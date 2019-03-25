@@ -1,6 +1,6 @@
 local M = {}
 
-local ui_animate = require "modules.ui.ui_animate"
+local ui_animate = require "druid.help_modules.druid_animate"
 
 local function fly_to(instance, pos_from, speed, callback)
   local pos_to = instance.get_pos_func()

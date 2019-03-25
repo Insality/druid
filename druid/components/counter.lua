@@ -1,6 +1,6 @@
 local M = {}
 
-local text_field = require "modules.ui.components.text_field"
+local text_field = require "druid.components.text_field"
 
 local FRAMES = 60
 

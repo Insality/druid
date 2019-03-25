@@ -1,8 +1,7 @@
 local M = {}
 
-local input = require "modules.input.input"
-local ui_animate = require "modules.ui.ui_animate"
-local extra_math = require "modules.utils.extra_math"
+local druid_input = require "druid.help_modules.druid_input"
+local ui_animate = require "druid.help_modules.druid_animate"
 
 M.START = hash("START")
 M.FINISH = hash("FINISH")
@@ -62,13 +61,18 @@ local function checkSwipeDirection(swipe, action)
   end
 end
 
+function lenght(x1, y1, x2, y2)
+  local a, b = x1 - x2, y1 - y2
+  return math.sqrt(a * a + b * b)
+end
+
 local function back_move(instance)
   if not instance.swipe.end_position_x and not instance.swipe.end_position_y then
     if instance.points_of_interest then
       local min_index, min_lenght = 0, math.huge
       local len
       for k, v in pairs(instance.points_of_interest) do
-        len = extra_math.lenght(instance.pos.x, instance.pos.y, v.x, v.y)
+        len = lenght(instance.pos.x, instance.pos.y, v.x, v.y)
         if len < min_lenght then
           min_lenght = len
           min_index = k
@@ -130,14 +134,14 @@ end
 -- @param action_id - input action id
 -- @param action - input action
 function M.on_input(instance, action_id, action)
-  if action_id == input.A_CLICK then
+  if action_id == druid_input.A_CLICK then
     if gui.pick_node(instance.scrolling_zone, action.x, action.y) then
       local swipe = instance.swipe
       if action.pressed then
         swipe.pressed = true
         swipe.beginX = action.x
         swipe.beginY = action.y
-        input.is_swipe = false
+        druid_input.is_swipe = false
         swipe.end_move_coef_x = 1
       elseif not action.released and not action.pressed and not swipe.special_move then
         swipe.endX = action.x

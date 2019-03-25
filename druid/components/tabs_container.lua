@@ -1,19 +1,19 @@
 local M = {}
 
-local helper = require "modules.render.helper"
-local tab_page = require "modules.ui.components.tab_page"
+--local helper = require "modules.render.helper"
+local tab_page = require "druid.components.tab_page"
 
 local DISABLE = hash("disable")
 
 function M.update_sizes(instance, width)
-  width = width or helper.config_x
+ -- width = width or helper.config_x
   instance.left = vmath.vector3(width * - 1, 0, 0)
   instance.right = vmath.vector3(width * 1, 0, 0)
 end
 
 --- Called when layout updated (rotate for example)
 function M.on_layout_updated(instance, message)
-  local width = helper.settings_x
+ -- local width = helper.settings_x
   M.update_sizes(instance, width)
 end
 

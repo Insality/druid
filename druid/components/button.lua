@@ -1,6 +1,6 @@
 local M = {}
 
-local ui_animate = require "modules.ui.ui_animate"
+local ui_animate = require "druid.help_modules.druid_animate"
 
 M.DEFAULT_SCALE_CHANGE = vmath.vector3(-0.05, - 0.1, 1)
 M.DEFAULT_POS_CHANGE = vmath.vector3(0, - 10, 0)

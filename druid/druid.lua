@@ -1,23 +1,22 @@
 local M = {}
 
-local lang = require "modules.localize.lang"
-local input = require "modules.input.input"
-M.input = input
+local druid_input = require "druid.help_modules.druid_input"
+M.input = druid_input
 
-local pie_progress_bar = require "modules.ui.components.pie_progress_bar"
-local progress_bar = require "modules.ui.components.progress_bar"
-local flying_particles = require "modules.ui.components.flying_particles"
-local text_field = require "modules.ui.components.text_field"
-local counter = require "modules.ui.components.counter"
-local image = require "modules.ui.components.image"
-local button = require "modules.ui.components.button"
-local timer = require "modules.ui.components.timer"
-local tab_page = require "modules.ui.components.tab_page"
-local tabs_container = require "modules.ui.components.tabs_container"
-local spine_anim = require "modules.ui.components.spine_anim"
-local scrolling_box = require "modules.ui.components.scrolling_box"
+local pie_progress_bar = require "druid.components.pie_progress_bar"
+local progress_bar = require "druid.components.progress_bar"
+local flying_particles = require "druid.components.flying_particles"
+local text_field = require "druid.components.text_field"
+local counter = require "druid.components.counter"
+local image = require "druid.components.image"
+local button = require "druid.components.button"
+local timer = require "druid.components.timer"
+local tab_page = require "druid.components.tab_page"
+local tabs_container = require "druid.components.tabs_container"
+local spine_anim = require "druid.components.spine_anim"
+local scrolling_box = require "druid.components.scrolling_box"
 
-local andr_back_btn = require "modules.ui.components.andr_back_btn"
+local andr_back_btn = require "druid.components.andr_back_btn"
 
 local LAYOUT_CHANGED = hash("layout_changed")
 local ON_MESSAGE = hash("on_message")
@@ -117,7 +116,7 @@ end
 local function input_init(factory)
   if not factory.input_inited then
     factory.input_inited = true
-    input.focus()
+    druid_input.focus()
   end
 end
 
@@ -269,8 +268,8 @@ M.BTN_SOUND_DISABLE_FUNC = function()end
 function M.new_button(factory, name, callback, params, animate_node_name, event, action, sound, sound_disable)
   input_init(factory)
   local instance = create(button, factory, name, ON_INPUT)
-  instance.event = event or input.A_CLICK
-  instance.action = action or input.RELEASED
+  instance.event = event or druid_input.A_CLICK
+  instance.action = action or druid_input.RELEASED
   instance.anim_node = animate_node_name and gui.get_node(animate_node_name) or instance.node
   instance.scale_from = gui.get_scale(instance.anim_node)
   instance.scale_to = instance.scale_from + button.DEFAULT_SCALE_CHANGE
@@ -290,8 +289,8 @@ end
 function M.new_back_handler(factory, callback)
   input_init(factory)
   local instance = create(andr_back_btn, factory, nil, ON_INPUT)
-  instance.event = input.A_ANDR_BACK
-  instance.action = input.RELEASED
+  instance.event = druid_input.A_ANDR_BACK
+  instance.action = druid_input.RELEASED
   instance.callback = callback
   return instance
 end
@@ -304,7 +303,7 @@ end
 -- @param callback - call when change page
 -- @return instance that represents the tab page
 function M.new_tab_page(factory, name, easing, duration, callback)
-  local instance = create(tab_page, factory, name, ON_MESSAGE)
+  local instance = create(tab_page, factory, name, M.EVENTS.ON_MESSAGE)
   instance.in_pos = gui.get_position(instance.node)
   instance.out_pos = gui.get_position(instance.node)
   instance.easing = easing or tab_page.DEFAULT_EASING

@@ -1,6 +1,6 @@
 local M = {}
 
-local ui_animate = require "modules.ui.ui_animate"
+local ui_animate = require "druid.help_modules.druid_animate"
 
 --- Bounce text field
 function M.bounce(instance, callback)

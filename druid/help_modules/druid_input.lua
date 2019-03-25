@@ -2,7 +2,6 @@ local M = {}
 
 local ADD_FOCUS = hash("acquire_input_focus")
 local REMOVE_FOCUS = hash("release_input_focus")
-
 local PATH_OBJ = "."
 
 M.A_CLICK = hash("click")

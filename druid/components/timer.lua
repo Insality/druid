@@ -1,6 +1,6 @@
 local M = {}
 
-local formats = require "modules.utils.formats"
+local formats = require "druid.help_modules.formats"
 
 --- Set text to text field
 -- @param set_to - set value in seconds
