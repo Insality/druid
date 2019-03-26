@@ -1,19 +1,11 @@
-local M = {}
-
-local druid_input = require("druid.help_modules.druid_input")
 local data = require("druid.data")
+local druid_input = require("druid.help_modules.druid_input")
 
-M.input = druid_input
-
-M.TRANSLATABLE = hash("TRANSLATABLE")
+local M = {}
 
 local STRING = "string"
 
 --- New druid era, registering components
--- temporary make components outside
-
-
-
 local components = {
   -- base
   button = require("druid.base.button"),
@@ -21,6 +13,7 @@ local components = {
   -- android_back = require("druid.base.android_back"),
   -- timer = require("druid.base.timer"),
 }
+
 
 local function register_components()
   for k, v in pairs(components) do
@@ -43,7 +36,7 @@ function M.on_message(factory, message_id, message, sender)
         v:on_layout_updated(message)
       end
     end
-  elseif message_id == M.TRANSLATABLE then
+  elseif message_id == data.TRANSLATABLE then
     M.translate(factory)
   else
     if factory[data.ON_MESSAGE] then
@@ -53,6 +46,7 @@ function M.on_message(factory, message_id, message, sender)
     end
   end
 end
+
 
 --- Called ON_INPUT
 function M.on_input(factory, action_id, action)
@@ -81,6 +75,7 @@ function M.on_input(factory, action_id, action)
   return false
 end
 
+
 --- Called on_update
 function M.update(factory, dt)
   if factory[data.ON_UPDATE] then
@@ -90,6 +85,7 @@ function M.update(factory, dt)
   end
 end
 
+
 --- Create UI instance for ui elements
 -- @return instance with all ui components
 function M.new(self)
@@ -97,6 +93,7 @@ function M.new(self)
   factory.parent = self
   return factory
 end
+
 
 local function input_init(factory)
   if not factory.input_inited then
@@ -136,6 +133,7 @@ local function create(meta, factory, name, ...)
   return instance
 end
 
+
 function M.create(factory, meta, name, ...)
   local instance = create(meta, factory, name)
   instance.factory = factory
@@ -144,5 +142,6 @@ function M.create(factory, meta, name, ...)
     instance:init(...)
   end
 end
+
 
 return M
