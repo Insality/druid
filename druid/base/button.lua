@@ -2,9 +2,14 @@ local data = require("druid.data")
 local ui_animate = require "druid.help_modules.druid_animate"
 
 local M = {}
+
 M.interest = {
   data.ON_INPUT
 }
+
+local BTN_SOUND = "button_click"
+local BTN_SOUND_DISABLED = "button_click_disabled"
+local HOVER_SCALE = vmath.vector3(-0.025, -0.025, 1)
 
 M.DEFAULT_SCALE_CHANGE = vmath.vector3(-0.05, - 0.1, 1)
 M.DEFAULT_POS_CHANGE = vmath.vector3(0, - 10, 0)
@@ -17,35 +22,66 @@ M.DEFAULT_ACTIVATE_SCALE = vmath.vector3(1, 1, 1)
 M.DEFAUL_ACTIVATION_TIME = 0.2
 
 
-function M.init(instance, callback, event, action, animate_node_name, sound)
+function M.init(instance, callback, params, animate_node_name, event)
   instance.event = event or data.A_TOUCH
-  instance.action = action or data.RELEASED
   instance.anim_node = animate_node_name and gui.get_node(animate_node_name) or instance.node
   instance.scale_from = gui.get_scale(instance.anim_node)
   instance.scale_to = instance.scale_from + M.DEFAULT_SCALE_CHANGE
+  instance.scale_hover_to = instance.scale_from + HOVER_SCALE
   instance.pos = gui.get_position(instance.anim_node)
   instance.callback = callback
-  -- instance.params = params
+  instance.params = params
   instance.tap_anim = M.tap_scale_animation
   instance.back_anim = M.back_scale_animation
-  -- instance.sound = sound or M.BTN_SOUND_FUNC
-  -- instance.sound_disable = sound_disable or M.BTN_SOUND_DISABLE_FUNC
+  instance.hover_anim = true
+  -- instance.sound = sound or BTN_SOUND
+  -- instance.sound_disable = sound_disable or BTN_SOUND_DISABLED
 end
 
 --- Set text to text field
 -- @param action_id - input action id
 -- @param action - input action
 function M.on_input(instance, action_id, action)
-  if gui.is_enabled(instance.node) and gui.pick_node(instance.node, action.x, action.y) then
-    if not instance.disabled then
-      instance.tap_anim(instance)
+  if gui.pick_node(instance.node, action.x, action.y) then
+    if action.pressed then
+      instance.can_action = true
+      instance.repeated_counter = 0
       return true
-    else
-      -- instance.sound_disable()
-      return false
     end
+
+    if action.released then
+      if not instance.disabled then
+        if not instance.stub and instance.can_action then
+          instance.can_action = false
+          instance.tap_anim(instance)
+          -- instance.sound()
+          instance.callback(instance.parent.parent, instance.params, instance)
+        else
+          if instance.hover_anim then
+            gui.animate(instance.node, "scale", instance.scale_from, gui.EASING_OUTSINE, 0.05)
+          end
+        end
+        return true
+      else
+        instance.sound_disable()
+        return false
+      end
+    else
+      -- scale in
+      if instance.hover_anim then
+        gui.animate(instance.node, "scale", instance.scale_hover_to, gui.EASING_OUTSINE, 0.05)
+      end
+    end
+    return not instance.disabled
+  else
+    -- scale back
+    -- bad solition, remake with flag
+    instance.can_action = false
+    if instance.hover_anim then
+      gui.animate(instance.node, "scale", instance.scale_from, gui.EASING_OUTSINE, 0.05)
+    end
+    return false
   end
-  return false
 end
 
 function M.tap_scale_animation(instance)
@@ -55,7 +91,6 @@ function M.tap_scale_animation(instance)
         instance.back_anim(instance)
       end
       -- instance.sound()
-      instance.callback(instance.parent.parent, instance.params, instance)
     end
   )
 end
