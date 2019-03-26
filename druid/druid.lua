@@ -7,7 +7,7 @@ local STRING = "string"
 
 --- New druid era, registering components
 local components = {
-  -- base
+  -- basic
   button = require("druid.base.button"),
   -- text = require("druid.base.text"),
   -- android_back = require("druid.base.android_back"),
@@ -15,17 +15,21 @@ local components = {
 }
 
 
-local function register_components()
+local function register_basic_components()
   for k, v in pairs(components) do
-    -- TODO: Find better solution to creating elements?
-    M["new_" .. k] = function(factory, name, ...)
-      M.create(factory, v, name, ...)
-    end
-    print("[Druid]: register component", k)
+    M.register(k, v)
   end
 end
-register_components()
+register_basic_components()
 
+
+function M.register(name, module)
+  -- TODO: Find better solution to creating elements?
+  M["new_" .. name] = function(factory, node_name, ...)
+      M.create(factory, module, node_name, ...)
+    end
+    print("[Druid]: register component", name)
+end
 
 --- Called on_message
 function M.on_message(factory, message_id, message, sender)
@@ -104,8 +108,8 @@ end
 
 --------------------------------------------------------------------------------
 
-local function create(meta, factory, name, ...)
-  local instance = setmetatable({}, {__index = meta})
+local function create(module, factory, name, ...)
+  local instance = setmetatable({}, {__index = module})
   instance.parent = factory
   if name then
     if type(name) == STRING then
@@ -119,7 +123,7 @@ local function create(meta, factory, name, ...)
   end
   factory[#factory + 1] = instance
 
-  local register_to = meta.interest or {}
+  local register_to = module.interest or {}
   for i, v in ipairs(register_to) do
     if not factory[v] then
       factory[v] = {}
@@ -134,13 +138,22 @@ local function create(meta, factory, name, ...)
 end
 
 
-function M.create(factory, meta, name, ...)
-  local instance = create(meta, factory, name)
-  instance.factory = factory
+function M.create(factory, module, name, ...)
+  local instance = create(module, factory, name)
 
   if instance.init then
     instance:init(...)
   end
+end
+
+
+function M.get_text(name)
+  -- override to get text for localized text
+end
+
+
+function M.play_sound(name)
+  -- override to play sound with name
 end
 
 
