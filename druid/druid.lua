@@ -20,7 +20,6 @@ local function register_basic_components()
     M.register(k, v)
   end
 end
-register_basic_components()
 
 
 function M.register(name, module)
@@ -70,7 +69,7 @@ function M.on_input(factory, action_id, action)
     local len = #factory[data.ON_INPUT]
     for i = 1, len do
       v = factory[data.ON_INPUT][i]
-      if action_id == v.event and action[v.action] and v:on_input(action_id, action) then
+      if action_id == v.event and v:on_input(action_id, action) then
         return true
       end
     end
@@ -156,5 +155,5 @@ function M.play_sound(name)
   -- override to play sound with name
 end
 
-
+register_basic_components()
 return M
