@@ -29,7 +29,7 @@ end
 function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
 	_factory["new_" .. name] = function(factory, node_or_name, ...)
-			_factory.create(factory, module, node_or_name, ...)
+			_factory.new(factory, module, node_or_name, ...)
 		end
 		log("Register component", name)
 end
@@ -86,7 +86,7 @@ local function create(module, factory, name, ...)
 end
 
 
-function _factory.create(factory, module, node_or_name, ...)
+function _factory.new(factory, module, node_or_name, ...)
 	local instance = create(module, factory, node_or_name)
 
 	if instance.init then

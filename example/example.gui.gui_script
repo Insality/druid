@@ -30,8 +30,8 @@ function init(self)
 		print("On button 1")
 	end)
 	
-	--alternative way of component registration
-	self.druid:create(druid.comps.button, "button_2", function()
+	--alternative way of component creation
+	self.druid:new(druid.comps.button, "button_2", function()
 		print("On button 2")
 	end)
 	
