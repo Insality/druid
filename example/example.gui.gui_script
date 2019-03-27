@@ -30,13 +30,17 @@ function init(self)
 		print("On button 3")
 	end)
 
+
+	self.druid:new_android_back(function(self, params)
+		print("On android back", params)
+	end, 2)
+
 	self.druid:new_text("text_2", "Simple text")
 	self.druid:new_text("text_3", "locale_text", true)
 
 	self.druid:new_timer("text_1", 0.5, 0, function()
 		print("On timer end")
 	end)
-
 
 end
 
