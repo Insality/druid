@@ -6,6 +6,11 @@ local lang = {
 }
 
 local function setup_druid(self)
+
+	-- two different way of exernal component regesstration
+	druid.comps["my_mega_test_comp"] = require "druid.base.text"
+	druid.register("my_custom_component", {})
+	
 	druid_settings.is_debug = true
 	
 	druid_settings.play_sound = function(name)
@@ -33,8 +38,6 @@ function init(self)
 	self.druid:new_button("button_3", function()
 		print("On button 3")
 	end)
-
-	druid.register("my_custom_component", {})
 	
 	self.druid:new_android_back(function(self, params)
 		print("On android back", params)

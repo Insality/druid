@@ -19,7 +19,7 @@ M.comps = {
 }
 
 
-local function register_basic_components()
+local register_basic_components = function ()
 	for k, v in pairs(M.comps) do
 		M.register(k, v)
 	end
@@ -37,6 +37,10 @@ end
 --- Create UI instance for ui elements
 -- @return instance with all ui components
 function M.new(self)
+	if register_basic_components then 
+		register_basic_components()
+		register_basic_components = false
+	end
 	local factory = setmetatable({}, {__index = _factory})
 	factory.parent = self
 	return factory
@@ -148,7 +152,5 @@ function _factory.update(factory, dt)
 		end
 	end
 end
-
-register_basic_components()
 
 return M
