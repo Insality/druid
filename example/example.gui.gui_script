@@ -21,6 +21,10 @@ function init(self)
 	self.druid:new_button("button_3", function()
 		print("On button 3")
 	end)
+
+	self.druid:new_timer("text_1", 0.5, 0, function()
+		print("On timer end")
+	end)
 end
 
 function update(self, dt)

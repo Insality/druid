@@ -13,4 +13,12 @@ function M.centrate_text_with_icon(text_node, icon_node)
   gui.set_position(icon_node, pos_i)
 end
 
+function M.step(current, target, step)
+  if current < target then
+    return math.min(current + step, target)
+  else
+    return math.max(target, current - step)
+  end
+end
+
 return M
