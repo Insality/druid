@@ -15,6 +15,7 @@ M.button = {
 
 function M.get_text(name)
   -- override to get text for localized text
+  return "locales not inited"
 end
 
 
