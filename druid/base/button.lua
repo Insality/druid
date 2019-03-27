@@ -1,5 +1,5 @@
 local data = require("druid.data")
-local ui_animate = require "druid.help_modules.druid_animate"
+local ui_animate = require "druid.helper.druid_animate"
 
 local M = {}
 

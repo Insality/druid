@@ -1,7 +1,7 @@
 local M = {}
 
-local druid_input = require "druid.help_modules.druid_input"
-local ui_animate = require "druid.help_modules.druid_animate"
+local druid_input = require "druid.helper.druid_input"
+local ui_animate = require "druid.helper.druid_animate"
 
 M.START = hash("START")
 M.FINISH = hash("FINISH")

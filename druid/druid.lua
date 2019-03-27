@@ -1,5 +1,5 @@
 local data = require("druid.data")
-local druid_input = require("druid.help_modules.druid_input")
+local druid_input = require("druid.helper.druid_input")
 
 local M = {}
 
