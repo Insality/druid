@@ -9,9 +9,9 @@ local STRING = "string"
 local components = {
   -- basic
   button = require("druid.base.button"),
+  timer = require("druid.base.timer"),
   -- text = require("druid.base.text"),
   -- android_back = require("druid.base.android_back"),
-  -- timer = require("druid.base.timer"),
 }
 
 
