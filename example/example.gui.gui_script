@@ -21,6 +21,10 @@ function init(self)
 	self.druid:new_button("button_3", function()
 		print("On button 3")
 	end)
+
+	self.druid:new_android_back(function(self, params)
+		print("On android back", params)
+	end, 2)
 end
 
 function update(self, dt)
