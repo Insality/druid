@@ -146,14 +146,5 @@ function M.create(factory, module, name, ...)
 end
 
 
-function M.get_text(name)
-  -- override to get text for localized text
-end
-
-
-function M.play_sound(name)
-  -- override to play sound with name
-end
-
 register_basic_components()
 return M

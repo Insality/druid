@@ -27,8 +27,8 @@ function M.init(instance, callback, params, animate_node_name, event)
 	instance.tap_anim = M.tap_scale_animation
 	instance.back_anim = M.back_scale_animation
 	instance.hover_anim = b_settings.IS_HOVER
-	-- instance.sound = sound or BTN_SOUND
-	-- instance.sound_disable = sound_disable or BTN_SOUND_DISABLED
+	instance.sound = b_settings.BTN_SOUND
+	instance.sound_disable = b_settings.BTN_SOUND_DISABLED
 end
 
 
@@ -45,7 +45,7 @@ local function on_button_release(instance)
 		if not instance.stub and instance.can_action then
 			instance.can_action = false
 			instance.tap_anim(instance)
-			-- instance.sound()
+	      settings.play_sound(instance.sound)
 			instance.callback(instance.parent.parent, instance.params, instance)
 		else
 			set_hover(instance, false)
@@ -89,7 +89,6 @@ function M.tap_scale_animation(instance)
 			if instance.back_anim then
 				instance.back_anim(instance)
 			end
-			-- instance.sound()
 		end
 	)
 end
