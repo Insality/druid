@@ -1,9 +1,17 @@
 local druid = require("druid.druid")
 local druid_settings = require("druid.settings")
 
+local lang = {
+	locale_text = "Localized"
+}
+
 local function setup_druid(self)
 	druid_settings.play_sound = function(name)
 		sound.play("sounds#" .. name)
+	end
+
+	druid_settings.get_text = function(text_id)
+		return lang[text_id]
 	end
 end
 
@@ -21,6 +29,9 @@ function init(self)
 	self.druid:new_button("button_3", function()
 		print("On button 3")
 	end)
+
+	self.druid:new_text("text_2", "Simple text")
+	self.druid:new_text("text_3", "locale_text", true)
 end
 
 function update(self, dt)
