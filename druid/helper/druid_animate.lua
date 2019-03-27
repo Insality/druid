@@ -130,6 +130,10 @@ function M.scale_to(self, node, to, callback, time, delay, easing)
   )
 end
 
+function M.scale(self, node, to, time)
+  gui.animate(node, "scale", to, gui.EASING_OUTSINE, time)
+end
+
 function M.scale_x_from_to(self, node, from, to, callback, time, easing, delay, playback)
   easing = easing or gui.EASING_INSINE
   time = time or M.SCALE_ANIMATION_TIME
