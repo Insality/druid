@@ -5,8 +5,8 @@ main_collection = /example/example.collectionc
 shared_state = 1
 
 [display]
-width = 960
-height = 640
+width = 400
+height = 400
 
 [project]
 title = druid
