@@ -24,14 +24,18 @@ function init(self)
 	self.druid:new_button("button_1", function()
 		print("On button 1")
 	end)
-	self.druid:new_button("button_2", function()
+	
+	--alternative way of component registration
+	self.druid:create(druid.comps.button, "button_2", function()
 		print("On button 2")
 	end)
+	
 	self.druid:new_button("button_3", function()
 		print("On button 3")
 	end)
 
-
+	druid.register("my_custom_component", {})
+	
 	self.druid:new_android_back(function(self, params)
 		print("On android back", params)
 	end, 2)

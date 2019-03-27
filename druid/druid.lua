@@ -10,7 +10,7 @@ local _factory = {}
 local STRING = "string"
 
 --- New druid era, registering components
-local components = {
+M.comps = {
 	-- basic
 	button = require("druid.base.button"),
 	android_back = require("druid.base.android_back"),
@@ -20,7 +20,7 @@ local components = {
 
 
 local function register_basic_components()
-	for k, v in pairs(components) do
+	for k, v in pairs(M.comps) do
 		M.register(k, v)
 	end
 end
@@ -28,8 +28,8 @@ end
 
 function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
-	_factory["new_" .. name] = function(factory, node_name, ...)
-			M.create(factory, module, node_name, ...)
+	_factory["new_" .. name] = function(factory, node_or_name, ...)
+			_factory.create(factory, module, node_or_name, ...)
 		end
 		log("Register component", name)
 end
@@ -82,16 +82,14 @@ local function create(module, factory, name, ...)
 end
 
 
-function M.create(factory, module, name, ...)
-	local instance = create(module, factory, name)
+function _factory.create(factory, module, node_or_name, ...)
+	local instance = create(module, factory, node_or_name)
 
 	if instance.init then
 		instance:init(...)
 	end
 end
 
-register_basic_components()
---------------------------------------------------------------------------------
 
 --- Called on_message
 function _factory.on_message(factory, message_id, message, sender)
@@ -150,5 +148,7 @@ function _factory.update(factory, dt)
 		end
 	end
 end
+
+register_basic_components()
 
 return M
