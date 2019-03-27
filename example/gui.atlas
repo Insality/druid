@@ -1,0 +1,9 @@
+images {
+  image: "/example/res/gray_long.png"
+}
+images {
+  image: "/example/res/green_long.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

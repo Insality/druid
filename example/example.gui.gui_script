@@ -1,7 +1,16 @@
-local druid = require "druid.druid"
+local druid = require("druid.druid")
+local druid_settings = require("druid.settings")
+
+local function setup_druid(self)
+	druid_settings.play_sound = function(name)
+		sound.play("sounds#" .. name)
+	end
+end
 
 function init(self)
+	setup_druid(self)
 	self.druid = druid.new(self)
+
 
 	self.druid:new_button("button_1", function()
 		print("On button 1")
