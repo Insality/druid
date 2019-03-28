@@ -1,7 +1,6 @@
 local data = require("druid.data")
 
 local M = {}
-
 M.interest = {
 	data.ON_INPUT
 }

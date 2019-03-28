@@ -4,7 +4,6 @@ local settings = require("druid.settings")
 local b_settings = settings.button
 
 local M = {}
-
 M.interest = {
 	data.ON_INPUT
 }
@@ -15,9 +14,9 @@ M.DEFAULT_ACTIVATE_SCALE = vmath.vector3(1, 1, 1)
 M.DEFAUL_ACTIVATION_TIME = 0.2
 
 
-function M.init(instance, callback, params, animate_node_name, event)
+function M.init(instance, callback, params, anim_node)
 	instance.event = data.A_TOUCH
-	instance.anim_node = animate_node_name and gui.get_node(animate_node_name) or instance.node
+	instance.anim_node = anim_node and gui.get_node(anim_node) or instance.node
 	instance.scale_from = gui.get_scale(instance.anim_node)
 	instance.scale_to = instance.scale_from + b_settings.SCALE_CHANGE
 	instance.scale_hover_to = instance.scale_from + b_settings.HOVER_SCALE
@@ -39,6 +38,7 @@ local function set_hover(instance, state)
 		instance._is_hovered = state
 	end
 end
+
 
 local function on_button_release(instance)
 	if not instance.disabled then
@@ -83,6 +83,7 @@ function M.on_input(instance, action_id, action)
 	end
 end
 
+
 function M.tap_scale_animation(instance)
 	ui_animate.scale_to(instance, instance.anim_node, instance.scale_to,
 		function()
@@ -109,12 +110,14 @@ function M.deactivate(instance, is_animate, callback)
 				callback(instance.parent.parent)
 			end
 		end
-		ui_animate.color(instance, instance.node, M.DEFAULT_DEACTIVATE_COLOR, clbk, M.DEFAUL_ACTIVATION_TIME, 0,
-		gui.EASING_OUTBOUNCE)
-		ui_animate.scale_y_from_to(instance, instance.node, M.DEFAULT_ACTIVATE_SCALE.x, M.DEFAULT_DEACTIVATE_SCALE.x, clbk,
-		M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
-		ui_animate.scale_x_from_to(instance, instance.node, M.DEFAULT_ACTIVATE_SCALE.y, M.DEFAULT_DEACTIVATE_SCALE.y, clbk,
-		M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
+		ui_animate.color(instance, instance.node, M.DEFAULT_DEACTIVATE_COLOR,
+			clbk, M.DEFAUL_ACTIVATION_TIME, 0,	gui.EASING_OUTBOUNCE)
+
+		ui_animate.scale_y_from_to(instance, instance.node, M.DEFAULT_ACTIVATE_SCALE.x,
+			M.DEFAULT_DEACTIVATE_SCALE.x, clbk,	M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
+
+		ui_animate.scale_x_from_to(instance, instance.node, M.DEFAULT_ACTIVATE_SCALE.y,
+			M.DEFAULT_DEACTIVATE_SCALE.y, clbk,	M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
 	else
 		gui.set_color(instance.node, M.DEFAULT_DEACTIVATE_COLOR)
 		gui.set_scale(instance.node, M.DEFAULT_DEACTIVATE_SCALE)
@@ -137,12 +140,14 @@ function M.activate(instance, is_animate, callback)
 				end
 			end
 		end
-		ui_animate.color(instance, instance.node, ui_animate.TINT_SHOW, clbk, M.DEFAUL_ACTIVATION_TIME, 0,
-		gui.EASING_OUTBOUNCE)
-		ui_animate.scale_y_from_to(instance, instance.node, M.DEFAULT_DEACTIVATE_SCALE.x, M.DEFAULT_ACTIVATE_SCALE.x, clbk,
-		M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
-		ui_animate.scale_x_from_to(instance, instance.node, M.DEFAULT_DEACTIVATE_SCALE.y, M.DEFAULT_ACTIVATE_SCALE.y, clbk,
-		M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
+		ui_animate.color(instance, instance.node, ui_animate.TINT_SHOW,
+			clbk, M.DEFAUL_ACTIVATION_TIME, 0, gui.EASING_OUTBOUNCE)
+
+		ui_animate.scale_y_from_to(instance, instance.node, M.DEFAULT_DEACTIVATE_SCALE.x,
+			M.DEFAULT_ACTIVATE_SCALE.x, clbk, M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
+
+		ui_animate.scale_x_from_to(instance, instance.node, M.DEFAULT_DEACTIVATE_SCALE.y,
+			M.DEFAULT_ACTIVATE_SCALE.y, clbk, M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
 	else
 		gui.set_color(instance.node, ui_animate.TINT_SHOW)
 		gui.set_scale(instance.node, M.DEFAULT_ACTIVATE_SCALE)
