@@ -1,6 +1,7 @@
 local data = require("druid.data")
-local ui_animate = require "druid.helper.druid_animate"
+local ui_animate = require("druid.helper.druid_animate")
 local settings = require("druid.settings")
+local helper = require("druid.helper.helper")
 local b_settings = settings.button
 
 local M = {}
@@ -15,7 +16,8 @@ M.DEFAULT_ACTIVATE_SCALE = vmath.vector3(1, 1, 1)
 M.DEFAUL_ACTIVATION_TIME = 0.2
 
 
-function M.init(instance, callback, params, animate_node_name, event)
+function M.init(instance, node, callback, params, animate_node_name, event)
+	instance.node = helper.get_node(node)
 	instance.event = data.A_TOUCH
 	instance.anim_node = animate_node_name and gui.get_node(animate_node_name) or instance.node
 	instance.scale_from = gui.get_scale(instance.anim_node)
