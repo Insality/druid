@@ -7,8 +7,6 @@ local M = {}
 local log = settings.log
 local _factory = {}
 
-local STRING = "string"
-
 M.comps = {
 	button = require("druid.base.button"),
 	android_back = require("druid.base.android_back"),
@@ -26,8 +24,8 @@ end
 
 function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
-	_factory["new_" .. name] = function(factory, node_or_name, ...)
-		return _factory.new(factory, module, node_or_name, ...)
+	_factory["new_" .. name] = function(factory, ...)
+		return _factory.new(factory, module, ...)
 	end
 	log("Register component", name)
 end
@@ -54,19 +52,9 @@ local function input_init(factory)
 end
 
 
-local function create(module, factory, name)
+local function create(module, factory)
 	local instance = setmetatable({}, {__index = module})
 	instance.parent = factory
-	if name then
-		if type(name) == STRING then
-			instance.name = name
-			instance.node = gui.get_node(name)
-		else
-			--name already is node
-			instance.name = nil
-			instance.node = name
-		end
-	end
 	factory[#factory + 1] = instance
 
 	local register_to = module.interest or {}
@@ -84,8 +72,8 @@ local function create(module, factory, name)
 end
 
 
-function _factory.new(factory, module, node_or_name, ...)
-	local instance = create(module, factory, node_or_name)
+function _factory.new(factory, module, ...)
+	local instance = create(module, factory)
 
 	if instance.init then
 		instance:init(...)

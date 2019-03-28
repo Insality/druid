@@ -18,6 +18,15 @@ function M.centrate_text_with_icon(text_node, icon_node, offset_x)
 end
 
 
+local STRING = "string"
+function M.get_node(node_or_name)
+	if type(node_or_name) == STRING then
+		return gui.get_node(node_or_name)
+	end
+	return node_or_name
+end
+
+
 function M.step(current, target, step)
 	if current < target then
 		return math.min(current + step, target)

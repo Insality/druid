@@ -1,5 +1,6 @@
 local data = require("druid.data")
 local settings = require("druid.settings")
+local helper = require("druid.helper.helper")
 
 local M = {}
 M.interest = {
@@ -8,7 +9,8 @@ M.interest = {
 }
 
 
-function M.init(instance, value, is_locale)
+function M.init(instance, node, value, is_locale)
+	instance.node = helper.get_node(node)
 	instance.last_color = gui.get_color(instance.node)
 	if is_locale then
 		instance.text_id = value
