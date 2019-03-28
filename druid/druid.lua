@@ -9,9 +9,7 @@ local _factory = {}
 
 local STRING = "string"
 
---- New druid era, registering components
 M.comps = {
-	-- basic
 	button = require("druid.base.button"),
 	android_back = require("druid.base.android_back"),
 	text = require("druid.base.text"),
@@ -34,6 +32,7 @@ function M.register(name, module)
 	log("Register component", name)
 end
 
+
 --- Create UI instance for ui elements
 -- @return instance with all ui components
 function M.new(self)
@@ -46,7 +45,6 @@ function M.new(self)
 	return factory
 end
 
---------------------------------------------------------------------------------
 
 local function input_init(factory)
 	if not factory.input_inited then
@@ -56,7 +54,7 @@ local function input_init(factory)
 end
 
 
-local function create(module, factory, name, ...)
+local function create(module, factory, name)
 	local instance = setmetatable({}, {__index = module})
 	instance.parent = factory
 	if name then
@@ -154,5 +152,6 @@ function _factory.update(factory, dt)
 		end
 	end
 end
+
 
 return M
