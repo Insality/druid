@@ -29,16 +29,16 @@ function init(self)
 	self.druid:new_button("button_1", function()
 		print("On button 1")
 	end)
-	
+
 	--alternative way of component creation
 	self.druid:new(druid.comps.button, "button_2", function()
 		print("On button 2")
 	end)
-	
+
 	self.druid:new_button("button_3", function()
 		print("On button 3")
 	end)
-	
+
 	self.druid:new_android_back(function(self, params)
 		print("On android back", params)
 	end, 2)

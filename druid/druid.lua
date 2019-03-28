@@ -37,7 +37,7 @@ end
 --- Create UI instance for ui elements
 -- @return instance with all ui components
 function M.new(self)
-	if register_basic_components then 
+	if register_basic_components then
 		register_basic_components()
 		register_basic_components = false
 	end
