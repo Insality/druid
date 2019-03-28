@@ -29,9 +29,9 @@ end
 function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
 	_factory["new_" .. name] = function(factory, node_or_name, ...)
-			_factory.new(factory, module, node_or_name, ...)
-		end
-		log("Register component", name)
+		return _factory.new(factory, module, node_or_name, ...)
+	end
+	log("Register component", name)
 end
 
 --- Create UI instance for ui elements
@@ -92,6 +92,8 @@ function _factory.new(factory, module, node_or_name, ...)
 	if instance.init then
 		instance:init(...)
 	end
+
+	return instance
 end
 
 
