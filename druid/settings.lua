@@ -1,5 +1,6 @@
 local M = {}
 
+M.is_debug = false
 
 M.button = {
 	IS_HOVER = true,
@@ -22,6 +23,13 @@ end
 function M.play_sound(name)
   -- override to play sound with name
 end
+
+function M.log(...)
+	if M.is_debug then
+		print("[Druid]: ", ...)
+	end
+end
+
 
 
 return M
