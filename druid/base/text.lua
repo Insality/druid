@@ -9,9 +9,12 @@ M.interest = {
 }
 
 
-function M.init(instance, node, value, is_locale)
+function M.init(instance, node, value, is_locale, max_width)
+	instance.max_width = max_width
 	instance.node = helper.get_node(node)
+	instance.start_scale = gui.get_scale(instance.node)
 	instance.last_color = gui.get_color(instance.node)
+
 	if is_locale then
 		instance.text_id = value
 		instance:translate()
@@ -29,11 +32,29 @@ function M.translate(instance)
 end
 
 
+--- Setup scale x, but can only be smaller, than start text scale
+local function setup_max_width(instance)
+  local metrics = gui.get_text_metrics_from_node(instance.node)
+  local cur_scale = gui.get_scale(instance.node)
+
+  if metrics.width * cur_scale.x > instance.max_width then
+    local scale_modifier = instance.max_width / metrics.width
+    scale_modifier = math.min(scale_modifier, instance.start_scale.x)
+    local new_scale = vmath.vector3(scale_modifier, scale_modifier, cur_scale.z)
+    gui.set_scale(instance.node, new_scale)
+  end
+end
+
+
 --- Set text to text field
 -- @param set_to - set value to text field
 function M.set_to(instance, set_to)
 	instance.last_value = set_to
 	gui.set_text(instance.node, set_to)
+
+	if instance.max_width then
+		setup_max_width(instance)
+	end
 end
 
 

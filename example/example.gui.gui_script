@@ -43,7 +43,7 @@ function init(self)
 		print("On android back", params)
 	end, 2)
 
-	self.druid:new_text("text_2", "Simple text")
+	self.druid:new_text("text_2", "Simple text", false, 400)
 	self.druid:new_text("text_3", "locale_text", true)
 
 	self.druid:new_timer("text_1", 5, 0, function()
