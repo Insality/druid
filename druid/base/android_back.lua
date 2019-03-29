@@ -6,9 +6,7 @@ M.interest = {
 }
 
 
-function M.init(instance, params)
-	-- TODO: first arg store as node. Find way to escape this
-	local callback = instance.node
+function M.init(instance, callback, params)
 	instance.event = data.A_ANDR_BACK
 	instance.callback = callback
 	instance.params = params
