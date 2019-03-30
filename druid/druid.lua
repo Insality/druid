@@ -109,7 +109,7 @@ function _factory.on_input(factory, action_id, action)
 	if factory[data.ON_SWIPE] then
 		local v, result
 		local len = #factory[data.ON_SWIPE]
-		for i = 1, len do
+		for i = len, 1, -1 do
 			v = factory[data.ON_SWIPE][i]
 			result = result or v:on_input(action_id, action)
 		end
@@ -120,7 +120,7 @@ function _factory.on_input(factory, action_id, action)
 	if factory[data.ON_INPUT] then
 		local v
 		local len = #factory[data.ON_INPUT]
-		for i = 1, len do
+		for i = len, 1, -1 do
 			v = factory[data.ON_INPUT][i]
 			if action_id == v.event and v:on_input(action_id, action) then
 				return true
