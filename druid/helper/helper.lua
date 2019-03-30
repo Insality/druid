@@ -36,4 +36,15 @@ function M.step(current, target, step)
 end
 
 
+function M.is_enabled(node)
+	local is_enabled = gui.is_enabled(node)
+	local parent = gui.get_parent(node)
+	while parent and is_enabled do
+		is_enabled = is_enabled and gui.is_enabled(parent)
+		parent = gui.get_parent(parent)
+	end
+	return is_enabled
+end
+
+
 return M

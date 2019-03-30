@@ -64,6 +64,10 @@ end
 -- @param action_id - input action id
 -- @param action - input action
 function M.on_input(instance, action_id, action)
+	if not helper.is_enabled(instance.node) then
+		return false
+	end
+
 	if gui.pick_node(instance.node, action.x, action.y) then
 		if action.pressed then
 			-- Can interact if start touch on the button
