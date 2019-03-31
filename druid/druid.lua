@@ -15,9 +15,13 @@ M.comps = {
 }
 
 
-local register_basic_components = function ()
+local function register_basic_components()
 	for k, v in pairs(M.comps) do
-		M.register(k, v)
+		if not _factory["new_" .. k] then
+			M.register(k, v)
+		else
+			log("Basic component", k, "already registered")
+		end
 	end
 end
 
