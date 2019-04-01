@@ -62,7 +62,7 @@ local function set_bar_to(instance, set_to, is_silence)
 	local total_width = set_to * instance.max_size
 
 	local scale = math.min(total_width / instance.slice_size, 1)
-	local size = math.max(total_width, instance.slice_size )
+	local size = math.max(total_width, instance.slice_size)
 
 	instance.scale[instance.key] = scale
 	gui.set_scale(instance.node, instance.scale)
@@ -109,10 +109,16 @@ end
 -- @param to - value between 0..1
 -- @param callback - callback when progress ended if need
 function M.to(instance, to, callback)
+	to = helper.clamp(to, 0, 1)
 	-- cause of float error
 	local value = helper.round(to, 5)
 	if value ~= instance.last_value then
 		instance.target = value
+		instance.target_callback = callback
+	else
+		if callback then
+			callback(instance.parent.parent, to)
+		end
 	end
 end
 
@@ -132,6 +138,11 @@ function M.update(instance, dt)
 
 		if instance.last_value == instance.target then
 			check_steps(instance, prev_value, instance.target, instance.target)
+
+			if instance.target_callback then
+				instance.target_callback(instance.parent.parent, instance.target)
+			end
+
 			instance.target = nil
 		end
 	end
