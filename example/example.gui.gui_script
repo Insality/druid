@@ -81,10 +81,10 @@ local function init_progress(self)
 	local rich_val = 0.3
 	self.druid:new_button("rich_add", function()
 		rich_val = rich_val + 0.1
-		if rich_val > 1 then
-			rich_val = 0
-			rich:empty()
-		end
+		rich:to(rich_val)
+	end)
+	self.druid:new_button("rich_dec", function()
+		rich_val = rich_val - 0.1
 		rich:to(rich_val)
 	end)
 end

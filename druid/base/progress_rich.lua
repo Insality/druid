@@ -24,14 +24,14 @@ end
 function M.to(instance, to, callback)
 	if instance.fill.last_value < to then
 		instance.green:to(to, function()
+			instance.red:to(to)
 			instance.fill:to(to, callback)
 		end)
 	end
 
 	if instance.fill.last_value > to then
-		instance.green:set_to(to)
-		instance.red:set_to(instance.fill.last_value)
 		instance.fill:to(to, function()
+			instance.green:to(to)
 			instance.red:to(to, callback)
 		end)
 	end
