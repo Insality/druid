@@ -54,14 +54,29 @@ end
 
 
 local function init_progress(self)
-	local val = 0.3
+	local val = 0.4
 	local simple = self.druid:new_progress("simple_fill", "x", val)
-	timer.delay(0.2, true, function()
+	-- local vert = self.druid:new_progress("simple_vert_fill", "y", val)
+
+	simple:set_steps({0, 0.3, 0.6, 1}, function(self, step)
+		print("STEP:", step)
+	end)
+
+	timer.delay(0.4, true, function()
 		val = val + 0.1
-		if val >= 1 then
+		if val > 1 then
+			simple:empty()
+			-- vert:empty()
 			val = 0
 		end
-		simple:set_to(val)
+		if val < 0 then
+			simple:fill()
+			-- vert:empty()
+			val = 1
+		end
+		simple:to(val)
+		-- vert:to(val)
+		-- simple:to(math.random())
 	end)
 end
 
@@ -69,7 +84,6 @@ end
 function init(self)
 	setup_druid(self)
 	self.druid = druid.new(self)
-
 
 	init_pages(self)
 	init_buttons(self)

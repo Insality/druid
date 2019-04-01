@@ -1,106 +1,134 @@
 local data = require("druid.data")
+local helper = require("druid.helper.helper")
 
 local M = {}
 
 M.interest = {
-	data.LAYOUT_CHANGED
+	data.LAYOUT_CHANGED,
+	data.ON_UPDATE,
 }
+
+local TIME = 0.5
+local LERP_KOEF = 0.2
+local LERP_DELTA = 0.005
+
+local PROP_X = "x"
+local PROP_Y = "y"
 
 function M.init(instance, name, key, init_value)
 	instance.prop = hash("scale."..key)
 	instance.key = key
+
 	instance.node = gui.get_node(name)
 	instance.scale = gui.get_scale(instance.node)
+	instance.size = gui.get_size(instance.node)
+	instance.max_size = instance.size[instance.key]
+	instance.slice = gui.get_slice9(instance.node)
+	if key == PROP_X then
+		instance.slice_size = instance.slice.x + instance.slice.z
+	else
+		instance.slice_size = instance.slice.y + instance.slice.w
+	end
+
 	instance:set_to(init_value or 1)
 end
 
-local function set_bar_to(instance, set_to)
-  instance.last_value = set_to
-  gui.cancel_animation(instance.node, instance.prop)
-  instance.scale[instance.key] = set_to
-  gui.set_scale(instance.node, instance.scale)
+
+local function check_steps(instance, from, to)
+	for i = 1, #instance.steps do
+		local step = instance.steps[i]
+		local v1, v2 = from, to
+		if v1 > v2 then
+			v1, v2 = v2, v1
+		end
+		local cond
+		if from > to then
+			cond = v1 <= step and step < v2
+		else
+			cond = v1 < step and step <= v2
+		end
+
+		if cond then
+			instance.step_callback(instance.parent.parent, step)
+		end
+	end
 end
 
-local function circle_anim(instance, full, steps, num, full_duration, callback)
-  local duration = (math.abs(steps[num - 1] - steps[num]) / full) * full_duration
-  local to = steps[num]
-  gui.animate(instance.node, instance.prop, to, gui.EASING_LINEAR, duration, 0,
-    function()
-      callback(num, callback)
-    end
-  )
+
+local function set_bar_to(instance, set_to, is_silence)
+	local prev_value = instance.last_value
+	instance.last_value = set_to
+
+	local total_width = set_to * instance.max_size
+
+	local scale = math.min(total_width / instance.slice_size, 1)
+	local size = math.max(total_width, instance.slice_size )
+
+	instance.scale[instance.key] = scale
+	gui.set_scale(instance.node, instance.scale)
+	instance.size[instance.key] = size
+	gui.set_size(instance.node, instance.size)
+
+	if instance.steps and not is_silence then
+		check_steps(instance, prev_value, set_to)
+	end
 end
+
 
 --- Fill a progress bar and stop progress animation
-function M.fill_bar(instance)
-  set_bar_to(instance, 1)
+function M.fill(instance)
+	set_bar_to(instance, 1, true)
 end
 
+
 --- To empty a progress bar
-function M.empty_bar(instance)
-  set_bar_to(instance, 0)
+function M.empty(instance)
+	set_bar_to(instance, 0, true)
 end
+
 
 --- Set fill a progress bar to value
 -- @param to - value between 0..1
 function M.set_to(instance, to)
-  set_bar_to(instance, to)
+	set_bar_to(instance, to)
 end
+
+
+function M.get(instance)
+	return instance.last_value
+end
+
+
+function M.set_steps(instance, steps, step_callback)
+	instance.steps = steps
+	instance.step_callback = step_callback
+end
+
 
 --- Start animation of a progress bar
 -- @param to - value between 0..1
--- @param duration - time of animation
 -- @param callback - callback when progress ended if need
--- @param callback_values - whitch values should callback
-function M.start_progress_to(instance, to, duration, callback, callback_values)
-  instance.is_anim = true
-  local steps
-  if callback_values then
-    steps = {instance.last_value}
-    if instance.last_value > to then
-      table.sort(callback_values, function(a, b) return a > b end)
-    else
-      table.sort(callback_values, function(a, b) return a < b end)
-    end
-    for i, v in ipairs(callback_values) do
-      if (instance.last_value > v and to < v) or (instance.last_value < v and to > v) then
-        steps[#steps + 1] = v
-      end
-    end
-    steps[#steps + 1] = to
-  end
-  if not steps then
-    gui.animate(instance.node, instance.prop, to, gui.EASING_LINEAR, duration, 0,
-      function()
-        set_bar_to(instance, to)
-        instance.is_anim = false
-        if callback then
-          callback(instance.parent.parent, to)
-        end
-      end
-    )
-  else
-    local full = math.abs(steps[1] - steps[#steps])
-    local _callback = function (num, _callback)
-      if num == #steps then
-        set_bar_to(instance, steps[num])
-        instance.is_anim = false
-        callback(instance.parent.parent, steps[num])
-      else
-        callback(instance.parent.parent, steps[num])
-        num = num + 1
-        circle_anim(instance, full, steps, num, duration, _callback)
-      end
-    end
-    circle_anim(instance, full, steps, 2, duration, _callback)
-  end
+function M.to(instance, to, callback)
+	instance.target = to
 end
+
 
 --- Called when layout updated (rotate for example)
 function M.on_layout_updated(instance)
-  if not instance.is_anim then
-    set_bar_to(instance, instance.last_value)
-  end
+	instance:set_to(instance.last_value)
+end
+
+
+function M.update(instance, dt)
+	if instance.target then
+		local step = math.abs(instance.last_value - instance.target) * LERP_KOEF
+		step = math.max(step, LERP_DELTA)
+		instance:set_to(helper.step(instance.last_value, instance.target, step))
+
+		if instance.last_value == instance.target then
+			instance.target = nil
+		end
+	end
 end
 
 return M
