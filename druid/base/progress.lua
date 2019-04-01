@@ -8,7 +8,6 @@ M.interest = {
 	data.ON_UPDATE,
 }
 
-local TIME = 0.5
 local LERP_KOEF = 0.2
 local LERP_DELTA = 0.005
 
@@ -34,21 +33,22 @@ function M.init(instance, name, key, init_value)
 end
 
 
-local function check_steps(instance, from, to)
+local function check_steps(instance, from, to, exactly)
+	if not instance.steps then
+		return
+	end
+
 	for i = 1, #instance.steps do
 		local step = instance.steps[i]
 		local v1, v2 = from, to
 		if v1 > v2 then
 			v1, v2 = v2, v1
 		end
-		local cond
-		if from > to then
-			cond = v1 <= step and step < v2
-		else
-			cond = v1 < step and step <= v2
-		end
 
-		if cond then
+		if v1 < step and step < v2 then
+			instance.step_callback(instance.parent.parent, step)
+		end
+		if exactly and exactly == step then
 			instance.step_callback(instance.parent.parent, step)
 		end
 	end
@@ -69,7 +69,7 @@ local function set_bar_to(instance, set_to, is_silence)
 	instance.size[instance.key] = size
 	gui.set_size(instance.node, instance.size)
 
-	if instance.steps and not is_silence then
+	if not is_silence then
 		check_steps(instance, prev_value, set_to)
 	end
 end
@@ -109,7 +109,11 @@ end
 -- @param to - value between 0..1
 -- @param callback - callback when progress ended if need
 function M.to(instance, to, callback)
-	instance.target = to
+	-- cause of float error
+	local value = helper.round(to, 5)
+	if value ~= instance.last_value then
+		instance.target = value
+	end
 end
 
 
@@ -121,14 +125,17 @@ end
 
 function M.update(instance, dt)
 	if instance.target then
+		local prev_value = instance.last_value
 		local step = math.abs(instance.last_value - instance.target) * LERP_KOEF
 		step = math.max(step, LERP_DELTA)
 		instance:set_to(helper.step(instance.last_value, instance.target, step))
 
 		if instance.last_value == instance.target then
+			check_steps(instance, prev_value, instance.target, instance.target)
 			instance.target = nil
 		end
 	end
 end
+
 
 return M

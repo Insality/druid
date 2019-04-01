@@ -36,6 +36,12 @@ function M.step(current, target, step)
 end
 
 
+function M.round(num, numDecimalPlaces)
+	local mult = 10^(numDecimalPlaces or 0)
+	return math.floor(num * mult + 0.5) / mult
+end
+
+
 function M.is_enabled(node)
 	local is_enabled = gui.is_enabled(node)
 	local parent = gui.get_parent(node)

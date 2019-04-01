@@ -56,7 +56,7 @@ end
 local function init_progress(self)
 	local val = 0.4
 	local simple = self.druid:new_progress("simple_fill", "x", val)
-	-- local vert = self.druid:new_progress("simple_vert_fill", "y", val)
+	local vert = self.druid:new_progress("simple_vert_fill", "y", val)
 
 	simple:set_steps({0, 0.3, 0.6, 1}, function(self, step)
 		print("STEP:", step)
@@ -66,17 +66,16 @@ local function init_progress(self)
 		val = val + 0.1
 		if val > 1 then
 			simple:empty()
-			-- vert:empty()
+			vert:empty()
 			val = 0
 		end
 		if val < 0 then
 			simple:fill()
-			-- vert:empty()
+			vert:empty()
 			val = 1
 		end
 		simple:to(val)
-		-- vert:to(val)
-		-- simple:to(math.random())
+		vert:to(val)
 	end)
 end
 
