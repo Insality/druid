@@ -9,7 +9,7 @@ M.interest = {
 }
 
 local LERP_KOEF = 0.2
-local LERP_DELTA = 0.005
+local LERP_MIN = 0.005
 
 local PROP_X = "x"
 local PROP_Y = "y"
@@ -55,7 +55,7 @@ local function check_steps(instance, from, to, exactly)
 end
 
 
-local function set_bar_to(instance, set_to, is_silence)
+local function set_bar_to(instance, node, set_to, is_silence)
 	local prev_value = instance.last_value
 	instance.last_value = set_to
 
@@ -65,9 +65,9 @@ local function set_bar_to(instance, set_to, is_silence)
 	local size = math.max(total_width, instance.slice_size)
 
 	instance.scale[instance.key] = scale
-	gui.set_scale(instance.node, instance.scale)
+	gui.set_scale(node, instance.scale)
 	instance.size[instance.key] = size
-	gui.set_size(instance.node, instance.size)
+	gui.set_size(node, instance.size)
 
 	if not is_silence then
 		check_steps(instance, prev_value, set_to)
@@ -77,20 +77,20 @@ end
 
 --- Fill a progress bar and stop progress animation
 function M.fill(instance)
-	set_bar_to(instance, 1, true)
+	set_bar_to(instance, instance.node, 1, true)
 end
 
 
 --- To empty a progress bar
 function M.empty(instance)
-	set_bar_to(instance, 0, true)
+	set_bar_to(instance, instance.node, 0, true)
 end
 
 
 --- Set fill a progress bar to value
 -- @param to - value between 0..1
 function M.set_to(instance, to)
-	set_bar_to(instance, to)
+	set_bar_to(instance, instance.node, to)
 end
 
 
@@ -133,7 +133,7 @@ function M.update(instance, dt)
 	if instance.target then
 		local prev_value = instance.last_value
 		local step = math.abs(instance.last_value - instance.target) * LERP_KOEF
-		step = math.max(step, LERP_DELTA)
+		step = math.max(step, LERP_MIN)
 		instance:set_to(helper.step(instance.last_value, instance.target, step))
 
 		if instance.last_value == instance.target then
