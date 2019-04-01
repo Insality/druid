@@ -54,7 +54,15 @@ end
 
 
 local function init_progress(self)
-
+	local val = 0.3
+	local simple = self.druid:new_progress("simple_fill", "x", val)
+	timer.delay(0.2, true, function()
+		val = val + 0.1
+		if val >= 1 then
+			val = 0
+		end
+		simple:set_to(val)
+	end)
 end
 
 
