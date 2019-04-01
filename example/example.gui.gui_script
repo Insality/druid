@@ -69,13 +69,23 @@ local function init_progress(self)
 			vert:empty()
 			val = 0
 		end
-		if val < 0 then
-			simple:fill()
-			vert:empty()
-			val = 1
-		end
 		simple:to(val)
 		vert:to(val)
+	end)
+
+
+	local rich = self.druid:new_progress_rich("rich_fill", "rich_red", "rich_green", "x")
+
+	rich:set_to(0.3)
+	
+	local rich_val = 0.3
+	self.druid:new_button("rich_add", function()
+		rich_val = rich_val + 0.1
+		if rich_val > 1 then
+			rich_val = 0
+			rich:empty()
+		end
+		rich:to(rich_val)
 	end)
 end
 

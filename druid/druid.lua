@@ -13,6 +13,7 @@ M.comps = {
 	text = require("druid.base.text"),
 	timer = require("druid.base.timer"),
 	progress = require("druid.base.progress"),
+	progress_rich = require("druid.base.progress_rich"),
 }
 
 
