@@ -4,52 +4,70 @@ local druid_settings = require("druid.settings")
 local lang = {
 	locale_text = "Localized"
 }
+local start_x = 300
+local page_width = 600
+local cur_page = 1
+local max_page = 2
+
+
+
+local function log(self, params)
+	print(params)
+end
+
 
 local function setup_druid(self)
-
 	-- two different way of exernal component regesstration
 	druid.comps["my_mega_test_comp"] = require "druid.base.text"
 	druid.register("my_custom_component", {})
-	
+
 	druid_settings.is_debug = true
-	
 	druid_settings.play_sound = function(name)
 		sound.play("sounds#" .. name)
 	end
-
 	druid_settings.get_text = function(text_id)
 		return lang[text_id]
 	end
 end
 
+
+local function change_page(self, delta)
+	cur_page = cur_page + delta
+	cur_page = math.max(1, cur_page)
+	cur_page = math.min(cur_page, max_page)
+
+	gui.animate(gui.get_node("center"), "position.x",
+		start_x - (page_width * (cur_page - 1)), gui.EASING_OUTSINE, 0.1)
+end
+
+local function init_pages(self)
+	self.druid:new_button("prev", change_page, -1)
+	self.druid:new_button("next", change_page, 1)
+end
+
+
+local function init_buttons(self)
+	self.druid:new_button("button_1", log, "button 1")
+
+	self.druid:new(druid.comps.button, "button_2", log, "button 2")
+end
+
+
+local function init_progress(self)
+
+end
+
+
 function init(self)
 	setup_druid(self)
 	self.druid = druid.new(self)
 
-	self.druid:new_button("button_1", function()
-		print("On button 1")
-	end)
 
-	--alternative way of component creation
-	self.druid:new(druid.comps.button, "button_2", function()
-		print("On button 2")
-	end)
+	init_pages(self)
+	init_buttons(self)
+	init_progress(self)
 
-	self.druid:new_button("button_3", function()
-		print("On button 3")
-	end)
-
-	self.druid:new_android_back(function(self, params)
-		print("On android back", params)
-	end, 2)
-
-	self.druid:new_text("text_2", "Simple text", false, 400)
-	self.druid:new_text("text_3", "locale_text", true)
-
-	self.druid:new_timer("text_1", 5, 0, function()
-		print("On timer end")
-	end)
-
+	self.druid:new_android_back(log, "some")
 end
 
 function update(self, dt)
