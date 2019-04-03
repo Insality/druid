@@ -12,6 +12,9 @@ M.comps = {
 	android_back = require("druid.base.android_back"),
 	text = require("druid.base.text"),
 	timer = require("druid.base.timer"),
+	progress = require("druid.base.progress"),
+
+	progress_rich = require("druid.rich.progress_rich"),
 }
 
 

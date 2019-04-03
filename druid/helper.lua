@@ -36,6 +36,27 @@ function M.step(current, target, step)
 end
 
 
+function M.clamp(a, min, max)
+	if min > max then
+		min, max = max, min
+	end
+
+	if a >= min and a <= max then
+		return a
+	elseif a < min then
+		return min
+	else
+		return max
+	end
+end
+
+
+function M.round(num, numDecimalPlaces)
+	local mult = 10^(numDecimalPlaces or 0)
+	return math.floor(num * mult + 0.5) / mult
+end
+
+
 function M.is_enabled(node)
 	local is_enabled = gui.is_enabled(node)
 	local parent = gui.get_parent(node)

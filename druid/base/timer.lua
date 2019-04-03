@@ -1,10 +1,9 @@
 local data = require("druid.data")
 local formats = require("druid.helper.formats")
-local helper = require("druid.helper.helper")
+local helper = require("druid.helper")
 
 local M = {}
 M.interest = {
-	data.LAYOUT_CHANGED,
 	data.ON_UPDATE
 }
 
@@ -33,12 +32,6 @@ end
 function M.set_to(instance, set_to)
 	instance.last_value = set_to
 	gui.set_text(instance.node, formats.second_string_min(set_to))
-end
-
-
---- Called when layout updated (rotate for example)
-function M.on_layout_updated(instance)
-	M.set_to(instance, instance.last_value)
 end
 
 

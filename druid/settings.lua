@@ -12,6 +12,14 @@ M.button = {
 	SCALE_CHANGE = vmath.vector3(-0.05, - 0.05, 1),
 }
 
+M.progress = {
+	SPEED = 5, -- progress bar fill rate, more faster
+	MIN_DELTA = 0.005
+}
+
+M.progress_rich = {
+	DELAY = 1, -- delay in seconds before main fill
+}
 
 
 function M.get_text(name)

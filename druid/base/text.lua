@@ -1,11 +1,10 @@
 local data = require("druid.data")
 local settings = require("druid.settings")
-local helper = require("druid.helper.helper")
+local helper = require("druid.helper")
 
 local M = {}
 M.interest = {
 	data.TRANSLATABLE,
-	data.LAYOUT_CHANGED
 }
 
 
@@ -79,17 +78,6 @@ end
 function M.set_scale(instance, scale)
 	instance.last_scale = scale
 	gui.set_scale(instance.node, scale)
-end
-
-
---- Called when layout updated (rotate for example)
-function M.on_layout_updated(instance)
-	if instance.last_color then
-		M.set_color(instance, instance.last_color)
-	end
-	if instance.last_scale then
-		M.set_scale(instance, instance.last_scale)
-	end
 end
 
 
