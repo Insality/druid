@@ -1,24 +1,28 @@
 local data = require("druid.data")
-local helper = require("druid.helper.helper")
+local helper = require("druid.helper")
+local settings = require("druid.settings")
+local p_settings = settings.progress
 
 local M = {}
 
 M.interest = {
-	data.LAYOUT_CHANGED,
 	data.ON_UPDATE,
 }
 
-local LERP_KOEF = 0.08
-local LERP_MIN = 0.005
-
-local PROP_X = "x"
 local PROP_Y = "y"
+local PROP_X = "x"
+
 
 function M.init(instance, name, key, init_value)
+	if key ~= PROP_X and key ~= PROP_Y then
+		settings.log("progress component: key must be 'x' or 'y'. Passed:", key)
+		key = PROP_X
+	end
+
 	instance.prop = hash("scale."..key)
 	instance.key = key
 
-	instance.node = gui.get_node(name)
+	instance.node = helper.get_node(name)
 	instance.scale = gui.get_scale(instance.node)
 	instance.size = gui.get_size(instance.node)
 	instance.max_size = instance.size[instance.key]
@@ -123,17 +127,11 @@ function M.to(instance, to, callback)
 end
 
 
---- Called when layout updated (rotate for example)
-function M.on_layout_updated(instance)
-	instance:set_to(instance.last_value)
-end
-
-
 function M.update(instance, dt)
 	if instance.target then
 		local prev_value = instance.last_value
-		local step = math.abs(instance.last_value - instance.target) * LERP_KOEF
-		step = math.max(step, LERP_MIN)
+		local step = math.abs(instance.last_value - instance.target) * (p_settings.SPEED*dt)
+		step = math.max(step, p_settings.MIN_DELTA)
 		instance:set_to(helper.step(instance.last_value, instance.target, step))
 
 		if instance.last_value == instance.target then

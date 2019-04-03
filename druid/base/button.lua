@@ -1,7 +1,7 @@
 local data = require("druid.data")
 local ui_animate = require("druid.helper.druid_animate")
 local settings = require("druid.settings")
-local helper = require("druid.helper.helper")
+local helper = require("druid.helper")
 local b_settings = settings.button
 
 local M = {}
@@ -18,7 +18,7 @@ M.DEFAUL_ACTIVATION_TIME = 0.2
 function M.init(instance, node, callback, params, anim_node, event)
 	instance.node = helper.get_node(node)
 	instance.event = data.A_TOUCH
-	instance.anim_node = anim_node and gui.get_node(anim_node) or instance.node
+	instance.anim_node = anim_node and helper.get_node(anim_node) or instance.node
 	instance.scale_from = gui.get_scale(instance.anim_node)
 	instance.scale_to = instance.scale_from + b_settings.SCALE_CHANGE
 	instance.scale_hover_to = instance.scale_from + b_settings.HOVER_SCALE
