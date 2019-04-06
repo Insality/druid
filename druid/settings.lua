@@ -29,6 +29,7 @@ M.scroll = {
 	DEADZONE = 6, -- in px
 	SOFT_ZONE_SIZE = 160, -- size of outside zone (back move)
 	BACK_SPEED = 0.2, -- lerp speed
+	ANIM_SPEED = 0.3, -- gui.animation speed to point
 }
 
 function M.get_text(name)

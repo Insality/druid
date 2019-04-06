@@ -319,7 +319,7 @@ function M.scroll_to(self, point)
 	cancel_animate(self)
 
 	self.animate = true
-	gui.animate(self.node, gui.PROP_POSITION, target, gui.EASING_OUTSINE, 0.3, 0, function()
+	gui.animate(self.node, gui.PROP_POSITION, target, gui.EASING_OUTSINE, settings.ANIM_SPEED, 0, function()
 		self.animate = false
 		self.target = target
 		set_pos(self, target)
