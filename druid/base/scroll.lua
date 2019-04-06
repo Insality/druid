@@ -117,9 +117,10 @@ local function check_points(self)
 		end
 	end
 
-	local target = false
 	local temp_dist = 99999
-	local index = -1
+	local temp_dist_on_inert = 99999
+	local index = false
+	local index_on_inert = false
 	local pos = get_zone_center(self)
 	for i = 1, #self.points do
 		local p = self.points[i]
@@ -132,19 +133,17 @@ local function check_points(self)
 		if inert.y ~= 0 and helper.sign(inert.y) ~= helper.sign(p.y - pos.y) then
 			on_inert = false
 		end
-		if not target and on_inert then
-			target = p
+
+		if dist < temp_dist then
 			index = i
 			temp_dist = dist
-		else
-			if dist < temp_dist and on_inert then
-				target = p
-				index = i
-				temp_dist = dist
-			end
+		end
+		if on_inert and dist < temp_dist_on_inert then
+			index_on_inert = i
+			temp_dist_on_inert = dist
 		end
 	end
-	self:scroll_to_index(index)
+	self:scroll_to_index(index_on_inert or index)
 end
 
 
@@ -251,7 +250,7 @@ function M.on_input(self, action_id, action)
 	local result = false
 
 	if gui.pick_node(self.input_zone, action.x, action.y) then
-		if not inp.touch then
+		if action.pressed then
 			cancel_animate(self)
 			inp.touch = true
 			inp.start_x = action.x
@@ -263,7 +262,6 @@ function M.on_input(self, action_id, action)
 		else
 			local dist = helper.distance(action.x, action.y, inp.start_x, inp.start_y)
 			if not inp.scroll and dist >= settings.DEADZONE then
-				inp.scroll = true
 				local dx = math.abs(inp.start_x - action.x)
 				local dy = math.abs(inp.start_y - action.y)
 				if dx > dy then
@@ -271,22 +269,26 @@ function M.on_input(self, action_id, action)
 				else
 					inp.side = SIDE_Y
 				end
-			end
-			if inp.scroll then
+				-- check scroll side
 				if self.can_x and inp.side == SIDE_X or
 					self.can_y and inp.side == SIDE_Y then
-					add_delta(self, action.dx, action.dy)
-				else
-					result = false
+					inp.scroll = true
 				end
+			end
+			if inp.scroll then
+				add_delta(self, action.dx, action.dy)
+				result = true
 			end
 		end
 	end
 
 	if action.released then
-		self.input.touch = false
-		self.input.scroll = false
-		self.input.side = false
+		if inp.scroll then
+			inp.touch = false
+			inp.scroll = false
+			inp.side = false
+			result = true
+		end
 		check_threshold(self)
 	end
 
@@ -313,23 +315,26 @@ end
 
 function M.scroll_to_index(self, index, skip_cb)
 	index = helper.clamp(index, 1, #self.points)
-	self.selected = index
-	-- TODO: Call two times from menu gui and from local check_points
-	self:scroll_to(self.points[index])
 
-	if not skip_cb and self.on_point_callback then
-		self.on_point_callback(self.parent.parent, index, self.points[index])
+	if self.selected ~= index then
+		self.selected = index
+
+		if not skip_cb and self.on_point_callback then
+			self.on_point_callback(self.parent.parent, index, self.points[index])
+		end
 	end
+
+	self:scroll_to(self.points[index])
 end
 
 
 --- Set points of interest
 function M.set_points(self, points)
 	self.points = points
-	self.selected = false
 	for i = 1, #self.points do
 		self.points[i].y = -self.points[i].y
 	end
+	check_threshold(self)
 end
 
 

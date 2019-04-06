@@ -14,6 +14,7 @@ M.comps = {
 	timer = require("druid.base.timer"),
 	progress = require("druid.base.progress"),
 	grid = require("druid.base.grid"),
+	scroll = require("druid.base.scroll"),
 
 	progress_rich = require("druid.rich.progress_rich"),
 }
@@ -72,7 +73,7 @@ local function create(module, factory)
 		end
 		factory[v][#factory[v] + 1] = instance
 
-		if v == data.ON_INPUT then
+		if v == data.ON_INPUT or v == data.ON_SWIPE then
 			input_init(factory)
 		end
 	end

@@ -83,4 +83,14 @@ function M.get_size(instance)
 end
 
 
+function M.get_all_pos(instance)
+	local result = {}
+	for i = 1, #instance.nodes do
+		table.insert(result,	gui.get_position(instance.nodes[i]))
+	end
+
+	return result
+end
+
+
 return M

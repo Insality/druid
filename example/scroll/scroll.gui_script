@@ -1,0 +1,74 @@
+local druid = require("druid.druid")
+
+
+local function init_left_page(self)
+	local prefab = gui.get_node("prefab")
+	self.left_grid = self.druid:new_grid("page_parent", prefab, 1)
+	self.left_grid:set_offset(vmath.vector3(0, 5, 0))
+	self.left_grid:set_anchor(vmath.vector3(0.5, 0, 0))
+
+	for i = 1, 30 do
+		self.left_grid:add(gui.clone(prefab))
+	end
+
+	local size = self.left_grid:get_size()
+	local view_size = gui.get_size(gui.get_node("page_parent"))
+
+	self.left_scroll = self.druid:new_scroll("page_parent", "page_input",
+		vmath.vector4(0, view_size.y/2, 0, -size.w - view_size.y/2))
+	self.left_scroll:set_points(self.left_grid:get_all_pos())
+end
+
+local function log(self, param)
+	print("test", param)
+end
+
+local function init_right_page(self)
+	local prefab = gui.get_node("prefab")
+	self.right_grid = self.druid:new_grid("right_parent", prefab, 1)
+	self.right_grid:set_offset(vmath.vector3(0, 5, 0))
+	self.right_grid:set_anchor(vmath.vector3(0.5, 0, 0))
+
+	for i = 1, 20 do
+		local clone = gui.clone(prefab)
+		self.druid:new_button(clone, log, i)
+		self.right_grid:add(clone)
+	end
+
+	local size = self.right_grid:get_size()
+	local view_size = gui.get_size(gui.get_node("right_parent"))
+
+	self.right_scroll = self.druid:new_scroll("right_parent", "right_input",
+		vmath.vector4(0, 0, 0, -size.w - view_size.y))
+	self.right_scroll:set_points(self.right_grid:get_all_pos())
+	self.right_scroll:on_point_move(function(self, a, b)
+		print(a, b)
+	end)
+end
+
+
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+	self.main_scroll = self.druid:new_scroll("parent", "input_zone",
+		vmath.vector4(-600, 0, 600, 0))
+	self.main_scroll:set_points({
+		vmath.vector3(900, 0, 0),
+		vmath.vector3(300, 0, 0),
+		vmath.vector3(-300, 0, 0),
+	})
+	self.main_scroll:set_inert(false)
+
+	-- init_left_page(self)
+	init_right_page(self)
+end
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+function on_input(self, action_id, action)
+	self.druid:on_input(action_id, action)
+end
