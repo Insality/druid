@@ -51,6 +51,19 @@ function M.clamp(a, min, max)
 end
 
 
+function M.distance(x1, y1, x2, y2)
+	return math.sqrt((x2 - x1) ^ 2 + (y2 - y1) ^ 2)
+end
+
+
+function M.sign(val)
+	if val == 0 then
+		return 0
+	end
+	return (val < 0) and -1 or 1
+end
+
+
 function M.round(num, numDecimalPlaces)
 	local mult = 10^(numDecimalPlaces or 0)
 	return math.floor(num * mult + 0.5) / mult
