@@ -76,6 +76,7 @@ function M.on_input(instance, action_id, action)
 		end
 
 		if action.released then
+			set_hover(instance, false)
 			return on_button_release(instance)
 		else
 			set_hover(instance, true)
@@ -89,6 +90,11 @@ function M.on_input(instance, action_id, action)
 	end
 end
 
+function M.on_swipe(instance)
+	-- unhover button if start swipe
+	instance.can_action = false
+	set_hover(instance, false)
+end
 
 function M.tap_scale_animation(instance)
 	ui_animate.scale_to(instance, instance.anim_node, instance.scale_to,

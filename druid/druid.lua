@@ -113,6 +113,19 @@ function _factory.on_message(factory, message_id, message, sender)
 end
 
 
+local function notify_input_on_swipe(factory)
+	if factory[data.ON_INPUT] then
+		local len = #factory[data.ON_INPUT]
+		for i = len, 1, -1 do
+			local comp = factory[data.ON_INPUT][i]
+			if comp.on_swipe then
+				comp:on_swipe()
+			end
+		end
+	end
+end
+
+
 --- Called ON_INPUT
 function _factory.on_input(factory, action_id, action)
 	if factory[data.ON_SWIPE] then
@@ -123,6 +136,7 @@ function _factory.on_input(factory, action_id, action)
 			result = result or v:on_input(action_id, action)
 		end
 		if result then
+			notify_input_on_swipe(factory)
 			return true
 		end
 	end
