@@ -12,11 +12,6 @@ M.interest = {
 	data.ON_SWIPE,
 }
 
-function M.set_border(self, border)
-	self.border = border
-	self.can_x = (border.x ~= border.z)
-	self.can_y = (border.y ~= border.w)
-end
 
 function M.init(self, scroll_parent, input_zone, border)
 	self.node = helper.get_node(scroll_parent)
@@ -25,8 +20,8 @@ function M.init(self, scroll_parent, input_zone, border)
 	self:set_border(border)
 	self.soft_size = settings.SOFT_ZONE_SIZE
 
+	-- Distance from node to node's center
 	local offset = helper.get_pivot_offset(gui.get_pivot(self.input_zone))
-	-- distance from node to node center
 	self.center_offset = vmath.vector3(self.zone_size)
 	self.center_offset.x = self.center_offset.x * offset.x
 	self.center_offset.y = self.center_offset.y * offset.y
@@ -54,6 +49,8 @@ local function set_pos(self, pos)
 end
 
 
+--- Return scroll, if it outside of scroll area
+-- Using the lerp with BACK_SPEED koef
 local function check_soft_target(self)
 	local t = self.target
 	local b = self.border
@@ -73,6 +70,7 @@ local function check_soft_target(self)
 end
 
 
+--- Free inert update function
 local function update_hand_scroll(self, dt)
 	local inert = self.inert
 	local delta_x = self.target.x - self.pos.x
@@ -106,6 +104,9 @@ local function get_zone_center(self)
 end
 
 
+--- Find closer point of interest
+-- if no inert, scroll to next point by scroll direction
+-- if inert, find next point by scroll director
 local function check_points(self)
 	if not self.points then
 		return
@@ -123,6 +124,8 @@ local function check_points(self)
 		end
 	end
 
+	-- Find closest point and point by scroll direction
+	-- Scroll to one of them (by scroll direction in priority)
 	local temp_dist = math.huge
 	local temp_dist_on_inert = math.huge
 	local index = false
@@ -155,7 +158,7 @@ end
 
 local function check_threshold(self)
 	local inert = self.inert
-	if math.abs(inert.x) + math.abs(inert.y) < settings.INERT_THRESHOLD or not self.is_inert then
+	if not self.is_inert or vmath.length(inert) < settings.INERT_THRESHOLD then
 		check_points(self)
 		inert.x = 0
 		inert.y = 0
@@ -172,7 +175,7 @@ local function update_free_inert(self, dt)
 		inert.x = inert.x * settings.FRICT
 		inert.y = inert.y * settings.FRICT
 
-		-- stop, when low inert speed
+		-- Stop, when low inert speed and go to points
 		check_threshold(self)
 	end
 
@@ -181,6 +184,7 @@ local function update_free_inert(self, dt)
 end
 
 
+--- Cancel animation on other animation or input touch
 local function cancel_animate(self)
 	if self.animate then
 		self.target = gui.get_position(self.node)
@@ -196,8 +200,6 @@ function M.update(self, dt)
 	if self.input.touch then
 		if self.input.scroll then
 			update_hand_scroll(self, dt)
-		else
-			return false
 		end
 	else
 		update_free_inert(self, dt)
@@ -210,40 +212,45 @@ local function add_delta(self, dx, dy)
 	local b = self.border
 	local soft = self.soft_size
 	-- TODO: Can we calc it more easier?
+	-- A lot of calculations for every side of border
 
-	-- soft zones
+	-- Handle soft zones
+	-- Percent - multiplier for delta. Less if outside of scroll zone
 	local x_perc = 1
+	local y_perc = 1
+
 	if t.x < b.x and dx < 0 then
 		x_perc = (soft - (b.x - t.x)) / soft
 	end
 	if t.x > b.z and dx > 0 then
 		x_perc = (soft - (t.x - b.z)) / soft
 	end
-	-- if no scroll by x
+	-- If disabled scroll by x
 	if not self.can_x then
 		x_perc = 0
 	end
-	t.x = t.x + dx * x_perc
 
-	local y_perc = 1
 	if t.y < b.y and dy < 0 then
 		y_perc = (soft - (b.y - t.y)) / soft
 	end
 	if t.y > b.w and dy > 0 then
 		y_perc = (soft - (t.y - b.w)) / soft
 	end
-	-- if no scroll by y
+	-- If disabled scroll by y
 	if not self.can_y then
 		y_perc = 0
 	end
-	t.y = t.y + dy * y_perc
 
+	-- Reset inert if outside of scroll zone
 	if x_perc ~= 1 then
 		self.inert.x = 0
 	end
 	if y_perc ~= 1 then
 		self.inert.y = 0
 	end
+
+	t.x = t.x + dx * x_perc
+	t.y = t.y + dy * y_perc
 end
 
 
@@ -275,7 +282,7 @@ function M.on_input(self, action_id, action)
 				else
 					inp.side = SIDE_Y
 				end
-				-- check scroll side
+				-- Check scroll side if we can scroll
 				if self.can_x and inp.side == SIDE_X or
 					self.can_y and inp.side == SIDE_Y then
 					inp.scroll = true
@@ -302,10 +309,10 @@ function M.on_input(self, action_id, action)
 end
 
 
+--- Start scroll to point (x, y, z)
 function M.scroll_to(self, point)
 	local b = self.border
 	local target = vmath.vector3(point)
-	-- TODO: possibly calculace from anchor of node zone
 	target.x = helper.clamp(point.x - self.center_offset.x, b.x, b.z)
 	target.y = helper.clamp(point.y - self.center_offset.y, b.y, b.w)
 
@@ -319,6 +326,7 @@ function M.scroll_to(self, point)
 end
 
 
+--- Scroll to item in scroll by points index
 function M.scroll_to_index(self, index, skip_cb)
 	index = helper.clamp(index, 1, #self.points)
 
@@ -335,6 +343,7 @@ end
 
 
 --- Set points of interest
+-- Scroll will always centered on closer points
 function M.set_points(self, points)
 	self.points = points
 	-- cause of parent move in other side by y
@@ -349,13 +358,25 @@ function M.set_points(self, points)
 end
 
 
+--- Enable or disable scroll inert
+-- If disabled, scroll through points (if exist)
+-- If no points, just simple drag without inertion
 function M.set_inert(self, state)
 	self.is_inert = state
 end
 
 
+--- Set the callback on scrolling to point (if exist)
 function M.on_point_move(self, callback)
 	self.on_point_callback = callback
+end
+
+
+--- Set the scroll possibly area
+function M.set_border(self, border)
+	self.border = border
+	self.can_x = (border.x ~= border.z)
+	self.can_y = (border.y ~= border.w)
 end
 
 

@@ -18,12 +18,15 @@ local function init_left_page(self)
 
 	self.left_scroll = self.druid:new_scroll("page_parent", "page_input",
 		vmath.vector4(0, view_size.y/2, 0, -size.w - view_size.y/2))
+
 	self.left_scroll:set_points(self.left_grid:get_all_pos())
 end
+
 
 local function log(self, index)
 	print("Click on", index)
 end
+
 
 local function init_right_page(self)
 	local prefab = gui.get_node("prefab")
@@ -41,28 +44,33 @@ local function init_right_page(self)
 	local size = self.right_grid:get_size()
 	local view_size = gui.get_size(gui.get_node("right_parent"))
 
+	-- TODO: Should we calc scrolle size with parent size?
+	-- If yes, we will pass only content size to correct scrolling
 	self.right_scroll = self.druid:new_scroll("right_parent", "right_input",
 		vmath.vector4(0, 0, 0, -size.w - view_size.y))
+
 	self.right_scroll:set_points(self.right_grid:get_all_pos())
+
 	self.right_scroll:on_point_move(function(self, index, pos)
 		print("Point to element:", index)
 	end)
-	self.right_scroll:set_inert(false)
 end
-
-
 
 
 function init(self)
 	self.druid = druid.new(self)
 
+	-- -600 to 600 - left and right pos.x pages
+	-- border is vmath.vector4(left_x, top_y, right_x, bot_y)
 	self.main_scroll = self.druid:new_scroll("parent", "input_zone",
 		vmath.vector4(-600, 0, 600, 0))
+
 	self.main_scroll:set_points({
 		vmath.vector3(600, 0, 0),
 		vmath.vector3(0, 0, 0),
 		vmath.vector3(-600, 0, 0),
 	})
+	-- Disable free inert and we only scroll via points, if exist
 	self.main_scroll:set_inert(false)
 
 	init_left_page(self)
