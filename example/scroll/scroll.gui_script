@@ -8,7 +8,9 @@ local function init_left_page(self)
 	self.left_grid:set_anchor(vmath.vector3(0.5, 0, 0))
 
 	for i = 1, 30 do
-		self.left_grid:add(gui.clone(prefab))
+		local nodes = gui.clone_tree(prefab)
+		gui.set_text(nodes["number"], i)
+		self.left_grid:add(nodes["prefab"])
 	end
 
 	local size = self.left_grid:get_size()
@@ -19,8 +21,8 @@ local function init_left_page(self)
 	self.left_scroll:set_points(self.left_grid:get_all_pos())
 end
 
-local function log(self, param)
-	print("test", param)
+local function log(self, index)
+	print("Click on", index)
 end
 
 local function init_right_page(self)
@@ -30,9 +32,10 @@ local function init_right_page(self)
 	self.right_grid:set_anchor(vmath.vector3(0.5, 0, 0))
 
 	for i = 1, 20 do
-		local clone = gui.clone(prefab)
-		self.druid:new_button(clone, log, i)
-		self.right_grid:add(clone)
+		local nodes = gui.clone_tree(prefab)
+		gui.set_text(nodes["number"], i)
+		self.druid:new_button(nodes["prefab"], log, i)
+		self.right_grid:add(nodes["prefab"])
 	end
 
 	local size = self.right_grid:get_size()
@@ -41,9 +44,10 @@ local function init_right_page(self)
 	self.right_scroll = self.druid:new_scroll("right_parent", "right_input",
 		vmath.vector4(0, 0, 0, -size.w - view_size.y))
 	self.right_scroll:set_points(self.right_grid:get_all_pos())
-	self.right_scroll:on_point_move(function(self, a, b)
-		print(a, b)
+	self.right_scroll:on_point_move(function(self, index, pos)
+		print("Point to element:", index)
 	end)
+	self.right_scroll:set_inert(false)
 end
 
 
@@ -55,13 +59,13 @@ function init(self)
 	self.main_scroll = self.druid:new_scroll("parent", "input_zone",
 		vmath.vector4(-600, 0, 600, 0))
 	self.main_scroll:set_points({
-		vmath.vector3(900, 0, 0),
-		vmath.vector3(300, 0, 0),
-		vmath.vector3(-300, 0, 0),
+		vmath.vector3(600, 0, 0),
+		vmath.vector3(0, 0, 0),
+		vmath.vector3(-600, 0, 0),
 	})
 	self.main_scroll:set_inert(false)
 
-	-- init_left_page(self)
+	init_left_page(self)
 	init_right_page(self)
 end
 

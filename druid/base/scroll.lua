@@ -25,6 +25,12 @@ function M.init(self, scroll_parent, input_zone, border)
 	self:set_border(border)
 	self.soft_size = settings.SOFT_ZONE_SIZE
 
+	local offset = helper.get_pivot_offset(gui.get_pivot(self.input_zone))
+	-- distance from node to node center
+	self.center_offset = vmath.vector3(self.zone_size)
+	self.center_offset.x = self.center_offset.x * offset.x
+	self.center_offset.y = self.center_offset.y * offset.y
+
 	self.is_inert = true
 	self.inert = vmath.vector3(0)
 	self.pos = gui.get_position(self.node)
@@ -94,8 +100,8 @@ end
 
 local function get_zone_center(self)
 	local pos = vmath.vector3(self.pos)
-	pos.x = pos.x + self.zone_size.x/2
-	pos.y = pos.y + self.zone_size.y/2
+	pos.x = pos.x + self.center_offset.x
+	pos.y = pos.y + self.center_offset.y
 	return pos
 end
 
@@ -112,13 +118,13 @@ local function check_points(self)
 			return
 		end
 		if math.abs(inert.y) > settings.DEADZONE then
-			self:scroll_to_index(self.selected - helper.sign(inert.y))
+			self:scroll_to_index(self.selected + helper.sign(inert.y))
 			return
 		end
 	end
 
-	local temp_dist = 99999
-	local temp_dist_on_inert = 99999
+	local temp_dist = math.huge
+	local temp_dist_on_inert = math.huge
 	local index = false
 	local index_on_inert = false
 	local pos = get_zone_center(self)
@@ -300,8 +306,8 @@ function M.scroll_to(self, point)
 	local b = self.border
 	local target = vmath.vector3(point)
 	-- TODO: possibly calculace from anchor of node zone
-	target.x = helper.clamp(point.x - self.zone_size.x/2, b.x, b.z)
-	target.y = helper.clamp(point.y - self.zone_size.y/2, b.y, b.w)
+	target.x = helper.clamp(point.x - self.center_offset.x, b.x, b.z)
+	target.y = helper.clamp(point.y - self.center_offset.y, b.y, b.w)
 
 	cancel_animate(self)
 
@@ -331,9 +337,14 @@ end
 --- Set points of interest
 function M.set_points(self, points)
 	self.points = points
+	-- cause of parent move in other side by y
 	for i = 1, #self.points do
 		self.points[i].y = -self.points[i].y
 	end
+
+	table.sort(self.points, function(a, b)
+		return a.x > b.x or a.y < b.y
+	end)
 	check_threshold(self)
 end
 
