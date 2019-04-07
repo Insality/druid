@@ -376,6 +376,8 @@ end
 --- Set the scroll possibly area
 function M.set_border(self, border)
 	self.border = border
+	border.z = math.max(border.x, border.z)
+	border.w = math.max(border.y, border.w)
 	self.can_x = (border.x ~= border.z)
 	self.can_y = (border.y ~= border.w)
 end
