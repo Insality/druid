@@ -94,6 +94,7 @@ local function init_grid(self)
 
 	-- 4 items per row
 	local grid = self.druid:new_grid("grid_1", prefab, 4)
+	grid:set_anchor(vmath.vector3(0))
 	grid:set_offset(vmath.vector3(2, 2, 0))
 	for i = 1, 16 do
 		local node = gui.clone(prefab)
@@ -120,6 +121,7 @@ local function init_grid(self)
 
 
 	local grid3 = self.druid:new_grid("grid_3", prefab, 10)
+	grid3:set_anchor(vmath.vector3(0))
 	grid3:set_offset(vmath.vector3(5, 0, 0))
 	for i = 1, 4 do
 		local node = gui.clone(prefab)

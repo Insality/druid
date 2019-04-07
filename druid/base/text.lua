@@ -8,76 +8,76 @@ M.interest = {
 }
 
 
-function M.init(instance, node, value, is_locale, max_width)
-	instance.max_width = max_width
-	instance.node = helper.get_node(node)
-	instance.start_scale = gui.get_scale(instance.node)
-	instance.last_color = gui.get_color(instance.node)
+function M.init(self, node, value, is_locale, max_width)
+	self.max_width = max_width
+	self.node = helper.get_node(node)
+	self.start_scale = gui.get_scale(self.node)
+	self.last_color = gui.get_color(self.node)
 
 	if is_locale then
-		instance.text_id = value
-		instance:translate()
+		self.text_id = value
+		self:translate()
 	else
-		instance:set_to(value or 0)
+		self:set_to(value or 0)
 	end
-	return instance
+	return self
 end
 
 
-function M.translate(instance)
-	if instance.text_id then
-		instance:set_to(settings.get_text(instance.text_id))
+function M.translate(self)
+	if self.text_id then
+		self:set_to(settings.get_text(self.text_id))
 	end
 end
 
 
 --- Setup scale x, but can only be smaller, than start text scale
-local function setup_max_width(instance)
-  local metrics = gui.get_text_metrics_from_node(instance.node)
-  local cur_scale = gui.get_scale(instance.node)
+local function setup_max_width(self)
+  local metrics = gui.get_text_metrics_from_node(self.node)
+  local cur_scale = gui.get_scale(self.node)
 
-  if metrics.width * cur_scale.x > instance.max_width then
-    local scale_modifier = instance.max_width / metrics.width
-    scale_modifier = math.min(scale_modifier, instance.start_scale.x)
+  if metrics.width * cur_scale.x > self.max_width then
+    local scale_modifier = self.max_width / metrics.width
+    scale_modifier = math.min(scale_modifier, self.start_scale.x)
     local new_scale = vmath.vector3(scale_modifier, scale_modifier, cur_scale.z)
-    gui.set_scale(instance.node, new_scale)
+    gui.set_scale(self.node, new_scale)
   end
 end
 
 
 --- Set text to text field
 -- @param set_to - set value to text field
-function M.set_to(instance, set_to)
-	instance.last_value = set_to
-	gui.set_text(instance.node, set_to)
+function M.set_to(self, set_to)
+	self.last_value = set_to
+	gui.set_text(self.node, set_to)
 
-	if instance.max_width then
-		setup_max_width(instance)
+	if self.max_width then
+		setup_max_width(self)
 	end
 end
 
 
 --- Set color
 -- @param color
-function M.set_color(instance, color)
-	instance.last_color = color
-	gui.set_color(instance.node, color)
+function M.set_color(self, color)
+	self.last_color = color
+	gui.set_color(self.node, color)
 end
 
 
 --- Set alpha
 -- @param alpha, number [0-1]
-function M.set_alpha(instance, alpha)
-	instance.last_color.w = alpha
-	gui.set_color(instance.node, instance.last_color)
+function M.set_alpha(self, alpha)
+	self.last_color.w = alpha
+	gui.set_color(self.node, self.last_color)
 end
 
 
 --- Set scale
 -- @param scale
-function M.set_scale(instance, scale)
-	instance.last_scale = scale
-	gui.set_scale(instance.node, scale)
+function M.set_scale(self, scale)
+	self.last_scale = scale
+	gui.set_scale(self.node, scale)
 end
 
 

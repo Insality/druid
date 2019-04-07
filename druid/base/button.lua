@@ -15,47 +15,47 @@ M.DEFAULT_ACTIVATE_SCALE = vmath.vector3(1, 1, 1)
 M.DEFAUL_ACTIVATION_TIME = 0.2
 
 
-function M.init(instance, node, callback, params, anim_node, event)
-	instance.node = helper.get_node(node)
-	instance.event = data.A_TOUCH
-	instance.anim_node = anim_node and helper.get_node(anim_node) or instance.node
-	instance.scale_from = gui.get_scale(instance.anim_node)
-	instance.scale_to = instance.scale_from + b_settings.SCALE_CHANGE
-	instance.scale_hover_to = instance.scale_from + b_settings.HOVER_SCALE
-	instance.pos = gui.get_position(instance.anim_node)
-	instance.callback = callback
-	instance.params = params
-	instance.tap_anim = M.tap_scale_animation
-	instance.back_anim = M.back_scale_animation
-	instance.hover_anim = b_settings.IS_HOVER
-	instance.sound = b_settings.BTN_SOUND
-	instance.sound_disable = b_settings.BTN_SOUND_DISABLED
-	instance.ext_zone = nil
+function M.init(self, node, callback, params, anim_node, event)
+	self.node = helper.get_node(node)
+	self.event = data.A_TOUCH
+	self.anim_node = anim_node and helper.get_node(anim_node) or self.node
+	self.scale_from = gui.get_scale(self.anim_node)
+	self.scale_to = self.scale_from + b_settings.SCALE_CHANGE
+	self.scale_hover_to = self.scale_from + b_settings.HOVER_SCALE
+	self.pos = gui.get_position(self.anim_node)
+	self.callback = callback
+	self.params = params
+	self.tap_anim = M.tap_scale_animation
+	self.back_anim = M.back_scale_animation
+	self.hover_anim = b_settings.IS_HOVER
+	self.sound = b_settings.BTN_SOUND
+	self.sound_disable = b_settings.BTN_SOUND_DISABLED
+	self.ext_zone = nil
 end
 
 
-local function set_hover(instance, state)
-	if instance.hover_anim and instance._is_hovered ~= state then
-		local target_scale = state and instance.scale_hover_to or instance.scale_from
-		ui_animate.scale(instance, instance.node, target_scale, b_settings.HOVER_TIME)
-		instance._is_hovered = state
+local function set_hover(self, state)
+	if self.hover_anim and self._is_hovered ~= state then
+		local target_scale = state and self.scale_hover_to or self.scale_from
+		ui_animate.scale(self, self.node, target_scale, b_settings.HOVER_TIME)
+		self._is_hovered = state
 	end
 end
 
 
-local function on_button_release(instance)
-	if not instance.disabled then
-		if not instance.stub and instance.can_action then
-			instance.can_action = false
-			instance.tap_anim(instance)
-	      settings.play_sound(instance.sound)
-			instance.callback(instance.parent.parent, instance.params, instance)
+local function on_button_release(self)
+	if not self.disabled then
+		if not self.stub and self.can_action then
+			self.can_action = false
+			self.tap_anim(self)
+	      settings.play_sound(self.sound)
+			self.callback(self.parent.parent, self.params, self)
 		else
-			set_hover(instance, false)
+			set_hover(self, false)
 		end
 		return true
 	else
-		instance.sound_disable()
+		self.sound_disable()
 		return false
 	end
 end
@@ -64,124 +64,124 @@ end
 --- Set text to text field
 -- @param action_id - input action id
 -- @param action - input action
-function M.on_input(instance, action_id, action)
-	if not helper.is_enabled(instance.node) then
+function M.on_input(self, action_id, action)
+	if not helper.is_enabled(self.node) then
 		return false
 	end
 
-	local is_pick = gui.pick_node(instance.node, action.x, action.y)
-	if instance.ext_zone then
-		is_pick = is_pick and gui.pick_node(instance.ext_zone, action.x, action.y)
+	local is_pick = gui.pick_node(self.node, action.x, action.y)
+	if self.ext_zone then
+		is_pick = is_pick and gui.pick_node(self.ext_zone, action.x, action.y)
 	end
 
 	if is_pick then
 		if action.pressed then
 			-- Can interact if start touch on the button
-			instance.can_action = true
+			self.can_action = true
 			return true
 		end
 
 		if action.released then
-			set_hover(instance, false)
-			return on_button_release(instance)
+			set_hover(self, false)
+			return on_button_release(self)
 		else
-			set_hover(instance, true)
+			set_hover(self, true)
 		end
-		return not instance.disabled
+		return not self.disabled
 	else
 		-- Can't interact, if touch outside of button
-		instance.can_action = false
-		set_hover(instance, false)
+		self.can_action = false
+		set_hover(self, false)
 		return false
 	end
 end
 
 
-function M.on_swipe(instance)
+function M.on_swipe(self)
 	-- unhover button if start swipe
-	instance.can_action = false
-	set_hover(instance, false)
+	self.can_action = false
+	set_hover(self, false)
 end
 
 
-function M.tap_scale_animation(instance)
-	ui_animate.scale_to(instance, instance.anim_node, instance.scale_to,
+function M.tap_scale_animation(self)
+	ui_animate.scale_to(self, self.anim_node, self.scale_to,
 		function()
-			if instance.back_anim then
-				instance.back_anim(instance)
+			if self.back_anim then
+				self.back_anim(self)
 			end
 		end
 	)
 end
 
 
-function M.back_scale_animation(instance)
-	ui_animate.scale_to(instance, instance.anim_node, instance.scale_from)
+function M.back_scale_animation(self)
+	ui_animate.scale_to(self, self.anim_node, self.scale_from)
 end
 
 
-function M.deactivate(instance, is_animate, callback)
-	instance.disabled = true
+function M.deactivate(self, is_animate, callback)
+	self.disabled = true
 	if is_animate then
 		local counter = 0
 		local clbk = function()
 			counter = counter + 1
 			if counter == 3 and callback then
-				callback(instance.parent.parent)
+				callback(self.parent.parent)
 			end
 		end
-		ui_animate.color(instance, instance.node, M.DEFAULT_DEACTIVATE_COLOR,
+		ui_animate.color(self, self.node, M.DEFAULT_DEACTIVATE_COLOR,
 			clbk, M.DEFAUL_ACTIVATION_TIME, 0,	gui.EASING_OUTBOUNCE)
 
-		ui_animate.scale_y_from_to(instance, instance.node, M.DEFAULT_ACTIVATE_SCALE.x,
+		ui_animate.scale_y_from_to(self, self.node, M.DEFAULT_ACTIVATE_SCALE.x,
 			M.DEFAULT_DEACTIVATE_SCALE.x, clbk,	M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
 
-		ui_animate.scale_x_from_to(instance, instance.node, M.DEFAULT_ACTIVATE_SCALE.y,
+		ui_animate.scale_x_from_to(self, self.node, M.DEFAULT_ACTIVATE_SCALE.y,
 			M.DEFAULT_DEACTIVATE_SCALE.y, clbk,	M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
 	else
-		gui.set_color(instance.node, M.DEFAULT_DEACTIVATE_COLOR)
-		gui.set_scale(instance.node, M.DEFAULT_DEACTIVATE_SCALE)
+		gui.set_color(self.node, M.DEFAULT_DEACTIVATE_COLOR)
+		gui.set_scale(self.node, M.DEFAULT_DEACTIVATE_SCALE)
 		if callback then
-			callback(instance.parent.parent)
+			callback(self.parent.parent)
 		end
 	end
 end
 
 
-function M.activate(instance, is_animate, callback)
+function M.activate(self, is_animate, callback)
 	if is_animate then
 		local counter = 0
 		local clbk = function()
 			counter = counter + 1
 			if counter == 3 then
-				instance.disabled = false
+				self.disabled = false
 				if callback then
-					callback(instance.parent.parent)
+					callback(self.parent.parent)
 				end
 			end
 		end
-		ui_animate.color(instance, instance.node, ui_animate.TINT_SHOW,
+		ui_animate.color(self, self.node, ui_animate.TINT_SHOW,
 			clbk, M.DEFAUL_ACTIVATION_TIME, 0, gui.EASING_OUTBOUNCE)
 
-		ui_animate.scale_y_from_to(instance, instance.node, M.DEFAULT_DEACTIVATE_SCALE.x,
+		ui_animate.scale_y_from_to(self, self.node, M.DEFAULT_DEACTIVATE_SCALE.x,
 			M.DEFAULT_ACTIVATE_SCALE.x, clbk, M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
 
-		ui_animate.scale_x_from_to(instance, instance.node, M.DEFAULT_DEACTIVATE_SCALE.y,
+		ui_animate.scale_x_from_to(self, self.node, M.DEFAULT_DEACTIVATE_SCALE.y,
 			M.DEFAULT_ACTIVATE_SCALE.y, clbk, M.DEFAUL_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
 	else
-		gui.set_color(instance.node, ui_animate.TINT_SHOW)
-		gui.set_scale(instance.node, M.DEFAULT_ACTIVATE_SCALE)
-		instance.disabled = false
+		gui.set_color(self.node, ui_animate.TINT_SHOW)
+		gui.set_scale(self.node, M.DEFAULT_ACTIVATE_SCALE)
+		self.disabled = false
 		if callback then
-			callback(instance.parent.parent)
+			callback(self.parent.parent)
 		end
 	end
 end
 
 --- Set additional node, what need to be clicked on button click
 -- Used, if need setup, what button can be clicked only in special zone
-function M.set_ext_zone(instance, zone)
-	instance.ext_zone = helper.get_node(zone)
+function M.set_ext_zone(self, zone)
+	self.ext_zone = helper.get_node(zone)
 end
 
 
