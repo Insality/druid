@@ -81,6 +81,25 @@ local function create(module, factory)
 end
 
 
+function _factory.remove(factory, instance)
+	for i = #factory, 1, -1 do
+		if factory[i] == instance then
+			table.remove(factory, i)
+		end
+	end
+	local interest = instance.interest
+	if interest then
+		for i, v in ipairs(interest) do
+			for j = #factory[v], 1, -1 do
+				if factory[v][j] == instance then
+					table.remove(factory[v], j)
+				end
+			end
+		end
+	end
+end
+
+
 function _factory.new(factory, module, ...)
 	local instance = create(module, factory)
 
