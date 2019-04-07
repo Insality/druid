@@ -30,6 +30,7 @@ function M.init(instance, node, callback, params, anim_node, event)
 	instance.hover_anim = b_settings.IS_HOVER
 	instance.sound = b_settings.BTN_SOUND
 	instance.sound_disable = b_settings.BTN_SOUND_DISABLED
+	instance.ext_zone = nil
 end
 
 
@@ -68,7 +69,12 @@ function M.on_input(instance, action_id, action)
 		return false
 	end
 
-	if gui.pick_node(instance.node, action.x, action.y) then
+	local is_pick = gui.pick_node(instance.node, action.x, action.y)
+	if instance.ext_zone then
+		is_pick = is_pick and gui.pick_node(instance.ext_zone, action.x, action.y)
+	end
+
+	if is_pick then
 		if action.pressed then
 			-- Can interact if start touch on the button
 			instance.can_action = true
@@ -171,5 +177,12 @@ function M.activate(instance, is_animate, callback)
 		end
 	end
 end
+
+--- Set additional node, what need to be clicked on button click
+-- Used, if need setup, what button can be clicked only in special zone
+function M.set_ext_zone(instance, zone)
+	instance.ext_zone = helper.get_node(zone)
+end
+
 
 return M
