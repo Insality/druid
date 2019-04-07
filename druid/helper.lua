@@ -51,6 +51,19 @@ function M.clamp(a, min, max)
 end
 
 
+function M.distance(x1, y1, x2, y2)
+	return math.sqrt((x2 - x1) ^ 2 + (y2 - y1) ^ 2)
+end
+
+
+function M.sign(val)
+	if val == 0 then
+		return 0
+	end
+	return (val < 0) and -1 or 1
+end
+
+
 function M.round(num, numDecimalPlaces)
 	local mult = 10^(numDecimalPlaces or 0)
 	return math.floor(num * mult + 0.5) / mult
@@ -67,5 +80,20 @@ function M.is_enabled(node)
 	return is_enabled
 end
 
+
+local pivots = {
+	[gui.PIVOT_CENTER] = vmath.vector3(0),
+	[gui.PIVOT_N] = vmath.vector3(0, 0.5, 0),
+	[gui.PIVOT_NE] = vmath.vector3(0.5, 0.5, 0),
+	[gui.PIVOT_E] = vmath.vector3(0.5, 0, 0),
+	[gui.PIVOT_SE] = vmath.vector3(0.5, -0.5, 0),
+	[gui.PIVOT_S] = vmath.vector3(0, -0.5, 0),
+	[gui.PIVOT_SW] = vmath.vector3(-0.5, -0.5, 0),
+	[gui.PIVOT_W] = vmath.vector3(-0.5, 0, 0),
+	[gui.PIVOT_NW] = vmath.vector3(-0.5, -0.5, 0),
+}
+function M.get_pivot_offset(pivot)
+	return pivots[pivot]
+end
 
 return M
