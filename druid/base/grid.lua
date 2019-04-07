@@ -12,24 +12,33 @@ function M.init(instance, parent, element, in_row)
 	instance.nodes = {}
 
 	instance.offset = vmath.vector3(0)
-	instance.anchor = vmath.vector3(0)
+	instance.anchor = vmath.vector3(0.5, 0, 0)
 	instance.in_row = in_row or 1
 	instance.node_size = gui.get_size(helper.get_node(element))
 	instance.border = vmath.vector4(0)
+	instance.border_offset = vmath.vector3(0)
 end
 
 
 local function check_border(instance, pos)
+	local border = instance.border
 	local size = instance.node_size
-	local W = pos.x - size.x/2
-	local E = pos.x + size.x/2
-	local N = pos.y + size.y/2
-	local S = pos.y - size.y/2
 
-	instance.border.x = math.min(instance.border.x, W)
-	instance.border.y = math.max(instance.border.y, N)
-	instance.border.z = math.max(instance.border.z, E)
-	instance.border.w = math.min(instance.border.w, S)
+	local W = pos.x - size.x/2 + instance.border_offset.x
+	local E = pos.x + size.x/2 + instance.border_offset.x
+	local N = pos.y + size.y/2 + instance.border_offset.y
+	local S = pos.y - size.y/2 + instance.border_offset.y
+
+	border.x = math.min(border.x, W)
+	border.y = math.max(border.y, N)
+	border.z = math.max(border.z, E)
+	border.w = math.min(border.w, S)
+
+	instance.border_offset = vmath.vector3(
+		(border.x + (border.z - border.x) * instance.anchor.x),
+		(border.y + (border.w - border.y) * instance.anchor.y),
+		0
+	)
 end
 
 
@@ -38,10 +47,8 @@ local function get_pos(instance, index)
 	local row = math.ceil(index / instance.in_row) - 1
 	local col = (index - row * instance.in_row) - 1
 
-	temp_pos.x = col * (instance.node_size.x + instance.offset.x)
-	temp_pos.x = temp_pos.x + (0.5 - instance.anchor.x) * instance.node_size.x
-	temp_pos.y = -row * (instance.node_size.y + instance.offset.y)
-	temp_pos.y = temp_pos.y - (0.5 - instance.anchor.y) * instance.node_size.y
+	temp_pos.x = col * (instance.node_size.x + instance.offset.x) - instance.border_offset.x
+	temp_pos.y = -row * (instance.node_size.y + instance.offset.y) - instance.border_offset.y
 
 	return temp_pos
 end
@@ -74,12 +81,15 @@ function M.add(instance, item, index)
 
 	local pos = get_pos(instance, index)
 	check_border(instance, pos)
-	gui.set_position(item, pos)
+	update_pos(instance)
 end
 
 
 function M.get_size(instance)
-	return instance.border
+	return vmath.vector3(
+		instance.border.z - instance.border.x,
+		instance.border.w - instance.border.y,
+		0)
 end
 
 
@@ -90,6 +100,14 @@ function M.get_all_pos(instance)
 	end
 
 	return result
+end
+
+
+function M.clear(instance)
+	for i = 1, #instance.nodes do
+		gui.delete_node(instance.nodes[i])
+	end
+	instance.nodes = {}
 end
 
 
