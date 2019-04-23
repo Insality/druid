@@ -266,7 +266,6 @@ function M.on_input(self, action_id, action)
 
 	if gui.pick_node(self.input_zone, action.x, action.y) then
 		if action.pressed then
-			cancel_animate(self)
 			inp.touch = true
 			inp.start_x = action.x
 			inp.start_y = action.y
@@ -299,8 +298,8 @@ function M.on_input(self, action_id, action)
 
 	if action.released then
 		if M.current_scroll == self then
-			inp.touch = false
 			M.current_scroll = nil
+			inp.touch = false
 			inp.side = false
 			result = true
 		end
