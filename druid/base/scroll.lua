@@ -12,6 +12,9 @@ M.interest = {
 	data.ON_SWIPE,
 }
 
+-- Global on all scrolls
+M.current_scroll = nil
+
 
 function M.init(self, scroll_parent, input_zone, border)
 	self.node = helper.get_node(scroll_parent)
@@ -33,7 +36,6 @@ function M.init(self, scroll_parent, input_zone, border)
 
 	self.input = {
 		touch = false,
-		scroll = false,
 		start_x = 0,
 		start_y = 0,
 		side = false,
@@ -198,7 +200,7 @@ end
 
 function M.update(self, dt)
 	if self.input.touch then
-		if self.input.scroll then
+		if M.current_scroll == self then
 			update_hand_scroll(self, dt)
 		end
 	else
@@ -274,7 +276,7 @@ function M.on_input(self, action_id, action)
 			self.target.y = self.pos.y
 		else
 			local dist = helper.distance(action.x, action.y, inp.start_x, inp.start_y)
-			if not inp.scroll and dist >= settings.DEADZONE then
+			if not M.current_scroll and dist >= settings.DEADZONE then
 				local dx = math.abs(inp.start_x - action.x)
 				local dy = math.abs(inp.start_y - action.y)
 				if dx > dy then
@@ -283,12 +285,12 @@ function M.on_input(self, action_id, action)
 					inp.side = SIDE_Y
 				end
 				-- Check scroll side if we can scroll
-				if self.can_x and inp.side == SIDE_X or
-					self.can_y and inp.side == SIDE_Y then
-					inp.scroll = true
+				if (self.can_x and inp.side == SIDE_X or
+					self.can_y and inp.side == SIDE_Y) then
+						M.current_scroll = self
 				end
 			end
-			if inp.scroll then
+			if M.current_scroll == self then
 				add_delta(self, action.dx, action.dy)
 				result = true
 			end
@@ -296,9 +298,9 @@ function M.on_input(self, action_id, action)
 	end
 
 	if action.released then
-		if inp.scroll then
+		if M.current_scroll == self then
 			inp.touch = false
-			inp.scroll = false
+			M.current_scroll = nil
 			inp.side = false
 			result = true
 		end
