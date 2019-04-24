@@ -145,6 +145,19 @@ local function notify_input_on_swipe(factory)
 end
 
 
+local function match_event(action_id, events)
+	if type(events) == "table" then
+		for i = 1, #events do
+			if action_id == events[i] then
+				return true
+			end
+		end
+	else
+		return action_id == events
+	end
+end
+
+
 --- Called ON_INPUT
 function _factory.on_input(factory, action_id, action)
 	if factory[data.ON_SWIPE] then
@@ -164,7 +177,7 @@ function _factory.on_input(factory, action_id, action)
 		local len = #factory[data.ON_INPUT]
 		for i = len, 1, -1 do
 			v = factory[data.ON_INPUT][i]
-			if action_id == v.event and v:on_input(action_id, action) then
+			if match_event(action_id, v.event) and v:on_input(action_id, action) then
 				return true
 			end
 		end
