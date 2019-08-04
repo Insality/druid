@@ -4,7 +4,7 @@ local helper = require("druid.helper")
 
 local M = {}
 M.interest = {
-	data.TRANSLATABLE,
+	data.ON_CHANGE_LANGUAGE,
 }
 
 

@@ -5,7 +5,7 @@ local settings = require("druid.settings")
 local M = {}
 
 local log = settings.log
-local _factory = {}
+local _fct_metatable = {}
 
 M.comps = {
 	button = require("druid.base.button"),
@@ -22,7 +22,7 @@ M.comps = {
 
 local function register_basic_components()
 	for k, v in pairs(M.comps) do
-		if not _factory["new_" .. k] then
+		if not _fct_metatable["new_" .. k] then
 			M.register(k, v)
 		else
 			log("Basic component", k, "already registered")
@@ -33,8 +33,8 @@ end
 
 function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
-	_factory["new_" .. name] = function(factory, ...)
-		return _factory.new(factory, module, ...)
+	_fct_metatable["new_" .. name] = function(self, ...)
+		return _fct_metatable.new(self, module, ...)
 	end
 	log("Register component", name)
 end
@@ -42,57 +42,64 @@ end
 
 --- Create UI instance for ui elements
 -- @return instance with all ui components
-function M.new(self)
+function M.new(component_script)
 	if register_basic_components then
 		register_basic_components()
 		register_basic_components = false
 	end
-	local factory = setmetatable({}, {__index = _factory})
-	factory.parent = self
-	return factory
+	local self = setmetatable({}, {__index = _fct_metatable})
+	self.parent = component_script
+	return self
 end
 
 
-local function input_init(factory)
-	if not factory.input_inited then
-		factory.input_inited = true
+local function input_init(self)
+	if not self.input_inited then
+		self.input_inited = true
 		druid_input.focus()
 	end
 end
 
 
-local function create(module, factory)
+local function create(self, module)
 	local instance = setmetatable({}, {__index = module})
-	instance.parent = factory
-	factory[#factory + 1] = instance
+	instance.parent = self
+	self[#self + 1] = instance
 
-	local register_to = module.interest or {}
-	for i, v in ipairs(register_to) do
-		if not factory[v] then
-			factory[v] = {}
-		end
-		factory[v][#factory[v] + 1] = instance
+	local register_to = module.interest
+	if register_to then
+		local v
+		for i = 1, #register_to do
+			v = register_to[i]
+			if not self[v] then
+				self[v] = {}
+			end
+			self[v][#self[v] + 1] = instance
 
-		if v == data.ON_INPUT or v == data.ON_SWIPE then
-			input_init(factory)
+			if data.ui_input[v] then
+				input_init(self)
+			end
 		end
 	end
 	return instance
 end
 
 
-function _factory.remove(factory, instance)
-	for i = #factory, 1, -1 do
-		if factory[i] == instance then
-			table.remove(factory, i)
+function _fct_metatable.remove(self, instance)
+	for i = #self, 1, -1 do
+		if self[i] == instance then
+			table.remove(self, i)
 		end
 	end
 	local interest = instance.interest
 	if interest then
-		for i, v in ipairs(interest) do
-			for j = #factory[v], 1, -1 do
-				if factory[v][j] == instance then
-					table.remove(factory[v], j)
+		local v
+		for i = 1, #interest do
+			v = interest[i]
+			local array = self[v]
+			for j = #array, 1, -1 do
+				if array[j] == instance then
+					table.remove(array, j)
 				end
 			end
 		end
@@ -100,8 +107,8 @@ function _factory.remove(factory, instance)
 end
 
 
-function _factory.new(factory, module, ...)
-	local instance = create(module, factory)
+function _fct_metatable.new(self, module, ...)
+	local instance = create(self, module)
 
 	if instance.init then
 		instance:init(...)
@@ -112,31 +119,33 @@ end
 
 
 --- Called on_message
-function _factory.on_message(factory, message_id, message, sender)
-	if message_id == data.LAYOUT_CHANGED then
-		if factory[data.LAYOUT_CHANGED] then
-			M.translate(factory)
-			for i, v in ipairs(factory[data.LAYOUT_CHANGED]) do
-				v:on_layout_updated(message)
+function _fct_metatable.on_message(self, message_id, message, sender)
+	local specific_ui_message = data.specific_ui_messages[message_id]
+	if specific_ui_message then
+		local array = self[message_id]
+		if array then
+			local item
+			for i = 1, #array do
+				item = array[i]
+				item[specific_ui_message](item, message, sender)
 			end
 		end
-	elseif message_id == data.TRANSLATABLE then
-		M.translate(factory)
 	else
-		if factory[data.ON_MESSAGE] then
-			for i, v in ipairs(factory[data.ON_MESSAGE]) do
-				v:on_message(message_id, message, sender)
+		local array = self[data.ON_MESSAGE]
+		if array then
+			for i = 1, #array do
+				array[i]:on_message(message_id, message, sender)
 			end
 		end
 	end
 end
 
 
-local function notify_input_on_swipe(factory)
-	if factory[data.ON_INPUT] then
-		local len = #factory[data.ON_INPUT]
+local function notify_input_on_swipe(self)
+	if self[data.ON_INPUT] then
+		local len = #self[data.ON_INPUT]
 		for i = len, 1, -1 do
-			local comp = factory[data.ON_INPUT][i]
+			local comp = self[data.ON_INPUT][i]
 			if comp.on_swipe then
 				comp:on_swipe()
 			end
@@ -159,24 +168,26 @@ end
 
 
 --- Called ON_INPUT
-function _factory.on_input(factory, action_id, action)
-	if factory[data.ON_SWIPE] then
+function _fct_metatable.on_input(self, action_id, action)
+	local array = self[data.ON_SWIPE]
+	if array then
 		local v, result
-		local len = #factory[data.ON_SWIPE]
+		local len = #array
 		for i = len, 1, -1 do
-			v = factory[data.ON_SWIPE][i]
+			v = array[i]
 			result = result or v:on_input(action_id, action)
 		end
 		if result then
-			notify_input_on_swipe(factory)
+			notify_input_on_swipe(self)
 			return true
 		end
 	end
-	if factory[data.ON_INPUT] then
+	array = self[data.ON_INPUT]
+	if array then
 		local v
-		local len = #factory[data.ON_INPUT]
+		local len = #array
 		for i = len, 1, -1 do
-			v = factory[data.ON_INPUT][i]
+			v = array[i]
 			if match_event(action_id, v.event) and v:on_input(action_id, action) then
 				return true
 			end
@@ -188,10 +199,11 @@ end
 
 
 --- Called on_update
-function _factory.update(factory, dt)
-	if factory[data.ON_UPDATE] then
-		for i, v in ipairs(factory[data.ON_UPDATE]) do
-			v:update(dt)
+function _fct_metatable.update(self, dt)
+	local array = self[data.ON_UPDATE]
+	if array then
+		for i = 1, #array do
+			array[i]:update(dt)
 		end
 	end
 end
