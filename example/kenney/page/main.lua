@@ -1,4 +1,7 @@
+local lang = require("example.kenney.lang")
+
 local M = {}
+
 
 local function empty_callback(self, param)
 	print("Empty callback. Param", param)
@@ -14,8 +17,22 @@ end
 
 
 local function setup_button(self)
-	self.druid:new_button("button_simple", empty_callback, "button_param")
+	self.druid:new_button("button_simple", lang.toggle_locale, "button_param")
 	self.druid:new_button("button_template/button", empty_callback, "button_param")
+end
+
+
+local function setup_texts(self)
+	self.druid:new_text("text_button", "ui_section_button", true)
+	self.druid:new_text("text_text", "ui_section_text", true)
+	self.druid:new_text("text_timer", "ui_section_timer", true)
+	self.druid:new_text("text_progress", "ui_section_progress", true)
+	self.druid:new_text("text_slider", "ui_section_slider", true)
+	self.druid:new_text("text_radio", "ui_section_radio", true)
+	self.druid:new_text("text_checkbox", "ui_section_checkbox", true)
+
+	self.druid:new_text("text_simple", "Simple")
+	self.druid:new_text("text_translated", "ui_text_example", true)
 end
 
 
@@ -23,7 +40,7 @@ local function setup_progress(self)
 	local progress = self.druid:new_progress("progress_fill", "x", 0.4)
 	random_progress(progress, gui.get_node("text_progress"))
 	timer.delay(2, true, function()
-		random_progress(progress, gui.get_node("text_progress"))
+		random_progress(progress, gui.get_node("text_progress_amount"))
 	end)
 end
 
@@ -40,14 +57,12 @@ local function setup_grid(self)
 		end, i)
 		self.druid:new_text(nodes["button_template/text"], "Grid"..i)
 		grid:add(root)
-
-
 	end
 end
 
 
 local function setup_timer(self)
-	self.timer = self.druid:new_timer("text_timer", 120, 0, empty_callback)
+	self.timer = self.druid:new_timer("timer", 300, 0, empty_callback)
 end
 
 
@@ -63,6 +78,8 @@ end
 
 
 function M.setup_page(self)
+	setup_texts(self)
+
 	setup_button(self)
 	setup_progress(self)
 	setup_grid(self)
