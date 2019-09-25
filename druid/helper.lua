@@ -67,6 +67,17 @@ function M.centrate_icon_with_text(icon_node, text_node, margin)
 end
 
 
+-- call callback after count calls
+function M.after(count, callback)
+	local closure = function()
+		count = count - 1
+		if count <= 0 then
+			callback()
+		end
+	end
+	return closure
+end
+
 
 local STRING = "string"
 function M.get_node(node_or_name)
