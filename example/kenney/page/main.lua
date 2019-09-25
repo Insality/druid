@@ -62,6 +62,16 @@ local function setup_grid(self)
 end
 
 
+local function setup_checkbox(self)
+	self.druid:new_checkbox("radio1/check", nil, "radio1/back")
+	self.druid:new_checkbox("radio2/check", nil, "radio2/back")
+	self.druid:new_checkbox("radio3/check", nil, "radio3/back")
+	self.druid:new_checkbox("checkbox1/check", nil, "checkbox1/back")
+	self.druid:new_checkbox("checkbox2/check", nil, "checkbox2/back")
+	self.druid:new_checkbox("checkbox3/check", nil, "checkbox3/back")
+end
+
+
 local function setup_timer(self)
 	self.timer = self.druid:new_timer("timer", 300, 0, empty_callback)
 end
@@ -85,6 +95,7 @@ function M.setup_page(self)
 	setup_progress(self)
 	setup_grid(self)
 	setup_timer(self)
+	setup_checkbox(self)
 	setup_scroll(self)
 	setup_back_handler(self)
 end
