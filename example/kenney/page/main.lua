@@ -63,22 +63,27 @@ end
 
 
 local function setup_slider(self)
-	self.druid:new_slider("slider_pin", vmath.vector3(95, 0, 0), function(_, value)
+	local slider = self.druid:new_slider("slider_pin", vmath.vector3(95, 0, 0), function(_, value)
 		gui.set_text(gui.get_node("text_progress_slider"), math.ceil(value * 100) .. "%")
 	end)
+
+	slider:set(0.2)
 end
 
 
 local function setup_checkbox(self)
-	self.druid:new_checkbox_group(
-		{"radio1/check", "radio2/check", "radio3/check" },
+	local group1 = self.druid:new_checkbox_group(
+		{"radio1/check", "radio2/check", "radio3/check"},
 		nil, true,
 		{"radio1/back", "radio2/back", "radio3/back"})
 
-	self.druid:new_checkbox_group(
-		{"checkbox1/check", "checkbox2/check", "checkbox3/check" },
+	local group2 = self.druid:new_checkbox_group(
+		{"checkbox1/check", "checkbox2/check", "checkbox3/check"},
 		nil, false,
 		{"checkbox1/back", "checkbox2/back", "checkbox3/back"})
+
+	group1:set_state({false, false, true})
+	group2:set_state({true, false, true})
 end
 
 

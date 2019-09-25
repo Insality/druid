@@ -12,8 +12,8 @@ end
 
 function M.set_state(self, indexes)
 	for i = 1, #indexes do
-		if self.checkbox[indexes[i]] then
-			self.checkbox[indexes[i]]:set_state(true, true)
+		if self.checkboxes[i] then
+			self.checkboxes[i]:set_state(indexes[i], true)
 		end
 	end
 end
