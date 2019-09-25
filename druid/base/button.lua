@@ -5,7 +5,7 @@
 -- Long tap
 -- Repeated tap
 
-local data = require("druid.data")
+local const = require("druid.const")
 local ui_animate = require("druid.helper.druid_animate")
 local settings = require("druid.settings")
 local helper = require("druid.helper")
@@ -13,7 +13,7 @@ local b_settings = settings.button
 
 local M = {}
 M.interest = {
-	data.ON_INPUT
+	const.ON_INPUT
 }
 
 M.DEFAULT_DEACTIVATE_COLOR = vmath.vector4(0, 0, 0, 0)
@@ -24,7 +24,7 @@ M.DEFAULT_ACTIVATION_TIME = 0.2
 
 function M.init(self, node, callback, params, anim_node, event)
 	self.node = helper.get_node(node)
-	self.event = data.ACTION_TOUCH
+	self.event = const.ACTION_TOUCH
 	self.anim_node = anim_node and helper.get_node(anim_node) or self.node
 	self.scale_from = gui.get_scale(self.anim_node)
 	self.scale_to = self.scale_from + b_settings.SCALE_CHANGE

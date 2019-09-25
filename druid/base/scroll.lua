@@ -2,7 +2,7 @@
 -- @module base.scroll
 
 local helper = require("druid.helper")
-local data = require("druid.data")
+local const = require("druid.const")
 local settings = require("druid.settings").scroll
 
 local M = {}
@@ -11,8 +11,8 @@ local SIDE_X = "x"
 local SIDE_Y = "y"
 
 M.interest = {
-	data.ON_UPDATE,
-	data.ON_SWIPE,
+	const.ON_UPDATE,
+	const.ON_SWIPE,
 }
 
 -- Global on all scrolls
@@ -257,7 +257,7 @@ end
 
 
 function M.on_input(self, action_id, action)
-	if action_id ~= data.ACTION_TOUCH then
+	if action_id ~= const.ACTION_TOUCH then
 		return false
 	end
 	local inp = self.input

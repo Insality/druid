@@ -1,11 +1,11 @@
 --- Component to handle back key
 -- @module base.back_handler
 
-local data = require("druid.data")
+local const = require("druid.const")
 
 local M = {}
 M.interest = {
-	data.ON_INPUT
+	const.ON_INPUT
 }
 
 --- Component init function
@@ -13,7 +13,7 @@ M.interest = {
 -- @tparam callback callback on back button
 -- @tparam[opt] params callback argument
 function M.init(self, callback, params)
-	self.event = data.ACTION_BACK
+	self.event = const.ACTION_BACK
 	self.callback = callback
 	self.params = params
 end
@@ -23,7 +23,7 @@ end
 -- @tparam string action_id on_input action id
 -- @tparam table action on_input action
 function M.on_input(self, action_id, action)
-	if action[data.RELEASED] then
+	if action[const.RELEASED] then
 		self.callback(self.parent.parent, self.params)
 	end
 
