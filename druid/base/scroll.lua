@@ -1,3 +1,6 @@
+--- Component to handle scroll content
+-- @module base.scroll
+
 local helper = require("druid.helper")
 local data = require("druid.data")
 local settings = require("druid.settings").scroll
@@ -310,7 +313,11 @@ function M.on_input(self, action_id, action)
 end
 
 
---- Start scroll to point (x, y, z)
+--- Start scroll to target point
+-- @tparam point vector3 target point
+-- @tparam[opt] bool is_instant instant scroll flag
+-- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
+-- @usage scroll:scroll_to(vmath.vector3(0), true)
 function M.scroll_to(self, point, is_instant)
 	local b = self.border
 	local target = vmath.vector3(point)

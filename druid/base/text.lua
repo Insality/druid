@@ -1,3 +1,7 @@
+--- Component to handle all GUI texts
+-- Good working with localization system
+-- @module base.text
+
 local data = require("druid.data")
 local settings = require("druid.settings")
 local helper = require("druid.helper")

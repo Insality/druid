@@ -1,11 +1,14 @@
+--- Druid constants
+-- @module constants
+
 local M = {}
 
 -- Actions
-M.A_TOUCH = hash("touch")
-M.A_TEXT = hash("text")
-M.A_BACKSPACE = hash("backspace")
-M.A_ENTER = hash("enter")
-M.A_ANDR_BACK = hash("back")
+M.ACTION_TOUCH = hash("touch")
+M.ACTION_TEXT = hash("text")
+M.ACTION_BACKSPACE = hash("backspace")
+M.ACTION_ENTER = hash("enter")
+M.ACTION_BACK = hash("back")
 
 M.RELEASED = "released"
 M.PRESSED = "pressed"

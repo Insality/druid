@@ -1,7 +1,10 @@
+--- Druid settings file
+-- @module settings
+
 local M = {}
 
+-- TODO: to JSON?
 M.is_debug = false
-
 M.button = {
 	IS_HOVER = true,
 	IS_HOLD = true,
@@ -33,13 +36,13 @@ M.scroll = {
 }
 
 function M.get_text(name)
-  -- override to get text for localized text
-  return "locales not inited"
+	-- override to get text for localized text
+	return "[Druid]: locales not inited"
 end
 
 
 function M.play_sound(name)
-  -- override to play sound with name
+	-- override to play sound with name
 end
 
 

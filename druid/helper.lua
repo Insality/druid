@@ -1,3 +1,6 @@
+--- Druid helper module
+-- @module helper
+
 local M = {}
 
 --- Text node or icon node can be nil

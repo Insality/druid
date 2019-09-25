@@ -1,3 +1,9 @@
+--- Druid UI Library.
+-- Component based UI library to make your life easier.
+-- Contains a lot of base components and give API
+-- to create your own rich components.
+-- @module druid
+
 local data = require("druid.data")
 local druid_input = require("druid.helper.druid_input")
 local settings = require("druid.settings")
@@ -7,6 +13,7 @@ local M = {}
 local log = settings.log
 local _fct_metatable = {}
 
+--- Basic components
 M.comps = {
 	button = require("druid.base.button"),
 	back_handler = require("druid.base.back_handler"),
@@ -31,6 +38,9 @@ local function register_basic_components()
 end
 
 
+--- Register external module
+-- @tparam string name module name
+-- @tparam table module lua table with module
 function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
 	_fct_metatable["new_" .. name] = function(self, ...)

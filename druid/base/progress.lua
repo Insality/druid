@@ -1,3 +1,6 @@
+--- Component to handle progress bars
+-- @module base.progress
+
 local data = require("druid.data")
 local helper = require("druid.helper")
 local settings = require("druid.settings")

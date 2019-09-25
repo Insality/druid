@@ -1,3 +1,6 @@
+--- Component to handle basic GUI button
+-- @module base.button
+
 local data = require("druid.data")
 local ui_animate = require("druid.helper.druid_animate")
 local settings = require("druid.settings")
@@ -17,7 +20,7 @@ M.DEFAUL_ACTIVATION_TIME = 0.2
 
 function M.init(self, node, callback, params, anim_node, event)
 	self.node = helper.get_node(node)
-	self.event = data.A_TOUCH
+	self.event = data.ACTION_TOUCH
 	self.anim_node = anim_node and helper.get_node(anim_node) or self.node
 	self.scale_from = gui.get_scale(self.anim_node)
 	self.scale_to = self.scale_from + b_settings.SCALE_CHANGE
