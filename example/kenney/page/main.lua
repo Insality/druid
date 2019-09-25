@@ -11,7 +11,7 @@ end
 local function random_progress(progress, text)
 	local rnd = math.random()
 
-	gui.set_text(text, math.ceil(rnd * 100))
+	gui.set_text(text, math.ceil(rnd * 100) .. "%")
 	progress:to(rnd)
 end
 
@@ -38,10 +38,10 @@ end
 
 
 local function setup_progress(self)
-	local progress = self.druid:new_progress("progress_fill", "x", 0.4)
-	random_progress(progress, gui.get_node("text_progress"))
+	self.progress = self.druid:new_progress("progress_fill", "x", 0.4)
+	random_progress(self.progress, gui.get_node("text_progress"))
 	timer.delay(2, true, function()
-		random_progress(progress, gui.get_node("text_progress_amount"))
+		random_progress(self.progress, gui.get_node("text_progress_amount"))
 	end)
 end
 
@@ -59,6 +59,13 @@ local function setup_grid(self)
 		self.druid:new_text(nodes["button_template/text"], "Grid"..i)
 		grid:add(root)
 	end
+end
+
+
+local function setup_slider(self)
+	self.druid:new_slider("slider_pin", vmath.vector3(95, 0, 0), function(_, value)
+		gui.set_text(gui.get_node("text_progress_slider"), math.ceil(value * 100) .. "%")
+	end)
 end
 
 
@@ -97,6 +104,7 @@ function M.setup_page(self)
 	setup_timer(self)
 	setup_checkbox(self)
 	setup_scroll(self)
+	setup_slider(self)
 	setup_back_handler(self)
 end
 
