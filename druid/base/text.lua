@@ -36,7 +36,9 @@ end
 
 
 function M.on_change_language(self)
-	M.translate(self)
+	if self.last_locale then
+		M.translate(self)
+	end
 end
 
 
