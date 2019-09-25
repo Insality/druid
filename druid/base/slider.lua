@@ -76,6 +76,17 @@ function M.on_input(self, action_id, action)
 	if action.released then
 		self.is_drag = false
 	end
+
+	return self.is_drag
+end
+
+
+function M.set(self, value)
+	value = helper.clamp(value, 0, 1)
+
+	gui.set_position(self.node, self.start_pos + self.dist * value)
+	self.value = value
+	on_change_value(self)
 end
 
 
