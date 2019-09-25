@@ -33,6 +33,7 @@ local function setup_texts(self)
 
 	self.druid:new_text("text_simple", "Simple")
 	self.druid:new_text("text_translated", "ui_text_example", true)
+	self.druid:new_text("text_button_lang", "ui_text_change_lang", true, 150 * 0.7)
 end
 
 
