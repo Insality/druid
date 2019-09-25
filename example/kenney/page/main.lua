@@ -70,12 +70,15 @@ end
 
 
 local function setup_checkbox(self)
-	self.druid:new_checkbox("radio1/check", nil, "radio1/back")
-	self.druid:new_checkbox("radio2/check", nil, "radio2/back")
-	self.druid:new_checkbox("radio3/check", nil, "radio3/back")
-	self.druid:new_checkbox("checkbox1/check", nil, "checkbox1/back")
-	self.druid:new_checkbox("checkbox2/check", nil, "checkbox2/back")
-	self.druid:new_checkbox("checkbox3/check", nil, "checkbox3/back")
+	self.druid:new_checkbox_group(
+		{"radio1/check", "radio2/check", "radio3/check" },
+		nil, true,
+		{"radio1/back", "radio2/back", "radio3/back"})
+
+	self.druid:new_checkbox_group(
+		{"checkbox1/check", "checkbox2/check", "checkbox3/check" },
+		nil, false,
+		{"checkbox1/back", "checkbox2/back", "checkbox3/back"})
 end
 
 

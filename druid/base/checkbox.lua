@@ -26,6 +26,11 @@ function M.set_state(self, state, is_silence)
 end
 
 
+function M.get_state(self)
+	return self.state
+end
+
+
 -- TODO: pass self as first parameter
 local function on_click(context, self)
 	M.set_state(self, not self.state)
@@ -36,6 +41,7 @@ function M.init(self, node, callback, click_node)
 	self.node = helper.get_node(node)
 	self.click_node = helper.get_node(click_node)
 	self.callback = callback
+
 	self.button = self.parent:new_button(self.click_node or self.node, on_click, self)
 	M.set_state(self, false, true)
 end
