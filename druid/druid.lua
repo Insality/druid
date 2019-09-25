@@ -9,7 +9,7 @@ local _fct_metatable = {}
 
 M.comps = {
 	button = require("druid.base.button"),
-	android_back = require("druid.base.android_back"),
+	back_handler = require("druid.base.back_handler"),
 	text = require("druid.base.text"),
 	timer = require("druid.base.timer"),
 	progress = require("druid.base.progress"),
