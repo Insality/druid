@@ -1,0 +1,35 @@
+local druid = require("druid.druid")
+
+
+local function on_control_button(self, side)
+	print("Click on button side", side)
+end
+
+
+local function init_top_panel(self)
+	self.druid:new_button("button_left/button", on_control_button, "left")
+	self.druid:new_button("button_right/button", on_control_button, "right")
+	self.header = self.druid:new_text("text_header", "main_page", true)
+end
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+	init_top_panel(self)
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	self.druid:on_input(action_id, action)
+end
