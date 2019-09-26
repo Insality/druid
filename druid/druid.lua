@@ -16,6 +16,7 @@ local _fct_metatable = {}
 --- Basic components
 M.comps = {
 	button = require("druid.base.button"),
+	blocker = require("druid.base.blocker"),
 	back_handler = require("druid.base.back_handler"),
 	text = require("druid.base.text"),
 	timer = require("druid.base.timer"),
