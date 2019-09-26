@@ -25,6 +25,7 @@ M.comps = {
 	slider = require("druid.base.slider"),
 	checkbox = require("druid.base.checkbox"),
 	checkbox_group = require("druid.base.checkbox_group"),
+	radio_group = require("druid.base.radio_group"),
 
 	progress_rich = require("druid.rich.progress_rich"),
 }

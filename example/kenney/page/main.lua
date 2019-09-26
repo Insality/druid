@@ -72,9 +72,9 @@ end
 
 
 local function setup_checkbox(self)
-	local group1 = self.druid:new_checkbox_group(
+	local radio_group = self.druid:new_radio_group(
 		{"radio1/check", "radio2/check", "radio3/check"},
-		nil, true,
+		nil,
 		{"radio1/back", "radio2/back", "radio3/back"})
 
 	local checkbox_group = self.druid:new_checkbox_group(
@@ -82,7 +82,7 @@ local function setup_checkbox(self)
 		nil,
 		{"checkbox1/back", "checkbox2/back", "checkbox3/back"})
 
-	group1:set_state({false, false, true})
+	radio_group:set_state(2)
 	checkbox_group:set_state({true, false, true})
 end
 
