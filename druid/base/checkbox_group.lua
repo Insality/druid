@@ -1,11 +1,12 @@
+--- Checkboux group module
+-- @module base.checkbox_group
+
 local M = {}
 
 
 local function on_checkbox_click(self, index)
-	if self.is_radio_mode then
-		for i = 1, #self.checkboxes do
-			self.checkboxes[i]:set_state(i == index, true)
-		end
+	if self.callback then
+		self.callback(self.parent.parent, index)
 	end
 end
 
@@ -30,15 +31,16 @@ function M.get_state(self)
 end
 
 
-function M.init(self, nodes, callback, is_radio_mode, anim_nodes)
-	self.is_radio_mode = is_radio_mode
+function M.init(self, nodes, callback, click_nodes)
 	self.checkboxes = {}
+	self.callback = callback
 
 	for i = 1, #nodes do
-		local anim_node = anim_nodes and anim_nodes[i] or nil
+		local click_node = click_nodes and click_nodes[i] or nil
 		local checkbox = self.parent:new_checkbox(nodes[i], function()
 			on_checkbox_click(self, i)
-		end, anim_node)
+		end, click_node)
+
 		table.insert(self.checkboxes, checkbox)
 	end
 end
