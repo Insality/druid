@@ -15,6 +15,8 @@ M.comps = {
 	progress = require("druid.base.progress"),
 	grid = require("druid.base.grid"),
 	scroll = require("druid.base.scroll"),
+	checkbox = require("druid.base.checkbox"),
+	radio_group = require("druid.base.radio_group"),
 
 	progress_rich = require("druid.rich.progress_rich"),
 }
