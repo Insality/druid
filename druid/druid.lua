@@ -17,11 +17,13 @@ local _fct_metatable = {}
 M.comps = {
 	button = require("druid.base.button"),
 	back_handler = require("druid.base.back_handler"),
+	blocker = require("druid.base.blocker"),
 	text = require("druid.base.text"),
 	timer = require("druid.base.timer"),
 	progress = require("druid.base.progress"),
 	grid = require("druid.base.grid"),
 	scroll = require("druid.base.scroll"),
+	slider = require("druid.base.slider"),
 
 	progress_rich = require("druid.rich.progress_rich"),
 }
