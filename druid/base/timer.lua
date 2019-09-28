@@ -1,13 +1,17 @@
-local data = require("druid.data")
+--- Component to handle GUI timers
+-- @module base.timer
+
+local const = require("druid.const")
 local formats = require("druid.helper.formats")
 local helper = require("druid.helper")
 
 local M = {}
 M.interest = {
-	data.ON_UPDATE
+	const.ON_UPDATE
 }
 
 local empty = function() end
+
 
 function M.init(self, node, seconds_from, seconds_to, callback)
 	self.node = helper.get_node(node)
