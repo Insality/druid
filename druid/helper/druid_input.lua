@@ -1,3 +1,7 @@
+--- Druid inner module to acquire/release input
+-- @module helper.input
+-- @local
+
 local M = {}
 
 local ADD_FOCUS = hash("acquire_input_focus")

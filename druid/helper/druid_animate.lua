@@ -1,3 +1,6 @@
+--- Druid helper module for animating GUI nodes
+-- @module helper.animate
+
 local M = {}
 
 local PROP_SCALE = gui.PROP_SCALE
