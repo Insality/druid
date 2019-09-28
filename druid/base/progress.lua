@@ -1,4 +1,7 @@
-local data = require("druid.data")
+--- Component to handle progress bars
+-- @module base.progress
+
+local const = require("druid.const")
 local helper = require("druid.helper")
 local settings = require("druid.settings")
 local p_settings = settings.progress
@@ -6,7 +9,7 @@ local p_settings = settings.progress
 local M = {}
 
 M.interest = {
-	data.ON_UPDATE,
+	const.ON_UPDATE,
 }
 
 local PROP_Y = "y"

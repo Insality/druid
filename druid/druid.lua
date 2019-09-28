@@ -1,4 +1,10 @@
-local data = require("druid.data")
+--- Druid UI Library.
+-- Component based UI library to make your life easier.
+-- Contains a lot of base components and give API
+-- to create your own rich components.
+-- @module druid
+
+local const = require("druid.const")
 local druid_input = require("druid.helper.druid_input")
 local settings = require("druid.settings")
 
@@ -7,9 +13,11 @@ local M = {}
 local log = settings.log
 local _fct_metatable = {}
 
+--- Basic components
 M.comps = {
 	button = require("druid.base.button"),
-	android_back = require("druid.base.android_back"),
+	back_handler = require("druid.base.back_handler"),
+	blocker = require("druid.base.blocker"),
 	text = require("druid.base.text"),
 	timer = require("druid.base.timer"),
 	progress = require("druid.base.progress"),
@@ -17,6 +25,8 @@ M.comps = {
 	scroll = require("druid.base.scroll"),
 	checkbox = require("druid.base.checkbox"),
 	radio_group = require("druid.base.radio_group"),
+	checkbox_group = require("druid.base.checkbox_group"),
+	slider = require("druid.base.slider"),
 
 	progress_rich = require("druid.rich.progress_rich"),
 }
@@ -33,6 +43,9 @@ local function register_basic_components()
 end
 
 
+--- Register external module
+-- @tparam string name module name
+-- @tparam table module lua table with module
 function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
 	_fct_metatable["new_" .. name] = function(self, ...)
@@ -78,7 +91,7 @@ local function create(self, module)
 			end
 			self[v][#self[v] + 1] = instance
 
-			if data.ui_input[v] then
+			if const.ui_input[v] then
 				input_init(self)
 			end
 		end
@@ -122,7 +135,7 @@ end
 
 --- Called on_message
 function _fct_metatable.on_message(self, message_id, message, sender)
-	local specific_ui_message = data.specific_ui_messages[message_id]
+	local specific_ui_message = const.specific_ui_messages[message_id]
 	if specific_ui_message then
 		local array = self[message_id]
 		if array then
@@ -133,7 +146,7 @@ function _fct_metatable.on_message(self, message_id, message, sender)
 			end
 		end
 	else
-		local array = self[data.ON_MESSAGE]
+		local array = self[const.ON_MESSAGE]
 		if array then
 			for i = 1, #array do
 				array[i]:on_message(message_id, message, sender)
@@ -144,10 +157,10 @@ end
 
 
 local function notify_input_on_swipe(self)
-	if self[data.ON_INPUT] then
-		local len = #self[data.ON_INPUT]
+	if self[const.ON_INPUT] then
+		local len = #self[const.ON_INPUT]
 		for i = len, 1, -1 do
-			local comp = self[data.ON_INPUT][i]
+			local comp = self[const.ON_INPUT][i]
 			if comp.on_swipe then
 				comp:on_swipe()
 			end
@@ -171,7 +184,7 @@ end
 
 --- Called ON_INPUT
 function _fct_metatable.on_input(self, action_id, action)
-	local array = self[data.ON_SWIPE]
+	local array = self[const.ON_SWIPE]
 	if array then
 		local v, result
 		local len = #array
@@ -184,7 +197,7 @@ function _fct_metatable.on_input(self, action_id, action)
 			return true
 		end
 	end
-	array = self[data.ON_INPUT]
+	array = self[const.ON_INPUT]
 	if array then
 		local v
 		local len = #array
@@ -202,7 +215,7 @@ end
 
 --- Called on_update
 function _fct_metatable.update(self, dt)
-	local array = self[data.ON_UPDATE]
+	local array = self[const.ON_UPDATE]
 	if array then
 		for i = 1, #array do
 			array[i]:update(dt)

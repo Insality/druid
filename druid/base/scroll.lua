@@ -1,5 +1,8 @@
+--- Component to handle scroll content
+-- @module base.scroll
+
 local helper = require("druid.helper")
-local data = require("druid.data")
+local const = require("druid.const")
 local settings = require("druid.settings").scroll
 
 local M = {}
@@ -8,8 +11,8 @@ local SIDE_X = "x"
 local SIDE_Y = "y"
 
 M.interest = {
-	data.ON_UPDATE,
-	data.ON_SWIPE,
+	const.ON_UPDATE,
+	const.ON_SWIPE,
 }
 
 -- Global on all scrolls
@@ -99,10 +102,7 @@ end
 
 
 local function get_zone_center(self)
-	local pos = vmath.vector3(self.pos)
-	pos.x = pos.x + self.center_offset.x
-	pos.y = pos.y + self.center_offset.y
-	return pos
+	return self.pos + self.center_offset
 end
 
 
@@ -257,7 +257,7 @@ end
 
 
 function M.on_input(self, action_id, action)
-	if action_id ~= data.A_TOUCH then
+	if action_id ~= const.ACTION_TOUCH then
 		return false
 	end
 	local inp = self.input
@@ -289,18 +289,21 @@ function M.on_input(self, action_id, action)
 						M.current_scroll = self
 				end
 			end
-			if M.current_scroll == self then
-				add_delta(self, action.dx, action.dy)
-				result = true
-			end
+		end
+	end
+
+	if inp.touch and not action.pressed then
+		if M.current_scroll == self then
+			add_delta(self, action.dx, action.dy)
+			result = true
 		end
 	end
 
 	if action.released then
+		inp.touch = false
+		inp.side = false
 		if M.current_scroll == self then
 			M.current_scroll = nil
-			inp.touch = false
-			inp.side = false
 			result = true
 		end
 		check_threshold(self)
@@ -310,8 +313,12 @@ function M.on_input(self, action_id, action)
 end
 
 
---- Start scroll to point (x, y, z)
-function M.scroll_to(self, point)
+--- Start scroll to target point
+-- @tparam point vector3 target point
+-- @tparam[opt] bool is_instant instant scroll flag
+-- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
+-- @usage scroll:scroll_to(vmath.vector3(0), true)
+function M.scroll_to(self, point, is_instant)
 	local b = self.border
 	local target = vmath.vector3(point)
 	target.x = helper.clamp(point.x - self.center_offset.x, b.x, b.z)
@@ -319,12 +326,18 @@ function M.scroll_to(self, point)
 
 	cancel_animate(self)
 
-	self.animate = true
-	gui.animate(self.node, gui.PROP_POSITION, target, gui.EASING_OUTSINE, settings.ANIM_SPEED, 0, function()
-		self.animate = false
+	self.animate = not is_instant
+
+	if is_instant then
 		self.target = target
 		set_pos(self, target)
-	end)
+	else
+		gui.animate(self.node, gui.PROP_POSITION, target, gui.EASING_OUTSINE, settings.ANIM_SPEED, 0, function()
+			self.animate = false
+			self.target = target
+			set_pos(self, target)
+		end)
+	end
 end
 
 

@@ -1,10 +1,10 @@
+--- Component to handle placing components by row and columns.
+-- Grid can anchor your elements, get content size and other
+-- @module base.grid
+
 local helper = require("druid.helper")
 
 local M = {}
-
---- Sort and placing nodes
--- Plans: placing by max width, placing with max in_row
--- Allow different node sizes, allow animation with node insert
 
 
 function M.init(self, parent, element, in_row)

@@ -1,10 +1,14 @@
-local data = require("druid.data")
+--- Component to handle all GUI texts
+-- Good working with localization system
+-- @module base.text
+
+local const = require("druid.const")
 local settings = require("druid.settings")
 local helper = require("druid.helper")
 
 local M = {}
 M.interest = {
-	data.ON_CHANGE_LANGUAGE,
+	const.ON_CHANGE_LANGUAGE,
 }
 
 
