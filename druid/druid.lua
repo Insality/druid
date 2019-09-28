@@ -24,6 +24,7 @@ M.comps = {
 	grid = require("druid.base.grid"),
 	scroll = require("druid.base.scroll"),
 	checkbox = require("druid.base.checkbox"),
+	radio_group = require("druid.base.radio_group"),
 	checkbox_group = require("druid.base.checkbox_group"),
 	slider = require("druid.base.slider"),
 
