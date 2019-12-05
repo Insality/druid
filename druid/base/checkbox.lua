@@ -31,7 +31,6 @@ function M.get_state(self)
 end
 
 
--- TODO: pass self as first parameter
 local function on_click(self)
 	M.set_state(self, not self.state)
 end
