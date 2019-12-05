@@ -12,6 +12,8 @@ local M = {}
 
 local log = settings.log
 local _fct_metatable = {}
+-- Temporary, what the place for it?
+local default_style = {}
 
 --- Basic components
 M.comps = {
@@ -57,9 +59,9 @@ function M.register(name, module)
 end
 
 
---- Create UI instance for ui elements
+--- Create Druid instance for creating components
 -- @return instance with all ui components
-function M.new(component_script)
+function M.new(component_script, style)
 	if register_basic_components then
 		register_basic_components()
 		register_basic_components = false
@@ -68,7 +70,13 @@ function M.new(component_script)
 	-- Druid context here (who created druid)
 	-- Usually gui_script, but can be component from helper.get_druid(component)
 	self._context = component_script
+	self._style = style or default_style
 	return self
+end
+
+
+function M.set_default_style(style)
+	default_style = style
 end
 
 
@@ -80,10 +88,12 @@ local function input_init(self)
 end
 
 
+-- Create the component
 local function create(self, module)
 	local instance = setmetatable({}, { __index = module })
 	-- Component context, self from component creation
 	instance.context = self._context
+	instance.druid_style = self._style
 	table.insert(self, instance)
 
 	local register_to = module.interest
