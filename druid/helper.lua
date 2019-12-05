@@ -148,4 +148,10 @@ function M.get_pivot_offset(pivot)
 end
 
 
+function M.get_druid(self)
+	local context = { _context = self }
+	return setmetatable(context, { __index = self.context.druid })
+end
+
+
 return M

@@ -12,7 +12,7 @@ M.interest = {
 
 local function on_change_value(self)
 	if self.callback then
-		self.callback(self.parent.parent, self.value)
+		self.callback(self.context, self.value)
 	end
 end
 

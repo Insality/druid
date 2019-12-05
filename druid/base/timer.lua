@@ -25,7 +25,7 @@ function M.init(self, node, seconds_from, seconds_to, callback)
 
 	if seconds_to - seconds_from == 0 then
 		self:set_state(false)
-		self.callback(self.parent.parent, self)
+		self.callback(self.context, self)
 	end
 	return self
 end
@@ -76,7 +76,7 @@ function M.update(self, dt)
 			M.set_to(self, self.value)
 			if self.value == self.target then
 				self:set_state(false)
-				self.callback(self.parent.parent, self)
+				self.callback(self.context, self)
 			end
 		end
 	end

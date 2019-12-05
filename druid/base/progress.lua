@@ -56,10 +56,10 @@ local function check_steps(self, from, to, exactly)
 		end
 
 		if v1 < step and step < v2 then
-			self.step_callback(self.parent.parent, step)
+			self.step_callback(self.context, step)
 		end
 		if exactly and exactly == step then
-			self.step_callback(self.parent.parent, step)
+			self.step_callback(self.context, step)
 		end
 	end
 end
@@ -143,7 +143,7 @@ function M.to(self, to, callback)
 		self.target_callback = callback
 	else
 		if callback then
-			callback(self.parent.parent, to)
+			callback(self.context, to)
 		end
 	end
 end
@@ -160,7 +160,7 @@ function M.update(self, dt)
 			check_steps(self, prev_value, self.target, self.target)
 
 			if self.target_callback then
-				self.target_callback(self.parent.parent, self.target)
+				self.target_callback(self.context, self.target)
 			end
 
 			self.target = nil
