@@ -1,51 +1,67 @@
+--- Component for rich progress component
+-- @module rich.progress_rich
+
 local settings = require("druid.settings")
 local pr_settings = settings.progress_rich
 
 local M = {}
 
-function M.init(instance, name, red, green, key)
-	instance.red = instance.parent:new_progress(red, key)
-	instance.green = instance.parent:new_progress(green, key)
-	instance.fill = instance.parent:new_progress(name, key)
+
+function M.init(self, name, red, green, key)
+	self.red = self.parent:new_progress(red, key)
+	self.green = self.parent:new_progress(green, key)
+	self.fill = self.parent:new_progress(name, key)
 end
 
 
-function M.set_to(instance, value)
-	instance.red:set_to(value)
-	instance.green:set_to(value)
-	instance.fill:set_to(value)
+--- Instant fill progress bar to value
+-- @function progress_rich:set_to
+-- @tparam table self Component instance
+-- @tparam number value Progress bar value, from 0 to 1
+function M.set_to(self, value)
+	self.red:set_to(value)
+	self.green:set_to(value)
+	self.fill:set_to(value)
 end
 
 
-function M.empty(instance)
-	instance.red:empty()
-	instance.green:empty()
-	instance.fill:empty()
+--- Empty a progress bar
+-- @function progress_rich:empty
+-- @tparam table self Component instance
+function M.empty(self)
+	self.red:empty()
+	self.green:empty()
+	self.fill:empty()
 end
 
 
-function M.to(instance, to, callback)
-	if instance.timer then
-		timer.cancel(instance.timer)
-		instance.timer = nil
+--- Start animation of a progress bar
+-- @function progress_rich:to
+-- @tparam table self Component instance
+-- @tparam number to value between 0..1
+-- @tparam[opt] function callback Callback on animation ends
+function M.to(self, to, callback)
+	if self.timer then
+		timer.cancel(self.timer)
+		self.timer = nil
 	end
 
-	if instance.fill.last_value < to then
-		instance.red:to(instance.fill.last_value)
-		instance.green:to(to, function()
-			instance.timer = timer.delay(pr_settings.DELAY, false, function()
-				instance.red:to(to)
-				instance.fill:to(to, callback)
+	if self.fill.last_value < to then
+		self.red:to(self.fill.last_value)
+		self.green:to(to, function()
+			self.timer = timer.delay(pr_settings.DELAY, false, function()
+				self.red:to(to)
+				self.fill:to(to, callback)
 			end)
 		end)
 	end
 
-	if instance.fill.last_value > to then
-		instance.green:to(instance.red.last_value)
-		instance.fill:to(to, function()
-			instance.timer = timer.delay(pr_settings.DELAY, false, function()
-				instance.green:to(to)
-				instance.red:to(to, callback)
+	if self.fill.last_value > to then
+		self.green:to(self.red.last_value)
+		self.fill:to(to, function()
+			self.timer = timer.delay(pr_settings.DELAY, false, function()
+				self.green:to(to)
+				self.red:to(to, callback)
 			end)
 		end)
 	end

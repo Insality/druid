@@ -1,4 +1,4 @@
---- Component to handle back key
+--- Component to handle back key (android, backspace)
 -- @module base.back_handler
 
 local const = require("druid.const")
@@ -9,9 +9,10 @@ M.interest = {
 }
 
 --- Component init function
--- @tparam table self component instance
--- @tparam callback callback on back button
--- @tparam[opt] params callback argument
+-- @function back_handler:init
+-- @tparam table self Component instance
+-- @tparam callback callback On back button
+-- @tparam[opt] params Callback argument
 function M.init(self, callback, params)
 	self.event = const.ACTION_BACK
 	self.callback = callback
@@ -20,6 +21,7 @@ end
 
 
 --- Input handler for component
+-- @function back_handler:on_input
 -- @tparam string action_id on_input action id
 -- @tparam table action on_input action
 function M.on_input(self, action_id, action)

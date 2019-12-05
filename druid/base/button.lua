@@ -22,6 +22,14 @@ M.DEFAULT_ACTIVATE_SCALE = vmath.vector3(1, 1, 1)
 M.DEFAULT_ACTIVATION_TIME = 0.2
 
 
+--- Component init function
+-- @function button:init
+-- @tparam table self Component instance
+-- @tparam node node Gui node
+-- @tparam function callback Button callback
+-- @tparam[opt] table params Button callback params
+-- @tparam[opt] node anim_node Button anim node (node, if not provided)
+-- @tparam[opt] string event Button react event, const.ACTION_TOUCH by default
 function M.init(self, node, callback, params, anim_node, event)
 	self.node = helper.node(node)
 	self.event = const.ACTION_TOUCH
@@ -79,9 +87,6 @@ local function on_button_release(self)
 end
 
 
---- Set text to text field
--- @param action_id - input action id
--- @param action - input action
 function M.on_input(self, action_id, action)
 	if not helper.is_enabled(self.node) then
 		return false
@@ -197,6 +202,9 @@ function M.activate(self, is_animate, callback)
 end
 
 
+--- Disable all button animations
+-- @function button:disable_animation
+-- @tparam table self Component instance
 function M.disable_animation(self)
 	self.hover_anim = false
 	self.tap_anim = nil
@@ -204,8 +212,11 @@ function M.disable_animation(self)
 end
 
 
---- Set additional node, what need to be clicked on button click
--- Used, if need setup, what button can be clicked only in special zone
+--- Strict button click area. Useful for
+-- no click events outside stencil node
+-- @function button:set_click_zone
+-- @tparam table self Component instance
+-- @tparam node zone Gui node
 function M.set_click_zone(self, zone)
 	self.click_zone = helper.node(zone)
 end

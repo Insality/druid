@@ -1,4 +1,4 @@
---- Component to handle progress bars
+--- Basic progress bar component
 -- @module base.progress
 
 local const = require("druid.const")
@@ -12,25 +12,28 @@ M.interest = {
 	const.ON_UPDATE,
 }
 
-local PROP_Y = "y"
-local PROP_X = "x"
 
-
-function M.init(self, name, key, init_value)
-	if key ~= PROP_X and key ~= PROP_Y then
+--- Component init function
+-- @function progress:init
+-- @tparam table self Component instance
+-- @tparam string|node node Progress bar fill node or node name
+-- @tparam string key Progress bar direction (x or y)
+-- @tparam number init_value Initial value of progress bar
+function M.init(self, node, key, init_value)
+	if key ~= const.SIDE.X and key ~= const.SIDE.Y then
 		settings.log("progress component: key must be 'x' or 'y'. Passed:", key)
-		key = PROP_X
+		key = const.SIDE.X
 	end
 
 	self.prop = hash("scale."..key)
 	self.key = key
 
-	self.node = helper.node(name)
+	self.node = helper.node(node)
 	self.scale = gui.get_scale(self.node)
 	self.size = gui.get_size(self.node)
 	self.max_size = self.size[self.key]
 	self.slice = gui.get_slice9(self.node)
-	if key == PROP_X then
+	if key == const.SIDE.X then
 		self.slice_size = self.slice.x + self.slice.z
 	else
 		self.slice_size = self.slice.y + self.slice.w
@@ -83,38 +86,54 @@ end
 
 
 --- Fill a progress bar and stop progress animation
+-- @function progress:empty
+-- @tparam table self Component instance
 function M.fill(self)
 	set_bar_to(self, 1, true)
 end
 
 
---- To empty a progress bar
+--- Empty a progress bar
+-- @function progress:empty
+-- @tparam table self Component instance
 function M.empty(self)
 	set_bar_to(self, 0, true)
 end
 
 
---- Set fill a progress bar to value
--- @param to - value between 0..1
+--- Instant fill progress bar to value
+-- @function progress:set_to
+-- @tparam table self Component instance
+-- @tparam number to Progress bar value, from 0 to 1
 function M.set_to(self, to)
 	set_bar_to(self, to)
 end
 
 
+--- Return current progress bar value
+-- @function progress:get
+-- @tparam table self Component instance
 function M.get(self)
 	return self.last_value
 end
 
 
-function M.set_steps(self, steps, step_callback)
+--- Set points on progress bar to fire the callback
+-- @function progress:set_steps
+-- @tparam table self Component instance
+-- @tparam table steps Array of progress bar values
+-- @tparam function callback Callback on intersect step value
+function M.set_steps(self, steps, callback)
 	self.steps = steps
-	self.step_callback = step_callback
+	self.step_callback = callback
 end
 
 
 --- Start animation of a progress bar
--- @param to - value between 0..1
--- @param callback - callback when progress ended if need
+-- @function progress:to
+-- @tparam table self Component instance
+-- @tparam number to value between 0..1
+-- @tparam[opt] function callback Callback on animation ends
 function M.to(self, to, callback)
 	to = helper.clamp(to, 0, 1)
 	-- cause of float error

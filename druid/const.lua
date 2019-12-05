@@ -13,6 +13,7 @@ M.ACTION_BACK = hash("back")
 M.RELEASED = "released"
 M.PRESSED = "pressed"
 M.STRING = "string"
+M.ZERO = "0"
 
 --- Interests
 M.ON_MESSAGE = hash("on_message")
@@ -34,7 +35,12 @@ M.PIVOTS = {
 	[gui.PIVOT_NW] = vmath.vector3(-0.5, -0.5, 0),
 }
 
-M.ui_input = {
+M.SIDE = {
+	X = "x",
+	Y = "y"
+}
+
+M.UI_INPUT = {
 	[M.ON_SWIPE] = true,
 	[M.ON_INPUT] = true
 }
