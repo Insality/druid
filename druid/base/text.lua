@@ -14,7 +14,7 @@ M.interest = {
 
 function M.init(self, node, value, is_locale, max_width)
 	self.max_width = max_width
-	self.node = helper.get_node(node)
+	self.node = helper.node(node)
 	self.start_scale = gui.get_scale(self.node)
 	self.scale = self.start_scale
 	self.last_color = gui.get_color(self.node)

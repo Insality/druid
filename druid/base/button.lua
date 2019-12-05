@@ -23,9 +23,9 @@ M.DEFAULT_ACTIVATION_TIME = 0.2
 
 
 function M.init(self, node, callback, params, anim_node, event)
-	self.node = helper.get_node(node)
+	self.node = helper.node(node)
 	self.event = const.ACTION_TOUCH
-	self.anim_node = anim_node and helper.get_node(anim_node) or self.node
+	self.anim_node = anim_node and helper.node(anim_node) or self.node
 	self.scale_from = gui.get_scale(self.anim_node)
 	self.scale_to = self.scale_from + b_settings.SCALE_CHANGE
 	self.scale_hover_to = self.scale_from + b_settings.HOVER_SCALE
@@ -207,7 +207,7 @@ end
 --- Set additional node, what need to be clicked on button click
 -- Used, if need setup, what button can be clicked only in special zone
 function M.set_click_zone(self, zone)
-	self.click_zone = helper.get_node(zone)
+	self.click_zone = helper.node(zone)
 end
 
 

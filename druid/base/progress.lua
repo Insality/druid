@@ -25,7 +25,7 @@ function M.init(self, name, key, init_value)
 	self.prop = hash("scale."..key)
 	self.key = key
 
-	self.node = helper.get_node(name)
+	self.node = helper.node(name)
 	self.scale = gui.get_scale(self.node)
 	self.size = gui.get_size(self.node)
 	self.max_size = self.size[self.key]

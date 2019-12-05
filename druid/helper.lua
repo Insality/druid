@@ -1,6 +1,8 @@
 --- Druid helper module
 -- @module helper
 
+local const = require("druid.const")
+
 local M = {}
 
 --- Text node or icon node can be nil
@@ -80,8 +82,8 @@ end
 
 
 local STRING = "string"
-function M.get_node(node_or_name)
-	if type(node_or_name) == STRING then
+function M.node(node_or_name)
+	if type(node_or_name) == const.STRING then
 		return gui.get_node(node_or_name)
 	end
 	return node_or_name
