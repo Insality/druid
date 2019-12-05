@@ -91,7 +91,7 @@ local function create(self, module)
 			end
 			self[v][#self[v] + 1] = instance
 
-			if const.ui_input[v] then
+			if const.UI_INPUT[v] then
 				input_init(self)
 			end
 		end
@@ -135,7 +135,7 @@ end
 
 --- Called on_message
 function _fct_metatable.on_message(self, message_id, message, sender)
-	local specific_ui_message = const.specific_ui_messages[message_id]
+	local specific_ui_message = const.SPECIFIC_UI_MESSAGES[message_id]
 	if specific_ui_message then
 		local array = self[message_id]
 		if array then
