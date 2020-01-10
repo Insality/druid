@@ -24,6 +24,7 @@ M.comps = {
 	blocker = require("druid.base.blocker"),
 	back_handler = require("druid.base.back_handler"),
 	text = require("druid.base.text"),
+	locale = require("druid.base.locale"),
 	timer = require("druid.base.timer"),
 	progress = require("druid.base.progress"),
 	grid = require("druid.base.grid"),
