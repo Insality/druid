@@ -6,8 +6,6 @@
 -- Repeated tap
 
 local const = require("druid.const")
-local settings = require("druid.settings")
-local b_settings = settings.button
 local helper = require("druid.helper")
 
 local M = {}
@@ -26,16 +24,16 @@ M.interest = {
 -- @tparam[opt] string event Button react event, const.ACTION_TOUCH by default
 function M.init(self, node, callback, params, anim_node, event)
 	assert(callback, "Button should have callback. To block input on zone use blocker component")
-	self.style = self.druid_style.BUTTON or {}
-
+	self.style = helper.get_style(self, "BUTTON")
 	self.node = helper.node(node)
+
 	self.event = const.ACTION_TOUCH
 	self.anim_node = anim_node and helper.node(anim_node) or self.node
 	self.scale_from = gui.get_scale(self.anim_node)
 	self.pos = gui.get_position(self.anim_node)
 	self.callback = callback
 	self.params = params
-	self.hover_anim = b_settings.IS_HOVER
+	self.hover_anim = self.style.IS_HOVER
 	self.click_zone = nil
 end
 

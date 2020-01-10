@@ -3,8 +3,6 @@
 
 local const = require("druid.const")
 local helper = require("druid.helper")
-local settings = require("druid.settings")
-local p_settings = settings.progress
 
 local M = {}
 
@@ -20,14 +18,12 @@ M.interest = {
 -- @tparam string key Progress bar direction (x or y)
 -- @tparam number init_value Initial value of progress bar
 function M.init(self, node, key, init_value)
-	if key ~= const.SIDE.X and key ~= const.SIDE.Y then
-		settings.log("progress component: key must be 'x' or 'y'. Passed:", key)
-		key = const.SIDE.X
-	end
+	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
 	self.prop = hash("scale."..key)
 	self.key = key
 
+	self.style = helper.get_style(self, "PROGRESS")
 	self.node = helper.node(node)
 	self.scale = gui.get_scale(self.node)
 	self.size = gui.get_size(self.node)
@@ -152,8 +148,8 @@ end
 function M.update(self, dt)
 	if self.target then
 		local prev_value = self.last_value
-		local step = math.abs(self.last_value - self.target) * (p_settings.SPEED*dt)
-		step = math.max(step, p_settings.MIN_DELTA)
+		local step = math.abs(self.last_value - self.target) * (self.style.SPEED*dt)
+		step = math.max(step, self.style.MIN_DELTA)
 		self:set_to(helper.step(self.last_value, self.target, step))
 
 		if self.last_value == self.target then

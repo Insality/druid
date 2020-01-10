@@ -4,16 +4,19 @@
 -- to create your own rich components.
 -- @module druid
 
+
 local const = require("druid.const")
 local druid_input = require("druid.helper.druid_input")
 local settings = require("druid.settings")
 
 local M = {}
 
+
 local log = settings.log
 local _fct_metatable = {}
 -- Temporary, what the place for it?
 local default_style = {}
+
 
 --- Basic components
 M.comps = {

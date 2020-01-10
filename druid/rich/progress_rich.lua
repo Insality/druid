@@ -2,14 +2,13 @@
 -- @module rich.progress_rich
 
 local helper = require("druid.helper")
-local settings = require("druid.settings")
-local pr_settings = settings.progress_rich
 
 local M = {}
 
 
 function M.init(self, name, red, green, key)
 	self.druid = helper.get_druid(self)
+	self.style = helper.get_style(self, "PROGRESS_RICH")
 	self.red = self.druid:new_progress(red, key)
 	self.green = self.druid:new_progress(green, key)
 	self.fill = self.druid:new_progress(name, key)
@@ -51,7 +50,7 @@ function M.to(self, to, callback)
 	if self.fill.last_value < to then
 		self.red:to(self.fill.last_value)
 		self.green:to(to, function()
-			self.timer = timer.delay(pr_settings.DELAY, false, function()
+			self.timer = timer.delay(self.style.DELAY, false, function()
 				self.red:to(to)
 				self.fill:to(to, callback)
 			end)
@@ -61,7 +60,7 @@ function M.to(self, to, callback)
 	if self.fill.last_value > to then
 		self.green:to(self.red.last_value)
 		self.fill:to(to, function()
-			self.timer = timer.delay(pr_settings.DELAY, false, function()
+			self.timer = timer.delay(self.style.DELAY, false, function()
 				self.green:to(to)
 				self.red:to(to, callback)
 			end)
