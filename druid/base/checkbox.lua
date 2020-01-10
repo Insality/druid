@@ -6,19 +6,15 @@ local helper = require("druid.helper")
 local M = {}
 
 
-local function state_animate(node, state)
-	local target = state and 1 or 0
-	gui.animate(node, "color.w", target, gui.EASING_OUTSINE, 0.1)
-end
-
-
 function M.set_state(self, state, is_silence)
 	if self.state == state then
 		return
 	end
 
 	self.state = state
-	state_animate(self.node, state)
+	if self.style.on_change_state then
+		self.style.on_change_state(self, self.node, state)
+	end
 
 	if not is_silence and self.callback then
 		self.callback(self.context, state)
@@ -37,6 +33,7 @@ end
 
 
 function M.init(self, node, callback, click_node)
+	self.style = helper.get_style(self, "CHECKBOX")
 	self.druid = helper.get_druid(self)
 	self.node = helper.node(node)
 	self.click_node = helper.node(click_node)

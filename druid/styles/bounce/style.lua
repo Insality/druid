@@ -54,13 +54,24 @@ M.SCROLL = {
 	ANIM_SPEED = 0.3, -- gui.animation speed to point
 }
 
+
 M.PROGRESS = {
 	SPEED = 5, -- progress bar fill rate, more faster
 	MIN_DELTA = 0.005
 }
 
+
 M.PROGRESS_RICH = {
 	DELAY = 1, -- delay in seconds before main fill
 }
+
+
+M.CHECKBOX = {
+	on_change_state = function(self, node, state)
+		local target = state and 1 or 0
+		gui.animate(node, "color.w", target, gui.EASING_OUTSINE, 0.1)
+	end
+}
+
 
 return M

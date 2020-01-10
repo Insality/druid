@@ -215,6 +215,7 @@ local function add_delta(self, dx, dy)
 	local t = self.target
 	local b = self.border
 	local soft = self.soft_size
+
 	-- TODO: Can we calc it more easier?
 	-- A lot of calculations for every side of border
 
