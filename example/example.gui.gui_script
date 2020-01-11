@@ -58,7 +58,7 @@ local function init_progress(self)
 	local simple = self.druid:new_progress("simple_fill", "x", val)
 	local vert = self.druid:new_progress("simple_vert_fill", "y", val)
 
-	simple:set_steps({0, 0.3, 0.6, 1}, function(self, step)
+	simple:set_steps({0, 0.3, 0.6, 1}, function(_, step)
 		print("STEP:", step)
 	end)
 

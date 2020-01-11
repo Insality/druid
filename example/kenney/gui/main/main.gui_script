@@ -1,4 +1,6 @@
 local druid = require("druid.druid")
+local bounce_style = require("druid.styles.bounce.style")
+local empty_style = require("druid.styles.empty.style")
 
 local main_page = require("example.kenney.page.main")
 
@@ -15,6 +17,7 @@ end
 
 
 function init(self)
+	druid.set_default_style(empty_style)
 	self.druid = druid.new(self)
 
 	init_top_panel(self)

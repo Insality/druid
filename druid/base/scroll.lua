@@ -3,7 +3,6 @@
 
 local helper = require("druid.helper")
 local const = require("druid.const")
-local settings = require("druid.settings").scroll
 
 local M = {}
 
@@ -18,10 +17,12 @@ M.current_scroll = nil
 
 
 function M.init(self, scroll_parent, input_zone, border)
+	self.style = helper.get_style(self, "SCROLL")
 	self.node = helper.node(scroll_parent)
 	self.input_zone = helper.node(input_zone)
+
 	self.zone_size = gui.get_size(self.input_zone)
-	self.soft_size = settings.SOFT_ZONE_SIZE
+	self.soft_size = self.style.SOFT_ZONE_SIZE
 
 	-- Distance from node to node's center
 	local offset = helper.get_pivot_offset(gui.get_pivot(self.input_zone))
@@ -61,16 +62,16 @@ local function check_soft_target(self)
 	local b = self.border
 
 	if t.y < b.y then
-		t.y = helper.step(t.y, b.y, math.abs(t.y - b.y) * settings.BACK_SPEED)
+		t.y = helper.step(t.y, b.y, math.abs(t.y - b.y) * self.style.BACK_SPEED)
 	end
 	if t.x < b.x then
-		t.x = helper.step(t.x, b.x, math.abs(t.x - b.x) * settings.BACK_SPEED)
+		t.x = helper.step(t.x, b.x, math.abs(t.x - b.x) * self.style.BACK_SPEED)
 	end
 	if t.y > b.w then
-		t.y = helper.step(t.y, b.w, math.abs(t.y - b.w) * settings.BACK_SPEED)
+		t.y = helper.step(t.y, b.w, math.abs(t.y - b.w) * self.style.BACK_SPEED)
 	end
 	if t.x > b.z then
-		t.x = helper.step(t.x, b.z, math.abs(t.x - b.z) * settings.BACK_SPEED)
+		t.x = helper.step(t.x, b.z, math.abs(t.x - b.z) * self.style.BACK_SPEED)
 	end
 end
 
@@ -94,8 +95,8 @@ local function update_hand_scroll(self, dt)
 	inert.x = math.abs(inert.x) * helper.sign(delta_x)
 	inert.y = math.abs(inert.y) * helper.sign(delta_y)
 
-	inert.x = inert.x * settings.FRICT_HOLD
-	inert.y = inert.y * settings.FRICT_HOLD
+	inert.x = inert.x * self.style.FRICT_HOLD
+	inert.y = inert.y * self.style.FRICT_HOLD
 
 	set_pos(self, self.target)
 end
@@ -116,11 +117,11 @@ local function check_points(self)
 
 	local inert = self.inert
 	if not self.is_inert then
-		if math.abs(inert.x) > settings.DEADZONE then
+		if math.abs(inert.x) > self.style.DEADZONE then
 			self:scroll_to_index(self.selected - helper.sign(inert.x))
 			return
 		end
-		if math.abs(inert.y) > settings.DEADZONE then
+		if math.abs(inert.y) > self.style.DEADZONE then
 			self:scroll_to_index(self.selected + helper.sign(inert.y))
 			return
 		end
@@ -154,13 +155,14 @@ local function check_points(self)
 			temp_dist_on_inert = dist
 		end
 	end
+
 	self:scroll_to_index(index_on_inert or index)
 end
 
 
 local function check_threshold(self)
 	local inert = self.inert
-	if not self.is_inert or vmath.length(inert) < settings.INERT_THRESHOLD then
+	if not self.is_inert or vmath.length(inert) < self.style.INERT_THRESHOLD then
 		check_points(self)
 		inert.x = 0
 		inert.y = 0
@@ -171,11 +173,11 @@ end
 local function update_free_inert(self, dt)
 	local inert = self.inert
 	if inert.x ~= 0 or inert.y ~= 0 then
-		self.target.x = self.pos.x + (inert.x * dt * settings.INERT_SPEED)
-		self.target.y = self.pos.y + (inert.y * dt * settings.INERT_SPEED)
+		self.target.x = self.pos.x + (inert.x * dt * self.style.INERT_SPEED)
+		self.target.y = self.pos.y + (inert.y * dt * self.style.INERT_SPEED)
 
-		inert.x = inert.x * settings.FRICT
-		inert.y = inert.y * settings.FRICT
+		inert.x = inert.x * self.style.FRICT
+		inert.y = inert.y * self.style.FRICT
 
 		-- Stop, when low inert speed and go to points
 		check_threshold(self)
@@ -213,6 +215,7 @@ local function add_delta(self, dx, dy)
 	local t = self.target
 	local b = self.border
 	local soft = self.soft_size
+
 	-- TODO: Can we calc it more easier?
 	-- A lot of calculations for every side of border
 
@@ -275,7 +278,7 @@ function M.on_input(self, action_id, action)
 			self.target.y = self.pos.y
 		else
 			local dist = helper.distance(action.x, action.y, inp.start_x, inp.start_y)
-			if not M.current_scroll and dist >= settings.DEADZONE then
+			if not M.current_scroll and dist >= self.style.DEADZONE then
 				local dx = math.abs(inp.start_x - action.x)
 				local dy = math.abs(inp.start_y - action.y)
 				inp.side = (dx > dy) and const.SIDE.X or const.SIDE.Y
@@ -331,7 +334,7 @@ function M.scroll_to(self, point, is_instant)
 		self.target = target
 		set_pos(self, target)
 	else
-		gui.animate(self.node, gui.PROP_POSITION, target, gui.EASING_OUTSINE, settings.ANIM_SPEED, 0, function()
+		gui.animate(self.node, gui.PROP_POSITION, target, gui.EASING_OUTSINE, self.style.ANIM_SPEED, 0, function()
 			self.animate = false
 			self.target = target
 			set_pos(self, target)

@@ -6,20 +6,12 @@
 -- Repeated tap
 
 local const = require("druid.const")
-local ui_animate = require("druid.helper.druid_animate")
-local settings = require("druid.settings")
 local helper = require("druid.helper")
-local b_settings = settings.button
 
 local M = {}
 M.interest = {
 	const.ON_INPUT
 }
-
-M.DEFAULT_DEACTIVATE_COLOR = vmath.vector4(0, 0, 0, 0)
-M.DEFAULT_DEACTIVATE_SCALE = vmath.vector3(0.8, 0.9, 1)
-M.DEFAULT_ACTIVATE_SCALE = vmath.vector3(1, 1, 1)
-M.DEFAULT_ACTIVATION_TIME = 0.2
 
 
 --- Component init function
@@ -31,37 +23,26 @@ M.DEFAULT_ACTIVATION_TIME = 0.2
 -- @tparam[opt] node anim_node Button anim node (node, if not provided)
 -- @tparam[opt] string event Button react event, const.ACTION_TOUCH by default
 function M.init(self, node, callback, params, anim_node, event)
+	assert(callback, "Button should have callback. To block input on zone use blocker component")
+	self.style = helper.get_style(self, "BUTTON")
 	self.node = helper.node(node)
+
 	self.event = const.ACTION_TOUCH
 	self.anim_node = anim_node and helper.node(anim_node) or self.node
 	self.scale_from = gui.get_scale(self.anim_node)
-	self.scale_to = self.scale_from + b_settings.SCALE_CHANGE
-	self.scale_hover_to = self.scale_from + b_settings.HOVER_SCALE
 	self.pos = gui.get_position(self.anim_node)
 	self.callback = callback
 	self.params = params
-	self.tap_anim = M.tap_scale_animation
-	self.back_anim = M.back_scale_animation
-	self.hover_anim = b_settings.IS_HOVER
-	self.sound = b_settings.BTN_SOUND
-	self.sound_disable = b_settings.BTN_SOUND_DISABLED
+	self.hover_anim = self.style.IS_HOVER
 	self.click_zone = nil
-
-	-- TODO: to separate component "block_input"?
-	-- If callback is nil, so the buttons is stub and without anim
-	-- Used for zones, what should dont pass the input to other UI elements
-	if not callback then
-		self.stub = true
-		self.hover_anim = false
-		self.callback = function() end
-	end
 end
 
 
 local function set_hover(self, state)
-	if self.hover_anim and self._is_hovered ~= state then
-		local target_scale = state and self.scale_hover_to or self.scale_from
-		ui_animate.scale(self, self.anim_node, target_scale, b_settings.HOVER_TIME)
+	if self._is_hovered ~= state then
+		if self.style.on_hover then
+			self.style.on_hover(self, self.anim_node, state)
+		end
 		self._is_hovered = state
 	end
 end
@@ -71,17 +52,18 @@ local function on_button_release(self)
 	if not self.disabled then
 		if not self.stub and self.can_action then
 			self.can_action = false
-			if self.tap_anim then
-				self.tap_anim(self)
+			if self.style.on_click then
+				self.style.on_click(self, self.anim_node)
 			end
 			self.callback(self.context, self.params, self)
-			settings.play_sound(self.sound)
 		else
 			set_hover(self, false)
 		end
 		return true
 	else
-		settings.play_sound(self.sound_disable)
+		if self.style.on_click_disabled then
+			self.style.on_click_disabled(self, self.anim_node)
+		end
 		return false
 	end
 end
@@ -129,76 +111,20 @@ function M.on_swipe(self)
 end
 
 
-function M.tap_scale_animation(self)
-	ui_animate.scale_to(self, self.anim_node, self.scale_to,
-		function()
-			if self.back_anim then
-				self.back_anim(self)
-			end
-		end
-	)
-end
+function M.set_enabled(self, state)
+	-- if self.disabled == state then
+	-- 	return
+	-- end
 
-
-function M.back_scale_animation(self)
-	ui_animate.scale_to(self, self.anim_node, self.scale_from)
-end
-
-
-function M.deactivate(self, is_animate, callback)
-	self.disabled = true
-	if is_animate then
-		-- callback call three times in gui.animation
-		local clbk = helper.after(3, function()
-			if callback then
-				callback(self.context)
-			end
-		end)
-
-		ui_animate.color(self, self.node, M.DEFAULT_DEACTIVATE_COLOR,
-			clbk, M.DEFAULT_ACTIVATION_TIME, 0, gui.EASING_OUTBOUNCE)
-
-		ui_animate.scale_y_from_to(self, self.node, M.DEFAULT_ACTIVATE_SCALE.x,
-			M.DEFAULT_DEACTIVATE_SCALE.x, clbk, M.DEFAULT_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
-
-		ui_animate.scale_x_from_to(self, self.node, M.DEFAULT_ACTIVATE_SCALE.y,
-			M.DEFAULT_DEACTIVATE_SCALE.y, clbk, M.DEFAULT_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
-	else
-		gui.set_color(self.node, M.DEFAULT_DEACTIVATE_COLOR)
-		gui.set_scale(self.node, M.DEFAULT_DEACTIVATE_SCALE)
-		if callback then
-			callback(self.context)
-		end
+	self.disabled = not state
+	if self.style.on_set_enabled then
+		self.style.on_set_enabled(self, self.node, state)
 	end
 end
 
 
-function M.activate(self, is_animate, callback)
-	if is_animate then
-		-- callback call three times in gui.animation
-		local clbk = helper.after(3, function()
-				self.disabled = false
-				if callback then
-					callback(self.context)
-				end
-		end)
-
-		ui_animate.color(self, self.node, ui_animate.TINT_SHOW,
-			clbk, M.DEFAULT_ACTIVATION_TIME, 0, gui.EASING_OUTBOUNCE)
-
-		ui_animate.scale_y_from_to(self, self.node, M.DEFAULT_DEACTIVATE_SCALE.x,
-			M.DEFAULT_ACTIVATE_SCALE.x, clbk, M.DEFAULT_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
-
-		ui_animate.scale_x_from_to(self, self.node, M.DEFAULT_DEACTIVATE_SCALE.y,
-			M.DEFAULT_ACTIVATE_SCALE.y, clbk, M.DEFAULT_ACTIVATION_TIME, gui.EASING_OUTBOUNCE)
-	else
-		gui.set_color(self.node, ui_animate.TINT_SHOW)
-		gui.set_scale(self.node, M.DEFAULT_ACTIVATE_SCALE)
-		self.disabled = false
-		if callback then
-			callback(self.context)
-		end
-	end
+function M.get_enabled(self)
+	return not self.disabled
 end
 
 
@@ -207,8 +133,6 @@ end
 -- @tparam table self Component instance
 function M.disable_animation(self)
 	self.hover_anim = false
-	self.tap_anim = nil
-	self.back_anim = nil
 end
 
 

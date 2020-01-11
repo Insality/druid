@@ -1,9 +1,11 @@
 --- Druid helper module
 -- @module helper
 
+
 local const = require("druid.const")
 
 local M = {}
+
 
 --- Text node or icon node can be nil
 local function get_text_width(text_node)
@@ -151,6 +153,15 @@ end
 function M.get_druid(self)
 	local context = { _context = self }
 	return setmetatable(context, { __index = self.context.druid })
+end
+
+
+function M.get_style(self, section)
+	if not self.druid_style then
+		return {}
+	end
+
+	return self.druid_style[section] or {}
 end
 
 
