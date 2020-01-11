@@ -4,6 +4,7 @@ local M = {}
 
 local en = {
 	main_page = "Main page",
+	texts_page = "Text page",
 	ui_section_button = "Button",
 	ui_section_text = "Text",
 	ui_section_timer = "Timer",
@@ -17,6 +18,7 @@ local en = {
 
 local ru = {
 	main_page = "Основное",
+	texts_page = "Текст",
 	ui_section_button = "Кнопка",
 	ui_section_text = "Текст",
 	ui_section_timer = "Таймер",

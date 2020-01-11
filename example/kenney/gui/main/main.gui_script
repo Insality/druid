@@ -1,28 +1,46 @@
 local druid = require("druid.druid")
-local bounce_style = require("druid.styles.bounce.style")
+
 local empty_style = require("druid.styles.empty.style")
+local bounce_style = require("druid.styles.bounce.style")
 
 local main_page = require("example.kenney.page.main")
+local text_page = require("example.kenney.page.texts")
 
-local function on_control_button(self, side)
-	print("Click on button side", side)
+local pages = {
+	"main_page",
+	"texts_page"
+}
+
+local function on_control_button(self, delta)
+	self.page = self.page + delta
+	if self.page < 1 then
+		self.page = #pages
+	end
+	if self.page > #pages then
+		self.page = 1
+	end
+
+	self.header:translate(pages[self.page])
+	local node = gui.get_node("C_Anchor")
+	gui.animate(node, "position.x", (self.page-1) * -600, gui.EASING_OUTSINE, 0.2)
 end
 
 
 local function init_top_panel(self)
-	self.druid:new_button("button_left/button", on_control_button, "left")
-	self.druid:new_button("button_right/button", on_control_button, "right")
+	self.druid:new_button("button_left/button", on_control_button, -1)
+	self.druid:new_button("button_right/button", on_control_button, 1)
 	self.header = self.druid:new_locale("text_header", "main_page")
 end
 
 
 function init(self)
-	druid.set_default_style(empty_style)
 	druid.set_default_style(bounce_style)
 	self.druid = druid.new(self)
 
 	init_top_panel(self)
+	self.page = 1
 	main_page.setup_page(self)
+	text_page.setup_page(self)
 end
 
 

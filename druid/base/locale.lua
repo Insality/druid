@@ -21,7 +21,7 @@ function M.init(self, node, lang_id, no_adjust)
 end
 
 
-function M.raw_set(self, text)
+function M.set_to(self, text)
 	self.last_locale = false
 	self.text:set_to(text)
 end
