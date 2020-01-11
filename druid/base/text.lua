@@ -16,36 +16,42 @@ function M.init(self, node, value, is_locale, max_width)
 	self.max_width = max_width
 	self.node = helper.get_node(node)
 	self.start_scale = gui.get_scale(self.node)
+	self.scale = self.start_scale
 	self.last_color = gui.get_color(self.node)
 
 	if is_locale then
-		self.text_id = value
-		self:translate()
+		self:translate(value)
 	else
 		self:set_to(value or 0)
 	end
+
 	return self
 end
 
 
-function M.translate(self)
-	if self.text_id then
-		self:set_to(settings.get_text(self.text_id))
+function M.translate(self, locale_id)
+	self.last_locale = locale_id or self.last_locale
+	self:set_to(settings.get_text(self.last_locale))
+end
+
+
+function M.on_change_language(self)
+	if self.last_locale then
+		M.translate(self)
 	end
 end
 
 
 --- Setup scale x, but can only be smaller, than start text scale
 local function setup_max_width(self)
-  local metrics = gui.get_text_metrics_from_node(self.node)
-  local cur_scale = gui.get_scale(self.node)
+	local metrics = gui.get_text_metrics_from_node(self.node)
+	local cur_scale = gui.get_scale(self.node)
 
-  if metrics.width * cur_scale.x > self.max_width then
-    local scale_modifier = self.max_width / metrics.width
-    scale_modifier = math.min(scale_modifier, self.start_scale.x)
-    local new_scale = vmath.vector3(scale_modifier, scale_modifier, cur_scale.z)
-    gui.set_scale(self.node, new_scale)
-  end
+	local scale_modifier = self.max_width / metrics.width
+	scale_modifier = math.min(scale_modifier, self.start_scale.x)
+	local new_scale = vmath.vector3(scale_modifier, scale_modifier, cur_scale.z)
+	gui.set_scale(self.node, new_scale)
+	self.scale = new_scale
 end
 
 

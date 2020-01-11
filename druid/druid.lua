@@ -16,17 +16,17 @@ local _fct_metatable = {}
 --- Basic components
 M.comps = {
 	button = require("druid.base.button"),
-	back_handler = require("druid.base.back_handler"),
 	blocker = require("druid.base.blocker"),
+	back_handler = require("druid.base.back_handler"),
 	text = require("druid.base.text"),
 	timer = require("druid.base.timer"),
 	progress = require("druid.base.progress"),
 	grid = require("druid.base.grid"),
 	scroll = require("druid.base.scroll"),
-	checkbox = require("druid.base.checkbox"),
-	radio_group = require("druid.base.radio_group"),
-	checkbox_group = require("druid.base.checkbox_group"),
 	slider = require("druid.base.slider"),
+	checkbox = require("druid.base.checkbox"),
+	checkbox_group = require("druid.base.checkbox_group"),
+	radio_group = require("druid.base.radio_group"),
 
 	progress_rich = require("druid.rich.progress_rich"),
 }

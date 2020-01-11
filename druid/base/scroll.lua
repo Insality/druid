@@ -23,7 +23,6 @@ function M.init(self, scroll_parent, input_zone, border)
 	self.node = helper.get_node(scroll_parent)
 	self.input_zone = helper.get_node(input_zone)
 	self.zone_size = gui.get_size(self.input_zone)
-	self:set_border(border)
 	self.soft_size = settings.SOFT_ZONE_SIZE
 
 	-- Distance from node to node's center
@@ -34,7 +33,8 @@ function M.init(self, scroll_parent, input_zone, border)
 
 	self.is_inert = true
 	self.inert = vmath.vector3(0)
-	self.pos = gui.get_position(self.node)
+	self.start_pos = gui.get_position(self.node)
+	self.pos = self.start_pos
 	self.target = vmath.vector3(self.pos)
 
 	self.input = {
@@ -43,6 +43,8 @@ function M.init(self, scroll_parent, input_zone, border)
 		start_y = 0,
 		side = false,
 	}
+
+	self:set_border(border)
 end
 
 
@@ -390,6 +392,12 @@ end
 --- Set the scroll possibly area
 function M.set_border(self, border)
 	self.border = border
+
+	self.border.x = self.border.x + self.start_pos.x
+	self.border.z = self.border.z + self.start_pos.x
+	self.border.y = self.border.y + self.start_pos.y
+	self.border.w = self.border.w + self.start_pos.y
+
 	border.z = math.max(border.x, border.z)
 	border.w = math.max(border.y, border.w)
 	self.can_x = (border.x ~= border.z)
