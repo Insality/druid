@@ -12,7 +12,7 @@ M.interest = {
 
 
 function M.init(self, node)
-	self.node = helper.get_node(node)
+	self.node = helper.node(node)
 	self.event = const.ACTION_TOUCH
 end
 

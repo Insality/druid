@@ -14,7 +14,7 @@ local empty = function() end
 
 
 function M.init(self, node, seconds_from, seconds_to, callback)
-	self.node = helper.get_node(node)
+	self.node = helper.node(node)
 	seconds_from = math.max(seconds_from, 0)
 	seconds_to = math.max(seconds_to or 0, 0)
 	callback = callback or empty
@@ -32,7 +32,9 @@ end
 
 
 --- Set text to text field
--- @param set_to - set value in seconds
+-- @function timer:set_to
+-- @tparam table self Component instance
+-- @tparam number set_to Value in seconds
 function M.set_to(self, set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, formats.second_string_min(set_to))
@@ -40,15 +42,19 @@ end
 
 
 --- Called when update
--- @param is_on - boolean is timer on
+-- @function timer:set_state
+-- @tparam table self Component instance
+-- @tparam boolean is_on Timer enable state
 function M.set_state(self, is_on)
 	self.is_on = is_on
 end
 
 
 --- Set time interval
--- @param from - "from" time in seconds
--- @param to - "to" time in seconds
+-- @function timer:set_interval
+-- @tparam table self Component instance
+-- @tparam number from Start time in seconds
+-- @tparam number to Target time in seconds
 function M.set_interval(self, from, to)
 	self.from = from
 	self.value = from
@@ -59,8 +65,6 @@ function M.set_interval(self, from, to)
 end
 
 
---- Called when update
--- @param dt - delta time
 function M.update(self, dt)
 	if self.is_on then
 		self.temp = self.temp + dt

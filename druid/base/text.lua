@@ -14,7 +14,7 @@ M.interest = {
 
 function M.init(self, node, value, is_locale, max_width)
 	self.max_width = max_width
-	self.node = helper.get_node(node)
+	self.node = helper.node(node)
 	self.start_scale = gui.get_scale(self.node)
 	self.scale = self.start_scale
 	self.last_color = gui.get_color(self.node)
@@ -29,6 +29,10 @@ function M.init(self, node, value, is_locale, max_width)
 end
 
 
+--- Translate the text by locale_id
+-- @function text:translate
+-- @tparam table self Component instance
+-- @tparam string locale_id Locale id
 function M.translate(self, locale_id)
 	self.last_locale = locale_id or self.last_locale
 	self:set_to(settings.get_text(self.last_locale))
@@ -56,7 +60,9 @@ end
 
 
 --- Set text to text field
--- @param set_to - set value to text field
+-- @function text:set_to
+-- @tparam table self Component instance
+-- @tparam string set_to Text for node
 function M.set_to(self, set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, set_to)
@@ -68,7 +74,9 @@ end
 
 
 --- Set color
--- @param color
+-- @function text:set_color
+-- @tparam table self Component instance
+-- @tparam vmath.vector4 color Color for node
 function M.set_color(self, color)
 	self.last_color = color
 	gui.set_color(self.node, color)
@@ -76,7 +84,9 @@ end
 
 
 --- Set alpha
--- @param alpha, number [0-1]
+-- @function text:set_alpha
+-- @tparam table self Component instance
+-- @tparam number alpha Alpha for node
 function M.set_alpha(self, alpha)
 	self.last_color.w = alpha
 	gui.set_color(self.node, self.last_color)
@@ -84,7 +94,9 @@ end
 
 
 --- Set scale
--- @param scale
+-- @function text:set_scale
+-- @tparam table self Component instance
+-- @tparam vmath.vector3 scale Scale for node
 function M.set_scale(self, scale)
 	self.last_scale = scale
 	gui.set_scale(self.node, scale)

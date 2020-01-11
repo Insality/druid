@@ -7,21 +7,19 @@ local settings = require("druid.settings").scroll
 
 local M = {}
 
-local SIDE_X = "x"
-local SIDE_Y = "y"
-
 M.interest = {
 	const.ON_UPDATE,
 	const.ON_SWIPE,
 }
 
 -- Global on all scrolls
+-- TODO: remove it
 M.current_scroll = nil
 
 
 function M.init(self, scroll_parent, input_zone, border)
-	self.node = helper.get_node(scroll_parent)
-	self.input_zone = helper.get_node(input_zone)
+	self.node = helper.node(scroll_parent)
+	self.input_zone = helper.node(input_zone)
 	self.zone_size = gui.get_size(self.input_zone)
 	self.soft_size = settings.SOFT_ZONE_SIZE
 
@@ -280,14 +278,11 @@ function M.on_input(self, action_id, action)
 			if not M.current_scroll and dist >= settings.DEADZONE then
 				local dx = math.abs(inp.start_x - action.x)
 				local dy = math.abs(inp.start_y - action.y)
-				if dx > dy then
-					inp.side = SIDE_X
-				else
-					inp.side = SIDE_Y
-				end
+				inp.side = (dx > dy) and const.SIDE.X or const.SIDE.Y
+
 				-- Check scroll side if we can scroll
-				if (self.can_x and inp.side == SIDE_X or
-					self.can_y and inp.side == SIDE_Y) then
+				if (self.can_x and inp.side == const.SIDE.X or
+					self.can_y and inp.side == const.SIDE.Y) then
 						M.current_scroll = self
 				end
 			end
@@ -308,6 +303,7 @@ function M.on_input(self, action_id, action)
 			M.current_scroll = nil
 			result = true
 		end
+
 		check_threshold(self)
 	end
 
@@ -316,6 +312,7 @@ end
 
 
 --- Start scroll to target point
+-- @function scroll:scroll_to
 -- @tparam point vector3 target point
 -- @tparam[opt] bool is_instant instant scroll flag
 -- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
@@ -343,7 +340,11 @@ function M.scroll_to(self, point, is_instant)
 end
 
 
---- Scroll to item in scroll by points index
+--- Scroll to item in scroll by point index
+-- @function scroll:init
+-- @tparam table self Component instance
+-- @tparam number index Point index
+-- @tparam[opt] boolean skip_cb If true, skip the point callback
 function M.scroll_to_index(self, index, skip_cb)
 	index = helper.clamp(index, 1, #self.points)
 
@@ -359,8 +360,11 @@ function M.scroll_to_index(self, index, skip_cb)
 end
 
 
---- Set points of interest
+--- Set points of interest.
 -- Scroll will always centered on closer points
+-- @function scroll:set_points
+-- @tparam table self Component instance
+-- @tparam table points Array of vector3 points
 function M.set_points(self, points)
 	self.points = points
 	-- cause of parent move in other side by y
@@ -375,21 +379,30 @@ function M.set_points(self, points)
 end
 
 
---- Enable or disable scroll inert
+--- Enable or disable scroll inert.
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
+-- @function scroll:set_inert
+-- @tparam table self Component instance
+-- @tparam boolean state Inert scroll state
 function M.set_inert(self, state)
 	self.is_inert = state
 end
 
 
 --- Set the callback on scrolling to point (if exist)
+-- @function scroll:on_point_move
+-- @tparam table self Component instance
+-- @tparam function callback Callback on scroll to point of interest
 function M.on_point_move(self, callback)
 	self.on_point_callback = callback
 end
 
 
 --- Set the scroll possibly area
+-- @function scroll:set_border
+-- @tparam table self Component instance
+-- @tparam vmath.vector3 border Size of scrolling area
 function M.set_border(self, border)
 	self.border = border
 

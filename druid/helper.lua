@@ -1,6 +1,8 @@
 --- Druid helper module
 -- @module helper
 
+local const = require("druid.const")
+
 local M = {}
 
 --- Text node or icon node can be nil
@@ -79,9 +81,8 @@ function M.after(count, callback)
 end
 
 
-local STRING = "string"
-function M.get_node(node_or_name)
-	if type(node_or_name) == STRING then
+function M.node(node_or_name)
+	if type(node_or_name) == const.STRING then
 		return gui.get_node(node_or_name)
 	end
 	return node_or_name
@@ -142,19 +143,8 @@ function M.is_enabled(node)
 end
 
 
-local pivots = {
-	[gui.PIVOT_CENTER] = vmath.vector3(0),
-	[gui.PIVOT_N] = vmath.vector3(0, 0.5, 0),
-	[gui.PIVOT_NE] = vmath.vector3(0.5, 0.5, 0),
-	[gui.PIVOT_E] = vmath.vector3(0.5, 0, 0),
-	[gui.PIVOT_SE] = vmath.vector3(0.5, -0.5, 0),
-	[gui.PIVOT_S] = vmath.vector3(0, -0.5, 0),
-	[gui.PIVOT_SW] = vmath.vector3(-0.5, -0.5, 0),
-	[gui.PIVOT_W] = vmath.vector3(-0.5, 0, 0),
-	[gui.PIVOT_NW] = vmath.vector3(-0.5, -0.5, 0),
-}
 function M.get_pivot_offset(pivot)
-	return pivots[pivot]
+	return const.PIVOTS[pivot]
 end
 
 
