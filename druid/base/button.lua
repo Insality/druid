@@ -74,7 +74,7 @@ local function on_button_release(self)
 			if self.tap_anim then
 				self.tap_anim(self)
 			end
-			self.callback(self.parent.parent, self.params, self)
+			self.callback(self.context, self.params, self)
 			settings.play_sound(self.sound)
 		else
 			set_hover(self, false)
@@ -151,7 +151,7 @@ function M.deactivate(self, is_animate, callback)
 		-- callback call three times in gui.animation
 		local clbk = helper.after(3, function()
 			if callback then
-				callback(self.parent.parent)
+				callback(self.context)
 			end
 		end)
 
@@ -167,7 +167,7 @@ function M.deactivate(self, is_animate, callback)
 		gui.set_color(self.node, M.DEFAULT_DEACTIVATE_COLOR)
 		gui.set_scale(self.node, M.DEFAULT_DEACTIVATE_SCALE)
 		if callback then
-			callback(self.parent.parent)
+			callback(self.context)
 		end
 	end
 end
@@ -179,7 +179,7 @@ function M.activate(self, is_animate, callback)
 		local clbk = helper.after(3, function()
 				self.disabled = false
 				if callback then
-					callback(self.parent.parent)
+					callback(self.context)
 				end
 		end)
 
@@ -196,7 +196,7 @@ function M.activate(self, is_animate, callback)
 		gui.set_scale(self.node, M.DEFAULT_ACTIVATE_SCALE)
 		self.disabled = false
 		if callback then
-			callback(self.parent.parent)
+			callback(self.context)
 		end
 	end
 end

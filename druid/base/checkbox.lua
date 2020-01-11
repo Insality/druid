@@ -21,7 +21,7 @@ function M.set_state(self, state, is_silence)
 	state_animate(self.node, state)
 
 	if not is_silence and self.callback then
-		self.callback(self.parent.parent, state)
+		self.callback(self.context, state)
 	end
 end
 
@@ -31,18 +31,18 @@ function M.get_state(self)
 end
 
 
--- TODO: pass self as first parameter
-local function on_click(context, self)
+local function on_click(self)
 	M.set_state(self, not self.state)
 end
 
 
 function M.init(self, node, callback, click_node)
+	self.druid = helper.get_druid(self)
 	self.node = helper.node(node)
 	self.click_node = helper.node(click_node)
 	self.callback = callback
 
-	self.button = self.parent:new_button(self.click_node or self.node, on_click, self)
+	self.button = self.druid:new_button(self.click_node or self.node, on_click)
 	M.set_state(self, false, true)
 end
 

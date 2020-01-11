@@ -1,6 +1,8 @@
 --- Radio group module
 -- @module base.checkbox_group
 
+local helper = require("druid.helper")
+
 local M = {}
 
 
@@ -10,7 +12,7 @@ local function on_checkbox_click(self, index)
 	end
 
 	if self.callback then
-		self.callback(self.parent.parent, index)
+		self.callback(self.context, index)
 	end
 end
 
@@ -35,12 +37,13 @@ end
 
 
 function M.init(self, nodes, callback, click_nodes)
+	self.druid = helper.get_druid(self)
 	self.checkboxes = {}
 	self.callback = callback
 
 	for i = 1, #nodes do
 		local click_node = click_nodes and click_nodes[i] or nil
-		local checkbox = self.parent:new_checkbox(nodes[i], function()
+		local checkbox = self.druid:new_checkbox(nodes[i], function()
 			on_checkbox_click(self, i)
 		end, click_node)
 

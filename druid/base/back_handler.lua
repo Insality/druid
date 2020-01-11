@@ -26,7 +26,7 @@ end
 -- @tparam table action on_input action
 function M.on_input(self, action_id, action)
 	if action[const.RELEASED] then
-		self.callback(self.parent.parent, self.params)
+		self.callback(self.context, self.params)
 	end
 
 	return true

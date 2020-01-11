@@ -1,6 +1,7 @@
 --- Component for rich progress component
 -- @module rich.progress_rich
 
+local helper = require("druid.helper")
 local settings = require("druid.settings")
 local pr_settings = settings.progress_rich
 
@@ -8,9 +9,10 @@ local M = {}
 
 
 function M.init(self, name, red, green, key)
-	self.red = self.parent:new_progress(red, key)
-	self.green = self.parent:new_progress(green, key)
-	self.fill = self.parent:new_progress(name, key)
+	self.druid = helper.get_druid(self)
+	self.red = self.druid:new_progress(red, key)
+	self.green = self.druid:new_progress(green, key)
+	self.fill = self.druid:new_progress(name, key)
 end
 
 

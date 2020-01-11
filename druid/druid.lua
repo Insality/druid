@@ -48,6 +48,8 @@ end
 -- @tparam table module lua table with module
 function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
+	-- Possibly: druid.new(druid.BUTTON, etc?)
+	-- Current way is very implicit
 	_fct_metatable["new_" .. name] = function(self, ...)
 		return _fct_metatable.new(self, module, ...)
 	end
@@ -62,8 +64,10 @@ function M.new(component_script)
 		register_basic_components()
 		register_basic_components = false
 	end
-	local self = setmetatable({}, {__index = _fct_metatable})
-	self.parent = component_script
+	local self = setmetatable({}, { __index = _fct_metatable })
+	-- Druid context here (who created druid)
+	-- Usually gui_script, but can be component from helper.get_druid(component)
+	self._context = component_script
 	return self
 end
 
@@ -77,9 +81,10 @@ end
 
 
 local function create(self, module)
-	local instance = setmetatable({}, {__index = module})
-	instance.parent = self
-	self[#self + 1] = instance
+	local instance = setmetatable({}, { __index = module })
+	-- Component context, self from component creation
+	instance.context = self._context
+	table.insert(self, instance)
 
 	local register_to = module.interest
 	if register_to then
@@ -89,13 +94,14 @@ local function create(self, module)
 			if not self[v] then
 				self[v] = {}
 			end
-			self[v][#self[v] + 1] = instance
+			table.insert(self[v], instance)
 
 			if const.UI_INPUT[v] then
 				input_init(self)
 			end
 		end
 	end
+
 	return instance
 end
 
