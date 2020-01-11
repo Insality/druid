@@ -840,7 +840,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "SImple"
+  text: "Simple"
   font: "game"
   id: "text_simple"
   xanchor: XANCHOR_NONE

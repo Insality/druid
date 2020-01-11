@@ -12,9 +12,9 @@ M.interest = {
 }
 
 
-function M.init(self, node, lang_id)
+function M.init(self, node, lang_id, no_adjust)
 	self.druid = helper.get_druid(self)
-	self.text = self.druid:new_text(node)
+	self.text = self.druid:new_text(node, lang_id, no_adjust)
 	self:translate(lang_id)
 
 	return self

@@ -2,23 +2,27 @@
 -- Good working with localization system
 -- @module base.text
 
+local const = require("druid.const")
 local helper = require("druid.helper")
 
 local M = {}
-M.interest = {}
 
 
-function M.init(self, node, value, no_text_adjust)
+function M.init(self, node, value, no_adjust)
 	self.node = helper.node(node)
-	self.start_scale = gui.get_scale(self.node)
 	self.start_pivot = gui.get_pivot(self.node)
+
+	self.start_pos = gui.get_position(self.node)
+	self.pos = gui.get_position(self.node)
+
+	self.start_scale = gui.get_scale(self.node)
+	self.scale = gui.get_scale(self.node)
 
 	self.text_area = gui.get_size(self.node)
 	self.text_area.x = self.text_area.x * self.start_scale.x
 	self.text_area.y = self.text_area.y * self.start_scale.y
 
-	self.is_no_text_adjust = no_text_adjust
-	self.scale = self.start_scale
+	self.is_no_adjust = no_adjust
 	self.last_color = gui.get_color(self.node)
 
 	self:set_to(value or 0)
@@ -54,7 +58,7 @@ function M.set_to(self, set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, set_to)
 
-	if not self.is_no_text_adjust then
+	if not self.is_no_adjust then
 		update_text_area_size(self)
 	end
 end
@@ -90,8 +94,26 @@ function M.set_scale(self, scale)
 end
 
 
+--- Set text pivot. Text will re-anchor inside
+-- his text area
+-- @function text:set_pivot
+-- @tparam table self Component instance
+-- @tparam gui.pivot pivot Gui pivot constant
 function M.set_pivot(self, pivot)
+	local prev_pivot = gui.get_pivot(self.node)
+	local prev_offset = const.PIVOTS[prev_pivot]
 
+	gui.set_pivot(self.node, pivot)
+	local cur_offset = const.PIVOTS[pivot]
+
+	local pos_offset = vmath.vector3(
+		self.text_area.x * (cur_offset.x - prev_offset.x),
+		self.text_area.y * (cur_offset.y - prev_offset.y),
+		0
+	)
+
+	self.pos = self.pos + pos_offset
+	gui.set_position(self.node, self.pos)
 end
 
 
