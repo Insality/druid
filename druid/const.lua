@@ -32,7 +32,7 @@ M.PIVOTS = {
 	[gui.PIVOT_S] = vmath.vector3(0, -0.5, 0),
 	[gui.PIVOT_SW] = vmath.vector3(-0.5, -0.5, 0),
 	[gui.PIVOT_W] = vmath.vector3(-0.5, 0, 0),
-	[gui.PIVOT_NW] = vmath.vector3(-0.5, -0.5, 0),
+	[gui.PIVOT_NW] = vmath.vector3(-0.5, 0.5, 0),
 }
 
 M.SIDE = {
