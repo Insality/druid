@@ -55,5 +55,6 @@ M.SPECIFIC_UI_MESSAGES = {
 }
 
 M.EMPTY_FUNCTION = function() end
+M.EMPTY_STRING = ""
 
 return M
