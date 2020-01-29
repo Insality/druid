@@ -4,6 +4,7 @@
 local M = {}
 
 M.is_debug = false
+M.default_style = nil
 
 
 function M.get_text(name)

@@ -4,17 +4,13 @@
 -- to create your own rich components.
 -- @module druid
 
-
 local const = require("druid.const")
 local druid_instance = require("druid.system.druid_instance")
 local settings = require("druid.system.settings")
 
 local M = {}
 
-
 local log = settings.log
--- Temporary, what the place for it?
-local default_style = {}
 
 
 --- Basic components
@@ -74,7 +70,7 @@ function M.new(component_script, style)
 	-- Druid context here (who created druid)
 	-- Usually gui_script, but can be component from self:get_druid()
 	self._context = component_script
-	self._style = style or default_style
+	self._style = style or settings.default_style
 
 	-- TODO: Find the better way to handle components
 	-- All component list
@@ -87,7 +83,7 @@ end
 
 
 function M.set_default_style(style)
-	default_style = style
+	settings.default_style = style
 end
 
 
