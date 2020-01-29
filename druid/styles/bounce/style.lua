@@ -1,4 +1,4 @@
-local settings = require("druid.settings")
+local settings = require("druid.system.settings")
 local anims = require("druid.styles.bounce.anims")
 
 local M = {}

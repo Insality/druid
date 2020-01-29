@@ -1,5 +1,5 @@
 local druid = require("druid.druid")
-local druid_settings = require("druid.settings")
+local druid_settings = require("druid.system.settings")
 
 local lang = {
 	locale_text = "Localized"

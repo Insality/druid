@@ -7,7 +7,7 @@
 
 local const = require("druid.const")
 local druid_instance = require("druid.system.druid_instance")
-local settings = require("druid.settings")
+local settings = require("druid.system.settings")
 
 local M = {}
 
@@ -85,6 +85,7 @@ end
 
 function M.set_text_function(callback)
 	settings.get_text = callback or const.EMPTY_FUNCTION
+	-- TODO: Update all localized text
 end
 
 
