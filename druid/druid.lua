@@ -71,7 +71,7 @@ function M.new(component_script, style)
 	end
 	local self = setmetatable({}, { __index = druid_instance })
 	-- Druid context here (who created druid)
-	-- Usually gui_script, but can be component from helper.get_druid(component)
+	-- Usually gui_script, but can be component from self:get_druid()
 	self._context = component_script
 	self._style = style or default_style
 	return self

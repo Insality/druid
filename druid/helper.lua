@@ -96,10 +96,10 @@ end
 -- node - может брать ноду у компонента по схеме (если есть
 -- template или таблица нод после gui.clone_tree)
 function M.node(component, name)
-	local template_name = component.template or const.EMPTY_STRING
+	local template_name = component._meta.template or const.EMPTY_STRING
 
-	if component.nodes then
-		return component.nodes[template_name .. name]
+	if component._meta.nodes then
+		return component._meta.nodes[template_name .. name]
 	else
 		return gui.get_node(template_name .. name)
 	end
@@ -162,21 +162,6 @@ end
 
 function M.get_pivot_offset(pivot)
 	return const.PIVOTS[pivot]
-end
-
-
-function M.get_druid(self)
-	local context = { _context = self }
-	return setmetatable(context, { __index = self.context.druid })
-end
-
-
-function M.get_style(self, section)
-	if not self.druid_style then
-		return {}
-	end
-
-	return self.druid_style[section] or {}
 end
 
 

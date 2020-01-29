@@ -3,8 +3,9 @@
 -- @module base.grid
 
 local helper = require("druid.helper")
+local component = require("druid.system.component")
 
-local M = {}
+local M = component.new("grid")
 
 
 function M.init(self, parent, element, in_row)

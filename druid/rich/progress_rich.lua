@@ -1,14 +1,14 @@
 --- Component for rich progress component
 -- @module rich.progress_rich
 
-local helper = require("druid.helper")
+local component = require("druid.system.component")
 
-local M = {}
+local M = component.new("progress_rich")
 
 
 function M.init(self, name, red, green, key)
-	self.druid = helper.get_druid(self)
-	self.style = helper.get_style(self, "PROGRESS_RICH")
+	self.druid = self:get_druid()
+	self.style = self:get_style()
 	self.red = self.druid:new_progress(red, key)
 	self.green = self.druid:new_progress(green, key)
 	self.fill = self.druid:new_progress(name, key)

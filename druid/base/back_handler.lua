@@ -2,11 +2,10 @@
 -- @module base.back_handler
 
 local const = require("druid.const")
+local component = require("druid.system.component")
 
-local M = {}
-M.interest = {
-	const.ON_INPUT
-}
+local M = component.new("back_handler", { const.ON_INPUT })
+
 
 --- Component init function
 -- @function back_handler:init
@@ -26,7 +25,7 @@ end
 -- @tparam table action on_input action
 function M.on_input(self, action_id, action)
 	if action[const.RELEASED] then
-		self.callback(self.context, self.params)
+		self.callback(self:get_context(), self.params)
 	end
 
 	return true

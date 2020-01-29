@@ -1,14 +1,14 @@
 --- Checkboux group module
 -- @module base.checkbox_group
 
-local helper = require("druid.helper")
+local component = require("druid.system.component")
 
-local M = {}
+local M = component.new("checkbox_group")
 
 
 local function on_checkbox_click(self, index)
 	if self.callback then
-		self.callback(self.context, index)
+		self.callback(self:get_context(), index)
 	end
 end
 
@@ -34,7 +34,7 @@ end
 
 
 function M.init(self, nodes, callback, click_nodes)
-	self.druid = helper.get_druid(self)
+	self.druid = self:get_druid()
 	self.checkboxes = {}
 	self.callback = callback
 

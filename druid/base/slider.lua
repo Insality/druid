@@ -3,16 +3,14 @@
 
 local helper = require("druid.helper")
 local const = require("druid.const")
+local component = require("druid.system.component")
 
-local M = {}
-M.interest = {
-	const.ON_SWIPE
-}
+local M = component.new("slider", { const.ON_SWIPE })
 
 
 local function on_change_value(self)
 	if self.callback then
-		self.callback(self.context, self.value)
+		self.callback(self:get_context(), self.value)
 	end
 end
 

@@ -2,8 +2,9 @@
 -- @module base.checkbox
 
 local helper = require("druid.helper")
+local component = require("druid.system.component")
 
-local M = {}
+local M = component.new("checkbox")
 
 
 function M.set_state(self, state, is_silence)
@@ -17,7 +18,7 @@ function M.set_state(self, state, is_silence)
 	end
 
 	if not is_silence and self.callback then
-		self.callback(self.context, state)
+		self.callback(self:get_context(), state)
 	end
 end
 
@@ -33,8 +34,8 @@ end
 
 
 function M.init(self, node, callback, click_node)
-	self.style = helper.get_style(self, "CHECKBOX")
-	self.druid = helper.get_druid(self)
+	self.style = self:get_style()
+	self.druid = self:get_druid()
 	self.node = helper.get_node(node)
 	self.click_node = helper.get_node(click_node)
 	self.callback = callback

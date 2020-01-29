@@ -16,11 +16,11 @@ end
 local function create(self, module)
 	local instance = setmetatable({}, { __index = module })
 	-- Component context, self from component creation
-	instance.context = self._context
-	instance.druid_style = self._style
+	instance:setup_component(self._context, self._style)
+
 	table.insert(self, instance)
 
-	local register_to = module.interest
+	local register_to = module._component.interest
 	if register_to then
 		local v
 		for i = 1, #register_to do
@@ -58,7 +58,7 @@ function M.remove(self, instance)
 		end
 	end
 
-	local interest = instance.interest
+	local interest = instance._component.interest
 	if interest then
 		local v
 		for i = 1, #interest do

@@ -164,7 +164,7 @@ function M.init(self, template_name, node_table)
 	local button = druid:new_button(...)
 
 	-- helper can return you the component style
-	local my_style = helper.get_style(self, "component_name")
+	local my_style = self:get_style()
 end
 
 ```

@@ -4,20 +4,16 @@
 local const = require("druid.const")
 local formats = require("druid.helper.formats")
 local helper = require("druid.helper")
+local component = require("druid.system.component")
 
-local M = {}
-M.interest = {
-	const.ON_UPDATE
-}
-
-local empty = function() end
+local M = component.new("timer", { const.ON_UPDATE })
 
 
 function M.init(self, node, seconds_from, seconds_to, callback)
 	self.node = helper.get_node(node)
 	seconds_from = math.max(seconds_from, 0)
 	seconds_to = math.max(seconds_to or 0, 0)
-	callback = callback or empty
+	callback = callback or const.EMPTY_FUNCTION
 
 	self:set_to(seconds_from)
 	self:set_interval(seconds_from, seconds_to)
@@ -25,7 +21,7 @@ function M.init(self, node, seconds_from, seconds_to, callback)
 
 	if seconds_to - seconds_from == 0 then
 		self:set_state(false)
-		self.callback(self.context, self)
+		self.callback(self:get_context(), self)
 	end
 	return self
 end
@@ -76,7 +72,7 @@ function M.update(self, dt)
 			M.set_to(self, self.value)
 			if self.value == self.target then
 				self:set_state(false)
-				self.callback(self.context, self)
+				self.callback(self:get_context(), self)
 			end
 		end
 	end

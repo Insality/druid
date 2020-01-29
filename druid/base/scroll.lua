@@ -3,13 +3,10 @@
 
 local helper = require("druid.helper")
 local const = require("druid.const")
+local component = require("druid.system.component")
 
-local M = {}
+local M = component.new("scroll", { const.ON_UPDATE, const.ON_SWIPE })
 
-M.interest = {
-	const.ON_UPDATE,
-	const.ON_SWIPE,
-}
 
 -- Global on all scrolls
 -- TODO: remove it
@@ -17,7 +14,7 @@ M.current_scroll = nil
 
 
 function M.init(self, scroll_parent, input_zone, border)
-	self.style = helper.get_style(self, "SCROLL")
+	self.style = self:get_style()
 	self.node = helper.get_node(scroll_parent)
 	self.input_zone = helper.get_node(input_zone)
 
@@ -355,7 +352,7 @@ function M.scroll_to_index(self, index, skip_cb)
 		self.selected = index
 
 		if not skip_cb and self.on_point_callback then
-			self.on_point_callback(self.context, index, self.points[index])
+			self.on_point_callback(self:get_context(), index, self.points[index])
 		end
 	end
 

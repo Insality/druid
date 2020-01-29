@@ -1,7 +1,7 @@
 local M = {}
 
 
-M.BUTTON = {
+M["button"] = {
 	BTN_SOUND = "click",
 	BTN_SOUND_DISABLED = "click",
 	DISABLED_COLOR = vmath.vector4(0, 0, 0, 1),
@@ -10,7 +10,7 @@ M.BUTTON = {
 }
 
 
-M.SCROLL = {
+M["scroll"] = {
 	FRICT_HOLD = 0, -- mult. for inert, while touching
 	FRICT = 0, -- mult for free inert
 	INERT_THRESHOLD = 2, -- speed to stop inertion
@@ -22,18 +22,18 @@ M.SCROLL = {
 }
 
 
-M.PROGRESS = {
+M["progress"] = {
 	SPEED = 5, -- progress bar fill rate, more faster
 	MIN_DELTA = 1
 }
 
 
-M.PROGRESS_RICH = {
+M["progress_rich"] = {
 	DELAY = 0, -- delay in seconds before main fill
 }
 
 
-M.CHECKBOX = {
+M["checkbox"] = {
 	on_change_state = function(self, node, state)
 		gui.set_enabled(node, state)
 	end
