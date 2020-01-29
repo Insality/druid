@@ -42,7 +42,7 @@ end
 
 local function setup_progress(self)
 	self.progress = self.druid:new_progress("progress_fill", "x", 0.4)
-	random_progress(self.progress, gui.get_node("text_progress"))
+	random_progress(self.progress, gui.get_node("text_progress_amount"))
 	timer.delay(2, true, function()
 		random_progress(self.progress, gui.get_node("text_progress_amount"))
 	end)
