@@ -100,9 +100,9 @@ end
 Basic custom component template looks like this:
 ```lua
 local const = require("druid.const")
+local component = require("druid.system.component")
 
-local M = {}
-M.interest = { const.ON_INPUT }
+local M = component.new("amazing_component", { const.ON_INPUT })
 
 function M.init(self, ...)
 	-- Component constructor
@@ -137,8 +137,9 @@ On each component recomended describe component schema in next way:
 ```lua
 -- Component module
 local helper = require("druid.helper")
+local component = require("druid.system.component")
 
-local M = {}
+local M = component.new("new_component")
 
 local SCHEME = {
 	ROOT = "/root",
@@ -146,20 +147,18 @@ local SCHEME = {
 	TITLE = "/title"
 }
 
--- TODO: Rework self.template/self.nodes
--- Make self._inner_data? { component_name, template, nodes }
 function M.init(self, template_name, node_table)
 	-- If component use template, setup it:
-	self.template = template_name
+	self:set_template(template_name)
 
 	-- If component was cloned with gui.clone_tree, pass his nodes
-	self.nodes = node_table
+	self:set_nodes(node_table)
 
 	-- helper can get node from gui/template/table
 	local root = helper.node(self, SCHEME.ROOT)
 
 	-- This component can spawn another druid components:
-	local druid = helper.get_druid(self)
+	local druid = self:get_druid(self)
 	-- Button self on callback is self of _this_ component
 	local button = druid:new_button(...)
 

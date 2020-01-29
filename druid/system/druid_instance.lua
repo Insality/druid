@@ -80,24 +80,13 @@ function M.remove(self, instance)
 end
 
 
---- Called on_message
-function M.on_message(self, message_id, message, sender)
-	local specific_ui_message = const.SPECIFIC_UI_MESSAGES[message_id]
-	if specific_ui_message then
-		local array = self.components[message_id]
-		if array then
-			local item
-			for i = 1, #array do
-				item = array[i]
-				item[specific_ui_message](item, message, sender)
-			end
-		end
-	else
-		local array = self.components[const.ON_MESSAGE]
-		if array then
-			for i = 1, #array do
-				array[i]:on_message(message_id, message, sender)
-			end
+--- Druid instance update function
+-- @function druid:update(dt)
+function M.update(self, dt)
+	local array = self.components[const.ON_UPDATE]
+	if array then
+		for i = 1, #array do
+			array[i]:update(dt)
 		end
 	end
 end
@@ -129,8 +118,11 @@ local function match_event(action_id, events)
 end
 
 
---- Called ON_INPUT
+--- Druid instance on_input function
+-- @function druid:on_input(action_id, action)
 function M.on_input(self, action_id, action)
+	-- TODO: расписать отличия ON_SWIPE и ON_INPUT
+	-- Почему-то некоторые используют ON_SWIPE, а логичнее ON_INPUT? (blocker, slider)
 	local array = self.components[const.ON_SWIPE]
 	if array then
 		local v, result
@@ -161,12 +153,25 @@ function M.on_input(self, action_id, action)
 end
 
 
---- Called on_update
-function M.update(self, dt)
-	local array = self.components[const.ON_UPDATE]
-	if array then
-		for i = 1, #array do
-			array[i]:update(dt)
+--- Druid instance on_message function
+-- @function druid:on_message(message_id, message, sender)
+function M.on_message(self, message_id, message, sender)
+	local specific_ui_message = const.SPECIFIC_UI_MESSAGES[message_id]
+	if specific_ui_message then
+		local array = self.components[message_id]
+		if array then
+			local item
+			for i = 1, #array do
+				item = array[i]
+				item[specific_ui_message](item, message, sender)
+			end
+		end
+	else
+		local array = self.components[const.ON_MESSAGE]
+		if array then
+			for i = 1, #array do
+				array[i]:on_message(message_id, message, sender)
+			end
 		end
 	end
 end

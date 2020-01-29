@@ -14,7 +14,7 @@ local log = settings.log
 
 
 --- Basic components
-M.comps = {
+M.components = {
 	button = require("druid.base.button"),
 	blocker = require("druid.base.blocker"),
 	back_handler = require("druid.base.back_handler"),
@@ -34,7 +34,7 @@ M.comps = {
 
 
 local function register_basic_components()
-	for k, v in pairs(M.comps) do
+	for k, v in pairs(M.components) do
 		if not druid_instance["new_" .. k] then
 			M.register(k, v)
 		else
@@ -60,25 +60,25 @@ end
 
 --- Create Druid instance for creating components
 -- @return instance with all ui components
-function M.new(component_script, style)
+function M.new(context, style)
 	if register_basic_components then
 		register_basic_components()
 		register_basic_components = false
 	end
-	local self = setmetatable({}, { __index = druid_instance })
+	local druid = setmetatable({}, { __index = druid_instance })
 
 	-- Druid context here (who created druid)
 	-- Usually gui_script, but can be component from self:get_druid()
-	self._context = component_script
-	self._style = style or settings.default_style
+	druid._context = context
+	druid._style = style or settings.default_style
 
 	-- TODO: Find the better way to handle components
 	-- All component list
-	self.all_components = {}
+	druid.all_components = {}
 	-- Map: interest: {components}
-	self.components = {}
+	druid.components = {}
 
-	return self
+	return druid
 end
 
 

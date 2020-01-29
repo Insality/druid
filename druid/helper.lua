@@ -1,7 +1,6 @@
 --- Druid helper module
 -- @module helper
 
-
 local const = require("druid.const")
 
 local M = {}
@@ -71,22 +70,11 @@ function M.centrate_icon_with_text(icon_node, text_node, margin)
 end
 
 
--- call callback after count calls
-function M.after(count, callback)
-	local closure = function()
-		count = count - 1
-		if count <= 0 then
-			callback()
-		end
-	end
-	return closure
-end
-
-
 function M.get_node(node_or_name)
 	if type(node_or_name) == const.STRING then
 		return gui.get_node(node_or_name)
 	end
+
 	return node_or_name
 end
 
@@ -97,9 +85,10 @@ end
 -- template или таблица нод после gui.clone_tree)
 function M.node(component, name)
 	local template_name = component._meta.template or const.EMPTY_STRING
+	local nodes = component._meta.nodes
 
-	if component._meta.nodes then
-		return component._meta.nodes[template_name .. name]
+	if nodes then
+		return nodes[template_name .. name]
 	else
 		return gui.get_node(template_name .. name)
 	end
@@ -139,6 +128,7 @@ function M.sign(val)
 	if val == 0 then
 		return 0
 	end
+
 	return (val < 0) and -1 or 1
 end
 
@@ -156,6 +146,7 @@ function M.is_enabled(node)
 		is_enabled = is_enabled and gui.is_enabled(parent)
 		parent = gui.get_parent(parent)
 	end
+
 	return is_enabled
 end
 
