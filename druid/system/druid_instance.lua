@@ -1,10 +1,16 @@
 local const = require("druid.const")
 local druid_input = require("druid.helper.druid_input")
+local settings = require("druid.system.settings")
 
 local M = {}
 
 
 local function input_init(self)
+	-- TODO: To custom settings
+	if not settings.auto_focus_gain then
+		return
+	end
+
 	if not self.input_inited then
 		self.input_inited = true
 		druid_input.focus()
@@ -16,6 +22,7 @@ end
 local function create(self, module)
 	---@class component
 	local instance = setmetatable({}, { __index = module })
+
 	-- Component context, self from component creation
 	instance:setup_component(self._context, self._style)
 

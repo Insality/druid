@@ -16,8 +16,8 @@ function instance.get_style(self)
 end
 
 
-function instance.set_style(self, component_style)
-	self._meta.style = component_style
+function instance.set_style(self, druid_style)
+	self._meta.style = druid_style
 end
 
 

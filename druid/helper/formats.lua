@@ -5,6 +5,7 @@ local const = require("druid.const")
 
 local M = {}
 
+
 --- Return number with zero number prefix
 -- @function formats.add_prefix_zeros
 -- @tparam number num Number for conversion
@@ -13,7 +14,7 @@ local M = {}
 function M.add_prefix_zeros(num, count)
 	local result = tostring(num)
 	for i = string.len(result), count - 1 do
-		result = const.ZERO..result
+		result = const.ZERO .. result
 	end
 	return result
 end
