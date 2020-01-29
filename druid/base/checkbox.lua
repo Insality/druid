@@ -35,8 +35,8 @@ end
 function M.init(self, node, callback, click_node)
 	self.style = helper.get_style(self, "CHECKBOX")
 	self.druid = helper.get_druid(self)
-	self.node = helper.node(node)
-	self.click_node = helper.node(click_node)
+	self.node = helper.get_node(node)
+	self.click_node = helper.get_node(click_node)
 	self.callback = callback
 
 	self.button = self.druid:new_button(self.click_node or self.node, on_click)

@@ -33,6 +33,7 @@ end)
 ## Components
 Druid provides next basic components:
 _insert simple gif of each?_
+_separate .md for each base component?_
 - **Button** - basic game button
 - **Text** - wrap on gui text node
 - **Blocker** - block input in node zone
@@ -44,8 +45,8 @@ _insert simple gif of each?_
 - **Grid** - manage node positions
 - **Slider** - simple slider (ex. volume adjust)
 - **Checkbox** - simple checkbox
-- **Checkbox** group - many checkbox
-- **Radio** group - many checkbox with single choice
+- **Checkbox group** - many checkbox
+- **Radio group** - many checkbox with single choice
 
 ## Styles
 You can setup default style for all druid module, for druid instance or any base druid component.

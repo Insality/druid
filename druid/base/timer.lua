@@ -14,7 +14,7 @@ local empty = function() end
 
 
 function M.init(self, node, seconds_from, seconds_to, callback)
-	self.node = helper.node(node)
+	self.node = helper.get_node(node)
 	seconds_from = math.max(seconds_from, 0)
 	seconds_to = math.max(seconds_to or 0, 0)
 	callback = callback or empty

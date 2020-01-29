@@ -83,11 +83,26 @@ function M.after(count, callback)
 end
 
 
-function M.node(node_or_name)
+function M.get_node(node_or_name)
 	if type(node_or_name) == const.STRING then
 		return gui.get_node(node_or_name)
 	end
 	return node_or_name
+end
+
+
+-- TODO: Определиться с get_node и node
+-- get_node - берет ноду по ноде или строке
+-- node - может брать ноду у компонента по схеме (если есть
+-- template или таблица нод после gui.clone_tree)
+function M.node(component, name)
+	local template_name = component.template or const.EMPTY_STRING
+
+	if component.nodes then
+		return component.nodes[template_name .. name]
+	else
+		return gui.get_node(template_name .. name)
+	end
 end
 
 

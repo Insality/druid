@@ -9,7 +9,7 @@ local M = {}
 
 
 function M.init(self, node, value, no_adjust)
-	self.node = helper.node(node)
+	self.node = helper.get_node(node)
 	self.start_pivot = gui.get_pivot(self.node)
 
 	self.start_pos = gui.get_position(self.node)
