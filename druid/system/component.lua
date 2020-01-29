@@ -1,3 +1,6 @@
+--- General component class
+--@class component
+
 local const = require("druid.const")
 
 local M = {}

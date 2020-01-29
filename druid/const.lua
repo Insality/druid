@@ -13,6 +13,7 @@ M.ACTION_BACK = hash("back")
 M.RELEASED = "released"
 M.PRESSED = "pressed"
 M.STRING = "string"
+M.TABLE = "table"
 M.ZERO = "0"
 
 --- Interests

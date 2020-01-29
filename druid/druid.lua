@@ -70,10 +70,18 @@ function M.new(component_script, style)
 		register_basic_components = false
 	end
 	local self = setmetatable({}, { __index = druid_instance })
+
 	-- Druid context here (who created druid)
 	-- Usually gui_script, but can be component from self:get_druid()
 	self._context = component_script
 	self._style = style or default_style
+
+	-- TODO: Find the better way to handle components
+	-- All component list
+	self.all_components = {}
+	-- Map: interest: {components}
+	self.components = {}
+
 	return self
 end
 

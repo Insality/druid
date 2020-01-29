@@ -14,23 +14,23 @@ end
 
 -- Create the component
 local function create(self, module)
+	---@class component
 	local instance = setmetatable({}, { __index = module })
 	-- Component context, self from component creation
 	instance:setup_component(self._context, self._style)
 
-	table.insert(self, instance)
+	table.insert(self.all_components, instance)
 
 	local register_to = module._component.interest
 	if register_to then
-		local v
 		for i = 1, #register_to do
-			v = register_to[i]
-			if not self[v] then
-				self[v] = {}
+			local interest = register_to[i]
+			if not self.components[interest] then
+				self.components[interest] = {}
 			end
-			table.insert(self[v], instance)
+			table.insert(self.components[interest], instance)
 
-			if const.UI_INPUT[v] then
+			if const.UI_INPUT[interest] then
 				input_init(self)
 			end
 		end
@@ -52,18 +52,17 @@ end
 
 
 function M.remove(self, instance)
-	for i = #self, 1, -1 do
-		if self[i] == instance then
+	for i = #self.all_components, 1, -1 do
+		if self.all_components[i] == instance then
 			table.remove(self, i)
 		end
 	end
 
-	local interest = instance._component.interest
-	if interest then
-		local v
-		for i = 1, #interest do
-			v = interest[i]
-			local array = self[v]
+	local interests = instance._component.interest
+	if interests then
+		for i = 1, #interests do
+			local interest = interests[i]
+			local array = self.components[interest]
 			for j = #array, 1, -1 do
 				if array[j] == instance then
 					table.remove(array, j)
@@ -78,7 +77,7 @@ end
 function M.on_message(self, message_id, message, sender)
 	local specific_ui_message = const.SPECIFIC_UI_MESSAGES[message_id]
 	if specific_ui_message then
-		local array = self[message_id]
+		local array = self.components[message_id]
 		if array then
 			local item
 			for i = 1, #array do
@@ -87,7 +86,7 @@ function M.on_message(self, message_id, message, sender)
 			end
 		end
 	else
-		local array = self[const.ON_MESSAGE]
+		local array = self.components[const.ON_MESSAGE]
 		if array then
 			for i = 1, #array do
 				array[i]:on_message(message_id, message, sender)
@@ -98,10 +97,10 @@ end
 
 
 local function notify_input_on_swipe(self)
-	if self[const.ON_INPUT] then
-		local len = #self[const.ON_INPUT]
+	if self.components[const.ON_INPUT] then
+		local len = #self.components[const.ON_INPUT]
 		for i = len, 1, -1 do
-			local comp = self[const.ON_INPUT][i]
+			local comp = self.components[const.ON_INPUT][i]
 			if comp.on_swipe then
 				comp:on_swipe()
 			end
@@ -111,7 +110,7 @@ end
 
 
 local function match_event(action_id, events)
-	if type(events) == "table" then
+	if type(events) == const.TABLE then
 		for i = 1, #events do
 			if action_id == events[i] then
 				return true
@@ -125,7 +124,7 @@ end
 
 --- Called ON_INPUT
 function M.on_input(self, action_id, action)
-	local array = self[const.ON_SWIPE]
+	local array = self.components[const.ON_SWIPE]
 	if array then
 		local v, result
 		local len = #array
@@ -139,7 +138,7 @@ function M.on_input(self, action_id, action)
 		end
 	end
 
-	array = self[const.ON_INPUT]
+	array = self.components[const.ON_INPUT]
 	if array then
 		local v
 		local len = #array
@@ -157,7 +156,7 @@ end
 
 --- Called on_update
 function M.update(self, dt)
-	local array = self[const.ON_UPDATE]
+	local array = self.components[const.ON_UPDATE]
 	if array then
 		for i = 1, #array do
 			array[i]:update(dt)
