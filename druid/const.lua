@@ -54,4 +54,6 @@ M.SPECIFIC_UI_MESSAGES = {
 	[M.ON_LAYOUT_CHANGED] = "on_layout_changed"
 }
 
+M.EMPTY_FUNCTION = function() end
+
 return M

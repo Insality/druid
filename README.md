@@ -15,14 +15,17 @@ Or point to the ZIP file of a  [specific release](https://github.com/AGulev/drui
 #### Code
 Adjust druid settings:
 ```lua
-local settings = require("druid.settings")
-settings.play_sound = function(name)
-	...
-end
+local druid = require("druid.druid")
 
-settings.get_text = function(lang_id)
+--- Function should return localized string by lang_id
+druid.set_text_function(function(lang_id)
 	...
-end
+end)
+
+-- Function should play sound by name
+druid.set_sound_function(function(name)
+	...
+end)
 ```
 
 ## Usage

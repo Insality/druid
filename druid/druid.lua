@@ -84,6 +84,16 @@ function M.set_default_style(style)
 end
 
 
+function M.set_text_function(callback)
+	settings.get_text = callback or const.EMPTY_FUNCTION
+end
+
+
+function M.set_sound_function(callback)
+	settings.play_sound = callback or const.EMPTY_FUNCTION
+end
+
+
 local function input_init(self)
 	if not self.input_inited then
 		self.input_inited = true
