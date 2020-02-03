@@ -86,7 +86,7 @@ end
 function M.set_text_function(callback)
 	settings.get_text = callback or const.EMPTY_FUNCTION
 	-- TODO: Update all localized text
-	-- TOOD: Need to store all current druid instances?
+	-- Need to store all current druid instances to iterate over it?
 end
 
 

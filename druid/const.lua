@@ -16,6 +16,8 @@ M.STRING = "string"
 M.TABLE = "table"
 M.ZERO = "0"
 
+M.ALL = "all"
+
 --- Interests
 M.ON_MESSAGE = hash("on_message")
 M.ON_UPDATE = hash("on_update")

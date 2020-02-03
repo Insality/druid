@@ -26,7 +26,9 @@ local function create(self, instance_class)
 
 	-- Component context, self from component creation
 	instance:setup_component(self._context, self._style)
-	table.insert(self.all_components, instance)
+
+	self.components[const.ALL] = self.components[const.ALL] or {}
+	table.insert(self.components[const.ALL], instance)
 
 	local register_to = instance:get_interests()
 	if register_to then
@@ -77,7 +79,6 @@ end
 function Druid.initialize(self, context, style)
 	self._context = context
 	self._style = style or settings.default_style
-	self.all_components = {}
 	self.components = {}
 end
 
@@ -97,8 +98,9 @@ end
 --- Remove component from druid instance
 -- It will call on_remove on component, if exist
 function Druid.remove(self, component)
-	for i = #self.all_components, 1, -1 do
-		if self.all_components[i] == component then
+	local all_components = self.components[const.ALL]
+	for i = #all_components, 1, -1 do
+		if all_components[i] == component then
 			if component.on_remove then
 				component:on_remove()
 			end
@@ -110,10 +112,10 @@ function Druid.remove(self, component)
 	if interests then
 		for i = 1, #interests do
 			local interest = interests[i]
-			local array = self.components[interest]
-			for j = #array, 1, -1 do
-				if array[j] == component then
-					table.remove(array, j)
+			local components = self.components[interest]
+			for j = #components, 1, -1 do
+				if components[j] == component then
+					table.remove(components, j)
 				end
 			end
 		end
@@ -124,10 +126,10 @@ end
 --- Druid instance update function
 -- @function druid:update(dt)
 function Druid.update(self, dt)
-	local array = self.components[const.ON_UPDATE]
-	if array then
-		for i = 1, #array do
-			array[i]:update(dt)
+	local components = self.components[const.ON_UPDATE]
+	if components then
+		for i = 1, #components do
+			components[i]:update(dt)
 		end
 	end
 end
@@ -138,11 +140,11 @@ end
 function Druid.on_input(self, action_id, action)
 	-- TODO: расписать отличия ON_SWIPE и ON_INPUT
 	-- Почему-то некоторые используют ON_SWIPE, а логичнее ON_INPUT? (blocker, slider)
-	local array = self.components[const.ON_SWIPE]
-	if array then
+	local components = self.components[const.ON_SWIPE]
+	if components then
 		local result
-		for i = #array, 1, -1 do
-			local v = array[i]
+		for i = #components, 1, -1 do
+			local v = components[i]
 			result = result or v:on_input(action_id, action)
 		end
 		if result then
@@ -151,10 +153,10 @@ function Druid.on_input(self, action_id, action)
 		end
 	end
 
-	array = self.components[const.ON_INPUT]
-	if array then
-		for i = #array, 1, -1 do
-			local v = array[i]
+	components = self.components[const.ON_INPUT]
+	if components then
+		for i = #components, 1, -1 do
+			local v = components[i]
 			if match_event(action_id, v.event) and v:on_input(action_id, action) then
 				return true
 			end
@@ -171,17 +173,17 @@ end
 function Druid.on_message(self, message_id, message, sender)
 	local specific_ui_message = const.SPECIFIC_UI_MESSAGES[message_id]
 	if specific_ui_message then
-		local array = self.components[message_id]
-		if array then
-			for i = 1, #array do
-				local item = array[i]
-				item[specific_ui_message](item, message, sender)
+		local components = self.components[message_id]
+		if components then
+			for i = 1, #components do
+				local component = components[i]
+				component[specific_ui_message](component, message, sender)
 			end
 		end
 	else
-		local array = self.components[const.ON_MESSAGE] or const.EMPTY_TABLE
-		for i = 1, #array do
-			array[i]:on_message(message_id, message, sender)
+		local components = self.components[const.ON_MESSAGE] or const.EMPTY_TABLE
+		for i = 1, #components do
+			components[i]:on_message(message_id, message, sender)
 		end
 	end
 end
