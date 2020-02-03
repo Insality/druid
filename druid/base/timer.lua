@@ -6,7 +6,7 @@ local formats = require("druid.helper.formats")
 local helper = require("druid.helper")
 local component = require("druid.system.component")
 
-local M = component.new("timer", { const.ON_UPDATE })
+local M = component.create("timer", { const.ON_UPDATE })
 
 
 function M.init(self, node, seconds_from, seconds_to, callback)

@@ -9,7 +9,8 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.system.component")
 
-local M = component.new("button", { const.ON_INPUT })
+local M = component.create("button", { const.ON_INPUT })
+
 
 --- Component init function
 -- @function button:init
@@ -21,6 +22,7 @@ local M = component.new("button", { const.ON_INPUT })
 -- @tparam[opt] string event Button react event, const.ACTION_TOUCH by default
 function M.init(self, node, callback, params, anim_node, event)
 	assert(callback, "Button should have callback. To block input on zone use blocker component")
+
 	self.style = self:get_style()
 	self.node = helper.get_node(node)
 

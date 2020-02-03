@@ -1,4 +1,4 @@
-![](media/druid_logo.png)
+[![](media/druid_logo.png)](https://AGulev.github.io/druid/)
 _travis/release bages_
 
 **Druid** - powerful defold component UI library. Use standart components or make your own game-specific to make amazing GUI in your games.
@@ -102,7 +102,7 @@ Basic custom component template looks like this:
 local const = require("druid.const")
 local component = require("druid.system.component")
 
-local M = component.new("amazing_component", { const.ON_INPUT })
+local M = component.create("amazing_component", { const.ON_INPUT })
 
 function M.init(self, ...)
 	-- Component constructor
@@ -139,7 +139,7 @@ On each component recomended describe component schema in next way:
 local helper = require("druid.helper")
 local component = require("druid.system.component")
 
-local M = component.new("new_component")
+local M = component.create("new_component")
 
 local SCHEME = {
 	ROOT = "/root",
@@ -172,8 +172,25 @@ end
 You can check our example here
 _TODO_
 
+## Reserver componeney keywords
+- initialize
+- init
+- update
+- on_input
+- on_message
+- on_swipe
+- setup_component
+- get_style
+- set_style
+- set_template
+- set_nodes
+- get_context
+- set_context
+- get_druid
+
 ## API
 _Link to ldoc_
+[API](https://AGulev.github.io/druid/)
 
 ## Internal
 Generate with `ldoc .` with `config.ld` file. [Instructions](https://github.com/stevedonovan/LDoc)
@@ -183,6 +200,7 @@ _TODO_
 
 
 ## License
+Using [middleclass by kikito](https://github.com/kikito/middleclass)
 MIT License
 
 

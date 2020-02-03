@@ -4,7 +4,7 @@
 local const = require("druid.const")
 local component = require("druid.system.component")
 
-local M = component.new("back_handler", { const.ON_INPUT })
+local M = component.create("back_handler", { const.ON_INPUT })
 
 
 --- Component init function

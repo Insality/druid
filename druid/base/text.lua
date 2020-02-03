@@ -6,7 +6,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.system.component")
 
-local M = component.new("text")
+local M = component.create("text")
 
 
 function M.init(self, node, value, no_adjust)

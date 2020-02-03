@@ -5,7 +5,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.system.component")
 
-local M = component.new("progress", { const.ON_UPDATE })
+local M = component.create("progress", { const.ON_UPDATE })
 
 
 --- Component init function

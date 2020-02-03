@@ -29,7 +29,14 @@ M.components = {
 	checkbox_group = require("druid.base.checkbox_group"),
 	radio_group = require("druid.base.radio_group"),
 
+	-- TODO:
+	-- input - text input
+	-- infinity_scroll -- to handle big data scroll
+
 	progress_rich = require("druid.rich.progress_rich"),
+
+	-- TODO: Examples:
+	-- Slider menu like clash royale
 }
 
 
@@ -52,8 +59,9 @@ function M.register(name, module)
 	-- Possibly: druid.new(druid.BUTTON, etc?)
 	-- Current way is very implicit
 	druid_instance["new_" .. name] = function(self, ...)
-		return druid_instance.new(self, module, ...)
+		return druid_instance.create(self, module, ...)
 	end
+
 	log("Register component", name)
 end
 
@@ -65,20 +73,8 @@ function M.new(context, style)
 		register_basic_components()
 		register_basic_components = false
 	end
-	local druid = setmetatable({}, { __index = druid_instance })
 
-	-- Druid context here (who created druid)
-	-- Usually gui_script, but can be component from self:get_druid()
-	druid._context = context
-	druid._style = style or settings.default_style
-
-	-- TODO: Find the better way to handle components
-	-- All component list
-	druid.all_components = {}
-	-- Map: interest: {components}
-	druid.components = {}
-
-	return druid
+	return druid_instance(context, style)
 end
 
 
@@ -90,6 +86,7 @@ end
 function M.set_text_function(callback)
 	settings.get_text = callback or const.EMPTY_FUNCTION
 	-- TODO: Update all localized text
+	-- TOOD: Need to store all current druid instances?
 end
 
 

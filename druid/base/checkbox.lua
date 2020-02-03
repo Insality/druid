@@ -4,7 +4,7 @@
 local helper = require("druid.helper")
 local component = require("druid.system.component")
 
-local M = component.new("checkbox")
+local M = component.create("checkbox")
 
 
 function M.set_state(self, state, is_silence)

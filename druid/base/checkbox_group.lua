@@ -3,7 +3,7 @@
 
 local component = require("druid.system.component")
 
-local M = component.new("checkbox_group")
+local M = component.create("checkbox_group")
 
 
 local function on_checkbox_click(self, index)

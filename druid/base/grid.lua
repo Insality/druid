@@ -5,7 +5,7 @@
 local helper = require("druid.helper")
 local component = require("druid.system.component")
 
-local M = component.new("grid")
+local M = component.create("grid")
 
 
 function M.init(self, parent, element, in_row)

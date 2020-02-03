@@ -6,7 +6,7 @@ local const = require("druid.const")
 local settings = require("druid.system.settings")
 local component = require("druid.system.component")
 
-local M = component.new("locale", { const.ON_CHANGE_LANGUAGE })
+local M = component.create("locale", { const.ON_CHANGE_LANGUAGE })
 
 
 function M.init(self, node, lang_id, no_adjust)

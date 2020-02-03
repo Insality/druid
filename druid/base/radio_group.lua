@@ -3,7 +3,7 @@
 
 local component = require("druid.system.component")
 
-local M = component.new("radio_group")
+local M = component.create("radio_group")
 
 
 local function on_checkbox_click(self, index)

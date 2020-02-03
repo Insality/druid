@@ -3,7 +3,7 @@
 
 local component = require("druid.system.component")
 
-local M = component.new("progress_rich")
+local M = component.create("progress_rich")
 
 
 function M.init(self, name, red, green, key)
