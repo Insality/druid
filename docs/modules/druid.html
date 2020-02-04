@@ -33,31 +33,31 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
-<li><a href="#Tables">Tables</a></li>
 </ul>
 
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><a href="../modules/base.back_handler.html">base.back_handler</a></li>
-  <li><a href="../modules/base.blocker.html">base.blocker</a></li>
-  <li><a href="../modules/base.button.html">base.button</a></li>
-  <li><a href="../modules/base.checkbox.html">base.checkbox</a></li>
-  <li><a href="../modules/base.checkbox_group.html">base.checkbox_group</a></li>
-  <li><a href="../modules/base.grid.html">base.grid</a></li>
-  <li><a href="../modules/base.progress.html">base.progress</a></li>
-  <li><a href="../modules/base.checkbox_group.html">base.checkbox_group</a></li>
-  <li><a href="../modules/base.scroll.html">base.scroll</a></li>
-  <li><a href="../modules/base.slider.html">base.slider</a></li>
-  <li><a href="../modules/base.text.html">base.text</a></li>
-  <li><a href="../modules/base.timer.html">base.timer</a></li>
-  <li><a href="../modules/constants.html">constants</a></li>
+  <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
+  <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
+  <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
+  <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
+  <li><a href="../modules/druid.grid.html">druid.grid</a></li>
+  <li><a href="../modules/druid.locale.html">druid.locale</a></li>
+  <li><a href="../modules/druid.progress.html">druid.progress</a></li>
+  <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
+  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
+  <li><a href="../modules/druid.slider.html">druid.slider</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/const.html">const</a></li>
   <li><strong>druid</strong></li>
   <li><a href="../modules/helper.html">helper</a></li>
-  <li><a href="../modules/helper.animate.html">helper.animate</a></li>
   <li><a href="../modules/helper.formats.html">helper.formats</a></li>
-  <li><a href="../modules/rich.progress_rich.html">rich.progress_rich</a></li>
-  <li><a href="../modules/settings.html">settings</a></li>
+  <li><a href="../modules/druid.progress_rich.html">druid.progress_rich</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
 
 </div>
@@ -66,37 +66,25 @@
 
 <h1>Module <code>druid</code></h1>
 <p>Druid UI Library.</p>
-<p>Component based UI library to make your life easier. Contains a lot of base components and give API to create your own rich components.</p>
+<p>
+ Powerful Defold component based UI library. Use standart
+ components or make your own game-specific to make amazing
+ GUI in your games.
+<p> Contains the several basic components and examples
+ to how to do your custom complex components to
+ separate UI game logic to small files
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#register">register(name, module)</a></td>
-	<td class="summary">Register external module</td>
+	<td class="summary">Register external druid component.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new">new(component_script)</a></td>
-	<td class="summary">Create UI instance for ui elements</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#_fct_metatable.on_message">_fct_metatable.on_message(self, message_id, message, sender)</a></td>
-	<td class="summary">Called on_message</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#_fct_metatable.on_input">_fct_metatable.on_input(self, action_id, action)</a></td>
-	<td class="summary">Called ON_INPUT</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#_fct_metatable.update">_fct_metatable.update(self, dt)</a></td>
-	<td class="summary">Called on_update</td>
-	</tr>
-</table>
-<h2><a href="#Tables">Tables</a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#comps">comps</a></td>
-	<td class="summary">Basic components</td>
+	<td class="name" nowrap><a href="#new">new(context[, style])</a></td>
+	<td class="summary">Create Druid instance.</td>
 	</tr>
 </table>
 
@@ -112,18 +100,20 @@
     <strong>register(name, module)</strong>
     </dt>
     <dd>
-    Register external module
+    Register external druid component.
+ After register you can create the component with
+ druid_instance:new_{name}. For example `druid:new_button(...)`
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">name</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
-        module name
+         module name
         </li>
         <li><span class="parameter">module</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-        lua table with module
+         lua table with component
         </li>
     </ul>
 
@@ -134,162 +124,31 @@
 </dd>
     <dt>
     <a name = "new"></a>
-    <strong>new(component_script)</strong>
+    <strong>new(context[, style])</strong>
     </dt>
     <dd>
-    Create UI instance for ui elements
+    Create Druid instance.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">component_script</span>
-
+        <li><span class="parameter">context</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Druid context. Usually it is self of script
+        </li>
+        <li><span class="parameter">style</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Druid style module
+         (<em>optional</em>)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-        instance with all ui components
+           <span class="types"><span class="type">druid_instance</span></span>
+        Druid instance
     </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "_fct_metatable.on_message"></a>
-    <strong>_fct_metatable.on_message(self, message_id, message, sender)</strong>
-    </dt>
-    <dd>
-    Called on_message
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-
-        </li>
-        <li><span class="parameter">message_id</span>
-
-        </li>
-        <li><span class="parameter">message</span>
-
-        </li>
-        <li><span class="parameter">sender</span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "_fct_metatable.on_input"></a>
-    <strong>_fct_metatable.on_input(self, action_id, action)</strong>
-    </dt>
-    <dd>
-    Called ON_INPUT
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-
-        </li>
-        <li><span class="parameter">action_id</span>
-
-        </li>
-        <li><span class="parameter">action</span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "_fct_metatable.update"></a>
-    <strong>_fct_metatable.update(self, dt)</strong>
-    </dt>
-    <dd>
-    Called on_update
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-
-        </li>
-        <li><span class="parameter">dt</span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-</dl>
-    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "comps"></a>
-    <strong>comps</strong>
-    </dt>
-    <dd>
-    Basic components
-
-
-    <h3>Fields:</h3>
-    <ul>
-        <li><span class="parameter">button</span>
-
-        </li>
-        <li><span class="parameter">blocker</span>
-
-        </li>
-        <li><span class="parameter">back_handler</span>
-
-        </li>
-        <li><span class="parameter">text</span>
-
-        </li>
-        <li><span class="parameter">timer</span>
-
-        </li>
-        <li><span class="parameter">progress</span>
-
-        </li>
-        <li><span class="parameter">grid</span>
-
-        </li>
-        <li><span class="parameter">scroll</span>
-
-        </li>
-        <li><span class="parameter">slider</span>
-
-        </li>
-        <li><span class="parameter">checkbox</span>
-
-        </li>
-        <li><span class="parameter">checkbox_group</span>
-
-        </li>
-        <li><span class="parameter">radio_group</span>
-
-        </li>
-        <li><span class="parameter">progress_rich</span>
-
-        </li>
-    </ul>
-
 
 
 
@@ -302,7 +161,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2019-12-05 22:04:11 </i>
+<i style="float:right;">Last updated 2020-02-05 02:41:04 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
