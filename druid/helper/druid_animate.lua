@@ -1,4 +1,4 @@
---- Druid helper module for animating GUI nodes
+-- Druid helper module for animating GUI nodes
 -- @module helper.animate
 
 local M = {}

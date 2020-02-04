@@ -1,6 +1,6 @@
 --- Component to handle placing components by row and columns.
 -- Grid can anchor your elements, get content size and other
--- @module base.grid
+-- @module druid.grid
 
 local helper = require("druid.helper")
 local component = require("druid.system.component")

@@ -1,5 +1,5 @@
 --- Component to handle GUI timers
--- @module base.timer
+-- @module druid.timer
 
 local const = require("druid.const")
 local formats = require("druid.helper.formats")

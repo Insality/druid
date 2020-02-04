@@ -1,4 +1,4 @@
---- Druid helper module
+-- Druid helper module
 -- @module helper
 
 local const = require("druid.const")

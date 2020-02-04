@@ -1,5 +1,5 @@
 --- Druid slider component
--- @module base.slider
+-- @module druid.slider
 
 local helper = require("druid.helper")
 local const = require("druid.const")

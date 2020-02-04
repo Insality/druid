@@ -1,5 +1,5 @@
 --- Component to handle basic GUI button
--- @module base.button
+-- @module druid.button
 
 -- TODO: Add button mode:
 -- Long tap
@@ -26,8 +26,10 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.style = self:get_style()
 	self.node = helper.get_node(node)
 
+	-- TODO: match event inside on_input?
 	self.event = const.ACTION_TOUCH
 	self.anim_node = anim_node and helper.get_node(anim_node) or self.node
+	-- TODO: rename to start_scale
 	self.scale_from = gui.get_scale(self.anim_node)
 	self.pos = gui.get_position(self.anim_node)
 	self.callback = callback

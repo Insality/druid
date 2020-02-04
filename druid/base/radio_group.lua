@@ -1,5 +1,5 @@
 --- Radio group module
--- @module base.checkbox_group
+-- @module druid.radio_group
 
 local component = require("druid.system.component")
 

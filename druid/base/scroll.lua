@@ -1,5 +1,5 @@
 --- Component to handle scroll content
--- @module base.scroll
+-- @module druid.scroll
 
 local helper = require("druid.helper")
 local const = require("druid.const")

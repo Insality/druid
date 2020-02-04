@@ -1,6 +1,6 @@
 --- Component to handle all GUI texts
 -- Good working with localization system
--- @module base.text
+-- @module druid.locale
 
 local const = require("druid.const")
 local settings = require("druid.system.settings")

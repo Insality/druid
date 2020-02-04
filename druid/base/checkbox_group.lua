@@ -1,5 +1,5 @@
 --- Checkboux group module
--- @module base.checkbox_group
+-- @module druid.checkbox_group
 
 local component = require("druid.system.component")
 

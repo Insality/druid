@@ -1,5 +1,5 @@
 --- Druid checkbox component
--- @module base.checkbox
+-- @module druid.checkbox
 
 local helper = require("druid.helper")
 local component = require("druid.system.component")

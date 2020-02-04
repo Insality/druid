@@ -1,5 +1,5 @@
 --- Basic progress bar component
--- @module base.progress
+-- @module druid.progress
 
 local const = require("druid.const")
 local helper = require("druid.helper")

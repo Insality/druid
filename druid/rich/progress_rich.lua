@@ -1,5 +1,5 @@
 --- Component for rich progress component
--- @module rich.progress_rich
+-- @module druid.progress_rich
 
 local component = require("druid.system.component")
 

@@ -1,5 +1,5 @@
 --- Component to block input on specify zone (node)
--- @module base.blocker
+-- @module druid.blocker
 
 local const = require("druid.const")
 local helper = require("druid.helper")

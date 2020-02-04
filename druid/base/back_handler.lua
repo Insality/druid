@@ -1,5 +1,5 @@
 --- Component to handle back key (android, backspace)
--- @module base.back_handler
+-- @module druid.back_handler
 
 local const = require("druid.const")
 local component = require("druid.system.component")
