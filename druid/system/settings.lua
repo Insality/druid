@@ -1,5 +1,6 @@
 --- Druid settings file
 -- @module settings
+-- @local
 
 local M = {}
 
