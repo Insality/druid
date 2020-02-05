@@ -361,6 +361,4 @@ function Druid.new_progress_rich(self, ...)
 end
 
 
-
-
 return Druid

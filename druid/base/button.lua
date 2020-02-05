@@ -4,6 +4,7 @@
 -- TODO: Add button mode:
 -- Long tap
 -- Repeated tap
+-- Double tap?
 
 local const = require("druid.const")
 local helper = require("druid.helper")

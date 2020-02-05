@@ -62,18 +62,20 @@ end
 
 
 function M.update(self, dt)
-	if self.is_on then
-		self.temp = self.temp + dt
-		local dist = math.min(1, math.abs(self.value - self.target))
+	if not self.is_on then
+		return
+	end
 
-		if self.temp > dist then
-			self.temp = self.temp - dist
-			self.value = helper.step(self.value, self.target, 1)
-			M.set_to(self, self.value)
-			if self.value == self.target then
-				self:set_state(false)
-				self.callback(self:get_context(), self)
-			end
+	self.temp = self.temp + dt
+	local dist = math.min(1, math.abs(self.value - self.target))
+
+	if self.temp > dist then
+		self.temp = self.temp - dist
+		self.value = helper.step(self.value, self.target, 1)
+		M.set_to(self, self.value)
+		if self.value == self.target then
+			self:set_state(false)
+			self.callback(self:get_context(), self)
 		end
 	end
 end
