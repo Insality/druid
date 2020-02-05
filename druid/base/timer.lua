@@ -4,7 +4,7 @@
 local const = require("druid.const")
 local formats = require("druid.helper.formats")
 local helper = require("druid.helper")
-local component = require("druid.system.component")
+local component = require("druid.component")
 
 local M = component.create("timer", { const.ON_UPDATE })
 

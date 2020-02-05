@@ -2,7 +2,7 @@
 -- @module druid.back_handler
 
 local const = require("druid.const")
-local component = require("druid.system.component")
+local component = require("druid.component")
 
 local M = component.create("back_handler", { const.ON_INPUT })
 

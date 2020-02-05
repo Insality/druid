@@ -100,7 +100,7 @@ end
 Basic custom component template looks like this:
 ```lua
 local const = require("druid.const")
-local component = require("druid.system.component")
+local component = require("druid.component")
 
 local M = component.create("amazing_component", { const.ON_INPUT })
 
@@ -137,7 +137,7 @@ On each component recomended describe component schema in next way:
 ```lua
 -- Component module
 local helper = require("druid.helper")
-local component = require("druid.system.component")
+local component = require("druid.component")
 
 local M = component.create("new_component")
 

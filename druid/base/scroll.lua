@@ -3,7 +3,7 @@
 
 local helper = require("druid.helper")
 local const = require("druid.const")
-local component = require("druid.system.component")
+local component = require("druid.component")
 
 local M = component.create("scroll", { const.ON_UPDATE, const.ON_SWIPE })
 

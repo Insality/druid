@@ -4,7 +4,7 @@
 
 local const = require("druid.const")
 local helper = require("druid.helper")
-local component = require("druid.system.component")
+local component = require("druid.component")
 
 local M = component.create("text")
 

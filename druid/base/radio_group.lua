@@ -1,7 +1,7 @@
 --- Radio group module
 -- @module druid.radio_group
 
-local component = require("druid.system.component")
+local component = require("druid.component")
 
 local M = component.create("radio_group")
 
