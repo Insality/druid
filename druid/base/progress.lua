@@ -21,7 +21,7 @@ function M.init(self, node, key, init_value)
 	self.key = key
 
 	self.style = self:get_style()
-	self.node = helper.get_node(node)
+	self.node = self:get_node(node)
 	self.scale = gui.get_scale(self.node)
 	self.size = gui.get_size(self.node)
 	self.max_size = self.size[self.key]

@@ -9,7 +9,7 @@ local M = component.create("blocker", { const.ON_SWIPE })
 
 
 function M.init(self, node)
-	self.node = helper.get_node(node)
+	self.node = self:get_node(node)
 	self.event = const.ACTION_TOUCH
 end
 

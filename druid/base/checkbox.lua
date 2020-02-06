@@ -1,7 +1,6 @@
 --- Druid checkbox component
 -- @module druid.checkbox
 
-local helper = require("druid.helper")
 local component = require("druid.component")
 
 local M = component.create("checkbox")
@@ -36,8 +35,8 @@ end
 function M.init(self, node, callback, click_node)
 	self.style = self:get_style()
 	self.druid = self:get_druid()
-	self.node = helper.get_node(node)
-	self.click_node = helper.get_node(click_node)
+	self.node = self:get_node(node)
+	self.click_node = self:get_node(click_node)
 	self.callback = callback
 
 	self.button = self.druid:new_button(self.click_node or self.node, on_click)

@@ -3,14 +3,13 @@
 -- @module druid.text
 
 local const = require("druid.const")
-local helper = require("druid.helper")
 local component = require("druid.component")
 
 local M = component.create("text")
 
 
 function M.init(self, node, value, no_adjust)
-	self.node = helper.get_node(node)
+	self.node = self:get_node(node)
 	self.start_pivot = gui.get_pivot(self.node)
 
 	self.start_pos = gui.get_position(self.node)

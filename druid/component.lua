@@ -114,6 +114,7 @@ function Component.get_node(self, node_or_name)
 	local nodes = self:get_nodes()
 
 	if nodes then
+		assert(type(node_or_name) == "strings", "You should pass node name instead of node")
 		return nodes[template_name .. node_or_name]
 	else
 		if type(node_or_name) == const.STRING then

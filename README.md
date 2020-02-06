@@ -154,8 +154,8 @@ function M.init(self, template_name, node_table)
 	-- If component was cloned with gui.clone_tree, pass his nodes
 	self:set_nodes(node_table)
 
-	-- helper can get node from gui/template/table
-	local root = helper.node(self, SCHEME.ROOT)
+	-- Component can get node from gui/template/table
+	local root = self:get_node(self, SCHEME.ROOT)
 
 	-- This component can spawn another druid components:
 	local druid = self:get_druid(self)

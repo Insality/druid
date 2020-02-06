@@ -82,31 +82,6 @@ function M.centrate_icon_with_text(icon_node, text_node, margin)
 end
 
 
-function M.get_node(node_or_name)
-	if type(node_or_name) == const.STRING then
-		return gui.get_node(node_or_name)
-	end
-
-	return node_or_name
-end
-
-
--- TODO: Определиться с get_node и node
--- get_node - берет ноду по ноде или строке
--- node - может брать ноду у компонента по схеме (если есть
--- template или таблица нод после gui.clone_tree)
-function M.node(component, name)
-	local template_name = component._meta.template or const.EMPTY_STRING
-	local nodes = component._meta.nodes
-
-	if nodes then
-		return nodes[template_name .. name]
-	else
-		return gui.get_node(template_name .. name)
-	end
-end
-
-
 function M.step(current, target, step)
 	if current < target then
 		return math.min(current + step, target)
@@ -151,6 +126,11 @@ function M.round(num, numDecimalPlaces)
 end
 
 
+--- Check if node is enabled in gui hierarchy.
+-- Return false, if node or any his parent is disabled
+-- @function helper.is_enabled
+-- @tparam node node Gui node
+-- @treturn bool Is enabled in hierarchy
 function M.is_enabled(node)
 	local is_enabled = gui.is_enabled(node)
 	local parent = gui.get_parent(node)
@@ -163,6 +143,10 @@ function M.is_enabled(node)
 end
 
 
+--- Get node offset for given gui pivot
+-- @function helper.get_pivot_offset
+-- @tparam gui.pivot pivot The node pivot
+-- @treturn vector3 Vector offset with [-1..1] values
 function M.get_pivot_offset(pivot)
 	return const.PIVOTS[pivot]
 end

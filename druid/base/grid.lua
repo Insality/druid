@@ -2,20 +2,19 @@
 -- Grid can anchor your elements, get content size and other
 -- @module druid.grid
 
-local helper = require("druid.helper")
 local component = require("druid.component")
 
 local M = component.create("grid")
 
 
 function M.init(self, parent, element, in_row)
-	self.parent = helper.get_node(parent)
+	self.parent = self:get_node(parent)
 	self.nodes = {}
 
 	self.offset = vmath.vector3(0)
 	self.anchor = vmath.vector3(0.5, 0, 0)
 	self.in_row = in_row or 1
-	self.node_size = gui.get_size(helper.get_node(element))
+	self.node_size = gui.get_size(self:get_node(element))
 	self.border = vmath.vector4(0)
 	self.border_offset = vmath.vector3(0)
 end

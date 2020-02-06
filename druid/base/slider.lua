@@ -16,7 +16,7 @@ end
 
 
 function M.init(self, node, end_pos, callback)
-	self.node = helper.get_node(node)
+	self.node = self:get_node(node)
 
 	self.start_pos = gui.get_position(self.node)
 	self.pos = gui.get_position(self.node)

@@ -25,11 +25,11 @@ function M.init(self, node, callback, params, anim_node, event)
 	assert(callback, "Button should have callback. To block input on zone use blocker component")
 
 	self.style = self:get_style()
-	self.node = helper.get_node(node)
+	self.node = self:get_node(node)
 
 	-- TODO: match event inside on_input?
 	self.event = const.ACTION_TOUCH
-	self.anim_node = anim_node and helper.get_node(anim_node) or self.node
+	self.anim_node = anim_node and helper:get_node(anim_node) or self.node
 	-- TODO: rename to start_scale
 	self.scale_from = gui.get_scale(self.anim_node)
 	self.pos = gui.get_position(self.anim_node)
@@ -144,7 +144,7 @@ end
 -- @tparam table self Component instance
 -- @tparam node zone Gui node
 function M.set_click_zone(self, zone)
-	self.click_zone = helper.get_node(zone)
+	self.click_zone = self:get_node(zone)
 end
 
 

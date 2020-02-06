@@ -15,8 +15,8 @@ M.current_scroll = nil
 
 function M.init(self, scroll_parent, input_zone, border)
 	self.style = self:get_style()
-	self.node = helper.get_node(scroll_parent)
-	self.input_zone = helper.get_node(input_zone)
+	self.node = self:get_node(scroll_parent)
+	self.input_zone = self:get_node(input_zone)
 
 	self.zone_size = gui.get_size(self.input_zone)
 	self.soft_size = self.style.SOFT_ZONE_SIZE
