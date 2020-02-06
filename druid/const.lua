@@ -1,10 +1,9 @@
 --- Druid constants
+-- @local
 -- @module const
 
 local M = {}
 
-
--- Actions
 M.ACTION_TOUCH = hash("touch")
 M.ACTION_TEXT = hash("text")
 M.ACTION_BACKSPACE = hash("backspace")

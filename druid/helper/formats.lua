@@ -1,4 +1,5 @@
 --- Druid module with utils on string formats
+-- @local
 -- @module helper.formats
 
 local const = require("druid.const")

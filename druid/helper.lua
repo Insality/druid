@@ -1,4 +1,4 @@
--- Druid helper module
+-- Druid helper module for gui layouts
 -- @module helper
 
 local const = require("druid.const")
@@ -28,7 +28,13 @@ local function get_icon_width(icon_node)
 end
 
 
---- Text node or icon node can be nil
+--- Center two nodes.
+-- Nodes will be center around 0 x position
+-- text_node will be first (at left side)
+-- @function helper.centrate_text_with_icon
+-- @tparam[opt] text text_node Gui text node
+-- @tparam[opt] box icon_node Gui box node
+-- @tparam number margin Offset between nodes
 function M.centrate_text_with_icon(text_node, icon_node, margin)
 	margin = margin or 0
 	local text_width = get_text_width(text_node)
@@ -49,7 +55,13 @@ function M.centrate_text_with_icon(text_node, icon_node, margin)
 end
 
 
---- Icon node or text node can be nil
+--- Center two nodes.
+-- Nodes will be center around 0 x position
+-- icon_node will be first (at left side)
+-- @function helper.centrate_icon_with_text
+-- @tparam[opt] box icon_node Gui box node
+-- @tparam[opt] text text_node Gui text node
+-- @tparam[opt=0] number margin Offset between nodes
 function M.centrate_icon_with_text(icon_node, text_node, margin)
 	margin = margin or 0
 	local icon_width = get_icon_width(icon_node)
