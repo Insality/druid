@@ -1,0 +1,22 @@
+Simple to-do for Druid Alpha 2.0
+
+- custom input settings (name of touch, text, etc)
+- refactor on_swipe. To on_scroll? Add input priority
+- remove button event and match_event from druid
+- add docs for all components
+- button polish, actions
+- ability to relocalize all locale text nodes
+- better name for locale component? lang? lang_text?
+- better scroll size management, check different cases. So implicit now
+- better grid + scroll management
+- add druid settings (add auto_focus input and other stuff)
+- better default style, add template for custom style
+- add template for user components
+- add good examples with template and/or nodes (basic component no use any of them)
+- add docs folder for every component with gifs? Solutions
+- add init/remove stuff for every style in component. How to set custom sprites for button states?
+- better callbacks for every components
+- separate custom data and predefined fields in components?
+- try use final druid in real project (FI uses custom druid)
+- better name for slider component?
+- add text component for alpha release
