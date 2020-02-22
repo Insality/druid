@@ -29,7 +29,7 @@ end
 local function init_top_panel(self)
 	self.druid:new_button("button_left/button", on_control_button, -1)
 	self.druid:new_button("button_right/button", on_control_button, 1)
-	self.header = self.druid:new_locale("text_header", "main_page")
+	self.header = self.druid:new_lang_text("text_header", "main_page")
 end
 
 

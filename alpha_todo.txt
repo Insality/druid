@@ -2,9 +2,9 @@ Simple to-do for Druid Alpha 0.2.0
 
 
 -- High
-- remove button event and match_event from druid
-- add hover component
-- add druid events/triggers? better callback system
++ remove button event and match_event from druid
++ add hover component
++ add druid events/triggers? better callback system
 - better name for locale component? lang? lang_text?
 - better scroll size management, check different cases. So implicit now
 - better grid + scroll management
@@ -22,6 +22,7 @@ Simple to-do for Druid Alpha 0.2.0
 - separate custom data and predefined fields in components?
 - unify component api (get/set/to and other general stuff)
 - compare with gooey
+- button and hover click restriction zone?
 
 
 -- Low
@@ -31,3 +32,4 @@ Simple to-do for Druid Alpha 0.2.0
 - add good examples with template and/or nodes (basic component no use any of them)
 - try use final druid in real project (FI uses custom druid) (use in 4321?)
 - Druid store assest - separate repository with rich components
+- ability to control buttons via controller. Select it by cursor (d-pad)

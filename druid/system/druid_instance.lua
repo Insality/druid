@@ -6,7 +6,7 @@
 -- @see druid.back_handler
 -- @see druid.input
 -- @see druid.text
--- @see druid.locale
+-- @see druid.lang_text
 -- @see druid.timer
 -- @see druid.progress
 -- @see druid.grid
@@ -26,7 +26,7 @@ local blocker = require("druid.base.blocker")
 local back_handler = require("druid.base.back_handler")
 local hover = require("druid.base.hover")
 local text = require("druid.base.text")
-local locale = require("druid.base.locale")
+local lang_text = require("druid.base.lang_text")
 local timer = require("druid.base.timer")
 local progress = require("druid.base.progress")
 local grid = require("druid.base.grid")
@@ -269,12 +269,12 @@ function Druid.new_text(self, ...)
 end
 
 
---- Create locale basic component
--- @function druid:new_locale
--- @tparam args ... locale init args
--- @treturn Component locale component
-function Druid.new_locale(self, ...)
-	return Druid.create(self, locale, ...)
+--- Create lang_text basic component
+-- @function druid:new_lang_text
+-- @tparam args ... lang_text init args
+-- @treturn Component lang_text component
+function Druid.new_lang_text(self, ...)
+	return Druid.create(self, lang_text, ...)
 end
 
 

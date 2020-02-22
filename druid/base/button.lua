@@ -16,6 +16,26 @@ local function on_button_hover(self, hover_state)
 	self.style.on_hover(self, self.anim_node, hover_state)
 end
 
+
+local function on_button_release(self)
+	if not self.disabled then
+		if not self.stub and self.can_action then
+			self.can_action = false
+			if self.style.on_click then
+				self.style.on_click(self, self.anim_node)
+			end
+			self.callback(self:get_context(), self.params, self)
+		end
+		return true
+	else
+		if self.style.on_click_disabled then
+			self.style.on_click_disabled(self, self.anim_node)
+		end
+		return false
+	end
+end
+
+
 --- Component init function
 -- @function button:init
 -- @tparam table self Component instance
@@ -41,25 +61,6 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.hover = self.druid:new_hover(node, self, on_button_hover)
 
 	self.click_zone = nil
-end
-
-
-local function on_button_release(self)
-	if not self.disabled then
-		if not self.stub and self.can_action then
-			self.can_action = false
-			if self.style.on_click then
-				self.style.on_click(self, self.anim_node)
-			end
-			self.callback(self:get_context(), self.params, self)
-		end
-		return true
-	else
-		if self.style.on_click_disabled then
-			self.style.on_click_disabled(self, self.anim_node)
-		end
-		return false
-	end
 end
 
 

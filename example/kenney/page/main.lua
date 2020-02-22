@@ -26,16 +26,16 @@ end
 
 
 local function setup_texts(self)
-	self.druid:new_locale("text_button", "ui_section_button")
-	self.druid:new_locale("text_text", "ui_section_text")
-	self.druid:new_locale("text_timer", "ui_section_timer")
-	self.druid:new_locale("text_progress", "ui_section_progress")
-	self.druid:new_locale("text_slider", "ui_section_slider")
-	self.druid:new_locale("text_radio", "ui_section_radio")
-	self.druid:new_locale("text_checkbox", "ui_section_checkbox")
+	self.druid:new_lang_text("text_button", "ui_section_button")
+	self.druid:new_lang_text("text_text", "ui_section_text")
+	self.druid:new_lang_text("text_timer", "ui_section_timer")
+	self.druid:new_lang_text("text_progress", "ui_section_progress")
+	self.druid:new_lang_text("text_slider", "ui_section_slider")
+	self.druid:new_lang_text("text_radio", "ui_section_radio")
+	self.druid:new_lang_text("text_checkbox", "ui_section_checkbox")
 
-	self.druid:new_locale("text_translated", "ui_text_example")
-	self.druid:new_locale("text_button_lang", "ui_text_change_lang")
+	self.druid:new_lang_text("text_translated", "ui_text_example")
+	self.druid:new_lang_text("text_button_lang", "ui_text_change_lang")
 	self.druid:new_text("text_simple", "Simple")
 end
 
