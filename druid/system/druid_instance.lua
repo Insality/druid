@@ -37,7 +37,6 @@ local checkbox_group = require("druid.base.checkbox_group")
 local radio_group = require("druid.base.radio_group")
 local input = require("druid.base.input")
 -- local infinity_scroll = require("druid.base.infinity_scroll")
-local progress_rich = require("druid.rich.progress_rich")
 
 -- @classmod Druid
 local Druid = class("druid.druid_instance")
@@ -356,15 +355,6 @@ end
 -- @treturn Component radio_group component
 function Druid.new_radio_group(self, ...)
 	return Druid.create(self, radio_group, ...)
-end
-
-
---- Create progress_rich basic component
--- @function druid:new_progress_rich
--- @tparam args ... progress_rich init args
--- @treturn Component progress_rich component
-function Druid.new_progress_rich(self, ...)
-	return Druid.create(self, progress_rich, ...)
 end
 
 
