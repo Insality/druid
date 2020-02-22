@@ -4,6 +4,7 @@
 -- @see druid.button
 -- @see druid.blocker
 -- @see druid.back_handler
+-- @see druid.input
 -- @see druid.text
 -- @see druid.locale
 -- @see druid.timer
@@ -23,6 +24,7 @@ local class = require("druid.system.middleclass")
 local button = require("druid.base.button")
 local blocker = require("druid.base.blocker")
 local back_handler = require("druid.base.back_handler")
+local hover = require("druid.base.hover")
 local text = require("druid.base.text")
 local locale = require("druid.base.locale")
 local timer = require("druid.base.timer")
@@ -33,7 +35,7 @@ local slider = require("druid.base.slider")
 local checkbox = require("druid.base.checkbox")
 local checkbox_group = require("druid.base.checkbox_group")
 local radio_group = require("druid.base.radio_group")
-local input - require("druid.base.input")
+local input = require("druid.base.input")
 -- local infinity_scroll = require("druid.base.infinity_scroll")
 local progress_rich = require("druid.rich.progress_rich")
 
@@ -90,19 +92,6 @@ local function notify_input_on_swipe(self)
 				comp:on_swipe()
 			end
 		end
-	end
-end
-
-
-local function match_event(action_id, events)
-	if type(events) == const.TABLE then
-		for i = 1, #events do
-			if action_id == events[i] then
-				return true
-			end
-		end
-	else
-		return action_id == events
 	end
 end
 
@@ -200,7 +189,7 @@ function Druid.on_input(self, action_id, action)
 	if components then
 		for i = #components, 1, -1 do
 			local v = components[i]
-			if match_event(action_id, v.event) and v:on_input(action_id, action) then
+			if v:on_input(action_id, action) then
 				return true
 			end
 		end
@@ -259,6 +248,15 @@ end
 -- @treturn Component back_handler component
 function Druid.new_back_handler(self, ...)
 	return Druid.create(self, back_handler, ...)
+end
+
+
+--- Create hover basic component
+-- @function druid:new_hover
+-- @tparam args ... hover init args
+-- @treturn Component hover component
+function Druid.new_hover(self, ...)
+	return Druid.create(self, hover, ...)
 end
 
 
@@ -331,6 +329,15 @@ end
 -- @treturn Component checkbox component
 function Druid.new_checkbox(self, ...)
 	return Druid.create(self, checkbox, ...)
+end
+
+
+--- Create input basic component
+-- @function druid:new_input
+-- @tparam args ... input init args
+-- @treturn Component input component
+function Druid.new_input(self, ...)
+	return Druid.create(self, input, ...)
 end
 
 

@@ -22,8 +22,6 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.style = self:get_style()
 	self.node = self:get_node(node)
 
-	-- TODO: match event inside on_input?
-	self.event = const.ACTION_TOUCH
 	self.anim_node = anim_node and helper:get_node(anim_node) or self.node
 	-- TODO: rename to start_scale
 	self.scale_from = gui.get_scale(self.anim_node)
@@ -67,6 +65,10 @@ end
 
 
 function M.on_input(self, action_id, action)
+	if action_id ~= const.ACTION_TOUCH then
+		return false
+	end
+
 	if not helper.is_enabled(self.node) then
 		return false
 	end

@@ -13,7 +13,6 @@ local M = component.create("back_handler", { const.ON_INPUT })
 -- @tparam callback callback On back button
 -- @tparam[opt] params Callback argument
 function M.init(self, callback, params)
-	self.event = const.ACTION_BACK
 	self.callback = callback
 	self.params = params
 end
@@ -24,11 +23,12 @@ end
 -- @tparam string action_id on_input action id
 -- @tparam table action on_input action
 function M.on_input(self, action_id, action)
-	if action[const.RELEASED] then
+	if action_id == const.ACTION_BACK and action[const.RELEASED] then
 		self.callback(self:get_context(), self.params)
+		return true
 	end
 
-	return true
+	return false
 end
 
 
