@@ -5,24 +5,24 @@ Simple to-do for Druid Alpha 0.2.0
 + remove button event and match_event from druid
 + add hover component
 + add druid events/triggers? better callback system
-- better name for locale component? lang? lang_text?
-- better scroll size management, check different cases. So implicit now
-- better grid + scroll management
-- button polish, actions
-- button add key trigger
-- add text component for alpha release
++ better name for locale component? lang? lang_text?
++ better name for slider component? Slider is ok
 - refactor on_swipe. To on_scroll? Add input priority
-- add druid settings (add auto_focus input and other stuff)
+- separate custom data and predefined fields in components?
 - add init/remove stuff for every style in component. How to set custom sprites for button states?
+- button add key trigger
+- button polish, actions
+- add druid settings (add auto_focus input and other stuff)
 - better callbacks for every components
 - better default style, add template for custom style
 - add docs for all components
 - add docs folder for every component with gifs? Solutions
-- better name for slider component?
-- separate custom data and predefined fields in components?
 - unify component api (get/set/to and other general stuff)
+- add text component for alpha release
 - compare with gooey
 - button and hover click restriction zone?
+- better scroll size management, check different cases. So implicit now
+- better grid + scroll management
 
 
 -- Low
