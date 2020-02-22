@@ -81,7 +81,7 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	self.druid:on_input(action_id, action)
+	return self.druid:on_input(action_id, action)
 end
 ```
 

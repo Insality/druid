@@ -1,11 +1,6 @@
 --- Component to handle basic GUI button
 -- @module druid.button
 
--- TODO: Add button mode:
--- Long tap
--- Repeated tap
--- Double tap?
-
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
@@ -145,6 +140,43 @@ end
 -- @tparam node zone Gui node
 function M.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
+end
+
+
+-- TODO: implement them all!
+--- Set key-code to trigger this button
+function M.set_key_trigger(self, key)
+
+end
+
+
+--- Get key-code to trigger this button
+function M.get_key_trigger(self)
+
+end
+
+
+--- Set usual button callback
+function M.set_callback(self, callback)
+
+end
+
+
+--- Repeat callback always, while holding button
+function M.set_hold_callback(self, callback)
+
+end
+
+
+--- Get doubletap callback on this button
+function M.set_double_tap_callback(self, callback)
+
+end
+
+
+--- Single callbacka after long_tap. No usual callback invoked
+function M.set_long_tap_callback(self, callback)
+
 end
 
 

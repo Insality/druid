@@ -33,7 +33,7 @@ local slider = require("druid.base.slider")
 local checkbox = require("druid.base.checkbox")
 local checkbox_group = require("druid.base.checkbox_group")
 local radio_group = require("druid.base.radio_group")
--- local input - require("druid.base.input")
+local input - require("druid.base.input")
 -- local infinity_scroll = require("druid.base.infinity_scroll")
 local progress_rich = require("druid.rich.progress_rich")
 
