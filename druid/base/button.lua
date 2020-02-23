@@ -2,15 +2,27 @@
 -- @module druid.button
 
 --- Component events
--- @tfield druid_event on_click
--- @tfield druid_event on_hold_click
--- @tfield druid_event on_long_click
--- @tfield druid_event on_double_click
--- @table events
+-- @table Events
+-- @tfield druid_event on_click On release button callback
+-- @tfield druid_event on_repeated_click On repeated action button callback
+-- @tfield druid_event on_long_click On long tap button callback
+-- @tfield druid_event on_double_click On double tap button callback
 
 --- Component fields
--- @tfield node Main node
--- @table fields
+-- @table Fields
+-- @tfield node node Trigger node
+-- @tfield[opt=node] node anim_node Animation node
+-- @tfield vector3 scale_from Initial scale of anim_node
+-- @tfield vector3 pos Initial pos of anim_node
+-- @tfield any params Params to click callbacks
+-- @tfield boolean hover_anim Is hover anim enabled
+-- @tfield druid.hover hover Druid hover logic component
+-- @tfield[opt] node click_zone Restriction zone
+
+--- Component style params
+-- @table Style
+-- @tfield function on_click (self, node)
+-- @tfield function on_hover (self, node, hover_state)
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -36,7 +48,7 @@ local function on_button_release(self)
 			if self.style.on_click then
 				self.style.on_click(self, self.anim_node)
 			end
-			self.callback(self:get_context(), self.params, self)
+			self.on_click:trigger(self:get_context(), self.params, self)
 		end
 		return true
 	else
@@ -66,19 +78,21 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.anim_node = anim_node and helper:get_node(anim_node) or self.node
 	-- TODO: rename to start_scale
 	self.scale_from = gui.get_scale(self.anim_node)
-	self.pos = gui.get_position(self.anim_node)
-	self.callback = callback
 	self.params = params
 	self.hover_anim = self.style.IS_HOVER
 	self.hover = self.druid:new_hover(node, self, on_button_hover)
+	self.click_zone = nil
 
 	-- Event stubs
 	self.on_click = Event()
-	self.on_hold_click = Event()
+	self.on_repeated_click = Event()
 	self.on_long_click = Event()
 	self.on_double_click = Event()
 
-	self.click_zone = nil
+	if callback then
+		self.on_click:subscribe(callback)
+	end
+
 end
 
 
@@ -162,30 +176,6 @@ end
 
 --- Get key-code to trigger this button
 function M.get_key_trigger(self)
-
-end
-
-
---- Set usual button callback
-function M.set_callback(self, callback)
-
-end
-
-
---- Repeat callback always, while holding button
-function M.set_hold_callback(self, callback)
-
-end
-
-
---- Get doubletap callback on this button
-function M.set_double_tap_callback(self, callback)
-
-end
-
-
---- Single callbacka after long_tap. No usual callback invoked
-function M.set_long_tap_callback(self, callback)
 
 end
 

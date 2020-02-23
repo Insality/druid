@@ -39,15 +39,12 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><strong>druid.button</strong></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
@@ -56,7 +53,10 @@
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
   <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
 
@@ -74,47 +74,35 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#disable_animation">disable_animation(self)</a></td>
-	<td class="summary">Disable all button animations</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_key_trigger">get_key_trigger(self)</a></td>
-	<td class="summary">Get key-code to trigger this button</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#init">init(self, node, callback[, params[, anim_node[, event]]])</a></td>
 	<td class="summary">Component init function</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_callback">set_callback(self, callback)</a></td>
-	<td class="summary">Set usual button callback</td>
+	<td class="name" nowrap><a href="#disable_animation">disable_animation(self)</a></td>
+	<td class="summary">Disable all button animations</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, zone)</a></td>
 	<td class="summary">Strict button click area.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_double_tap_callback">set_double_tap_callback(self, callback)</a></td>
-	<td class="summary">Get doubletap callback on this button</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_hold_callback">set_hold_callback(self, callback)</a></td>
-	<td class="summary">Repeat callback always, while holding button</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_long_tap_callback">set_long_tap_callback(self, callback)</a></td>
-	<td class="summary">Single callbacka after long_tap.</td>
+	<td class="name" nowrap><a href="#get_key_trigger">get_key_trigger(self)</a></td>
+	<td class="summary">Get key-code to trigger this button</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#events">events</a></td>
+	<td class="name" nowrap><a href="#Events">Events</a></td>
 	<td class="summary">Component events</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#fields">fields</a></td>
+	<td class="name" nowrap><a href="#Fields">Fields</a></td>
 	<td class="summary">Component fields</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Style">Style</a></td>
+	<td class="summary">Component style params</td>
 	</tr>
 </table>
 
@@ -125,49 +113,6 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
-    <dt>
-    <a name = "disable_animation"></a>
-    <strong>disable_animation(self)</strong>
-    </dt>
-    <dd>
-    Disable all button animations
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_key_trigger"></a>
-    <strong>get_key_trigger(self)</strong>
-    </dt>
-    <dd>
-    Get key-code to trigger this button
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
     <dt>
     <a name = "init"></a>
     <strong>init(self, node, callback[, params[, anim_node[, event]]])</strong>
@@ -213,24 +158,18 @@
 
 </dd>
     <dt>
-    <a name = "set_callback"></a>
-    <strong>set_callback(self, callback)</strong>
+    <a name = "disable_animation"></a>
+    <strong>disable_animation(self)</strong>
     </dt>
     <dd>
-    Set usual button callback
+    Disable all button animations
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
-
-
-
-        </li>
-        <li><span class="parameter">callback</span>
-
-
-
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Component instance
         </li>
     </ul>
 
@@ -266,75 +205,16 @@
 
 </dd>
     <dt>
-    <a name = "set_double_tap_callback"></a>
-    <strong>set_double_tap_callback(self, callback)</strong>
+    <a name = "get_key_trigger"></a>
+    <strong>get_key_trigger(self)</strong>
     </dt>
     <dd>
-    Get doubletap callback on this button
+    Get key-code to trigger this button
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
-
-
-
-        </li>
-        <li><span class="parameter">callback</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_hold_callback"></a>
-    <strong>set_hold_callback(self, callback)</strong>
-    </dt>
-    <dd>
-    Repeat callback always, while holding button
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-
-
-
-        </li>
-        <li><span class="parameter">callback</span>
-
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_long_tap_callback"></a>
-    <strong>set_long_tap_callback(self, callback)</strong>
-    </dt>
-    <dd>
-    Single callbacka after long_tap.  No usual callback invoked
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-
-
-
-        </li>
-        <li><span class="parameter">callback</span>
 
 
 
@@ -351,8 +231,8 @@
 
     <dl class="function">
     <dt>
-    <a name = "events"></a>
-    <strong>events</strong>
+    <a name = "Events"></a>
+    <strong>Events</strong>
     </dt>
     <dd>
     Component events
@@ -362,27 +242,19 @@
     <ul>
         <li><span class="parameter">on_click</span>
             <span class="types"><span class="type">druid_event</span></span>
-
-
-
+         On release button callback
         </li>
-        <li><span class="parameter">on_hold_click</span>
+        <li><span class="parameter">on_repeated_click</span>
             <span class="types"><span class="type">druid_event</span></span>
-
-
-
+         On repeated action button callback
         </li>
         <li><span class="parameter">on_long_click</span>
             <span class="types"><span class="type">druid_event</span></span>
-
-
-
+         On long tap button callback
         </li>
         <li><span class="parameter">on_double_click</span>
             <span class="types"><span class="type">druid_event</span></span>
-
-
-
+         On double tap button callback
         </li>
     </ul>
 
@@ -392,8 +264,8 @@
 
 </dd>
     <dt>
-    <a name = "fields"></a>
-    <strong>fields</strong>
+    <a name = "Fields"></a>
+    <strong>Fields</strong>
     </dt>
     <dd>
     Component fields
@@ -401,9 +273,64 @@
 
     <h3>Fields:</h3>
     <ul>
-        <li><span class="parameter">Main</span>
+        <li><span class="parameter">node</span>
             <span class="types"><span class="type">node</span></span>
-         node
+         Trigger node
+        </li>
+        <li><span class="parameter">anim_node</span>
+            <span class="types"><span class="type">node</span></span>
+         Animation node
+         (<em>default</em> node)
+        </li>
+        <li><span class="parameter">scale_from</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Initial scale of anim_node
+        </li>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Initial pos of anim_node
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">any</span></span>
+         Params to click callbacks
+        </li>
+        <li><span class="parameter">hover_anim</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Is hover anim enabled
+        </li>
+        <li><span class="parameter">hover</span>
+            <span class="types"><span class="type">druid.hover</span></span>
+         Druid hover logic component
+        </li>
+        <li><span class="parameter">click_zone</span>
+            <span class="types"><span class="type">node</span></span>
+         Restriction zone
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Style"></a>
+    <strong>Style</strong>
+    </dt>
+    <dd>
+    Component style params
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">on_click</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node)
+        </li>
+        <li><span class="parameter">on_hover</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node, hover_state)
         </li>
     </ul>
 
@@ -419,7 +346,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-23 13:01:03 </i>
+<i style="float:right;">Last updated 2020-02-23 22:54:59 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

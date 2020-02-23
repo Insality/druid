@@ -9,26 +9,6 @@ local class = require("druid.system.middleclass")
 local Component = class("druid.component")
 
 
---- Setup component context and his style table
--- @function component:setup_component
--- @tparam context table Druid context. Usually it is self of script
--- @tparam style table Druid style module
--- @treturn Component Component itself
-function Component.setup_component(self, context, style)
-	self._meta = {
-		template = nil,
-		context = nil,
-		nodes = nil,
-		style = nil,
-	}
-
-	self:set_context(context)
-	self:set_style(style)
-
-	return self
-end
-
-
 --- Get current component style table
 -- @function component:get_style
 -- @treturn table Component style table
@@ -133,6 +113,26 @@ end
 function Component.get_druid(self)
 	local context = { _context = self }
 	return setmetatable(context, { __index = self:get_context().druid })
+end
+
+
+--- Setup component context and his style table
+-- @function component:setup_component
+-- @tparam context table Druid context. Usually it is self of script
+-- @tparam style table Druid style module
+-- @treturn Component Component itself
+function Component.setup_component(self, context, style)
+	self._meta = {
+		template = nil,
+		context = nil,
+		nodes = nil,
+		style = nil,
+	}
+
+	self:set_context(context)
+	self:set_style(style)
+
+	return self
 end
 
 

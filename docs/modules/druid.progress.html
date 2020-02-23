@@ -38,15 +38,12 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><strong>druid.progress</strong></li>
@@ -55,7 +52,10 @@
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
   <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
 
@@ -73,28 +73,28 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#empty">empty(self)</a></td>
-	<td class="summary">Empty a progress bar</td>
+	<td class="name" nowrap><a href="#init">init(self, node, key, init_value)</a></td>
+	<td class="summary">Component init function</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#empty">empty(self)</a></td>
 	<td class="summary">Fill a progress bar and stop progress animation</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get(self)</a></td>
-	<td class="summary">Return current progress bar value</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, key, init_value)</a></td>
-	<td class="summary">Component init function</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_steps">set_steps(self, steps, callback)</a></td>
-	<td class="summary">Set points on progress bar to fire the callback</td>
+	<td class="name" nowrap><a href="#empty">empty(self)</a></td>
+	<td class="summary">Empty a progress bar</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_to">set_to(self, to)</a></td>
 	<td class="summary">Instant fill progress bar to value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get">get(self)</a></td>
+	<td class="summary">Return current progress bar value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_steps">set_steps(self, steps, callback)</a></td>
+	<td class="summary">Set points on progress bar to fire the callback</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#to">to(self, to[, callback])</a></td>
@@ -109,69 +109,6 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
-    <dt>
-    <a name = "empty"></a>
-    <strong>empty(self)</strong>
-    </dt>
-    <dd>
-    Empty a progress bar
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "empty"></a>
-    <strong>empty(self)</strong>
-    </dt>
-    <dd>
-    Fill a progress bar and stop progress animation
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get"></a>
-    <strong>get(self)</strong>
-    </dt>
-    <dd>
-    Return current progress bar value
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
     <dt>
     <a name = "init"></a>
     <strong>init(self, node, key, init_value)</strong>
@@ -206,11 +143,11 @@
 
 </dd>
     <dt>
-    <a name = "set_steps"></a>
-    <strong>set_steps(self, steps, callback)</strong>
+    <a name = "empty"></a>
+    <strong>empty(self)</strong>
     </dt>
     <dd>
-    Set points on progress bar to fire the callback
+    Fill a progress bar and stop progress animation
 
 
     <h3>Parameters:</h3>
@@ -219,13 +156,26 @@
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
          Component instance
         </li>
-        <li><span class="parameter">steps</span>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "empty"></a>
+    <strong>empty(self)</strong>
+    </dt>
+    <dd>
+    Empty a progress bar
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Array of progress bar values
-        </li>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
-         Callback on intersect step value
+         Component instance
         </li>
     </ul>
 
@@ -251,6 +201,56 @@
         <li><span class="parameter">to</span>
             <span class="types"><span class="type">number</span></span>
          Progress bar value, from 0 to 1
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get"></a>
+    <strong>get(self)</strong>
+    </dt>
+    <dd>
+    Return current progress bar value
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Component instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_steps"></a>
+    <strong>set_steps(self, steps, callback)</strong>
+    </dt>
+    <dd>
+    Set points on progress bar to fire the callback
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Component instance
+        </li>
+        <li><span class="parameter">steps</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Array of progress bar values
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Callback on intersect step value
         </li>
     </ul>
 
@@ -296,7 +296,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-23 13:01:03 </i>
+<i style="float:right;">Last updated 2020-02-23 22:54:59 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

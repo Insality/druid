@@ -38,15 +38,12 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
@@ -55,7 +52,10 @@
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
   <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><strong>druid_instance</strong></li>
 </ul>
 
@@ -89,72 +89,20 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#druid:create">druid:create(component, ...)</a></td>
-	<td class="summary">Create new druid component</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#druid:initialize">druid:initialize(table, table)</a></td>
 	<td class="summary">Druid class constructor</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:new_back_handler">druid:new_back_handler(...)</a></td>
-	<td class="summary">Create back_handler basic component</td>
+	<td class="name" nowrap><a href="#druid:create">druid:create(component, ...)</a></td>
+	<td class="summary">Create new druid component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:new_blocker">druid:new_blocker(...)</a></td>
-	<td class="summary">Create blocker basic component</td>
+	<td class="name" nowrap><a href="#druid:remove">druid:remove(component)</a></td>
+	<td class="summary">Remove component from druid instance.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:new_button">druid:new_button(...)</a></td>
-	<td class="summary">Create button basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_checkbox">druid:new_checkbox(...)</a></td>
-	<td class="summary">Create checkbox basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_checkbox_group">druid:new_checkbox_group(...)</a></td>
-	<td class="summary">Create checkbox_group basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_grid">druid:new_grid(...)</a></td>
-	<td class="summary">Create grid basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_hover">druid:new_hover(...)</a></td>
-	<td class="summary">Create hover basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_input">druid:new_input(...)</a></td>
-	<td class="summary">Create input basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_lang_text">druid:new_lang_text(...)</a></td>
-	<td class="summary">Create lang_text basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_progress">druid:new_progress(...)</a></td>
-	<td class="summary">Create progress basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_radio_group">druid:new_radio_group(...)</a></td>
-	<td class="summary">Create radio_group basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_scroll">druid:new_scroll(...)</a></td>
-	<td class="summary">Create scroll basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_slider">druid:new_slider(...)</a></td>
-	<td class="summary">Create slider basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_text">druid:new_text(...)</a></td>
-	<td class="summary">Create text basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_timer">druid:new_timer(...)</a></td>
-	<td class="summary">Create timer basic component</td>
+	<td class="name" nowrap><a href="#druid:update">druid:update(dt)</a></td>
+	<td class="summary">Druid update function</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#druid:on_input">druid:on_input(action_id, action)</a></td>
@@ -165,12 +113,64 @@
 	<td class="summary">Druid on_message function</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:remove">druid:remove(component)</a></td>
-	<td class="summary">Remove component from druid instance.</td>
+	<td class="name" nowrap><a href="#druid:new_button">druid:new_button(...)</a></td>
+	<td class="summary">Create button basic component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:update">druid:update(dt)</a></td>
-	<td class="summary">Druid update function</td>
+	<td class="name" nowrap><a href="#druid:new_blocker">druid:new_blocker(...)</a></td>
+	<td class="summary">Create blocker basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_back_handler">druid:new_back_handler(...)</a></td>
+	<td class="summary">Create back_handler basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_hover">druid:new_hover(...)</a></td>
+	<td class="summary">Create hover basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_text">druid:new_text(...)</a></td>
+	<td class="summary">Create text basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_lang_text">druid:new_lang_text(...)</a></td>
+	<td class="summary">Create lang_text basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_timer">druid:new_timer(...)</a></td>
+	<td class="summary">Create timer basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_progress">druid:new_progress(...)</a></td>
+	<td class="summary">Create progress basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_grid">druid:new_grid(...)</a></td>
+	<td class="summary">Create grid basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_scroll">druid:new_scroll(...)</a></td>
+	<td class="summary">Create scroll basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_slider">druid:new_slider(...)</a></td>
+	<td class="summary">Create slider basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_checkbox">druid:new_checkbox(...)</a></td>
+	<td class="summary">Create checkbox basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_input">druid:new_input(...)</a></td>
+	<td class="summary">Create input basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_checkbox_group">druid:new_checkbox_group(...)</a></td>
+	<td class="summary">Create checkbox_group basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_radio_group">druid:new_radio_group(...)</a></td>
+	<td class="summary">Create radio_group basic component</td>
 	</tr>
 </table>
 
@@ -181,31 +181,6 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
-    <dt>
-    <a name = "druid:create"></a>
-    <strong>druid:create(component, ...)</strong>
-    </dt>
-    <dd>
-    Create new druid component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">component</span>
-            <span class="types"><span class="type">Component</span></span>
-         Component module
-        </li>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         Other component params to pass it to component:init function
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
     <dt>
     <a name = "druid:initialize"></a>
     <strong>druid:initialize(table, table)</strong>
@@ -232,18 +207,140 @@
 
 </dd>
     <dt>
-    <a name = "druid:new_back_handler"></a>
-    <strong>druid:new_back_handler(...)</strong>
+    <a name = "druid:create"></a>
+    <strong>druid:create(component, ...)</strong>
     </dt>
     <dd>
-    Create back_handler basic component
+    Create new druid component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">component</span>
+            <span class="types"><span class="type">Component</span></span>
+         Component module
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         Other component params to pass it to component:init function
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:remove"></a>
+    <strong>druid:remove(component)</strong>
+    </dt>
+    <dd>
+    Remove component from druid instance.
+ Component <code>on_remove</code> function will be invoked, if exist.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">component</span>
+            <span class="types"><span class="type">Component</span></span>
+         Component instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:update"></a>
+    <strong>druid:update(dt)</strong>
+    </dt>
+    <dd>
+    Druid update function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+            <span class="types"><span class="type">number</span></span>
+         Delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:on_input"></a>
+    <strong>druid:on_input(action_id, action)</strong>
+    </dt>
+    <dd>
+    Druid on_input function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">action_id</span>
+            <span class="types"><span class="type">hash</span></span>
+         Action<em>id from on</em>input
+        </li>
+        <li><span class="parameter">action</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Action from on_input
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:on_message"></a>
+    <strong>druid:on_message(message_id, message, sender)</strong>
+    </dt>
+    <dd>
+    Druid on_message function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message_id</span>
+            <span class="types"><span class="type">hash</span></span>
+         Message<em>id from on</em>message
+        </li>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Message from on_message
+        </li>
+        <li><span class="parameter">sender</span>
+            <span class="types"><span class="type">hash</span></span>
+         Sender from on_message
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:new_button"></a>
+    <strong>druid:new_button(...)</strong>
+    </dt>
+    <dd>
+    Create button basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         back_handler init args
+         button init args
         </li>
     </ul>
 
@@ -251,7 +348,7 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        back_handler component
+        button component
     </ol>
 
 
@@ -286,18 +383,18 @@
 
 </dd>
     <dt>
-    <a name = "druid:new_button"></a>
-    <strong>druid:new_button(...)</strong>
+    <a name = "druid:new_back_handler"></a>
+    <strong>druid:new_back_handler(...)</strong>
     </dt>
     <dd>
-    Create button basic component
+    Create back_handler basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         button init args
+         back_handler init args
         </li>
     </ul>
 
@@ -305,88 +402,7 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        button component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_checkbox"></a>
-    <strong>druid:new_checkbox(...)</strong>
-    </dt>
-    <dd>
-    Create checkbox basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         checkbox init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        checkbox component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_checkbox_group"></a>
-    <strong>druid:new_checkbox_group(...)</strong>
-    </dt>
-    <dd>
-    Create checkbox_group basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         checkbox_group init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        checkbox_group component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_grid"></a>
-    <strong>druid:new_grid(...)</strong>
-    </dt>
-    <dd>
-    Create grid basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         grid init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        grid component
+        back_handler component
     </ol>
 
 
@@ -421,18 +437,18 @@
 
 </dd>
     <dt>
-    <a name = "druid:new_input"></a>
-    <strong>druid:new_input(...)</strong>
+    <a name = "druid:new_text"></a>
+    <strong>druid:new_text(...)</strong>
     </dt>
     <dd>
-    Create input basic component
+    Create text basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         input init args
+         text init args
         </li>
     </ul>
 
@@ -440,7 +456,7 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        input component
+        text component
     </ol>
 
 
@@ -475,6 +491,33 @@
 
 </dd>
     <dt>
+    <a name = "druid:new_timer"></a>
+    <strong>druid:new_timer(...)</strong>
+    </dt>
+    <dd>
+    Create timer basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         timer init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        timer component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "druid:new_progress"></a>
     <strong>druid:new_progress(...)</strong>
     </dt>
@@ -502,18 +545,18 @@
 
 </dd>
     <dt>
-    <a name = "druid:new_radio_group"></a>
-    <strong>druid:new_radio_group(...)</strong>
+    <a name = "druid:new_grid"></a>
+    <strong>druid:new_grid(...)</strong>
     </dt>
     <dd>
-    Create radio_group basic component
+    Create grid basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         radio_group init args
+         grid init args
         </li>
     </ul>
 
@@ -521,7 +564,7 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        radio_group component
+        grid component
     </ol>
 
 
@@ -583,18 +626,18 @@
 
 </dd>
     <dt>
-    <a name = "druid:new_text"></a>
-    <strong>druid:new_text(...)</strong>
+    <a name = "druid:new_checkbox"></a>
+    <strong>druid:new_checkbox(...)</strong>
     </dt>
     <dd>
-    Create text basic component
+    Create checkbox basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         text init args
+         checkbox init args
         </li>
     </ul>
 
@@ -602,7 +645,7 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        text component
+        checkbox component
     </ol>
 
 
@@ -610,18 +653,18 @@
 
 </dd>
     <dt>
-    <a name = "druid:new_timer"></a>
-    <strong>druid:new_timer(...)</strong>
+    <a name = "druid:new_input"></a>
+    <strong>druid:new_input(...)</strong>
     </dt>
     <dd>
-    Create timer basic component
+    Create input basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         timer init args
+         input init args
         </li>
     </ul>
 
@@ -629,7 +672,7 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        timer component
+        input component
     </ol>
 
 
@@ -637,97 +680,54 @@
 
 </dd>
     <dt>
-    <a name = "druid:on_input"></a>
-    <strong>druid:on_input(action_id, action)</strong>
+    <a name = "druid:new_checkbox_group"></a>
+    <strong>druid:new_checkbox_group(...)</strong>
     </dt>
     <dd>
-    Druid on_input function
+    Create checkbox_group basic component
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">action_id</span>
-            <span class="types"><span class="type">hash</span></span>
-         Action<em>id from on</em>input
-        </li>
-        <li><span class="parameter">action</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Action from on_input
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         checkbox_group init args
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        checkbox_group component
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "druid:on_message"></a>
-    <strong>druid:on_message(message_id, message, sender)</strong>
+    <a name = "druid:new_radio_group"></a>
+    <strong>druid:new_radio_group(...)</strong>
     </dt>
     <dd>
-    Druid on_message function
+    Create radio_group basic component
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">message_id</span>
-            <span class="types"><span class="type">hash</span></span>
-         Message<em>id from on</em>message
-        </li>
-        <li><span class="parameter">message</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Message from on_message
-        </li>
-        <li><span class="parameter">sender</span>
-            <span class="types"><span class="type">hash</span></span>
-         Sender from on_message
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         radio_group init args
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
 
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:remove"></a>
-    <strong>druid:remove(component)</strong>
-    </dt>
-    <dd>
-    Remove component from druid instance.
- Component <code>on_remove</code> function will be invoked, if exist.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">component</span>
-            <span class="types"><span class="type">Component</span></span>
-         Component instance
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:update"></a>
-    <strong>druid:update(dt)</strong>
-    </dt>
-    <dd>
-    Druid update function
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">dt</span>
-            <span class="types"><span class="type">number</span></span>
-         Delta time
-        </li>
-    </ul>
-
+           <span class="types"><span class="type">Component</span></span>
+        radio_group component
+    </ol>
 
 
 
@@ -740,7 +740,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-23 13:01:03 </i>
+<i style="float:right;">Last updated 2020-02-23 22:54:59 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
