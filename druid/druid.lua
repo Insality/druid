@@ -7,6 +7,11 @@
 -- to how to do your custom complex components to
 -- separate UI game logic to small files
 --
+--    require("druid.druid")
+--    function init(self)
+--        self.druid = druid.new(self)
+--    end
+--
 -- @module druid
 
 local const = require("druid.const")

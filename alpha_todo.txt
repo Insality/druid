@@ -8,7 +8,7 @@ Simple to-do for Druid Alpha 0.2.0
 + better name for locale component? lang? lang_text?
 + better name for slider component? Slider is ok
 + Druid store assets - separate repository with rich components (progress_rich migrate)
-- refactor on_swipe. To on_scroll? Add input priority
++ refactor on_swipe. To on_scroll? Add input priority
 - separate custom data and predefined fields in components?
 - add init/remove stuff for every style in component. How to set custom sprites for button states?
 - unify component api (get/set/to and other general stuff)
@@ -24,6 +24,7 @@ Simple to-do for Druid Alpha 0.2.0
 - compare with gooey
 - add docs for all components
 - add docs folder for every component with gifs? Solutions
+- remove component autoremove all children component
 
 
 -- Low

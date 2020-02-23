@@ -1,7 +1,9 @@
 --- Lua event small library
+-- @module druid_event
 
 local class = require("druid.system.middleclass")
 
+-- @class DruidEvent
 local M = class("druid.event")
 
 

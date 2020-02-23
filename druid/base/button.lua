@@ -1,6 +1,17 @@
 --- Component to handle basic GUI button
 -- @module druid.button
 
+--- Component events
+-- @tfield druid_event on_click
+-- @tfield druid_event on_hold_click
+-- @tfield druid_event on_long_click
+-- @tfield druid_event on_double_click
+-- @table events
+
+--- Component fields
+-- @tfield node Main node
+-- @table fields
+
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
