@@ -5,7 +5,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("blocker", { const.ON_SWIPE })
+local M = component.create("blocker", { const.ON_INPUT_HIGH })
 
 
 function M.init(self, node)

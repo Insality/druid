@@ -19,14 +19,13 @@ M.ZERO = "0"
 M.ALL = "all"
 
 
---- Interests
+--- Component Interests
 M.ON_MESSAGE = hash("on_message")
 M.ON_UPDATE = hash("on_update")
-
-
--- Input
-M.ON_SWIPE = hash("on_swipe")
+M.ON_INPUT_HIGH = hash("on_input_high")
 M.ON_INPUT = hash("on_input")
+M.ON_CHANGE_LANGUAGE = hash("on_change_language")
+M.ON_LAYOUT_CHANGED = hash("on_layout_changed")
 
 
 M.PIVOTS = {
@@ -42,43 +41,21 @@ M.PIVOTS = {
 }
 
 
-M.SIDE = {
-	X = "x",
-	Y = "y"
-}
-
-
-M.UI_INPUT = {
-	[M.ON_SWIPE] = true,
-	[M.ON_INPUT] = true
-}
-
--- UI messages
-M.ON_CHANGE_LANGUAGE = hash("on_change_language")
-M.ON_LAYOUT_CHANGED = hash("on_layout_changed")
-
-
 M.SPECIFIC_UI_MESSAGES = {
 	[M.ON_CHANGE_LANGUAGE] = "on_change_language",
 	[M.ON_LAYOUT_CHANGED] = "on_layout_changed"
 }
 
 
--- Basic druid components
-M.COMPONENTS = {
-	BUTTON = "button",
-	BLOCKER = "blocker",
-	BACK_HANDLER = "back_handler",
-	TEXT = "text",
-	LOCALE = "locale",
-	TIMER = "timer",
-	PROGRESS = "progress",
-	GRID = "grid",
-	SCROLL = "scroll",
-	SLIDER = "slider",
-	CHECKBOX = "checkbox",
-	CHECKBOX_GROUP = "checkbox_group",
-	RADIO_GROUP = "radio_group",
+M.UI_INPUT = {
+	[M.ON_INPUT_HIGH] = true,
+	[M.ON_INPUT] = true
+}
+
+
+M.SIDE = {
+	X = "x",
+	Y = "y"
 }
 
 

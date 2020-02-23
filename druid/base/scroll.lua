@@ -5,7 +5,7 @@ local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("scroll", { const.ON_UPDATE, const.ON_SWIPE })
+local M = component.create("scroll", { const.ON_UPDATE, const.ON_INPUT_HIGH })
 
 
 -- Global on all scrolls

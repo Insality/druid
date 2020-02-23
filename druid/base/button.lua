@@ -1,6 +1,7 @@
 --- Component to handle basic GUI button
 -- @module druid.button
 
+local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
@@ -60,6 +61,12 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.hover_anim = self.style.IS_HOVER
 	self.hover = self.druid:new_hover(node, self, on_button_hover)
 
+	-- Event stubs
+	self.on_click = Event()
+	self.on_hold_click = Event()
+	self.on_long_click = Event()
+	self.on_double_click = Event()
+
 	self.click_zone = nil
 end
 
@@ -99,7 +106,7 @@ function M.on_input(self, action_id, action)
 end
 
 
-function M.on_swipe(self)
+function M.on_input_interrupt(self)
 	self.can_action = false
 end
 

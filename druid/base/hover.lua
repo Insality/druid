@@ -59,7 +59,7 @@ function M.on_input(self, action_id, action)
 end
 
 
-function M.on_swipe(self)
+function M.on_input_interrupt(self)
 	set_hover(self, false)
 end
 

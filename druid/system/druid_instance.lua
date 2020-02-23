@@ -82,16 +82,24 @@ local function create(self, instance_class)
 end
 
 
-local function notify_input_on_swipe(self)
-	if self.components[const.ON_INPUT] then
-		local len = #self.components[const.ON_INPUT]
-		for i = len, 1, -1 do
-			local comp = self.components[const.ON_INPUT][i]
-			if comp.on_swipe then
-				comp:on_swipe()
+local function process_input(action_id, action, components, is_input_consumed)
+	if not components then
+		return is_input_consumed
+	end
+
+	for i = #components, 1, -1 do
+		local component = components[i]
+
+		if not is_input_consumed then
+			is_input_consumed = component:on_input(action_id, action)
+		else
+			if component.on_input_interrupt then
+				component:on_input_interrupt()
 			end
 		end
 	end
+
+	return is_input_consumed
 end
 
 
@@ -169,33 +177,15 @@ end
 -- @tparam hash action_id Action_id from on_input
 -- @tparam table action Action from on_input
 function Druid.on_input(self, action_id, action)
-	-- TODO: расписать отличия ON_SWIPE и ON_INPUT
-	-- Почему-то некоторые используют ON_SWIPE, а логичнее ON_INPUT? (blocker, slider)
-	local components = self.components[const.ON_SWIPE]
-	if components then
-		local result
-		for i = #components, 1, -1 do
-			local v = components[i]
-			result = result or v:on_input(action_id, action)
-		end
-		if result then
-			notify_input_on_swipe(self)
-			return true
-		end
-	end
+	local is_input_consumed = false
 
-	components = self.components[const.ON_INPUT]
-	if components then
-		for i = #components, 1, -1 do
-			local v = components[i]
-			if v:on_input(action_id, action) then
-				return true
-			end
-		end
-		return false
-	end
+	is_input_consumed = process_input(action_id, action,
+		self.components[const.ON_INPUT_HIGH], is_input_consumed)
 
-	return false
+	is_input_consumed = process_input(action_id, action,
+		self.components[const.ON_INPUT], is_input_consumed)
+
+	return is_input_consumed
 end
 
 

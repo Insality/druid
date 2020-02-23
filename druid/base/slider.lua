@@ -5,7 +5,7 @@ local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("slider", { const.ON_SWIPE })
+local M = component.create("slider", { const.ON_INPUT_HIGH })
 
 
 local function on_change_value(self)
