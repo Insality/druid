@@ -147,16 +147,22 @@ table.index td { text-align: left; vertical-align: top; }
 
 #main {
     background-color:#FFFFFF; // #f0f0f0;
-    //border-left: 2px solid #cccccc;
+    border-left: 1px solid #cccccc;
 }
 
 #navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
     float: left;
     width: 14em;
     vertical-align: top;
     background-color:#FFFFFF; // #f0f0f0;
     border-right: 2px solid #cccccc;
     overflow: visible;
+    overflow-y: scroll;
+    height: 100%;
+    padding-left: 1em;
 }
 
 #navigation h2 {
@@ -165,7 +171,6 @@ table.index td { text-align: left; vertical-align: top; }
     color:#000000;
     text-align: left;
     padding:0.2em;
-    //border-top:1px solid #dddddd;
     border-bottom:1px solid #dddddd;
 }
 
@@ -189,6 +194,7 @@ table.index td { text-align: left; vertical-align: top; }
 #content {
     margin-left: 14em;
     padding: 1em;
+    padding-left: 2em;
     width: 700px;
     border-left: 2px solid #cccccc;
    // border-right: 2px solid #cccccc;
@@ -197,8 +203,10 @@ table.index td { text-align: left; vertical-align: top; }
 
 #about {
     clear: both;
-    padding: 5px;
+    padding-left: 1em;
+    margin-left: 14em; // avoid the damn sidebar!
     border-top: 2px solid #cccccc;
+    border-left: 2px solid #cccccc;
     background-color: #ffffff;
 }
 

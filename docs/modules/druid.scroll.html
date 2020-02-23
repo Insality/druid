@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
     <title>Defold Druid UI Library</title>
-    <link rel="stylesheet" href="../ldoc_pale.css" type="text/css" />
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
 
@@ -38,23 +38,24 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.locale.html">druid.locale</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
   <li><strong>druid.scroll</strong></li>
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
   <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/helper.html">helper</a></li>
-  <li><a href="../modules/druid.progress_rich.html">druid.progress_rich</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
 
@@ -64,34 +65,36 @@
 
 <h1>Module <code>druid.scroll</code></h1>
 <p>Component to handle scroll content</p>
-<p></p>
+<p>
+
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#scroll_to">scroll_to(vector3[, is_instant])</a></td>
-	<td class="summary">Start scroll to target point</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#init">init(self, index[, skip_cb])</a></td>
 	<td class="summary">Scroll to item in scroll by point index</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_points">set_points(self, points)</a></td>
-	<td class="summary">Set points of interest.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_inert">set_inert(self, state)</a></td>
-	<td class="summary">Enable or disable scroll inert.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_point_move">on_point_move(self, callback)</a></td>
 	<td class="summary">Set the callback on scrolling to point (if exist)</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#scroll_to">scroll_to(vector3[, is_instant])</a></td>
+	<td class="summary">Start scroll to target point</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set_border">set_border(self, border)</a></td>
 	<td class="summary">Set the scroll possibly area</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_inert">set_inert(self, state)</a></td>
+	<td class="summary">Enable or disable scroll inert.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_points">set_points(self, points)</a></td>
+	<td class="summary">Set points of interest.</td>
 	</tr>
 </table>
 
@@ -102,6 +105,61 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, index[, skip_cb])</strong>
+    </dt>
+    <dd>
+    Scroll to item in scroll by point index
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Component instance
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
+         Point index
+        </li>
+        <li><span class="parameter">skip_cb</span>
+            <span class="types"><span class="type">boolean</span></span>
+         If true, skip the point callback
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_point_move"></a>
+    <strong>on_point_move(self, callback)</strong>
+    </dt>
+    <dd>
+    Set the callback on scrolling to point (if exist)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Component instance
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Callback on scroll to point of interest
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "scroll_to"></a>
     <strong>scroll_to(vector3[, is_instant])</strong>
@@ -134,11 +192,11 @@
 
 </dd>
     <dt>
-    <a name = "init"></a>
-    <strong>init(self, index[, skip_cb])</strong>
+    <a name = "set_border"></a>
+    <strong>set_border(self, border)</strong>
     </dt>
     <dd>
-    Scroll to item in scroll by point index
+    Set the scroll possibly area
 
 
     <h3>Parameters:</h3>
@@ -147,40 +205,9 @@
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
          Component instance
         </li>
-        <li><span class="parameter">index</span>
-            <span class="types"><span class="type">number</span></span>
-         Point index
-        </li>
-        <li><span class="parameter">skip_cb</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true, skip the point callback
-         (<em>optional</em>)
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_points"></a>
-    <strong>set_points(self, points)</strong>
-    </dt>
-    <dd>
-    Set points of interest.
- Scroll will always centered on closer points
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
-        <li><span class="parameter">points</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Array of vector3 points
+        <li><span class="parameter">border</span>
+            <span class="types"><span class="type">vmath.vector3</span></span>
+         Size of scrolling area
         </li>
     </ul>
 
@@ -217,11 +244,12 @@
 
 </dd>
     <dt>
-    <a name = "on_point_move"></a>
-    <strong>on_point_move(self, callback)</strong>
+    <a name = "set_points"></a>
+    <strong>set_points(self, points)</strong>
     </dt>
     <dd>
-    Set the callback on scrolling to point (if exist)
+    Set points of interest.
+ Scroll will always centered on closer points
 
 
     <h3>Parameters:</h3>
@@ -230,34 +258,9 @@
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
          Component instance
         </li>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
-         Callback on scroll to point of interest
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_border"></a>
-    <strong>set_border(self, border)</strong>
-    </dt>
-    <dd>
-    Set the scroll possibly area
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
+        <li><span class="parameter">points</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
-        <li><span class="parameter">border</span>
-            <span class="types"><span class="type">vmath.vector3</span></span>
-         Size of scrolling area
+         Array of vector3 points
         </li>
     </ul>
 
@@ -273,7 +276,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-07 01:09:38 </i>
+<i style="float:right;">Last updated 2020-02-23 13:01:03 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

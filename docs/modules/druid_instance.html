@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
     <title>Defold Druid UI Library</title>
-    <link rel="stylesheet" href="../ldoc_pale.css" type="text/css" />
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
 
@@ -38,23 +38,24 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.locale.html">druid.locale</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
   <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
   <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/helper.html">helper</a></li>
-  <li><a href="../modules/druid.progress_rich.html">druid.progress_rich</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><strong>druid_instance</strong></li>
 </ul>
 
@@ -71,8 +72,9 @@
          <li><a href="../modules/druid.button.html#">druid.button</a></li>
          <li><a href="../modules/druid.blocker.html#">druid.blocker</a></li>
          <li><a href="../modules/druid.back_handler.html#">druid.back_handler</a></li>
+         <li><a href="../modules/druid.input.html#">druid.input</a></li>
          <li><a href="../modules/druid.text.html#">druid.text</a></li>
-         <li><a href="../modules/druid.locale.html#">druid.locale</a></li>
+         <li><a href="../modules/druid.lang_text.html#">druid.lang_text</a></li>
          <li><a href="../modules/druid.timer.html#">druid.timer</a></li>
          <li><a href="../modules/druid.progress.html#">druid.progress</a></li>
          <li><a href="../modules/druid.grid.html#">druid.grid</a></li>
@@ -87,68 +89,24 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#druid:initialize">druid:initialize(table, table)</a></td>
-	<td class="summary">Druid class constructor</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#druid:create">druid:create(component, ...)</a></td>
 	<td class="summary">Create new druid component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:remove">druid:remove(component)</a></td>
-	<td class="summary">Remove component from druid instance.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:update">druid:update(dt)</a></td>
-	<td class="summary">Druid update function</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:on_input">druid:on_input(action_id, action)</a></td>
-	<td class="summary">Druid on_input function</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:on_message">druid:on_message(message_id, message, sender)</a></td>
-	<td class="summary">Druid on_message function</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_button">druid:new_button(...)</a></td>
-	<td class="summary">Create button basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_blocker">druid:new_blocker(...)</a></td>
-	<td class="summary">Create blocker basic component</td>
+	<td class="name" nowrap><a href="#druid:initialize">druid:initialize(table, table)</a></td>
+	<td class="summary">Druid class constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#druid:new_back_handler">druid:new_back_handler(...)</a></td>
 	<td class="summary">Create back_handler basic component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:new_text">druid:new_text(...)</a></td>
-	<td class="summary">Create text basic component</td>
+	<td class="name" nowrap><a href="#druid:new_blocker">druid:new_blocker(...)</a></td>
+	<td class="summary">Create blocker basic component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:new_locale">druid:new_locale(...)</a></td>
-	<td class="summary">Create locale basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_timer">druid:new_timer(...)</a></td>
-	<td class="summary">Create timer basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_progress">druid:new_progress(...)</a></td>
-	<td class="summary">Create progress basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_grid">druid:new_grid(...)</a></td>
-	<td class="summary">Create grid basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_scroll">druid:new_scroll(...)</a></td>
-	<td class="summary">Create scroll basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_slider">druid:new_slider(...)</a></td>
-	<td class="summary">Create slider basic component</td>
+	<td class="name" nowrap><a href="#druid:new_button">druid:new_button(...)</a></td>
+	<td class="summary">Create button basic component</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#druid:new_checkbox">druid:new_checkbox(...)</a></td>
@@ -159,12 +117,60 @@
 	<td class="summary">Create checkbox_group basic component</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#druid:new_grid">druid:new_grid(...)</a></td>
+	<td class="summary">Create grid basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_hover">druid:new_hover(...)</a></td>
+	<td class="summary">Create hover basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_input">druid:new_input(...)</a></td>
+	<td class="summary">Create input basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_lang_text">druid:new_lang_text(...)</a></td>
+	<td class="summary">Create lang_text basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_progress">druid:new_progress(...)</a></td>
+	<td class="summary">Create progress basic component</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#druid:new_radio_group">druid:new_radio_group(...)</a></td>
 	<td class="summary">Create radio_group basic component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:new_progress_rich">druid:new_progress_rich(...)</a></td>
-	<td class="summary">Create progress_rich basic component</td>
+	<td class="name" nowrap><a href="#druid:new_scroll">druid:new_scroll(...)</a></td>
+	<td class="summary">Create scroll basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_slider">druid:new_slider(...)</a></td>
+	<td class="summary">Create slider basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_text">druid:new_text(...)</a></td>
+	<td class="summary">Create text basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:new_timer">druid:new_timer(...)</a></td>
+	<td class="summary">Create timer basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:on_input">druid:on_input(action_id, action)</a></td>
+	<td class="summary">Druid on_input function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:on_message">druid:on_message(message_id, message, sender)</a></td>
+	<td class="summary">Druid on_message function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:remove">druid:remove(component)</a></td>
+	<td class="summary">Remove component from druid instance.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid:update">druid:update(dt)</a></td>
+	<td class="summary">Druid update function</td>
 	</tr>
 </table>
 
@@ -175,31 +181,6 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
-    <dt>
-    <a name = "druid:initialize"></a>
-    <strong>druid:initialize(table, table)</strong>
-    </dt>
-    <dd>
-    Druid class constructor
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">table</span>
-            <span class="types"><span class="type">style</span></span>
-         Druid style module
-        </li>
-        <li><span class="parameter">table</span>
-            <span class="types"><span class="type">style</span></span>
-         Druid style module
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
     <dt>
     <a name = "druid:create"></a>
     <strong>druid:create(component, ...)</strong>
@@ -226,19 +207,22 @@
 
 </dd>
     <dt>
-    <a name = "druid:remove"></a>
-    <strong>druid:remove(component)</strong>
+    <a name = "druid:initialize"></a>
+    <strong>druid:initialize(table, table)</strong>
     </dt>
     <dd>
-    Remove component from druid instance.
- Component `on_remove` function will be invoked, if exist.
+    Druid class constructor
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">component</span>
-            <span class="types"><span class="type">Component</span></span>
-         Component instance
+        <li><span class="parameter">table</span>
+            <span class="types"><span class="type">style</span></span>
+         Druid style module
+        </li>
+        <li><span class="parameter">table</span>
+            <span class="types"><span class="type">style</span></span>
+         Druid style module
         </li>
     </ul>
 
@@ -248,93 +232,18 @@
 
 </dd>
     <dt>
-    <a name = "druid:update"></a>
-    <strong>druid:update(dt)</strong>
+    <a name = "druid:new_back_handler"></a>
+    <strong>druid:new_back_handler(...)</strong>
     </dt>
     <dd>
-    Druid update function
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">dt</span>
-            <span class="types"><span class="type">number</span></span>
-         Delta time
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:on_input"></a>
-    <strong>druid:on_input(action_id, action)</strong>
-    </dt>
-    <dd>
-    Druid on_input function
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">action_id</span>
-            <span class="types"><span class="type">hash</span></span>
-         Action_id from on_input
-        </li>
-        <li><span class="parameter">action</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Action from on_input
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:on_message"></a>
-    <strong>druid:on_message(message_id, message, sender)</strong>
-    </dt>
-    <dd>
-    Druid on_message function
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">message_id</span>
-            <span class="types"><span class="type">hash</span></span>
-         Message_id from on_message
-        </li>
-        <li><span class="parameter">message</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Message from on_message
-        </li>
-        <li><span class="parameter">sender</span>
-            <span class="types"><span class="type">hash</span></span>
-         Sender from on_message
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_button"></a>
-    <strong>druid:new_button(...)</strong>
-    </dt>
-    <dd>
-    Create button basic component
+    Create back_handler basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         button init args
+         back_handler init args
         </li>
     </ul>
 
@@ -342,7 +251,7 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        button component
+        back_handler component
     </ol>
 
 
@@ -377,18 +286,18 @@
 
 </dd>
     <dt>
-    <a name = "druid:new_back_handler"></a>
-    <strong>druid:new_back_handler(...)</strong>
+    <a name = "druid:new_button"></a>
+    <strong>druid:new_button(...)</strong>
     </dt>
     <dd>
-    Create back_handler basic component
+    Create button basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         back_handler init args
+         button init args
         </li>
     </ul>
 
@@ -396,196 +305,7 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        back_handler component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_text"></a>
-    <strong>druid:new_text(...)</strong>
-    </dt>
-    <dd>
-    Create text basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         text init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        text component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_locale"></a>
-    <strong>druid:new_locale(...)</strong>
-    </dt>
-    <dd>
-    Create locale basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         locale init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        locale component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_timer"></a>
-    <strong>druid:new_timer(...)</strong>
-    </dt>
-    <dd>
-    Create timer basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         timer init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        timer component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_progress"></a>
-    <strong>druid:new_progress(...)</strong>
-    </dt>
-    <dd>
-    Create progress basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         progress init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        progress component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_grid"></a>
-    <strong>druid:new_grid(...)</strong>
-    </dt>
-    <dd>
-    Create grid basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         grid init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        grid component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_scroll"></a>
-    <strong>druid:new_scroll(...)</strong>
-    </dt>
-    <dd>
-    Create scroll basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         scroll init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        scroll component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "druid:new_slider"></a>
-    <strong>druid:new_slider(...)</strong>
-    </dt>
-    <dd>
-    Create slider basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         slider init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        slider component
+        button component
     </ol>
 
 
@@ -647,6 +367,141 @@
 
 </dd>
     <dt>
+    <a name = "druid:new_grid"></a>
+    <strong>druid:new_grid(...)</strong>
+    </dt>
+    <dd>
+    Create grid basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         grid init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        grid component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:new_hover"></a>
+    <strong>druid:new_hover(...)</strong>
+    </dt>
+    <dd>
+    Create hover basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         hover init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        hover component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:new_input"></a>
+    <strong>druid:new_input(...)</strong>
+    </dt>
+    <dd>
+    Create input basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         input init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        input component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:new_lang_text"></a>
+    <strong>druid:new_lang_text(...)</strong>
+    </dt>
+    <dd>
+    Create lang_text basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         lang_text init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        lang_text component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:new_progress"></a>
+    <strong>druid:new_progress(...)</strong>
+    </dt>
+    <dd>
+    Create progress basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         progress init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        progress component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "druid:new_radio_group"></a>
     <strong>druid:new_radio_group(...)</strong>
     </dt>
@@ -674,18 +529,18 @@
 
 </dd>
     <dt>
-    <a name = "druid:new_progress_rich"></a>
-    <strong>druid:new_progress_rich(...)</strong>
+    <a name = "druid:new_scroll"></a>
+    <strong>druid:new_scroll(...)</strong>
     </dt>
     <dd>
-    Create progress_rich basic component
+    Create scroll basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         progress_rich init args
+         scroll init args
         </li>
     </ul>
 
@@ -693,8 +548,186 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        progress_rich component
+        scroll component
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:new_slider"></a>
+    <strong>druid:new_slider(...)</strong>
+    </dt>
+    <dd>
+    Create slider basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         slider init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        slider component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:new_text"></a>
+    <strong>druid:new_text(...)</strong>
+    </dt>
+    <dd>
+    Create text basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         text init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        text component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:new_timer"></a>
+    <strong>druid:new_timer(...)</strong>
+    </dt>
+    <dd>
+    Create timer basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         timer init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        timer component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:on_input"></a>
+    <strong>druid:on_input(action_id, action)</strong>
+    </dt>
+    <dd>
+    Druid on_input function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">action_id</span>
+            <span class="types"><span class="type">hash</span></span>
+         Action<em>id from on</em>input
+        </li>
+        <li><span class="parameter">action</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Action from on_input
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:on_message"></a>
+    <strong>druid:on_message(message_id, message, sender)</strong>
+    </dt>
+    <dd>
+    Druid on_message function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message_id</span>
+            <span class="types"><span class="type">hash</span></span>
+         Message<em>id from on</em>message
+        </li>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Message from on_message
+        </li>
+        <li><span class="parameter">sender</span>
+            <span class="types"><span class="type">hash</span></span>
+         Sender from on_message
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:remove"></a>
+    <strong>druid:remove(component)</strong>
+    </dt>
+    <dd>
+    Remove component from druid instance.
+ Component <code>on_remove</code> function will be invoked, if exist.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">component</span>
+            <span class="types"><span class="type">Component</span></span>
+         Component instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid:update"></a>
+    <strong>druid:update(dt)</strong>
+    </dt>
+    <dd>
+    Druid update function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">dt</span>
+            <span class="types"><span class="type">number</span></span>
+         Delta time
+        </li>
+    </ul>
+
 
 
 
@@ -707,7 +740,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-07 01:09:38 </i>
+<i style="float:right;">Last updated 2020-02-23 13:01:03 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

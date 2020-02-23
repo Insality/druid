@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
     <title>Defold Druid UI Library</title>
-    <link rel="stylesheet" href="../ldoc_pale.css" type="text/css" />
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
 
@@ -38,23 +38,24 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.locale.html">druid.locale</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><strong>druid.input</strong></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
   <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
   <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/helper.html">helper</a></li>
-  <li><strong>druid.progress_rich</strong></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
 
@@ -62,24 +63,22 @@
 
 <div id="content">
 
-<h1>Module <code>druid.progress_rich</code></h1>
-<p>Component for rich progress component</p>
-<p></p>
+<h1>Module <code>druid.input</code></h1>
+<p>Component to handle hover node interaction</p>
+<p>
+
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#set_to">set_to(self, value)</a></td>
-	<td class="summary">Instant fill progress bar to value</td>
+	<td class="name" nowrap><a href="#button:set_click_zone">button:set_click_zone(self, zone)</a></td>
+	<td class="summary">Strict button click area.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#empty">empty(self)</a></td>
-	<td class="summary">Empty a progress bar</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#to">to(self, to[, callback])</a></td>
-	<td class="summary">Start animation of a progress bar</td>
+	<td class="name" nowrap><a href="#hover:init">hover:init(self, node, on_hover_callback)</a></td>
+	<td class="summary">Component init function</td>
 	</tr>
 </table>
 
@@ -91,11 +90,12 @@
 
     <dl class="function">
     <dt>
-    <a name = "set_to"></a>
-    <strong>set_to(self, value)</strong>
+    <a name = "button:set_click_zone"></a>
+    <strong>button:set_click_zone(self, zone)</strong>
     </dt>
     <dd>
-    Instant fill progress bar to value
+    Strict button click area.  Useful for
+ no click events outside stencil node
 
 
     <h3>Parameters:</h3>
@@ -104,9 +104,9 @@
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
          Component instance
         </li>
-        <li><span class="parameter">value</span>
-            <span class="types"><span class="type">number</span></span>
-         Progress bar value, from 0 to 1
+        <li><span class="parameter">zone</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
         </li>
     </ul>
 
@@ -116,11 +116,11 @@
 
 </dd>
     <dt>
-    <a name = "empty"></a>
-    <strong>empty(self)</strong>
+    <a name = "hover:init"></a>
+    <strong>hover:init(self, node, on_hover_callback)</strong>
     </dt>
     <dd>
-    Empty a progress bar
+    Component init function
 
 
     <h3>Parameters:</h3>
@@ -129,35 +129,13 @@
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
          Component instance
         </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "to"></a>
-    <strong>to(self, to[, callback])</strong>
-    </dt>
-    <dd>
-    Start animation of a progress bar
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
         </li>
-        <li><span class="parameter">to</span>
-            <span class="types"><span class="type">number</span></span>
-         value between 0..1
-        </li>
-        <li><span class="parameter">callback</span>
+        <li><span class="parameter">on_hover_callback</span>
             <span class="types"><span class="type">function</span></span>
-         Callback on animation ends
-         (<em>optional</em>)
+         Hover callback
         </li>
     </ul>
 
@@ -173,7 +151,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-07 01:09:38 </i>
+<i style="float:right;">Last updated 2020-02-23 13:01:03 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

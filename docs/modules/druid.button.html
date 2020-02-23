@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
     <title>Defold Druid UI Library</title>
-    <link rel="stylesheet" href="../ldoc_pale.css" type="text/css" />
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
 
@@ -33,28 +33,30 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
 </ul>
 
 
 <h2>Modules</h2>
 <ul class="nowrap">
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><strong>druid.button</strong></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.locale.html">druid.locale</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
   <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
   <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/helper.html">helper</a></li>
-  <li><a href="../modules/druid.progress_rich.html">druid.progress_rich</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
 
@@ -64,22 +66,55 @@
 
 <h1>Module <code>druid.button</code></h1>
 <p>Component to handle basic GUI button</p>
-<p></p>
+<p>
+
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, callback[, params[, anim_node[, event]]])</a></td>
-	<td class="summary">Component init function</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#disable_animation">disable_animation(self)</a></td>
 	<td class="summary">Disable all button animations</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#get_key_trigger">get_key_trigger(self)</a></td>
+	<td class="summary">Get key-code to trigger this button</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, node, callback[, params[, anim_node[, event]]])</a></td>
+	<td class="summary">Component init function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_callback">set_callback(self, callback)</a></td>
+	<td class="summary">Set usual button callback</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, zone)</a></td>
 	<td class="summary">Strict button click area.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_double_tap_callback">set_double_tap_callback(self, callback)</a></td>
+	<td class="summary">Get doubletap callback on this button</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_hold_callback">set_hold_callback(self, callback)</a></td>
+	<td class="summary">Repeat callback always, while holding button</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_long_tap_callback">set_long_tap_callback(self, callback)</a></td>
+	<td class="summary">Single callbacka after long_tap.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#events">events</a></td>
+	<td class="summary">Component events</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#fields">fields</a></td>
+	<td class="summary">Component fields</td>
 	</tr>
 </table>
 
@@ -90,6 +125,49 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "disable_animation"></a>
+    <strong>disable_animation(self)</strong>
+    </dt>
+    <dd>
+    Disable all button animations
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Component instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_key_trigger"></a>
+    <strong>get_key_trigger(self)</strong>
+    </dt>
+    <dd>
+    Get key-code to trigger this button
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "init"></a>
     <strong>init(self, node, callback[, params[, anim_node[, event]]])</strong>
@@ -135,18 +213,24 @@
 
 </dd>
     <dt>
-    <a name = "disable_animation"></a>
-    <strong>disable_animation(self)</strong>
+    <a name = "set_callback"></a>
+    <strong>set_callback(self, callback)</strong>
     </dt>
     <dd>
-    Disable all button animations
+    Set usual button callback
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
+
+
+
+        </li>
+        <li><span class="parameter">callback</span>
+
+
+
         </li>
     </ul>
 
@@ -181,6 +265,153 @@
 
 
 </dd>
+    <dt>
+    <a name = "set_double_tap_callback"></a>
+    <strong>set_double_tap_callback(self, callback)</strong>
+    </dt>
+    <dd>
+    Get doubletap callback on this button
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+
+
+        </li>
+        <li><span class="parameter">callback</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_hold_callback"></a>
+    <strong>set_hold_callback(self, callback)</strong>
+    </dt>
+    <dd>
+    Repeat callback always, while holding button
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+
+
+        </li>
+        <li><span class="parameter">callback</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_long_tap_callback"></a>
+    <strong>set_long_tap_callback(self, callback)</strong>
+    </dt>
+    <dd>
+    Single callbacka after long_tap.  No usual callback invoked
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+
+
+        </li>
+        <li><span class="parameter">callback</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "events"></a>
+    <strong>events</strong>
+    </dt>
+    <dd>
+    Component events
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">on_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">on_hold_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">on_long_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">on_double_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "fields"></a>
+    <strong>fields</strong>
+    </dt>
+    <dd>
+    Component fields
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">Main</span>
+            <span class="types"><span class="type">node</span></span>
+         node
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
 </dl>
 
 
@@ -188,7 +419,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-07 01:09:38 </i>
+<i style="float:right;">Last updated 2020-02-23 13:01:03 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
