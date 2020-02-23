@@ -1,14 +1,16 @@
 local druid = require("druid.druid")
 
 local empty_style = require("druid.styles.empty.style")
-local bounce_style = require("druid.styles.bounce.style")
+local default_style = require("druid.styles.default.style")
 
 local main_page = require("example.kenney.page.main")
 local text_page = require("example.kenney.page.texts")
 
 local pages = {
 	"main_page",
-	"texts_page"
+	"texts_page",
+	"button_page",
+	"scroll_page",
 }
 
 local function on_control_button(self, delta)
@@ -34,7 +36,7 @@ end
 
 
 function init(self)
-	druid.set_default_style(bounce_style)
+	druid.set_default_style(default_style)
 	self.druid = druid.new(self)
 
 	init_top_panel(self)

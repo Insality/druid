@@ -1,5 +1,5 @@
 local settings = require("druid.system.settings")
-local anims = require("druid.styles.bounce.anims")
+local anims = require("druid.styles.default.anims")
 
 local M = {}
 
