@@ -12,6 +12,8 @@ M["button"] = {
 	BTN_SOUND_DISABLED = "click",
 	DISABLED_COLOR = vmath.vector4(0, 0, 0, 1),
 	ENABLED_COLOR = vmath.vector4(1),
+	LONGTAP_TIME = 0.4,
+	DOUBLETAP_TIME = 0.4,
 	IS_HOVER = true,
 
 	on_hover = function(self, node, state)

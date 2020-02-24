@@ -42,11 +42,14 @@ function init(self)
 	self.druid = druid.new(self)
 
 	init_top_panel(self)
-	self.page = 1
+	self.page = 3
 	main_page.setup_page(self)
 	text_page.setup_page(self)
 	button_page.setup_page(self)
 	scroll_page.setup_page(self)
+
+	-- Refresh state
+	on_control_button(self, 0)
 end
 
 

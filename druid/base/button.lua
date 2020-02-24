@@ -47,14 +47,67 @@ local function on_button_hover(self, hover_state)
 end
 
 
+local function on_button_click(self)
+	if self.style.on_click then
+		self.style.on_click(self, self.anim_node)
+	end
+	self.click_in_row = 1
+	self.on_click:trigger(self:get_context(), self.params, self)
+end
+
+
+local function on_button_repeated_click(self)
+	if self.style.on_click then
+		self.style.on_click(self, self.anim_node)
+	end
+	self.click_in_row = self.click_in_row + 1
+	self.on_repeated_click:trigger(self:get_context(), self.params, self)
+end
+
+
+local function on_button_long_click(self)
+	if self.style.on_click then
+		self.style.on_click(self, self.anim_node)
+	end
+	self.click_in_row = 1
+	self.on_long_click:trigger(self:get_context(), self.params, self)
+end
+
+
+local function on_button_double_click(self)
+	if self.style.on_click then
+		self.style.on_click(self, self.anim_node)
+	end
+	self.click_in_row = self.click_in_row + 1
+	self.on_double_click:trigger(self:get_context(), self.params, self)
+end
+
+
 local function on_button_release(self)
+	if self.is_repeated_started then
+		return false
+	end
+
 	if not self.disabled then
-		if not self.stub and self.can_action then
+		if self.can_action then
 			self.can_action = false
-			if self.style.on_click then
-				self.style.on_click(self, self.anim_node)
+
+			local time = socket.gettime()
+			local is_long_click = (time - self.last_pressed_time) > self.style.LONGTAP_TIME
+			is_long_click = is_long_click and self.on_long_click:is_exist()
+
+			local is_double_click = (time - self.last_released_time) < self.style.DOUBLETAP_TIME
+			is_double_click = is_double_click and self.on_double_click:is_exist()
+
+			if is_long_click then
+				on_button_long_click(self)
+			elseif is_double_click then
+				on_button_double_click(self)
+			else
+				on_button_click(self)
 			end
-			self.on_click:trigger(self:get_context(), self.params, self)
+
+			self.last_released_time = time
 		end
 		return true
 	else
@@ -86,6 +139,10 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.hover_anim = self.style.IS_HOVER
 	self.hover = self.druid:new_hover(node, on_button_hover)
 	self.click_zone = nil
+	self.is_repeated_started = false
+	self.last_pressed_time = 0
+	self.last_released_time = 0
+	self.click_in_row = 0
 
 	-- Event stubs
 	self.on_click = Event(callback)
@@ -118,8 +175,18 @@ function M.on_input(self, action_id, action)
 	if action.pressed then
 		-- Can interact if start touch on the button
 		self.can_action = true
-		self.repeated_counter = 0
+		self.is_repeated_started = false
+		self.last_pressed_time = socket.gettime()
 		return true
+	end
+
+	-- While hold button, repeat rate pick from input.repeat_interval
+	if action.repeated then
+		if not self.disabled and self.on_repeated_click:is_exist() and self.can_action then
+			self.is_repeated_started = true
+			on_button_repeated_click(self)
+			return true
+		end
 	end
 
 	if action.released then
@@ -166,7 +233,6 @@ function M.set_click_zone(self, zone)
 end
 
 
--- TODO: implement them all!
 --- Set key-code to trigger this button
 function M.set_key_trigger(self, key)
 

@@ -43,6 +43,21 @@ function M.unsubscribe(self, callback)
 end
 
 
+--- Return true, if event have at lease one handler
+-- @function event:is_exist
+-- @treturn boolean True if event have handlers
+function M.is_exist(self)
+	return #self._callbacks > 0
+end
+
+
+--- Clear the all event handlers
+-- @function event:clear
+function M.clear(self)
+	self._callbacks = {}
+end
+
+
 --- Trigger the event and call all subscribed callbacks
 -- @function event:trigger
 -- @param ... All event params
