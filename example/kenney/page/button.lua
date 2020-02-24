@@ -29,13 +29,17 @@ local function setup_buttons(self)
 	custom_style.HOVER_IMAGE = "button_yellow"
 	custom_style.DEFAULT_IMAGE = "button_blue"
 
-
 	self.druid:new_button("button_long_tap/button", usual_callback)
 		.on_long_click:subscribe(long_tap_callback)
 	self.druid:new_button("button_repeated_tap/button", usual_callback)
 		.on_repeated_click:subscribe(repeated_callback)
 	self.druid:new_button("button_double_tap/button", usual_callback)
 		.on_double_click:subscribe(double_tap_callback)
+
+	local button_space = self.druid:new_button("button_key_trigger/button", usual_callback)
+	button_space:set_key_trigger("key_space")
+	button_space.on_long_click:subscribe(long_tap_callback)
+	button_space.on_double_click:subscribe(double_tap_callback)
 end
 
 

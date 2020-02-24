@@ -24,7 +24,7 @@ function M.init(self, node, on_hover_callback)
 end
 
 
-local function set_hover(self, state)
+function M.set_hover(self, state)
 	if self._is_hovered ~= state then
 		self._is_hovered = state
 		self.on_hover:trigger(self:get_context(), state)
@@ -44,20 +44,20 @@ function M.on_input(self, action_id, action)
 	local is_pick = gui.pick_node(self.node, action.x, action.y)
 
 	if not is_pick then
-		set_hover(self, false)
+		M.set_hover(self, false)
 		return false
 	end
 
 	if action.released then
-		set_hover(self, false)
+		M.set_hover(self, false)
 	else
-		set_hover(self, true)
+		M.set_hover(self, true)
 	end
 end
 
 
 function M.on_input_interrupt(self)
-	set_hover(self, false)
+	M.set_hover(self, false)
 end
 
 
