@@ -84,7 +84,7 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.scale_from = gui.get_scale(self.anim_node)
 	self.params = params
 	self.hover_anim = self.style.IS_HOVER
-	self.hover = self.druid:new_hover(node, self, on_button_hover)
+	self.hover = self.druid:new_hover(node, on_button_hover)
 	self.click_zone = nil
 
 	-- Event stubs

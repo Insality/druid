@@ -14,12 +14,11 @@ local M = component.create("hover", { const.ON_INPUT })
 -- @tparam table self Component instance
 -- @tparam node node Gui node
 -- @tparam function on_hover_callback Hover callback
-function M.init(self, node, context, on_hover_callback)
+function M.init(self, node, on_hover_callback)
 	self.style = self:get_style()
 	self.node = self:get_node(node)
 
 	self._is_hovered = false
-	self.context = context
 
 	self.on_hover = Event(on_hover_callback)
 end
@@ -28,7 +27,7 @@ end
 local function set_hover(self, state)
 	if self._is_hovered ~= state then
 		self._is_hovered = state
-		self.on_hover:trigger(self.context, state)
+		self.on_hover:trigger(self:get_context(), state)
 	end
 end
 
