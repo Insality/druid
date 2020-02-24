@@ -20,10 +20,8 @@ function M.init(self, node, context, on_hover_callback)
 
 	self._is_hovered = false
 	self.context = context
-	self.on_hover = Event()
-	if on_hover_callback then
-		self.on_hover:subscribe(on_hover_callback)
-	end
+
+	self.on_hover = Event(on_hover_callback)
 end
 
 

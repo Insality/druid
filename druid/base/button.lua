@@ -75,8 +75,6 @@ end
 -- @tparam[opt] node anim_node Button anim node (node, if not provided)
 -- @tparam[opt] string event Button react event, const.ACTION_TOUCH by default
 function M.init(self, node, callback, params, anim_node, event)
-	assert(callback, "Button should have callback. To block input on zone use blocker component")
-
 	self.druid = self:get_druid()
 	self.style = self:get_style()
 	self.node = self:get_node(node)
@@ -90,15 +88,10 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.click_zone = nil
 
 	-- Event stubs
-	self.on_click = Event()
+	self.on_click = Event(callback)
 	self.on_repeated_click = Event()
 	self.on_long_click = Event()
 	self.on_double_click = Event()
-
-	if callback then
-		self.on_click:subscribe(callback)
-	end
-
 end
 
 

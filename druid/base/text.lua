@@ -2,6 +2,7 @@
 -- Good working with localization system
 -- @module druid.text
 
+local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
@@ -25,6 +26,10 @@ function M.init(self, node, value, no_adjust)
 	self.is_no_adjust = no_adjust
 	self.last_color = gui.get_color(self.node)
 
+	self.on_set_text = Event()
+	self.on_update_text_scale = Event()
+	self.on_set_pivot = Event()
+
 	self:set_to(value or 0)
 	return self
 end
@@ -47,6 +52,8 @@ local function update_text_area_size(self)
 	local new_scale = vmath.vector3(scale_modifier, scale_modifier, cur_scale.z)
 	gui.set_scale(self.node, new_scale)
 	self.scale = new_scale
+
+	self.on_update_text_scale:trigger(self:get_context(), new_scale)
 end
 
 
@@ -57,6 +64,8 @@ end
 function M.set_to(self, set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, set_to)
+
+	self.on_set_text:trigger(self:get_context(), set_to)
 
 	if not self.is_no_adjust then
 		update_text_area_size(self)
@@ -114,6 +123,8 @@ function M.set_pivot(self, pivot)
 
 	self.pos = self.pos + pos_offset
 	gui.set_position(self.node, self.pos)
+
+	self.on_set_pivot:trigger(self:get_context(), pivot)
 end
 
 

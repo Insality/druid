@@ -1,16 +1,10 @@
 --- Checkboux group module
 -- @module druid.checkbox_group
 
+local Event = require("druid.event")
 local component = require("druid.component")
 
 local M = component.create("checkbox_group")
-
-
-local function on_checkbox_click(self, index)
-	if self.callback then
-		self.callback(self:get_context(), index)
-	end
-end
 
 
 function M.set_state(self, indexes)
@@ -36,12 +30,13 @@ end
 function M.init(self, nodes, callback, click_nodes)
 	self.druid = self:get_druid()
 	self.checkboxes = {}
-	self.callback = callback
+
+	self.on_checkbox_click = Event(callback)
 
 	for i = 1, #nodes do
 		local click_node = click_nodes and click_nodes[i] or nil
 		local checkbox = self.druid:new_checkbox(nodes[i], function()
-			on_checkbox_click(self, i)
+			self.on_checkbox_click:trigger(self:get_context(), i)
 		end, click_node)
 
 		table.insert(self.checkboxes, checkbox)

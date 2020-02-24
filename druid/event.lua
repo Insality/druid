@@ -7,8 +7,15 @@ local class = require("druid.system.middleclass")
 local M = class("druid.event")
 
 
-function M.initialize(self)
+--- Event constructur
+-- @function Event
+-- @tparam function initial_callback Subscribe the callback on new event, if callback exist
+function M.initialize(self, initial_callback)
 	self._callbacks = {}
+
+	if initial_callback then
+		self:subscribe(initial_callback)
+	end
 end
 
 
