@@ -176,14 +176,12 @@ function M.on_input(self, action_id, action)
 		return false
 	end
 
-	local is_key_trigger = (action_id == self.key_trigger)
-
 	if not helper.is_enabled(self.node) then
 		return false
 	end
 
 	local is_pick = true
-
+	local is_key_trigger = (action_id == self.key_trigger)
 	if not is_key_trigger then
 		is_pick = gui.pick_node(self.node, action.x, action.y)
 		if self.click_zone then
