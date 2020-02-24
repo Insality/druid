@@ -1,6 +1,7 @@
 --- Component to handle scroll content
 -- @module druid.scroll
 
+local Event = require("druid.event")
 local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
@@ -41,14 +42,21 @@ function M.init(self, scroll_parent, input_zone, border)
 	}
 
 	self:set_border(border)
+
+	self.on_scroll = Event()
+	self.on_scroll_to = Event()
+	self.on_point_scroll = Event()
 end
 
 
 local function set_pos(self, pos)
-	self.pos.x = pos.x
-	self.pos.y = pos.y
+	if self.pos.x ~= pos.x or self.pos.y ~= pos.y then
+		self.pos.x = pos.x
+		self.pos.y = pos.y
+		gui.set_position(self.node, self.pos)
 
-	gui.set_position(self.node, self.pos)
+		self.on_scroll:trigger(self:get_context(), self.pos)
+	end
 end
 
 
@@ -337,6 +345,8 @@ function M.scroll_to(self, point, is_instant)
 			set_pos(self, target)
 		end)
 	end
+
+	self.on_scroll_to:trigger(self:get_context(), point, is_instant)
 end
 
 
@@ -351,8 +361,8 @@ function M.scroll_to_index(self, index, skip_cb)
 	if self.selected ~= index then
 		self.selected = index
 
-		if not skip_cb and self.on_point_callback then
-			self.on_point_callback(self:get_context(), index, self.points[index])
+		if not skip_cb then
+			self.on_point_scroll:trigger(self:get_context(), index, self.points[index])
 		end
 	end
 
@@ -395,7 +405,7 @@ end
 -- @tparam table self Component instance
 -- @tparam function callback Callback on scroll to point of interest
 function M.on_point_move(self, callback)
-	self.on_point_callback = callback
+	self.on_point_scroll:subscribe(callback)
 end
 
 
