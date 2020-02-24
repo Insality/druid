@@ -42,6 +42,9 @@ function M.on_input(self, action_id, action)
 	end
 
 	local is_pick = gui.pick_node(self.node, action.x, action.y)
+	if self.click_zone then
+		is_pick = is_pick and gui.pick_node(self.click_zone, action.x, action.y)
+	end
 
 	if not is_pick then
 		M.set_hover(self, false)

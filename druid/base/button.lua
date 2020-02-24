@@ -258,6 +258,7 @@ end
 -- @tparam node zone Gui node
 function M.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
+	self.hover:set_click_zone(zone)
 end
 
 
