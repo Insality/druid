@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
     <title>Defold Druid UI Library</title>
-    <link rel="stylesheet" href="../ldoc_pale.css" type="text/css" />
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
 
@@ -44,7 +44,8 @@
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.locale.html">druid.locale</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
   <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
@@ -53,8 +54,8 @@
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
   <li><a href="../modules/component.html">component</a></li>
   <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/helper.html">helper</a></li>
-  <li><a href="../modules/druid.progress_rich.html">druid.progress_rich</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><strong>druid_instance</strong></li>
 </ul>
 
@@ -71,8 +72,9 @@
          <li><a href="../modules/druid.button.html#">druid.button</a></li>
          <li><a href="../modules/druid.blocker.html#">druid.blocker</a></li>
          <li><a href="../modules/druid.back_handler.html#">druid.back_handler</a></li>
+         <li><a href="../modules/druid.input.html#">druid.input</a></li>
          <li><a href="../modules/druid.text.html#">druid.text</a></li>
-         <li><a href="../modules/druid.locale.html#">druid.locale</a></li>
+         <li><a href="../modules/druid.lang_text.html#">druid.lang_text</a></li>
          <li><a href="../modules/druid.timer.html#">druid.timer</a></li>
          <li><a href="../modules/druid.progress.html#">druid.progress</a></li>
          <li><a href="../modules/druid.grid.html#">druid.grid</a></li>
@@ -123,12 +125,16 @@
 	<td class="summary">Create back_handler basic component</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#druid:new_hover">druid:new_hover(...)</a></td>
+	<td class="summary">Create hover basic component</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#druid:new_text">druid:new_text(...)</a></td>
 	<td class="summary">Create text basic component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#druid:new_locale">druid:new_locale(...)</a></td>
-	<td class="summary">Create locale basic component</td>
+	<td class="name" nowrap><a href="#druid:new_lang_text">druid:new_lang_text(...)</a></td>
+	<td class="summary">Create lang_text basic component</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#druid:new_timer">druid:new_timer(...)</a></td>
@@ -155,16 +161,16 @@
 	<td class="summary">Create checkbox basic component</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#druid:new_input">druid:new_input(...)</a></td>
+	<td class="summary">Create input basic component</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#druid:new_checkbox_group">druid:new_checkbox_group(...)</a></td>
 	<td class="summary">Create checkbox_group basic component</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#druid:new_radio_group">druid:new_radio_group(...)</a></td>
 	<td class="summary">Create radio_group basic component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#druid:new_progress_rich">druid:new_progress_rich(...)</a></td>
-	<td class="summary">Create progress_rich basic component</td>
 	</tr>
 </table>
 
@@ -231,7 +237,7 @@
     </dt>
     <dd>
     Remove component from druid instance.
- Component `on_remove` function will be invoked, if exist.
+ Component <code>on_remove</code> function will be invoked, if exist.
 
 
     <h3>Parameters:</h3>
@@ -280,7 +286,7 @@
     <ul>
         <li><span class="parameter">action_id</span>
             <span class="types"><span class="type">hash</span></span>
-         Action_id from on_input
+         Action<em>id from on</em>input
         </li>
         <li><span class="parameter">action</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
@@ -305,7 +311,7 @@
     <ul>
         <li><span class="parameter">message_id</span>
             <span class="types"><span class="type">hash</span></span>
-         Message_id from on_message
+         Message<em>id from on</em>message
         </li>
         <li><span class="parameter">message</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
@@ -404,6 +410,33 @@
 
 </dd>
     <dt>
+    <a name = "druid:new_hover"></a>
+    <strong>druid:new_hover(...)</strong>
+    </dt>
+    <dd>
+    Create hover basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         hover init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        hover component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "druid:new_text"></a>
     <strong>druid:new_text(...)</strong>
     </dt>
@@ -431,18 +464,18 @@
 
 </dd>
     <dt>
-    <a name = "druid:new_locale"></a>
-    <strong>druid:new_locale(...)</strong>
+    <a name = "druid:new_lang_text"></a>
+    <strong>druid:new_lang_text(...)</strong>
     </dt>
     <dd>
-    Create locale basic component
+    Create lang_text basic component
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">args</span></span>
-         locale init args
+         lang_text init args
         </li>
     </ul>
 
@@ -450,7 +483,7 @@
     <ol>
 
            <span class="types"><span class="type">Component</span></span>
-        locale component
+        lang_text component
     </ol>
 
 
@@ -620,6 +653,33 @@
 
 </dd>
     <dt>
+    <a name = "druid:new_input"></a>
+    <strong>druid:new_input(...)</strong>
+    </dt>
+    <dd>
+    Create input basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         input init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        input component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "druid:new_checkbox_group"></a>
     <strong>druid:new_checkbox_group(...)</strong>
     </dt>
@@ -673,33 +733,6 @@
 
 
 </dd>
-    <dt>
-    <a name = "druid:new_progress_rich"></a>
-    <strong>druid:new_progress_rich(...)</strong>
-    </dt>
-    <dd>
-    Create progress_rich basic component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
-         progress_rich init args
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Component</span></span>
-        progress_rich component
-    </ol>
-
-
-
-
-</dd>
 </dl>
 
 
@@ -707,7 +740,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-07 01:09:38 </i>
+<i style="float:right;">Last updated 2020-02-24 00:03:02 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

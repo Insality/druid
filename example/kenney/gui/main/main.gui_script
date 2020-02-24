@@ -1,14 +1,18 @@
 local druid = require("druid.druid")
 
 local empty_style = require("druid.styles.empty.style")
-local bounce_style = require("druid.styles.bounce.style")
+local default_style = require("druid.styles.default.style")
 
 local main_page = require("example.kenney.page.main")
 local text_page = require("example.kenney.page.texts")
+local button_page = require("example.kenney.page.button")
+local scroll_page = require("example.kenney.page.scroll")
 
 local pages = {
 	"main_page",
-	"texts_page"
+	"texts_page",
+	"button_page",
+	"scroll_page",
 }
 
 local function on_control_button(self, delta)
@@ -29,18 +33,23 @@ end
 local function init_top_panel(self)
 	self.druid:new_button("button_left/button", on_control_button, -1)
 	self.druid:new_button("button_right/button", on_control_button, 1)
-	self.header = self.druid:new_locale("text_header", "main_page")
+	self.header = self.druid:new_lang_text("text_header", "main_page")
 end
 
 
 function init(self)
-	druid.set_default_style(bounce_style)
+	druid.set_default_style(default_style)
 	self.druid = druid.new(self)
 
 	init_top_panel(self)
-	self.page = 1
+	self.page = 3
 	main_page.setup_page(self)
 	text_page.setup_page(self)
+	button_page.setup_page(self)
+	scroll_page.setup_page(self)
+
+	-- Refresh state
+	on_control_button(self, 0)
 end
 
 

@@ -81,7 +81,7 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	self.druid:on_input(action_id, action)
+	return self.druid:on_input(action_id, action)
 end
 ```
 
@@ -113,7 +113,7 @@ function M.update(self, dt)
 
 end
 
--- Call only if exist interest: const.ON_INPUT or const.ON_SWIPE
+-- Call only if exist interest: const.ON_INPUT or const.ON_INPUT_HIGH
 function M.on_input(self, action_id, action)
 
 end
@@ -123,8 +123,8 @@ function M.on_message(self, message_id, message, sender)
 
 end
 
--- Call only if swipe was started on another component (ex. scroll)
-function M.on_swipe(self)
+-- Call if input was interrupt by previous components (ex. scroll)
+function M.on_input_interrupt(self)
 
 end
 
@@ -178,7 +178,7 @@ _TODO_
 - update
 - on_input
 - on_message
-- on_swipe
+- on_input_interrupt
 - setup_component
 - get_style
 - set_style

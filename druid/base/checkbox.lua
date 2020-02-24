@@ -1,6 +1,7 @@
 --- Druid checkbox component
 -- @module druid.checkbox
 
+local Event = require("druid.event")
 local component = require("druid.component")
 
 local M = component.create("checkbox")
@@ -17,7 +18,7 @@ function M.set_state(self, state, is_silence)
 	end
 
 	if not is_silence and self.callback then
-		self.callback(self:get_context(), state)
+		self.on_change_state:trigger(self:get_context(), state)
 	end
 end
 
@@ -41,6 +42,8 @@ function M.init(self, node, callback, click_node)
 
 	self.button = self.druid:new_button(self.click_node or self.node, on_click)
 	M.set_state(self, false, true)
+
+	self.on_change_state = Event(callback)
 end
 
 

@@ -1,6 +1,7 @@
 --- Component to handle GUI timers
 -- @module druid.timer
 
+local Event = require("druid.event")
 local const = require("druid.const")
 local formats = require("druid.helper.formats")
 local helper = require("druid.helper")
@@ -13,16 +14,19 @@ function M.init(self, node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
 	seconds_from = math.max(seconds_from, 0)
 	seconds_to = math.max(seconds_to or 0, 0)
-	callback = callback or const.EMPTY_FUNCTION
+
+	self.on_tick = Event()
+	self.on_set_enabled = Event()
+	self.on_timer_end = Event(callback)
 
 	self:set_to(seconds_from)
 	self:set_interval(seconds_from, seconds_to)
-	self.callback = callback
 
 	if seconds_to - seconds_from == 0 then
 		self:set_state(false)
-		self.callback(self:get_context(), self)
+		self.on_timer_end:trigger(self:get_context(), self)
 	end
+
 	return self
 end
 
@@ -43,6 +47,8 @@ end
 -- @tparam boolean is_on Timer enable state
 function M.set_state(self, is_on)
 	self.is_on = is_on
+
+	self.on_set_enabled:trigger(self:get_context(), is_on)
 end
 
 
@@ -73,9 +79,12 @@ function M.update(self, dt)
 		self.temp = self.temp - dist
 		self.value = helper.step(self.value, self.target, 1)
 		M.set_to(self, self.value)
+
+		self.on_tick:trigger(self:get_context(), self.value)
+
 		if self.value == self.target then
 			self:set_state(false)
-			self.callback(self:get_context(), self)
+			self.on_timer_end:trigger(self:get_context(), self)
 		end
 	end
 end

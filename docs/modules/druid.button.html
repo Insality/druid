@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
     <title>Defold Druid UI Library</title>
-    <link rel="stylesheet" href="../ldoc_pale.css" type="text/css" />
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
 
@@ -33,6 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
 </ul>
 
 
@@ -44,7 +45,8 @@
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.locale.html">druid.locale</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
   <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
@@ -53,8 +55,8 @@
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
   <li><a href="../modules/component.html">component</a></li>
   <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/helper.html">helper</a></li>
-  <li><a href="../modules/druid.progress_rich.html">druid.progress_rich</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
 
@@ -64,7 +66,9 @@
 
 <h1>Module <code>druid.button</code></h1>
 <p>Component to handle basic GUI button</p>
-<p></p>
+<p>
+
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -80,6 +84,25 @@
 	<tr>
 	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, zone)</a></td>
 	<td class="summary">Strict button click area.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_key_trigger">get_key_trigger(self)</a></td>
+	<td class="summary">Get key-code to trigger this button</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Events">Events</a></td>
+	<td class="summary">Component events</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Fields">Fields</a></td>
+	<td class="summary">Component fields</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Style">Style</a></td>
+	<td class="summary">Component style params</td>
 	</tr>
 </table>
 
@@ -181,6 +204,155 @@
 
 
 </dd>
+    <dt>
+    <a name = "get_key_trigger"></a>
+    <strong>get_key_trigger(self)</strong>
+    </dt>
+    <dd>
+    Get key-code to trigger this button
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Events"></a>
+    <strong>Events</strong>
+    </dt>
+    <dd>
+    Component events
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">on_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On release button callback
+        </li>
+        <li><span class="parameter">on_repeated_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On repeated action button callback
+        </li>
+        <li><span class="parameter">on_long_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On long tap button callback
+        </li>
+        <li><span class="parameter">on_double_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On double tap button callback
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Fields"></a>
+    <strong>Fields</strong>
+    </dt>
+    <dd>
+    Component fields
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Trigger node
+        </li>
+        <li><span class="parameter">anim_node</span>
+            <span class="types"><span class="type">node</span></span>
+         Animation node
+         (<em>default</em> node)
+        </li>
+        <li><span class="parameter">scale_from</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Initial scale of anim_node
+        </li>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Initial pos of anim_node
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">any</span></span>
+         Params to click callbacks
+        </li>
+        <li><span class="parameter">hover_anim</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Is hover anim enabled
+        </li>
+        <li><span class="parameter">hover</span>
+            <span class="types"><span class="type">druid.hover</span></span>
+         Druid hover logic component
+        </li>
+        <li><span class="parameter">click_zone</span>
+            <span class="types"><span class="type">node</span></span>
+         Restriction zone
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Style"></a>
+    <strong>Style</strong>
+    </dt>
+    <dd>
+    Component style params
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">on_click</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node)
+        </li>
+        <li><span class="parameter">on_click_disabled</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node)
+        </li>
+        <li><span class="parameter">on_hover</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node, hover_state)
+        </li>
+        <li><span class="parameter">on_set_enabled</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node, enabled_state)
+        </li>
+        <li><span class="parameter">IS_HOVER</span>
+            <span class="types"><span class="type">bool</span></span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
 </dl>
 
 
@@ -188,7 +360,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-07 01:09:38 </i>
+<i style="float:right;">Last updated 2020-02-24 00:03:02 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

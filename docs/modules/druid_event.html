@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
     <title>Defold Druid UI Library</title>
-    <link rel="stylesheet" href="../ldoc_pale.css" type="text/css" />
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
 
@@ -44,7 +44,8 @@
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.locale.html">druid.locale</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
   <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
@@ -53,9 +54,8 @@
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
   <li><a href="../modules/component.html">component</a></li>
   <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/helper.html">helper</a></li>
-  <li><strong>helper.formats</strong></li>
-  <li><a href="../modules/druid.progress_rich.html">druid.progress_rich</a></li>
+  <li><strong>druid_event</strong></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
 
@@ -63,24 +63,26 @@
 
 <div id="content">
 
-<h1>Module <code>helper.formats</code></h1>
-<p>Druid module with utils on string formats</p>
-<p></p>
+<h1>Module <code>druid_event</code></h1>
+<p>Lua event small library</p>
+<p>
+
+</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#add_prefix_zeros">add_prefix_zeros(num, count)</a></td>
-	<td class="summary">Return number with zero number prefix</td>
+	<td class="name" nowrap><a href="#event:subscribe">event:subscribe(callback)</a></td>
+	<td class="summary">Subscribe callback on event</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#second_string_min">second_string_min(sec)</a></td>
-	<td class="summary">Convert seconds to string minutes:seconds</td>
+	<td class="name" nowrap><a href="#event:unsubscribe">event:unsubscribe(callback)</a></td>
+	<td class="summary">Unsubscribe callback on event</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#second_string_min">second_string_min(s, tab)</a></td>
-	<td class="summary">Interpolate string with named Parameters in Table</td>
+	<td class="name" nowrap><a href="#event:trigger">event:trigger(...)</a></td>
+	<td class="summary">Trigger the event and call all subscribed callbacks</td>
 	</tr>
 </table>
 
@@ -92,86 +94,62 @@
 
     <dl class="function">
     <dt>
-    <a name = "add_prefix_zeros"></a>
-    <strong>add_prefix_zeros(num, count)</strong>
+    <a name = "event:subscribe"></a>
+    <strong>event:subscribe(callback)</strong>
     </dt>
     <dd>
-    Return number with zero number prefix
+    Subscribe callback on event
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">num</span>
-            <span class="types"><span class="type">number</span></span>
-         Number for conversion
-        </li>
-        <li><span class="parameter">count</span>
-            <span class="types"><span class="type">number</span></span>
-         Count of numerals
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Callback itself
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-        string with need count of zero (1,3) -> 001
-    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "second_string_min"></a>
-    <strong>second_string_min(sec)</strong>
+    <a name = "event:unsubscribe"></a>
+    <strong>event:unsubscribe(callback)</strong>
     </dt>
     <dd>
-    Convert seconds to string minutes:seconds
+    Unsubscribe callback on event
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">sec</span>
-            <span class="types"><span class="type">number</span></span>
-         Seconds
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Callback itself
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-        string minutes:seconds
-    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "second_string_min"></a>
-    <strong>second_string_min(s, tab)</strong>
+    <a name = "event:trigger"></a>
+    <strong>event:trigger(...)</strong>
     </dt>
     <dd>
-    Interpolate string with named Parameters in Table
+    Trigger the event and call all subscribed callbacks
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">s</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
-         Target string
-        </li>
-        <li><span class="parameter">tab</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Table with parameters
+        <li><span class="parameter">...</span>
+         All event params
         </li>
     </ul>
 
-    <h3>Returns:</h3>
-    <ol>
-
-        string with replaced parameters
-    </ol>
 
 
 
@@ -184,7 +162,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-07 01:01:59 </i>
+<i style="float:right;">Last updated 2020-02-24 00:03:02 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

@@ -4,8 +4,9 @@
 -- @see druid.button
 -- @see druid.blocker
 -- @see druid.back_handler
+-- @see druid.input
 -- @see druid.text
--- @see druid.locale
+-- @see druid.lang_text
 -- @see druid.timer
 -- @see druid.progress
 -- @see druid.grid
@@ -23,8 +24,9 @@ local class = require("druid.system.middleclass")
 local button = require("druid.base.button")
 local blocker = require("druid.base.blocker")
 local back_handler = require("druid.base.back_handler")
+local hover = require("druid.base.hover")
 local text = require("druid.base.text")
-local locale = require("druid.base.locale")
+local lang_text = require("druid.base.lang_text")
 local timer = require("druid.base.timer")
 local progress = require("druid.base.progress")
 local grid = require("druid.base.grid")
@@ -33,9 +35,8 @@ local slider = require("druid.base.slider")
 local checkbox = require("druid.base.checkbox")
 local checkbox_group = require("druid.base.checkbox_group")
 local radio_group = require("druid.base.radio_group")
--- local input - require("druid.base.input")
+local input = require("druid.base.input")
 -- local infinity_scroll = require("druid.base.infinity_scroll")
-local progress_rich = require("druid.rich.progress_rich")
 
 -- @classmod Druid
 local Druid = class("druid.druid_instance")
@@ -81,29 +82,24 @@ local function create(self, instance_class)
 end
 
 
-local function notify_input_on_swipe(self)
-	if self.components[const.ON_INPUT] then
-		local len = #self.components[const.ON_INPUT]
-		for i = len, 1, -1 do
-			local comp = self.components[const.ON_INPUT][i]
-			if comp.on_swipe then
-				comp:on_swipe()
+local function process_input(action_id, action, components, is_input_consumed)
+	if not components then
+		return is_input_consumed
+	end
+
+	for i = #components, 1, -1 do
+		local component = components[i]
+
+		if not is_input_consumed then
+			is_input_consumed = component:on_input(action_id, action)
+		else
+			if component.on_input_interrupt then
+				component:on_input_interrupt()
 			end
 		end
 	end
-end
 
-
-local function match_event(action_id, events)
-	if type(events) == const.TABLE then
-		for i = 1, #events do
-			if action_id == events[i] then
-				return true
-			end
-		end
-	else
-		return action_id == events
-	end
+	return is_input_consumed
 end
 
 
@@ -181,33 +177,15 @@ end
 -- @tparam hash action_id Action_id from on_input
 -- @tparam table action Action from on_input
 function Druid.on_input(self, action_id, action)
-	-- TODO: расписать отличия ON_SWIPE и ON_INPUT
-	-- Почему-то некоторые используют ON_SWIPE, а логичнее ON_INPUT? (blocker, slider)
-	local components = self.components[const.ON_SWIPE]
-	if components then
-		local result
-		for i = #components, 1, -1 do
-			local v = components[i]
-			result = result or v:on_input(action_id, action)
-		end
-		if result then
-			notify_input_on_swipe(self)
-			return true
-		end
-	end
+	local is_input_consumed = false
 
-	components = self.components[const.ON_INPUT]
-	if components then
-		for i = #components, 1, -1 do
-			local v = components[i]
-			if match_event(action_id, v.event) and v:on_input(action_id, action) then
-				return true
-			end
-		end
-		return false
-	end
+	is_input_consumed = process_input(action_id, action,
+		self.components[const.ON_INPUT_HIGH], is_input_consumed)
 
-	return false
+	is_input_consumed = process_input(action_id, action,
+		self.components[const.ON_INPUT], is_input_consumed)
+
+	return is_input_consumed
 end
 
 
@@ -262,6 +240,15 @@ function Druid.new_back_handler(self, ...)
 end
 
 
+--- Create hover basic component
+-- @function druid:new_hover
+-- @tparam args ... hover init args
+-- @treturn Component hover component
+function Druid.new_hover(self, ...)
+	return Druid.create(self, hover, ...)
+end
+
+
 --- Create text basic component
 -- @function druid:new_text
 -- @tparam args ... text init args
@@ -271,12 +258,12 @@ function Druid.new_text(self, ...)
 end
 
 
---- Create locale basic component
--- @function druid:new_locale
--- @tparam args ... locale init args
--- @treturn Component locale component
-function Druid.new_locale(self, ...)
-	return Druid.create(self, locale, ...)
+--- Create lang_text basic component
+-- @function druid:new_lang_text
+-- @tparam args ... lang_text init args
+-- @treturn Component lang_text component
+function Druid.new_lang_text(self, ...)
+	return Druid.create(self, lang_text, ...)
 end
 
 
@@ -334,6 +321,15 @@ function Druid.new_checkbox(self, ...)
 end
 
 
+--- Create input basic component
+-- @function druid:new_input
+-- @tparam args ... input init args
+-- @treturn Component input component
+function Druid.new_input(self, ...)
+	return Druid.create(self, input, ...)
+end
+
+
 --- Create checkbox_group basic component
 -- @function druid:new_checkbox_group
 -- @tparam args ... checkbox_group init args
@@ -349,15 +345,6 @@ end
 -- @treturn Component radio_group component
 function Druid.new_radio_group(self, ...)
 	return Druid.create(self, radio_group, ...)
-end
-
-
---- Create progress_rich basic component
--- @function druid:new_progress_rich
--- @tparam args ... progress_rich init args
--- @treturn Component progress_rich component
-function Druid.new_progress_rich(self, ...)
-	return Druid.create(self, progress_rich, ...)
 end
 
 

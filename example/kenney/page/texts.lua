@@ -19,7 +19,7 @@ local function setup_texts(self)
 	self.druid:new_text("text_multiline", "Simple multiline text with smth")
 	local anchoring = self.druid:new_text("text_anchoring", "Anchoring")
 	self.druid:new_text("text_no_adjust", "Without adjust size", true)
-	self.druid:new_locale("text_locale", "ui_text_example")
+	self.druid:new_lang_text("text_locale", "ui_text_example")
 
 	local big_text = "Check max size"
 	local width = self.druid:new_text("text_max_width", big_text)

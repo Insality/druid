@@ -2,6 +2,7 @@
 -- Grid can anchor your elements, get content size and other
 -- @module druid.grid
 
+local Event = require("druid.event")
 local component = require("druid.component")
 
 local M = component.create("grid")
@@ -17,6 +18,11 @@ function M.init(self, parent, element, in_row)
 	self.node_size = gui.get_size(self:get_node(element))
 	self.border = vmath.vector4(0)
 	self.border_offset = vmath.vector3(0)
+
+	self.on_add_item = Event()
+	self.on_remove_item = Event()
+	self.on_clear = Event()
+	self.on_update_positions = Event()
 end
 
 
@@ -59,6 +65,8 @@ local function update_pos(self)
 		local node = self.nodes[i]
 		gui.set_position(node, get_pos(self, i))
 	end
+
+	self.on_update_positions:trigger(self:get_context())
 end
 
 
@@ -82,6 +90,8 @@ function M.add(self, item, index)
 	local pos = get_pos(self, index)
 	check_border(self, pos)
 	update_pos(self)
+
+	self.on_add_item:trigger(self:get_context(), item, index)
 end
 
 

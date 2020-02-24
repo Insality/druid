@@ -1,17 +1,16 @@
 --- Druid slider component
 -- @module druid.slider
 
+local Event = require("druid.event")
 local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("slider", { const.ON_SWIPE })
+local M = component.create("slider", { const.ON_INPUT_HIGH })
 
 
 local function on_change_value(self)
-	if self.callback then
-		self.callback(self:get_context(), self.value)
-	end
+	self.on_change_value:trigger(self:get_context(), self.value)
 end
 
 
@@ -26,7 +25,8 @@ function M.init(self, node, end_pos, callback)
 	self.dist = self.end_pos - self.start_pos
 	self.is_drag = false
 	self.value = 0
-	self.callback = callback
+
+	self.on_change_value = Event(callback)
 
 	assert(self.dist.x == 0 or self.dist.y == 0, "Slider for now can be only vertical or horizontal")
 end
