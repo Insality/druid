@@ -13,16 +13,15 @@ M["button"] = {
 	DISABLED_COLOR = vmath.vector4(0, 0, 0, 1),
 	ENABLED_COLOR = vmath.vector4(1),
 	LONGTAP_TIME = 0.4,
+	AUTOHOLD_TRIGGER = 0.8,
 	DOUBLETAP_TIME = 0.4,
 	IS_HOVER = true,
 
 	on_hover = function(self, node, state)
-		if self.hover_anim then
-			local scale_to = self.scale_from + M.button.HOVER_SCALE
+		local scale_to = self.scale_from + M.button.HOVER_SCALE
 
-			local target_scale = state and scale_to or self.scale_from
-			anims.hover_scale(self, target_scale, M.button.HOVER_TIME)
-		end
+		local target_scale = state and scale_to or self.scale_from
+		anims.hover_scale(self, target_scale, M.button.HOVER_TIME)
 	end,
 
 	on_click = function(self, node)

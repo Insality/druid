@@ -26,6 +26,7 @@ end
 -- @tparam table style Druid style module
 function Component.set_style(self, druid_style)
 	self._meta.style = druid_style
+	self._style = self:get_style()
 end
 
 

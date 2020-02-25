@@ -18,7 +18,6 @@
 -- @tfield vector3 scale_from Initial scale of anim_node
 -- @tfield vector3 pos Initial pos of anim_node
 -- @tfield any params Params to click callbacks
--- @tfield boolean hover_anim Is hover anim enabled
 -- @tfield druid.hover hover Druid hover logic component
 -- @tfield[opt] node click_zone Restriction zone
 
@@ -52,17 +51,17 @@ end
 
 
 local function on_button_hover(self, hover_state)
-	if not self.style.on_hover then
+	if not self._style.on_hover then
 		return
 	end
 
-	self.style.on_hover(self, self.anim_node, hover_state)
+	self._style.on_hover(self, self.anim_node, hover_state)
 end
 
 
 local function on_button_click(self)
-	if self.style.on_click then
-		self.style.on_click(self, self.anim_node)
+	if self._style.on_click then
+		self._style.on_click(self, self.anim_node)
 	end
 	self.click_in_row = 1
 	self.on_click:trigger(self:get_context(), self.params, self)
@@ -75,29 +74,35 @@ local function on_button_repeated_click(self)
 		self.is_repeated_started = true
 	end
 
-	if self.style.on_click then
-		self.style.on_click(self, self.anim_node)
+	if self._style.on_click then
+		self._style.on_click(self, self.anim_node)
 	end
 	self.click_in_row = self.click_in_row + 1
-	self.on_repeated_click:trigger(self:get_context(), self.params, self)
+	self.on_repeated_click:trigger(self:get_context(), self.params, self, self.click_in_row)
 end
 
 
 local function on_button_long_click(self)
-	if self.style.on_click then
-		self.style.on_click(self, self.anim_node)
+	if self._style.on_click then
+		self._style.on_click(self, self.anim_node)
 	end
 	self.click_in_row = 1
-	self.on_long_click:trigger(self:get_context(), self.params, self)
+	local time = socket.gettime() - self.last_pressed_time
+	self.on_long_click:trigger(self:get_context(), self.params, self, time)
 end
 
 
 local function on_button_double_click(self)
-	if self.style.on_click then
-		self.style.on_click(self, self.anim_node)
+	if self._style.on_click then
+		self._style.on_click(self, self.anim_node)
 	end
 	self.click_in_row = self.click_in_row + 1
-	self.on_double_click:trigger(self:get_context(), self.params, self)
+	self.on_double_click:trigger(self:get_context(), self.params, self, self.click_in_row)
+end
+
+
+local function on_button_hold(self, press_time)
+	self.on_hold_callback:trigger(self:get_context(), self.params, self, press_time)
 end
 
 
@@ -111,10 +116,10 @@ local function on_button_release(self)
 			self.can_action = false
 
 			local time = socket.gettime()
-			local is_long_click = (time - self.last_pressed_time) > self.style.LONGTAP_TIME
+			local is_long_click = (time - self.last_pressed_time) > self._style.LONGTAP_TIME
 			is_long_click = is_long_click and self.on_long_click:is_exist()
 
-			local is_double_click = (time - self.last_released_time) < self.style.DOUBLETAP_TIME
+			local is_double_click = (time - self.last_released_time) < self._style.DOUBLETAP_TIME
 			is_double_click = is_double_click and self.on_double_click:is_exist()
 
 			if is_long_click then
@@ -129,8 +134,8 @@ local function on_button_release(self)
 		end
 		return true
 	else
-		if self.style.on_click_disabled then
-			self.style.on_click_disabled(self, self.anim_node)
+		if self._style.on_click_disabled then
+			self._style.on_click_disabled(self, self.anim_node)
 		end
 		return false
 	end
@@ -147,14 +152,12 @@ end
 -- @tparam[opt] string event Button react event, const.ACTION_TOUCH by default
 function M.init(self, node, callback, params, anim_node, event)
 	self.druid = self:get_druid()
-	self.style = self:get_style()
 	self.node = self:get_node(node)
 
 	self.anim_node = anim_node and helper:get_node(anim_node) or self.node
 	-- TODO: rename to start_scale
 	self.scale_from = gui.get_scale(self.anim_node)
 	self.params = params
-	self.hover_anim = self.style.IS_HOVER
 	self.hover = self.druid:new_hover(node, on_button_hover)
 	self.click_zone = nil
 	self.is_repeated_started = false
@@ -168,6 +171,7 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.on_repeated_click = Event()
 	self.on_long_click = Event()
 	self.on_double_click = Event()
+	self.on_hold_callback = Event()
 end
 
 
@@ -219,6 +223,20 @@ function M.on_input(self, action_id, action)
 		return on_button_release(self)
 	end
 
+	if not self.disabled and self.can_action and self.on_long_click:is_exist() then
+		local press_time = socket.gettime() - self.last_pressed_time
+
+		if self._style.AUTOHOLD_TRIGGER and self._style.AUTOHOLD_TRIGGER <= press_time then
+			on_button_release(self)
+			return true
+		end
+
+		if press_time >= self._style.LONGTAP_TIME then
+			on_button_hold(self, press_time)
+			return true
+		end
+	end
+
 	return not self.disabled
 end
 
@@ -230,22 +248,14 @@ end
 
 function M.set_enabled(self, state)
 	self.disabled = not state
-	if self.style.on_set_enabled then
-		self.style.on_set_enabled(self, self.node, state)
+	if self._style.on_set_enabled then
+		self._style.on_set_enabled(self, self.node, state)
 	end
 end
 
 
 function M.get_enabled(self)
 	return not self.disabled
-end
-
-
---- Disable all button animations
--- @function button:disable_animation
--- @tparam table self Component instance
-function M.disable_animation(self)
-	self.hover_anim = false
 end
 
 

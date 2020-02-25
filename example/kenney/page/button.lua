@@ -1,4 +1,4 @@
-local sprite_change_style = {}
+local sprite_style = require("druid.styles.sprites.style")
 
 local M = {}
 
@@ -7,16 +7,20 @@ local function usual_callback()
 	print("Usual callback")
 end
 
-local function long_tap_callback()
-	print("Long tap callback")
+local function long_tap_callback(self, params, button, hold_time)
+	print("Long tap callback", hold_time)
 end
 
-local function repeated_callback(self, params, button)
-	print("Repeated callback", button.click_in_row)
+local function hold_callback(self, params, button, hold_time)
+	print("On hold callback", hold_time)
 end
 
-local function double_tap_callback(self, params, button)
-	print("Double tap callback", button.click_in_row)
+local function repeated_callback(self, params, button, click_in_row)
+	print("Repeated callback", click_in_row)
+end
+
+local function double_tap_callback(self, params, button, click_in_row)
+	print("Double tap callback", click_in_row)
 end
 
 
@@ -24,13 +28,11 @@ local function setup_buttons(self)
 	self.druid:new_button("button_usual/button", usual_callback)
 
 	local custom_style = self.druid:new_button("button_custom_style/button", usual_callback)
-	custom_style:set_style(sprite_change_style)
-	-- HOVER_IMAGE and DEFAULT_IMAGE - from our custom style params
-	custom_style.HOVER_IMAGE = "button_yellow"
-	custom_style.DEFAULT_IMAGE = "button_blue"
+	custom_style:set_style(sprite_style)
 
-	self.druid:new_button("button_long_tap/button", usual_callback)
-		.on_long_click:subscribe(long_tap_callback)
+	local long_button = self.druid:new_button("button_long_tap/button", usual_callback)
+	long_button.on_hold_callback:subscribe(hold_callback)
+	long_button.on_long_click:subscribe(long_tap_callback)
 	self.druid:new_button("button_repeated_tap/button", usual_callback)
 		.on_repeated_click:subscribe(repeated_callback)
 	self.druid:new_button("button_double_tap/button", usual_callback)
