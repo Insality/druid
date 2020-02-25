@@ -42,7 +42,7 @@ function init(self)
 	self.druid = druid.new(self)
 
 	init_top_panel(self)
-	self.page = 3
+	self.page = 1
 	main_page.setup_page(self)
 	text_page.setup_page(self)
 	button_page.setup_page(self)

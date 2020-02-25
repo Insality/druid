@@ -96,7 +96,7 @@ end
 
 
 local function setup_scroll(self)
-	self.scroll = self.druid:new_scroll("scroll_content", "main_page", vmath.vector4(0, 0, 0, 200))
+	self.scroll = self.druid:new_scroll("scroll_content", "main_page")
 end
 
 

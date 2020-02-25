@@ -14,6 +14,19 @@ local M = component.create("scroll", { const.ON_UPDATE, const.ON_INPUT_HIGH })
 M.current_scroll = nil
 
 
+local function get_border(node)
+	local pivot = gui.get_pivot(node)
+	local pivot_offset = helper.get_pivot_offset(pivot)
+	local size = vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
+	return vmath.vector4(
+		-size.x*(0.5 + pivot_offset.x),
+		size.y*(0.5 + pivot_offset.y),
+		size.x*(0.5 - pivot_offset.x),
+		-size.y*(0.5 - pivot_offset.y)
+	)
+end
+
+
 function M.init(self, scroll_parent, input_zone, border)
 	self.style = self:get_style()
 	self.node = self:get_node(scroll_parent)
@@ -30,8 +43,7 @@ function M.init(self, scroll_parent, input_zone, border)
 
 	self.is_inert = true
 	self.inert = vmath.vector3(0)
-	self.start_pos = gui.get_position(self.node)
-	self.pos = self.start_pos
+	self.pos = gui.get_position(self.node)
 	self.target = vmath.vector3(self.pos)
 
 	self.input = {
@@ -41,7 +53,14 @@ function M.init(self, scroll_parent, input_zone, border)
 		side = false,
 	}
 
-	self:set_border(border)
+	local input_border = get_border(self.input_zone)
+	local content_border = get_border(self.node)
+	self:set_border(vmath.vector4(
+		input_border.x - content_border.x,
+		-input_border.w + content_border.w,
+		input_border.z - content_border.z,
+		-input_border.y + content_border.y
+	))
 
 	self.on_scroll = Event()
 	self.on_scroll_to = Event()
@@ -69,13 +88,13 @@ local function check_soft_target(self)
 	if t.y < b.y then
 		t.y = helper.step(t.y, b.y, math.abs(t.y - b.y) * self.style.BACK_SPEED)
 	end
-	if t.x < b.x then
+	if t.x > b.x then
 		t.x = helper.step(t.x, b.x, math.abs(t.x - b.x) * self.style.BACK_SPEED)
 	end
 	if t.y > b.w then
 		t.y = helper.step(t.y, b.w, math.abs(t.y - b.w) * self.style.BACK_SPEED)
 	end
-	if t.x > b.z then
+	if t.x < b.z then
 		t.x = helper.step(t.x, b.z, math.abs(t.x - b.z) * self.style.BACK_SPEED)
 	end
 end
@@ -229,10 +248,10 @@ local function add_delta(self, dx, dy)
 	local x_perc = 1
 	local y_perc = 1
 
-	if t.x < b.x and dx < 0 then
+	if t.x > b.x and dx < 0 then
 		x_perc = (soft - (b.x - t.x)) / soft
 	end
-	if t.x > b.z and dx > 0 then
+	if t.x < b.z and dx > 0 then
 		x_perc = (soft - (t.x - b.z)) / soft
 	end
 	-- If disabled scroll by x
@@ -414,15 +433,11 @@ end
 -- @tparam table self Component instance
 -- @tparam vmath.vector3 border Size of scrolling area
 function M.set_border(self, border)
+	-- border.x - min content.x node pos
+	-- border.y - min content.y node pos
+	-- border.z - max content.x node pos
+	-- border.w - max content.y node pos
 	self.border = border
-
-	self.border.x = self.border.x + self.start_pos.x
-	self.border.z = self.border.z + self.start_pos.x
-	self.border.y = self.border.y + self.start_pos.y
-	self.border.w = self.border.w + self.start_pos.y
-
-	border.z = math.max(border.x, border.z)
-	border.w = math.max(border.y, border.w)
 	self.can_x = (border.x ~= border.z)
 	self.can_y = (border.y ~= border.w)
 end
