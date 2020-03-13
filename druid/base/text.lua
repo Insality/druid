@@ -9,6 +9,16 @@ local component = require("druid.component")
 local M = component.create("text")
 
 
+local function update_text_size(self)
+	local size = vmath.vector3(
+		self.start_size.x * (self.start_scale.x / self.scale.x),
+		self.start_size.y * (self.start_scale.y / self.scale.y),
+		self.start_size.z
+	)
+	gui.set_size(self.node, size)
+end
+
+
 function M.init(self, node, value, no_adjust)
 	self.node = self:get_node(node)
 	self.start_pivot = gui.get_pivot(self.node)
@@ -19,6 +29,7 @@ function M.init(self, node, value, no_adjust)
 	self.start_scale = gui.get_scale(self.node)
 	self.scale = gui.get_scale(self.node)
 
+	self.start_size = gui.get_size(self.node)
 	self.text_area = gui.get_size(self.node)
 	self.text_area.x = self.text_area.x * self.start_scale.x
 	self.text_area.y = self.text_area.y * self.start_scale.y
@@ -52,6 +63,8 @@ local function update_text_area_size(self)
 	local new_scale = vmath.vector3(scale_modifier, scale_modifier, cur_scale.z)
 	gui.set_scale(self.node, new_scale)
 	self.scale = new_scale
+
+	update_text_size(self)
 
 	self.on_update_text_scale:trigger(self:get_context(), new_scale)
 end
