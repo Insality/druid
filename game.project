@@ -20,3 +20,5 @@ texture_profiles = /example/res/custom.texture_profiles
 [input]
 gamepads = /builtins/input/default.gamepadsc
 
+[druid]
+autofocus = 1
