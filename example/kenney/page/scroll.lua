@@ -4,16 +4,16 @@ local M = {}
 local function init_grid(self)
 	local prefab = gui.get_node("grid_prefab")
 
-
 	local grid = self.druid:new_grid("grid_content", "grid_prefab", 20)
 	grid:set_anchor(vmath.vector3(0, 0.5, 0))
-	grid:set_offset(vmath.vector3(15, 100, 0))
 
 	for i = 1, 40 do
 		local clone_prefab = gui.clone_tree(prefab)
 
 		grid:add(clone_prefab["grid_prefab"])
 		gui.set_text(clone_prefab["grid_prefab_text"], "Node " .. i)
+
+		self.druid:new_button(clone_prefab["grid_button"])
 	end
 
 	gui.set_enabled(prefab, false)
