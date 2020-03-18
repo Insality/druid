@@ -98,7 +98,7 @@ end
 function M.get_size(self)
 	return vmath.vector3(
 		self.border.z - self.border.x,
-		self.border.w - self.border.y,
+		self.border.y - self.border.w,
 		0)
 end
 

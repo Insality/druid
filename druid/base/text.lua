@@ -48,6 +48,9 @@ end
 
 --- Setup scale x, but can only be smaller, than start text scale
 local function update_text_area_size(self)
+	gui.set_scale(self.node, self.start_scale)
+	gui.set_size(self.node, self.start_size)
+
 	local max_width = self.text_area.x
 	local max_height = self.text_area.y
 

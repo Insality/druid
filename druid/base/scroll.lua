@@ -27,6 +27,25 @@ local function get_border(node)
 end
 
 
+local function update_border(self)
+	local input_border = get_border(self.input_zone)
+	local content_border = get_border(self.node)
+
+	-- border.x - min content.x node pos
+	-- border.y - min content.y node pos
+	-- border.z - max content.x node pos
+	-- border.w - max content.y node pos
+	self.border = vmath.vector4(
+		input_border.x - content_border.x,
+		-input_border.w + content_border.w,
+		input_border.z - content_border.z,
+		-input_border.y + content_border.y
+	)
+	self.can_x = (self.border.x ~= self.border.z)
+	self.can_y = (self.border.y ~= self.border.w)
+end
+
+
 function M.init(self, scroll_parent, input_zone, border)
 	self.style = self:get_style()
 	self.node = self:get_node(scroll_parent)
@@ -53,14 +72,7 @@ function M.init(self, scroll_parent, input_zone, border)
 		side = false,
 	}
 
-	local input_border = get_border(self.input_zone)
-	local content_border = get_border(self.node)
-	self:set_border(vmath.vector4(
-		input_border.x - content_border.x,
-		-input_border.w + content_border.w,
-		input_border.z - content_border.z,
-		-input_border.y + content_border.y
-	))
+	update_border(self)
 
 	self.on_scroll = Event()
 	self.on_scroll_to = Event()
@@ -432,14 +444,9 @@ end
 -- @function scroll:set_border
 -- @tparam table self Component instance
 -- @tparam vmath.vector3 border Size of scrolling area
-function M.set_border(self, border)
-	-- border.x - min content.x node pos
-	-- border.y - min content.y node pos
-	-- border.z - max content.x node pos
-	-- border.w - max content.y node pos
-	self.border = border
-	self.can_x = (border.x ~= border.z)
-	self.can_y = (border.y ~= border.w)
+function M.set_border(self, content_size)
+	gui.set_size(self.node, content_size)
+	update_border(self)
 end
 
 

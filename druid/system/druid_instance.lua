@@ -43,8 +43,7 @@ local Druid = class("druid.druid_instance")
 
 
 local function input_init(self)
-	-- TODO: To custom settings
-	if not settings.auto_focus_gain then
+	if not sys.get_config("druid.auto_focus") == "1" then
 		return
 	end
 

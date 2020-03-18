@@ -20,8 +20,6 @@ local settings = require("druid.system.settings")
 
 local M = {}
 
-local log = settings.log
-
 
 --- Register external druid component.
 -- After register you can create the component with
@@ -37,7 +35,7 @@ function M.register(name, module)
 		return druid_instance.create(self, module, ...)
 	end
 
-	log("Register component", name)
+	-- print("Register component", name)
 end
 
 

@@ -11,7 +11,7 @@ Simple to-do for Druid Alpha 0.2.0
 + refactor on_swipe. To on_scroll? Add input priority
 + separate custom data and predefined fields in components? Every component have their fields and events
 + How to set custom sprites for button states?
-- add druid settings (add auto_focus input and other stuff)
++ add druid settings (add auto_focus input and other stuff) (to game.project)
 
 + button add key trigger
 + button and hover click restriction zone?
