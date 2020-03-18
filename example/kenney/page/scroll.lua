@@ -18,7 +18,17 @@ local function init_grid(self)
 
 	gui.set_enabled(prefab, false)
 	local grid_scroll = self.druid:new_scroll("grid_content", "scroll_with_grid_size")
+	local size = grid:get_size()
 	grid_scroll:set_border(grid:get_size())
+
+	local scroll_slider = self.druid:new_slider("grid_scroll_pin", vmath.vector3(300, 0, 0), function(_, value)
+		grid_scroll:scroll_to(vmath.vector3(-size.x * value, size.y, size.z), true)
+	end)
+
+	grid_scroll.on_scroll:subscribe(function(_, point)
+		local value = -point.x / size.x
+		scroll_slider:set(value)
+	end)
 end
 
 
