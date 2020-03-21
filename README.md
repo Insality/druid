@@ -2,8 +2,11 @@
 
 **Druid** - powerful defold component UI library. Use basic druid components or make your own game-specific components to make amazing GUI in your games.
 
+
 ## Setup
-#### Dependency
+
+### Dependency
+
 You can use the druid extension in your own project by adding this project as a  [Defold library dependency](https://www.defold.com/manuals/libraries/). Open your game.project file and in the dependencies field under project add:
 
 > [https://github.com/Insality/druid/archive/master.zip](https://github.com/Insality/druid/archive/master.zip)
@@ -11,7 +14,8 @@ You can use the druid extension in your own project by adding this project as a 
 Or point to the ZIP file of a  [specific release](https://github.com/Insality/druid/releases).
 
 
-#### Code
+### Code
+
 Adjust druid settings, if needed:
 ```lua
 local druid = require("druid.druid")
@@ -26,7 +30,9 @@ druid.set_text_function(callback)
 druid.set_default_style(your_style)
 ```
 
+
 ## Components
+
 Druid provides next basic components:
 - **Button** - Basic game button
 
@@ -56,7 +62,9 @@ Druid provides next basic components:
 
 Full info see on _components.md_
 
+
 ## Creating components
+
 Any components creating via druid:
 ```lua
 local druid = require("druid.druid")
@@ -80,12 +88,18 @@ function on_input(self, action_id, action)
 end
 ```
 
+
 ## Examples
-See the [example folder](https://github.com/Insality/druid/tree/develop/example/kenney) for examples of how to use Druid
-See the [druid-assets repository](https://github.com/Insality/druid-assets) for examples of how to create custom components and styles
+
+See the [example folder](https://github.com/insality/druid/tree/develop/example/kenney) for examples of how to use Druid
+
+See the [druid-assets repository](https://github.com/insality/druid-assets) for examples of how to create custom components and styles
+
 Try the HTML5 version of the example app
 
+
 ## Documentation
+
 To learn druid better, read next documentation:
 - Druid components
 - Create custom components
@@ -95,8 +109,11 @@ To learn druid better, read next documentation:
 Full druid documentation you can find here:
 https://insality.github.io/druid/
 
-## Games powered by Druid:
+
+## Games powered by Druid
+
 _Will fill later_
+
 
 ## Future plans
 
@@ -110,11 +127,16 @@ _Will fill later_
 
 - Add more comfortable gamepad support for GUI (ability to select button with DPAD and other stuff)
 
+
 ## License
+
 Original idea by [AGulev](https://github.com/AGulev)
+
 Developed and supporting by [Insality](https://github.com/Insality)
+
 MIT License
 
 
 ## Issues and suggestions
+
 If you have any issues, questions or suggestions please  [create an issue](https://github.com/Insality/druid/issues)  or contact me:  [insality@gmail.com](mailto:insality@gmail.com)
