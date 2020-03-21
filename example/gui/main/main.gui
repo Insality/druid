@@ -1,11 +1,11 @@
-script: "/example/kenney/gui/main/main.gui_script"
+script: "/example/gui/main/main.gui_script"
 fonts {
   name: "game"
-  font: "/example/kenney/assets/fonts/game.font"
+  font: "/example/assets/fonts/game.font"
 }
 textures {
   name: "kenney"
-  texture: "/example/kenney/assets/images/kenney.atlas"
+  texture: "/example/assets/images/kenney.atlas"
 }
 background_color {
   x: 0.0
@@ -387,7 +387,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/button.gui"
+  template: "/example/templates/button.gui"
   template_node_child: false
 }
 nodes {
@@ -1843,7 +1843,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/radio.gui"
+  template: "/example/templates/radio.gui"
   template_node_child: false
 }
 nodes {
@@ -1993,7 +1993,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/radio.gui"
+  template: "/example/templates/radio.gui"
   template_node_child: false
 }
 nodes {
@@ -2143,7 +2143,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/radio.gui"
+  template: "/example/templates/radio.gui"
   template_node_child: false
 }
 nodes {
@@ -2466,7 +2466,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/checkbox.gui"
+  template: "/example/templates/checkbox.gui"
   template_node_child: false
 }
 nodes {
@@ -2616,7 +2616,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/checkbox.gui"
+  template: "/example/templates/checkbox.gui"
   template_node_child: false
 }
 nodes {
@@ -2766,7 +2766,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/checkbox.gui"
+  template: "/example/templates/checkbox.gui"
   template_node_child: false
 }
 nodes {
@@ -4128,7 +4128,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/button.gui"
+  template: "/example/templates/button.gui"
   template_node_child: false
 }
 nodes {
@@ -4287,7 +4287,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/button.gui"
+  template: "/example/templates/button.gui"
   template_node_child: false
 }
 nodes {
@@ -4447,7 +4447,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/button.gui"
+  template: "/example/templates/button.gui"
   template_node_child: false
 }
 nodes {
@@ -4607,7 +4607,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/button.gui"
+  template: "/example/templates/button.gui"
   template_node_child: false
 }
 nodes {
@@ -4767,7 +4767,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/button.gui"
+  template: "/example/templates/button.gui"
   template_node_child: false
 }
 nodes {
@@ -4927,7 +4927,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/button.gui"
+  template: "/example/templates/button.gui"
   template_node_child: false
 }
 nodes {
@@ -6062,7 +6062,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/button.gui"
+  template: "/example/templates/button.gui"
   template_node_child: false
 }
 nodes {
@@ -6221,7 +6221,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/kenney/templates/button.gui"
+  template: "/example/templates/button.gui"
   template_node_child: false
 }
 nodes {

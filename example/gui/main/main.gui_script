@@ -3,10 +3,10 @@ local druid = require("druid.druid")
 local empty_style = require("druid.styles.empty.style")
 local default_style = require("druid.styles.default.style")
 
-local main_page = require("example.kenney.page.main")
-local text_page = require("example.kenney.page.texts")
-local button_page = require("example.kenney.page.button")
-local scroll_page = require("example.kenney.page.scroll")
+local main_page = require("example.page.main")
+local text_page = require("example.page.texts")
+local button_page = require("example.page.button")
+local scroll_page = require("example.page.scroll")
 
 local pages = {
 	"main_page",

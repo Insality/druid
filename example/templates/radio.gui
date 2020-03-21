@@ -1,7 +1,7 @@
 script: ""
 textures {
   name: "kenney"
-  texture: "/example/kenney/assets/images/kenney.atlas"
+  texture: "/example/assets/images/kenney.atlas"
 }
 background_color {
   x: 0.0

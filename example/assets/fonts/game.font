@@ -1,4 +1,4 @@
-font: "/example/kenney/assets/fonts/exo2.ttf"
+font: "/example/assets/fonts/exo2.ttf"
 material: "/builtins/fonts/font-df.material"
 size: 40
 antialias: 1

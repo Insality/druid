@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/kenney/kenney.collectionc
+main_collection = /example/kenney.collectionc
 
 [script]
 shared_state = 1
@@ -14,11 +14,9 @@ title = druid
 [library]
 include_dirs = druid
 
-[graphics]
-texture_profiles = /example/res/custom.texture_profiles
-
 [input]
 gamepads = /builtins/input/default.gamepadsc
 
 [druid]
 autofocus = 1
+

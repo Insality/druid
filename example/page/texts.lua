@@ -1,5 +1,3 @@
-local lang = require("example.kenney.lang")
-
 local M = {}
 
 local pivots = {

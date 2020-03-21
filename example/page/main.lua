@@ -1,4 +1,4 @@
-local lang = require("example.kenney.lang")
+local lang = require("example.lang")
 
 local M = {}
 

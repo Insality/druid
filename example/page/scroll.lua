@@ -14,11 +14,12 @@ local function init_grid(self)
 		grid:add(clone_prefab["grid_prefab"])
 		gui.set_text(clone_prefab["grid_prefab_text"], "Node " .. i)
 
-		self.druid:new_button(clone_prefab["grid_button"], function()
+		local button = self.druid:new_button(clone_prefab["grid_button"], function()
 			local position = gui.get_position(clone_prefab["grid_prefab"])
 			position.x = -position.x
 			grid_scroll:scroll_to(position)
 		end)
+		button:set_click_zone(gui.get_node("scroll_with_grid_size"))
 	end
 
 	gui.set_enabled(prefab, false)
