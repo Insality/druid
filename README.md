@@ -60,6 +60,10 @@ Druid provides next basic components:
 
 - **Radio group** - Several checkboxes in one group with single choice
 
+- **Hover** - Trigger component for check node hover state
+
+- **Input** - Component to process user text input
+
 Full info see on _components.md_
 
 
