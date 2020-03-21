@@ -12,5 +12,6 @@ sort=false
 dir='./docs'
 style='!fixed'
 format='discount'
+topics={"./docs_md", "README.md"}
 use_markdown_titles=true
 no_space_before_args=true

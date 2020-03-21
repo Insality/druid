@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Setup">Setup </a></li>
+<li><a href="#Components">Components </a></li>
+<li><a href="#Creating_components">Creating components </a></li>
+<li><a href="#Examples">Examples </a></li>
+<li><a href="#Documentation">Documentation </a></li>
+<li><a href="#Games_powered_by_Druid_">Games powered by Druid: </a></li>
+<li><a href="#Future_plans">Future plans </a></li>
+<li><a href="#License">License </a></li>
+<li><a href="#Issues_and_suggestions">Issues and suggestions </a></li>
+</ul>
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/components.md.html">Druid components</a></li>
+  <li><a href="../topics/creating_custom_components.md.html">Creating custom components</a></li>
+  <li><a href="../topics/druid_assets.md.html">Druid assets</a></li>
+  <li><a href="../topics/examples.md.html">Examples</a></li>
+  <li><a href="../topics/styles.md.html">Styles</a></li>
+  <li><strong>README</strong></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
+  <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
+  <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
+  <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
+  <li><a href="../modules/druid.grid.html">druid.grid</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
+  <li><a href="../modules/druid.progress.html">druid.progress</a></li>
+  <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
+  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
+  <li><a href="../modules/druid.slider.html">druid.slider</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/druid_instance.html">druid_instance</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <img src="druid_logo.png" alt=""/></p>
+
+<p><strong>Druid</strong> - powerful defold component UI library. Use basic druid components or make your own game-specific components to make amazing GUI in your games.</p>
+
+<p><a name="Setup"></a></p>
+<h2>Setup</h2>
+<h4>Dependency</h4>
+<p>You can use the druid extension in your own project by adding this project as a  <a href="https://www.defold.com/manuals/libraries/">Defold library dependency</a>. Open your game.project file and in the dependencies field under project add:</p>
+
+<blockquote>
+    <p><a href="https://github.com/Insality/druid/archive/master.zip">https://github.com/Insality/druid/archive/master.zip</a></p>
+</blockquote>
+
+<p>Or point to the ZIP file of a  <a href="https://github.com/Insality/druid/releases">specific release</a>.</p>
+
+
+<h4>Code</h4>
+<p>Adjust druid settings, if needed:</p>
+
+<pre>
+<span class="keyword">local</span> druid = <span class="global">require</span>(<span class="string">"druid.druid"</span>)
+
+<span class="comment">-- Used for button component and custom components
+</span>druid.set_sound_function(callback)
+
+<span class="comment">-- Used for lang_text component
+</span>druid.set_text_function(callback)
+
+<span class="comment">-- Used for change default druid style
+</span>druid.set_default_style(your_style)
+</pre>
+
+
+<p><a name="Components"></a></p>
+<h2>Components</h2>
+<p>Druid provides next basic components:
+- <strong>Button</strong> - Basic game button</p>
+
+<ul>
+    <li><p><strong>Text</strong> - Wrap on text node with text size adjusting</p></li>
+    <li><p><strong>Blocker</strong> - Block input in node zone</p></li>
+    <li><p><strong>Back Handler</strong> - Handle back button (Android, backspace)</p></li>
+    <li><p><strong>Lang text</strong> - Text component with handle localization system</p></li>
+    <li><p><strong>Timer</strong> - Run timer on text node</p></li>
+    <li><p><strong>Progress</strong> - Basic progress bar</p></li>
+    <li><p><strong>Scroll</strong> - Basic scroll component</p></li>
+    <li><p><strong>Grid</strong> - Component for manage node positions</p></li>
+    <li><p><strong>Slider</strong> - Basic slider component</p></li>
+    <li><p><strong>Checkbox</strong> - Basic checkbox component</p></li>
+    <li><p><strong>Checkbox group</strong> - Several checkboxes in one group</p></li>
+    <li><p><strong>Radio group</strong> - Several checkboxes in one group with single choice</p></li>
+</ul>
+
+<p>Full info see on <em>components.md</em></p>
+
+<p><a name="Creating_components"></a></p>
+<h2>Creating components</h2>
+<p>Any components creating via druid:</p>
+
+<pre>
+<span class="keyword">local</span> druid = <span class="global">require</span>(<span class="string">"druid.druid"</span>)
+
+<span class="keyword">local</span> <span class="keyword">function</span> init(self)
+    self.druid = druid.new(self)
+    <span class="keyword">local</span> button = self.druid:new_button(node_name, callback)
+    <span class="keyword">local</span> text = self.druid:new_text(node_text_name)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> update(self, dt)
+    self.druid:update(dt)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> on_input(self, action_id, action)
+    self.druid:on_input(action_id, action)
+<span class="keyword">end</span>
+</pre>
+
+
+<p><a name="Examples"></a></p>
+<h2>Examples</h2>
+<p>See the <a href="https://github.com/Insality/druid/tree/develop/example/kenney">example folder</a> for examples of how to use Druid
+See the <a href="https://github.com/Insality/druid-assets">druid-assets repository</a> for examples of how to create custom components and styles
+Try the HTML5 version of the example app</p>
+
+<p><a name="Documentation"></a></p>
+<h2>Documentation</h2>
+<p>To learn druid better, read next documentation:
+- Druid components
+- Create custom components
+- Druid asset store
+- Druid Styles</p>
+
+<p>Full druid documentation you can find here:
+https://insality.github.io/druid/</p>
+
+<p><a name="Games_powered_by_Druid_"></a></p>
+<h2>Games powered by Druid:</h2>
+<p><em>Will fill later</em></p>
+
+<p><a name="Future_plans"></a></p>
+<h2>Future plans</h2>
+
+<ul>
+    <li><p>Basic input component</p></li>
+    <li><p>Add on<em>layout</em>change support (to keep gui data between layout change)</p></li>
+    <li><p>Add on<em>change</em>language support (call single function to update all druid instance)</p></li>
+    <li><p>Better documentation and examples</p></li>
+    <li><p>Add more comfortable gamepad support for GUI (ability to select button with DPAD and other stuff)</p></li>
+</ul>
+
+<p><a name="License"></a></p>
+<h2>License</h2>
+<p>Original idea by <a href="https://github.com/AGulev">AGulev</a>
+Developed and supporting by <a href="https://github.com/Insality">Insality</a>
+MIT License</p>
+
+
+<p><a name="Issues_and_suggestions"></a></p>
+<h2>Issues and suggestions</h2>
+<p>If you have any issues, questions or suggestions please  <a href="https://github.com/Insality/druid/issues">create an issue</a>  or contact me:  <a href="mailto:insality@gmail.com">insality@gmail.com</a>
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-03-21 22:53:41 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
