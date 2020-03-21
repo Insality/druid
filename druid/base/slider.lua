@@ -30,6 +30,12 @@ local function on_change_value(self)
 end
 
 
+local function set_position(self, value)
+	value = helper.clamp(value, 0, 1)
+	gui.set_position(self.node, self.start_pos + self.dist * value)
+end
+
+
 --- Component init function
 -- @function slider:init
 -- @tparam node node Gui pin node
@@ -76,9 +82,8 @@ function M.on_input(self, action_id, action)
 		self.target_pos.x = helper.clamp(self.pos.x, self.start_pos.x, self.end_pos.x)
 		self.target_pos.y = helper.clamp(self.pos.y, self.start_pos.y, self.end_pos.y)
 
-		gui.set_position(self.node, self.target_pos)
-
 		if prev_x ~= self.target_pos.x or prev_y ~= self.target_pos.y then
+			local prev_value = self.value
 
 			if self.dist.x > 0 then
 				self.value = (self.target_pos.x - self.start_pos.x) / self.dist.x
@@ -88,8 +93,27 @@ function M.on_input(self, action_id, action)
 				self.value = (self.target_pos.y - self.start_pos.y) / self.dist.y
 			end
 
-			on_change_value(self)
+			if self.steps then
+				local closest_dist = 1000
+				local closest = nil
+				for i = 1, #self.steps do
+					local dist = math.abs(self.value - self.steps[i])
+					if dist < closest_dist then
+						closest = self.steps[i]
+						closest_dist = dist
+					end
+				end
+				if closest then
+					self.value = closest
+				end
+			end
+
+			if prev_value ~= self.value then
+				on_change_value(self)
+			end
 		end
+
+		set_position(self, self.value)
 	end
 
 	if action.released then
@@ -106,12 +130,21 @@ end
 -- @tparam[opt] bool is_silent Don't trigger event if true
 function M.set(self, value, is_silent)
 	value = helper.clamp(value, 0, 1)
-
-	gui.set_position(self.node, self.start_pos + self.dist * value)
+	set_position(self, value)
 	self.value = value
 	if not is_silent then
 		on_change_value(self)
 	end
+end
+
+
+--- Set slider steps. Pin node will
+-- apply closest step position
+-- @function slider:set_steps
+-- @tparam number[] steps Array of steps
+-- @usage slider:set_steps({0, 0.2, 0.6, 1})
+function M.set_steps(self, steps)
+	self.steps = steps
 end
 
 
