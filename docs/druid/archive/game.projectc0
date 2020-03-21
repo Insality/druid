@@ -43,7 +43,7 @@ default_texture_mag_filter = linear
 max_draw_calls = 1024
 max_characters = 8192
 max_debug_vertices = 10000
-texture_profiles = /builtins/graphics/default.texture_profiles
+texture_profiles = /example/custom.texture_profiles
 
 [sound]
 gain = 1
@@ -61,7 +61,7 @@ repeat_delay = 0.5
 repeat_interval = 0.2
 gamepads = /builtins/input/default.gamepadsc
 game_binding = /input/game.input_bindingc
-use_accelerometer = 1
+use_accelerometer = 0
 
 [sprite]
 max_count = 128
@@ -114,13 +114,15 @@ bundle_identifier = example.unnamed
 
 [html5]
 custom_heap_size = 0
-heap_size = 256
+heap_size = 64
 htmlfile = /builtins/manifests/web/engine_template.html
 cssfile = /builtins/manifests/web/light_theme.css
 archive_location_prefix = archive
-show_fullscreen_button = 1
-show_made_with_defold = 1
-scale_mode = downscale_fit
+show_fullscreen_button = 0
+show_made_with_defold = 0
+scale_mode = fit
+engine_arguments = --verify-graphics-calls=false
+splash_image = /media/druid_logo.png
 
 [particle_fx]
 max_count = 64
@@ -154,4 +156,7 @@ max_tile_count = 2048
 
 [druid]
 autofocus = 1
+
+[native_extension]
+app_manifest = /example/game.appmanifest
 
