@@ -72,7 +72,7 @@ end
 
 --- Strict button click area. Useful for
 -- no click events outside stencil node
--- @function button:set_click_zone
+-- @function hover:set_click_zone
 -- @tparam node zone Gui node
 function M.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)

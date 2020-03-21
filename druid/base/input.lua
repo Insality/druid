@@ -1,6 +1,6 @@
 --- Druid input text component.
 -- Carry on user text input
--- @local unimplemented
+-- UNIMPLEMENTED
 -- @module druid.input
 
 local component = require("druid.component")

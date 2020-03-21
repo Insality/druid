@@ -30,6 +30,11 @@
   <li><a href="../index.html">Index</a></li>
 </ul>
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
 
 
 <h2>Modules</h2>
@@ -40,6 +45,7 @@
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
@@ -66,18 +72,174 @@
 </p>
 
 
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#init">init(node, end_pos[, callback])</a></td>
+	<td class="summary">Component init function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set">set(value[, is_silent])</a></td>
+	<td class="summary">Set value for slider</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Events">Events</a></td>
+	<td class="summary">Component events</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Fields">Fields</a></td>
+	<td class="summary">Component fields</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
 
 
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init(node, end_pos[, callback])</strong>
+    </dt>
+    <dd>
+    Component init function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui pin node
+        </li>
+        <li><span class="parameter">end_pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+         The end position of slider
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         On slider change callback
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set"></a>
+    <strong>set(value[, is_silent])</strong>
+    </dt>
+    <dd>
+    Set value for slider
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">number</span></span>
+         Value from 0 to 1
+        </li>
+        <li><span class="parameter">is_silent</span>
+            <span class="types"><span class="type">bool</span></span>
+         Don't trigger event if true
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Events"></a>
+    <strong>Events</strong>
+    </dt>
+    <dd>
+    Component events
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">on_change_value</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On change value callback
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Fields"></a>
+    <strong>Fields</strong>
+    </dt>
+    <dd>
+    Component fields
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Slider pin node
+        </li>
+        <li><span class="parameter">start_pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Start pin node position
+        </li>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Current pin node position
+        </li>
+        <li><span class="parameter">target_pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Targer pin node position
+        </li>
+        <li><span class="parameter">end_pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+         End pin node position
+        </li>
+        <li><span class="parameter">dist</span>
+            <span class="types"><span class="type">number</span></span>
+         Length between start and end position
+        </li>
+        <li><span class="parameter">is_drag</span>
+            <span class="types"><span class="type">bool</span></span>
+         Current drag state
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">number</span></span>
+         Current slider value
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-24 00:03:02 </i>
+<i style="float:right;">Last updated 2020-03-21 21:42:52 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

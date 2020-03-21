@@ -39,13 +39,13 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><strong>druid.back_handler</strong></li>
+  <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><strong>druid.hover</strong></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
@@ -65,8 +65,8 @@
 
 <div id="content">
 
-<h1>Module <code>druid.back_handler</code></h1>
-<p>Component to handle back key (android, backspace)</p>
+<h1>Module <code>druid.hover</code></h1>
+<p>Component to handle hover node interaction</p>
 <p>
 
 </p>
@@ -75,12 +75,16 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(callback[, Callback])</a></td>
+	<td class="name" nowrap><a href="#init">init(node, on_hover_callback)</a></td>
 	<td class="summary">Component init function</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#on_input">on_input(action_id, action)</a></td>
-	<td class="summary">Input handler for component</td>
+	<td class="name" nowrap><a href="#set_hover">set_hover(state)</a></td>
+	<td class="summary">Set hover state</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(zone)</a></td>
+	<td class="summary">Strict button click area.</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -88,10 +92,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#Events">Events</a></td>
 	<td class="summary">Component events</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#Fields">Fields</a></td>
-	<td class="summary">Component fields</td>
 	</tr>
 </table>
 
@@ -104,7 +104,7 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(callback[, Callback])</strong>
+    <strong>init(node, on_hover_callback)</strong>
     </dt>
     <dd>
     Component init function
@@ -112,14 +112,13 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">callback</span></span>
-         On back button
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
         </li>
-        <li><span class="parameter">Callback</span>
-            <span class="types"><span class="type">params</span></span>
-         argument
-         (<em>optional</em>)
+        <li><span class="parameter">on_hover_callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Hover callback
         </li>
     </ul>
 
@@ -129,22 +128,40 @@
 
 </dd>
     <dt>
-    <a name = "on_input"></a>
-    <strong>on_input(action_id, action)</strong>
+    <a name = "set_hover"></a>
+    <strong>set_hover(state)</strong>
     </dt>
     <dd>
-    Input handler for component
+    Set hover state
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">action_id</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
-         on_input action id
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">bool</span></span>
+         The hover state
         </li>
-        <li><span class="parameter">action</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         on_input action
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_click_zone"></a>
+    <strong>set_click_zone(zone)</strong>
+    </dt>
+    <dd>
+    Strict button click area.  Useful for
+ no click events outside stencil node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">zone</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
         </li>
     </ul>
 
@@ -167,30 +184,9 @@
 
     <h3>Fields:</h3>
     <ul>
-        <li><span class="parameter">on_back</span>
+        <li><span class="parameter">on_hover</span>
             <span class="types"><span class="type">druid_event</span></span>
-         On back handler callback
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "Fields"></a>
-    <strong>Fields</strong>
-    </dt>
-    <dd>
-    Component fields
-
-
-    <h3>Fields:</h3>
-    <ul>
-        <li><span class="parameter">params</span>
-            <span class="types"><span class="type">any</span></span>
-         Params to click callbacks
+         On hover callback
         </li>
     </ul>
 

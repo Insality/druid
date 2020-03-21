@@ -17,6 +17,9 @@ local component = require("druid.component")
 local M = component.create("blocker", { const.ON_INPUT_HIGH })
 
 
+--- Component init function
+-- @function blocker:init
+-- @tparam node node Gui node
 function M.init(self, node)
 	self.node = self:get_node(node)
 

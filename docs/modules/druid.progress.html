@@ -33,6 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
 </ul>
 
 
@@ -44,6 +45,7 @@
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><strong>druid.progress</strong></li>
@@ -64,41 +66,54 @@
 <div id="content">
 
 <h1>Module <code>druid.progress</code></h1>
-<p>Basic progress bar component</p>
-<p>
-
-</p>
+<p>Basic progress bar component.</p>
+<p> For correct progress bar init it should be in max size from gui</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, key, init_value)</a></td>
+	<td class="name" nowrap><a href="#init">init(node, key, init_value)</a></td>
 	<td class="summary">Component init function</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#empty">empty(self)</a></td>
+	<td class="name" nowrap><a href="#fill">fill()</a></td>
 	<td class="summary">Fill a progress bar and stop progress animation</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#empty">empty(self)</a></td>
+	<td class="name" nowrap><a href="#empty">empty()</a></td>
 	<td class="summary">Empty a progress bar</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_to">set_to(self, to)</a></td>
+	<td class="name" nowrap><a href="#set_to">set_to(to)</a></td>
 	<td class="summary">Instant fill progress bar to value</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get">get(self)</a></td>
+	<td class="name" nowrap><a href="#get">get()</a></td>
 	<td class="summary">Return current progress bar value</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_steps">set_steps(self, steps, callback)</a></td>
+	<td class="name" nowrap><a href="#set_steps">set_steps(steps, callback)</a></td>
 	<td class="summary">Set points on progress bar to fire the callback</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#to">to(self, to[, callback])</a></td>
+	<td class="name" nowrap><a href="#to">to(to[, callback])</a></td>
 	<td class="summary">Start animation of a progress bar</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Events">Events</a></td>
+	<td class="summary">Component events</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Fields">Fields</a></td>
+	<td class="summary">Component fields</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Style">Style</a></td>
+	<td class="summary">Component style params</td>
 	</tr>
 </table>
 
@@ -111,7 +126,7 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, key, init_value)</strong>
+    <strong>init(node, key, init_value)</strong>
     </dt>
     <dd>
     Component init function
@@ -119,17 +134,13 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
         <li><span class="parameter">node</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a> or <span class="type">node</span></span>
          Progress bar fill node or node name
         </li>
         <li><span class="parameter">key</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
-         Progress bar direction (x or y)
+         Progress bar direction: const.SIDE.X or const.SIDE.Y
         </li>
         <li><span class="parameter">init_value</span>
             <span class="types"><span class="type">number</span></span>
@@ -143,20 +154,13 @@
 
 </dd>
     <dt>
-    <a name = "empty"></a>
-    <strong>empty(self)</strong>
+    <a name = "fill"></a>
+    <strong>fill()</strong>
     </dt>
     <dd>
     Fill a progress bar and stop progress animation
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
-    </ul>
 
 
 
@@ -165,19 +169,12 @@
 </dd>
     <dt>
     <a name = "empty"></a>
-    <strong>empty(self)</strong>
+    <strong>empty()</strong>
     </dt>
     <dd>
     Empty a progress bar
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
-    </ul>
 
 
 
@@ -186,7 +183,7 @@
 </dd>
     <dt>
     <a name = "set_to"></a>
-    <strong>set_to(self, to)</strong>
+    <strong>set_to(to)</strong>
     </dt>
     <dd>
     Instant fill progress bar to value
@@ -194,10 +191,6 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
         <li><span class="parameter">to</span>
             <span class="types"><span class="type">number</span></span>
          Progress bar value, from 0 to 1
@@ -211,19 +204,12 @@
 </dd>
     <dt>
     <a name = "get"></a>
-    <strong>get(self)</strong>
+    <strong>get()</strong>
     </dt>
     <dd>
     Return current progress bar value
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
-    </ul>
 
 
 
@@ -232,7 +218,7 @@
 </dd>
     <dt>
     <a name = "set_steps"></a>
-    <strong>set_steps(self, steps, callback)</strong>
+    <strong>set_steps(steps, callback)</strong>
     </dt>
     <dd>
     Set points on progress bar to fire the callback
@@ -240,12 +226,8 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
         <li><span class="parameter">steps</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+            <span class="types"><span class="type">number[]</span></span>
          Array of progress bar values
         </li>
         <li><span class="parameter">callback</span>
@@ -257,11 +239,15 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">progress:set_steps({<span class="number">0</span>, <span class="number">0.3</span>, <span class="number">0.6</span>, <span class="number">1</span>}, <span class="keyword">function</span>(self, step) <span class="keyword">end</span>)</pre>
+    </ul>
 
 </dd>
     <dt>
     <a name = "to"></a>
-    <strong>to(self, to[, callback])</strong>
+    <strong>to(to[, callback])</strong>
     </dt>
     <dd>
     Start animation of a progress bar
@@ -269,10 +255,6 @@
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Component instance
-        </li>
         <li><span class="parameter">to</span>
             <span class="types"><span class="type">number</span></span>
          value between 0..1
@@ -290,13 +272,104 @@
 
 </dd>
 </dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Events"></a>
+    <strong>Events</strong>
+    </dt>
+    <dd>
+    Component events
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">on_change</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On progress bar change callback
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Fields"></a>
+    <strong>Fields</strong>
+    </dt>
+    <dd>
+    Component fields
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Progress bar fill node
+        </li>
+        <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+         The progress bar direction
+        </li>
+        <li><span class="parameter">scale</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Current progress bar scale
+        </li>
+        <li><span class="parameter">size</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Current progress bar size
+        </li>
+        <li><span class="parameter">max_size</span>
+            <span class="types"><span class="type">number</span></span>
+         Maximum size of progress bar
+        </li>
+        <li><span class="parameter">slice</span>
+            <span class="types"><span class="type">vector4</span></span>
+         Progress bar slice9 settings
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Style"></a>
+    <strong>Style</strong>
+    </dt>
+    <dd>
+    Component style params
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">SPEED</span>
+            <span class="types"><span class="type">number</span></span>
+         Progress bas fill rate. More -> faster
+        </li>
+        <li><span class="parameter">MIN_DELTA</span>
+            <span class="types"><span class="type">number</span></span>
+         Minimum step to fill progress bar
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-02-24 00:03:02 </i>
+<i style="float:right;">Last updated 2020-03-21 21:42:52 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

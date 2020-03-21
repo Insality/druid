@@ -1,7 +1,7 @@
 --- Druid UI Library.
 -- Powerful Defold component based UI library. Use standart
--- components or make your own game-specific to make amazing
--- GUI in your games.
+-- components or make your own game-specific components to
+-- make amazing GUI in your games.
 --
 -- Contains the several basic components and examples
 -- to how to do your custom complex components to
