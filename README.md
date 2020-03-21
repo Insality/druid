@@ -1,6 +1,6 @@
 [![](media/druid_logo.png)](https://insality.github.io/druid/)
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/insality/druid)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/insality/druid)](https://github.com/Insality/druid/releases)
 
 **Druid** - powerful defold component UI library. Use basic druid components or make your own game-specific components to make amazing GUI in your games.
 
