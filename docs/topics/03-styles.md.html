@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Overview">Overview </a></li>
+<li><a href="#Usage">Usage </a></li>
+<li><a href="#Create_custom_components">Create custom components </a></li>
+</ul>
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/01-components.md.html">Druid components</a></li>
+  <li><a href="../topics/02-creating_custom_components.md.html">Creating custom components</a></li>
+  <li><strong>Styles</strong></li>
+  <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
+  <li><a href="../topics/05-examples.md.html">Examples</a></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
+  <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
+  <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
+  <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
+  <li><a href="../modules/druid.grid.html">druid.grid</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
+  <li><a href="../modules/druid.progress.html">druid.progress</a></li>
+  <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
+  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
+  <li><a href="../modules/druid.slider.html">druid.slider</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/druid_instance.html">druid_instance</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+<h1>Styles</h1>
+
+<p><a name="Overview"></a></p>
+<h2>Overview</h2>
+<p>Styles - set of functions and parameters for components to customize their behavior.</p>
+
+<p>Styles is a table, where key is name of component, and value is style table for this component.</p>
+
+<p>In component API documentation, you can find the style API for this component. Or just lookup for existing styles and modify them.</p>
+
+<p><a name="Usage"></a></p>
+<h2>Usage</h2>
+<p>Setup default druid style for all druid instances via <code>druid.set_default_style</code></p>
+
+<pre>
+<span class="keyword">local</span> druid = <span class="global">require</span>(<span class="string">"druid.druid"</span>)
+<span class="keyword">local</span> my_style = <span class="global">require</span>(<span class="string">"my.amazing.style"</span>)
+
+<span class="keyword">local</span> <span class="keyword">function</span> init(self)
+    druid.set_default_style(my_style)
+<span class="keyword">end</span>
+</pre>
+
+
+<p>Setup custom style to specific druid instance:</p>
+
+<pre>
+<span class="keyword">local</span> druid = <span class="global">require</span>(<span class="string">"druid.druid"</span>)
+<span class="keyword">local</span> my_style = <span class="global">require</span>(<span class="string">"my.amazing.style"</span>)
+
+<span class="keyword">local</span> <span class="keyword">function</span> init(self)
+    <span class="comment">-- This druid instance will be use my_style as default
+</span> self.druid = druid.new(self, my_style)
+<span class="keyword">end</span>
+</pre>
+
+
+<p>Change component style with <em>set</em>style_ function</p>
+
+<pre>
+<span class="keyword">local</span> druid = <span class="global">require</span>(<span class="string">"druid.druid"</span>)
+<span class="keyword">local</span> my_style = <span class="global">require</span>(<span class="string">"my.amazing.style"</span>)
+
+<span class="keyword">local</span> <span class="keyword">function</span> init(self)
+    self.druid = druid.new(self)
+    self.button = self.druid:new_button(self, <span class="string">"node"</span>)
+    <span class="comment">-- Setup custom style for specific component
+</span> self.button:set_style(my_style)
+<span class="keyword">end</span>
+</pre>
+
+
+<p><a name="Create_custom_components"></a></p>
+<h2>Create custom components</h2>
+<p>Styles is just lua table, so it can be described in just one single file
+<strong>TODO</strong></p>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-03-21 23:23:01 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
