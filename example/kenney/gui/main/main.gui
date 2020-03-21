@@ -6153,7 +6153,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Tap me!"
+  text: "<<<"
   font: "game"
   id: "button_left/text"
   xanchor: XANCHOR_NONE
@@ -6179,6 +6179,7 @@ nodes {
   alpha: 1.0
   outline_alpha: 0.0
   shadow_alpha: 0.78
+  overridden_fields: 8
   template_node_child: true
   text_leading: 1.0
   text_tracking: 0.0
@@ -6311,7 +6312,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Tap me!"
+  text: ">>>"
   font: "game"
   id: "button_right/text"
   xanchor: XANCHOR_NONE
@@ -6337,6 +6338,7 @@ nodes {
   alpha: 1.0
   outline_alpha: 0.0
   shadow_alpha: 0.78
+  overridden_fields: 8
   template_node_child: true
   text_leading: 1.0
   text_tracking: 0.0

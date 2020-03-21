@@ -380,6 +380,29 @@ function M.scroll_to(self, point, is_instant)
 	self.on_scroll_to:trigger(self:get_context(), point, is_instant)
 end
 
+--- Start scroll to target scroll percent
+-- @function scroll:scroll_to_percent
+-- @tparam point vector3 target percent
+-- @tparam[opt] bool is_instant instant scroll flag
+-- @usage scroll:scroll_to_percent(vmath.vector3(0.5, 0, 0))
+function M.scroll_to_percent(self, percent, is_instant)
+	local border = self.border
+
+	local size_x = math.abs(border.z - border.x)
+	if size_x == 0 then
+		size_x = 1
+	end
+	local size_y = math.abs(border.w - border.y)
+	if size_y == 0 then
+		size_y = 1
+	end
+
+	local pos = vmath.vector3(
+		-size_x * percent.x + border.x,
+		-size_y * percent.y + border.y,
+		0)
+	M.scroll_to(self, pos, is_instant)
+end
 
 --- Scroll to item in scroll by point index
 -- @function scroll:init
@@ -447,6 +470,31 @@ end
 function M.set_border(self, content_size)
 	gui.set_size(self.node, content_size)
 	update_border(self)
+end
+
+
+--- Return current scroll progress
+-- @function scroll:get_scroll_percent
+-- @tparam table self Component instance
+-- @return vmath.vector3 Scroll progress
+function M.get_scroll_percent(self)
+	local border = self.border
+	local size_x = math.abs(border.z - border.x)
+	if size_x == 0 then
+		size_x = 1
+	end
+
+	local size_y = math.abs(border.w - border.y)
+	if size_y == 0 then
+		size_y = 1
+	end
+	local pos = self.pos
+
+	return vmath.vector3(
+		(border.x - pos.x) / size_x,
+		(border.y - pos.y) / size_y,
+		0
+	)
 end
 
 

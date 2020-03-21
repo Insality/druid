@@ -79,12 +79,14 @@ function M.on_input(self, action_id, action)
 end
 
 
-function M.set(self, value)
+function M.set(self, value, is_silent)
 	value = helper.clamp(value, 0, 1)
 
 	gui.set_position(self.node, self.start_pos + self.dist * value)
 	self.value = value
-	on_change_value(self)
+	if not is_silent then
+		on_change_value(self)
+	end
 end
 
 
