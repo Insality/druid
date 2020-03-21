@@ -134,7 +134,7 @@ _Will fill later_
 
 ## License
 
-Original idea by [AGulev](https://github.com/AGulev)
+Original created by [AGulev](https://github.com/AGulev)
 
 Developed and supporting by [Insality](https://github.com/Insality)
 
