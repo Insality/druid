@@ -1,4 +1,4 @@
-![](druid_logo.png)
+[![](media/druid_logo.png)](https://insality.github.io/druid/)
 
 **Druid** - powerful defold component UI library. Use basic druid components or make your own game-specific components to make amazing GUI in your games.
 
