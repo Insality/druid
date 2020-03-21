@@ -48,7 +48,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  layer: ""
+  layer: "image"
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -103,7 +103,7 @@ nodes {
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   parent: "back"
-  layer: ""
+  layer: "image"
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -117,6 +117,9 @@ nodes {
   alpha: 1.0
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
+}
+layers {
+  name: "image"
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
