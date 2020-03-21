@@ -1,4 +1,5 @@
---- Druid input text component
+--- Druid input text component.
+-- Carry on user text input
 -- @local unimplemented
 -- @module druid.input
 

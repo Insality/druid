@@ -1,6 +1,22 @@
 --- Druid slider component
 -- @module druid.slider
 
+--- Component events
+-- @table Events
+-- @tfield druid_event on_change_value On change value callback
+
+--- Component fields
+-- @table Fields
+-- @tfield node node Slider pin node
+-- @tfield vector3 start_pos Start pin node position
+-- @tfield vector3 pos Current pin node position
+-- @tfield vector3 target_pos Targer pin node position
+-- @tfield vector3 end_pos End pin node position
+-- @tfield number dist Length between start and end position
+-- @tfield bool is_drag Current drag state
+-- @tfield number value Current slider value
+
+
 local Event = require("druid.event")
 local helper = require("druid.helper")
 local const = require("druid.const")
@@ -14,6 +30,11 @@ local function on_change_value(self)
 end
 
 
+--- Component init function
+-- @function slider:init
+-- @tparam node node Gui pin node
+-- @tparam vector3 end_pos The end position of slider
+-- @tparam[opt] function callback On slider change callback
 function M.init(self, node, end_pos, callback)
 	self.node = self:get_node(node)
 
@@ -79,6 +100,10 @@ function M.on_input(self, action_id, action)
 end
 
 
+--- Set value for slider
+-- @function slider:set
+-- @tparam number value Value from 0 to 1
+-- @tparam[opt] bool is_silent Don't trigger event if true
 function M.set(self, value, is_silent)
 	value = helper.clamp(value, 0, 1)
 

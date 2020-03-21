@@ -1,9 +1,6 @@
 --- Component to handle basic GUI button
 -- @module druid.button
 
---- Button gui component
---@class druid
-
 --- Component events
 -- @table Events
 -- @tfield druid_event on_click On release button callback
@@ -144,7 +141,6 @@ end
 
 --- Component init function
 -- @function button:init
--- @tparam table self Component instance
 -- @tparam node node Gui node
 -- @tparam function callback Button callback
 -- @tparam[opt] table params Button callback params
@@ -246,6 +242,9 @@ function M.on_input_interrupt(self)
 end
 
 
+--- Set enabled button component state
+-- @function button:set_enabled
+-- @tparam bool state Enabled state
 function M.set_enabled(self, state)
 	self.disabled = not state
 	if self._style.on_set_enabled then
@@ -254,7 +253,10 @@ function M.set_enabled(self, state)
 end
 
 
-function M.get_enabled(self)
+--- Return button enabled state
+-- @function button:is_enabled
+-- @treturn bool True, if button is enabled
+function M.is_enabled(self)
 	return not self.disabled
 end
 
@@ -262,7 +264,6 @@ end
 --- Strict button click area. Useful for
 -- no click events outside stencil node
 -- @function button:set_click_zone
--- @tparam table self Component instance
 -- @tparam node zone Gui node
 function M.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)

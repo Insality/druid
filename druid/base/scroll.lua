@@ -1,5 +1,40 @@
---- Component to handle scroll content
+--- Component to handle scroll content.
+-- Scroll consist from two nodes: scroll parent and scroll input
+-- Scroll input the user input zone, it's static
+-- Scroll parent the scroll moving part, it will change position.
+-- Setup initial scroll size by changing scroll parent size. If scroll parent
+-- size will be less than scroll_input size, no scroll is available. For scroll
+-- parent size should be more than input size
 -- @module druid.scroll
+
+--- Component events
+-- @table Events
+-- @tfield druid_event on_scroll On scroll move callback
+-- @tfield druid_event on_scroll_to On scroll_to function callback
+-- @tfield druid_event on_point_scroll On scroll_to_index function callbck
+
+--- Component fields
+-- @table Fields
+-- @tfield node node Scroll parent node
+-- @tfield node input_zone Scroll input node
+-- @tfield vector3 zone_size Current scroll content size
+-- @tfield number soft_size Soft zone size from style table
+-- @tfield vector3 center_offset Distance from node to node's center
+-- @tfield bool is_inert Flag, if scroll now moving by inertion
+-- @tfield vector3 inert Current inert speed
+-- @tfield vector3 pos Current scroll posisition
+-- @tfield vector3 target Current scroll target position
+
+--- Component style params
+-- @table Style
+-- @tfield number FRICT_HOLD Multiplier for inertion, while touching
+-- @tfield number FRICT Multiplier for free inertion
+-- @tfield number INERT_THRESHOLD Scroll speed to stop inertion
+-- @tfield number INERT_SPEED Multiplier for inertion speed
+-- @tfield number DEADZONE Deadzone for start scrol in pixels
+-- @tfield number SOFT_ZONE_SIZE Size of outside zone in pixels (for scroll back moving)
+-- @tfield number BACK_SPEED Scroll back returning lerp speed
+-- @tfield number ANIM_SPEED Scroll gui.animation speed for scroll_to function
 
 local Event = require("druid.event")
 local helper = require("druid.helper")
@@ -45,39 +80,6 @@ local function update_border(self)
 	self.can_y = (self.border.y ~= self.border.w)
 end
 
-
-function M.init(self, scroll_parent, input_zone, border)
-	self.style = self:get_style()
-	self.node = self:get_node(scroll_parent)
-	self.input_zone = self:get_node(input_zone)
-
-	self.zone_size = gui.get_size(self.input_zone)
-	self.soft_size = self.style.SOFT_ZONE_SIZE
-
-	-- Distance from node to node's center
-	local offset = helper.get_pivot_offset(gui.get_pivot(self.input_zone))
-	self.center_offset = vmath.vector3(self.zone_size)
-	self.center_offset.x = self.center_offset.x * offset.x
-	self.center_offset.y = self.center_offset.y * offset.y
-
-	self.is_inert = true
-	self.inert = vmath.vector3(0)
-	self.pos = gui.get_position(self.node)
-	self.target = vmath.vector3(self.pos)
-
-	self.input = {
-		touch = false,
-		start_x = 0,
-		start_y = 0,
-		side = false,
-	}
-
-	update_border(self)
-
-	self.on_scroll = Event()
-	self.on_scroll_to = Event()
-	self.on_point_scroll = Event()
-end
 
 
 local function set_pos(self, pos)
@@ -146,6 +148,7 @@ end
 --- Find closer point of interest
 -- if no inert, scroll to next point by scroll direction
 -- if inert, find next point by scroll director
+-- @local
 local function check_points(self)
 	if not self.points then
 		return
@@ -236,17 +239,6 @@ local function cancel_animate(self)
 end
 
 
-function M.update(self, dt)
-	if self.input.touch then
-		if M.current_scroll == self then
-			update_hand_scroll(self, dt)
-		end
-	else
-		update_free_inert(self, dt)
-	end
-end
-
-
 local function add_delta(self, dx, dy)
 	local t = self.target
 	local b = self.border
@@ -292,6 +284,55 @@ local function add_delta(self, dx, dy)
 
 	t.x = t.x + dx * x_perc
 	t.y = t.y + dy * y_perc
+end
+
+
+--- Component init function
+-- @function scroll:init
+-- @tparam node scroll_parent Gui node where placed scroll content. This node will change position
+-- @tparam node input_zone Gui node where input is catched
+function M.init(self, scroll_parent, input_zone)
+	self.style = self:get_style()
+	self.node = self:get_node(scroll_parent)
+	self.input_zone = self:get_node(input_zone)
+
+	self.zone_size = gui.get_size(self.input_zone)
+	self.soft_size = self.style.SOFT_ZONE_SIZE
+
+	-- Distance from node to node's center
+	local offset = helper.get_pivot_offset(gui.get_pivot(self.input_zone))
+	self.center_offset = vmath.vector3(self.zone_size)
+	self.center_offset.x = self.center_offset.x * offset.x
+	self.center_offset.y = self.center_offset.y * offset.y
+
+	self.is_inert = true
+	self.inert = vmath.vector3(0)
+	self.pos = gui.get_position(self.node)
+	self.target = vmath.vector3(self.pos)
+
+	self.input = {
+		touch = false,
+		start_x = 0,
+		start_y = 0,
+		side = false,
+	}
+
+	update_border(self)
+
+	self.on_scroll = Event()
+	self.on_scroll_to = Event()
+	self.on_point_scroll = Event()
+end
+
+
+function M.update(self, dt)
+	if self.input.touch then
+		if M.current_scroll == self then
+			update_hand_scroll(self, dt)
+		end
+	else
+		update_free_inert(self, dt)
+	end
 end
 
 
@@ -377,8 +418,9 @@ function M.scroll_to(self, point, is_instant)
 		end)
 	end
 
-	self.on_scroll_to:trigger(self:get_context(), point, is_instant)
+	self.on_scroll_to:trigger(self:get_context(), target, is_instant)
 end
+
 
 --- Start scroll to target scroll percent
 -- @function scroll:scroll_to_percent
@@ -404,11 +446,11 @@ function M.scroll_to_percent(self, percent, is_instant)
 	M.scroll_to(self, pos, is_instant)
 end
 
+
 --- Scroll to item in scroll by point index
 -- @function scroll:init
--- @tparam table self Component instance
 -- @tparam number index Point index
--- @tparam[opt] boolean skip_cb If true, skip the point callback
+-- @tparam[opt] bool skip_cb If true, skip the point callback
 function M.scroll_to_index(self, index, skip_cb)
 	index = helper.clamp(index, 1, #self.points)
 
@@ -427,7 +469,6 @@ end
 --- Set points of interest.
 -- Scroll will always centered on closer points
 -- @function scroll:set_points
--- @tparam table self Component instance
 -- @tparam table points Array of vector3 points
 function M.set_points(self, points)
 	self.points = points
@@ -447,8 +488,7 @@ end
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
 -- @function scroll:set_inert
--- @tparam table self Component instance
--- @tparam boolean state Inert scroll state
+-- @tparam bool state Inert scroll state
 function M.set_inert(self, state)
 	self.is_inert = state
 end
@@ -456,7 +496,6 @@ end
 
 --- Set the callback on scrolling to point (if exist)
 -- @function scroll:on_point_move
--- @tparam table self Component instance
 -- @tparam function callback Callback on scroll to point of interest
 function M.on_point_move(self, callback)
 	self.on_point_scroll:subscribe(callback)
@@ -465,8 +504,7 @@ end
 
 --- Set the scroll possibly area
 -- @function scroll:set_border
--- @tparam table self Component instance
--- @tparam vmath.vector3 border Size of scrolling area
+-- @tparam vector3 border Size of scrolling area
 function M.set_border(self, content_size)
 	gui.set_size(self.node, content_size)
 	update_border(self)
@@ -475,8 +513,7 @@ end
 
 --- Return current scroll progress
 -- @function scroll:get_scroll_percent
--- @tparam table self Component instance
--- @return vmath.vector3 Scroll progress
+-- @treturn vector3 Scroll progress
 function M.get_scroll_percent(self)
 	local border = self.border
 	local size_x = math.abs(border.z - border.x)

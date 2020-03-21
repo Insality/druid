@@ -1,6 +1,24 @@
---- Component to handle all GUI texts
--- Good working with localization system
+--- Component to handle all GUI texts.
+-- Druid text can adjust itself for text node size
+-- Text will never will be outside of his text size (even multiline)
 -- @module druid.text
+
+--- Component events
+-- @table Events
+-- @tfield druid_event on_set_text On set text callback
+-- @tfield druid_event on_update_text_scale On adjust text size callback
+-- @tfield druid_event on_set_pivot On change pivot callback
+
+--- Component fields
+-- @table Fields
+-- @tfield node node Text node
+-- @tfield vector3 pos Current text position
+-- @tfield vector3 start_scale Initial text node scale
+-- @tfield vector3 scale Current text node scale
+-- @tfield vector3 start_size Initial text node size
+-- @tfield vector3 text_area Current text node available are
+-- @tfield bool is_no_adjust Current text size adjust settings
+-- @tfield vector3 color Current text color
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -16,33 +34,6 @@ local function update_text_size(self)
 		self.start_size.z
 	)
 	gui.set_size(self.node, size)
-end
-
-
-function M.init(self, node, value, no_adjust)
-	self.node = self:get_node(node)
-	self.start_pivot = gui.get_pivot(self.node)
-
-	self.start_pos = gui.get_position(self.node)
-	self.pos = gui.get_position(self.node)
-
-	self.start_scale = gui.get_scale(self.node)
-	self.scale = gui.get_scale(self.node)
-
-	self.start_size = gui.get_size(self.node)
-	self.text_area = gui.get_size(self.node)
-	self.text_area.x = self.text_area.x * self.start_scale.x
-	self.text_area.y = self.text_area.y * self.start_scale.y
-
-	self.is_no_adjust = no_adjust
-	self.last_color = gui.get_color(self.node)
-
-	self.on_set_text = Event()
-	self.on_update_text_scale = Event()
-	self.on_set_pivot = Event()
-
-	self:set_to(value or 0)
-	return self
 end
 
 
@@ -73,9 +64,37 @@ local function update_text_area_size(self)
 end
 
 
+--- Component init function
+-- @function text:init
+-- @tparam node node Gui text node
+-- @tparam[opt] string value Initial text
+-- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
+function M.init(self, node, value, no_adjust)
+	self.node = self:get_node(node)
+	self.pos = gui.get_position(self.node)
+
+	self.start_scale = gui.get_scale(self.node)
+	self.scale = gui.get_scale(self.node)
+
+	self.start_size = gui.get_size(self.node)
+	self.text_area = gui.get_size(self.node)
+	self.text_area.x = self.text_area.x * self.start_scale.x
+	self.text_area.y = self.text_area.y * self.start_scale.y
+
+	self.is_no_adjust = no_adjust
+	self.color = gui.get_color(self.node)
+
+	self.on_set_text = Event()
+	self.on_update_text_scale = Event()
+	self.on_set_pivot = Event()
+
+	self:set_to(value or 0)
+	return self
+end
+
+
 --- Set text to text field
 -- @function text:set_to
--- @tparam table self Component instance
 -- @tparam string set_to Text for node
 function M.set_to(self, set_to)
 	self.last_value = set_to
@@ -91,28 +110,25 @@ end
 
 --- Set color
 -- @function text:set_color
--- @tparam table self Component instance
--- @tparam vmath.vector4 color Color for node
+-- @tparam vector4 color Color for node
 function M.set_color(self, color)
-	self.last_color = color
+	self.color = color
 	gui.set_color(self.node, color)
 end
 
 
 --- Set alpha
 -- @function text:set_alpha
--- @tparam table self Component instance
 -- @tparam number alpha Alpha for node
 function M.set_alpha(self, alpha)
-	self.last_color.w = alpha
-	gui.set_color(self.node, self.last_color)
+	self.color.w = alpha
+	gui.set_color(self.node, self.color)
 end
 
 
 --- Set scale
 -- @function text:set_scale
--- @tparam table self Component instance
--- @tparam vmath.vector3 scale Scale for node
+-- @tparam vector3 scale Scale for node
 function M.set_scale(self, scale)
 	self.last_scale = scale
 	gui.set_scale(self.node, scale)
@@ -122,7 +138,6 @@ end
 --- Set text pivot. Text will re-anchor inside
 -- his text area
 -- @function text:set_pivot
--- @tparam table self Component instance
 -- @tparam gui.pivot pivot Gui pivot constant
 function M.set_pivot(self, pivot)
 	local prev_pivot = gui.get_pivot(self.node)

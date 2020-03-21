@@ -1,39 +1,31 @@
---- Basic progress bar component
+--- Basic progress bar component.
+-- For correct progress bar init it should be in max size from gui
 -- @module druid.progress
 
+--- Component events
+-- @table Events
+-- @tfield druid_event on_change On progress bar change callback
+
+--- Component fields
+-- @table Fields
+-- @tfield node node Progress bar fill node
+-- @tfield string key The progress bar direction
+-- @tfield vector3 scale Current progress bar scale
+-- @tfield vector3 size Current progress bar size
+-- @tfield number max_size Maximum size of progress bar
+-- @tfield vector4 slice Progress bar slice9 settings
+
+--- Component style params
+-- @table Style
+-- @tfield number SPEED Progress bas fill rate. More -> faster
+-- @tfield number MIN_DELTA Minimum step to fill progress bar
+
+local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 local M = component.create("progress", { const.ON_UPDATE })
-
-
---- Component init function
--- @function progress:init
--- @tparam table self Component instance
--- @tparam string|node node Progress bar fill node or node name
--- @tparam string key Progress bar direction (x or y)
--- @tparam number init_value Initial value of progress bar
-function M.init(self, node, key, init_value)
-	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
-
-	self.prop = hash("scale."..key)
-	self.key = key
-
-	self.style = self:get_style()
-	self.node = self:get_node(node)
-	self.scale = gui.get_scale(self.node)
-	self.size = gui.get_size(self.node)
-	self.max_size = self.size[self.key]
-	self.slice = gui.get_slice9(self.node)
-	if key == const.SIDE.X then
-		self.slice_size = self.slice.x + self.slice.z
-	else
-		self.slice_size = self.slice.y + self.slice.w
-	end
-
-	self:set_to(init_value or 1)
-end
 
 
 local function check_steps(self, from, to, exactly)
@@ -58,7 +50,7 @@ local function check_steps(self, from, to, exactly)
 end
 
 
-local function set_bar_to(self, set_to, is_silence)
+local function set_bar_to(self, set_to, is_silent)
 	local prev_value = self.last_value
 	self.last_value = set_to
 
@@ -72,73 +64,38 @@ local function set_bar_to(self, set_to, is_silence)
 	self.size[self.key] = size
 	gui.set_size(self.node, self.size)
 
-	if not is_silence then
+	if not is_silent then
 		check_steps(self, prev_value, set_to)
 	end
 end
 
 
---- Fill a progress bar and stop progress animation
--- @function progress:empty
--- @tparam table self Component instance
-function M.fill(self)
-	set_bar_to(self, 1, true)
-end
+--- Component init function
+-- @function progress:init
+-- @tparam string|node node Progress bar fill node or node name
+-- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
+-- @tparam number init_value Initial value of progress bar
+function M.init(self, node, key, init_value)
+	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
+	self.prop = hash("scale."..key)
+	self.key = key
 
---- Empty a progress bar
--- @function progress:empty
--- @tparam table self Component instance
-function M.empty(self)
-	set_bar_to(self, 0, true)
-end
-
-
---- Instant fill progress bar to value
--- @function progress:set_to
--- @tparam table self Component instance
--- @tparam number to Progress bar value, from 0 to 1
-function M.set_to(self, to)
-	set_bar_to(self, to)
-end
-
-
---- Return current progress bar value
--- @function progress:get
--- @tparam table self Component instance
-function M.get(self)
-	return self.last_value
-end
-
-
---- Set points on progress bar to fire the callback
--- @function progress:set_steps
--- @tparam table self Component instance
--- @tparam table steps Array of progress bar values
--- @tparam function callback Callback on intersect step value
-function M.set_steps(self, steps, callback)
-	self.steps = steps
-	self.step_callback = callback
-end
-
-
---- Start animation of a progress bar
--- @function progress:to
--- @tparam table self Component instance
--- @tparam number to value between 0..1
--- @tparam[opt] function callback Callback on animation ends
-function M.to(self, to, callback)
-	to = helper.clamp(to, 0, 1)
-	-- cause of float error
-	local value = helper.round(to, 5)
-	if value ~= self.last_value then
-		self.target = value
-		self.target_callback = callback
+	self.style = self:get_style()
+	self.node = self:get_node(node)
+	self.scale = gui.get_scale(self.node)
+	self.size = gui.get_size(self.node)
+	self.max_size = self.size[self.key]
+	self.slice = gui.get_slice9(self.node)
+	if key == const.SIDE.X then
+		self.slice_size = self.slice.x + self.slice.z
 	else
-		if callback then
-			callback(self:get_context(), to)
-		end
+		self.slice_size = self.slice.y + self.slice.w
 	end
+
+	self.on_change = Event()
+
+	self:set_to(init_value or 1)
 end
 
 
@@ -157,6 +114,65 @@ function M.update(self, dt)
 			end
 
 			self.target = nil
+		end
+	end
+end
+
+
+--- Fill a progress bar and stop progress animation
+-- @function progress:fill
+function M.fill(self)
+	set_bar_to(self, 1, true)
+end
+
+
+--- Empty a progress bar
+-- @function progress:empty
+function M.empty(self)
+	set_bar_to(self, 0, true)
+end
+
+
+--- Instant fill progress bar to value
+-- @function progress:set_to
+-- @tparam number to Progress bar value, from 0 to 1
+function M.set_to(self, to)
+	set_bar_to(self, to)
+end
+
+
+--- Return current progress bar value
+-- @function progress:get
+function M.get(self)
+	return self.last_value
+end
+
+
+--- Set points on progress bar to fire the callback
+-- @function progress:set_steps
+-- @tparam number[] steps Array of progress bar values
+-- @tparam function callback Callback on intersect step value
+-- @usage progress:set_steps({0, 0.3, 0.6, 1}, function(self, step) end)
+function M.set_steps(self, steps, callback)
+	self.steps = steps
+	self.step_callback = callback
+end
+
+
+--- Start animation of a progress bar
+-- @function progress:to
+-- @tparam number to value between 0..1
+-- @tparam[opt] function callback Callback on animation ends
+function M.to(self, to, callback)
+	to = helper.clamp(to, 0, 1)
+	-- cause of float error
+	local value = helper.round(to, 5)
+	if value ~= self.last_value then
+		self.target = value
+		self.target_callback = callback
+	else
+		if callback then
+			callback(self:get_context(), to)
 		end
 	end
 end

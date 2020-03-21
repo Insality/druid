@@ -1,5 +1,23 @@
---- Component to handle GUI timers
+--- Component to handle GUI timers.
+-- Timer updating by game delta time. If game is not focused -
+-- timer will be not updated.
 -- @module druid.timer
+
+--- Component events
+-- @table Events
+-- @tfield druid_event on_tick On timer tick callback. Fire every second
+-- @tfield druid_event on_set_enabled On timer change enabled state callback
+-- @tfield druid_event on_timer_end On timer end callback
+
+--- Component fields
+-- @table Fields
+-- @tfield node node Trigger node
+-- @tfield[opt=node] node anim_node Animation node
+-- @tfield vector3 scale_from Initial scale of anim_node
+-- @tfield vector3 pos Initial pos of anim_node
+-- @tfield any params Params to click callbacks
+-- @tfield druid.hover hover Druid hover logic component
+-- @tfield[opt] node click_zone Restriction zone
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -10,6 +28,12 @@ local component = require("druid.component")
 local M = component.create("timer", { const.ON_UPDATE })
 
 
+--- Component init function
+-- @function timer:init
+-- @tparam node node Gui text node
+-- @tparam number seconds_from Start timer value in seconds
+-- @tparam[opt=0] number seconds_to End timer value in seconds
+-- @tparam[opt] function callback Function on timer end
 function M.init(self, node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
 	seconds_from = math.max(seconds_from, 0)
@@ -28,42 +52,6 @@ function M.init(self, node, seconds_from, seconds_to, callback)
 	end
 
 	return self
-end
-
-
---- Set text to text field
--- @function timer:set_to
--- @tparam table self Component instance
--- @tparam number set_to Value in seconds
-function M.set_to(self, set_to)
-	self.last_value = set_to
-	gui.set_text(self.node, formats.second_string_min(set_to))
-end
-
-
---- Called when update
--- @function timer:set_state
--- @tparam table self Component instance
--- @tparam boolean is_on Timer enable state
-function M.set_state(self, is_on)
-	self.is_on = is_on
-
-	self.on_set_enabled:trigger(self:get_context(), is_on)
-end
-
-
---- Set time interval
--- @function timer:set_interval
--- @tparam table self Component instance
--- @tparam number from Start time in seconds
--- @tparam number to Target time in seconds
-function M.set_interval(self, from, to)
-	self.from = from
-	self.value = from
-	self.temp = 0
-	self.target = to
-	M.set_state(self, true)
-	M.set_to(self, from)
 end
 
 
@@ -87,6 +75,38 @@ function M.update(self, dt)
 			self.on_timer_end:trigger(self:get_context(), self)
 		end
 	end
+end
+
+--- Set text to text field
+-- @function timer:set_to
+-- @tparam number set_to Value in seconds
+function M.set_to(self, set_to)
+	self.last_value = set_to
+	gui.set_text(self.node, formats.second_string_min(set_to))
+end
+
+
+--- Called when update
+-- @function timer:set_state
+-- @tparam bool is_on Timer enable state
+function M.set_state(self, is_on)
+	self.is_on = is_on
+
+	self.on_set_enabled:trigger(self:get_context(), is_on)
+end
+
+
+--- Set time interval
+-- @function timer:set_interval
+-- @tparam number from Start time in seconds
+-- @tparam number to Target time in seconds
+function M.set_interval(self, from, to)
+	self.from = from
+	self.value = from
+	self.temp = 0
+	self.target = to
+	M.set_state(self, true)
+	M.set_to(self, from)
 end
 
 

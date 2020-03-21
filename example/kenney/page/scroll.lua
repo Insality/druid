@@ -4,6 +4,7 @@ local M = {}
 local function init_grid(self)
 	local prefab = gui.get_node("grid_prefab")
 
+	local grid_scroll = self.druid:new_scroll("grid_content", "scroll_with_grid_size")
 	local grid = self.druid:new_grid("grid_content", "grid_prefab", 20)
 	grid:set_anchor(vmath.vector3(0, 0.5, 0))
 
@@ -13,12 +14,15 @@ local function init_grid(self)
 		grid:add(clone_prefab["grid_prefab"])
 		gui.set_text(clone_prefab["grid_prefab_text"], "Node " .. i)
 
-		self.druid:new_button(clone_prefab["grid_button"])
+		self.druid:new_button(clone_prefab["grid_button"], function()
+			local position = gui.get_position(clone_prefab["grid_prefab"])
+			position.x = -position.x
+			grid_scroll:scroll_to(position)
+		end)
 	end
 
 	gui.set_enabled(prefab, false)
 
-	local grid_scroll = self.druid:new_scroll("grid_content", "scroll_with_grid_size")
 	grid_scroll:set_border(grid:get_size())
 
 	local scroll_slider = self.druid:new_slider("grid_scroll_pin", vmath.vector3(300, 0, 0), function(_, value)

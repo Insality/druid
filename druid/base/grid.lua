@@ -2,12 +2,34 @@
 -- Grid can anchor your elements, get content size and other
 -- @module druid.grid
 
+--- Component events
+-- @table Events
+-- @tfield druid_event on_add_item On item add callback
+-- @tfield druid_event on_remove_item On item remove callback
+-- @tfield druid_event on_clear On grid clear callback
+-- @tfield druid_event on_update_positions On update item positions callback
+
+--- Component fields
+-- @table Fields
+-- @tfield node parent Parent gui node
+-- @tfield node[] nodes List of all grid nodes
+-- @tfield vector3 offset Item distance between each other items
+-- @tfield vector3 anchor Item anchor
+-- @tfield vector3 node_size Item size
+-- @tfield vector4 border The size of item content
+-- @tfield vector3 border_offer The border offset for correct anchor calculations
+
 local Event = require("druid.event")
 local component = require("druid.component")
 
 local M = component.create("grid")
 
 
+--- Component init function
+-- @function grid:init
+-- @tparam node parent The gui node parent, where items will be placed
+-- @tparam node element Element prefab. Need to get it size
+-- @tparam[opt=1] number in_row How many nodes in row can be placed
 function M.init(self, parent, element, in_row)
 	self.parent = self:get_node(parent)
 	self.nodes = {}
@@ -55,6 +77,7 @@ local function get_pos(self, index)
 
 	temp_pos.x = col * (self.node_size.x + self.offset.x) - self.border_offset.x
 	temp_pos.y = -row * (self.node_size.y + self.offset.y) - self.border_offset.y
+	temp_pos.z = 0
 
 	return temp_pos
 end
@@ -70,18 +93,29 @@ local function update_pos(self)
 end
 
 
+
+--- Set grid items offset, the distance between items
+-- @function grid:set_offset
+-- @tparam vector3 offset Offset
 function M.set_offset(self, offset)
 	self.offset = offset
 	update_pos(self)
 end
 
 
+--- Set grid anchor
+-- @function grid:set_anchor
+-- @tparam vector3 acnhor Anchor
 function M.set_anchor(self, anchor)
 	self.anchor = anchor
 	update_pos(self)
 end
 
 
+--- Add new item to the grid
+-- @function grid:add
+--	@tparam node item Gui node
+-- @tparam[opt] number index The item position. By default add as last item
 function M.add(self, item, index)
 	index = index or (#self.nodes + 1)
 	table.insert(self.nodes, index, item)
@@ -95,6 +129,9 @@ function M.add(self, item, index)
 end
 
 
+--- Return grid content size
+-- @function grid:get_size
+-- @treturn vector3 The grid content size
 function M.get_size(self)
 	return vmath.vector3(
 		self.border.z - self.border.x,
@@ -103,6 +140,9 @@ function M.get_size(self)
 end
 
 
+--- Return array of all node positions
+-- @function grid:get_all_pos
+-- @treturn vector3[] All grid node positions
 function M.get_all_pos(self)
 	local result = {}
 	for i = 1, #self.nodes do
@@ -113,6 +153,8 @@ function M.get_all_pos(self)
 end
 
 
+--- Clear all items from the grid
+-- @function grid:clear
 function M.clear(self)
 	for i = 1, #self.nodes do
 		gui.delete_node(self.nodes[i])

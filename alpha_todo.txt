@@ -15,21 +15,21 @@ Simple to-do for Druid Alpha 0.2.0
 
 + button add key trigger
 + button and hover click restriction zone?
++ button polish, actions
++ better scroll size management, check different cases. So implicit now
++ better callbacks for every components
 
 - unify component api (get/set/to and other general stuff)
-- better callbacks for every components
-- better scroll size management, check different cases. So implicit now
 - better grid + scroll management
 - better default style, add template for custom style
-- add input_text component for alpha release
 - compare with gooey
 - add docs for all components
 - add docs folder for every component with gifs? Solutions
 - remove component autoremove all children component
 
-- button polish, actions
 
 -- Low
+- add input_text component for alpha release
 - add code template and example for user components
 - custom input settings (name of touch, text, etc)
 - add good examples with template and/or nodes (basic component no use any of them)
