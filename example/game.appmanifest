@@ -1,0 +1,84 @@
+# App manifest generated Sat Mar 21 2020 23:36:54 GMT+0300 (Moscow Standard Time)
+# Settings: Physics2D,Physics3D,Record,Profiler
+platforms:
+    x86_64-osx:
+        context:
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["physics_null","record_null","profilerext_null"]
+            linkFlags: []
+
+    x86_64-linux:
+        context:
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["physics_null","record_null","profilerext_null"]
+            linkFlags: []
+
+    js-web:
+        context:
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
+            excludeJsLibs: []
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["physics_null","record_null","profilerext_null"]
+            linkFlags: []
+
+    wasm-web:
+        context:
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
+            excludeJsLibs: []
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["physics_null","record_null","profilerext_null"]
+            linkFlags: []
+
+    x86-win32:
+        context:
+            excludeLibs: ["libphysics","libLinearMath","libBulletDynamics","libBulletCollision","libBox2D","librecord","vpx","libprofilerext"]
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["libphysics_null.lib","librecord_null.lib","libprofilerext_null.lib"]
+            linkFlags: []
+
+    x86_64-win32:
+        context:
+            excludeLibs: ["libphysics","libLinearMath","libBulletDynamics","libBulletCollision","libBox2D","librecord","vpx","libprofilerext"]
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["libphysics_null.lib","librecord_null.lib","libprofilerext_null.lib"]
+            linkFlags: []
+
+    armv7-android:
+        context:
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
+            excludeJars: []
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["physics_null","record_null","profilerext_null"]
+            linkFlags: []
+
+    arm64-android:
+        context:
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
+            excludeJars: []
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["physics_null","record_null","profilerext_null"]
+            linkFlags: []
+
+    armv7-ios:
+        context:
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["physics_null","record_null","profilerext_null"]
+            linkFlags: []
+
+    arm64-ios:
+        context:
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["physics_null","record_null","profilerext_null"]
+            linkFlags: []
+
+    x86_64-ios:
+        context:
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
+            excludeSymbols: ["ProfilerExt"]
+            libs: ["physics_null","record_null","profilerext_null"]
+            linkFlags: []
+

@@ -99,7 +99,7 @@ See the [example folder](https://github.com/insality/druid/tree/develop/example/
 
 See the [druid-assets repository](https://github.com/insality/druid-assets) for examples of how to create custom components and styles
 
-Try the HTML5 version of the example app
+Try the [HTML5 version](https://insality.github.io/druid/druid/) of the example app
 
 
 ## Documentation

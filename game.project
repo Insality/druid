@@ -16,7 +16,22 @@ include_dirs = druid
 
 [input]
 gamepads = /builtins/input/default.gamepadsc
+use_accelerometer = 0
 
 [druid]
 autofocus = 1
+
+[html5]
+engine_arguments = --verify-graphics-calls=false
+heap_size = 64
+splash_image = /media/druid_logo.png
+scale_mode = fit
+show_fullscreen_button = 0
+show_made_with_defold = 0
+
+[native_extension]
+app_manifest = /example/game.appmanifest
+
+[graphics]
+texture_profiles = /example/custom.texture_profiles
 
