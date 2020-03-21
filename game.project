@@ -1,16 +1,22 @@
 [bootstrap]
-main_collection = /example/example.collectionc
+main_collection = /example/kenney.collectionc
 
 [script]
 shared_state = 1
 
 [display]
-width = 960
-height = 640
+width = 600
+height = 900
 
 [project]
 title = druid
 
 [library]
 include_dirs = druid
+
+[input]
+gamepads = /builtins/input/default.gamepadsc
+
+[druid]
+autofocus = 1
 

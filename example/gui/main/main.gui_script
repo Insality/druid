@@ -1,0 +1,68 @@
+local druid = require("druid.druid")
+
+local empty_style = require("druid.styles.empty.style")
+local default_style = require("druid.styles.default.style")
+
+local main_page = require("example.page.main")
+local text_page = require("example.page.texts")
+local button_page = require("example.page.button")
+local scroll_page = require("example.page.scroll")
+
+local pages = {
+	"main_page",
+	"texts_page",
+	"button_page",
+	"scroll_page",
+}
+
+local function on_control_button(self, delta)
+	self.page = self.page + delta
+	if self.page < 1 then
+		self.page = #pages
+	end
+	if self.page > #pages then
+		self.page = 1
+	end
+
+	self.header:translate(pages[self.page])
+	local node = gui.get_node("C_Anchor")
+	gui.animate(node, "position.x", (self.page-1) * -600, gui.EASING_OUTSINE, 0.2)
+end
+
+
+local function init_top_panel(self)
+	self.druid:new_button("button_left/button", on_control_button, -1)
+	self.druid:new_button("button_right/button", on_control_button, 1)
+	self.header = self.druid:new_lang_text("text_header", "main_page")
+end
+
+
+function init(self)
+	druid.set_default_style(default_style)
+	self.druid = druid.new(self)
+
+	init_top_panel(self)
+	self.page = 1
+	main_page.setup_page(self)
+	text_page.setup_page(self)
+	button_page.setup_page(self)
+	scroll_page.setup_page(self)
+
+	-- Refresh state
+	on_control_button(self, 0)
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	self.druid:on_input(action_id, action)
+end

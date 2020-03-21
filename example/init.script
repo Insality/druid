@@ -1,0 +1,24 @@
+local druid = require("druid.druid")
+local const = require("druid.const")
+local lang = require("example.lang")
+
+
+local function setup_druid()
+	druid.set_sound_function(function(name)
+		sound.play("kenney:/sound#" .. name)
+	end)
+
+	druid.set_text_function(function(lang_id)
+		return lang.get_locale(lang_id)
+	end)
+
+	-- TODO: Call druid.finish_setup?
+	-- Need to update all gui, in case, when gui init was befure this init
+	msg.post("/gui#main", const.ON_CHANGE_LANGUAGE)
+end
+
+
+function init(self)
+	setup_druid()
+	msg.post("@render:", "clear_color", { color = vmath.vector4(0.8, 0.9, 0.85, 1) })
+end
