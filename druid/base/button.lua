@@ -7,7 +7,7 @@
 -- @tfield druid_event on_repeated_click On repeated action button callback
 -- @tfield druid_event on_long_click On long tap button callback
 -- @tfield druid_event on_double_click On double tap button callback
--- @tfield druid_event on_hold_click On button hold before long_click callback
+-- @tfield druid_event on_hold_callback On button hold before long_click callback
 
 --- Component fields
 -- @table Fields
@@ -100,7 +100,7 @@ end
 
 
 local function on_button_hold(self, press_time)
-	self.on_hold_click:trigger(self:get_context(), self.params, self, press_time)
+	self.on_hold_callback:trigger(self:get_context(), self.params, self, press_time)
 end
 
 
@@ -168,7 +168,7 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.on_repeated_click = Event()
 	self.on_long_click = Event()
 	self.on_double_click = Event()
-	self.on_hold_click = Event()
+	self.on_hold_callback = Event()
 end
 
 
