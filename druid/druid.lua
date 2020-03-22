@@ -18,6 +18,8 @@ local const = require("druid.const")
 local druid_instance = require("druid.system.druid_instance")
 local settings = require("druid.system.settings")
 
+local default_style = require("druid.styles.default.style")
+
 local M = {}
 
 
@@ -45,6 +47,9 @@ end
 -- @tparam[opt] table style Druid style module
 -- @treturn druid_instance Druid instance
 function M.new(context, style)
+	if settings.default_style == nil then
+		M.set_default_style(default_style)
+	end
 	return druid_instance(context, style)
 end
 
