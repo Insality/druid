@@ -31,13 +31,10 @@ local M = {}
 -- @tparam table module lua table with component
 function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
-	-- Possibly: druid.new(druid.BUTTON, etc?)
 	-- Current way is very implicit
 	druid_instance["new_" .. name] = function(self, ...)
 		return druid_instance.create(self, module, ...)
 	end
-
-	-- print("Register component", name)
 end
 
 

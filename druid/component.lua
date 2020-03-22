@@ -86,10 +86,13 @@ function Component.get_interests(self)
 end
 
 
--- TODO: Определиться с get_node и node
--- get_node - берет ноду по ноде или строке
--- node - может брать ноду у компонента по схеме (если есть
--- template или таблица нод после gui.clone_tree)
+--- Get node for component by name.
+-- If component has nodes, node_or_name should be string
+-- It auto pick node by template name or from nodes by clone_tree
+-- if they was setup via component:set_nodes, component:set_template
+-- @function component:get_node
+-- @tparam string|node node_or_name Node name or node itself
+-- @treturn node Gui node
 function Component.get_node(self, node_or_name)
 	local template_name = self:get_template() or const.EMPTY_STRING
 	local nodes = self:get_nodes()

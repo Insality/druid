@@ -13,7 +13,7 @@
 -- @table Fields
 -- @tfield node node Trigger node
 -- @tfield[opt=node] node anim_node Animation node
--- @tfield vector3 scale_from Initial scale of anim_node
+-- @tfield vector3 start_scale Initial scale of anim_node
 -- @tfield vector3 pos Initial pos of anim_node
 -- @tfield any params Params to click callbacks
 -- @tfield druid.hover hover Druid hover logic component
@@ -152,8 +152,7 @@ function M.init(self, node, callback, params, anim_node, event)
 	self.node = self:get_node(node)
 
 	self.anim_node = anim_node and helper:get_node(anim_node) or self.node
-	-- TODO: rename to start_scale
-	self.scale_from = gui.get_scale(self.anim_node)
+	self.start_scale = gui.get_scale(self.anim_node)
 	self.params = params
 	self.hover = self.druid:new_hover(node, on_button_hover)
 	self.click_zone = nil
