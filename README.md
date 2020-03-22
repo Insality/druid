@@ -58,37 +58,38 @@ druid.set_default_style(your_style)
 ## Components
 
 **Druid** provides next basic components:
-- **Button** - Basic game button
 
-- **Text** - Wrap on text node with text size adjusting
+- **[Button](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#button)** - Basic Druid input component
 
-- **Blocker** - Block input in node zone
+- **[Text](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#text)** - Basic Druid text component
 
-- **Back Handler** - Handle back button (Android, backspace)
+- **Lang text** - Wrap on Text component to handle localization
 
-- **Lang text** - Text component with handle localization system
+- **Scroll** - Basic Druid scroll component
 
-- **Timer** - Run timer on text node
+- **Progress** - Basic Druid progress bar component
 
-- **Progress** - Basic progress bar
+- **Slider** - Basic Druid slider component
 
-- **Scroll** - Basic scroll component
+- **Input** - Basic Druid text input component (unimplemented)
 
-- **Grid** - Component for manage node positions
-
-- **Slider** - Basic slider component
-
-- **Checkbox** - Basic checkbox component
+- **Checkbox** - Basic Druid checkbox component
 
 - **Checkbox group** - Several checkboxes in one group
 
 - **Radio group** - Several checkboxes in one group with single choice
 
-- **Hover** - Trigger component for check node hover state
+- **[Blocker](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#blocker)** - Block input in node zone component
 
-- **Input** - Component to process user text input
+- **Back Handler** - Handle back button (Android back, backspace)
 
-Full info see on _components.md_
+- **Timer** - Handle timer work on gui text node
+
+- **Grid** - Component for manage node positions 
+
+- **Hover** - System Druid component, handle hover node state
+
+Full info see on _[components.md](https://github.com/Insality/druid/blob/master/docs_md/01-components.md)_
 
 
 ## Basic usage
@@ -153,10 +154,10 @@ Try the [HTML5 version](https://insality.github.io/druid/druid/) of the example 
 ## Documentation
 
 To learn **Druid** better, read next documentation:
-- [Druid components](https://insality.github.io/druid/topics/01-components.md.html)
-- [Create custom components](https://insality.github.io/druid/topics/02-creating_custom_components.md.html)
-- [Druid styles](https://insality.github.io/druid/topics/03-styles.md.html)
-- [Druid asset store](https://insality.github.io/druid/topics/04-druid_assets.md.html)
+- [Druid components](https://github.com/Insality/druid/blob/master/docs_md/01-components.md)
+- [Create custom components](https://github.com/Insality/druid/blob/master/docs_md/02-creating_custom_components.md)
+- [Druid styles](https://github.com/Insality/druid/blob/master/docs_md/03-styles.md)
+- [Druid asset store](https://github.com/Insality/druid/blob/master/docs_md/04-druid_assets.md)
 
 Full **Druid** documentation you can find here:
 https://insality.github.io/druid/
