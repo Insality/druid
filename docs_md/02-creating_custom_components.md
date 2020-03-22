@@ -47,8 +47,20 @@ Add your custom component to druid via `druid.register`
 local druid = require("druid.druid")
 local my_component = require("my.amazing.component")
 
-local function init(self)
+function init(self)
 	druid.register("my_component", my_component)
+end
+```
+
+Registering make new function with "new_{component_name}". In our example it will be: `druid:new_my_component()`
+
+As component registered, you can create your component with next code:
+```lua
+local druid = require("druid.druid")
+
+function init(self)
+	self.druid = druid.new(self)
+	local my_component = self.druid:new_my_component(...)
 end
 ```
 

@@ -144,7 +144,7 @@ Any events can handle several callbacks, if needed.
 
 ## Examples
 
-See the [example folder](https://github.com/insality/druid/tree/develop/example/kenney) for examples of how to use **Druid**
+See the [example folder](https://github.com/Insality/druid/tree/develop/example) for examples of how to use **Druid**
 
 See the [druid-assets repository](https://github.com/insality/druid-assets) for examples of how to create custom components and styles
 
