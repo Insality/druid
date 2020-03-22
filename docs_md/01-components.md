@@ -20,9 +20,9 @@ Basic Druid input component
 Basic Druid text component
 
 - Text component by default have auto adjust text sizing. Text never will be more, than text size, which you can setup in gui scene. It can be disabled on component creating
-![](media/text_autosize.png)
+![](../media/text_autosize.png)
 - Text pivot can be changed with `text:set_pivot`, and text will save their position inside their text size box:
-![](media/text_anchor.gif)
+![](../media/text_anchor.gif)
 
 ## Blocker
 Druid component for block input
@@ -30,7 +30,7 @@ Druid component for block input
 It can be used for block input in special zone.
 
 Example:
-![](media/blocker_scheme.png)
+![](../media/blocker_scheme.png)
 
 Blue zone is **button** with close_window callback  
 
