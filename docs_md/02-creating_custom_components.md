@@ -1,16 +1,18 @@
 # Creating custom components
 
 ## Overview
+
 Druid allows you to create your custom components from druid basic components or other custom components
 
 
 ## Custom components
+
 Basic custom component template looks like this:
 ```lua
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("your_component")
+local M = component.create("name_your_component")
 
 -- Component constructor
 function M.init(self, ...)
@@ -67,7 +69,7 @@ There is next interests in druid:
 
 
 ## Best practice on custom components
-On each component recomended describe component scheme in next way:
+On each component recommended describe component scheme in next way:
 
 ```lua
 -- Component module
@@ -76,9 +78,9 @@ local component = require("druid.component")
 local M = component.create("your_component")
 
 local SCHEME = {
-	ROOT = "/root",
-	ITEM = "/item",
-	TITLE = "/title"
+	ROOT = "root",
+	ITEM = "item",
+	TITLE = "title"
 }
 
 function M.init(self, template_name, node_table)
@@ -103,3 +105,8 @@ function M.init(self, template_name, node_table)
 end
 
 ```
+
+
+## Power of using templates
+
+You can use one component, but creating and customizing templates for them. Templates only requires to match the component scheme.

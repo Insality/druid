@@ -36,17 +36,17 @@
 <li><a href="#Text">Text </a></li>
 <li><a href="#Blocker">Blocker </a></li>
 <li><a href="#Back_Handler">Back Handler </a></li>
-<li><a href="#Locale">Locale </a></li>
-<li><a href="#Timer">Timer </a></li>
-<li><a href="#Progress">Progress </a></li>
+<li><a href="#Lang_text">Lang text </a></li>
 <li><a href="#Scroll">Scroll </a></li>
-<li><a href="#Grid">Grid </a></li>
+<li><a href="#Progress">Progress </a></li>
 <li><a href="#Slider">Slider </a></li>
+<li><a href="#Input">Input </a></li>
 <li><a href="#Checkbox">Checkbox </a></li>
 <li><a href="#Checkbox_group">Checkbox group </a></li>
 <li><a href="#Radio_group">Radio group </a></li>
+<li><a href="#Timer">Timer </a></li>
+<li><a href="#Grid">Grid </a></li>
 <li><a href="#Hover">Hover </a></li>
-<li><a href="#Input">Input </a></li>
 </ul>
 
 
@@ -90,49 +90,100 @@
 
 <h1>Druid components</h1>
 
+
 <p><a name="Button"></a></p>
 <h2>Button</h2>
-<p>Basic game button</p>
+
+<p>Basic Druid input component</p>
+
+<ul>
+    <li>Button callback have next params: (self, params, button_instance)
+
+<pre>
+- **self** - Druid self context
+- **params** - Additional params, specified on button creating
+- **button_instance** - button itself
+</pre>
+</li>
+    <li>Button have next events:
+
+<pre>
+- **on_click** - basic button callback
+- **on_repeated_click** - repeated click callback, <span class="keyword">while</span> holding the button, don<span class="string">'t trigger if callback is empty
+- **on_long_click** - callback on long button tap, don'</span>t trigger <span class="keyword">if</span> callback is empty
+- **on_hold_click** - hold callback, before long_click trigger, don<span class="string">'t trigger if callback is empty
+- **on_double_click** - different callback, if tap button 2+ in row, don'</span>t trigger <span class="keyword">if</span> callback is empty
+</pre>
+</li>
+    <li>If you have stencil on buttons and you don't want trigger them outside of stencil node, you can use <a href="../modules/druid.button.html#set_click_zone">button:set_click_zone</a> to restrict button click zone</li>
+    <li>Button can have key trigger to use then by key: <a href="../modules/druid.button.html#set_key_trigger">button:set_key_trigger</a></li>
+</ul>
+
 
 <p><a name="Text"></a></p>
 <h2>Text</h2>
-<p>Wrap on text node with text size adjusting</p>
+
+<p>Basic Druid text component</p>
+
+<ul>
+    <li>Text component by default have auto adjust text sizing. Text never will be more, than text size, which you can setup in gui scene. It can be disabled on component creating</li>
+</ul>
+
+<p><img src="../media/text_autosize.png" alt=""/></p>
+
+<ul>
+    <li>Text pivot can be changed with <a href="../modules/druid.text.html#set_pivot">text:set_pivot</a>, and text will save their position inside their text size box:</li>
+</ul>
+
+<p><img src="../media/text_anchor.gif" alt=""/></p>
+
 
 <p><a name="Blocker"></a></p>
 <h2>Blocker</h2>
-<p>Block input in node zone</p>
+
+<p>Druid component for block input</p>
+
+<p>It can be used for block input in special zone.</p>
+
+<p>Example:</p>
+
+<p><img src="../media/blocker_scheme.png" alt=""/></p>
+
+<p>Blue zone is <strong>button</strong> with close_window callback</p>
+
+<p>Yellow zone is blocker with window content</p>
+
+<p>So you can do the safe zones, when you have the big buttons</p>
 
 <p><a name="Back_Handler"></a></p>
 <h2>Back Handler</h2>
-<p>Handle back button (Android, backspace)</p>
+<p>Component to handle back button</p>
 
-<p><a name="Locale"></a></p>
-<h2>Locale</h2>
-<p>Text component with handle localization system</p>
+<p>It works on Android back button and Backspace. Key triggers in <code>input.binding</code> should be setup</p>
 
-<p><a name="Timer"></a></p>
-<h2>Timer</h2>
-<p>Run timer on text node</p>
-
-<p><a name="Progress"></a></p>
-<h2>Progress</h2>
-<p>Basic progress bar</p>
+<p><a name="Lang_text"></a></p>
+<h2>Lang text</h2>
+<p>Wrap on Text component to handle localization</p>
 
 <p><a name="Scroll"></a></p>
 <h2>Scroll</h2>
-<p>Basic scroll component</p>
+<p>Basic Druid scroll component</p>
 
-<p><a name="Grid"></a></p>
-<h2>Grid</h2>
-<p>Component for manage node positions</p>
+<p><a name="Progress"></a></p>
+<h2>Progress</h2>
+<p>Basic Druid progress bar component</p>
 
 <p><a name="Slider"></a></p>
 <h2>Slider</h2>
-<p>Basic slider component</p>
+<p>Basic Druid slider component</p>
+
+<p><a name="Input"></a></p>
+<h2>Input</h2>
+<p>Basic Druid text input component (unimplemented)</p>
 
 <p><a name="Checkbox"></a></p>
 <h2>Checkbox</h2>
-<p>Basic checkbox component</p>
+<p>Basic Druid checkbox component</p>
 
 <p><a name="Checkbox_group"></a></p>
 <h2>Checkbox group</h2>
@@ -142,20 +193,24 @@
 <h2>Radio group</h2>
 <p>Several checkboxes in one group with single choice</p>
 
+<p><a name="Timer"></a></p>
+<h2>Timer</h2>
+<p>Handle timer work on gui text node</p>
+
+<p><a name="Grid"></a></p>
+<h2>Grid</h2>
+<p>Component for manage node positions </p>
+
 <p><a name="Hover"></a></p>
 <h2>Hover</h2>
-<p>Trigger component for check node hover state</p>
-
-<p><a name="Input"></a></p>
-<h2>Input</h2>
-<p>Component to process user text input</p>
+<p>System Druid component, handle hover node state</p>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-03-22 02:23:51 </i>
+<i style="float:right;">Last updated 2020-03-22 15:19:02 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

@@ -19,7 +19,7 @@ gamepads = /builtins/input/default.gamepadsc
 use_accelerometer = 0
 
 [druid]
-autofocus = 1
+no_auto_input = 0
 
 [html5]
 engine_arguments = --verify-graphics-calls=false

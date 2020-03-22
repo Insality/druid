@@ -94,6 +94,10 @@ function Component.get_node(self, node_or_name)
 	local template_name = self:get_template() or const.EMPTY_STRING
 	local nodes = self:get_nodes()
 
+	if template_name ~= const.EMPTY_STRING then
+		template_name = template_name .. "/"
+	end
+
 	if nodes then
 		assert(type(node_or_name) == "strings", "You should pass node name instead of node")
 		return nodes[template_name .. node_or_name]
