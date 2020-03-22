@@ -43,7 +43,7 @@ local Druid = class("druid.druid_instance")
 
 
 local function input_init(self)
-	if not sys.get_config("druid.auto_focus") == "1" then
+	if sys.get_config("druid.no_auto_input") == "1" then
 		return
 	end
 
