@@ -1,10 +1,12 @@
 # Creating custom components
 
 ## Overview
+
 Druid allows you to create your custom components from druid basic components or other custom components
 
 
 ## Custom components
+
 Basic custom component template looks like this:
 ```lua
 local const = require("druid.const")
@@ -103,3 +105,8 @@ function M.init(self, template_name, node_table)
 end
 
 ```
+
+
+## Power of using templates
+
+You can use one component, but creating and customizing templates for them. Templates only requires to match the component scheme.

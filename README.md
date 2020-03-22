@@ -2,7 +2,7 @@
 
 [![](media/druid_logo.png)](https://insality.github.io/druid/)
 
-**Druid** - powerful defold component UI library. Use basic Druid components or make your own game-specific components to make amazing GUI in your games.
+**Druid** - powerful defold component UI library. Use basic **Druid** components or make your own game-specific components to make amazing GUI in your games.
 
 
 ## Setup
@@ -15,8 +15,28 @@ You can use the **Druid** extension in your own project by adding this project a
 
 Or point to the ZIP file of a  [specific release](https://github.com/Insality/druid/releases).
 
+### Input bindings
 
-### Code
+For **Druid** to work requires next input bindings:
+
+-   Mouse trigger - `Button 1` -> `touch` _For basic input components_
+-   Key trigger - `Backspace` -> `backspace`  _For back_handler component_
+-   Key trigger - `Back` -> `text`  _For back_handler component, Android back button_
+
+![](media/input_binding.png)
+
+
+### Input capturing [optional]
+
+By default, **Druid** will auto-capture input focus, if any input component will be created. So you don't need to call `msg.post(".", "acquire_input_focus)"`
+
+If you not need this behaviour, you can disable it by settings `druid.no_auto_input` field in _game.project_:
+```
+[druid]
+no_auto_input = 1
+```
+
+### Code [optional]
 
 Adjust **Druid** settings, if needed:
 ```lua
@@ -34,25 +54,6 @@ druid.set_text_function(callback)
 druid.set_default_style(your_style)
 ```
 
-### Input bindings
-
-For **Druid** to work requires next input bindings:
-
--   Mouse trigger - `mouse-button-1` -> `touch` _For basic input components_
--   Key trigger - `Backspace` -> `backspace`  _For back_handler component_
--   Key trigger - `Back` -> `text`  _For back_handler component, Android back button_
-
-![](media/input_binding.png)
-
-### Input capturing
-
-By default, **Druid** will auto-capture input focus, if any input component will be created. So you don't need to call `msg.post(".", "acquire_input_focus)"`
-
-If you not need this behaviour, you can disable it by settings `druid.no_auto_input` field in _game.project_:
-```
-[druid]
-no_auto_input = 1
-```
 
 ## Components
 
@@ -123,6 +124,22 @@ function on_input(self, action_id, action)
 end
 ```
 
+## Druid Events
+
+Any **Druid** components as callbacks uses Druid Events. In component API ([button example](https://insality.github.io/druid/modules/druid.button.html#Events)) pointed list of component events. You can manually subscribe on this events by next API:
+
+- **event:subscribe**(callback)
+
+- **event:unsubscribe**(callback)
+
+- **event:clear**()
+
+Any events can handle several callbacks, if needed.
+
+## Features
+
+- Druid input goes as stack. Last created button will checked first. So create your GUI from back
+- Don't forget about `return` in `on_input`: `return self.druid:on_input()`. It need, if you have more than 1 acquire inputs (several druid, other input system, etc)
 
 ## Examples
 
@@ -157,6 +174,8 @@ _Will fill later_
 - Add on_layout_change support (to keep gui data between layout change)
 
 - Add on_change_language support (call single function to update all Druid instance)
+
+- Unit tests
 
 - Better documentation and examples
 
