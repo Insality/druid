@@ -10,7 +10,7 @@ Basic custom component template looks like this:
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("your_component")
+local M = component.create("name_your_component")
 
 -- Component constructor
 function M.init(self, ...)
@@ -67,7 +67,7 @@ There is next interests in druid:
 
 
 ## Best practice on custom components
-On each component recomended describe component scheme in next way:
+On each component recommended describe component scheme in next way:
 
 ```lua
 -- Component module
@@ -76,9 +76,9 @@ local component = require("druid.component")
 local M = component.create("your_component")
 
 local SCHEME = {
-	ROOT = "/root",
-	ITEM = "/item",
-	TITLE = "/title"
+	ROOT = "root",
+	ITEM = "item",
+	TITLE = "title"
 }
 
 function M.init(self, template_name, node_table)
