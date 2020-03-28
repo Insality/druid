@@ -3,11 +3,11 @@
 
 --- Component events
 -- @table Events
--- @tfield druid_event on_click On release button callback
--- @tfield druid_event on_repeated_click On repeated action button callback
--- @tfield druid_event on_long_click On long tap button callback
--- @tfield druid_event on_double_click On double tap button callback
--- @tfield druid_event on_hold_callback On button hold before long_click callback
+-- @tfield druid_event on_click (self, params, button_instance) On release button callback
+-- @tfield druid_event on_repeated_click (self, params, button_instance, click_amount) On repeated action button callback
+-- @tfield druid_event on_long_click (self, params, button_instance, time) On long tap button callback
+-- @tfield druid_event on_double_click (self, params, button_instance, click_amount) On double tap button callback
+-- @tfield druid_event on_hold_callback (self, params, button_instance, time) On button hold before long_click callback
 
 --- Component fields
 -- @table Fields
@@ -146,8 +146,7 @@ end
 -- @tparam function callback Button callback
 -- @tparam[opt] table params Button callback params
 -- @tparam[opt] node anim_node Button anim node (node, if not provided)
--- @tparam[opt] string event Button react event, const.ACTION_TOUCH by default
-function M.init(self, node, callback, params, anim_node, event)
+function M.init(self, node, callback, params, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 

@@ -67,7 +67,7 @@ end
 --- Component init function
 -- @function text:init
 -- @tparam node node Gui text node
--- @tparam[opt] string value Initial text
+-- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
 -- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
 function M.init(self, node, value, no_adjust)
 	self.node = self:get_node(node)

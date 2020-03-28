@@ -74,7 +74,7 @@ end
 -- @function progress:init
 -- @tparam string|node node Progress bar fill node or node name
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
--- @tparam number init_value Initial value of progress bar
+-- @tparam[opt=1] number init_value Initial value of progress bar
 function M.init(self, node, key, init_value)
 	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
