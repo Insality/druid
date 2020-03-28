@@ -85,10 +85,10 @@ function M.init(self, node, value, no_adjust)
 	self.color = gui.get_color(self.node)
 
 	self.on_set_text = Event()
-	self.on_update_text_scale = Event()
 	self.on_set_pivot = Event()
+	self.on_update_text_scale = Event()
 
-	self:set_to(value or 0)
+	self:set_to(value or gui.get_text(self.node))
 	return self
 end
 
