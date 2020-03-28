@@ -38,6 +38,11 @@ end
 function M.on_layout_change(self)
 end
 
+-- Call, if input was capturing before this component
+-- Example: scroll is start scrolling, so you need unhover button
+function M.on_input_interrupt(self)
+end
+
 return M
 ```
 

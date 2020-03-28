@@ -1,5 +1,6 @@
 
 
+
 [![](media/druid_logo.png)](https://insality.github.io/druid/)
 
 **Druid** - powerful defold component UI library. Use basic **Druid** components or make your own game-specific components to make amazing GUI in your games.
@@ -20,8 +21,8 @@ Or point to the ZIP file of a  [specific release](https://github.com/Insality/dr
 For **Druid** to work requires next input bindings:
 
 -   Mouse trigger - `Button 1` -> `touch` _For basic input components_
--   Key trigger - `Backspace` -> `backspace`  _For back_handler component_
--   Key trigger - `Back` -> `text`  _For back_handler component, Android back button_
+-   Key trigger - `Backspace` -> `back`  _For back_handler component_
+-   Key trigger - `Back` -> `back`  _For back_handler component, Android back button_
 
 ![](media/input_binding.png)
 
@@ -127,7 +128,7 @@ end
 
 ## Druid Events
 
-Any **Druid** components as callbacks uses Druid Events. In component API ([button example](https://insality.github.io/druid/modules/druid.button.html#Events)) pointed list of component events. You can manually subscribe on this events by next API:
+Any **Druid** components as callbacks uses [Druid Events](https://insality.github.io/druid/modules/druid_event.html). In component API ([button example](https://insality.github.io/druid/modules/druid.button.html#Events)) pointed list of component events. You can manually subscribe on this events by next API:
 
 - **event:subscribe**(callback)
 
