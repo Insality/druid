@@ -2,7 +2,7 @@
 
 ## Overview
 
-Druid allows you to create your custom components from druid basic components or other custom components
+Druid allows you to create your custom components from druid basic components or other custom components. Read the [basic component API here].(https://insality.github.io/druid/modules/component.html)
 
 
 ## Custom components
