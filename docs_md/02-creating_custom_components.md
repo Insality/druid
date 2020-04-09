@@ -43,6 +43,10 @@ end
 function M.on_input_interrupt(self)
 end
 
+-- Call on component remove or on druid:final
+function M.on_remove(self)
+end
+
 return M
 ```
 

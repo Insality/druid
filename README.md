@@ -3,6 +3,8 @@
 
 [![](media/druid_logo.png)](https://insality.github.io/druid/)
 
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/insality/druid)](https://github.com/Insality/druid/releases)
+
 **Druid** - powerful defold component UI library. Use basic **Druid** components or make your own game-specific components to make amazing GUI in your games.
 
 
@@ -113,14 +115,6 @@ local function init(self)
 	self.druid:new_button("button_node_name", button_callback)
 end
 
-function update(self, dt)
-	self.druid:update(dt)
-end
-
-function on_message(self, message_id, message, sender)
-	self.druid:on_message(message_id, message, sender)
-end
-
 function on_input(self, action_id, action)
 	return self.druid:on_input(action_id, action)
 end
@@ -138,10 +132,47 @@ Any **Druid** components as callbacks uses [Druid Events](https://insality.githu
 
 Any events can handle several callbacks, if needed.
 
+
+## Druid lifecycle
+
+Here is full druid lifecycle setup in your ***.gui_script** file:
+```lua
+local druid = require("druid.druid")
+
+function init(self)
+	self.druid = druid.new(self)
+end
+
+function final(self)
+	self.druid:final()
+end
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+```
+
+- *on_input* used for almost all basic druid components
+- *update* used for progress bar, scroll and timer base components
+- *on_message* used for specific druid events, like language change or layout change (TODO: in future)
+- *final* used for custom components, what have to do several action before destroy
+
+Recommended is fully integrate al druid lifecycles functions
+
+
 ## Features
 
 - Druid input goes as stack. Last created button will checked first. So create your GUI from back
 - Don't forget about `return` in `on_input`: `return self.druid:on_input()`. It need, if you have more than 1 acquire inputs (several druid, other input system, etc)
+
 
 ## Examples
 
