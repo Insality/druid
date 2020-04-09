@@ -36,6 +36,7 @@
 <li><a href="#Components">Components </a></li>
 <li><a href="#Basic_usage">Basic usage </a></li>
 <li><a href="#Druid_Events">Druid Events </a></li>
+<li><a href="#Druid_lifecycle">Druid lifecycle </a></li>
 <li><a href="#Features">Features </a></li>
 <li><a href="#Examples">Examples </a></li>
 <li><a href="#Documentation">Documentation </a></li>
@@ -48,7 +49,7 @@
 
 <h2>Topics</h2>
 <ul class="">
-  <li><a href="../topics/01-components.md.html">Druid components</a></li>
+  <li><a href="../topics/01-components.md.html">01-components</a></li>
   <li><a href="../topics/02-creating_custom_components.md.html">Creating custom components</a></li>
   <li><a href="../topics/03-styles.md.html">Styles</a></li>
   <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
@@ -85,6 +86,8 @@
 
     <a href="https://insality.github.io/druid/"><img src="media/druid_logo.png" alt=""/></a></p>
 
+<p><a href="https://github.com/Insality/druid/releases"><img src="https://img.shields.io/github/v/release/insality/druid" alt="GitHub release (latest by date)"/></a></p>
+
 <p><strong>Druid</strong> - powerful defold component UI library. Use basic <strong>Druid</strong> components or make your own game-specific components to make amazing GUI in your games.</p>
 
 
@@ -107,8 +110,8 @@
 
 <ul>
     <li>Mouse trigger - <code>Button 1</code> -> <code>touch</code> <em>For basic input components</em></li>
-    <li>Key trigger - <code>Backspace</code> -> <code>backspace</code>  <em>For back</em>handler component_</li>
-    <li>Key trigger - <code>Back</code> -> <a href="../modules/druid.text.html#">text</a>  <em>For back</em>handler component, Android back button_</li>
+    <li>Key trigger - <code>Backspace</code> -> <code>back</code>  <em>For back</em>handler component_</li>
+    <li>Key trigger - <code>Back</code> -> <code>back</code>  <em>For back</em>handler component, Android back button_</li>
 </ul>
 
 <p><img src="media/input_binding.png" alt=""/></p>
@@ -193,14 +196,6 @@
     self.druid:new_button(<span class="string">"button_node_name"</span>, button_callback)
 <span class="keyword">end</span>
 
-<span class="keyword">function</span> update(self, dt)
-    self.druid:update(dt)
-<span class="keyword">end</span>
-
-<span class="keyword">function</span> on_message(self, message_id, message, sender)
-    self.druid:on_message(message_id, message, sender)
-<span class="keyword">end</span>
-
 <span class="keyword">function</span> on_input(self, action_id, action)
     <span class="keyword">return</span> self.druid:on_input(action_id, action)
 <span class="keyword">end</span>
@@ -210,7 +205,7 @@
 <p><a name="Druid_Events"></a></p>
 <h2>Druid Events</h2>
 
-<p>Any <strong>Druid</strong> components as callbacks uses Druid Events. In component API (<a href="https://insality.github.io/druid/modules/druid.button.html#Events">button example</a>) pointed list of component events. You can manually subscribe on this events by next API:</p>
+<p>Any <strong>Druid</strong> components as callbacks uses <a href="https://insality.github.io/druid/modules/druid_event.html">Druid Events</a>. In component API (<a href="https://insality.github.io/druid/modules/druid.button.html#Events">button example</a>) pointed list of component events. You can manually subscribe on this events by next API:</p>
 
 <ul>
     <li><p><strong>event:subscribe</strong>(callback)</p></li>
@@ -220,6 +215,47 @@
 
 <p>Any events can handle several callbacks, if needed.</p>
 
+
+<p><a name="Druid_lifecycle"></a></p>
+<h2>Druid lifecycle</h2>
+
+<p>Here is full druid lifecycle setup in your <strong>*.gui_script</strong> file:</p>
+
+<pre>
+<span class="keyword">local</span> druid = <span class="global">require</span>(<span class="string">"druid.druid"</span>)
+
+<span class="keyword">function</span> init(self)
+    self.druid = druid.new(self)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> final(self)
+    self.druid:final()
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> update(self, dt)
+    self.druid:update(dt)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> on_input(self, action_id, action)
+    <span class="keyword">return</span> self.druid:on_input(action_id, action)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+<span class="keyword">end</span>
+</pre>
+
+
+<ul>
+    <li>*on_input* used for almost all basic druid components</li>
+    <li><em>update</em> used for progress bar, scroll and timer base components</li>
+    <li>*on_message* used for specific druid events, like language change or layout change (TODO: in future)</li>
+    <li><em>final</em> used for custom components, what have to do several action before destroy</li>
+</ul>
+
+<p>Recommended is fully integrate al druid lifecycles functions</p>
+
+
 <p><a name="Features"></a></p>
 <h2>Features</h2>
 
@@ -228,10 +264,11 @@
     <li>Don't forget about <code>return</code> in <code>on_input</code>: <code>return self.druid:on_input()</code>. It need, if you have more than 1 acquire inputs (several druid, other input system, etc)</li>
 </ul>
 
+
 <p><a name="Examples"></a></p>
 <h2>Examples</h2>
 
-<p>See the <a href="https://github.com/insality/druid/tree/develop/example/kenney">example folder</a> for examples of how to use <strong>Druid</strong></p>
+<p>See the <a href="https://github.com/Insality/druid/tree/develop/example">example folder</a> for examples of how to use <strong>Druid</strong></p>
 
 <p>See the <a href="https://github.com/insality/druid-assets">druid-assets repository</a> for examples of how to create custom components and styles</p>
 
@@ -291,7 +328,7 @@ https://insality.github.io/druid/</p>
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-03-22 15:31:43 </i>
+<i style="float:right;">Last updated 2020-04-09 22:11:32 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
