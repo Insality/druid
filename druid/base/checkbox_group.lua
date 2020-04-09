@@ -39,7 +39,7 @@ end
 
 --- Set checkbox group state
 -- @function checkbox_group:set_state
--- @tparam bool[] state Array of checkbox state
+-- @tparam bool[] indexes Array of checkbox state
 function M.set_state(self, indexes)
 	for i = 1, #indexes do
 		if self.checkboxes[i] then
