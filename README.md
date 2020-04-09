@@ -66,31 +66,31 @@ druid.set_default_style(your_style)
 
 - **[Text](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#text)** - Basic Druid text component
 
-- **Lang text** - Wrap on Text component to handle localization
+- **[Lang text](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#lang-text)** - Wrap on Text component to handle localization
 
-- **Scroll** - Basic Druid scroll component
+- **[Scroll](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#scroll)** - Basic Druid scroll component
 
-- **Progress** - Basic Druid progress bar component
+- **[Progress](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#progress)** - Basic Druid progress bar component
 
-- **Slider** - Basic Druid slider component
+- **[Slider](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#slider)** - Basic Druid slider component
 
-- **Input** - Basic Druid text input component (unimplemented)
+- **[Input](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#input)** - Basic Druid text input component (unimplemented)
 
-- **Checkbox** - Basic Druid checkbox component
+- **[Checkbox](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#checkbox)** - Basic Druid checkbox component
 
-- **Checkbox group** - Several checkboxes in one group
+- **[Checkbox group](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#checkbox-group)** - Several checkboxes in one group
 
-- **Radio group** - Several checkboxes in one group with single choice
+- **[Radio group](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#radio-group)** - Several checkboxes in one group with single choice
 
 - **[Blocker](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#blocker)** - Block input in node zone component
 
-- **Back Handler** - Handle back button (Android back, backspace)
+- **[Back Handler](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#back-handler)** - Handle back button (Android back, backspace)
 
-- **Timer** - Handle timer work on gui text node
+- **[Timer](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#timer)** - Handle timer work on gui text node
 
-- **Grid** - Component for manage node positions 
+- **[Grid](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#grid)** - Component for manage node positions 
 
-- **Hover** - System Druid component, handle hover node state
+- **[Hover](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#hover)** - System Druid component, handle hover node state
 
 Full info see on _[components.md](https://github.com/Insality/druid/blob/master/docs_md/01-components.md)_
 
