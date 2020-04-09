@@ -48,7 +48,7 @@ end
 
 --- Set radio group state
 -- @function radio_group:set_state
--- @tparam bool[] state Array of checkbox state
+-- @tparam number index Index in radio group
 function M.set_state(self, index)
 	on_checkbox_click(self, index)
 end
@@ -56,7 +56,7 @@ end
 
 --- Return radio group state
 -- @function radio_group:get_state
--- @treturn bool[] Array if checkboxes state
+-- @treturn number Index in radio group
 function M.get_state(self)
 	local result = -1
 

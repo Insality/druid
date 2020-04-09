@@ -18,14 +18,14 @@ M["button"] = {
 	IS_HOVER = true,
 
 	on_hover = function(self, node, state)
-		local scale_to = self.scale_from + M.button.HOVER_SCALE
+		local scale_to = self.start_scale + M.button.HOVER_SCALE
 
-		local target_scale = state and scale_to or self.scale_from
+		local target_scale = state and scale_to or self.start_scale
 		anims.hover_scale(self, target_scale, M.button.HOVER_TIME)
 	end,
 
 	on_click = function(self, node)
-		local scale_to = self.scale_from + M.button.SCALE_CHANGE
+		local scale_to = self.start_scale + M.button.SCALE_CHANGE
 		anims.tap_scale_animation(self, node, scale_to)
 		settings.play_sound(M.button.BTN_SOUND)
 	end,

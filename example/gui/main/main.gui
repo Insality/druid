@@ -3518,7 +3518,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Inline:"
+  text: "Simple inline text"
   font: "game"
   id: "text_inline"
   xanchor: XANCHOR_NONE
@@ -3581,7 +3581,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Multiline"
+  text: "Simple multiline text with smth"
   font: "game"
   id: "text_multiline"
   xanchor: XANCHOR_NONE
@@ -3699,7 +3699,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Anchoring:"
+  text: "Anchoring"
   font: "game"
   id: "text_anchoring"
   xanchor: XANCHOR_NONE

@@ -3,16 +3,17 @@
 
 --- Component events
 -- @table Events
--- @tfield druid_event on_click On release button callback
--- @tfield druid_event on_repeated_click On repeated action button callback
--- @tfield druid_event on_long_click On long tap button callback
--- @tfield druid_event on_double_click On double tap button callback
+-- @tfield druid_event on_click (self, params, button_instance) On release button callback
+-- @tfield druid_event on_repeated_click (self, params, button_instance, click_amount) On repeated action button callback
+-- @tfield druid_event on_long_click (self, params, button_instance, time) On long tap button callback
+-- @tfield druid_event on_double_click (self, params, button_instance, click_amount) On double tap button callback
+-- @tfield druid_event on_hold_callback (self, params, button_instance, time) On button hold before long_click callback
 
 --- Component fields
 -- @table Fields
 -- @tfield node node Trigger node
 -- @tfield[opt=node] node anim_node Animation node
--- @tfield vector3 scale_from Initial scale of anim_node
+-- @tfield vector3 start_scale Initial scale of anim_node
 -- @tfield vector3 pos Initial pos of anim_node
 -- @tfield any params Params to click callbacks
 -- @tfield druid.hover hover Druid hover logic component
@@ -145,14 +146,12 @@ end
 -- @tparam function callback Button callback
 -- @tparam[opt] table params Button callback params
 -- @tparam[opt] node anim_node Button anim node (node, if not provided)
--- @tparam[opt] string event Button react event, const.ACTION_TOUCH by default
-function M.init(self, node, callback, params, anim_node, event)
+function M.init(self, node, callback, params, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 
 	self.anim_node = anim_node and helper:get_node(anim_node) or self.node
-	-- TODO: rename to start_scale
-	self.scale_from = gui.get_scale(self.anim_node)
+	self.start_scale = gui.get_scale(self.anim_node)
 	self.params = params
 	self.hover = self.druid:new_hover(node, on_button_hover)
 	self.click_zone = nil

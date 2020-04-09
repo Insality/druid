@@ -11,7 +11,7 @@
 -- @table Events
 -- @tfield druid_event on_scroll On scroll move callback
 -- @tfield druid_event on_scroll_to On scroll_to function callback
--- @tfield druid_event on_point_scroll On scroll_to_index function callbck
+-- @tfield druid_event on_point_scroll On scroll_to_index function callback
 
 --- Component fields
 -- @table Fields

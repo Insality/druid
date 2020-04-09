@@ -12,12 +12,9 @@
 --- Component fields
 -- @table Fields
 -- @tfield node node Trigger node
--- @tfield[opt=node] node anim_node Animation node
--- @tfield vector3 scale_from Initial scale of anim_node
--- @tfield vector3 pos Initial pos of anim_node
--- @tfield any params Params to click callbacks
--- @tfield druid.hover hover Druid hover logic component
--- @tfield[opt] node click_zone Restriction zone
+-- @tfield number from Initial timer value
+-- @tfield number target Target timer value
+-- @tfield number value Current timer value
 
 local Event = require("druid.event")
 local const = require("druid.const")

@@ -52,7 +52,7 @@
 
 <h2>Topics</h2>
 <ul class="">
-  <li><strong>Druid components</strong></li>
+  <li><strong>01-components</strong></li>
   <li><a href="../topics/02-creating_custom_components.md.html">Creating custom components</a></li>
   <li><a href="../topics/03-styles.md.html">Styles</a></li>
   <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
@@ -88,24 +88,33 @@
 <div id="content">
 
 
+
+
 <h1>Druid components</h1>
 
 
 <p><a name="Button"></a></p>
 <h2>Button</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.button.html">Button API here</a></p>
 
-<p>Basic Druid input component</p>
+<h3>Overview</h3>
+<p>Basic Druid input component. Handle input on node and provide different callbacks on touch events.</p>
 
-<ul>
-    <li>Button callback have next params: (self, params, button_instance)
+<h3>Setup</h3>
+<p>Create button with druid: <code>button = druid:new_button(node_name, callback, [params], [animation_node])</code>
+Where node name is name of node from GUI scene. You can use <code>node_name</code> as input trigger zone and point another node for animation via <code>animation_node</code></p>
+
+<h3>Notes</h3>
+<p>- Button callback have next params: (self, params, button_instance)</p>
 
 <pre>
 - **self** - Druid self context
 - **params** - Additional params, specified on button creating
 - **button_instance** - button itself
 </pre>
-</li>
-    <li>Button have next events:
+
+<p>- You can set <em>params</em> on button callback on button creating: <code>druid:new_button(&quot;node_name&quot;, callback, params)</code>. This <em>params</em> will pass in callback as second argument
+- Button have next events:</p>
 
 <pre>
 - **on_click** - basic button callback
@@ -114,20 +123,24 @@
 - **on_hold_click** - hold callback, before long_click trigger, don<span class="string">'t trigger if callback is empty
 - **on_double_click** - different callback, if tap button 2+ in row, don'</span>t trigger <span class="keyword">if</span> callback is empty
 </pre>
-</li>
-    <li>If you have stencil on buttons and you don't want trigger them outside of stencil node, you can use <a href="../modules/druid.button.html#set_click_zone">button:set_click_zone</a> to restrict button click zone</li>
-    <li>Button can have key trigger to use then by key: <a href="../modules/druid.button.html#set_key_trigger">button:set_key_trigger</a></li>
-</ul>
+
+<p>- If you have stencil on buttons and you don't want trigger them outside of stencil node, you can use <a href="../modules/druid.button.html#set_click_zone">button:set_click_zone</a> to restrict button click zone
+- Button can have key trigger to use then by key: <a href="../modules/druid.button.html#set_key_trigger">button:set_key_trigger</a>
+- Animation node can be used for example to animate small icon on big panel. Node name of trigger zone will be <code>big panel</code> and animation node will be <code>small icon</code></p>
 
 
 <p><a name="Text"></a></p>
 <h2>Text</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.text.html">Text API here</a></p>
 
-<p>Basic Druid text component</p>
+<h3>Overview</h3>
+<p>Basic Druid text component. Text components by default have the text size adjusting.</p>
 
-<ul>
-    <li>Text component by default have auto adjust text sizing. Text never will be more, than text size, which you can setup in gui scene. It can be disabled on component creating</li>
-</ul>
+<h3>Setup</h3>
+<p>Create text node with druid: <code>text = druid:new_text(node_name, [initial_value])</code></p>
+
+<h3>Notes</h3>
+<p>- Text component by default have auto adjust text sizing. Text never will be bigger, than text node size, which you can setup in GUI scene. It can be disabled on component creating by settings argument <code>is_no_adjust</code> to <em>true</em></p>
 
 <p><img src="../media/text_autosize.png" alt=""/></p>
 
@@ -140,14 +153,17 @@
 
 <p><a name="Blocker"></a></p>
 <h2>Blocker</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.button.html">Blocker API here</a></p>
 
-<p>Druid component for block input</p>
+<h3>Overview</h3>
+<p>Druid component for block input. Use it to block input in special zone.</p>
 
-<p>It can be used for block input in special zone.</p>
+<h3>Setup</h3>
+<p>Create blocker component with druid: <code>druid:new_blocker(node_name)</code></p>
 
-<p>Example:</p>
-
-<p><img src="../media/blocker_scheme.png" alt=""/></p>
+<h3>Notes</h3>
+<p>Explanation:
+<img src="../media/blocker_scheme.png" alt=""/></p>
 
 <p>Blue zone is <strong>button</strong> with close_window callback</p>
 
@@ -155,62 +171,209 @@
 
 <p>So you can do the safe zones, when you have the big buttons</p>
 
+
 <p><a name="Back_Handler"></a></p>
 <h2>Back Handler</h2>
-<p>Component to handle back button</p>
+<p><a href="https://insality.github.io/druid/modules/druid.back_handler.html">Back handler API here</a></p>
 
-<p>It works on Android back button and Backspace. Key triggers in <code>input.binding</code> should be setup</p>
+<h3>Overview</h3>
+<p>Component to handle back button. It handle Android back button and Backspace key. Key triggers in <code>input.binding</code> should be setup for correct working.</p>
+
+<h3>Setup</h3>
+<p>Setup callback with <code>druid:new_back_handler(callback)</code></p>
+
+<h3>Notes</h3>
+
 
 <p><a name="Lang_text"></a></p>
 <h2>Lang text</h2>
-<p>Wrap on Text component to handle localization</p>
+<p><a href="https://insality.github.io/druid/modules/druid.lang_text.html">Lang text API here</a></p>
+
+<h3>Overview</h3>
+<p>Wrap on Text component to handle localization. It uses druid get<em>text</em>function to set text by it's id</p>
+
+<h3>Setup</h3>
+<p>Create lang text component with druid <code>text = druid:new_lang_text(node_name, locale_id)</code></p>
+
+<h3>Notes</h3>
+
 
 <p><a name="Scroll"></a></p>
 <h2>Scroll</h2>
-<p>Basic Druid scroll component</p>
+<p><a href="https://insality.github.io/druid/modules/druid.scroll.html">Scroll API here</a></p>
+
+<h3>Overview</h3>
+<p>Basic Druid scroll component. Handle all scrolling stuff in druid GUI</p>
+
+<h3>Setup</h3>
+<p>Create scroll component with druid: <code>scroll = druid:new_scroll(scroll_parent, scroll_input)</code>.</p>
+
+<p><em>Scroll parent</em> - is dynamic part. This node will change position by scroll system</p>
+
+<p><em>Scroll input</em> - is static part. It capturing user input and recognize scrolling touches</p>
+
+<p>Initial scroll size will be equal to <em>scroll parent</em> node size. The initial view box will be equal to <em>scroll input</em> node size</p>
+
+<p>Usually, Place static input zone part, and as children add scroll parent part:
+<img src="../media/scroll_scheme.png" alt=""/>
+<img src="../media/scroll_outline.png" alt=""/></p>
+
+<p>*Here scroll<em>content</em>zone below input zone, in game content zone be able to scroll left until end*</p>
+
+<h3>Notes</h3>
+<p>- Scroll by default style have inertion and "back moving". It can be adjust via scroll <a href="https://insality.github.io/druid/modules/druid.scroll.html#Style">style settings</a>
+- You can setup "points of interest". Scroll always will be centered on closes point of interest. It is able to create slider without inertion and points of interest on each scroll element.
+- Scroll have next events:</p>
+
+<pre>
+- *on_scroll* On scroll move callback
+- *on_scroll_to* On scroll_to <span class="keyword">function</span> callback
+- *on_point_scroll* On scroll_to_index <span class="keyword">function</span> callback
+</pre>
+
+<p>- You can adjust scroll content size by <code>scroll:set_border(node_size)</code>. It will setup new size to content node.</p>
+
 
 <p><a name="Progress"></a></p>
 <h2>Progress</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.progress.html">Progress API here</a></p>
+
+<h3>Overview</h3>
 <p>Basic Druid progress bar component</p>
+
+<h3>Setup</h3>
+<p>Create progress bar component with druid: <code>progress = druid:new_progress(node_name, key, init_value)</code></p>
+
+<p>Node name should have maximum node size, so in GUI scene, node_name should be fully filled.
+Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or just "y")</p>
+
+<h3>Notes</h3>
+<p>- Progress correct working with 9slice nodes, it trying to set size by <em>set</em>size_ first, if it is not possible, it set up sizing via <em>set</em>scale_
+- Progress bar can fill only by vertical or horizontal size. If you want make diagonal progress bar, just rotate node in GUI scene
+- If you have glitchy or dark texture bug with progress bar, try to disable mipmaps in your texture profiles</p>
 
 <p><a name="Slider"></a></p>
 <h2>Slider</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.slider.html">Slider API here</a></p>
+
+<h3>Overview</h3>
 <p>Basic Druid slider component</p>
+
+<h3>Setup</h3>
+<p>Create slider component  with druid: <code>slider = druid:new_slider(node_name, end_pos, callback)</code></p>
+
+<p>Pin node (node_name in params) should be placed in zero position (initial). It will be available to mode Pin node between start pos and end pos. </p>
+
+<h3>Notes</h3>
+<p>- You can setup points of interests on slider via <a href="../modules/druid.slider.html#set_steps">slider:set_steps</a>. If steps are exist, slider values will be only from this steps (notched slider)
+- For now, start pos and end pos should be on vertical or horizontal line (their x or y value should be equal)</p>
 
 <p><a name="Input"></a></p>
 <h2>Input</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.input.html">Input API here</a></p>
+
+<h3>Overview</h3>
 <p>Basic Druid text input component (unimplemented)</p>
+
+<h3>Setup</h3>
+
+<h3>Notes</h3>
+
 
 <p><a name="Checkbox"></a></p>
 <h2>Checkbox</h2>
-<p>Basic Druid checkbox component</p>
+<p><a href="https://insality.github.io/druid/modules/druid.checkbox.html">Checkbox API here</a></p>
+
+<h3>Overview</h3>
+<p>Basic Druid checkbox component.</p>
+
+<h3>Setup</h3>
+<p>Create checkbox component with druid: <code>checkbox = druid:new_checkbox(node, callback)</code></p>
+
+<h3>Notes</h3>
+<p>- Checkbox uses button to handle click
+- You can setup another node to handle input with click_node arg in component init: <code>druid:new_checkbox(node, callback, [click_node])</code></p>
 
 <p><a name="Checkbox_group"></a></p>
 <h2>Checkbox group</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.checkbox_group.html">Checkbox group API here</a></p>
+
+<h3>Overview</h3>
 <p>Several checkboxes in one group</p>
+
+<h3>Setup</h3>
+<p>Create checkbox_group component with druid: <code>group = druid:new_checkbox_group(nodes[], callback)</code></p>
+
+<h3>Notes</h3>
+<p>- Callback arguments: <code>function(self, checkbox_index)</code>. Index is equals in <em>nodes[]</em> array in component constructor
+- You can get/set checkbox_group state with <code>group:set_state()</code> and <code>group:get_state()</code></p>
+
 
 <p><a name="Radio_group"></a></p>
 <h2>Radio group</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.radio_group.html">Radio group API here</a></p>
+
+<h3>Overview</h3>
 <p>Several checkboxes in one group with single choice</p>
+
+<h3>Setup</h3>
+<p>Create radio_group component with druid: <code>group = druid:new_radio_group(nodes[], callback)</code></p>
+
+<h3>Notes</h3>
+<p>- Callback arguments: <code>function(self, checkbox_index)</code>. Index is equals in <em>nodes[]</em> array in component constructor
+- You can get/set radio_group state with <code>group:set_state()</code> and <code>group:get_state()</code>
+- Only different from checkbox_group: on click another checkboxes in this group will be unchecked</p>
 
 <p><a name="Timer"></a></p>
 <h2>Timer</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.timer.html">Timer API here</a></p>
+
+<h3>Overview</h3>
 <p>Handle timer work on gui text node</p>
+
+<h3>Setup</h3>
+<p>Create timer component with druid: <code>timer = druid:new_timer(text_node, from_seconds, to_seconds, callback)</code></p>
+
+<h3>Notes</h3>
+<p>- Timer fires callback, when timer value equals to <em>to</em>seconds_
+- Timer will setup text node with current timer value
+- Timer uses update function to handle time</p>
 
 <p><a name="Grid"></a></p>
 <h2>Grid</h2>
-<p>Component for manage node positions </p>
+<p><a href="https://insality.github.io/druid/modules/druid.grid.html">Grid API here</a></p>
+
+<h3>Overview</h3>
+<p>Component for manage node positions. Very simple implementation for nodes with equal size</p>
+
+<h3>Setup</h3>
+<p>Create grid component with druid: <code>grid = druid:new_grid(parent_node, prefab_node, max_in_row_elements)</code></p>
+
+<h3>Notes</h3>
+<p>- Grid on <em>adding elements</em> will setup parent to <em>parent</em>node_
+- You can get array of position of every element for setup points of interest in scroll component
+- You can get size of all elements for setup size in scroll component
+- You can adjust anchor and border between elements
+- <em>Prefab node</em> in component init used to get grid item size</p>
 
 <p><a name="Hover"></a></p>
 <h2>Hover</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.hover.html">Hover API here</a></p>
+
+<h3>Overview</h3>
 <p>System Druid component, handle hover node state</p>
+
+<h3>Setup</h3>
+<p>Create grid component with druid: <code>hover = druid:new_hover(node, callback)</code></p>
+
+<h3>Notes</h3>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-03-22 15:19:02 </i>
+<i style="float:right;">Last updated 2020-04-09 22:11:32 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

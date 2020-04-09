@@ -13,9 +13,9 @@ local pivots = {
 }
 
 local function setup_texts(self)
-	self.druid:new_text("text_inline", "Simple inline text")
-	self.druid:new_text("text_multiline", "Simple multiline text with smth")
-	local anchoring = self.druid:new_text("text_anchoring", "Anchoring")
+	self.druid:new_text("text_inline")
+	self.druid:new_text("text_multiline")
+	local anchoring = self.druid:new_text("text_anchoring")
 	self.druid:new_text("text_no_adjust", "Without adjust size", true)
 	self.druid:new_lang_text("text_locale", "ui_text_example")
 

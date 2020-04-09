@@ -128,12 +128,27 @@ function Druid.create(self, component, ...)
 end
 
 
+--- Call on final function on gui_script. It will call on_remove
+-- on all druid components
+-- @function druid:final
+function Druid.final(self)
+	local components = self.components[const.ALL]
+
+	for i = #components, 1, -1 do
+		if components[i].on_remove then
+			components[i]:on_remove()
+		end
+	end
+end
+
+
 --- Remove component from druid instance.
 -- Component `on_remove` function will be invoked, if exist.
 -- @function druid:remove
 -- @tparam Component component Component instance
 function Druid.remove(self, component)
 	local all_components = self.components[const.ALL]
+
 	for i = #all_components, 1, -1 do
 		if all_components[i] == component then
 			if component.on_remove then
@@ -204,9 +219,11 @@ function Druid.on_message(self, message_id, message, sender)
 			end
 		end
 	else
-		local components = self.components[const.ON_MESSAGE] or const.EMPTY_TABLE
-		for i = 1, #components do
-			components[i]:on_message(message_id, message, sender)
+		local components = self.components[const.ON_MESSAGE]
+		if components then
+			for i = 1, #components do
+				components[i]:on_message(message_id, message, sender)
+			end
 		end
 	end
 end

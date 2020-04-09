@@ -24,7 +24,7 @@ end
 function M.tap_scale_animation(self, node, target_scale)
 	scale_to(self, node, target_scale,
 		function()
-			M.back_scale_animation(self, node, self.scale_from)
+			M.back_scale_animation(self, node, self.start_scale)
 		end
 	)
 end
