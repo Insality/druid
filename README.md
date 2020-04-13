@@ -200,21 +200,6 @@ https://insality.github.io/druid/
 _Will fill later_
 
 
-## Future plans
-
-- Basic input component
-
-- Add on_layout_change support (to keep gui data between layout change)
-
-- Add on_change_language support (call single function to update all Druid instance)
-
-- Unit tests
-
-- Better documentation and examples
-
-- Add more comfortable gamepad support for GUI (ability to select button with DPAD and other stuff)
-
-
 ## License
 
 Original created by [AGulev](https://github.com/AGulev)

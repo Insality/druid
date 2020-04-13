@@ -5,7 +5,7 @@ local function scale_to(self, node, to, callback, time, delay, easing)
 	easing = easing or gui.EASING_INSINE
 	time = time or M.SCALE_ANIMATION_TIME
 	delay = delay or 0
-	time = time or 0.25
+	time = time or 0.10
 	gui.animate(node, gui.PROP_SCALE, to, easing, time, delay,
 		function()
 			if callback then

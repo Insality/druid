@@ -39,6 +39,15 @@ end
 function M.setup_page(self)
 	self.druid:new_scroll("scroll_page_content", "scroll_page")
 	self.druid:new_scroll("simple_scroll_content", "simple_scroll_input")
+
+	-- scroll contain scrolls:
+	-- parent first
+	self.druid:new_scroll("children_scroll_content", "children_scroll")
+	-- chilren next
+	self.druid:new_scroll("children_scroll_content_1", "children_scroll_1")
+	self.druid:new_scroll("children_scroll_content_2", "children_scroll_2")
+	self.druid:new_scroll("children_scroll_content_3", "children_scroll_3")
+
 	init_grid(self)
 end
 
