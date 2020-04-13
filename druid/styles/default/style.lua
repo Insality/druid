@@ -5,9 +5,9 @@ local M = {}
 
 
 M["button"] = {
-	HOVER_SCALE = vmath.vector3(-0.025, -0.025, 1),
-	HOVER_TIME = 0.05,
-	SCALE_CHANGE = vmath.vector3(-0.05, -0.05, 1),
+	HOVER_SCALE = vmath.vector3(0.02, 0.02, 1),
+	HOVER_TIME = 0.04,
+	SCALE_CHANGE = vmath.vector3(0.035, 0.035, 1),
 	BTN_SOUND = "click",
 	BTN_SOUND_DISABLED = "click",
 	DISABLED_COLOR = vmath.vector4(0, 0, 0, 1),
