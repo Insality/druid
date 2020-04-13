@@ -2,7 +2,9 @@
 
 ## Overview
 
-Druid allows you to create your custom components from druid basic components or other custom components. Read the [basic component API here].(https://insality.github.io/druid/modules/component.html)
+Druid allows you to create your custom components from druid basic components or other custom components.
+
+Every component is the children of Basic Druid component. Read the [basic component API here].(https://insality.github.io/druid/modules/component.html), Methods of basic components you can call via self:{method_name}
 
 
 ## Custom components
@@ -12,7 +14,7 @@ Basic custom component template looks like this:
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("name_your_component")
+local M = component.create("my_component")
 
 -- Component constructor
 function M.init(self, ...)
@@ -61,15 +63,21 @@ function init(self)
 end
 ```
 
-Registering make new function with "new_{component_name}". In our example it will be: `druid:new_my_component()`
+Registering make new function with "new_{component_name}". In our example it will be: `druid:new_my_component()`.
+
+Or you can create component without registering with `druid:create(my_component_module)`
 
 As component registered, you can create your component with next code:
 ```lua
 local druid = require("druid.druid")
+local my_component = require("my.amazing.component")
 
 function init(self)
 	self.druid = druid.new(self)
+
 	local my_component = self.druid:new_my_component(...)
+	-- or --
+	local my_component = self.druid:create(my_component, ...)
 end
 ```
 
