@@ -10,6 +10,7 @@ height = 900
 
 [project]
 title = druid
+version = 0.2.0
 
 [library]
 include_dirs = druid
