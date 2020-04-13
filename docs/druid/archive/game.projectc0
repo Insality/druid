@@ -155,7 +155,7 @@ max_count = 16
 max_tile_count = 2048
 
 [druid]
-autofocus = 1
+no_auto_input = 0
 
 [native_extension]
 app_manifest = /example/game.appmanifest
