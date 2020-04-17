@@ -84,15 +84,24 @@ M["swipe"] = {
 
 M["input"] = {
 	BUTTON_SELECT_INCREASE = 1.1,
-	on_select = function(self)
-		local button = self.button.node
+
+	on_select = function(self, button_node)
 		local target_scale = self.button.start_scale
-		gui.animate(button, "scale", target_scale * M.input.BUTTON_SELECT_INCREASE, gui.EASING_OUTSINE, 0.15)
+		gui.animate(button_node, "scale", target_scale * M.input.BUTTON_SELECT_INCREASE, gui.EASING_OUTSINE, 0.15)
 	end,
-	on_unselect = function(self)
-		local button = self.button.node
+
+	on_unselect = function(self, button_node)
 		local start_scale = self.button.start_scale
-		gui.animate(button, "scale", start_scale, gui.EASING_OUTSINE, 0.15)
+		gui.animate(button_node, "scale", start_scale, gui.EASING_OUTSINE, 0.15)
+	end,
+
+	on_input_wrong = function(self, button_node)
+		local start_pos = self.button.start_pos
+		gui.animate(button_node, "position.x", start_pos.x - 3, gui.EASING_OUTSINE, 0.05, 0, function()
+			gui.animate(button_node, "position.x", start_pos.x + 3, gui.EASING_OUTSINE, 0.1, 0, function()
+				gui.animate(button_node, "position.x", start_pos.x, gui.EASING_OUTSINE, 0.05)
+			end)
+		end)
 	end,
 
 	button = {
