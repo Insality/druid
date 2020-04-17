@@ -4,10 +4,11 @@
 
 local M = {}
 
-M.ACTION_TOUCH = hash("touch")
 M.ACTION_TEXT = hash("text")
-M.ACTION_BACKSPACE = hash("backspace")
-M.ACTION_ENTER = hash("enter")
+M.ACTION_TOUCH = hash("touch")
+M.ACTION_MARKED_TEXT = hash("marked_text")
+M.ACTION_BACKSPACE = hash("key_backspace")
+M.ACTION_ENTER = hash("key_enter")
 M.ACTION_BACK = hash("back")
 
 
@@ -68,6 +69,7 @@ M.SWIPE = {
 
 M.EMPTY_FUNCTION = function() end
 M.EMPTY_STRING = ""
+M.SPACE_STRING = " "
 M.EMPTY_TABLE = {}
 
 
