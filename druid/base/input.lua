@@ -8,7 +8,7 @@ local const = require("druid.const")
 local component = require("druid.component")
 local utf8 = require("druid.system.utf8")
 
-local M = component.create("input", { const.ON_INPUT })
+local M = component.create("input", { const.ON_INPUT, const.ON_FOCUS_LOST })
 
 
 local function select(self)
@@ -16,7 +16,7 @@ local function select(self)
 	self.marked_value = ""
 	if not self.selected then
 		self.selected = true
-		gui.show_keyboard(gui.KEYBOARD_TYPE_DEFAULT, false)
+		gui.show_keyboard(self.keyboard_type, false)
 		self.on_input_select:trigger(self:get_context())
 
 		if self.style.on_select then
@@ -41,6 +41,12 @@ local function unselect(self)
 end
 
 
+local function clear_and_select(self)
+	self:set_text("")
+	select(self)
+end
+
+
 function M.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
 	self.style = self:get_style(self)
@@ -59,11 +65,12 @@ function M.init(self, click_node, text_node, keyboard_type)
 	self.max_length = 18
 	self.allowed_characters = nil
 
-	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_DEFAULT
+	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_NUMBER_PAD
 
 	self.button = self.druid:new_button(click_node, select)
 	self.button:set_style(self.style)
 	self.button.on_click_outside:subscribe(unselect)
+	self.button.on_long_click:subscribe(clear_and_select)
 
 	self.on_input_select = Event()
 	self.on_input_unselect = Event()
@@ -126,6 +133,11 @@ function M.on_input(self, action_id, action)
 	end
 
 	return self.selected
+end
+
+
+function M.on_focus_lost(self)
+	unselect(self)
 end
 
 
