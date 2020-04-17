@@ -3,6 +3,11 @@
 -- ended on one node
 -- @module druid.swipe
 
+--- Components fields
+-- @table Fields
+-- @tparam node node Swipe node
+-- @tparam[opt] node click_zone Restriction zone
+
 --- Component events
 -- @table Events
 -- @tfield druid_event on_swipe Trigger on swipe event
@@ -23,8 +28,8 @@ local M = component.create("swipe", { const.ON_INPUT })
 
 local function start_swipe(self, action)
 	self._swipe_start_time = socket.gettime()
-	self.start_pos.x = action.x
-	self.start_pos.y = action.y
+	self._start_pos.x = action.x
+	self._start_pos.y = action.y
 end
 
 
@@ -34,9 +39,9 @@ end
 
 
 local function check_swipe(self, action)
-	local dx = action.x - self.start_pos.x
-	local dy = action.y - self.start_pos.y
-	local dist = helper.distance(self.start_pos.x, self.start_pos.y, action.x, action.y)
+	local dx = action.x - self._start_pos.x
+	local dy = action.y - self._start_pos.y
+	local dist = helper.distance(self._start_pos.x, self._start_pos.y, action.x, action.y)
 	local delta_time = socket.gettime() - self._swipe_start_time
 	local is_swipe = self.style.SWIPE_THRESHOLD <= dist and delta_time <= self.style.SWIPE_TIME
 
@@ -72,7 +77,7 @@ function M.init(self, node, on_swipe_callback)
 	self.node = self:get_node(node)
 
 	self._swipe_start_time = false
-	self.start_pos = vmath.vector3(0)
+	self._start_pos = vmath.vector3(0)
 
 	self.click_zone = nil
 	self.on_swipe = Event(on_swipe_callback)
