@@ -111,6 +111,8 @@ end
 function Druid.initialize(self, context, style)
 	self._context = context
 	self._style = style or settings.default_style
+	self._deleted = false
+	self.url = msg.url()
 	self.components = {}
 end
 
@@ -141,6 +143,8 @@ function Druid.final(self)
 			components[i]:on_remove()
 		end
 	end
+
+	self._deleted = true
 end
 
 
@@ -226,6 +230,45 @@ function Druid.on_message(self, message_id, message, sender)
 			for i = 1, #components do
 				components[i]:on_message(message_id, message, sender)
 			end
+		end
+	end
+end
+
+
+function Druid.on_focus_lost(self)
+	local components = self.components[const.ON_FOCUS_LOST]
+	if components then
+		for i = 1, #components do
+			components[i]:on_focus_lost()
+		end
+	end
+end
+
+function Druid.on_focus_gained(self)
+	local components = self.components[const.ON_FOCUS_GAINED]
+	if components then
+		for i = 1, #components do
+			components[i]:on_focus_gained()
+		end
+	end
+end
+
+
+function Druid.on_layout_change(self)
+	local components = self.components[const.ON_LAYOUT_CHANGE]
+	if components then
+		for i = 1, #components do
+			components[i]:on_layout_change()
+		end
+	end
+end
+
+
+function Druid.on_language_change(self)
+	local components = self.components[const.ON_LANGUAGE_CHANGE]
+	if components then
+		for i = 1, #components do
+			components[i]:on_language_change()
 		end
 	end
 end

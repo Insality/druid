@@ -1,4 +1,4 @@
-local const = require("druid.const")
+local druid = require("druid.druid")
 
 local M = {}
 
@@ -47,7 +47,7 @@ end
 
 function M.toggle_locale()
 	data = data == en and ru or en
-	msg.post("/gui#main", const.ON_CHANGE_LANGUAGE)
+	druid.on_language_change()
 end
 
 return M

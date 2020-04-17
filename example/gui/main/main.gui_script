@@ -51,9 +51,16 @@ local function init_swipe_control(self)
 end
 
 
+local function on_window_callback(self, event, data)
+	druid.on_window_callback(event, data)
+end
+
+
 function init(self)
 	druid.set_default_style(default_style)
 	self.druid = druid.new(self)
+
+	window.set_listener(on_window_callback)
 
 	init_top_panel(self)
 	init_swipe_control(self)
