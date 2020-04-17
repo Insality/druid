@@ -15,7 +15,6 @@ M["button"] = {
 	LONGTAP_TIME = 0.4,
 	AUTOHOLD_TRIGGER = 0.8,
 	DOUBLETAP_TIME = 0.4,
-	IS_HOVER = true,
 
 	on_hover = function(self, node, state)
 		local scale_to = self.start_scale + M.button.HOVER_SCALE
@@ -51,6 +50,7 @@ M["scroll"] = {
 	INERT_SPEED = 25, -- koef. of inert speed
 	DEADZONE = 6, -- in px
 	SOFT_ZONE_SIZE = 160, -- size of outside zone (back move)
+	SCROLL_WHEEL_SPEED = 10,
 	BACK_SPEED = 0.2, -- lerp speed
 	ANIM_SPEED = 0.3, -- gui.animation speed to point
 }
@@ -79,6 +79,31 @@ M["swipe"] = {
 	SWIPE_THRESHOLD = 50,
 	SWIPE_TIME = 0.4,
 	SWIPE_TRIGGER_ON_MOVE = true
+}
+
+
+M["input"] = {
+	BUTTON_SELECT_INCREASE = 1.1,
+	on_select = function(self)
+		local button = self.button.node
+		local target_scale = self.button.start_scale
+		gui.animate(button, "scale", target_scale * M.input.BUTTON_SELECT_INCREASE, gui.EASING_OUTSINE, 0.15)
+	end,
+	on_unselect = function(self)
+		local button = self.button.node
+		local start_scale = self.button.start_scale
+		gui.animate(button, "scale", start_scale, gui.EASING_OUTSINE, 0.15)
+	end,
+
+	button = {
+		BTN_SOUND = "click",
+		BTN_SOUND_DISABLED = "click",
+		DISABLED_COLOR = vmath.vector4(0, 0, 0, 1),
+		ENABLED_COLOR = vmath.vector4(1),
+		LONGTAP_TIME = 0.4,
+		AUTOHOLD_TRIGGER = 0.8,
+		DOUBLETAP_TIME = 0.4,
+	}
 }
 
 

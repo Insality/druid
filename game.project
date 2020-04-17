@@ -36,3 +36,6 @@ app_manifest = /example/game.appmanifest
 [graphics]
 texture_profiles = /example/custom.texture_profiles
 
+[android]
+package = com.insality.druid
+

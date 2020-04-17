@@ -3176,13 +3176,13 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.4
-    y: 0.4
+    x: 0.7
+    y: 0.7
     z: 1.0
     w: 1.0
   }
   size {
-    x: 450.0
+    x: 250.0
     y: 80.0
     z: 0.0
     w: 1.0
@@ -3195,7 +3195,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Input text will be here"
+  text: "Hello"
   font: "game"
   id: "input_text"
   xanchor: XANCHOR_NONE
@@ -3214,7 +3214,7 @@ nodes {
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: false
+  line_break: true
   parent: "input_box"
   layer: ""
   inherit_alpha: true

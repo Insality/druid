@@ -3,6 +3,7 @@
 -- @author Part of code from Britzl gooey input component
 -- @module druid.input
 
+local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 local utf8 = require("druid.system.utf8")
@@ -12,26 +13,37 @@ local M = component.create("input", { const.ON_INPUT })
 
 local function select(self)
 	gui.reset_keyboard()
+	self.marked_value = ""
 	if not self.selected then
-		print("selected")
 		self.selected = true
 		gui.show_keyboard(gui.KEYBOARD_TYPE_DEFAULT, false)
+		self.on_input_select:trigger(self:get_context())
+
+		if self.style.on_select then
+			self.style.on_select(self)
+		end
 	end
 end
 
 
 local function unselect(self)
 	gui.reset_keyboard()
+	self.marked_value = ""
 	if self.selected then
 		self.selected = false
-		print("unselected")
 		gui.hide_keyboard()
+		self.on_input_unselect:trigger(self:get_context())
+
+		if self.style.on_unselect then
+			self.style.on_unselect(self)
+		end
 	end
 end
 
 
-function M.init(self, click_node, text_node)
+function M.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
+	self.style = self:get_style(self)
 	self.text = self.druid:new_text(text_node)
 
 	self.selected = false
@@ -44,12 +56,20 @@ function M.init(self, click_node, text_node)
 	self.market_text_width = 0
 	self.total_width = 0
 
-	self.max_width = 10
+	self.max_length = 18
+	self.allowed_characters = nil
 
-	self.keyboard_type = gui.KEYBOARD_TYPE_DEFAULT
+	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_DEFAULT
 
 	self.button = self.druid:new_button(click_node, select)
+	self.button:set_style(self.style)
 	self.button.on_click_outside:subscribe(unselect)
+
+	self.on_input_select = Event()
+	self.on_input_unselect = Event()
+	self.on_input_text = Event()
+	self.on_input_empty = Event()
+	self.on_input_full = Event()
 end
 
 
@@ -57,7 +77,6 @@ function M.on_input(self, action_id, action)
 	if self.selected then
 		local input_text = nil
 		if action_id == const.ACTION_TEXT then
-			print("usual", action.text)
 			-- ignore return key
 			if action.text == "\n" or action.text == "\r" then
 				return true
@@ -69,17 +88,17 @@ function M.on_input(self, action_id, action)
 
 			-- ignore arrow keys
 			if not string.match(hex, "EF9C8[0-3]") then
-				-- if not config or not config.allowed_characters or action.text:match(config.allowed_characters) then
-				input_text = self.value .. action.text
-				if self.max_length then
-					input_text = utf8.sub(self.value, 1, self.max_length)
+				if not self.allowed_characters or action.text:match(self.allowed_characters) then
+					input_text = self.value .. action.text
+					if self.max_length then
+						input_text = utf8.sub(input_text, 1, self.max_length)
+					end
 				end
 				self.marked_value = ""
 			end
 		end
 
 		if action_id == const.ACTION_MARKED_TEXT then
-			print("marked")
 			self.marked_value = action.text or ""
 			if self.max_length then
 				input_text = utf8.sub(self.marked_value, 1, self.max_length)
@@ -101,7 +120,6 @@ function M.on_input(self, action_id, action)
 		end
 
 		if input_text then
-			print("set input_text", input_text)
 			self:set_text(input_text)
 			return true
 		end
@@ -117,7 +135,6 @@ function M.set_text(self, input_text)
 	-- only update the text if it has changed
 	local current_value = self.value .. self.marked_value
 
-	print(self.value)
 	if current_value ~= self.current_value then
 		self.current_value = current_value
 
@@ -138,7 +155,16 @@ function M.set_text(self, input_text)
 		self.marked_text_width = self.text:get_text_width(marked_value)
 		self.total_width = self.text_width + self.marked_text_width
 
-		self.text:set_to(value .. marked_value)
+		local final_text = value .. marked_value
+		self.text:set_to(final_text)
+
+		self.on_input_text:trigger(self:get_context(), final_text)
+		if #final_text == 0 then
+			self.on_input_empty:trigger(self:get_context(), final_text)
+		end
+		if self.max_length and #final_text == self.max_length then
+			self.on_input_full:trigger(self:get_context(), final_text)
+		end
 	end
 end
 
@@ -146,7 +172,6 @@ end
 function M.get_text(self)
 	return self.value .. self.marked_value
 end
-
 
 
 return M

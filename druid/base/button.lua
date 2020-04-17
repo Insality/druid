@@ -26,7 +26,6 @@
 -- @tfield function on_click_disabled (self, node)
 -- @tfield function on_hover (self, node, hover_state)
 -- @tfield function on_set_enabled (self, node, enabled_state)
--- @tfield bool IS_HOVER
 
 local Event = require("druid.event")
 local const = require("druid.const")

@@ -194,4 +194,12 @@ function M.set_pivot(self, pivot)
 end
 
 
+--- Return true, if text with line break
+-- @function text:is_multiline
+-- @treturn boolean Is text node with line break
+function M.is_multiline(self)
+	return gui.get_line_break(self.node)
+end
+
+
 return M
