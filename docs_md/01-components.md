@@ -243,9 +243,30 @@ Create grid component with druid: `grid = druid:new_grid(parent_node, prefab_nod
 [Hover API here](https://insality.github.io/druid/modules/druid.hover.html)
 
 ### Overview
-System Druid component, handle hover node state
+System Druid component, handle hover node state.
 
 ### Setup
-Create grid component with druid: `hover = druid:new_hover(node, callback)`
+Create hover component with druid: `hover = druid:new_hover(node, callback)`
 
 ### Notes
+
+
+## Swipe
+[Swipe API here](https://insality.github.io/druid/modules/druid.swipe.html)
+
+### Overview
+System Druid component, handle swipe actions on node
+
+### Setup
+Create hover component with druid: `hover = druid:new_swipe(node, swipe_callback)`
+
+### Notes
+- Swipe callback have next params: (self, swipe_side, distance, time)
+	- **self** - Druid self context
+	- **swipe_side**: *string* - values from ["up", "down", "left", "right"]
+	- **distance**: *number* - in pixels, distance of swipe
+	- **time**: *number* - in seconds, time of swiping
+- Swipe trigger only, if all input actions was on swipe node. If action will be outside of node, swipe status will be reseted
+- In swipe style table you can adjust minimal distance and maximum time to trigger swipe
+- In swipe style table you can toggle type of swipe triggering. if SWIPE_TRIGGER_ON_MOVE setup to true - swipe will trigger as swipe can be triggered. If setup to false - swipe will trigger only on released action
+- If you have stencil on swipe node and you don't want trigger it outside of stencil node, you can use `swipe:set_click_zone` to restrict swipe zone
