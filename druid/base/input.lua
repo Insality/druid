@@ -15,6 +15,7 @@ local function select(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
 	if not self.selected then
+		self.previous_value = self.value
 		self.selected = true
 		gui.show_keyboard(self.keyboard_type, false)
 		self.on_input_select:trigger(self:get_context())
@@ -53,6 +54,7 @@ function M.init(self, click_node, text_node, keyboard_type)
 	self.text = self.druid:new_text(text_node)
 
 	self.selected = false
+	self.previous_value = ""
 	self.value = ""
 	self.marked_value = ""
 	self.current_value = ""
@@ -132,6 +134,11 @@ function M.on_input(self, action_id, action)
 			return true
 		end
 
+		if action_id == const.ACTION_ESC and action.released then
+			unselect(self)
+			return true
+		end
+
 		if input_text then
 			self:set_text(input_text)
 			return true
@@ -200,6 +207,12 @@ end
 -- [%a%d] for alpha numeric
 function M.set_allowed_characters(self, characters)
 	self.allowed_characters = characters
+end
+
+
+function M.reset_changes(self)
+	self:set_text(self.previous_value)
+	unselect(self)
 end
 
 

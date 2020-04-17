@@ -10,6 +10,7 @@ M.ACTION_MARKED_TEXT = hash("marked_text")
 M.ACTION_BACKSPACE = hash("key_backspace")
 M.ACTION_ENTER = hash("key_enter")
 M.ACTION_BACK = hash("back")
+M.ACTION_ESC = hash("key_esc")
 M.ACTION_SCROLL_UP = hash("scroll_up")
 M.ACTION_SCROLL_DOWN = hash("scroll_down")
 
