@@ -235,6 +235,9 @@ function Druid.on_message(self, message_id, message, sender)
 end
 
 
+--- Druid on focus lost interest function.
+-- This one called by on_window_callback by global window listener
+-- @function druid:on_focus_lost
 function Druid.on_focus_lost(self)
 	local components = self.components[const.ON_FOCUS_LOST]
 	if components then
@@ -244,6 +247,10 @@ function Druid.on_focus_lost(self)
 	end
 end
 
+
+--- Druid on focus gained interest function.
+-- This one called by on_window_callback by global window listener
+-- @function druid:on_focus_gained
 function Druid.on_focus_gained(self)
 	local components = self.components[const.ON_FOCUS_GAINED]
 	if components then
@@ -254,6 +261,9 @@ function Druid.on_focus_gained(self)
 end
 
 
+--- Druid on layout change function.
+-- Called on update gui layout
+-- @function druid:on_layout_change
 function Druid.on_layout_change(self)
 	local components = self.components[const.ON_LAYOUT_CHANGE]
 	if components then
@@ -264,6 +274,10 @@ function Druid.on_layout_change(self)
 end
 
 
+--- Druid on language change.
+-- This one called by global gruid.on_language_change, but can be
+-- call manualy to update all translations
+-- @function druid.on_language_change
 function Druid.on_language_change(self)
 	local components = self.components[const.ON_LANGUAGE_CHANGE]
 	if components then

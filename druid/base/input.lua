@@ -154,6 +154,9 @@ function M.on_focus_lost(self)
 end
 
 
+--- Set text for input field
+-- @function input:set_text
+-- @tparam string input_text The string to apply for input field
 function M.set_text(self, input_text)
 	self.value = input_text
 
@@ -194,22 +197,34 @@ function M.set_text(self, input_text)
 end
 
 
+--- Return current input field text
+-- @function input:get_text
+-- @treturn string The current input field text
 function M.get_text(self)
 	return self.value .. self.marked_value
 end
 
 
+--- Set maximum length for input field.
+-- Pass nil to make input field unliminted (by default)
+-- @function input:set_max_length
+-- @tparam number max_length Maximum length for input text field
 function M.set_max_length(self, max_length)
 	self.max_length = max_length
 end
 
 
--- [%a%d] for alpha numeric
+--- Set allowed charaters for input field.
+-- ex: [%a%d] for alpha and numeric
+-- @function input:set_allowerd_characters
+-- @tparam string characters Regulax exp. for validate user input
 function M.set_allowed_characters(self, characters)
 	self.allowed_characters = characters
 end
 
 
+--- Reset current input selection and return previous value
+-- @function input:reset_changes
 function M.reset_changes(self)
 	self:set_text(self.previous_value)
 	unselect(self)

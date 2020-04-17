@@ -100,7 +100,6 @@ end
 -- Used to trigger on_focus_lost and on_focus_gain
 -- @function druid.on_window_callback
 -- @tparam string event Event param from window listener
--- @tparam table data Data param from window listener
 function M.on_window_callback(event)
 	local instances = get_druid_instances()
 
@@ -130,7 +129,7 @@ end
 
 
 --- Callback on global language change event.
--- Used to update all lang texts
+-- Use to update all lang texts
 -- @function druid.on_language_change
 function M.on_language_change()
 	local instances = get_druid_instances()

@@ -4,6 +4,7 @@ Druid 0.3.0:
 
 - Add swipe basic component
 	- Swipe component handle simple swipe gestures on node. It has single callback with direction on swipe. You can adjust a several parameters of swipe in druid style.
+	- Add swipe example at main Druid example. Try swipe left/right to switch example pages.
 
 - Add input basic component
 	- Input component handle user text input. Input contains from button and text component. Button needed for selecting input field
@@ -12,6 +13,7 @@ Druid 0.3.0:
 	- On focus lost (game minimized) input field will be unselected
 	- You can setup max length of the text
 	- You can setup allowed characters. On add not allowed characters `on_input_wrong` will be called. By default it cause simple shake animation
+	- The keyboard for input will not show on mobile HTML5
 
 - Add button on_click_outside event. You can subscribe on this event in button. Was needed for Input component (click outside to deselect input field).
 - Add start_pos to button component
