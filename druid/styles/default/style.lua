@@ -75,4 +75,11 @@ M["checkbox"] = {
 }
 
 
+M["swipe"] = {
+	SWIPE_THRESHOLD = 50,
+	SWIPE_TIME = 0.4,
+	SWIPE_TRIGGER_ON_MOVE = true
+}
+
+
 return M

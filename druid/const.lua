@@ -58,6 +58,13 @@ M.SIDE = {
 	Y = "y"
 }
 
+M.SWIPE = {
+	UP = "up",
+	DOWN = "down",
+	LEFT = "left",
+	RIGHT = "right",
+}
+
 
 M.EMPTY_FUNCTION = function() end
 M.EMPTY_STRING = ""

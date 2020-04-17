@@ -39,11 +39,24 @@ local function init_top_panel(self)
 end
 
 
+local function init_swipe_control(self)
+	self.druid:new_swipe("root", function(_, side)
+		if side == "left" then
+			on_control_button(self, 1)
+		end
+		if side == "right" then
+			on_control_button(self, -1)
+		end
+	end)
+end
+
+
 function init(self)
 	druid.set_default_style(default_style)
 	self.druid = druid.new(self)
 
 	init_top_panel(self)
+	init_swipe_control(self)
 	self.page = 1
 	main_page.setup_page(self)
 	text_page.setup_page(self)
