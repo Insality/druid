@@ -8,6 +8,7 @@
 -- @tfield druid_event on_long_click (self, params, button_instance, time) On long tap button callback
 -- @tfield druid_event on_double_click (self, params, button_instance, click_amount) On double tap button callback
 -- @tfield druid_event on_hold_callback (self, params, button_instance, time) On button hold before long_click callback
+-- @tfield druid_event on_click_outside (self, params, button_instance) On click outside of button
 
 --- Component fields
 -- @table Fields
@@ -167,6 +168,7 @@ function M.init(self, node, callback, params, anim_node)
 	self.on_long_click = Event()
 	self.on_double_click = Event()
 	self.on_hold_callback = Event()
+	self.on_click_outside = Event()
 end
 
 
@@ -191,6 +193,9 @@ function M.on_input(self, action_id, action)
 	if not is_pick then
 		-- Can't interact, if touch outside of button
 		self.can_action = false
+		if action.released then
+			self.on_click_outside:trigger(self:get_context(), self.params, self)
+		end
 		return false
 	end
 
