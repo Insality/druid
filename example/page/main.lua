@@ -106,7 +106,6 @@ local function setup_back_handler(self)
 end
 
 
-
 function M.setup_page(self)
 	setup_texts(self)
 

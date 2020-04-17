@@ -70,7 +70,7 @@ function M.set_hover(self, state)
 end
 
 
---- Strict button click area. Useful for
+--- Strict hover click area. Useful for
 -- no click events outside stencil node
 -- @function hover:set_click_zone
 -- @tparam node zone Gui node
