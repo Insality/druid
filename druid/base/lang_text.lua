@@ -15,7 +15,7 @@ local const = require("druid.const")
 local settings = require("druid.system.settings")
 local component = require("druid.component")
 
-local M = component.create("lang_text", { const.ON_CHANGE_LANGUAGE })
+local M = component.create("lang_text", { const.ON_LANGUAGE_CHANGE })
 
 
 --- Component init function
@@ -35,7 +35,7 @@ function M.init(self, node, locale_id, no_adjust)
 end
 
 
-function M.on_change_language(self)
+function M.on_language_change(self)
 	if self.last_locale then
 		M.translate(self)
 	end
