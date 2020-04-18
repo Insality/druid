@@ -3183,7 +3183,7 @@ nodes {
   }
   size {
     x: 250.0
-    y: 80.0
+    y: 50.0
     z: 0.0
     w: 1.0
   }
@@ -3214,7 +3214,7 @@ nodes {
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: true
+  line_break: false
   parent: "input_box"
   layer: ""
   inherit_alpha: true
@@ -8130,7 +8130,7 @@ nodes {
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: true
+  line_break: false
   parent: "input_box_usual"
   layer: "text"
   inherit_alpha: true
@@ -8366,7 +8366,7 @@ nodes {
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: true
+  line_break: false
   parent: "input_box_password"
   layer: "text"
   inherit_alpha: true
@@ -8602,7 +8602,7 @@ nodes {
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: true
+  line_break: false
   parent: "input_box_email"
   layer: "text"
   inherit_alpha: true
@@ -8838,7 +8838,7 @@ nodes {
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: true
+  line_break: false
   parent: "input_box_numpad"
   layer: "text"
   inherit_alpha: true

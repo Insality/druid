@@ -270,17 +270,21 @@ end
 -- no click events outside stencil node
 -- @function button:set_click_zone
 -- @tparam node zone Gui node
+-- @tparam druid.button Self instance to make chain calls
 function M.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
 	self.hover:set_click_zone(zone)
+	return self
 end
 
 
 --- Set key-code to trigger this button
 -- @function button:set_key_trigger
 -- @tparam hash key The action_id of the key
+-- @tparam druid.button Self instance to make chain calls
 function M.set_key_trigger(self, key)
 	self.key_trigger = hash(key)
+	return self
 end
 
 

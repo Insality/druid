@@ -90,12 +90,27 @@ local function process_input(action_id, action, components, is_input_consumed)
 
 	for i = #components, 1, -1 do
 		local component = components[i]
+		-- Process increased input priority first
+		if component._meta.increased_input_priority then
+			if not is_input_consumed then
+				is_input_consumed = component:on_input(action_id, action)
+			else
+				if component.on_input_interrupt then
+					component:on_input_interrupt()
+				end
+			end
+		end
+	end
 
-		if not is_input_consumed then
-			is_input_consumed = component:on_input(action_id, action)
-		else
-			if component.on_input_interrupt then
-				component:on_input_interrupt()
+	for i = #components, 1, -1 do
+		local component = components[i]
+		if not component._meta.increased_input_priority then
+			if not is_input_consumed then
+				is_input_consumed = component:on_input(action_id, action)
+			else
+				if component.on_input_interrupt then
+					component:on_input_interrupt()
+				end
 			end
 		end
 	end

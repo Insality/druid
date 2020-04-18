@@ -30,9 +30,11 @@ local function select(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
 	if not self.selected then
+		self:increase_input_priority()
+		self.button:increase_input_priority()
 		self.previous_value = self.value
 		self.selected = true
-		print("type", self.keyboard_type)
+
 		gui.show_keyboard(self.keyboard_type, false)
 		self.on_input_select:trigger(self:get_context())
 
@@ -47,7 +49,10 @@ local function unselect(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
 	if self.selected then
+		self:reset_input_priority()
+		self.button:reset_input_priority()
 		self.selected = false
+
 		gui.hide_keyboard()
 		self.on_input_unselect:trigger(self:get_context())
 
@@ -137,7 +142,6 @@ function M.on_input(self, action_id, action)
 			if self.max_length then
 				self.marked_value = utf8.sub(self.marked_value, 1, self.max_length)
 			end
-			print("marked text", self.marked_value)
 		end
 
 		if action_id == const.ACTION_BACKSPACE and (action.pressed or action.repeated) then
@@ -189,7 +193,6 @@ function M.set_text(self, input_text)
 	end
 
 	-- Only update the text if it has changed
-	print("set text", self.value, ":::", self.marked_value)
 	local current_value = self.value .. self.marked_value
 
 	if current_value ~= self.current_value then
@@ -239,17 +242,22 @@ end
 -- Pass nil to make input field unliminted (by default)
 -- @function input:set_max_length
 -- @tparam number max_length Maximum length for input text field
+-- @tparam druid.input Self instance to make chain calls
 function M.set_max_length(self, max_length)
 	self.max_length = max_length
+	return self
 end
 
 
 --- Set allowed charaters for input field.
+-- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
 -- @function input:set_allowerd_characters
 -- @tparam string characters Regulax exp. for validate user input
+-- @tparam druid.input Self instance to make chain calls
 function M.set_allowed_characters(self, characters)
 	self.allowed_characters = characters
+	return self
 end
 
 
