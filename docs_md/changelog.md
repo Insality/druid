@@ -1,6 +1,6 @@
 Druid 0.3.0:
 
-- `Druid:final` now is important function for correct working
+- `Druid:final()` now is important function for correct working
 
 - Add _swipe_ basic component
 	- Swipe component handle simple swipe gestures on node. It has single callback with direction on swipe. You can adjust a several parameters of swipe in druid style.
@@ -15,16 +15,9 @@ Druid 0.3.0:
 	- You can setup max length of the text
 	- You can setup allowed characters. On add not allowed characters `on_input_wrong` will be called. By default it cause simple shake animation
 	- The keyboard for input will not show on mobile HTML5. So input field in mobile HTML5 is not working now
-	- To make work different keyboard type, make sure value in game.project Android:InputMethod set to HidderInputField (https://defold.com/manuals/project-settings/#input-method)
+	- To make work different keyboard type, make sure value in game.project Android:InputMethod set to HiddenInputField (https://defold.com/manuals/project-settings/#input-method)
 
-- Add button on_click_outside event. You can subscribe on this event in button. Was needed for Input component (click outside to deselect input field).
-- Add start_pos to button component
-
-- Changed input binding settings. Add backspace, enter, text and marked_text. Backspace now is different from android back button.
-
-- Renamed on_change_language -> on_language_change component interest
-
-- Add basic component two functions: `increase_input_priority` and `reset_input_priority`. It used to process component input first in current input stack (there is two input stacks: INPUT and INPUT_HIGH). Example: on selecting input field, it increase input self priority until it be unselected
+- Add two functions to basic component: `increase_input_priority` and `reset_input_priority`. It used to process component input first in current input stack (there is two input stacks now: INPUT and INPUT_HIGH). Example: on selecting input field, it increase input self priority until it be unselected
 
 - Add two new component interests: `on_focus_gain` and `on_focus_lost`
 
@@ -33,8 +26,17 @@ Druid 0.3.0:
 	- on_language_change: call `druid.on_language_change()` (#38) for update all druid instances lang components
 	- on_layout_change: call `druid.on_layout_change()` (#37) for update all gui layouts (unimplemented now)
 
-- Add several examples to druid-assets respository
+- Add button `on_click_outside` event. You can subscribe on this event in button. Was needed for Input component (click outside to deselect input field)
+
+- Add _start_pos_ field to button component
+
+- Changed input binding settings. Add esc, enter, text and marked_text. Backspace now is different from android back button event. Check the README setup section
+
+- Renamed _on_change_language_ -> _on_language_change_ component interest
+
+- Add several examples to druid-assets respository (see live example here): https://insality.github.io/druid-assets/)
 
 - Known issues:
 	- Adjusting text size by height works wrong. Adjusting single line texting works fine
+	- Space is not working in HTML5
 	

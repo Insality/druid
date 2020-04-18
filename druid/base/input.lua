@@ -271,7 +271,7 @@ end
 -- Pass nil to make input field unliminted (by default)
 -- @function input:set_max_length
 -- @tparam number max_length Maximum length for input text field
--- @tparam druid.input Self instance to make chain calls
+-- @treturn druid.input Self instance to make chain calls
 function M.set_max_length(self, max_length)
 	self.max_length = max_length
 	return self
@@ -283,7 +283,7 @@ end
 -- ex: [%a%d] for alpha and numeric
 -- @function input:set_allowerd_characters
 -- @tparam string characters Regulax exp. for validate user input
--- @tparam druid.input Self instance to make chain calls
+-- @treturn druid.input Self instance to make chain calls
 function M.set_allowed_characters(self, characters)
 	self.allowed_characters = characters
 	return self
