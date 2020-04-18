@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/01-components.md.html">01-components</a></li>
+  <li><a href="../topics/02-creating_custom_components.md.html">Creating custom components</a></li>
+  <li><a href="../topics/03-styles.md.html">Styles</a></li>
+  <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
+  <li><a href="../topics/05-examples.md.html">Examples</a></li>
+  <li><strong>changelog</strong></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
+  <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
+  <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
+  <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
+  <li><a href="../modules/druid.grid.html">druid.grid</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
+  <li><a href="../modules/druid.progress.html">druid.progress</a></li>
+  <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
+  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
+  <li><a href="../modules/druid.slider.html">druid.slider</a></li>
+  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/druid_instance.html">druid_instance</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+<p>Druid 0.3.0:</p>
+
+<ul>
+    <li><p><code>Druid:final</code> now is important function for correct working</p></li>
+    <li><p>Add <em>swipe</em> basic component</p>
+
+<pre>
+- Swipe component handle simple swipe gestures on node. It has single callback with direction on swipe. You can adjust a several parameters of swipe <span class="keyword">in</span> druid style.
+- Swipe can be triggered on action.released <span class="keyword">or</span> <span class="keyword">while</span> user is make swiping (<span class="keyword">in</span> process)
+- Add swipe example at main Druid example. Try swipe left/right to switch example pages.
+</pre>
+</li>
+    <li><p>Add <em>input</em> basic component</p>
+
+<pre>
+- Input component handle user text input. Input contains from button <span class="keyword">and</span> text components. Button needed <span class="keyword">for</span> selecting/unselecting input field
+- Long click on input field <span class="keyword">for</span> clear <span class="keyword">and</span> <span class="global">select</span> input field (clearing can be disable via styles)
+- Click outside of button to unselect input field
+- On focus lost (game minimized) input field will be unselected
+- You can setup max length of the text
+- You can setup allowed characters. On add <span class="keyword">not</span> allowed characters <span class="backtick"><code>on_input_wrong</code></span> will be called. By default it cause simple shake animation
+- The keyboard <span class="keyword">for</span> input will <span class="keyword">not</span> show on mobile HTML5. So input field <span class="keyword">in</span> mobile HTML5 is <span class="keyword">not</span> working now
+- To make work different keyboard <span class="global">type</span>, make sure value <span class="keyword">in</span> game.project Android:InputMethod set to HidderInputField (https://defold.com/manuals/project-settings/#input-method)
+</pre>
+</li>
+    <li><p>Add button on<em>click</em>outside event. You can subscribe on this event in button. Was needed for Input component (click outside to deselect input field).</p></li>
+    <li><p>Add start_pos to button component</p></li>
+    <li><p>Changed input binding settings. Add backspace, enter, text and marked_text. Backspace now is different from android back button.</p></li>
+    <li><p>Renamed on<em>change</em>language -> on<em>language</em>change component interest</p></li>
+    <li><p>Add basic component two functions: <code>increase_input_priority</code> and <code>reset_input_priority</code>. It used to process component input first in current input stack (there is two input stacks: INPUT and INPUT_HIGH). Example: on selecting input field, it increase input self priority until it be unselected</p></li>
+    <li><p>Add two new component interests: <code>on_focus_gain</code> and <code>on_focus_lost</code></p></li>
+    <li><p>Add global druid events:</p>
+
+<pre>
+- on_window_callback: call <span class="backtick"><code>druid.on_window_callback(event)</code></span> <span class="keyword">for</span> on_focus_gain/lost correct work
+- on_language_change: call <span class="backtick"><code>druid.on_language_change()</code></span> (#<span class="number">38</span>) <span class="keyword">for</span> update all druid instances lang components
+- on_layout_change: call <span class="backtick"><code>druid.on_layout_change()</code></span> (#<span class="number">37</span>) <span class="keyword">for</span> update all gui layouts (unimplemented now)
+</pre>
+</li>
+    <li><p>Add several examples to druid-assets respository</p></li>
+    <li><p>Known issues:</p>
+
+<pre>
+- Adjusting text size by height works wrong. Adjusting single line texting works fine
+</pre>
+</li>
+</ul>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-04-18 14:39:17 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
