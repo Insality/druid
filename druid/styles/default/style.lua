@@ -83,7 +83,9 @@ M["swipe"] = {
 
 
 M["input"] = {
+	IS_LONGTAP_ERASE = true,
 	BUTTON_SELECT_INCREASE = 1.1,
+	MASK_DEFAULT_CHAR = "*",
 
 	on_select = function(self, button_node)
 		local target_scale = self.button.start_scale

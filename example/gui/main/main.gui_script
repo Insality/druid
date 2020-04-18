@@ -8,6 +8,7 @@ local text_page = require("example.page.texts")
 local button_page = require("example.page.button")
 local scroll_page = require("example.page.scroll")
 local slider_page = require("example.page.slider")
+local input_page = require("example.page.input")
 
 local pages = {
 	"main_page",
@@ -15,6 +16,7 @@ local pages = {
 	"button_page",
 	"scroll_page",
 	"slider_page",
+	"input_page",
 }
 
 local function on_control_button(self, delta)
@@ -70,6 +72,7 @@ function init(self)
 	button_page.setup_page(self)
 	scroll_page.setup_page(self)
 	slider_page.setup_page(self)
+	input_page.setup_page(self)
 
 	-- Refresh state
 	on_control_button(self, 0)

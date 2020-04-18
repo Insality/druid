@@ -38,4 +38,5 @@ texture_profiles = /example/custom.texture_profiles
 
 [android]
 package = com.insality.druid
+input_method = HiddenInputField
 

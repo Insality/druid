@@ -14,6 +14,7 @@ Druid 0.3.0:
 	- You can setup max length of the text
 	- You can setup allowed characters. On add not allowed characters `on_input_wrong` will be called. By default it cause simple shake animation
 	- The keyboard for input will not show on mobile HTML5
+	- To make work different keyboard type, make sure value in game.project Android:InputMethod set to HidderInputField (https://defold.com/manuals/project-settings/#input-method)
 
 - Add button on_click_outside event. You can subscribe on this event in button. Was needed for Input component (click outside to deselect input field).
 - Add start_pos to button component

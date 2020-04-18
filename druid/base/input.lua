@@ -11,12 +11,28 @@ local utf8 = require("druid.system.utf8")
 local M = component.create("input", { const.ON_INPUT, const.ON_FOCUS_LOST })
 
 
+--- Mask text by replacing every character with a mask character
+-- @tparam string text
+-- @tparam string mask
+-- @treturn string Masked text
+local function mask_text(text, mask)
+	mask = mask or "*"
+	local masked_text = ""
+	for uchar in utf8.gmatch(text, ".") do
+		masked_text = masked_text .. mask
+	end
+
+	return masked_text
+end
+
+
 local function select(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
 	if not self.selected then
 		self.previous_value = self.value
 		self.selected = true
+		print("type", self.keyboard_type)
 		gui.show_keyboard(self.keyboard_type, false)
 		self.on_input_select:trigger(self:get_context())
 
@@ -43,7 +59,10 @@ end
 
 
 local function clear_and_select(self)
-	self:set_text("")
+	if self.style.IS_LONGTAP_ERASE then
+		self:set_text("")
+	end
+
 	select(self)
 end
 
@@ -54,10 +73,10 @@ function M.init(self, click_node, text_node, keyboard_type)
 	self.text = self.druid:new_text(text_node)
 
 	self.selected = false
-	self.previous_value = ""
-	self.value = ""
+	self.value = self.text.last_value
+	self.previous_value = self.text.last_value
+	self.current_value = self.text.last_value
 	self.marked_value = ""
-	self.current_value = ""
 	self.is_empty = true
 
 	self.text_width = 0
@@ -67,7 +86,7 @@ function M.init(self, click_node, text_node, keyboard_type)
 	self.max_length = nil
 	self.allowed_characters = nil
 
-	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_NUMBER_PAD
+	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_DEFAULT
 
 	self.button = self.druid:new_button(click_node, select)
 	self.button:set_style(self.style)
@@ -116,8 +135,9 @@ function M.on_input(self, action_id, action)
 		if action_id == const.ACTION_MARKED_TEXT then
 			self.marked_value = action.text or ""
 			if self.max_length then
-				input_text = utf8.sub(self.marked_value, 1, self.max_length)
+				self.marked_value = utf8.sub(self.marked_value, 1, self.max_length)
 			end
+			print("marked text", self.marked_value)
 		end
 
 		if action_id == const.ACTION_BACKSPACE and (action.pressed or action.repeated) then
@@ -139,7 +159,7 @@ function M.on_input(self, action_id, action)
 			return true
 		end
 
-		if input_text then
+		if input_text or #self.marked_value > 0 then
 			self:set_text(input_text)
 			return true
 		end
@@ -154,13 +174,22 @@ function M.on_focus_lost(self)
 end
 
 
+function M.on_input_interrupt(self)
+	-- unselect(self)
+end
+
+
 --- Set text for input field
 -- @function input:set_text
 -- @tparam string input_text The string to apply for input field
 function M.set_text(self, input_text)
-	self.value = input_text
+	-- Case when update with marked text
+	if input_text then
+		self.value = input_text
+	end
 
-	-- only update the text if it has changed
+	-- Only update the text if it has changed
+	print("set text", self.value, ":::", self.marked_value)
 	local current_value = self.value .. self.marked_value
 
 	if current_value ~= self.current_value then
@@ -169,8 +198,9 @@ function M.set_text(self, input_text)
 		-- mask text if password field
 		local masked_value, masked_marked_value
 		if self.keyboard_type == gui.KEYBOARD_TYPE_PASSWORD then
-			masked_value = M.mask_text(self.text, "*")
-			masked_marked_value = M.mask_text(self.marked_text, "*")
+			local mask_char = self.style.MASK_DEFAULT_CHAR or "*"
+			masked_value = mask_text(self.value, mask_char)
+			masked_marked_value = mask_text(self.marked_value, mask_char)
 		end
 
 		-- text + marked text
