@@ -22,6 +22,17 @@ local default_style = require("druid.styles.default.style")
 
 local M = {}
 
+local _instances = {}
+
+local function get_druid_instances()
+	for i = #_instances, 1, -1 do
+		if _instances[i]._deleted then
+			table.remove(_instances, i)
+		end
+	end
+
+	return _instances
+end
 
 --- Register external druid component.
 -- After register you can create the component with
@@ -47,11 +58,14 @@ function M.new(context, style)
 	if settings.default_style == nil then
 		M.set_default_style(default_style)
 	end
-	return druid_instance(context, style)
+
+	local new_instance = druid_instance(context, style)
+	table.insert(_instances, new_instance)
+	return new_instance
 end
 
 
--- Set new default style.
+--- Set new default style.
 -- @function druid.set_default_style
 -- @tparam table style Druid style module
 function M.set_default_style(style)
@@ -59,7 +73,7 @@ function M.set_default_style(style)
 end
 
 
--- Set text function.
+--- Set text function.
 -- Druid locale component will call this function
 -- to get translated text. After set_text_funtion
 -- all existing locale component will be updated
@@ -72,13 +86,57 @@ function M.set_text_function(callback)
 end
 
 
--- Set sound function.
+--- Set sound function.
 -- Component will call this function to
 -- play sound by sound_id
 -- @function druid.set_sound_function
 -- @tparam function callback Sound play callback
 function M.set_sound_function(callback)
 	settings.play_sound = callback or const.EMPTY_FUNCTION
+end
+
+
+--- Callback on global window event.
+-- Used to trigger on_focus_lost and on_focus_gain
+-- @function druid.on_window_callback
+-- @tparam string event Event param from window listener
+function M.on_window_callback(event)
+	local instances = get_druid_instances()
+
+	if event == window.WINDOW_EVENT_FOCUS_LOST then
+		for i = 1, #instances do
+			msg.post(instances[i].url, const.ON_FOCUS_LOST)
+		end
+	end
+
+	if event == window.WINDOW_EVENT_FOCUS_GAINED then
+		for i = 1, #instances do
+			msg.post(instances[i].url, const.ON_FOCUS_GAINED)
+		end
+	end
+end
+
+
+--- Callback on global layout change event.
+-- @function druid.on_layout_change
+function M.on_layout_change()
+	local instances = get_druid_instances()
+
+	for i = 1, #instances do
+		msg.post(instances[i].url, const.ON_LAYOUT_CHANGE)
+	end
+end
+
+
+--- Callback on global language change event.
+-- Use to update all lang texts
+-- @function druid.on_language_change
+function M.on_language_change()
+	local instances = get_druid_instances()
+
+	for i = 1, #instances do
+		msg.post(instances[i].url, const.ON_LANGUAGE_CHANGE)
+	end
 end
 
 

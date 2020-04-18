@@ -23,10 +23,13 @@ Or point to the ZIP file of a  [specific release](https://github.com/Insality/dr
 For **Druid** to work requires next input bindings:
 
 -   Mouse trigger - `Button 1` -> `touch` _For basic input components_
--   Key trigger - `Backspace` -> `back`  _For back_handler component_
--   Key trigger - `Back` -> `back`  _For back_handler component, Android back button_
+-   Key trigger - `Backspace` -> `key_backspace`  _For back_handler component, input component_
+-   Key trigger - `Back` -> `key_back`  _For back_handler component, Android back button, input component_
+- Key trigger - `Enter` -> `key_enter` _For input component, optional_
+- Key trigger - `Esc` -> `key_esc` _For input component, optional_
 
-![](media/input_binding.png)
+![](media/input_binding_2.png)
+![](media/input_binding_1.png)
 
 
 ### Input capturing [optional]
@@ -55,6 +58,18 @@ druid.set_text_function(callback)
 
 -- Used for change default druid style
 druid.set_default_style(your_style)
+
+-- Call this function on language changing in the game,
+-- to retranslate all lang_text components:
+druid.on_languge_change()
+
+-- Call this function on layout changing in the game,
+-- to reapply layouts
+druid.on_layout_change()
+
+-- Call this function inside window.set_listener
+-- to catch game focus lost/gained callbacks:
+druid.on_window_callback(event)
 ```
 
 
@@ -92,6 +107,8 @@ druid.set_default_style(your_style)
 
 - **[Hover](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#hover)** - System Druid component, handle hover node state
 
+- **[Swipe](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
+
 Full info see on _[components.md](https://github.com/Insality/druid/blob/master/docs_md/01-components.md)_
 
 
@@ -110,9 +127,13 @@ local function button_callback(self)
 	print("Button was clicked!")
 end
 
-local function init(self)
+function init(self)
 	self.druid = druid.new(self)
 	self.druid:new_button("button_node_name", button_callback)
+end
+
+function final(self)
+	self.druid:final()
 end
 
 function on_input(self, action_id, action)

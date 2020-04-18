@@ -32,8 +32,8 @@ end
 function M.on_message(self, message_id, message, sender)
 end
 
--- Call only if component with ON_CHANGE_LANGUAGE interest
-function M.on_change_language(self)
+-- Call only if component with ON_LANGUAGE_CHANGE interest
+function M.on_language_change(self)
 end
 
 -- Call only if component with ON_LAYOUT_CHANGE interest
@@ -43,6 +43,14 @@ end
 -- Call, if input was capturing before this component
 -- Example: scroll is start scrolling, so you need unhover button
 function M.on_input_interrupt(self)
+end
+
+-- Call, if game lost focus. Need ON_FOCUS_LOST intereset
+function M.on_focus_lost(self)
+end
+
+-- Call, if game gained focus. Need ON_FOCUS_GAINED intereset
+function M.on_focus_gained(self)
 end
 
 -- Call on component remove or on druid:final
@@ -92,10 +100,13 @@ There is next interests in druid:
 
 - **ON_INPUT** - component will receive input from on_input, after other components with ON_INPUT_HIGH
 
-- **ON_CHANGE_LANGUAGE** - will call _on_change_language_ function on language change trigger
+- **ON_LANGUAGE_CHANGE** - will call _on_language_change_ function on language change trigger
 
-- **ON_LAYOUT_CHANGED** will call _on_layout_change_ function on layout change trigger
+- **ON_LAYOUT_CHANGE** will call _on_layout_change_ function on layout change trigger
 
+- **ON_FOCUS_LOST** will call _on_focust_lost_ function in on focus lost event. You need to pass window_callback to global `druid:on_window_callback`
+
+- **ON_FOCUS_GAINED** will call _on_focust_gained_ function in on focus gained event. You need to pass window_callback to global `druid:on_window_callback`
 
 ## Best practice on custom components
 On each component recommended describe component scheme in next way:

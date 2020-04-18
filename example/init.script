@@ -1,5 +1,4 @@
 local druid = require("druid.druid")
-local const = require("druid.const")
 local lang = require("example.lang")
 
 
@@ -12,9 +11,7 @@ local function setup_druid()
 		return lang.get_locale(lang_id)
 	end)
 
-	-- TODO: Call druid.finish_setup?
-	-- Need to update all gui, in case, when gui init was befure this init
-	msg.post("/gui#main", const.ON_CHANGE_LANGUAGE)
+	druid.on_language_change()
 end
 
 

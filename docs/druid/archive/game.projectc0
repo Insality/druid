@@ -1,6 +1,6 @@
 [project]
 title = druid
-version = 1.0
+version = 0.2.0
 write_log = 0
 compress_archive = 1
 
@@ -99,10 +99,10 @@ infoplist = /builtins/manifests/ios/Info.plist
 version_code = 1
 minimum_sdk_version = 16
 target_sdk_version = 28
-package = com.example.todo
+package = com.insality.druid
 manifest = /builtins/manifests/android/AndroidManifest.xml
 iap_provider = GooglePlay
-input_method = KeyEvent
+input_method = HiddenInputField
 immersive_mode = 0
 debuggable = 0
 

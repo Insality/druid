@@ -8,7 +8,6 @@ M["button"] = {
 	ENABLED_COLOR = vmath.vector4(1),
 	LONGTAP_TIME = 0.4,
 	DOUBLETAP_TIME = 0.4,
-	IS_HOVER = false,
 }
 
 
@@ -39,6 +38,13 @@ M["checkbox"] = {
 	on_change_state = function(self, node, state)
 		gui.set_enabled(node, state)
 	end
+}
+
+
+M["swipe"] = {
+	SWIPE_THRESHOLD = 50,
+	SWIPE_TIME = 0.4,
+	SWIPE_TRIGGER_ON_MOVE = false
 }
 
 

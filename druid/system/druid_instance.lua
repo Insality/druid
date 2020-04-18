@@ -15,6 +15,7 @@
 -- @see druid.checkbox
 -- @see druid.checkbox_group
 -- @see druid.radio_group
+-- @see druid.swipe
 
 local const = require("druid.const")
 local druid_input = require("druid.helper.druid_input")
@@ -36,6 +37,7 @@ local checkbox = require("druid.base.checkbox")
 local checkbox_group = require("druid.base.checkbox_group")
 local radio_group = require("druid.base.radio_group")
 local input = require("druid.base.input")
+local swipe = require("druid.base.swipe")
 -- local infinity_scroll = require("druid.base.infinity_scroll")
 
 -- @classmod Druid
@@ -88,12 +90,27 @@ local function process_input(action_id, action, components, is_input_consumed)
 
 	for i = #components, 1, -1 do
 		local component = components[i]
+		-- Process increased input priority first
+		if component._meta.increased_input_priority then
+			if not is_input_consumed then
+				is_input_consumed = component:on_input(action_id, action)
+			else
+				if component.on_input_interrupt then
+					component:on_input_interrupt()
+				end
+			end
+		end
+	end
 
-		if not is_input_consumed then
-			is_input_consumed = component:on_input(action_id, action)
-		else
-			if component.on_input_interrupt then
-				component:on_input_interrupt()
+	for i = #components, 1, -1 do
+		local component = components[i]
+		if not component._meta.increased_input_priority then
+			if not is_input_consumed then
+				is_input_consumed = component:on_input(action_id, action)
+			else
+				if component.on_input_interrupt then
+					component:on_input_interrupt()
+				end
 			end
 		end
 	end
@@ -109,6 +126,8 @@ end
 function Druid.initialize(self, context, style)
 	self._context = context
 	self._style = style or settings.default_style
+	self._deleted = false
+	self.url = msg.url()
 	self.components = {}
 end
 
@@ -139,6 +158,8 @@ function Druid.final(self)
 			components[i]:on_remove()
 		end
 	end
+
+	self._deleted = true
 end
 
 
@@ -224,6 +245,59 @@ function Druid.on_message(self, message_id, message, sender)
 			for i = 1, #components do
 				components[i]:on_message(message_id, message, sender)
 			end
+		end
+	end
+end
+
+
+--- Druid on focus lost interest function.
+-- This one called by on_window_callback by global window listener
+-- @function druid:on_focus_lost
+function Druid.on_focus_lost(self)
+	local components = self.components[const.ON_FOCUS_LOST]
+	if components then
+		for i = 1, #components do
+			components[i]:on_focus_lost()
+		end
+	end
+end
+
+
+--- Druid on focus gained interest function.
+-- This one called by on_window_callback by global window listener
+-- @function druid:on_focus_gained
+function Druid.on_focus_gained(self)
+	local components = self.components[const.ON_FOCUS_GAINED]
+	if components then
+		for i = 1, #components do
+			components[i]:on_focus_gained()
+		end
+	end
+end
+
+
+--- Druid on layout change function.
+-- Called on update gui layout
+-- @function druid:on_layout_change
+function Druid.on_layout_change(self)
+	local components = self.components[const.ON_LAYOUT_CHANGE]
+	if components then
+		for i = 1, #components do
+			components[i]:on_layout_change()
+		end
+	end
+end
+
+
+--- Druid on language change.
+-- This one called by global gruid.on_language_change, but can be
+-- call manualy to update all translations
+-- @function druid.on_language_change
+function Druid.on_language_change(self)
+	local components = self.components[const.ON_LANGUAGE_CHANGE]
+	if components then
+		for i = 1, #components do
+			components[i]:on_language_change()
 		end
 	end
 end
@@ -361,6 +435,15 @@ end
 -- @treturn Component radio_group component
 function Druid.new_radio_group(self, ...)
 	return Druid.create(self, radio_group, ...)
+end
+
+
+--- Create swipe basic component
+-- @function druid:new_swipe
+-- @tparam args ... swipe init args
+-- @treturn Component swipe component
+function Druid.new_swipe(self, ...)
+	return Druid.create(self, swipe, ...)
 end
 
 

@@ -86,6 +86,19 @@ function Component.get_interests(self)
 end
 
 
+--- Increase input priority in current input stack
+-- @function component:increase_input_priority
+function Component.increase_input_priority(self)
+	self._meta.increased_input_priority = true
+end
+
+--- Reset input priority in current input stack
+-- @function component:reset_input_priority
+function Component.reset_input_priority(self)
+	self._meta.increased_input_priority = false
+end
+
+
 --- Get node for component by name.
 -- If component has nodes, node_or_name should be string
 -- It auto pick node by template name or from nodes by clone_tree
@@ -135,6 +148,7 @@ function Component.setup_component(self, context, style)
 		context = nil,
 		nodes = nil,
 		style = nil,
+		increased_input_priority = false
 	}
 
 	self:set_context(context)

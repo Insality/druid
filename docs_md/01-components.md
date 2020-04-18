@@ -164,8 +164,17 @@ Pin node (node_name in params) should be placed in zero position (initial). It w
 Basic Druid text input component (unimplemented)
 
 ### Setup
+Create input component with druid: `input = druid:new_input(button_node_name, text_node_name, keyboard_type)`
 
 ### Notes
+- Input component handle user text input. Input contains from button and text components. Button needed for selecting/unselecting input field
+- Long click on input field for clear and select input field (clearing can be disable via styles)
+- Click outside of button to unselect input field
+- On focus lost (game minimized) input field will be unselected
+- You can setup max length of the text
+- You can setup allowed characters. On add not allowed characters `on_input_wrong` will be called. By default it cause simple shake animation
+- The keyboard for input will not show on mobile HTML5. So input field in mobile HTML5 is not working now
+- To make work different keyboard type, make sure value in game.project Android:InputMethod set to HidderInputField (https://defold.com/manuals/project-settings/#input-method)
 
 
 ## Checkbox
@@ -243,9 +252,30 @@ Create grid component with druid: `grid = druid:new_grid(parent_node, prefab_nod
 [Hover API here](https://insality.github.io/druid/modules/druid.hover.html)
 
 ### Overview
-System Druid component, handle hover node state
+System Druid component, handle hover node state.
 
 ### Setup
-Create grid component with druid: `hover = druid:new_hover(node, callback)`
+Create hover component with druid: `hover = druid:new_hover(node, callback)`
 
 ### Notes
+
+
+## Swipe
+[Swipe API here](https://insality.github.io/druid/modules/druid.swipe.html)
+
+### Overview
+System Druid component, handle swipe actions on node
+
+### Setup
+Create hover component with druid: `hover = druid:new_swipe(node, swipe_callback)`
+
+### Notes
+- Swipe callback have next params: (self, swipe_side, distance, time)
+	- **self** - Druid self context
+	- **swipe_side**: *string* - values from ["up", "down", "left", "right"]
+	- **distance**: *number* - in pixels, distance of swipe
+	- **time**: *number* - in seconds, time of swiping
+- Swipe trigger only, if all input actions was on swipe node. If action will be outside of node, swipe status will be reseted
+- In swipe style table you can adjust minimal distance and maximum time to trigger swipe
+- In swipe style table you can toggle type of swipe triggering. if SWIPE_TRIGGER_ON_MOVE setup to true - swipe will trigger as swipe can be triggered. If setup to false - swipe will trigger only on released action
+- If you have stencil on swipe node and you don't want trigger it outside of stencil node, you can use `swipe:set_click_zone` to restrict swipe zone
