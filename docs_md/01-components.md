@@ -164,8 +164,17 @@ Pin node (node_name in params) should be placed in zero position (initial). It w
 Basic Druid text input component (unimplemented)
 
 ### Setup
+Create input component with druid: `input = druid:new_input(button_node_name, text_node_name, keyboard_type)`
 
 ### Notes
+- Input component handle user text input. Input contains from button and text components. Button needed for selecting/unselecting input field
+- Long click on input field for clear and select input field (clearing can be disable via styles)
+- Click outside of button to unselect input field
+- On focus lost (game minimized) input field will be unselected
+- You can setup max length of the text
+- You can setup allowed characters. On add not allowed characters `on_input_wrong` will be called. By default it cause simple shake animation
+- The keyboard for input will not show on mobile HTML5. So input field in mobile HTML5 is not working now
+- To make work different keyboard type, make sure value in game.project Android:InputMethod set to HidderInputField (https://defold.com/manuals/project-settings/#input-method)
 
 
 ## Checkbox

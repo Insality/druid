@@ -3,6 +3,35 @@
 -- @author Part of code from Britzl gooey input component
 -- @module druid.input
 
+--- Component events
+-- @table Events
+-- @tfield druid_event on_input_select (self, button_node) On input field select callback
+-- @tfield druid_event on_input_unselect (self, button_node) On input field unselect callback
+-- @tfield druid_event on_input_text (self, input_text) On input field text change callback
+-- @tfield druid_event on_input_empty (self, input_text) On input field text change to empty string callback
+-- @tfield druid_event on_input_full (self, input_text) On input field text change to max length string callback
+-- @tfield druid_event on_input_wrong (self, params, button_instance) On trying user input with not allowed character callback
+
+--- Component fields
+-- @table Fields
+-- @tfield druid.text text Text component
+-- @tfield druid.button button Button component
+-- @tfield bool is_selected Is current input selected now
+-- @tfield bool is_empty Is current input is empty now
+-- @tfield[opt] number max_length Max length for input text
+-- @tfield[opt] string allowerd_characters Pattern matching for user input
+-- @tfield number keyboard_type Gui keyboard type for input field
+
+--- Component style params
+-- @table Style
+-- @tfield bool IS_LONGTAP_ERASE Is long tap will erase current input data
+-- @tfield number BUTTON_SELECT_INCREASE Button scale multiplier on selecting input field
+-- @tfield string MASK_DEFAULT_CHAR Default character mask for password input
+-- @tfield function on_select (self, button_node) Callback on input field selecting
+-- @tfield function on_unselect (self, button_node) Callback on input field unselecting
+-- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
+-- @tfield table button Custom button style for input node
+
 local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
