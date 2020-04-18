@@ -211,13 +211,13 @@ function M.set_text(self, input_text)
 		local marked_value = masked_marked_value or self.marked_value
 		self.is_empty = #value == 0 and #marked_value == 0
 
+		local final_text = value .. marked_value
+		self.text:set_to(final_text)
+
 		-- measure it
 		self.text_width = self.text:get_text_width(value)
 		self.marked_text_width = self.text:get_text_width(marked_value)
 		self.total_width = self.text_width + self.marked_text_width
-
-		local final_text = value .. marked_value
-		self.text:set_to(final_text)
 
 		self.on_input_text:trigger(self:get_context(), final_text)
 		if #final_text == 0 then
