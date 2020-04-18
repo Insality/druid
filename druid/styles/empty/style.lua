@@ -8,7 +8,6 @@ M["button"] = {
 	ENABLED_COLOR = vmath.vector4(1),
 	LONGTAP_TIME = 0.4,
 	DOUBLETAP_TIME = 0.4,
-	IS_HOVER = false,
 }
 
 

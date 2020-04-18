@@ -8,12 +8,14 @@
 -- @tfield druid_event on_long_click (self, params, button_instance, time) On long tap button callback
 -- @tfield druid_event on_double_click (self, params, button_instance, click_amount) On double tap button callback
 -- @tfield druid_event on_hold_callback (self, params, button_instance, time) On button hold before long_click callback
+-- @tfield druid_event on_click_outside (self, params, button_instance) On click outside of button
 
 --- Component fields
 -- @table Fields
 -- @tfield node node Trigger node
 -- @tfield[opt=node] node anim_node Animation node
 -- @tfield vector3 start_scale Initial scale of anim_node
+-- @tfield vector3 start_pos Initial pos of anim_node
 -- @tfield vector3 pos Initial pos of anim_node
 -- @tfield any params Params to click callbacks
 -- @tfield druid.hover hover Druid hover logic component
@@ -25,7 +27,6 @@
 -- @tfield function on_click_disabled (self, node)
 -- @tfield function on_hover (self, node, hover_state)
 -- @tfield function on_set_enabled (self, node, enabled_state)
--- @tfield bool IS_HOVER
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -152,6 +153,7 @@ function M.init(self, node, callback, params, anim_node)
 
 	self.anim_node = anim_node and helper:get_node(anim_node) or self.node
 	self.start_scale = gui.get_scale(self.anim_node)
+	self.start_pos = gui.get_position(self.anim_node)
 	self.params = params
 	self.hover = self.druid:new_hover(node, on_button_hover)
 	self.click_zone = nil
@@ -167,6 +169,7 @@ function M.init(self, node, callback, params, anim_node)
 	self.on_long_click = Event()
 	self.on_double_click = Event()
 	self.on_hold_callback = Event()
+	self.on_click_outside = Event()
 end
 
 
@@ -191,6 +194,9 @@ function M.on_input(self, action_id, action)
 	if not is_pick then
 		-- Can't interact, if touch outside of button
 		self.can_action = false
+		if action.released then
+			self.on_click_outside:trigger(self:get_context(), self.params, self)
+		end
 		return false
 	end
 
@@ -264,17 +270,21 @@ end
 -- no click events outside stencil node
 -- @function button:set_click_zone
 -- @tparam node zone Gui node
+-- @tparam druid.button Self instance to make chain calls
 function M.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
 	self.hover:set_click_zone(zone)
+	return self
 end
 
 
 --- Set key-code to trigger this button
 -- @function button:set_key_trigger
 -- @tparam hash key The action_id of the key
+-- @tparam druid.button Self instance to make chain calls
 function M.set_key_trigger(self, key)
 	self.key_trigger = hash(key)
+	return self
 end
 
 

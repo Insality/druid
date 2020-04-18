@@ -41,7 +41,3 @@ local function init(self)
 	self.button:set_style(my_style)
 end
 ```
-
-## Create custom components
-Styles is just lua table, so it can be described in just one single file
-__TODO__

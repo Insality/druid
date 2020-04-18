@@ -64,6 +64,18 @@ local function update_text_area_size(self)
 end
 
 
+-- calculate space width with font
+local function get_space_width(self, font)
+	if not self._space_width[font] then
+		local no_space = gui.get_text_metrics(font, "1", 0, false, 0, 0).width
+		local with_space = gui.get_text_metrics(font, " 1", 0, false, 0, 0).width
+		self._space_width[font] = with_space - no_space
+	end
+
+	return self._space_width[font]
+end
+
+
 --- Component init function
 -- @function text:init
 -- @tparam node node Gui text node
@@ -88,8 +100,31 @@ function M.init(self, node, value, no_adjust)
 	self.on_set_pivot = Event()
 	self.on_update_text_scale = Event()
 
+	self._space_width = {}
+
 	self:set_to(value or gui.get_text(self.node))
 	return self
+end
+
+
+--- Calculate text width with font with respect to trailing space
+-- @function text:get_text_width
+-- @tparam[opt] string text
+function M.get_text_width(self, text)
+	text = text or self.last_value
+	local font = gui.get_font(self.node)
+	local scale = gui.get_scale(self.node)
+	local result = gui.get_text_metrics(font, text, 0, false, 0, 0).width
+	for i = #text, 1, -1 do
+		local c = string.sub(text, i, i)
+		if c ~= ' ' then
+			break
+		end
+
+		result = result + get_space_width(self, font)
+	end
+
+	return result * scale.x
 end
 
 
@@ -156,6 +191,14 @@ function M.set_pivot(self, pivot)
 	gui.set_position(self.node, self.pos)
 
 	self.on_set_pivot:trigger(self:get_context(), pivot)
+end
+
+
+--- Return true, if text with line break
+-- @function text:is_multiline
+-- @treturn boolean Is text node with line break
+function M.is_multiline(self)
+	return gui.get_line_break(self.node)
 end
 
 

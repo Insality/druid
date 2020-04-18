@@ -106,6 +106,12 @@ local function setup_back_handler(self)
 end
 
 
+local function setup_input(self)
+	local input = self.druid:new_input("input_box", "input_text")
+	input:set_text("hello!")
+end
+
+
 function M.setup_page(self)
 	setup_texts(self)
 
@@ -117,6 +123,7 @@ function M.setup_page(self)
 	setup_scroll(self)
 	setup_slider(self)
 	setup_back_handler(self)
+	setup_input(self)
 end
 
 

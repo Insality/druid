@@ -32,7 +32,11 @@ end
 -- @tparam string action_id on_input action id
 -- @tparam table action on_input action
 function M.on_input(self, action_id, action)
-	if action_id == const.ACTION_BACK and action[const.RELEASED] then
+	if not action[const.RELEASED] then
+		return false
+	end
+
+	if action_id == const.ACTION_BACK or action_id == const.ACTION_BACKSPACE then
 		self.on_back:trigger(self:get_context(), self.params)
 		return true
 	end

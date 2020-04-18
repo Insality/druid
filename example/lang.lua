@@ -1,4 +1,4 @@
-local const = require("druid.const")
+local druid = require("druid.druid")
 
 local M = {}
 
@@ -8,6 +8,7 @@ local en = {
 	button_page = "Button page",
 	scroll_page = "Scroll page",
 	slider_page = "Slider page",
+	input_page = "Input page",
 	ui_section_button = "Button",
 	ui_section_text = "Text",
 	ui_section_timer = "Timer",
@@ -25,6 +26,7 @@ local ru = {
 	button_page = "Кнопки",
 	scroll_page = "Скролл",
 	slider_page = "Слайдеры",
+	input_page = "Текст. ввод",
 	ui_section_button = "Кнопка",
 	ui_section_text = "Текст",
 	ui_section_timer = "Таймер",
@@ -47,7 +49,7 @@ end
 
 function M.toggle_locale()
 	data = data == en and ru or en
-	msg.post("/gui#main", const.ON_CHANGE_LANGUAGE)
+	druid.on_language_change()
 end
 
 return M
