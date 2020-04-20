@@ -20,6 +20,7 @@
 -- @tfield vector3 border_offer The border offset for correct anchor calculations
 
 local Event = require("druid.event")
+local const = require("druid.const")
 local component = require("druid.component")
 
 local M = component.create("grid")
@@ -35,7 +36,10 @@ function M.init(self, parent, element, in_row)
 	self.nodes = {}
 
 	self.offset = vmath.vector3(0)
-	self.anchor = vmath.vector3(0.5, 0, 0)
+
+	local pivot = const.PIVOTS[gui.get_pivot(self.parent)]
+	self.anchor = vmath.vector3(0.5 + pivot.x, 0.5 - pivot.y, 0)
+
 	self.in_row = in_row or 1
 	self.node_size = gui.get_size(self:get_node(element))
 	self.border = vmath.vector4(0)
