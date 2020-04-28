@@ -43,16 +43,24 @@ M["button"] = {
 }
 
 
+M["drag"] = {
+	DRAG_DEADZONE = 10,
+}
+
+
 M["scroll"] = {
-	FRICT_HOLD = 0.8, -- mult. for inert, while touching
+	ANIM_SPEED = 0.3, -- gui.animation speed to point
+	SCROLL_WHEEL_SPEED = 10,
+
 	FRICT = 0.93, -- mult for free inert
+	FRICT_HOLD = 0.8, -- mult. for inert, while touching
 	INERT_THRESHOLD = 2, -- speed to stop inertion
 	INERT_SPEED = 25, -- koef. of inert speed
-	DEADZONE = 6, -- in px
-	SOFT_ZONE_SIZE = 160, -- size of outside zone (back move)
-	SCROLL_WHEEL_SPEED = 10,
+	EXTRA_STRECH_SIZE = vmath.vector4(-100, 100, 100, -100), -- size of outside zone (back move)
+
 	BACK_SPEED = 0.2, -- lerp speed
-	ANIM_SPEED = 0.3, -- gui.animation speed to point
+	LERP_SPEED = 1,
+	BORDER_LERP_SPEED = 0.3,
 }
 
 

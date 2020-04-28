@@ -63,10 +63,21 @@ M.UI_INPUT = {
 }
 
 
+M.OS = {
+	ANDROID = "Android",
+	IOS = "iPhone OS",
+	MAC = "Darwin",
+	LINUX = "Linux",
+	WINDOWS = "Windows",
+	BROWSER = "HTML5",
+}
+
+
 M.SIDE = {
 	X = "x",
 	Y = "y"
 }
+
 
 M.SWIPE = {
 	UP = "up",

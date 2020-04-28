@@ -16,6 +16,7 @@
 -- @see druid.checkbox_group
 -- @see druid.radio_group
 -- @see druid.swipe
+-- @see druid.drag
 
 local const = require("druid.const")
 local druid_input = require("druid.helper.druid_input")
@@ -38,6 +39,7 @@ local checkbox_group = require("druid.base.checkbox_group")
 local radio_group = require("druid.base.radio_group")
 local input = require("druid.base.input")
 local swipe = require("druid.base.swipe")
+local drag = require("druid.base.drag")
 -- local infinity_scroll = require("druid.base.infinity_scroll")
 
 -- @classmod Druid
@@ -444,6 +446,11 @@ end
 -- @treturn Component swipe component
 function Druid.new_swipe(self, ...)
 	return Druid.create(self, swipe, ...)
+end
+
+
+function Druid.new_drag(self, ...)
+	return Druid.create(self, drag, ...)
 end
 
 

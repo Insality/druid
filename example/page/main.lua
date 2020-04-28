@@ -97,7 +97,8 @@ end
 
 
 local function setup_scroll(self)
-	self.scroll = self.druid:new_scroll("scroll_content", "main_page")
+	self.druid:new_scroll("main_page", "scroll_content")
+	self.scroll = self.druid:new_scroll("scroll2_view", "scroll2_content")
 end
 
 
