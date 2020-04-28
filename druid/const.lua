@@ -14,6 +14,7 @@ M.ACTION_ESC = hash("key_esc")
 
 M.ACTION_TOUCH = hash("touch")
 M.ACTION_SCROLL_UP = hash("scroll_up")
+M.ACTION_MULTITOUCH = hash("multitouch")
 M.ACTION_SCROLL_DOWN = hash("scroll_down")
 
 

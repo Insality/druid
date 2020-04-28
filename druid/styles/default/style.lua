@@ -60,7 +60,6 @@ M["scroll"] = {
 
 	BACK_SPEED = 0.2, -- lerp speed
 	LERP_SPEED = 1,
-	BORDER_LERP_SPEED = 0.3,
 }
 
 

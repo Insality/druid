@@ -61,7 +61,7 @@ end
 
 
 local function find_touch(action_id, action, touch_id)
-	local act = const.ACTION_TOUCH
+	local act = helper.is_mobile() and const.ACTION_MULTITOUCH or const.ACTION_TOUCH
 
 	if action_id ~= act then
 		return
@@ -135,7 +135,7 @@ end
 
 
 function M.on_input(self, action_id, action)
-	if action_id ~= const.ACTION_TOUCH then
+	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
 		return
 	end
 
@@ -172,7 +172,7 @@ function M.on_input(self, action_id, action)
 	if touch.released and self.is_touch then
 		if action.touch then
 			-- Mobile
-			on_touch_release(action_id, action, self)
+			on_touch_release(self, action_id, action)
 		else
 			-- PC
 			end_touch(self)
@@ -189,9 +189,9 @@ function M.on_input(self, action_id, action)
 		self.dy = touch_modified.screen_y - self.screen_y
 	end
 
-	if touch then
-		self.screen_x = touch.screen_x
-		self.screen_y = touch.screen_y
+	if touch_modified then
+		self.screen_x = touch_modified.screen_x
+		self.screen_y = touch_modified.screen_y
 	end
 
 	if self.is_drag then

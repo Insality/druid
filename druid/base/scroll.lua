@@ -235,7 +235,6 @@ end
 
 
 function M.set_size(self, size)
-	pprint(size)
 	gui.set_size(self.content_node, size)
 	update_size(self)
 end
