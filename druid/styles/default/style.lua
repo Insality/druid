@@ -52,14 +52,14 @@ M["scroll"] = {
 	ANIM_SPEED = 0.3, -- gui.animation speed to point
 	SCROLL_WHEEL_SPEED = 10,
 
-	FRICT = 0.93, -- mult for free inert
-	FRICT_HOLD = 0.8, -- mult. for inert, while touching
+	FRICT = 0.94, -- mult for free inert
+	FRICT_HOLD = 0.75, -- mult. for inert, while touching
 	INERT_THRESHOLD = 2, -- speed to stop inertion
-	INERT_SPEED = 25, -- koef. of inert speed
-	EXTRA_STRECH_SIZE = vmath.vector4(-100, 100, 100, -100), -- size of outside zone (back move)
+	INERT_SPEED = 27, -- koef. of inert speed
 
-	BACK_SPEED = 0.2, -- lerp speed
-	LERP_SPEED = 1,
+	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
+
+	EXTRA_STRECH_SIZE = vmath.vector4(-100, 100, 100, -100), -- size of outside zone (back move)
 }
 
 

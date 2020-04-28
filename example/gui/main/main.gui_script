@@ -21,12 +21,8 @@ local pages = {
 
 local function on_control_button(self, delta)
 	self.page = self.page + delta
-	if self.page < 1 then
-		self.page = #pages
-	end
-	if self.page > #pages then
-		self.page = 1
-	end
+	self.page = math.max(1, self.page)
+	self.page = math.min(self.page, #pages)
 
 	self.header:translate(pages[self.page])
 	local node = gui.get_node("C_Anchor")

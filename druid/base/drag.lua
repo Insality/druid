@@ -22,11 +22,11 @@ local function start_touch(self, touch)
 	self.is_touch = true
 	self.is_drag = false
 
-	self.touch_start_pos.x = touch.screen_x
-	self.touch_start_pos.y = touch.screen_y
+	self.touch_start_pos.x = touch.x
+	self.touch_start_pos.y = touch.y
 
-	self.screen_x = touch.screen_x
-	self.screen_y = touch.screen_y
+	self.x = touch.x
+	self.y = touch.y
 
 	self.on_touch_start:trigger(self:get_context())
 end
@@ -40,22 +40,24 @@ local function end_touch(self)
 	self.is_drag = false
 	self.is_touch = false
 	self.on_touch_end:trigger(self:get_context())
+	self:reset_input_priority()
 	self.touch_id = 0
 end
 
 
 local function process_touch(self, touch)
 	if not self.can_x then
-		self.touch_start_pos.x = touch.screen_x
+		self.touch_start_pos.x = touch.x
 	end
 	if not self.can_y then
-		self.touch_start_pos.y = touch.screen_y
+		self.touch_start_pos.y = touch.y
 	end
 
-	local distance = helper.distance(touch.screen_x, touch.screen_y, self.touch_start_pos.x, self.touch_start_pos.y)
+	local distance = helper.distance(touch.x, touch.y, self.touch_start_pos.x, self.touch_start_pos.y)
 	if not self.is_drag and distance >= self.drag_deadzone then
 		self.is_drag = true
 		self.on_drag_start:trigger(self:get_context())
+		self:increase_input_priority()
 	end
 end
 
@@ -93,8 +95,8 @@ local function on_touch_release(self, action_id, action)
 		end
 
 		if next_touch then
-			self.screen_x = next_touch.screen_x
-			self.screen_y = next_touch.screen_y
+			self.x = next_touch.x
+			self.y = next_touch.y
 			self.touch_id = next_touch.id
 		else
 			end_touch(self)
@@ -116,8 +118,8 @@ function M.init(self, node, on_drag_callback)
 	self.dx = 0
 	self.dy = 0
 	self.touch_id = 0
-	self.screen_x = 0
-	self.screen_y = 0
+	self.x = 0
+	self.y = 0
 	self.is_touch = false
 	self.is_drag = false
 	self.touch_start_pos = vmath.vector3(0)
@@ -185,13 +187,13 @@ function M.on_input(self, action_id, action)
 
 	local touch_modified = find_touch(action_id, action, self.touch_id)
 	if touch_modified and self.is_drag then
-		self.dx = touch_modified.screen_x - self.screen_x
-		self.dy = touch_modified.screen_y - self.screen_y
+		self.dx = touch_modified.x - self.x
+		self.dy = touch_modified.y - self.y
 	end
 
 	if touch_modified then
-		self.screen_x = touch_modified.screen_x
-		self.screen_y = touch_modified.screen_y
+		self.x = touch_modified.x
+		self.y = touch_modified.y
 	end
 
 	if self.is_drag then

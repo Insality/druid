@@ -22,7 +22,7 @@ local function on_scroll_drag(self, dx, dy)
 	dy = -dy
 	local t = self.target_pos
 	local b = self.available_soft_pos
-	local soft = 100
+	local extra_size = self.style.EXTRA_STRECH_SIZE
 
 	-- Handle soft zones
 	-- Percent - multiplier for delta. Less if outside of scroll zone
@@ -30,10 +30,10 @@ local function on_scroll_drag(self, dx, dy)
 	local y_perc = 1
 
 	if t.x < b.x and dx < 0 then
-		x_perc = (soft - (b.x - t.x)) / soft
+		x_perc = (-extra_size.x - (b.x - t.x)) / -extra_size.x
 	end
 	if t.x > b.z and dx > 0 then
-		x_perc = (soft - (t.x - b.z)) / soft
+		x_perc = (extra_size.z - (t.x - b.z)) / extra_size.z
 	end
 	-- If disabled scroll by x
 	if not self.can_x then
@@ -41,22 +41,14 @@ local function on_scroll_drag(self, dx, dy)
 	end
 
 	if t.y > b.y and dy < 0 then
-		y_perc = (soft - (t.y - b.y)) / soft
+		y_perc = (extra_size.y - (t.y - b.y)) / extra_size.y
 	end
 	if t.y < b.w and dy > 0 then
-		y_perc = (soft - (b.w - t.y)) / soft
+		y_perc = (-extra_size.w - (b.w - t.y)) / -extra_size.w
 	end
 	-- If disabled scroll by y
 	if not self.can_y then
 		y_perc = 0
-	end
-
-	-- Reset inert if outside of scroll zone
-	if x_perc ~= 1 then
-		self.inertion.x = 0
-	end
-	if y_perc ~= 1 then
-		self.inertion.y = 0
 	end
 
 	t.x = t.x + dx * x_perc
@@ -79,21 +71,8 @@ local function update_hand_scroll(self, dt)
 	local dx = self.target_pos.x - self.current_pos.x
 	local dy = self.target_pos.y - self.current_pos.y
 
-	if helper.sign(dx) ~= helper.sign(self.inertion.x) then
-		self.inertion.x = 0
-	end
-	if helper.sign(dy) ~= helper.sign(self.inertion.y) then
-		self.inertion.y = 0
-	end
-
-	self.inertion.x = self.inertion.x + dx
-	self.inertion.y = self.inertion.y + dy
-
-	self.inertion.x = math.abs(self.inertion.x) * helper.sign(dx)
-	self.inertion.y = math.abs(self.inertion.y) * helper.sign(dy)
-
-	self.inertion.x = self.inertion.x * self.style.FRICT_HOLD
-	self.inertion.y = self.inertion.y * self.style.FRICT_HOLD
+	self.inertion.x = (self.inertion.x + dx) * self.style.FRICT_HOLD
+	self.inertion.y = (self.inertion.y + dy) * self.style.FRICT_HOLD
 
 	set_pos(self, self.target_pos)
 end
@@ -119,8 +98,10 @@ end
 
 
 local function check_threshold(self)
-	if vmath.length(self.inertion) < self.style.INERT_THRESHOLD then
+	if math.abs(self.inertion.x) < self.style.INERT_THRESHOLD then
 		self.inertion.x = 0
+	end
+	if math.abs(self.inertion.y) < self.style.INERT_THRESHOLD then
 		self.inertion.y = 0
 	end
 end
@@ -221,7 +202,7 @@ function M.init(self, view_zone, content_zone)
 
 	self.current_pos = gui.get_position(self.content_node)
 	self.target_pos = vmath.vector3(self.current_pos)
-	self.inertion = vmath.vector3()
+	self.inertion = vmath.vector3(0)
 
 	self.drag = self.druid:new_drag(view_zone, on_scroll_drag)
 	self.drag.on_touch_start:subscribe(on_touch_start)
