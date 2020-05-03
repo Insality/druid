@@ -44,6 +44,7 @@
   <li><a href="../modules/druid.button.html">druid.button</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
+  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
   <li><a href="../modules/druid.hover.html">druid.hover</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
@@ -89,40 +90,48 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(scroll_parent, input_zone)</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#init">init(view_node, content_node)</a></td>
+	<td class="summary">Scroll constructor.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#scroll_to">scroll_to(vector3[, is_instant])</a></td>
-	<td class="summary">Start scroll to target point</td>
+	<td class="summary">Start scroll to target point.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#scroll_to_index">scroll_to_index(index[, skip_cb])</a></td>
+	<td class="summary">Scroll to item in scroll by point index.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#scroll_to_percent">scroll_to_percent(vector3[, is_instant])</a></td>
 	<td class="summary">Start scroll to target scroll percent</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(index[, skip_cb])</a></td>
-	<td class="summary">Scroll to item in scroll by point index</td>
+	<td class="name" nowrap><a href="#get_percent">get_percent()</a></td>
+	<td class="summary">Return current scroll progress status.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_points">set_points(points)</a></td>
-	<td class="summary">Set points of interest.</td>
+	<td class="name" nowrap><a href="#set_size">set_size(size)</a></td>
+	<td class="summary">Set scroll content size.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_inert">set_inert(state)</a></td>
 	<td class="summary">Enable or disable scroll inert.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#on_point_move">on_point_move(callback)</a></td>
-	<td class="summary">Set the callback on scrolling to point (if exist)</td>
+	<td class="name" nowrap><a href="#is_inert">is_inert()</a></td>
+	<td class="summary">Return if scroll have inertion.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_border">set_border(border)</a></td>
-	<td class="summary">Set the scroll possibly area</td>
+	<td class="name" nowrap><a href="#set_extra_strech_size">set_extra_strech_size(stretch_size)</a></td>
+	<td class="summary">Set extra size for scroll stretching.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_scroll_percent">get_scroll_percent()</a></td>
-	<td class="summary">Return current scroll progress</td>
+	<td class="name" nowrap><a href="#get_scroll_size">get_scroll_size()</a></td>
+	<td class="summary">Return vector of scroll size with width and height.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_points">set_points(points)</a></td>
+	<td class="summary">Set points of interest.</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -150,21 +159,21 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(scroll_parent, input_zone)</strong>
+    <strong>init(view_node, content_node)</strong>
     </dt>
     <dd>
-    Component init function
+    Scroll constructor.
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">scroll_parent</span>
+        <li><span class="parameter">view_node</span>
             <span class="types"><span class="type">node</span></span>
-         Gui node where placed scroll content. This node will change position
+         GUI view scroll node
         </li>
-        <li><span class="parameter">input_zone</span>
+        <li><span class="parameter">content_node</span>
             <span class="types"><span class="type">node</span></span>
-         Gui node where input is catched
+         GUI content scroll node
         </li>
     </ul>
 
@@ -178,18 +187,18 @@
     <strong>scroll_to(vector3[, is_instant])</strong>
     </dt>
     <dd>
-    Start scroll to target point
+    Start scroll to target point.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">vector3</span>
             <span class="types"><span class="type">point</span></span>
-         target point
+         Target point
         </li>
         <li><span class="parameter">is_instant</span>
             <span class="types"><span class="type">bool</span></span>
-         instant scroll flag
+         Instant scroll flag
          (<em>optional</em>)
         </li>
     </ul>
@@ -202,6 +211,32 @@
         <li><pre class="example">scroll:scroll_to(vmath.vector3(<span class="number">0</span>, <span class="number">50</span>, <span class="number">0</span>))</pre></li>
         <li><pre class="example">scroll:scroll_to(vmath.vector3(<span class="number">0</span>), <span class="keyword">true</span>)</pre></li>
     </ul>
+
+</dd>
+    <dt>
+    <a name = "scroll_to_index"></a>
+    <strong>scroll_to_index(index[, skip_cb])</strong>
+    </dt>
+    <dd>
+    Scroll to item in scroll by point index.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
+         Point index
+        </li>
+        <li><span class="parameter">skip_cb</span>
+            <span class="types"><span class="type">bool</span></span>
+         If true, skip the point callback
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
 
 </dd>
     <dt>
@@ -235,48 +270,49 @@
 
 </dd>
     <dt>
-    <a name = "init"></a>
-    <strong>init(index[, skip_cb])</strong>
+    <a name = "get_percent"></a>
+    <strong>get_percent()</strong>
     </dt>
     <dd>
-    Scroll to item in scroll by point index
+    Return current scroll progress status.
+ Values will be in [0..1] interval
 
 
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">index</span>
-            <span class="types"><span class="type">number</span></span>
-         Point index
-        </li>
-        <li><span class="parameter">skip_cb</span>
-            <span class="types"><span class="type">bool</span></span>
-         If true, skip the point callback
-         (<em>optional</em>)
-        </li>
-    </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        New vector with scroll progress values
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "set_points"></a>
-    <strong>set_points(points)</strong>
+    <a name = "set_size"></a>
+    <strong>set_size(size)</strong>
     </dt>
     <dd>
-    Set points of interest.
- Scroll will always centered on closer points
+    Set scroll content size.
+ It will change content gui node size
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">points</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Array of vector3 points
+        <li><span class="parameter">size</span>
+            <span class="types"><span class="type">vector3</span></span>
+         The new size for content node
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.scroll</span></span>
+        Self instance
+    </ol>
 
 
 
@@ -300,59 +336,71 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.scroll</span></span>
+        Self instance
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "on_point_move"></a>
-    <strong>on_point_move(callback)</strong>
+    <a name = "is_inert"></a>
+    <strong>is_inert()</strong>
     </dt>
     <dd>
-    Set the callback on scrolling to point (if exist)
+    Return if scroll have inertion.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        If scroll have inertion
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_extra_strech_size"></a>
+    <strong>set_extra_strech_size(stretch_size)</strong>
+    </dt>
+    <dd>
+    Set extra size for scroll stretching.
+ Set 0 to disable stretching effect
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
-         Callback on scroll to point of interest
+        <li><span class="parameter">stretch_size</span>
+            <span class="types"><span class="type">number</span></span>
+         Size in pixels of additional scroll area
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.scroll</span></span>
+        Self instance
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "set_border"></a>
-    <strong>set_border(border)</strong>
+    <a name = "get_scroll_size"></a>
+    <strong>get_scroll_size()</strong>
     </dt>
     <dd>
-    Set the scroll possibly area
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">border</span>
-            <span class="types"><span class="type">vector3</span></span>
-         Size of scrolling area
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_scroll_percent"></a>
-    <strong>get_scroll_percent()</strong>
-    </dt>
-    <dd>
-    Return current scroll progress
+    Return vector of scroll size with width and height.
 
 
 
@@ -360,7 +408,35 @@
     <ol>
 
            <span class="types"><span class="type">vector3</span></span>
-        Scroll progress
+        Available scroll size
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_points"></a>
+    <strong>set_points(points)</strong>
+    </dt>
+    <dd>
+    Set points of interest.
+ Scroll will always centered on closer points
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">points</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Array of vector3 points
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.scroll</span></span>
+        Self instance
     </ol>
 
 
@@ -410,41 +486,50 @@
 
     <h3>Fields:</h3>
     <ul>
-        <li><span class="parameter">node</span>
+        <li><span class="parameter">view_node</span>
             <span class="types"><span class="type">node</span></span>
-         Scroll parent node
+         Scroll view node
         </li>
-        <li><span class="parameter">input_zone</span>
+        <li><span class="parameter">content_node</span>
             <span class="types"><span class="type">node</span></span>
-         Scroll input node
-        </li>
-        <li><span class="parameter">zone_size</span>
-            <span class="types"><span class="type">vector3</span></span>
-         Current scroll content size
-        </li>
-        <li><span class="parameter">soft_size</span>
-            <span class="types"><span class="type">number</span></span>
-         Soft zone size from style table
-        </li>
-        <li><span class="parameter">center_offset</span>
-            <span class="types"><span class="type">vector3</span></span>
-         Distance from node to node's center
+         Scroll content node
         </li>
         <li><span class="parameter">is_inert</span>
             <span class="types"><span class="type">bool</span></span>
          Flag, if scroll now moving by inertion
         </li>
-        <li><span class="parameter">inert</span>
+        <li><span class="parameter">inertion</span>
             <span class="types"><span class="type">vector3</span></span>
          Current inert speed
         </li>
-        <li><span class="parameter">pos</span>
+        <li><span class="parameter">position</span>
             <span class="types"><span class="type">vector3</span></span>
          Current scroll posisition
         </li>
-        <li><span class="parameter">target</span>
+        <li><span class="parameter">target_position</span>
             <span class="types"><span class="type">vector3</span></span>
          Current scroll target position
+        </li>
+        <li><span class="parameter">available_pos</span>
+            <span class="types"><span class="type">vector4</span></span>
+         Available position for content node: (min<em>x, max</em>y, max<em>x, min</em>y)
+        </li>
+        <li><span class="parameter">available_size</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Size of available positions: (width, height, 0)
+        </li>
+        <li><span class="parameter">drag</span>
+            <span class="types"><span class="type">druid.drag</span></span>
+         Drag component
+        </li>
+        <li><span class="parameter">Current</span>
+            <span class="types"><span class="type">selected</span></span>
+         index of points of interests
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">is_animate</span>
+            <span class="types"><span class="type">bool</span></span>
+         Flag, if scroll now animating by gui.animate
         </li>
     </ul>
 
@@ -479,13 +564,9 @@
             <span class="types"><span class="type">number</span></span>
          Multiplier for inertion speed
         </li>
-        <li><span class="parameter">DEADZONE</span>
+        <li><span class="parameter">POINTS_DEADZONE</span>
             <span class="types"><span class="type">number</span></span>
-         Deadzone for start scrol in pixels
-        </li>
-        <li><span class="parameter">SOFT_ZONE_SIZE</span>
-            <span class="types"><span class="type">number</span></span>
-         Size of outside zone in pixels (for scroll back moving)
+         Speed to check points of interests in no_inertion mode
         </li>
         <li><span class="parameter">BACK_SPEED</span>
             <span class="types"><span class="type">number</span></span>
@@ -494,6 +575,14 @@
         <li><span class="parameter">ANIM_SPEED</span>
             <span class="types"><span class="type">number</span></span>
          Scroll gui.animation speed for scroll_to function
+        </li>
+        <li><span class="parameter">EXTRA_STRECH_SIZE</span>
+            <span class="types"><span class="type">number</span></span>
+         extra size in pixels outside of scroll (stretch effect)
+        </li>
+        <li><span class="parameter">SMALL_CONTENT_SCROLL</span>
+            <span class="types"><span class="type">bool</span></span>
+         If true, content node with size less than view node size can be scrolled
         </li>
     </ul>
 
@@ -509,7 +598,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-04-18 14:39:17 </i>
+<i style="float:right;">Last updated 2020-05-04 00:51:46 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
