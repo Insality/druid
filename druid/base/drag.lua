@@ -136,6 +136,13 @@ function M.init(self, node, on_drag_callback)
 end
 
 
+function M.on_input_interrupt(self)
+	if self.is_drag or self.is_touch then
+		end_touch(self)
+	end
+end
+
+
 function M.on_input(self, action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
 		return

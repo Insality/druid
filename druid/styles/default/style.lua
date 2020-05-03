@@ -51,6 +51,7 @@ M["drag"] = {
 M["scroll"] = {
 	ANIM_SPEED = 0.3, -- gui.animation speed to point
 	SCROLL_WHEEL_SPEED = 10,
+	DEADZONE = 20,
 
 	FRICT = 0.94, -- mult for free inert
 	FRICT_HOLD = 0.75, -- mult. for inert, while touching
@@ -59,7 +60,7 @@ M["scroll"] = {
 
 	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
 
-	EXTRA_STRECH_SIZE = vmath.vector4(-100, 100, 100, -100), -- size of outside zone (back move)
+	EXTRA_STRECH_SIZE = 100, -- size of outside zone (back move)
 }
 
 

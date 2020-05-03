@@ -168,15 +168,18 @@ function M.is_web()
 end
 
 
+--- Distance from node to size border
+-- @function helper.get_border
+-- @return vector4 (left, top, right, down)
 function M.get_border(node)
 	local pivot = gui.get_pivot(node)
 	local pivot_offset = M.get_pivot_offset(pivot)
 	local size = vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
 	return vmath.vector4(
-		-size.x*(0.5 - pivot_offset.x),
-		size.y*(0.5 + pivot_offset.y),
-		size.x*(0.5 + pivot_offset.x),
-		-size.y*(0.5 - pivot_offset.y)
+		-size.x*(0.5 + pivot_offset.x),
+		size.y*(0.5 - pivot_offset.y),
+		size.x*(0.5 - pivot_offset.x),
+		-size.y*(0.5 + pivot_offset.y)
 	)
 end
 
