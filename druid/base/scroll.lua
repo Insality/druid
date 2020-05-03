@@ -15,15 +15,17 @@
 
 --- Component fields
 -- @table Fields
--- @tfield node node Scroll parent node
--- @tfield node input_zone Scroll input node
--- @tfield vector3 zone_size Current scroll content size
--- @tfield number soft_size Soft zone size from style table
--- @tfield vector3 center_offset Distance from node to node's center
+-- @tfield node view_node Scroll view node
+-- @tfield node content_node Scroll content node
 -- @tfield bool is_inert Flag, if scroll now moving by inertion
--- @tfield vector3 inert Current inert speed
--- @tfield vector3 pos Current scroll posisition
--- @tfield vector3 target Current scroll target position
+-- @tfield vector3 inertion Current inert speed
+-- @tfield vector3 position Current scroll posisition
+-- @tfield vector3 target_position Current scroll target position
+-- @tfield vector4 available_pos Available position for content node: (min_x, max_y, max_x, min_y)
+-- @tfield vector3 available_size Size of available positions: (width, height, 0)
+-- @tfield druid.drag drag Drag component
+-- @tfield[opt] selected Current index of points of interests
+-- @tfield bool is_animate Flag, if scroll now animating by gui.animate
 
 --- Component style params
 -- @table Style
@@ -31,10 +33,11 @@
 -- @tfield number FRICT Multiplier for free inertion
 -- @tfield number INERT_THRESHOLD Scroll speed to stop inertion
 -- @tfield number INERT_SPEED Multiplier for inertion speed
--- @tfield number DEADZONE Deadzone for start scrol in pixels
--- @tfield number SOFT_ZONE_SIZE Size of outside zone in pixels (for scroll back moving)
+-- @tfield number POINTS_DEADZONE Speed to check points of interests in no_inertion mode
 -- @tfield number BACK_SPEED Scroll back returning lerp speed
 -- @tfield number ANIM_SPEED Scroll gui.animation speed for scroll_to function
+-- @tfield number EXTRA_STRECH_SIZE extra size in pixels outside of scroll (stretch effect)
+-- @tfield bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -174,11 +177,11 @@ local function check_points(self)
 
 	local inert = self.inertion
 	if not self._is_inert then
-		if math.abs(inert.x) > self.style.DEADZONE then
+		if math.abs(inert.x) > self.style.POINTS_DEADZONE then
 			self:scroll_to_index(self.selected - helper.sign(inert.x))
 			return
 		end
-		if math.abs(inert.y) > self.style.DEADZONE then
+		if math.abs(inert.y) > self.style.POINTS_DEADZONE then
 			self:scroll_to_index(self.selected + helper.sign(inert.y))
 			return
 		end
@@ -251,8 +254,8 @@ local function update_free_scroll(self, dt)
 	-- Inertion friction
 	self.inertion = self.inertion * self.style.FRICT
 
+	check_soft_zone(self)
 	if self.position.x ~= target.x or self.position.y ~= target.y then
-		check_soft_zone(self)
 		set_scroll_position(self, target)
 	end
 end
@@ -326,18 +329,18 @@ end
 -- @function scroll:init
 -- @tparam node view_node GUI view scroll node
 -- @tparam node content_node GUI content scroll node
-function M.init(self, view_zone, content_zone)
+function M.init(self, view_node, content_node)
 	self.druid = self:get_druid()
 	self.style = self:get_style()
 
-	self.view_node = self:get_node(view_zone)
-	self.content_node = self:get_node(content_zone)
+	self.view_node = self:get_node(view_node)
+	self.content_node = self:get_node(content_node)
 
 	self.position = gui.get_position(self.content_node)
 	self.target_position = vmath.vector3(self.position)
 	self.inertion = vmath.vector3(0)
 
-	self.drag = self.druid:new_drag(view_zone, on_scroll_drag)
+	self.drag = self.druid:new_drag(view_node, on_scroll_drag)
 	self.drag.on_touch_start:subscribe(on_touch_start)
 	self.drag.on_touch_end:subscribe(on_touch_end)
 

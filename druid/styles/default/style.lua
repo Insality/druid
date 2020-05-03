@@ -44,35 +44,29 @@ M["button"] = {
 
 
 M["drag"] = {
-	DRAG_DEADZONE = 10,
+	DRAG_DEADZONE = 10, -- Size in pixels of drag deadzone
 }
 
 
 M["scroll"] = {
 	ANIM_SPEED = 0.2, -- gui.animation speed to point
-	SCROLL_WHEEL_SPEED = 10,
-	DEADZONE = 20,
-
+	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
 	FRICT = 0.93, -- mult for free inert
 	FRICT_HOLD = 0.79, -- mult. for inert, while touching
 	INERT_THRESHOLD = 2.5, -- speed to stop inertion
 	INERT_SPEED = 30, -- koef. of inert speed
+	EXTRA_STRECH_SIZE = 100, -- extra size in pixels outside of scroll (stretch effect)
+	POINTS_DEADZONE = 20, -- Speed to check points of interests in no_inertion mode
 
-	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
+	SCROLL_WHEEL_SPEED = 20,
 
-	EXTRA_STRECH_SIZE = 100, -- size of outside zone (back move)
-	SMALL_CONTENT_SCROLL = true,
+	SMALL_CONTENT_SCROLL = true, -- If true, content node with size less than view node size can be scrolled
 }
 
 
 M["progress"] = {
 	SPEED = 5, -- progress bar fill rate, more faster
 	MIN_DELTA = 0.005
-}
-
-
-M["progress_rich"] = {
-	DELAY = 1, -- delay in seconds before main fill
 }
 
 
