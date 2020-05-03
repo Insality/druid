@@ -49,6 +49,14 @@ function M.setup_page(self)
 
 	self.druid:new_scroll("scroll_smaller_view", "scroll_smaller_content")
 
+	self.druid:new_scroll("scroll_with_points", "scroll_with_points_content")
+		:set_points({
+			vmath.vector3(-300, 0, 0),
+			vmath.vector3(-900, 0, 0),
+			vmath.vector3(-1500, 0, 0),
+			vmath.vector3(-2100, 0, 0),
+		})
+
 	init_grid(self)
 end
 

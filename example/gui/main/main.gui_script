@@ -3,12 +3,12 @@ local druid = require("druid.druid")
 local empty_style = require("druid.styles.empty.style")
 local default_style = require("druid.styles.default.style")
 
-local main_page = require("example.page.main")
-local text_page = require("example.page.texts")
-local button_page = require("example.page.button")
-local scroll_page = require("example.page.scroll")
-local slider_page = require("example.page.slider")
-local input_page = require("example.page.input")
+local main_page = require("example.page.main_page")
+local text_page = require("example.page.texts_page")
+local button_page = require("example.page.button_page")
+local scroll_page = require("example.page.scroll_page")
+local slider_page = require("example.page.slider_page")
+local input_page = require("example.page.input_page")
 
 local pages = {
 	"main_page",
@@ -62,7 +62,7 @@ function init(self)
 
 	init_top_panel(self)
 	init_swipe_control(self)
-	self.page = 1
+	self.page = 4
 	main_page.setup_page(self)
 	text_page.setup_page(self)
 	button_page.setup_page(self)
