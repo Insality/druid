@@ -58,6 +58,15 @@ local function on_button_hover(self, hover_state)
 end
 
 
+local function on_button_mouse_hover(self, hover_state)
+	if not self._style.on_mouse_hover then
+		return
+	end
+
+	self._style.on_mouse_hover(self, self.anim_node, hover_state)
+end
+
+
 local function on_button_click(self)
 	if self._style.on_click then
 		self._style.on_click(self, self.anim_node)
@@ -156,6 +165,7 @@ function M.init(self, node, callback, params, anim_node)
 	self.start_pos = gui.get_position(self.anim_node)
 	self.params = params
 	self.hover = self.druid:new_hover(node, on_button_hover)
+	self.hover.on_mouse_hover:subscribe(on_button_mouse_hover)
 	self.click_zone = nil
 	self.is_repeated_started = false
 	self.last_pressed_time = 0

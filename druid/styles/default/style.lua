@@ -6,6 +6,7 @@ local M = {}
 
 M["button"] = {
 	HOVER_SCALE = vmath.vector3(0.02, 0.02, 1),
+	HOVER_MOUSE_SCALE = vmath.vector3(0.01, 0.01, 1),
 	HOVER_TIME = 0.04,
 	SCALE_CHANGE = vmath.vector3(0.035, 0.035, 1),
 	BTN_SOUND = "click",
@@ -18,6 +19,13 @@ M["button"] = {
 
 	on_hover = function(self, node, state)
 		local scale_to = self.start_scale + M.button.HOVER_SCALE
+
+		local target_scale = state and scale_to or self.start_scale
+		anims.hover_scale(self, target_scale, M.button.HOVER_TIME)
+	end,
+
+	on_mouse_hover = function(self, node, state)
+		local scale_to = self.start_scale + M.button.HOVER_MOUSE_SCALE
 
 		local target_scale = state and scale_to or self.start_scale
 		anims.hover_scale(self, target_scale, M.button.HOVER_TIME)

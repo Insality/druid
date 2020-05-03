@@ -72,4 +72,8 @@ Druid 0.4.0:
 
 - _Grid_ anchor by default equals to node pivot (so, more gui settings in _.gui_ settings)
 
+- _Hover_ component now have two hover events:
+	- _on_hover_ is old hover event. Trigger only if touch pressed on node
+	- _on_mouse_hover_ action on node without action_id (desktop mouse over). Works only on desktop platform
+
 - **Fix:** Blocker component bug (blocker had very high priority, so it's block even button components, created after bloker)

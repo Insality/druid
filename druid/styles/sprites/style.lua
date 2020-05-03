@@ -8,12 +8,17 @@ M["button"] = {
 	ENABLED_COLOR = vmath.vector4(1),
 	LONGTAP_TIME = 0.4,
 	DOUBLETAP_TIME = 0.4,
-	HOVER_IMAGE = "button_yellow",
+	HOVER_MOUSE_IMAGE = "button_yellow",
 	DEFAULT_IMAGE = "button_blue",
-	CLICK_IMAGE = "button_red",
+	HOVER_IMAGE = "button_red",
 
 	on_hover = function(self, node, state)
 		local anim = state and M.button.HOVER_IMAGE or M.button.DEFAULT_IMAGE
+		gui.play_flipbook(node, anim)
+	end,
+
+	on_mouse_hover = function(self, node, state)
+		local anim = state and M.button.HOVER_MOUSE_IMAGE or M.button.DEFAULT_IMAGE
 		gui.play_flipbook(node, anim)
 	end
 }
