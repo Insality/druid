@@ -449,6 +449,10 @@ function Druid.new_swipe(self, ...)
 end
 
 
+--- Create drag basic component
+-- @function druid:new_drag
+-- @tparam args ... drag init args
+-- @treturn Componetn drag component
 function Druid.new_drag(self, ...)
 	return Druid.create(self, drag, ...)
 end
