@@ -42,7 +42,7 @@ local function on_scroll_drag(self, dx, dy)
 		x_perc = inverse_lerp(eb.z, b.z, t.x)
 	end
 	-- Disable x scroll
-	if not self.can_x then
+	if not self.drag.can_x then
 		x_perc = 0
 	end
 
@@ -54,7 +54,8 @@ local function on_scroll_drag(self, dx, dy)
 	if t.y > b.w and dy > 0 then
 		y_perc = inverse_lerp(eb.w, b.w, t.y)
 	end
-	if not self.can_y then
+	-- Disable y scroll
+	if not self.drag.can_y then
 		y_perc = 0
 	end
 
@@ -212,74 +213,61 @@ local function on_touch_start(self)
 end
 
 
+--- Verify vector
+-- Field x have to <= field z
+-- Field y have to <= field w
+local function verify_scroll_vector4(vector)
+	if vector.x > vector.z then
+		vector.x, vector.z = vector.z, vector.x
+	end
+	if vector.y > vector.w then
+		vector.y, vector.w = vector.w, vector.y
+	end
+
+	return vector
+end
+
+
+--- Return size from scroll border vector4
+local function get_size_vector(vector)
+	return vmath.vector3(vector.z - vector.x, vector.w - vector.y, 0)
+end
+
+
 local function on_touch_end(self)
 	check_threshold(self)
 end
 
 
 local function update_size(self)
-	self.view_border = helper.get_border(self.view_node)
-	self.view_size = vmath.mul_per_elem(gui.get_size(self.view_node),
-		gui.get_scale(self.view_node))
+	local view_border = helper.get_border(self.view_node)
+	local view_size = vmath.mul_per_elem(gui.get_size(self.view_node), gui.get_scale(self.view_node))
 
-	self.content_border = helper.get_border(self.content_node)
-	self.content_size = vmath.mul_per_elem(gui.get_size(self.content_node),
-		gui.get_scale(self.content_node))
+	local content_border = helper.get_border(self.content_node)
+	local content_size = vmath.mul_per_elem(gui.get_size(self.content_node), gui.get_scale(self.content_node))
 
-	--== AVAILABLE POSITION
-	-- (min_x, min_y, max_x, max_y)
-	self.available_pos = self.view_border - self.content_border
+	self.available_pos = verify_scroll_vector4(view_border - content_border)
+	self.available_size = get_size_vector(self.available_pos)
 
-	if self.available_pos.x > self.available_pos.z then
-		self.available_pos.x, self.available_pos.z = self.available_pos.z, self.available_pos.x
-	end
-	if self.available_pos.y > self.available_pos.w then
-		self.available_pos.y, self.available_pos.w = self.available_pos.w, self.available_pos.y
-	end
+	self.drag.can_x = self.available_size.x > 0
+	self.drag.can_y = self.available_size.y > 0
 
-	self.available_size = vmath.vector3(
-		self.available_pos.z - self.available_pos.x,
-		self.available_pos.w - self.available_pos.y,
-	0)
-
-	self.can_x = math.abs(self.available_pos.x - self.available_pos.z) > 0
-	self.can_y = math.abs(self.available_pos.y - self.available_pos.w) > 0
-
-	self.drag.can_x = self.can_x
-	self.drag.can_y = self.can_y
-
-
-	--== EXTRA CONTENT SIZE
-	self.content_size_extra = helper.get_border(self.content_node)
-	if self.can_x then
-		local sign = self.content_size.x > self.view_size.x and 1 or -1
-		self.content_size_extra.x = self.content_size_extra.x - self.extra_stretch_size * sign
-		self.content_size_extra.z = self.content_size_extra.z + self.extra_stretch_size * sign
+	--== Extra content size calculation
+	local content_border_extra = helper.get_border(self.content_node)
+	if self.drag.can_x then
+		local sign = content_size.x > view_size.x and 1 or -1
+		content_border_extra.x = content_border_extra.x - self.extra_stretch_size * sign
+		content_border_extra.z = content_border_extra.z + self.extra_stretch_size * sign
 	end
 
-	if self.can_y then
-		local sign = self.content_size.y > self.view_size.y and 1 or -1
-		self.content_size_extra.y = self.content_size_extra.y + self.extra_stretch_size * sign
-		self.content_size_extra.w = self.content_size_extra.w - self.extra_stretch_size * sign
+	if self.drag.can_y then
+		local sign = content_size.y > view_size.y and 1 or -1
+		content_border_extra.y = content_border_extra.y + self.extra_stretch_size * sign
+		content_border_extra.w = content_border_extra.w - self.extra_stretch_size * sign
 	end
 
-	self.available_pos_extra = vmath.vector4(
-		self.view_border.x - self.content_size_extra.x,
-		self.view_border.y - self.content_size_extra.y,
-		self.view_border.z - self.content_size_extra.z,
-		self.view_border.w - self.content_size_extra.w
-	)
-	if self.available_pos_extra.x > self.available_pos_extra.z then
-		self.available_pos_extra.x, self.available_pos_extra.z = self.available_pos_extra.z, self.available_pos_extra.x
-	end
-	if self.available_pos_extra.y > self.available_pos_extra.w then
-		self.available_pos_extra.y, self.available_pos_extra.w = self.available_pos_extra.w, self.available_pos_extra.y
-	end
-
-	self.available_size_extra = vmath.vector3(
-		self.available_pos_extra.z - self.available_pos_extra.x,
-		self.available_pos_extra.w - self.available_pos_extra.y,
-	0)
+	self.available_pos_extra = verify_scroll_vector4(view_border - content_border_extra)
+	self.available_size_extra = get_size_vector(self.available_pos_extra)
 end
 
 
@@ -407,6 +395,7 @@ end
 function M.get_percent(self)
 	local x_perc = 1 - inverse_lerp(self.available_pos.x, self.available_pos.z, self.current_pos.x)
 	local y_perc = inverse_lerp(self.available_pos.w, self.available_pos.y, self.current_pos.y)
+
 	return vmath.vector3(x_perc, y_perc, 0)
 end
 
