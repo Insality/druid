@@ -27,7 +27,6 @@ local function on_scroll_drag(self, dx, dy)
 	local t = self.target_pos
 	local b = self.available_pos
 	local eb = self.available_pos_extra
-	local extra_size = self.style.EXTRA_STRECH_SIZE
 
 	-- Handle soft zones
 	-- Percent - multiplier for delta. Less if outside of scroll zone
@@ -52,7 +51,7 @@ local function on_scroll_drag(self, dx, dy)
 		y_perc = inverse_lerp(eb.y, b.y, t.y)
 	end
 	-- Bot border (maximum y)
-	if t.y > b.w and dy > 0 and extra_size > 0 then
+	if t.y > b.w and dy > 0 then
 		y_perc = inverse_lerp(eb.w, b.w, t.y)
 	end
 	if not self.can_y then
@@ -141,15 +140,16 @@ local function check_points(self)
 	local index = false
 	local index_on_inert = false
 	local pos = self.current_pos
+
 	for i = 1, #self.points do
 		local p = self.points[i]
-		local dist = helper.distance(pos.x, pos.y, p.x, p.y)
+		local dist = helper.distance(pos.x, pos.y, -p.x, -p.y)
 		local on_inert = true
 		-- If inert ~= 0, scroll only by move direction
-		if inert.x ~= 0 and helper.sign(inert.x) ~= helper.sign(p.x - pos.x) then
+		if inert.x ~= 0 and helper.sign(inert.x) ~= helper.sign(-p.x - pos.x) then
 			on_inert = false
 		end
-		if inert.y ~= 0 and helper.sign(inert.y) ~= helper.sign(p.y - pos.y) then
+		if inert.y ~= 0 and helper.sign(inert.y) ~= helper.sign(-p.y - pos.y) then
 			on_inert = false
 		end
 
@@ -179,10 +179,7 @@ local function check_threshold(self)
 		self.inertion.y = 0
 	end
 
-	if is_stopped or not self.inert then
-		if self.points then
-			print("check points free inert?")
-		end
+	if is_stopped or not self.is_inert then
 		check_points(self)
 	end
 end
@@ -231,12 +228,7 @@ local function update_size(self)
 
 	--== AVAILABLE POSITION
 	-- (min_x, min_y, max_x, max_y)
-	self.available_pos = vmath.vector4(
-		self.view_border.x - self.content_border.x,
-		self.view_border.y - self.content_border.y,
-		self.view_border.z - self.content_border.z,
-		self.view_border.w - self.content_border.w
-	)
+	self.available_pos = self.view_border - self.content_border
 
 	if self.available_pos.x > self.available_pos.z then
 		self.available_pos.x, self.available_pos.z = self.available_pos.z, self.available_pos.x
@@ -261,14 +253,14 @@ local function update_size(self)
 	self.content_size_extra = helper.get_border(self.content_node)
 	if self.can_x then
 		local sign = self.content_size.x > self.view_size.x and 1 or -1
-		self.content_size_extra.x = self.content_size_extra.x - self.style.EXTRA_STRECH_SIZE * sign
-		self.content_size_extra.z = self.content_size_extra.z + self.style.EXTRA_STRECH_SIZE * sign
+		self.content_size_extra.x = self.content_size_extra.x - self.extra_stretch_size * sign
+		self.content_size_extra.z = self.content_size_extra.z + self.extra_stretch_size * sign
 	end
 
 	if self.can_y then
 		local sign = self.content_size.y > self.view_size.y and 1 or -1
-		self.content_size_extra.y = self.content_size_extra.y + self.style.EXTRA_STRECH_SIZE * sign
-		self.content_size_extra.w = self.content_size_extra.w - self.style.EXTRA_STRECH_SIZE * sign
+		self.content_size_extra.y = self.content_size_extra.y + self.extra_stretch_size * sign
+		self.content_size_extra.w = self.content_size_extra.w - self.extra_stretch_size * sign
 	end
 
 	self.available_pos_extra = vmath.vector4(
@@ -288,19 +280,6 @@ local function update_size(self)
 		self.available_pos_extra.z - self.available_pos_extra.x,
 		self.available_pos_extra.w - self.available_pos_extra.y,
 	0)
-	--== END CONTENT EXTRA
-
-	-- print("VIEW BORDER", self.view_border)
-	-- print("CONTENT BORDER", self.content_border)
-	-- print("AVAILABLE POS", self.available_pos)
-	-- print("CURRENT POS", self.current_pos)
-	-- print("VIEW_SIZE", self.view_size)
-	-- print("CONTENT_SIZE", self.content_size)
-	-- print("AVAILABLE_SIZE", self.available_size)
-
-	-- print("CONTENT SIZE EXTRA", self.content_size_extra)
-	-- print("AVAILABLE POS EXTRA", self.available_pos_extra)
-	-- print("")
 end
 
 
@@ -330,6 +309,7 @@ function M.init(self, view_zone, content_zone)
 	self.current_pos = gui.get_position(self.content_node)
 	self.target_pos = vmath.vector3(self.current_pos)
 	self.inertion = vmath.vector3(0)
+	self.extra_stretch_size = self.style.EXTRA_STRECH_SIZE
 
 	self.drag = self.druid:new_drag(view_zone, on_scroll_drag)
 	self.drag.on_touch_start:subscribe(on_touch_start)
@@ -368,9 +348,9 @@ end
 -- @usage scroll:scroll_to(vmath.vector3(0), true)
 function M.scroll_to(self, point, is_instant)
 	local b = self.available_pos
-	local target = vmath.vector3(point)
-	target.x = helper.clamp(point.x, b.x, b.z)
-	target.y = helper.clamp(point.y, b.y, b.w)
+	local target = vmath.vector3(-point.x, -point.y, 0)
+	target.x = helper.clamp(target.x, b.x, b.z)
+	target.y = helper.clamp(target.y, b.y, b.w)
 
 	cancel_animate(self)
 
@@ -414,30 +394,19 @@ end
 function M.scroll_to_percent(self, percent, is_instant)
 	local border = self.available_pos
 
-	local size_x = math.abs(border.z - border.x)
-	if size_x == 0 then
-		size_x = 1
-	end
-	local size_y = math.abs(border.w - border.y)
-	if size_y == 0 then
-		size_y = 1
-	end
-
 	local pos = vmath.vector3(
-		-size_x * percent.x + border.x,
-		-size_y * percent.y + border.y,
-		0)
+		-helper.lerp(border.x, border.z, 1 - percent.x),
+		-helper.lerp(border.w, border.y, 1 - percent.y),
+		0
+	)
+
 	M.scroll_to(self, pos, is_instant)
 end
 
 
 function M.get_percent(self)
-	local y_dist = self.available_size.y
-	local y_perc = y_dist ~= 0 and (self.current_pos.y - self.available_pos.w) / y_dist or 1
-
-	local x_dist = self.available_size.x
-	local x_perc = x_dist ~= 0 and (self.current_pos.x - self.available_pos.z) / x_dist or 1
-
+	local x_perc = 1 - inverse_lerp(self.available_pos.x, self.available_pos.z, self.current_pos.x)
+	local y_perc = inverse_lerp(self.available_pos.w, self.available_pos.y, self.current_pos.y)
 	return vmath.vector3(x_perc, y_perc, 0)
 end
 
@@ -454,25 +423,26 @@ function M.set_inert(self, state)
 end
 
 
+function M.set_extra_strech_size(self, stretch_size)
+	self.extra_stretch_size = stretch_size or self.style.EXTRA_STRECH_SIZE
+	update_size(self)
+
+	return self
+end
+
+
 --- Set points of interest.
 -- Scroll will always centered on closer points
 -- @function scroll:set_points
 -- @tparam table points Array of vector3 points
 function M.set_points(self, points)
 	self.points = points
-	-- cause of parent move in other side by y
-	for i = 1, #self.points do
-		self.points[i].x = -self.points[i].x
-		self.points[i].y = -self.points[i].y
-	end
 
 	table.sort(self.points, function(a, b)
 		return a.x > b.x or a.y < b.y
 	end)
 
 	check_threshold(self)
-
-	pprint(self.points)
 
 	return self
 end

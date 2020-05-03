@@ -126,6 +126,11 @@ function M.round(num, numDecimalPlaces)
 end
 
 
+function M.lerp(a, b, t)
+	return a + (b - a) * t
+end
+
+
 --- Check if node is enabled in gui hierarchy.
 -- Return false, if node or any his parent is disabled
 -- @function helper.is_enabled

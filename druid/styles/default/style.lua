@@ -49,13 +49,13 @@ M["drag"] = {
 
 
 M["scroll"] = {
-	ANIM_SPEED = 0.3, -- gui.animation speed to point
+	ANIM_SPEED = 0.2, -- gui.animation speed to point
 	SCROLL_WHEEL_SPEED = 10,
 	DEADZONE = 20,
 
 	FRICT = 0.94, -- mult for free inert
 	FRICT_HOLD = 0.75, -- mult. for inert, while touching
-	INERT_THRESHOLD = 2, -- speed to stop inertion
+	INERT_THRESHOLD = 2.5, -- speed to stop inertion
 	INERT_SPEED = 27, -- koef. of inert speed
 
 	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
