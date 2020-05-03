@@ -24,7 +24,7 @@ local function init_scroll_with_grid(self)
 
 	grid_scroll:set_size(grid:get_size())
 
-	local scroll_slider = self.druid:new_slider("grid_scroll_pin", vmath.vector3(300, 0, 0), function(_, value)
+	local scroll_slider = self.druid:new_slider("grid_scroll_pin", vmath.vector3(287, 0, 0), function(_, value)
 		grid_scroll:scroll_to_percent(vmath.vector3(value, 0, 0), true)
 	end)
 
@@ -55,6 +55,7 @@ function M.setup_page(self)
 	-- Content with less size than view
 	self.druid:new_scroll("scroll_smaller_view", "scroll_smaller_content")
 		:set_extra_strech_size(0)
+		:set_inert(false)
 
 	-- Scroll with points of interests
 	self.druid:new_scroll("scroll_with_points", "scroll_with_points_content")

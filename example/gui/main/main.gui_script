@@ -31,6 +31,7 @@ end
 
 
 local function init_top_panel(self)
+	self.druid:new_blocker("panel_top")
 	self.druid:new_button("button_left/button", on_control_button, -1)
 	self.druid:new_button("button_right/button", on_control_button, 1)
 	self.header = self.druid:new_lang_text("text_header", "main_page")
@@ -60,15 +61,17 @@ function init(self)
 
 	window.set_listener(on_window_callback)
 
-	init_top_panel(self)
 	init_swipe_control(self)
-	self.page = 4
+
+	self.page = 1
 	main_page.setup_page(self)
 	text_page.setup_page(self)
 	button_page.setup_page(self)
 	scroll_page.setup_page(self)
 	slider_page.setup_page(self)
 	input_page.setup_page(self)
+
+	init_top_panel(self)
 
 	-- Refresh state
 	on_control_button(self, 0)

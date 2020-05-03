@@ -39,4 +39,37 @@ Druid 0.3.0:
 - Known issues:
 	- Adjusting text size by height works wrong. Adjusting single line texting works fine
 	- Space is not working in HTML5
-	
+
+
+
+Druid 0.4.0:
+
+- Add _Drag_ basic component
+	- Drag component allow you detect dragging on GUI node
+	- Drag will be processed even the cursor is outside of node, if drag is already started
+	- Drag provides correct handle of several touches. Drag can switch between them (no more scroll gliches with position)
+	- Drag have next events:
+		- on_touch_start (self)
+		- on_touch_end (self)
+		- on_drag_start (self)
+		- on_drag (self, dx, dy)
+		- on_drag_end (self)
+	- You can restriction side of draggin by changing _drag.can_x_ and _drag.can_y_ fields
+	- You can setup drag deadzone to detect, when dragging is started (by default 10 pixels)
+
+- Druid _Scroll_ component fully reworked. Input logic moved to _Drag_ component
+	- Updated scroll documentation
+	- Changed constructor order params
+	- Scroll now contains from view and content node
+		- _View node_ - static node, which size determine the "camera" zone
+		- _Content node_ - dynamic node, moving by _Scroll_ component
+	- Scroll will be disabled only if content size equals to view size (by width or height separatly)
+	- You can adjust scroll size via _.gui_ scene. Just setup correct node size
+	- Different anchoring is supported (for easier layout)
+	- Function _scroll_to_ now accept position relative to _content node_. It's more easier for handling. _Example:_ if you have children node of _content_node_, you can pass this node position to scroll to this.
+	- **Resolve #52**: _Content node size_ now can be less than _view node size_. In this case, content will be scrolled only inside _view size_
+	- **Fix #50**: If style:SOFT_ZONE_SIZE equals to [0..1], scroll can be disappeared
+
+- _Grid_ anchor by default equals to node pivot (so, more gui settings in _.gui_ settings)
+
+- **Fix:** Blocker component bug (blocker had very high priority, so it's block even button components, created after bloker)

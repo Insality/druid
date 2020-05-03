@@ -14,7 +14,7 @@ local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("blocker", { const.ON_INPUT_HIGH })
+local M = component.create("blocker", { const.ON_INPUT })
 
 
 --- Component init function
@@ -29,7 +29,7 @@ end
 
 
 function M.on_input(self, action_id, action)
-	if action_id ~= const.ACTION_TOUCH then
+	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
 		return false
 	end
 

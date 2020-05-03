@@ -53,14 +53,15 @@ M["scroll"] = {
 	SCROLL_WHEEL_SPEED = 10,
 	DEADZONE = 20,
 
-	FRICT = 0.94, -- mult for free inert
-	FRICT_HOLD = 0.75, -- mult. for inert, while touching
+	FRICT = 0.93, -- mult for free inert
+	FRICT_HOLD = 0.79, -- mult. for inert, while touching
 	INERT_THRESHOLD = 2.5, -- speed to stop inertion
-	INERT_SPEED = 27, -- koef. of inert speed
+	INERT_SPEED = 30, -- koef. of inert speed
 
 	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
 
 	EXTRA_STRECH_SIZE = 100, -- size of outside zone (back move)
+	SMALL_CONTENT_SCROLL = true,
 }
 
 
