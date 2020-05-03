@@ -14,6 +14,7 @@ M.ACTION_ESC = hash("key_esc")
 
 M.ACTION_TOUCH = hash("touch")
 M.ACTION_SCROLL_UP = hash("scroll_up")
+M.ACTION_MULTITOUCH = hash("multitouch")
 M.ACTION_SCROLL_DOWN = hash("scroll_down")
 
 
@@ -63,10 +64,21 @@ M.UI_INPUT = {
 }
 
 
+M.OS = {
+	ANDROID = "Android",
+	IOS = "iPhone OS",
+	MAC = "Darwin",
+	LINUX = "Linux",
+	WINDOWS = "Windows",
+	BROWSER = "HTML5",
+}
+
+
 M.SIDE = {
 	X = "x",
 	Y = "y"
 }
+
 
 M.SWIPE = {
 	UP = "up",

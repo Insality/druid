@@ -19,16 +19,20 @@ key_trigger {
   action: "key_esc"
 }
 mouse_trigger {
-  input: MOUSE_BUTTON_1
-  action: "touch"
-}
-mouse_trigger {
   input: MOUSE_WHEEL_UP
   action: "scroll_up"
 }
 mouse_trigger {
   input: MOUSE_WHEEL_DOWN
   action: "scroll_down"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_1
+  action: "touch"
+}
+touch_trigger {
+  input: TOUCH_MULTI
+  action: "multitouch"
 }
 text_trigger {
   input: TEXT

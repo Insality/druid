@@ -73,11 +73,11 @@ function M.set_default_style(style)
 end
 
 
---- Set text function.
+--- Set text function
 -- Druid locale component will call this function
 -- to get translated text. After set_text_funtion
 -- all existing locale component will be updated
--- @function druid.set_text_function(callback)
+-- @function druid.set_text_function
 -- @tparam function callback Get localized text function
 function M.set_text_function(callback)
 	settings.get_text = callback or const.EMPTY_FUNCTION

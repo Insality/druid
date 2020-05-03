@@ -49,6 +49,7 @@
   <li><a href="../modules/druid.button.html">druid.button</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
+  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
   <li><a href="../modules/druid.grid.html">druid.grid</a></li>
   <li><a href="../modules/druid.hover.html">druid.hover</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
@@ -75,7 +76,7 @@
 <p>Druid 0.3.0:</p>
 
 <ul>
-    <li><p><code>Druid:final</code> now is important function for correct working</p></li>
+    <li><p><code>Druid:final()</code> now is important function for correct working</p></li>
     <li><p>Add <em>swipe</em> basic component</p>
 
 <pre>
@@ -94,14 +95,10 @@
 - You can setup max length of the text
 - You can setup allowed characters. On add <span class="keyword">not</span> allowed characters <span class="backtick"><code>on_input_wrong</code></span> will be called. By default it cause simple shake animation
 - The keyboard <span class="keyword">for</span> input will <span class="keyword">not</span> show on mobile HTML5. So input field <span class="keyword">in</span> mobile HTML5 is <span class="keyword">not</span> working now
-- To make work different keyboard <span class="global">type</span>, make sure value <span class="keyword">in</span> game.project Android:InputMethod set to HidderInputField (https://defold.com/manuals/project-settings/#input-method)
+- To make work different keyboard <span class="global">type</span>, make sure value <span class="keyword">in</span> game.project Android:InputMethod set to HiddenInputField (https://defold.com/manuals/project-settings/#input-method)
 </pre>
 </li>
-    <li><p>Add button on<em>click</em>outside event. You can subscribe on this event in button. Was needed for Input component (click outside to deselect input field).</p></li>
-    <li><p>Add start_pos to button component</p></li>
-    <li><p>Changed input binding settings. Add backspace, enter, text and marked_text. Backspace now is different from android back button.</p></li>
-    <li><p>Renamed on<em>change</em>language -> on<em>language</em>change component interest</p></li>
-    <li><p>Add basic component two functions: <code>increase_input_priority</code> and <code>reset_input_priority</code>. It used to process component input first in current input stack (there is two input stacks: INPUT and INPUT_HIGH). Example: on selecting input field, it increase input self priority until it be unselected</p></li>
+    <li><p>Add two functions to basic component: <code>increase_input_priority</code> and <code>reset_input_priority</code>. It used to process component input first in current input stack (there is two input stacks now: INPUT and INPUT_HIGH). Example: on selecting input field, it increase input self priority until it be unselected</p></li>
     <li><p>Add two new component interests: <code>on_focus_gain</code> and <code>on_focus_lost</code></p></li>
     <li><p>Add global druid events:</p>
 
@@ -111,13 +108,53 @@
 - on_layout_change: call <span class="backtick"><code>druid.on_layout_change()</code></span> (#<span class="number">37</span>) <span class="keyword">for</span> update all gui layouts (unimplemented now)
 </pre>
 </li>
-    <li><p>Add several examples to druid-assets respository</p></li>
+    <li><p>Add button <code>on_click_outside</code> event. You can subscribe on this event in button. Was needed for Input component (click outside to deselect input field)</p></li>
+    <li><p>Add <em>start</em>pos_ field to button component</p></li>
+    <li><p>Changed input binding settings. Add esc, enter, text and marked_text. Backspace now is different from android back button event. Check the README setup section</p></li>
+    <li><p>Renamed <em>on</em>change<em>language</em> -> <em>on</em>language<em>change</em> component interest</p></li>
+    <li><p>Add several examples to druid-assets respository (see live example here): https://insality.github.io/druid-assets/)</p></li>
     <li><p>Known issues:</p>
 
 <pre>
 - Adjusting text size by height works wrong. Adjusting single line texting works fine
+- Space is <span class="keyword">not</span> working <span class="keyword">in</span> HTML5
+</pre>
+
+<p>Druid 0.4.0:</p></li>
+    <li><p>Add <em>Drag</em> basic component</p>
+
+<pre>
+- Drag component allow you detect dragging on GUI node
+- Drag will be processed even the cursor is outside of node, <span class="keyword">if</span> drag is already started
+- Drag provides correct handle of several touches. Drag can switch between them (no more scroll gliches with position)
+- Drag have <span class="global">next</span> events:
+    - on_touch_start (self)
+    - on_touch_end (self)
+    - on_drag_start (self)
+    - on_drag (self, dx, dy)
+    - on_drag_end (self)
+- You can restriction side of draggin by changing _drag.can_x_ <span class="keyword">and</span> _drag.can_y_ fields
+- You can setup drag deadzone to detect, when dragging is started (by default <span class="number">10</span> pixels)
 </pre>
 </li>
+    <li><p>Druid <em>Scroll</em> component fully reworked. Input logic moved to <em>Drag</em> component</p>
+
+<pre>
+- Updated scroll documentation
+- Changed constructor order params
+- Scroll now contains from view <span class="keyword">and</span> content node
+    - _View node_ - static node, which size determine the <span class="string">"camera"</span> zone
+    - _Content node_ - dynamic node, moving by _Scroll_ component
+- Scroll will be disabled only <span class="keyword">if</span> content size equals to view size (by width <span class="keyword">or</span> height separatly)
+- You can adjust scroll size via _.gui_ scene. Just setup correct node size
+- Different anchoring is supported (<span class="keyword">for</span> easier layout)
+- Function _scroll_to_ now accept position relative to _content node_. It's more easier <span class="keyword">for</span> handling. _Example:_ <span class="keyword">if</span> you have children node of _content_node_, you can pass this node position to scroll to this.
+- **Resolve #<span class="number">52</span>**: _Content node size_ now can be less than _view node size_. In this case, content will be scrolled only inside _view size_
+- **Fix #<span class="number">50</span>**: If style:SOFT_ZONE_SIZE equals to [<span class="number">0.</span>.<span class="number">1</span>], scroll can be disappeared
+</pre>
+</li>
+    <li><p><em>Grid</em> anchor by default equals to node pivot (so, more gui settings in <em>.gui</em> settings)</p></li>
+    <li><p><strong>Fix:</strong> Blocker component bug (blocker had very high priority, so it's block even button components, created after bloker)</p></li>
 </ul>
 
 
@@ -125,7 +162,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-04-18 14:39:17 </i>
+<i style="float:right;">Last updated 2020-05-04 00:51:46 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
