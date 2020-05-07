@@ -157,12 +157,10 @@ function M.get_all_pos(self)
 end
 
 
---- Clear all items from the grid
+--- Clear grid nodes array. GUI nodes will be not deleted!
+-- If you want to delete GUI nodes, use grid.nodes array before grid:clear
 -- @function grid:clear
 function M.clear(self)
-	for i = 1, #self.nodes do
-		gui.delete_node(self.nodes[i])
-	end
 	self.nodes = {}
 end
 

@@ -92,6 +92,7 @@ function Component.increase_input_priority(self)
 	self._meta.increased_input_priority = true
 end
 
+
 --- Reset input priority in current input stack
 -- @function component:reset_input_priority
 function Component.reset_input_priority(self)
@@ -133,21 +134,39 @@ end
 -- @treturn Druid Druid instance with component context
 function Component.get_druid(self)
 	local context = { _context = self }
-	return setmetatable(context, { __index = self:get_context().druid })
+	return setmetatable(context, { __index = self._meta.druid })
+end
+
+
+--- Return true, if current component is child of another component
+-- @function component:is_child_of
+-- @treturn bool True, if current component is child of another
+function Component.is_child_of(self, component)
+	return self:get_context() == component
+end
+
+
+--- Return component name
+-- @function component:get_name
+-- @treturn string The component name
+function Component.get_name(self)
+	return self._component.name
 end
 
 
 --- Setup component context and his style table
 -- @function component:setup_component
+-- @tparam druid_instance table The parent druid instance
 -- @tparam context table Druid context. Usually it is self of script
 -- @tparam style table Druid style module
 -- @treturn Component Component itself
-function Component.setup_component(self, context, style)
+function Component.setup_component(self, druid_instance, context, style)
 	self._meta = {
 		template = nil,
 		context = nil,
 		nodes = nil,
 		style = nil,
+		druid = druid_instance,
 		increased_input_priority = false
 	}
 
