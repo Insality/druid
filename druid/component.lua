@@ -138,6 +138,22 @@ function Component.get_druid(self)
 end
 
 
+--- Return true, if current component is child of another component
+-- @function component:is_child_of
+-- @treturn bool True, if current component is child of another
+function Component.is_child_of(self, component)
+	return self:get_context() == component
+end
+
+
+--- Return component name
+-- @function component:get_name
+-- @treturn string The component name
+function Component.get_name(self)
+	return self._component.name
+end
+
+
 --- Setup component context and his style table
 -- @function component:setup_component
 -- @tparam druid_instance table The parent druid instance

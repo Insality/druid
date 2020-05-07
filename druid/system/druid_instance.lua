@@ -170,6 +170,14 @@ end
 function Druid.remove(self, component)
 	local all_components = self.components[const.ALL]
 
+	-- Recursive remove all children of component
+	for i = 1, #all_components do
+		local inst = all_components[i]
+		if inst:is_child_of(component) then
+			self:remove(inst)
+		end
+	end
+
 	for i = #all_components, 1, -1 do
 		if all_components[i] == component then
 			if component.on_remove then
