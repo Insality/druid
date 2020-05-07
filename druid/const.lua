@@ -37,6 +37,19 @@ M.ON_LAYOUT_CHANGE = hash("on_layout_change")
 M.ON_LANGUAGE_CHANGE = hash("on_language_change")
 
 
+M.ALL_INTERESTS = {
+	M.ALL,
+	M.ON_INPUT,
+	M.ON_UPDATE,
+	M.ON_MESSAGE,
+	M.ON_FOCUS_LOST,
+	M.ON_INPUT_HIGH,
+	M.ON_FOCUS_GAINED,
+	M.ON_LAYOUT_CHANGE,
+	M.ON_LANGUAGE_CHANGE,
+}
+
+
 M.PIVOTS = {
 	[gui.PIVOT_CENTER] = vmath.vector3(0),
 	[gui.PIVOT_N] = vmath.vector3(0, 0.5, 0),

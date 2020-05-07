@@ -162,9 +162,11 @@ end
 -- by `Component.static.create`
 -- @function component:initialize
 -- @tparam string name Component name
--- @tparam table interest List of component's interest
+-- @tparam[opt={}] table interest List of component's interest
 -- @local
 function Component.initialize(self, name, interest)
+	interest = interest or {}
+
 	self._component = {
 		name = name,
 		interest = interest
@@ -176,7 +178,7 @@ end
 -- druid component.
 -- @function Component.create
 -- @tparam string name Component name
--- @tparam table interest List of component's interest
+-- @tparam[opt={}] table interest List of component's interest
 function Component.static.create(name, interest)
 	-- Yea, inheritance here
 	local new_class = class(name, Component)
