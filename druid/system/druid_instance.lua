@@ -61,7 +61,7 @@ end
 -- Create the component itself
 local function create(self, instance_class)
 	local instance = instance_class()
-	instance:setup_component(self._context, self._style)
+	instance:setup_component(self, self._context, self._style)
 
 	table.insert(self.components[const.ALL], instance)
 
