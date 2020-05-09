@@ -22,10 +22,6 @@
 -- @tfield number y Current touch y position
 -- @tfield vector3 touch_start_pos Touch start position
 
---- Component style params
--- @table Style
--- @tfield number DRAG_DEADZONE Distance in pixels to start dragging
-
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -128,12 +124,22 @@ local function on_touch_release(self, action_id, action)
 end
 
 
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield[opt=10] number DRAG_DEADZONE Distance in pixels to start dragging
+function M.on_style_change(self, style)
+	self.style = {}
+	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
+end
+
+
 --- Drag component constructor
 -- @tparam node node GUI node to detect dragging
 -- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
 -- @function drag:init
 function M.init(self, node, on_drag_callback)
-	self.style = self:get_style()
 	self.node = self:get_node(node)
 
 	self.dx = 0

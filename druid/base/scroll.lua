@@ -27,18 +27,6 @@
 -- @tfield[opt] selected Current index of points of interests
 -- @tfield bool is_animate Flag, if scroll now animating by gui.animate
 
---- Component style params
--- @table Style
--- @tfield number FRICT_HOLD Multiplier for inertion, while touching
--- @tfield number FRICT Multiplier for free inertion
--- @tfield number INERT_THRESHOLD Scroll speed to stop inertion
--- @tfield number INERT_SPEED Multiplier for inertion speed
--- @tfield number POINTS_DEADZONE Speed to check points of interests in no_inertion mode
--- @tfield number BACK_SPEED Scroll back returning lerp speed
--- @tfield number ANIM_SPEED Scroll gui.animation speed for scroll_to function
--- @tfield number EXTRA_STRECH_SIZE extra size in pixels outside of scroll (stretch effect)
--- @tfield bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
-
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -302,17 +290,18 @@ local function update_size(self)
 	-- We add extra size only if scroll is available
 	-- Even the content zone size less than view zone size
 	local content_border_extra = helper.get_border(self.content_node)
+	local stretch_size = self.style.EXTRA_STRECH_SIZE
 
 	if self.drag.can_x then
 		local sign = content_size.x > view_size.x and 1 or -1
-		content_border_extra.x = content_border_extra.x - self.extra_stretch_size * sign
-		content_border_extra.z = content_border_extra.z + self.extra_stretch_size * sign
+		content_border_extra.x = content_border_extra.x - stretch_size * sign
+		content_border_extra.z = content_border_extra.z + stretch_size * sign
 	end
 
 	if self.drag.can_y then
 		local sign = content_size.y > view_size.y and 1 or -1
-		content_border_extra.y = content_border_extra.y + self.extra_stretch_size * sign
-		content_border_extra.w = content_border_extra.w - self.extra_stretch_size * sign
+		content_border_extra.y = content_border_extra.y + stretch_size * sign
+		content_border_extra.w = content_border_extra.w - stretch_size * sign
 	end
 
 	if not self.style.SMALL_CONTENT_SCROLL then
@@ -325,13 +314,45 @@ local function update_size(self)
 end
 
 
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield[opt=0] number FRICT Multiplier for free inertion
+-- @tfield[opt=0] number FRICT_HOLD Multiplier for inertion, while touching
+-- @tfield[opt=3] number INERT_THRESHOLD Scroll speed to stop inertion
+-- @tfield[opt=30] number INERT_SPEED Multiplier for inertion speed
+-- @tfield[opt=20] number POINTS_DEADZONE Speed to check points of interests in no_inertion mode
+-- @tfield[opt=0.35] number BACK_SPEED Scroll back returning lerp speed
+-- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
+-- @tfield[opt=0] number EXTRA_STRECH_SIZE extra size in pixels outside of scroll (stretch effect)
+-- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
+function M.on_style_change(self, style)
+	self.style = {}
+	self.style.EXTRA_STRECH_SIZE = style.EXTRA_STRECH_SIZE or 0
+	self.style.ANIM_SPEED = style.ANIM_SPEED or 0.2
+	self.style.BACK_SPEED = style.BACK_SPEED or 0.35
+
+	self.style.FRICT = style.FRICT or 0
+	self.style.FRICT_HOLD = style.FRICT_HOLD or 0
+
+	self.style.INERT_THRESHOLD = style.INERT_THRESHOLD or 3
+	self.style.INERT_SPEED = style.INERT_SPEED or 30
+	self.style.POINTS_DEADZONE = style.POINTS_DEADZONE or 20
+	self.style.SMALL_CONTENT_SCROLL = style.SMALL_CONTENT_SCROLL or false
+
+	self._is_inert = not (self.style.FRICT == 0 or
+		self.style.FRICT_HOLD == 0 or
+		self.style.INERT_SPEED == 0)
+end
+
+
 --- Scroll constructor.
 -- @function scroll:init
 -- @tparam node view_node GUI view scroll node
 -- @tparam node content_node GUI content scroll node
 function M.init(self, view_node, content_node)
 	self.druid = self:get_druid()
-	self.style = self:get_style()
 
 	self.view_node = self:get_node(view_node)
 	self.content_node = self:get_node(content_node)
@@ -349,9 +370,7 @@ function M.init(self, view_node, content_node)
 	self.on_point_scroll = Event()
 
 	self.selected = nil
-	self._is_inert = true
 	self.is_animate = false
-	self.extra_stretch_size = self.style.EXTRA_STRECH_SIZE
 
 	update_size(self)
 end
@@ -486,10 +505,10 @@ end
 --- Set extra size for scroll stretching.
 -- Set 0 to disable stretching effect
 -- @function scroll:set_extra_strech_size
--- @tparam number stretch_size Size in pixels of additional scroll area
+-- @tparam[opt=0] number stretch_size Size in pixels of additional scroll area
 -- @treturn druid.scroll Self instance
 function M.set_extra_strech_size(self, stretch_size)
-	self.extra_stretch_size = stretch_size or self.style.EXTRA_STRECH_SIZE
+	self.style.EXTRA_STRECH_SIZE = stretch_size or 0
 	update_size(self)
 
 	return self

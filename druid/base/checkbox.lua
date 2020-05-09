@@ -11,10 +11,6 @@
 -- @tfield[opt=node] node click_node Button trigger node
 -- @tfield druid.button button Button component from click_node
 
---- Component style params
--- @table Style
--- @tfield function on_change_state (self, node, state)
-
 local Event = require("druid.event")
 local component = require("druid.component")
 
@@ -26,13 +22,26 @@ local function on_click(self)
 end
 
 
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield function on_change_state (self, node, state)
+function M.on_style_change(self, style)
+	self.style = {}
+
+	self.style.on_change_state = style.on_change_state or function(_, node, state)
+		gui.set_enabled(node, state)
+	end
+end
+
+
 --- Component init function
 -- @function checkbox:init
 -- @tparam node node Gui node
 -- @tparam function callback Checkbox callback
 -- @tparam[opt=node] node click node Trigger node, by default equals to node
 function M.init(self, node, callback, click_node)
-	self.style = self:get_style()
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 	self.click_node = self:get_node(click_node)
@@ -54,9 +63,7 @@ function M.set_state(self, state, is_silent)
 	end
 
 	self.state = state
-	if self.style.on_change_state then
-		self.style.on_change_state(self, self.node, state)
-	end
+	self.style.on_change_state(self, self.node, state)
 
 	if not is_silent then
 		self.on_change_state:trigger(self:get_context(), state)

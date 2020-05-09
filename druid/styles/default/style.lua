@@ -118,10 +118,6 @@ M["input"] = {
 	end,
 
 	button = {
-		BTN_SOUND = "click",
-		BTN_SOUND_DISABLED = "click",
-		DISABLED_COLOR = vmath.vector4(0, 0, 0, 1),
-		ENABLED_COLOR = vmath.vector4(1),
 		LONGTAP_TIME = 0.4,
 		AUTOHOLD_TRIGGER = 0.8,
 		DOUBLETAP_TIME = 0.4,
