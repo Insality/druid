@@ -70,10 +70,23 @@ Druid 0.4.0:
 	- **Resolve #52**: _Content node size_ now can be less than _view node size_. In this case, content will be scrolled only inside _view size_
 	- **Fix #50**: If style:SOFT_ZONE_SIZE equals to [0..1], scroll can be disappeared
 
-- _Grid_ anchor by default equals to node pivot (so, more gui settings in _.gui_ settings)
+- Druid _Grid_ Update
+	- Anchor by default equals to node pivot (so, more component settings in _.gui_ settings) (#51)
+	- Function `grid:clear` now don't delete any GUI nodes. Druid will not care about `gui.delete_node` logic anymore (#56)
 
-- _Hover_ component now have two hover events:
+- Druid _Hover_ component now have two _hover_ events (#49):
 	- _on_hover_ is old hover event. Trigger only if touch pressed on node
 	- _on_mouse_hover_ action on node without action_id (desktop mouse over). Works only on desktop platform
 
+- Styles update:
+	- Styles table now can be empty, every component have their default style values
+	- Remove `component:get_style` function. Now style can be only set
+	- To get style values in component, add `component:on_style_change` function. It's invoked on `component:set_style` function
+	- You can look up default values inside `component:on_style_change` function or style component API on Druid API
+
+- Druid update:
+	- Now function `druid:remove` remove instance and all instance children components. No more manual deleting child components (#41)
+
 - **Fix:** Blocker component bug (blocker had very high priority, so it's block even button components, created after bloker)
+- **Fix #58:** Bug, when druid instance should be always named `druid` (ex: `self.druid = druid.new(self)`)
+- **Fix #53:** Bug with final _Druid instance_ without any components

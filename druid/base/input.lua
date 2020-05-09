@@ -103,9 +103,9 @@ function M.on_style_change(self, style)
 	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
 	self.style.MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*"
 
-	self.style.on_select = style.on_select or function(self, button_node) end
-	self.style.on_unselect = style.on_unselect or function(self, button_node) end
-	self.style.on_input_wrong = style.on_input_wrong or function(self, button_node) end
+	self.style.on_select = style.on_select or function(_, button_node) end
+	self.style.on_unselect = style.on_unselect or function(_, button_node) end
+	self.style.on_input_wrong = style.on_input_wrong or function(_, button_node) end
 
 	self.style.button_style = style.button_style or {
 		LONGTAP_TIME = 0.4,

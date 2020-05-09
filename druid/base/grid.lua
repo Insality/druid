@@ -161,6 +161,11 @@ end
 -- If you want to delete GUI nodes, use grid.nodes array before grid:clear
 -- @function grid:clear
 function M.clear(self)
+	self.border.x = 0
+	self.border.y = 0
+	self.border.w = 0
+	self.border.z = 0
+
 	self.nodes = {}
 end
 
