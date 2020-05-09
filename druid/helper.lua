@@ -126,6 +126,11 @@ function M.round(num, numDecimalPlaces)
 end
 
 
+function M.lerp(a, b, t)
+	return a + (b - a) * t
+end
+
+
 --- Check if node is enabled in gui hierarchy.
 -- Return false, if node or any his parent is disabled
 -- @function helper.is_enabled
@@ -151,5 +156,36 @@ function M.get_pivot_offset(pivot)
 	return const.PIVOTS[pivot]
 end
 
+
+--- Check if device is mobile (Android or iOS)
+-- @function helper..is_mobile
+function M.is_mobile()
+	local system_name = sys.get_sys_info().system_name
+	return system_name == const.OS.IOS or system_name == const.OS.ANDROID
+end
+
+
+--- Check if device is HTML5
+-- @function helper.is_web
+function M.is_web()
+	local system_name = sys.get_sys_info().system_name
+	return system_name == const.OS.BROWSER
+end
+
+
+--- Distance from node to size border
+-- @function helper.get_border
+-- @return vector4 (left, top, right, down)
+function M.get_border(node)
+	local pivot = gui.get_pivot(node)
+	local pivot_offset = M.get_pivot_offset(pivot)
+	local size = vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
+	return vmath.vector4(
+		-size.x*(0.5 + pivot_offset.x),
+		size.y*(0.5 - pivot_offset.y),
+		size.x*(0.5 - pivot_offset.x),
+		-size.y*(0.5 + pivot_offset.y)
+	)
+end
 
 return M

@@ -16,6 +16,7 @@
 -- @see druid.checkbox_group
 -- @see druid.radio_group
 -- @see druid.swipe
+-- @see druid.drag
 
 local const = require("druid.const")
 local druid_input = require("druid.helper.druid_input")
@@ -38,6 +39,7 @@ local checkbox_group = require("druid.base.checkbox_group")
 local radio_group = require("druid.base.radio_group")
 local input = require("druid.base.input")
 local swipe = require("druid.base.swipe")
+local drag = require("druid.base.drag")
 -- local infinity_scroll = require("druid.base.infinity_scroll")
 
 -- @classmod Druid
@@ -59,23 +61,17 @@ end
 -- Create the component itself
 local function create(self, instance_class)
 	local instance = instance_class()
-	instance:setup_component(self._context, self._style)
+	instance:setup_component(self, self._context, self._style)
 
-	self.components[const.ALL] = self.components[const.ALL] or {}
 	table.insert(self.components[const.ALL], instance)
 
 	local register_to = instance:get_interests()
-	if register_to then
-		for i = 1, #register_to do
-			local interest = register_to[i]
-			if not self.components[interest] then
-				self.components[interest] = {}
-			end
-			table.insert(self.components[interest], instance)
+	for i = 1, #register_to do
+		local interest = register_to[i]
+		table.insert(self.components[interest], instance)
 
-			if const.UI_INPUT[interest] then
-				input_init(self)
-			end
+		if const.UI_INPUT[interest] then
+			input_init(self)
 		end
 	end
 
@@ -84,7 +80,7 @@ end
 
 
 local function process_input(action_id, action, components, is_input_consumed)
-	if not components then
+	if #components == 0 then
 		return is_input_consumed
 	end
 
@@ -128,7 +124,11 @@ function Druid.initialize(self, context, style)
 	self._style = style or settings.default_style
 	self._deleted = false
 	self.url = msg.url()
+
 	self.components = {}
+	for i = 1, #const.ALL_INTERESTS do
+		self.components[const.ALL_INTERESTS[i]] = {}
+	end
 end
 
 
@@ -170,6 +170,14 @@ end
 function Druid.remove(self, component)
 	local all_components = self.components[const.ALL]
 
+	-- Recursive remove all children of component
+	for i = 1, #all_components do
+		local inst = all_components[i]
+		if inst:is_child_of(component) then
+			self:remove(inst)
+		end
+	end
+
 	for i = #all_components, 1, -1 do
 		if all_components[i] == component then
 			if component.on_remove then
@@ -180,14 +188,12 @@ function Druid.remove(self, component)
 	end
 
 	local interests = component:get_interests()
-	if interests then
-		for i = 1, #interests do
-			local interest = interests[i]
-			local components = self.components[interest]
-			for j = #components, 1, -1 do
-				if components[j] == component then
-					table.remove(components, j)
-				end
+	for i = 1, #interests do
+		local interest = interests[i]
+		local components = self.components[interest]
+		for j = #components, 1, -1 do
+			if components[j] == component then
+				table.remove(components, j)
 			end
 		end
 	end
@@ -199,10 +205,8 @@ end
 -- @tparam number dt Delta time
 function Druid.update(self, dt)
 	local components = self.components[const.ON_UPDATE]
-	if components then
-		for i = 1, #components do
-			components[i]:update(dt)
-		end
+	for i = 1, #components do
+		components[i]:update(dt)
 	end
 end
 
@@ -231,6 +235,7 @@ end
 -- @tparam hash sender Sender from on_message
 function Druid.on_message(self, message_id, message, sender)
 	local specific_ui_message = const.SPECIFIC_UI_MESSAGES[message_id]
+
 	if specific_ui_message then
 		local components = self.components[message_id]
 		if components then
@@ -241,10 +246,8 @@ function Druid.on_message(self, message_id, message, sender)
 		end
 	else
 		local components = self.components[const.ON_MESSAGE]
-		if components then
-			for i = 1, #components do
-				components[i]:on_message(message_id, message, sender)
-			end
+		for i = 1, #components do
+			components[i]:on_message(message_id, message, sender)
 		end
 	end
 end
@@ -255,10 +258,8 @@ end
 -- @function druid:on_focus_lost
 function Druid.on_focus_lost(self)
 	local components = self.components[const.ON_FOCUS_LOST]
-	if components then
-		for i = 1, #components do
-			components[i]:on_focus_lost()
-		end
+	for i = 1, #components do
+		components[i]:on_focus_lost()
 	end
 end
 
@@ -268,10 +269,8 @@ end
 -- @function druid:on_focus_gained
 function Druid.on_focus_gained(self)
 	local components = self.components[const.ON_FOCUS_GAINED]
-	if components then
-		for i = 1, #components do
-			components[i]:on_focus_gained()
-		end
+	for i = 1, #components do
+		components[i]:on_focus_gained()
 	end
 end
 
@@ -281,10 +280,8 @@ end
 -- @function druid:on_layout_change
 function Druid.on_layout_change(self)
 	local components = self.components[const.ON_LAYOUT_CHANGE]
-	if components then
-		for i = 1, #components do
-			components[i]:on_layout_change()
-		end
+	for i = 1, #components do
+		components[i]:on_layout_change()
 	end
 end
 
@@ -295,10 +292,8 @@ end
 -- @function druid.on_language_change
 function Druid.on_language_change(self)
 	local components = self.components[const.ON_LANGUAGE_CHANGE]
-	if components then
-		for i = 1, #components do
-			components[i]:on_language_change()
-		end
+	for i = 1, #components do
+		components[i]:on_language_change()
 	end
 end
 
@@ -444,6 +439,15 @@ end
 -- @treturn Component swipe component
 function Druid.new_swipe(self, ...)
 	return Druid.create(self, swipe, ...)
+end
+
+
+--- Create drag basic component
+-- @function druid:new_drag
+-- @tparam args ... drag init args
+-- @treturn Componetn drag component
+function Druid.new_drag(self, ...)
+	return Druid.create(self, drag, ...)
 end
 
 

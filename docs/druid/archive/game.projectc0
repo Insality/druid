@@ -1,6 +1,6 @@
 [project]
 title = druid
-version = 0.2.0
+version = 0.4.0
 write_log = 0
 compress_archive = 1
 
@@ -14,7 +14,12 @@ update_frequency = 0
 vsync = 1
 display_profiles = /builtins/render/default.display_profilesc
 dynamic_orientation = 0
-clear_color = 0
+
+[render]
+clear_color_red = 0
+clear_color_green = 0
+clear_color_blue = 0
+clear_color_alpha = 0
 
 [physics]
 type = 2D
@@ -153,6 +158,9 @@ settings = /liveupdate.settings
 [tilemap]
 max_count = 16
 max_tile_count = 2048
+
+[engine]
+run_while_iconified = 0
 
 [druid]
 no_auto_input = 0

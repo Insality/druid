@@ -3,12 +3,12 @@ local druid = require("druid.druid")
 local empty_style = require("druid.styles.empty.style")
 local default_style = require("druid.styles.default.style")
 
-local main_page = require("example.page.main")
-local text_page = require("example.page.texts")
-local button_page = require("example.page.button")
-local scroll_page = require("example.page.scroll")
-local slider_page = require("example.page.slider")
-local input_page = require("example.page.input")
+local main_page = require("example.page.main_page")
+local text_page = require("example.page.texts_page")
+local button_page = require("example.page.button_page")
+local scroll_page = require("example.page.scroll_page")
+local slider_page = require("example.page.slider_page")
+local input_page = require("example.page.input_page")
 
 local pages = {
 	"main_page",
@@ -21,12 +21,8 @@ local pages = {
 
 local function on_control_button(self, delta)
 	self.page = self.page + delta
-	if self.page < 1 then
-		self.page = #pages
-	end
-	if self.page > #pages then
-		self.page = 1
-	end
+	self.page = math.max(1, self.page)
+	self.page = math.min(self.page, #pages)
 
 	self.header:translate(pages[self.page])
 	local node = gui.get_node("C_Anchor")
@@ -35,6 +31,7 @@ end
 
 
 local function init_top_panel(self)
+	self.druid:new_blocker("panel_top")
 	self.druid:new_button("button_left/button", on_control_button, -1)
 	self.druid:new_button("button_right/button", on_control_button, 1)
 	self.header = self.druid:new_lang_text("text_header", "main_page")
@@ -64,8 +61,8 @@ function init(self)
 
 	window.set_listener(on_window_callback)
 
-	init_top_panel(self)
 	init_swipe_control(self)
+
 	self.page = 1
 	main_page.setup_page(self)
 	text_page.setup_page(self)
@@ -73,6 +70,8 @@ function init(self)
 	scroll_page.setup_page(self)
 	slider_page.setup_page(self)
 	input_page.setup_page(self)
+
+	init_top_panel(self)
 
 	-- Refresh state
 	on_control_button(self, 0)

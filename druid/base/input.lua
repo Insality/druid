@@ -22,16 +22,6 @@
 -- @tfield[opt] string allowerd_characters Pattern matching for user input
 -- @tfield number keyboard_type Gui keyboard type for input field
 
---- Component style params
--- @table Style
--- @tfield bool IS_LONGTAP_ERASE Is long tap will erase current input data
--- @tfield number BUTTON_SELECT_INCREASE Button scale multiplier on selecting input field
--- @tfield string MASK_DEFAULT_CHAR Default character mask for password input
--- @tfield function on_select (self, button_node) Callback on input field selecting
--- @tfield function on_unselect (self, button_node) Callback on input field unselecting
--- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
--- @tfield table button Custom button style for input node
-
 local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
@@ -67,9 +57,7 @@ local function select(self)
 		gui.show_keyboard(self.keyboard_type, false)
 		self.on_input_select:trigger(self:get_context())
 
-		if self.style.on_select then
-			self.style.on_select(self, self.button.node)
-		end
+		self.style.on_select(self, self.button.node)
 	end
 end
 
@@ -85,9 +73,7 @@ local function unselect(self)
 		gui.hide_keyboard()
 		self.on_input_unselect:trigger(self:get_context())
 
-		if self.style.on_unselect then
-			self.style.on_unselect(self, self.button.node)
-		end
+		self.style.on_unselect(self, self.button.node)
 	end
 end
 
@@ -101,9 +87,36 @@ local function clear_and_select(self)
 end
 
 
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield[opt=false] bool IS_LONGTAP_ERASE Is long tap will erase current input data
+-- @tfield[opt=*] string MASK_DEFAULT_CHAR Default character mask for password input
+-- @tfield function on_select (self, button_node) Callback on input field selecting
+-- @tfield function on_unselect (self, button_node) Callback on input field unselecting
+-- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
+-- @tfield table button_style Custom button style for input node
+function M.on_style_change(self, style)
+	self.style = {}
+
+	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
+	self.style.MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*"
+
+	self.style.on_select = style.on_select or function(_, button_node) end
+	self.style.on_unselect = style.on_unselect or function(_, button_node) end
+	self.style.on_input_wrong = style.on_input_wrong or function(_, button_node) end
+
+	self.style.button_style = style.button_style or {
+		LONGTAP_TIME = 0.4,
+		AUTOHOLD_TRIGGER = 0.8,
+		DOUBLETAP_TIME = 0.4
+	}
+end
+
+
 function M.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
-	self.style = self:get_style(self)
 	self.text = self.druid:new_text(text_node)
 
 	self.selected = false
@@ -123,7 +136,7 @@ function M.init(self, click_node, text_node, keyboard_type)
 	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_DEFAULT
 
 	self.button = self.druid:new_button(click_node, select)
-	self.button:set_style(self.style)
+	self.button:set_style(self.button_style)
 	self.button.on_click_outside:subscribe(unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
 
@@ -158,9 +171,7 @@ function M.on_input(self, action_id, action)
 					end
 				else
 					self.on_input_wrong:trigger(self:get_context(), action.text)
-					if self.style.on_input_wrong then
-						self.style.on_input_wrong(self, self.button.node)
-					end
+					self.style.on_input_wrong(self, self.button.node)
 				end
 				self.marked_value = ""
 			end
@@ -271,7 +282,7 @@ end
 -- Pass nil to make input field unliminted (by default)
 -- @function input:set_max_length
 -- @tparam number max_length Maximum length for input text field
--- @tparam druid.input Self instance to make chain calls
+-- @treturn druid.input Self instance to make chain calls
 function M.set_max_length(self, max_length)
 	self.max_length = max_length
 	return self
@@ -283,7 +294,7 @@ end
 -- ex: [%a%d] for alpha and numeric
 -- @function input:set_allowerd_characters
 -- @tparam string characters Regulax exp. for validate user input
--- @tparam druid.input Self instance to make chain calls
+-- @treturn druid.input Self instance to make chain calls
 function M.set_allowed_characters(self, characters)
 	self.allowed_characters = characters
 	return self

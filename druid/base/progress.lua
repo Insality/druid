@@ -15,11 +15,6 @@
 -- @tfield number max_size Maximum size of progress bar
 -- @tfield vector4 slice Progress bar slice9 settings
 
---- Component style params
--- @table Style
--- @tfield number SPEED Progress bas fill rate. More -> faster
--- @tfield number MIN_DELTA Minimum step to fill progress bar
-
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -70,6 +65,19 @@ local function set_bar_to(self, set_to, is_silent)
 end
 
 
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield[opt=5] number SPEED Progress bas fill rate. More -> faster
+-- @tfield[opt=0.005] number MIN_DELTA Minimum step to fill progress bar
+function M.on_style_change(self, style)
+	self.style = {}
+	self.style.SPEED = style.SPEED or 5
+	self.style.MIN_DELTA = style.MIN_DELTA or 0.005
+end
+
+
 --- Component init function
 -- @function progress:init
 -- @tparam string|node node Progress bar fill node or node name
@@ -81,7 +89,6 @@ function M.init(self, node, key, init_value)
 	self.prop = hash("scale."..key)
 	self.key = key
 
-	self.style = self:get_style()
 	self.node = self:get_node(node)
 	self.scale = gui.get_scale(self.node)
 	self.size = gui.get_size(self.node)

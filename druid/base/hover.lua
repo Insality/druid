@@ -3,7 +3,8 @@
 
 --- Component events
 -- @table Events
--- @tfield druid_event on_hover On hover callback
+-- @tfield druid_event on_hover On hover callback (Touch pressed)
+-- @tfield druid_event on_mouse_hover On mouse hover callback (Touch over without action_id)
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -18,18 +19,22 @@ local M = component.create("hover", { const.ON_INPUT })
 -- @tparam node node Gui node
 -- @tparam function on_hover_callback Hover callback
 function M.init(self, node, on_hover_callback)
-	self.style = self:get_style()
 	self.node = self:get_node(node)
 
 	self._is_hovered = false
 
 	self.on_hover = Event(on_hover_callback)
+	self.on_mouse_hover = Event()
 end
 
 
 function M.on_input(self, action_id, action)
-	if action_id ~= const.ACTION_TOUCH then
+	if action_id ~= const.ACTION_TOUCH and action_id ~= nil then
 		return
+	end
+
+	if not action_id and helper.is_mobile() then
+		return false
 	end
 
 	if not helper.is_enabled(self.node) then
@@ -41,15 +46,17 @@ function M.on_input(self, action_id, action)
 		is_pick = is_pick and gui.pick_node(self.click_zone, action.x, action.y)
 	end
 
+	local hover_function = action_id and M.set_hover or M.set_mouse_hover
+
 	if not is_pick then
-		M.set_hover(self, false)
+		hover_function(self, false)
 		return false
 	end
 
 	if action.released then
-		M.set_hover(self, false)
+		hover_function(self, false)
 	else
-		M.set_hover(self, true)
+		hover_function(self, true)
 	end
 end
 
@@ -66,6 +73,16 @@ function M.set_hover(self, state)
 	if self._is_hovered ~= state then
 		self._is_hovered = state
 		self.on_hover:trigger(self:get_context(), state)
+	end
+end
+
+--- Set mouse hover state
+-- @function hover:set_mouse_hover
+-- @tparam bool state The mouse hover state
+function M.set_mouse_hover(self, state)
+	if self._is_mouse_hovered ~= state then
+		self._is_mouse_hovered = state
+		self.on_mouse_hover:trigger(self:get_context(), state)
 	end
 end
 

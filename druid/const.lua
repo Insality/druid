@@ -14,6 +14,7 @@ M.ACTION_ESC = hash("key_esc")
 
 M.ACTION_TOUCH = hash("touch")
 M.ACTION_SCROLL_UP = hash("scroll_up")
+M.ACTION_MULTITOUCH = hash("multitouch")
 M.ACTION_SCROLL_DOWN = hash("scroll_down")
 
 
@@ -34,6 +35,19 @@ M.ON_FOCUS_LOST = hash("on_focus_lost")
 M.ON_FOCUS_GAINED = hash("on_focus_gained")
 M.ON_LAYOUT_CHANGE = hash("on_layout_change")
 M.ON_LANGUAGE_CHANGE = hash("on_language_change")
+
+
+M.ALL_INTERESTS = {
+	M.ALL,
+	M.ON_INPUT,
+	M.ON_UPDATE,
+	M.ON_MESSAGE,
+	M.ON_FOCUS_LOST,
+	M.ON_INPUT_HIGH,
+	M.ON_FOCUS_GAINED,
+	M.ON_LAYOUT_CHANGE,
+	M.ON_LANGUAGE_CHANGE,
+}
 
 
 M.PIVOTS = {
@@ -63,10 +77,21 @@ M.UI_INPUT = {
 }
 
 
+M.OS = {
+	ANDROID = "Android",
+	IOS = "iPhone OS",
+	MAC = "Darwin",
+	LINUX = "Linux",
+	WINDOWS = "Windows",
+	BROWSER = "HTML5",
+}
+
+
 M.SIDE = {
 	X = "x",
 	Y = "y"
 }
+
 
 M.SWIPE = {
 	UP = "up",

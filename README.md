@@ -22,11 +22,12 @@ Or point to the ZIP file of a  [specific release](https://github.com/Insality/dr
 
 For **Druid** to work requires next input bindings:
 
--   Mouse trigger - `Button 1` -> `touch` _For basic input components_
--   Key trigger - `Backspace` -> `key_backspace`  _For back_handler component, input component_
--   Key trigger - `Back` -> `key_back`  _For back_handler component, Android back button, input component_
+- Mouse trigger - `Button 1` -> `touch` _For basic input components_
+- Key trigger - `Backspace` -> `key_backspace`  _For back_handler component, input component_
+- Key trigger - `Back` -> `key_back`  _For back_handler component, Android back button, input component_
 - Key trigger - `Enter` -> `key_enter` _For input component, optional_
 - Key trigger - `Esc` -> `key_esc` _For input component, optional_
+- Touch triggers - `Touch multi` -> `multitouch` _For scroll component_
 
 ![](media/input_binding_2.png)
 ![](media/input_binding_1.png)
@@ -61,7 +62,7 @@ druid.set_default_style(your_style)
 
 -- Call this function on language changing in the game,
 -- to retranslate all lang_text components:
-druid.on_languge_change()
+druid.on_language_change()
 
 -- Call this function on layout changing in the game,
 -- to reapply layouts
@@ -108,6 +109,8 @@ druid.on_window_callback(event)
 - **[Hover](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#hover)** - System Druid component, handle hover node state
 
 - **[Swipe](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
+
+- **[Drag](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#drag)** - System Druid component, handle drag input on node 
 
 Full info see on _[components.md](https://github.com/Insality/druid/blob/master/docs_md/01-components.md)_
 
@@ -183,7 +186,7 @@ end
 
 - *on_input* used for almost all basic druid components
 - *update* used for progress bar, scroll and timer base components
-- *on_message* used for specific druid events, like language change or layout change (TODO: in future)
+- *on_message* used for specific druid events, like language change or layout change
 - *final* used for custom components, what have to do several action before destroy
 
 Recommended is fully integrate al druid lifecycles functions
@@ -223,13 +226,11 @@ _Will fill later_
 
 ## License
 
-Original created by [AGulev](https://github.com/AGulev)
+- Original created by [AGulev](https://github.com/AGulev)
+- Developed and supporting by [Insality](https://github.com/Insality)
+- Assets from [Kenney](http://www.kenney.nl/)
 
-Developed and supporting by [Insality](https://github.com/Insality)
-
-Assets from [Kenney](http://www.kenney.nl/)
-
-MIT License
+**MIT** License
 
 
 ## Issues and suggestions

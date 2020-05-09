@@ -20,6 +20,7 @@
 -- @tfield vector3 border_offer The border offset for correct anchor calculations
 
 local Event = require("druid.event")
+local helper = require("druid.helper")
 local component = require("druid.component")
 
 local M = component.create("grid")
@@ -35,7 +36,10 @@ function M.init(self, parent, element, in_row)
 	self.nodes = {}
 
 	self.offset = vmath.vector3(0)
-	self.anchor = vmath.vector3(0.5, 0, 0)
+
+	local pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
+	self.anchor = vmath.vector3(0.5 + pivot.x, 0.5 - pivot.y, 0)
+
 	self.in_row = in_row or 1
 	self.node_size = gui.get_size(self:get_node(element))
 	self.border = vmath.vector4(0)
@@ -153,12 +157,15 @@ function M.get_all_pos(self)
 end
 
 
---- Clear all items from the grid
+--- Clear grid nodes array. GUI nodes will be not deleted!
+-- If you want to delete GUI nodes, use grid.nodes array before grid:clear
 -- @function grid:clear
 function M.clear(self)
-	for i = 1, #self.nodes do
-		gui.delete_node(self.nodes[i])
-	end
+	self.border.x = 0
+	self.border.y = 0
+	self.border.w = 0
+	self.border.z = 0
+
 	self.nodes = {}
 end
 
