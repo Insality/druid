@@ -21,13 +21,6 @@
 -- @tfield druid.hover hover Druid hover logic component
 -- @tfield[opt] node click_zone Restriction zone
 
---- Component style params
--- @table Style
--- @tfield function on_click (self, node)
--- @tfield function on_click_disabled (self, node)
--- @tfield function on_hover (self, node, hover_state)
--- @tfield function on_set_enabled (self, node, enabled_state)
-
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -136,23 +129,29 @@ local function on_button_release(self)
 end
 
 
---- Change style of component.
--- This function can be called before component:init. This callback
--- only for store component style params inside self context
--- @function button:on_style_change
--- @tparam table style The component style table
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield[opt=0.4] number LONGTAP_TIME Minimum time to trigger on_hold_callback
+-- @tfield[opt=0.8] number AUTOHOLD_TRIGGER Maximum hold time to trigger button release while holding
+-- @tfield[opt=0.4] number DOUBLETAP_TIME Time between double taps
+-- @tfield function on_click (self, node)
+-- @tfield function on_click_disabled (self, node)
+-- @tfield function on_hover (self, node, hover_state)
+-- @tfield function on_mouse_hover (self, node, hover_state)
+-- @tfield function on_set_enabled (self, node, enabled_state)
 function M.on_style_change(self, style)
 	self.style = {}
-	self.style.HOVER_SCKCOLOR = style.HOVER_SCKCOLOR or vmath.vector4(1)
 	self.style.LONGTAP_TIME = style.LONGTAP_TIME or 0.4
 	self.style.AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8
 	self.style.DOUBLETAP_TIME = style.DOUBLETAP_TIME or 0.4
 
-	self.style.on_hover = style.on_hover or function(self, node, state) end
-	self.style.on_mouse_hover = style.on_mouse_hover or function(self, node, state) end
-	self.style.on_click = style.on_click or function(self, node) end
-	self.style.on_click_disabled = style.on_click_disabled or function(self, node) end
-	self.style.on_set_enabled = style.on_set_enabled or function(self, node, state) end
+	self.style.on_click = style.on_click or function(_, node) end
+	self.style.on_click_disabled = style.on_click_disabled or function(_, node) end
+	self.style.on_mouse_hover = style.on_mouse_hover or function(_, node, state) end
+	self.style.on_hover = style.on_hover or function(_, node, state) end
+	self.style.on_set_enabled = style.on_set_enabled or function(_, node, state) end
 end
 
 

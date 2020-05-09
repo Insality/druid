@@ -11,10 +11,6 @@
 -- @tfield[opt=node] node click_node Button trigger node
 -- @tfield druid.button button Button component from click_node
 
---- Component style params
--- @table Style
--- @tfield function on_change_state (self, node, state)
-
 local Event = require("druid.event")
 local component = require("druid.component")
 
@@ -26,15 +22,15 @@ local function on_click(self)
 end
 
 
---- Change style of component.
--- This function can be called before component:init. This callback
--- only for store component style params inside self context
--- @function checkbox:on_style_change
--- @tparam table style The component style table
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield function on_change_state (self, node, state)
 function M.on_style_change(self, style)
 	self.style = {}
 
-	self.style.on_change_state = style.on_change_state or function(self, node, state)
+	self.style.on_change_state = style.on_change_state or function(_, node, state)
 		gui.set_enabled(node, state)
 	end
 end

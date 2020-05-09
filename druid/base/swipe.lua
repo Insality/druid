@@ -12,12 +12,6 @@
 -- @table Events
 -- @tfield druid_event on_swipe Trigger on swipe event
 
---- Component style params
--- @table Style
--- @tfield number SWIPE_TIME Maximum time for swipe trigger
--- @tfield number SWIPE_THRESHOLD Minimum distance for swipe trigger
--- @tfield bool SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action
-
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -48,6 +42,7 @@ local function check_swipe(self, action)
 	if is_swipe then
 		local is_x_swipe = math.abs(dx) >= math.abs(dy)
 		local swipe_side = false
+
 		if is_x_swipe and dx > 0 then
 			swipe_side = const.SWIPE.RIGHT
 		end
@@ -67,15 +62,17 @@ local function check_swipe(self, action)
 end
 
 
---- Change style of component.
--- This function can be called before component:init. This callback
--- only for store component style params inside self context
--- @function swipe:on_style_change
--- @tparam table style The component style table
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield[opt=0.4] number SWIPE_TIME Maximum time for swipe trigger
+-- @tfield[opt=50] number SWIPE_THRESHOLD Minimum distance for swipe trigger
+-- @tfield[opt=false] bool SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action
 function M.on_style_change(self, style)
 	self.style = {}
-	self.style.SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50
 	self.style.SWIPE_TIME = style.SWIPE_TIME or 0.4
+	self.style.SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50
 	self.style.SWIPE_TRIGGER_ON_MOVE = style.SWIPE_TRIGGER_ON_MOVE or false
 end
 

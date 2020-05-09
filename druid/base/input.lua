@@ -22,15 +22,6 @@
 -- @tfield[opt] string allowerd_characters Pattern matching for user input
 -- @tfield number keyboard_type Gui keyboard type for input field
 
---- Component style params
--- @table Style
--- @tfield bool IS_LONGTAP_ERASE Is long tap will erase current input data
--- @tfield string MASK_DEFAULT_CHAR Default character mask for password input
--- @tfield function on_select (self, button_node) Callback on input field selecting
--- @tfield function on_unselect (self, button_node) Callback on input field unselecting
--- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
--- @tfield table button Custom button style for input node
-
 local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
@@ -96,11 +87,16 @@ local function clear_and_select(self)
 end
 
 
---- Change style of component.
--- This function can be called before component:init. This callback
--- only for store component style params inside self context
--- @function input:on_style_change
--- @tparam table style The component style table
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield[opt=false] bool IS_LONGTAP_ERASE Is long tap will erase current input data
+-- @tfield[opt=*] string MASK_DEFAULT_CHAR Default character mask for password input
+-- @tfield function on_select (self, button_node) Callback on input field selecting
+-- @tfield function on_unselect (self, button_node) Callback on input field unselecting
+-- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
+-- @tfield table button_style Custom button style for input node
 function M.on_style_change(self, style)
 	self.style = {}
 
@@ -140,7 +136,7 @@ function M.init(self, click_node, text_node, keyboard_type)
 	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_DEFAULT
 
 	self.button = self.druid:new_button(click_node, select)
-	self.button:set_style(self.style)
+	self.button:set_style(self.button_style)
 	self.button.on_click_outside:subscribe(unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
 

@@ -27,18 +27,6 @@
 -- @tfield[opt] selected Current index of points of interests
 -- @tfield bool is_animate Flag, if scroll now animating by gui.animate
 
---- Component style params
--- @table Style
--- @tfield number FRICT_HOLD Multiplier for inertion, while touching
--- @tfield number FRICT Multiplier for free inertion
--- @tfield number INERT_THRESHOLD Scroll speed to stop inertion
--- @tfield number INERT_SPEED Multiplier for inertion speed
--- @tfield number POINTS_DEADZONE Speed to check points of interests in no_inertion mode
--- @tfield number BACK_SPEED Scroll back returning lerp speed
--- @tfield number ANIM_SPEED Scroll gui.animation speed for scroll_to function
--- @tfield number EXTRA_STRECH_SIZE extra size in pixels outside of scroll (stretch effect)
--- @tfield bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
-
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -326,11 +314,19 @@ local function update_size(self)
 end
 
 
---- Change style of component.
--- This function can be called before component:init. This callback
--- only for store component style params inside self context
--- @function scroll:on_style_change
--- @tparam table style The component style table
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table Style
+-- @tfield[opt=0] number FRICT Multiplier for free inertion
+-- @tfield[opt=0] number FRICT_HOLD Multiplier for inertion, while touching
+-- @tfield[opt=3] number INERT_THRESHOLD Scroll speed to stop inertion
+-- @tfield[opt=30] number INERT_SPEED Multiplier for inertion speed
+-- @tfield[opt=20] number POINTS_DEADZONE Speed to check points of interests in no_inertion mode
+-- @tfield[opt=0.35] number BACK_SPEED Scroll back returning lerp speed
+-- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
+-- @tfield[opt=0] number EXTRA_STRECH_SIZE extra size in pixels outside of scroll (stretch effect)
+-- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
 function M.on_style_change(self, style)
 	self.style = {}
 	self.style.EXTRA_STRECH_SIZE = style.EXTRA_STRECH_SIZE or 0
