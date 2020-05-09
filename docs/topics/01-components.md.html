@@ -48,6 +48,7 @@
 <li><a href="#Grid">Grid </a></li>
 <li><a href="#Hover">Hover </a></li>
 <li><a href="#Swipe">Swipe </a></li>
+<li><a href="#Drag">Drag </a></li>
 </ul>
 
 
@@ -158,7 +159,7 @@ Where node name is name of node from GUI scene. You can use <code>node_name</cod
 
 <p><a name="Blocker"></a></p>
 <h2>Blocker</h2>
-<p><a href="https://insality.github.io/druid/modules/druid.button.html">Blocker API here</a></p>
+<p><a href="https://insality.github.io/druid/modules/druid.blocker.html">Blocker API here</a></p>
 
 <h3>Overview</h3>
 <p>Druid component for block input. Use it to block input in special zone.</p>
@@ -211,32 +212,35 @@ Where node name is name of node from GUI scene. You can use <code>node_name</cod
 <p>Basic Druid scroll component. Handle all scrolling stuff in druid GUI</p>
 
 <h3>Setup</h3>
-<p>Create scroll component with druid: <code>scroll = druid:new_scroll(scroll_parent, scroll_input)</code>.</p>
+<p>Create scroll component with druid: <code>scroll = druid:new_scroll(view_node, content_node)</code>.</p>
 
-<p><em>Scroll parent</em> - is dynamic part. This node will change position by scroll system</p>
+<p><em>View</em>node_ - is static part. It capturing user input and recognize scrolling touches</p>
 
-<p><em>Scroll input</em> - is static part. It capturing user input and recognize scrolling touches</p>
+<p><em>Content</em>node_ - is dynamic part. This node will change position by scroll system</p>
 
-<p>Initial scroll size will be equal to <em>scroll parent</em> node size. The initial view box will be equal to <em>scroll input</em> node size</p>
+<p>Initial scroll size will be equal to <em>content</em>node_ node size. The initial view box will be equal to <em>view</em>node_ node size</p>
 
-<p>Usually, Place static input zone part, and as children add scroll parent part:
+<p>Usually, Place <em>view</em>node_ and as children add <em>content</em>node_:
 <img src="../media/scroll_scheme.png" alt=""/>
 <img src="../media/scroll_outline.png" alt=""/></p>
 
-<p>*Here scroll<em>content</em>zone below input zone, in game content zone be able to scroll left until end*</p>
+<p>*Here content<em>node below view</em>node, in game content_node be able to scroll left until end*</p>
 
 <h3>Notes</h3>
-<p>- Scroll by default style have inertion and "back moving". It can be adjust via scroll <a href="https://insality.github.io/druid/modules/druid.scroll.html#Style">style settings</a>
+<p>- Scroll by default style have inertion and extra size for strecthing effect. It can be adjust via scroll <a href="https://insality.github.io/druid/modules/druid.scroll.html#Style">style settings</a>
 - You can setup "points of interest". Scroll always will be centered on closes point of interest. It is able to create slider without inertion and points of interest on each scroll element.
 - Scroll have next events:</p>
 
 <pre>
-- *on_scroll* On scroll move callback
-- *on_scroll_to* On scroll_to <span class="keyword">function</span> callback
-- *on_point_scroll* On scroll_to_index <span class="keyword">function</span> callback
+- *on_scroll* (self, position) On scroll move callback
+- *on_scroll_to* (self, position, is_instant) On scroll_to <span class="keyword">function</span> callback
+- *on_point_scroll* (self, item_index, position) On scroll_to_index <span class="keyword">function</span> callback
 </pre>
 
-<p>- You can adjust scroll content size by <code>scroll:set_border(node_size)</code>. It will setup new size to content node.</p>
+<p>- You can adjust scroll content size by <code>scroll:set_size(node_size)</code>. It will setup new size to <em>content node</em>
+- You can enabled or disable inertion mode via <code>scroll:set_intert(state)</code>
+- You can adjust extra stretch size via <code>scroll:set_extra_stretch_size</code>
+- Multitouch is required for scroll. Scroll is correctly handling touch_id swap while dragging scroll</p>
 
 
 <p><a name="Progress"></a></p>
@@ -361,7 +365,7 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 <p>Component for manage node positions. Very simple implementation for nodes with equal size</p>
 
 <h3>Setup</h3>
-<p>Create grid component with druid: <code>grid = druid:new_grid(parent_node, prefab_node, max_in_row_elements)</code></p>
+<p>Create  component with druid: <code>grid = druid:new_grid(parent_node, prefab_node, max_in_row_elements)</code></p>
 
 <h3>Notes</h3>
 <p>- Grid on <em>adding elements</em> will setup parent to <em>parent</em>node_
@@ -381,6 +385,8 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 <p>Create hover component with druid: <code>hover = druid:new_hover(node, callback)</code></p>
 
 <h3>Notes</h3>
+<p>- By default, hover handles <em>hover event</em> with pressed touch action_id. So it's mean, what mouse or touch have to be pressed
+- On desktop platforms there is <em>on</em>mouse<em>hover</em> event. It's event on mouse hover without any action id</p>
 
 
 <p><a name="Swipe"></a></p>
@@ -391,7 +397,7 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 <p>System Druid component, handle swipe actions on node</p>
 
 <h3>Setup</h3>
-<p>Create hover component with druid: <code>hover = druid:new_swipe(node, swipe_callback)</code></p>
+<p>Create swipe component with druid: <code>hover = druid:new_swipe(node, swipe_callback)</code></p>
 
 <h3>Notes</h3>
 <p>- Swipe callback have next params: (self, swipe_side, distance, time)</p>
@@ -404,16 +410,60 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 </pre>
 
 <p>- Swipe trigger only, if all input actions was on swipe node. If action will be outside of node, swipe status will be reseted
-- In swipe style table you can adjust minimal distance and maximum time to trigger swipe
+- In swipe style table you can adjust minimal distance and maximum time to trigg-  Hover state trigger only with touch on mobile devices or button mouse holding. Just mouse over swipe
 - In swipe style table you can toggle type of swipe triggering. if SWIPE<em>TRIGGER</em>ON_MOVE setup to true - swipe will trigger as swipe can be triggered. If setup to false - swipe will trigger only on released action
-- If you have stencil on swipe node and you don't want trigger it outside of stencil node, you can use <a href="../modules/druid.swipe.html#set_click_zone">swipe:set_click_zone</a> to restrict swipe zone</p>
+- If you have stencil on swipe node and you don't want trigger it outside of stencil node, you can use <a href="../modules/druid.swipe.html#set_click_zone">swipe:set_click_zone</a> to restrict swipe zonethout buttons is now not allowed.</p>
+
+
+<p><a name="Drag"></a></p>
+<h2>Drag</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.drag.html">Drag API here</a></p>
+
+<h3>Overview</h3>
+<p>System Druid component, handle drag actions on node</p>
+
+<h3>Setup</h3>
+<p>Create drag component with druid: <code>hover = druid:new_drag(node, drag_callback)</code></p>
+
+<h3>Notes</h3>
+<p>- Drag callback have next params: (self, swipe_side, distance, time)</p>
+
+<pre>
+- **self**: Druid self context
+- **dx**: *number* - delta x position
+- **dy**: *number* - delta y position
+</pre>
+
+<p>- In styles, you can point the drag start deadzone. Default value is 10 pixels
+- Drag correctly process multitouch. You can switch touch_id, while dragging on node with correct <em>dx</em> and <em>dy</em> values (made for correct scrolling)
+- You can restrict horizontal or vertical dragging by setting <code>drag.can_x</code> or <code>drag.can_y</code> to <em>false</em> value
+- You can get info about current drag state:</p>
+
+<pre>
+- _is_touch_ - Is currently node touching
+- _is_drag_ - Is currently node is dragging
+- _x_ <span class="keyword">and</span> _y_ - Current touch position
+- _touch_start_pos_ - Touch stat positions
+</pre>
+
+<p>- Drag have next events:</p>
+
+<pre>
+- _on_touch_start_ (self) - Event on touch start
+- _on_touch_end_ (self) - Event on touch <span class="keyword">end</span>
+- _on_drag_start_ (self) - Event on drag start
+- _on_drag_ (self, dx, dy) - Event on drag process
+- _on_drag_end_ (self) - Event on drag <span class="keyword">end</span>
+</pre>
+
+<p>- Drag node zone can be restricted via <code>drag:set_click_zone(node)</code></p>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-05-04 00:51:46 </i>
+<i style="float:right;">Last updated 2020-05-09 16:07:15 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

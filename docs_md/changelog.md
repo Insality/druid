@@ -58,16 +58,17 @@ Druid 0.4.0:
 	- You can setup drag deadzone to detect, when dragging is started (by default 10 pixels)
 
 - Druid _Scroll_ component fully reworked. Input logic moved to _Drag_ component
-	- Updated scroll documentation
-	- Changed constructor order params
+	- Update scroll documentation
+	- Change constructor order params
+	- Change _scroll:set_border_ to _scroll:set_size_
 	- Scroll now contains from view and content node
 		- _View node_ - static node, which size determine the "camera" zone
 		- _Content node_ - dynamic node, moving by _Scroll_ component
 	- Scroll will be disabled only if content size equals to view size (by width or height separatly)
-	- You can adjust scroll size via _.gui_ scene. Just setup correct node size
-	- Different anchoring is supported (for easier layout)
+	- You can adjust start scroll size via _.gui_ scene. Just setup correct node size
+	- Different anchoring is supported (for easier layouting)
 	- Function _scroll_to_ now accept position relative to _content node_. It's more easier for handling. _Example:_ if you have children node of _content_node_, you can pass this node position to scroll to this.
-	- **Resolve #52**: _Content node size_ now can be less than _view node size_. In this case, content will be scrolled only inside _view size_
+	- **Resolve #52**: _Content node size_ now can be less than _view node size_. In this case, content will be scrolled only inside _view size_ (can be disabled via style field: _SMALL_CONTENT_SCROLL_)
 	- **Fix #50**: If style:SOFT_ZONE_SIZE equals to [0..1], scroll can be disappeared
 
 - Druid _Grid_ Update
@@ -75,7 +76,7 @@ Druid 0.4.0:
 	- Function `grid:clear` now don't delete any GUI nodes. Druid will not care about `gui.delete_node` logic anymore (#56)
 
 - Druid _Hover_ component now have two _hover_ events (#49):
-	- _on_hover_ is old hover event. Trigger only if touch pressed on node
+	- _on_hover_ is usual hover event. Trigger only if touch or mouse action_id pressed on node
 	- _on_mouse_hover_ action on node without action_id (desktop mouse over). Works only on desktop platform
 
 - Styles update:

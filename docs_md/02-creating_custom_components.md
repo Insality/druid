@@ -28,6 +28,10 @@ end
 function M.on_input(self, action_id, action)
 end
 
+-- Call on component creation and on component:set_style() function
+function M.on_style_change(self, style)
+end
+
 -- Call only if exist interest: const.ON_MESSAGE
 function M.on_message(self, message_id, message, sender)
 end
@@ -138,10 +142,6 @@ function M.init(self, template_name, node_table)
 
 	-- Button self on callback is self of _this_ component
 	local button = druid:new_button(...)
-
-	-- helper can return you the component style for current component
-	-- It return by component name from 
-	local my_style = self:get_style()
 end
 
 ```
