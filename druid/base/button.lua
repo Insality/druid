@@ -50,27 +50,18 @@ end
 
 
 local function on_button_hover(self, hover_state)
-	if not self._style.on_hover then
-		return
-	end
-
-	self._style.on_hover(self, self.anim_node, hover_state)
+	self.style.on_hover(self, self.anim_node, hover_state)
 end
 
 
 local function on_button_mouse_hover(self, hover_state)
-	if not self._style.on_mouse_hover then
-		return
-	end
-
-	self._style.on_mouse_hover(self, self.anim_node, hover_state)
+	self.style.on_mouse_hover(self, self.anim_node, hover_state)
 end
 
 
 local function on_button_click(self)
-	if self._style.on_click then
-		self._style.on_click(self, self.anim_node)
-	end
+	self.style.on_click(self, self.anim_node)
+
 	self.click_in_row = 1
 	self.on_click:trigger(self:get_context(), self.params, self)
 end
@@ -82,18 +73,16 @@ local function on_button_repeated_click(self)
 		self.is_repeated_started = true
 	end
 
-	if self._style.on_click then
-		self._style.on_click(self, self.anim_node)
-	end
+	self.style.on_click(self, self.anim_node)
+
 	self.click_in_row = self.click_in_row + 1
 	self.on_repeated_click:trigger(self:get_context(), self.params, self, self.click_in_row)
 end
 
 
 local function on_button_long_click(self)
-	if self._style.on_click then
-		self._style.on_click(self, self.anim_node)
-	end
+	self.style.on_click(self, self.anim_node)
+
 	self.click_in_row = 1
 	local time = socket.gettime() - self.last_pressed_time
 	self.on_long_click:trigger(self:get_context(), self.params, self, time)
@@ -101,9 +90,8 @@ end
 
 
 local function on_button_double_click(self)
-	if self._style.on_click then
-		self._style.on_click(self, self.anim_node)
-	end
+	self.style.on_click(self, self.anim_node)
+
 	self.click_in_row = self.click_in_row + 1
 	self.on_double_click:trigger(self:get_context(), self.params, self, self.click_in_row)
 end
@@ -124,10 +112,10 @@ local function on_button_release(self)
 			self.can_action = false
 
 			local time = socket.gettime()
-			local is_long_click = (time - self.last_pressed_time) > self._style.LONGTAP_TIME
+			local is_long_click = (time - self.last_pressed_time) > self.style.LONGTAP_TIME
 			is_long_click = is_long_click and self.on_long_click:is_exist()
 
-			local is_double_click = (time - self.last_released_time) < self._style.DOUBLETAP_TIME
+			local is_double_click = (time - self.last_released_time) < self.style.DOUBLETAP_TIME
 			is_double_click = is_double_click and self.on_double_click:is_exist()
 
 			if is_long_click then
@@ -142,11 +130,29 @@ local function on_button_release(self)
 		end
 		return true
 	else
-		if self._style.on_click_disabled then
-			self._style.on_click_disabled(self, self.anim_node)
-		end
+		self.style.on_click_disabled(self, self.anim_node)
 		return false
 	end
+end
+
+
+--- Change style of component.
+-- This function can be called before component:init. This callback
+-- only for store component style params inside self context
+-- @function button:on_style_change
+-- @tparam table style The component style table
+function M.on_style_change(self, style)
+	self.style = {}
+	self.style.HOVER_SCKCOLOR = style.HOVER_SCKCOLOR or vmath.vector4(1)
+	self.style.LONGTAP_TIME = style.LONGTAP_TIME or 0.4
+	self.style.AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8
+	self.style.DOUBLETAP_TIME = style.DOUBLETAP_TIME or 0.4
+
+	self.style.on_hover = style.on_hover or function(self, node, state) end
+	self.style.on_mouse_hover = style.on_mouse_hover or function(self, node, state) end
+	self.style.on_click = style.on_click or function(self, node) end
+	self.style.on_click_disabled = style.on_click_disabled or function(self, node) end
+	self.style.on_set_enabled = style.on_set_enabled or function(self, node, state) end
 end
 
 
@@ -237,12 +243,12 @@ function M.on_input(self, action_id, action)
 	if not self.disabled and self.can_action and self.on_long_click:is_exist() then
 		local press_time = socket.gettime() - self.last_pressed_time
 
-		if self._style.AUTOHOLD_TRIGGER and self._style.AUTOHOLD_TRIGGER <= press_time then
+		if self.style.AUTOHOLD_TRIGGER <= press_time then
 			on_button_release(self)
 			return true
 		end
 
-		if press_time >= self._style.LONGTAP_TIME then
+		if press_time >= self.style.LONGTAP_TIME then
 			on_button_hold(self, press_time)
 			return true
 		end
@@ -262,9 +268,7 @@ end
 -- @tparam bool state Enabled state
 function M.set_enabled(self, state)
 	self.disabled = not state
-	if self._style.on_set_enabled then
-		self._style.on_set_enabled(self, self.node, state)
-	end
+	self.style.on_set_enabled(self, self.node, state)
 end
 
 

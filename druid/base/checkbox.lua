@@ -26,13 +26,26 @@ local function on_click(self)
 end
 
 
+--- Change style of component.
+-- This function can be called before component:init. This callback
+-- only for store component style params inside self context
+-- @function checkbox:on_style_change
+-- @tparam table style The component style table
+function M.on_style_change(self, style)
+	self.style = {}
+
+	self.style.on_change_state = style.on_change_state or function(self, node, state)
+		gui.set_enabled(node, state)
+	end
+end
+
+
 --- Component init function
 -- @function checkbox:init
 -- @tparam node node Gui node
 -- @tparam function callback Checkbox callback
 -- @tparam[opt=node] node click node Trigger node, by default equals to node
 function M.init(self, node, callback, click_node)
-	self.style = self:get_style()
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 	self.click_node = self:get_node(click_node)
@@ -54,9 +67,7 @@ function M.set_state(self, state, is_silent)
 	end
 
 	self.state = state
-	if self.style.on_change_state then
-		self.style.on_change_state(self, self.node, state)
-	end
+	self.style.on_change_state(self, self.node, state)
 
 	if not is_silent then
 		self.on_change_state:trigger(self:get_context(), state)

@@ -67,12 +67,24 @@ local function check_swipe(self, action)
 end
 
 
+--- Change style of component.
+-- This function can be called before component:init. This callback
+-- only for store component style params inside self context
+-- @function swipe:on_style_change
+-- @tparam table style The component style table
+function M.on_style_change(self, style)
+	self.style = {}
+	self.style.SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50
+	self.style.SWIPE_TIME = style.SWIPE_TIME or 0.4
+	self.style.SWIPE_TRIGGER_ON_MOVE = style.SWIPE_TRIGGER_ON_MOVE or false
+end
+
+
 --- Component init function
 -- @function swipe:init
 -- @tparam node node Gui node
 -- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
 function M.init(self, node, on_swipe_callback)
-	self.style = self:get_style()
 	self._trigger_on_move = self.style.SWIPE_TRIGGER_ON_MOVE
 	self.node = self:get_node(node)
 

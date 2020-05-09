@@ -25,7 +25,6 @@
 --- Component style params
 -- @table Style
 -- @tfield bool IS_LONGTAP_ERASE Is long tap will erase current input data
--- @tfield number BUTTON_SELECT_INCREASE Button scale multiplier on selecting input field
 -- @tfield string MASK_DEFAULT_CHAR Default character mask for password input
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
@@ -67,9 +66,7 @@ local function select(self)
 		gui.show_keyboard(self.keyboard_type, false)
 		self.on_input_select:trigger(self:get_context())
 
-		if self.style.on_select then
-			self.style.on_select(self, self.button.node)
-		end
+		self.style.on_select(self, self.button.node)
 	end
 end
 
@@ -85,9 +82,7 @@ local function unselect(self)
 		gui.hide_keyboard()
 		self.on_input_unselect:trigger(self:get_context())
 
-		if self.style.on_unselect then
-			self.style.on_unselect(self, self.button.node)
-		end
+		self.style.on_unselect(self, self.button.node)
 	end
 end
 
@@ -101,9 +96,31 @@ local function clear_and_select(self)
 end
 
 
+--- Change style of component.
+-- This function can be called before component:init. This callback
+-- only for store component style params inside self context
+-- @function input:on_style_change
+-- @tparam table style The component style table
+function M.on_style_change(self, style)
+	self.style = {}
+
+	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
+	self.style.MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*"
+
+	self.style.on_select = style.on_select or function(self, button_node) end
+	self.style.on_unselect = style.on_unselect or function(self, button_node) end
+	self.style.on_input_wrong = style.on_input_wrong or function(self, button_node) end
+
+	self.style.button_style = style.button_style or {
+		LONGTAP_TIME = 0.4,
+		AUTOHOLD_TRIGGER = 0.8,
+		DOUBLETAP_TIME = 0.4
+	}
+end
+
+
 function M.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
-	self.style = self:get_style(self)
 	self.text = self.druid:new_text(text_node)
 
 	self.selected = false
@@ -158,9 +175,7 @@ function M.on_input(self, action_id, action)
 					end
 				else
 					self.on_input_wrong:trigger(self:get_context(), action.text)
-					if self.style.on_input_wrong then
-						self.style.on_input_wrong(self, self.button.node)
-					end
+					self.style.on_input_wrong(self, self.button.node)
 				end
 				self.marked_value = ""
 			end

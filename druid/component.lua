@@ -9,24 +9,18 @@ local class = require("druid.system.middleclass")
 local Component = class("druid.component")
 
 
---- Get current component style table
--- @function component:get_style
--- @treturn table Component style table
-function Component.get_style(self)
-	if not self._meta.style then
-		return const.EMPTY_TABLE
-	end
-
-	return self._meta.style[self._component.name] or const.EMPTY_TABLE
-end
-
-
---- Set current component style table
+--- Set current component style table.
+-- Invoke `on_style_change` on component, if exist. Component should handle
+-- their style changing and store all style params
 -- @function component:set_style
 -- @tparam table style Druid style module
 function Component.set_style(self, druid_style)
-	self._meta.style = druid_style
-	self._style = self:get_style()
+	self._meta.style = druid_style or const.EMPTY_TABLE
+	local component_style = self._meta.style[self._component.name] or const.EMPTY_TABLE
+
+	if self.on_style_change then
+		self:on_style_change(component_style)
+	end
 end
 
 

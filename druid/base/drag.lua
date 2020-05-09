@@ -128,12 +128,22 @@ local function on_touch_release(self, action_id, action)
 end
 
 
+--- Change style of component.
+-- This function can be called before component:init. This callback
+-- only for store component style params inside self context
+-- @function drag:on_style_change
+-- @tparam table style The component style table
+function M.on_style_change(self, style)
+	self.style = {}
+	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
+end
+
+
 --- Drag component constructor
 -- @tparam node node GUI node to detect dragging
 -- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
 -- @function drag:init
 function M.init(self, node, on_drag_callback)
-	self.style = self:get_style()
 	self.node = self:get_node(node)
 
 	self.dx = 0

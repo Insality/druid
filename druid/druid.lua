@@ -69,7 +69,7 @@ end
 -- @function druid.set_default_style
 -- @tparam table style Druid style module
 function M.set_default_style(style)
-	settings.default_style = style
+	settings.default_style = style or {}
 end
 
 
