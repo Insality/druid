@@ -165,7 +165,7 @@ function M.init(self, node, callback, params, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 
-	self.anim_node = anim_node and helper:get_node(anim_node) or self.node
+	self.anim_node = anim_node and self:get_node(anim_node) or self.node
 	self.start_scale = gui.get_scale(self.anim_node)
 	self.start_pos = gui.get_position(self.anim_node)
 	self.params = params

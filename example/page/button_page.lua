@@ -42,6 +42,9 @@ local function setup_buttons(self)
 	button_space:set_key_trigger("key_space")
 	button_space.on_long_click:subscribe(long_tap_callback)
 	button_space.on_double_click:subscribe(double_tap_callback)
+
+	-- Button with another node for animating
+	self.druid:new_button("button_anim/button", usual_callback, nil, "anim_node_icon")
 end
 
 
