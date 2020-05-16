@@ -54,10 +54,10 @@ Druid 0.4.0:
 		- on_drag_start (self)
 		- on_drag (self, dx, dy)
 		- on_drag_end (self)
-	- You can restriction side of draggin by changing _drag.can_x_ and _drag.can_y_ fields
-	- You can setup drag deadzone to detect, when dragging is started (by default 10 pixels)
+	- You can restriction side of dragging by changing _drag.can_x_ and _drag.can_y_ fields
+	- You can setup drag deadzone to detect, when dragging is started (_by default 10 pixels_)
 
-- Druid _Scroll_ component fully reworked. Input logic moved to _Drag_ component
+- [Breaking changes] Druid _Scroll_ component fully reworked. Input logic moved to _Drag_ component
 	- Update scroll documentation
 	- Change constructor order params
 	- Change _scroll:set_border_ to _scroll:set_size_
@@ -69,7 +69,7 @@ Druid 0.4.0:
 	- Different anchoring is supported (for easier layouting)
 	- Function _scroll_to_ now accept position relative to _content node_. It's more easier for handling. _Example:_ if you have children node of _content_node_, you can pass this node position to scroll to this.
 	- **Resolve #52**: _Content node size_ now can be less than _view node size_. In this case, content will be scrolled only inside _view size_ (can be disabled via style field: _SMALL_CONTENT_SCROLL_)
-	- **Fix #50**: If style:SOFT_ZONE_SIZE equals to [0..1], scroll can be disappeared
+	- **Fix #50**: If style.SOFT_ZONE_SIZE equals to [0..1], scroll can be disappeared
 
 - Druid _Grid_ Update
 	- Anchor by default equals to node pivot (so, more component settings in _.gui_ settings) (#51)
@@ -81,13 +81,13 @@ Druid 0.4.0:
 
 - Styles update:
 	- Styles table now can be empty, every component have their default style values
-	- Remove `component:get_style` function. Now style can be only set
+	- Remove `component:get_style` function. Now you can only set styles
 	- To get style values in component, add `component:on_style_change` function. It's invoked on `component:set_style` function
-	- You can look up default values inside `component:on_style_change` function or style component API on Druid API
+	- You can look up default values inside `component:on_style_change` function or style component API on [Druid API](https://insality.github.io/druid/index.html)
 
 - Druid update:
 	- Now function `druid:remove` remove instance and all instance children components. No more manual deleting child components (#41)
 
-- **Fix:** Blocker component bug (blocker had very high priority, so it's block even button components, created after bloker)
+- **Fix:** Blocker component bug (blocker had very high priority, so it's block even button components, created after blocker)
 - **Fix #58:** Bug, when druid instance should be always named `druid` (ex: `self.druid = druid.new(self)`)
 - **Fix #53:** Bug with final _Druid instance_ without any components
