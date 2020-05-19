@@ -91,3 +91,8 @@ Druid 0.4.0:
 - **Fix:** Blocker component bug (blocker had very high priority, so it's block even button components, created after blocker)
 - **Fix #58:** Bug, when druid instance should be always named `druid` (ex: `self.druid = druid.new(self)`)
 - **Fix #53:** Bug with final _Druid instance_ without any components
+
+
+Druid 0.5.0:
+- **Fix #61:** Button component: fix button animation node creation
+- **Fix #64:** Hover component: wrong mouse_hover default state
