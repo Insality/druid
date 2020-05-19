@@ -263,6 +263,7 @@ Create hover component with druid: `hover = druid:new_hover(node, callback)`
 ### Notes
 - By default, hover handles _hover event_ with pressed touch action_id. So it's mean, what mouse or touch have to be pressed
 - On desktop platforms there is _on_mouse_hover_ event. It's event on mouse hover without any action id
+- By default, assume what node is on not hovered state (both _hover_ and _mouse_hover_)
 
 
 ## Swipe

@@ -22,6 +22,7 @@ function M.init(self, node, on_hover_callback)
 	self.node = self:get_node(node)
 
 	self._is_hovered = false
+	self._is_mouse_hovered = false
 
 	self.on_hover = Event(on_hover_callback)
 	self.on_mouse_hover = Event()
