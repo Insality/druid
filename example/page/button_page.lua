@@ -43,6 +43,10 @@ local function setup_buttons(self)
 	button_space.on_long_click:subscribe(long_tap_callback)
 	button_space.on_double_click:subscribe(double_tap_callback)
 
+	local button_shift_enter = self.druid:new_button("button_combo_key_trigger/button", usual_callback)
+	button_shift_enter:set_key_combo_trigger("key_lshift", "key_enter")
+	button_shift_enter.on_double_click:subscribe(double_tap_callback)
+
 	-- Button with another node for animating
 	self.druid:new_button("button_anim/button", usual_callback, nil, "anim_node_icon")
 end

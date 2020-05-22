@@ -28,6 +28,35 @@ local component = require("druid.component")
 
 local M = component.create("button", { const.ON_INPUT })
 
+local function is_single_triggered(self, action_id)
+	return self.key_trigger and action_id == self.key_trigger
+end
+
+local function is_key_triggered(self, action_id, action)
+	if self.key_combo_trigger[action_id] then
+		local triggered = true
+
+		if action.pressed then
+			self.key_combo_count = self.key_combo_count + 1
+			self.key_combo_triggered[action_id] = self.key_combo_count
+		elseif action.released then
+			self.key_combo_count = self.key_combo_count - 1
+			self.key_combo_triggered[action_id] = nil
+		end
+
+		for key, order in pairs(self.key_combo_trigger) do
+			if order ~= self.key_combo_triggered[key] then
+				triggered = false
+			end
+		end
+
+		return triggered
+	elseif is_single_triggered(self, action_id) then
+		return true
+	else
+		return false
+	end
+end
 
 local function is_input_match(self, action_id)
 	if action_id == const.ACTION_TOUCH then
@@ -35,6 +64,10 @@ local function is_input_match(self, action_id)
 	end
 
 	if self.key_trigger and action_id == self.key_trigger then
+		return true
+	end
+
+	if self.key_combo_trigger[action_id] then
 		return true
 	end
 
@@ -177,6 +210,9 @@ function M.init(self, node, callback, params, anim_node)
 	self.last_released_time = 0
 	self.click_in_row = 0
 	self.key_trigger = nil
+	self.key_combo_trigger = {}
+	self.key_combo_count = 0
+	self.key_combo_triggered = {}
 
 	-- Event stubs
 	self.on_click = Event(callback)
@@ -198,7 +234,7 @@ function M.on_input(self, action_id, action)
 	end
 
 	local is_pick = true
-	local is_key_trigger = (action_id == self.key_trigger)
+	local is_key_trigger = is_key_triggered(self, action_id, action)
 	if not is_key_trigger then
 		is_pick = gui.pick_node(self.node, action.x, action.y)
 		if self.click_zone then
@@ -216,7 +252,15 @@ function M.on_input(self, action_id, action)
 	end
 
 	if is_key_trigger then
-		self.hover:set_hover(not action.released)
+		if is_single_triggered(self, action_id) then
+			self.hover:set_hover(not action.released)
+		else
+			self.can_action = true
+			self.is_repeated_started = false
+			self.last_pressed_time = socket.gettime()
+			self.key_combo_triggered[action_id] = nil
+			return on_button_release(self)
+		end
 	end
 
 	if action.pressed then
@@ -306,6 +350,33 @@ end
 -- @treturn hash The action_id of the key
 function M.get_key_trigger(self)
 	return self.key_trigger
+end
+
+
+--- Set combo-key-code to trigger this button
+-- @function button:set_key_combo_trigger
+-- @tparam varargs of hash keys Multiple action_id's of the keys
+-- @treturn druid.button Self instance to make chain calls
+function M.set_key_combo_trigger(self, ...)
+	local triggers = {}
+	local triggered = {}
+
+	for i, v in pairs({...}) do
+		triggers[hash(v)] = i
+		triggered[hash(v)] = nil
+	end
+
+	self.key_combo_trigger = triggers
+	self.key_combo_triggered = triggered
+	return self
+end
+
+
+--- Get combo-key-code to trigger this button
+-- @function button:get_key_combo_trigger
+-- @treturn table Where key is hash key and value is press order
+function M.get_key_combo_trigger(self)
+	return self.key_combo_trigger
 end
 
 
