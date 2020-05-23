@@ -359,15 +359,12 @@ end
 -- @treturn druid.button Self instance to make chain calls
 function M.set_key_combo_trigger(self, ...)
 	local triggers = {}
-	local triggered = {}
 
 	for i, v in pairs({...}) do
 		triggers[hash(v)] = i
-		triggered[hash(v)] = nil
 	end
 
 	self.key_combo_trigger = triggers
-	self.key_combo_triggered = triggered
 	return self
 end
 
