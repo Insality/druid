@@ -24,6 +24,8 @@ function M.init(self, node, on_hover_callback)
 	self._is_hovered = false
 	self._is_mouse_hovered = false
 
+	self._is_enabled = true
+
 	self.on_hover = Event(on_hover_callback)
 	self.on_mouse_hover = Event()
 end
@@ -38,7 +40,7 @@ function M.on_input(self, action_id, action)
 		return false
 	end
 
-	if not helper.is_enabled(self.node) then
+	if not helper.is_enabled(self.node) or not self._is_enabled then
 		return false
 	end
 
@@ -94,6 +96,33 @@ end
 -- @tparam node zone Gui node
 function M.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
+end
+
+
+--- Set enable state of hover component.
+-- If hover is not enabled, it will not generate
+-- any hover events
+-- @function hover:set_enabled
+-- @tparam bool state The hover enabled state
+function M.set_enabled(self, state)
+	self._is_enabled = state
+
+	if not state then
+		if self._is_hovered then
+			M.set_hover(false)
+		end
+		if self._is_mouse_hovered then
+			M.set_mouse_hover(false)
+		end
+	end
+end
+
+
+--- Return current hover enabled state
+-- @function hover:is_enabled
+-- @treturn bool The hover enabled state
+function M.is_enabled(self)
+	return self._is_enabled
 end
 
 

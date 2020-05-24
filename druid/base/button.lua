@@ -267,6 +267,7 @@ end
 -- @tparam bool state Enabled state
 function M.set_enabled(self, state)
 	self.disabled = not state
+	self.hover:set_enabled(state)
 	self.style.on_set_enabled(self, self.node, state)
 end
 
