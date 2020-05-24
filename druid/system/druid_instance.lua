@@ -173,7 +173,7 @@ function Druid.final(self)
 
 	self._deleted = true
 
-	input_release()
+	input_release(self)
 end
 
 
