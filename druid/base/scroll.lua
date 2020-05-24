@@ -473,7 +473,7 @@ end
 -- It will change content gui node size
 -- @function scroll:set_size
 -- @tparam vector3 size The new size for content node
--- @treturn druid.scroll Self instance
+-- @treturn druid.scroll Current scroll instance
 function M.set_size(self, size)
 	gui.set_size(self.content_node, size)
 	update_size(self)
@@ -487,9 +487,10 @@ end
 -- If no points, just simple drag without inertion
 -- @function scroll:set_inert
 -- @tparam bool state Inert scroll state
--- @treturn druid.scroll Self instance
+-- @treturn druid.scroll Current scroll instance
 function M.set_inert(self, state)
 	self._is_inert = state
+
 	return self
 end
 
@@ -506,7 +507,7 @@ end
 -- Set 0 to disable stretching effect
 -- @function scroll:set_extra_strech_size
 -- @tparam[opt=0] number stretch_size Size in pixels of additional scroll area
--- @treturn druid.scroll Self instance
+-- @treturn druid.scroll Current scroll instance
 function M.set_extra_strech_size(self, stretch_size)
 	self.style.EXTRA_STRECH_SIZE = stretch_size or 0
 	update_size(self)
@@ -527,7 +528,7 @@ end
 -- Scroll will always centered on closer points
 -- @function scroll:set_points
 -- @tparam table points Array of vector3 points
--- @treturn druid.scroll Self instance
+-- @treturn druid.scroll Current scroll instance
 function M.set_points(self, points)
 	self.points = points
 
