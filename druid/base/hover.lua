@@ -33,7 +33,7 @@ end
 
 function M.on_input(self, action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= nil then
-		return
+		return false
 	end
 
 	if not action_id and helper.is_mobile() then

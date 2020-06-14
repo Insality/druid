@@ -16,6 +16,7 @@ end
 
 -- Call only if exist interest: const.ON_INPUT or const.ON_INPUT_HIGH
 function M.on_input(self, action_id, action)
+	return false
 end
 
 
