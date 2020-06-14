@@ -96,3 +96,8 @@ Druid 0.4.0:
 Druid 0.5.0:
 - **Fix #61:** Button component: fix button animation node creation
 - **Fix #64:** Hover component: wrong mouse_hover default state
+- **Fix #71:** Blocker: blocker now correct block mouse hover event
+- **Fix #72:** Fix `return nil` in some `on_input` functions
+- **Fix #74:** Fix typo: strech -> stretch. Scroll function `set_extra_stretch_size` renamed
+- Add `component.tempalte.lua` as template for Druid custom component
+

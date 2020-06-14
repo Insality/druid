@@ -63,7 +63,7 @@ M["scroll"] = {
 	FRICT_HOLD = 0.79, -- mult. for inert, while touching
 	INERT_THRESHOLD = 2.5, -- speed to stop inertion
 	INERT_SPEED = 30, -- koef. of inert speed
-	EXTRA_STRECH_SIZE = 100, -- extra size in pixels outside of scroll (stretch effect)
+	EXTRA_STRETCH_SIZE = 100, -- extra size in pixels outside of scroll (stretch effect)
 	POINTS_DEADZONE = 20, -- Speed to check points of interests in no_inertion mode
 
 	SCROLL_WHEEL_SPEED = 20,

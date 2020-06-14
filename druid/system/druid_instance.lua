@@ -58,6 +58,18 @@ local function input_init(self)
 end
 
 
+local function input_release(self)
+	if sys.get_config("druid.no_auto_input") == "1" then
+		return
+	end
+
+	if self.input_inited then
+		self.input_inited = false
+		druid_input.remove()
+	end
+end
+
+
 -- Create the component itself
 local function create(self, instance_class)
 	local instance = instance_class()
@@ -160,6 +172,8 @@ function Druid.final(self)
 	end
 
 	self._deleted = true
+
+	input_release(self)
 end
 
 

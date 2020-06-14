@@ -25,6 +25,7 @@ Where node name is name of node from GUI scene. You can use `node_name` as input
 	- **on_long_click** - callback on long button tap, don't trigger if callback is empty
 	- **on_hold_click** - hold callback, before long_click trigger, don't trigger if callback is empty
 	- **on_double_click** - different callback, if tap button 2+ in row, don't trigger if callback is empty
+- Click event will not trigger, if between pressed and released state cursor was outside of node zone
 - If button have double click event and it is triggered, usual callback will be not invoked
 - If you have stencil on buttons and you don't want trigger them outside of stencil node, you can use `button:set_click_zone` to restrict button click zone
 - Button can have key trigger to use then by key: `button:set_key_trigger`

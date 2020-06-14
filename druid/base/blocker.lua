@@ -29,7 +29,9 @@ end
 
 
 function M.on_input(self, action_id, action)
-	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
+	if action_id ~= const.ACTION_TOUCH and
+		action_id ~= const.ACTION_MULTITOUCH and
+		action_id ~= nil then
 		return false
 	end
 

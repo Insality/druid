@@ -36,8 +36,8 @@ end
 function M.on_message(self, message_id, message, sender)
 end
 
--- Call only if component with ON_LANGUAGE_CHANGE interest
-function M.on_language_change(self)
+-- Call only if component with ON_ANGUAGECHANinterest
+function M.on_anguagechanself)
 end
 
 -- Call only if component with ON_LAYOUT_CHANGE interest

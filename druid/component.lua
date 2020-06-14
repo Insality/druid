@@ -109,13 +109,15 @@ function Component.get_node(self, node_or_name)
 		template_name = template_name .. "/"
 	end
 
+	local node_type = type(node_or_name)
 	if nodes then
-		assert(type(node_or_name) == "strings", "You should pass node name instead of node")
+		assert(node_type == const.STRING, "You should pass node name instead of node")
 		return nodes[template_name .. node_or_name]
 	else
-		if type(node_or_name) == const.STRING then
+		if node_type == const.STRING then
 			return gui.get_node(template_name .. node_or_name)
 		else
+			-- Assume it's already node from gui.get_node
 			return node_or_name
 		end
 	end

@@ -5,7 +5,7 @@
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/insality/druid)](https://github.com/Insality/druid/releases)
 
-**Druid** - powerful defold component UI library. Use basic **Druid** components or make your own game-specific components to make amazing GUI in your games.
+**Druid** - powerful Defold component UI library. Use basic **Druid** components or make your own game-specific components to make amazing GUI in your games.
 
 
 ## Setup
@@ -184,18 +184,19 @@ function on_message(self, message_id, message, sender)
 end
 ```
 
+- *final* required function for correct druid lifecycle
 - *on_input* used for almost all basic druid components
 - *update* used for progress bar, scroll and timer base components
 - *on_message* used for specific druid events, like language change or layout change
-- *final* used for custom components, what have to do several action before destroy
 
-Recommended is fully integrate al druid lifecycles functions
+Recommended is fully integrate all druid lifecycles functions
 
 
 ## Features
 
 - Druid input goes as stack. Last created button will checked first. So create your GUI from back
 - Don't forget about `return` in `on_input`: `return self.druid:on_input()`. It need, if you have more than 1 acquire inputs (several druid, other input system, etc)
+- Druid by default do _acquire_input_focus_. So you don't need do it manually. Buy only if you have components, which requires _on_input_ 
 
 
 ## Examples
