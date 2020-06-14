@@ -1,7 +1,7 @@
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("my_component_name", { M.ON_UPDATE })
+local M = component.create("my_component_name", { const.ON_UPDATE })
 
 
 -- Component constructor
