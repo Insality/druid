@@ -290,7 +290,7 @@ local function update_size(self)
 	-- We add extra size only if scroll is available
 	-- Even the content zone size less than view zone size
 	local content_border_extra = helper.get_border(self.content_node)
-	local stretch_size = self.style.EXTRA_STRECH_SIZE
+	local stretch_size = self.style.EXTRA_STRETCH_SIZE
 
 	if self.drag.can_x then
 		local sign = content_size.x > view_size.x and 1 or -1
@@ -325,11 +325,11 @@ end
 -- @tfield[opt=20] number POINTS_DEADZONE Speed to check points of interests in no_inertion mode
 -- @tfield[opt=0.35] number BACK_SPEED Scroll back returning lerp speed
 -- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
--- @tfield[opt=0] number EXTRA_STRECH_SIZE extra size in pixels outside of scroll (stretch effect)
+-- @tfield[opt=0] number EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect)
 -- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
 function M.on_style_change(self, style)
 	self.style = {}
-	self.style.EXTRA_STRECH_SIZE = style.EXTRA_STRECH_SIZE or 0
+	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
 	self.style.ANIM_SPEED = style.ANIM_SPEED or 0.2
 	self.style.BACK_SPEED = style.BACK_SPEED or 0.35
 
@@ -505,11 +505,11 @@ end
 
 --- Set extra size for scroll stretching.
 -- Set 0 to disable stretching effect
--- @function scroll:set_extra_strech_size
+-- @function scroll:set_extra_stretch_size
 -- @tparam[opt=0] number stretch_size Size in pixels of additional scroll area
 -- @treturn druid.scroll Current scroll instance
-function M.set_extra_strech_size(self, stretch_size)
-	self.style.EXTRA_STRECH_SIZE = stretch_size or 0
+function M.set_extra_stretch_size(self, stretch_size)
+	self.style.EXTRA_STRETCH_SIZE = stretch_size or 0
 	update_size(self)
 
 	return self

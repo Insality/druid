@@ -54,7 +54,7 @@ function M.setup_page(self)
 
 	-- Content with less size than view
 	self.druid:new_scroll("scroll_smaller_view", "scroll_smaller_content")
-		:set_extra_strech_size(0)
+		:set_extra_stretch_size(0)
 		:set_inert(false)
 
 	-- Scroll with points of interests
