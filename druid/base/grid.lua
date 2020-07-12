@@ -19,6 +19,7 @@
 -- @tfield vector4 border The size of item content
 -- @tfield vector3 border_offer The border offset for correct anchor calculations
 
+local const = require("druid.const")
 local Event = require("druid.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
@@ -36,6 +37,7 @@ function M.init(self, parent, element, in_row)
 	self.nodes = {}
 
 	self.offset = vmath.vector3(0)
+	self.grid_mode = const.GRID_MODE.DYNAMIC
 
 	local pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
 	self.anchor = vmath.vector3(0.5 + pivot.x, 0.5 - pivot.y, 0)
@@ -76,8 +78,27 @@ local function check_border(self, pos)
 end
 
 
+local function update_pos(self, is_instant)
+	for i = 1, #self.nodes do
+		local node = self.nodes[i]
+
+		if is_instant then
+			gui.set_position(node, self:get_pos(i))
+		else
+			self._set_position_function(node, self:get_pos(i))
+		end
+	end
+
+	self.on_update_positions:trigger(self:get_context())
+end
+
+
 local temp_pos = vmath.vector3(0)
-local function get_pos(self, index)
+--- Return pos for grid node index
+-- @function grid:get_pos
+-- @tparam number index The grid element index
+-- @treturn vector3 Node position
+function M.get_pos(self, index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
@@ -89,20 +110,17 @@ local function get_pos(self, index)
 end
 
 
-local function update_pos(self, is_instant)
-	for i = 1, #self.nodes do
-		local node = self.nodes[i]
+--- Return index for grid pos
+-- @function grid:get_index
+-- @tparam vector3 pos The node position in the grid
+-- @treturn number The node index
+function M.get_index(self, pos)
+	local col = (pos.x + self.border_offset.x) / (self.node_size.x + self.offset.x)
+	local row = -(pos.y + self.border_offset.y) / (self.node_size.y + self.offset.y)
 
-		if is_instant then
-			gui.set_position(node, get_pos(self, i))
-		else
-			self._set_position_function(node, get_pos(self, i))
-		end
-	end
-
-	self.on_update_positions:trigger(self:get_context())
+	local index = col + (row * self.in_row) + 1
+	return math.floor(index)
 end
-
 
 
 --- Set grid items offset, the distance between items
@@ -132,7 +150,7 @@ function M.add(self, item, index)
 	table.insert(self.nodes, index, item)
 	gui.set_parent(item, self.parent)
 
-	local pos = get_pos(self, index)
+	local pos = self:get_pos(index)
 	check_border(self, pos)
 	update_pos(self)
 
