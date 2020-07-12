@@ -49,6 +49,8 @@ function M.init(self, parent, element, in_row)
 	self.on_remove_item = Event()
 	self.on_clear = Event()
 	self.on_update_positions = Event()
+
+	self._set_position_function = gui.set_position
 end
 
 
@@ -87,10 +89,15 @@ local function get_pos(self, index)
 end
 
 
-local function update_pos(self)
+local function update_pos(self, is_instant)
 	for i = 1, #self.nodes do
 		local node = self.nodes[i]
-		gui.set_position(node, get_pos(self, i))
+
+		if is_instant then
+			gui.set_position(node, get_pos(self, i))
+		else
+			self._set_position_function(node, get_pos(self, i))
+		end
 	end
 
 	self.on_update_positions:trigger(self:get_context())
@@ -154,6 +161,15 @@ function M.get_all_pos(self)
 	end
 
 	return result
+end
+
+
+--- Chane set position function for grid nodes. It will call on
+-- update poses on grid elements. Default: gui.set_position
+-- @function grid:set_position_function
+-- @tparam function callback Function on node set position
+function M.set_position_function(self, callback)
+	self._set_position_function = callback or gui.set_position
 end
 
 
