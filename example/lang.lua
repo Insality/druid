@@ -44,8 +44,14 @@ local ru = {
 local data = en
 
 
-function M.get_locale(lang_id)
-	return data[lang_id] or lang_id
+function M.get_locale(lang_id, ...)
+	local localized_text = data[lang_id] or lang_id
+
+	if #{...} > 0 then
+		localized_text = string.format(localized_text, ...)
+	end
+
+	return localized_text
 end
 
 

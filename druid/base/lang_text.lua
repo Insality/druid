@@ -26,6 +26,7 @@ local M = component.create("lang_text", { const.ON_LANGUAGE_CHANGE })
 function M.init(self, node, locale_id, no_adjust)
 	self.druid = self:get_druid()
 	self.text = self.druid:new_text(node, locale_id, no_adjust)
+	self.last_locale_args = {}
 
 	self.on_change = Event()
 
@@ -37,7 +38,7 @@ end
 
 function M.on_language_change(self)
 	if self.last_locale then
-		M.translate(self)
+		M.translate(self, self.last_locale, unpack(self.last_locale_args))
 	end
 end
 
@@ -55,9 +56,10 @@ end
 --- Translate the text by locale_id
 -- @function lang_text:translate
 -- @tparam string locale_id Locale id
-function M.translate(self, locale_id)
+function M.translate(self, locale_id, ...)
+	self.last_locale_args = {...}
 	self.last_locale = locale_id or self.last_locale
-	self.text:set_to(settings.get_text(self.last_locale))
+	self.text:set_to(settings.get_text(self.last_locale, ...))
 end
 
 
