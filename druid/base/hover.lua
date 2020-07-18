@@ -65,7 +65,7 @@ end
 
 
 function M.on_input_interrupt(self)
-	M.set_hover(self, false)
+	self:set_hover(false)
 end
 
 
@@ -109,10 +109,10 @@ function M.set_enabled(self, state)
 
 	if not state then
 		if self._is_hovered then
-			M.set_hover(false)
+			self:set_hover(false)
 		end
 		if self._is_mouse_hovered then
-			M.set_mouse_hover(false)
+			self:set_mouse_hover(false)
 		end
 	end
 end
