@@ -6,7 +6,8 @@ local M = {}
 
 M.default_style = nil
 
-function M.get_text(name)
+
+function M.get_text(name, ...)
 	return "[Druid]: locales not inited"
 end
 

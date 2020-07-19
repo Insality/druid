@@ -9,6 +9,7 @@ local en = {
 	scroll_page = "Scroll page",
 	slider_page = "Slider page",
 	input_page = "Input page",
+	grid_page = "Grid page",
 	ui_section_button = "Button",
 	ui_section_text = "Text",
 	ui_section_timer = "Timer",
@@ -27,6 +28,7 @@ local ru = {
 	scroll_page = "Скролл",
 	slider_page = "Слайдеры",
 	input_page = "Текст. ввод",
+	grid_page = "Сетка",
 	ui_section_button = "Кнопка",
 	ui_section_text = "Текст",
 	ui_section_timer = "Таймер",
@@ -42,8 +44,14 @@ local ru = {
 local data = en
 
 
-function M.get_locale(lang_id)
-	return data[lang_id] or lang_id
+function M.get_locale(lang_id, ...)
+	local localized_text = data[lang_id] or lang_id
+
+	if #{...} > 0 then
+		localized_text = string.format(localized_text, ...)
+	end
+
+	return localized_text
 end
 
 
