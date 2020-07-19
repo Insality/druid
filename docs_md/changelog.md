@@ -99,5 +99,8 @@ Druid 0.5.0:
 - **Fix #71:** Blocker: blocker now correct block mouse hover event
 - **Fix #72:** Fix `return nil` in some `on_input` functions
 - **Fix #74:** Fix typo: strech -> stretch. Scroll function `set_extra_stretch_size` renamed
+- **Fix #76:** Add params for lang text localization component
+- **Fix #79:** Fix druid:remove inside on_input callback
+- **Fix #80:** Fix hover set_enable typo function call
 - Add `component.tempalte.lua` as template for Druid custom component
 
