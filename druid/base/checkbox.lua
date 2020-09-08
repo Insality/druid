@@ -11,10 +11,11 @@
 -- @tfield[opt=node] node click_node Button trigger node
 -- @tfield druid.button button Button component from click_node
 
+local const = require("druid.const")
 local Event = require("druid.event")
 local component = require("druid.component")
 
-local M = component.create("checkbox")
+local M = component.create("checkbox", { const.ON_LAYOUT_CHANGE })
 
 
 local function on_click(self)
@@ -53,15 +54,16 @@ function M.init(self, node, callback, click_node)
 end
 
 
+function M.on_layout_change(self)
+	self:set_state(self.state, true)
+end
+
+
 --- Set checkbox state
 -- @function checkbox:set_state
 -- @tparam bool state Checkbox state
 -- @tparam bool is_silent Don't trigger on_change_state if true
 function M.set_state(self, state, is_silent)
-	if self.state == state then
-		return
-	end
-
 	self.state = state
 	self.style.on_change_state(self, self.node, state)
 

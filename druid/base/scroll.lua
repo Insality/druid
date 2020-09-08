@@ -32,7 +32,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("scroll", { const.ON_UPDATE })
+local M = component.create("scroll", { const.ON_UPDATE, const.ON_LAYOUT_CHANGE })
 
 
 local function inverse_lerp(min, max, current)
@@ -373,6 +373,11 @@ function M.init(self, view_node, content_node)
 	self.is_animate = false
 
 	update_size(self)
+end
+
+
+function M.on_layout_change(self)
+	gui.set_position(self.content_node, self.position)
 end
 
 

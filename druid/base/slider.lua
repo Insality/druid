@@ -22,7 +22,7 @@ local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("slider", { const.ON_INPUT_HIGH })
+local M = component.create("slider", { const.ON_INPUT_HIGH, const.ON_LAYOUT_CHANGE })
 
 
 local function on_change_value(self)
@@ -56,6 +56,11 @@ function M.init(self, node, end_pos, callback)
 	self.on_change_value = Event(callback)
 
 	assert(self.dist.x == 0 or self.dist.y == 0, "Slider for now can be only vertical or horizontal")
+end
+
+
+function M.on_layout_change(self)
+	self:set(self.value, true)
 end
 
 

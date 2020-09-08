@@ -24,7 +24,7 @@ local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("text")
+local M = component.create("text", { const.ON_LAYOUT_CHANGE })
 
 
 local function update_text_size(self)
@@ -104,6 +104,11 @@ function M.init(self, node, value, no_adjust)
 
 	self:set_to(value or gui.get_text(self.node))
 	return self
+end
+
+
+function M.on_layout_change(self)
+	self:set_to(self.last_value)
 end
 
 

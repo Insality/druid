@@ -19,11 +19,12 @@
 -- @tfield vector4 border The size of item content
 -- @tfield vector3 border_offer The border offset for correct anchor calculations
 
+local const = require("druid.const")
 local Event = require("druid.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("grid")
+local M = component.create("grid", { const.ON_LAYOUT_CHANGE })
 
 
 --- Component init function
@@ -87,7 +88,7 @@ local function get_pos(self, index)
 end
 
 
-local function update_pos(self)
+local function update_pos(self, is_instant)
 	for i = 1, #self.nodes do
 		local node = self.nodes[i]
 		gui.set_position(node, get_pos(self, i))
@@ -96,6 +97,10 @@ local function update_pos(self)
 	self.on_update_positions:trigger(self:get_context())
 end
 
+
+function M.on_layout_change(self)
+	update_pos(self, true)
+end
 
 
 --- Set grid items offset, the distance between items
