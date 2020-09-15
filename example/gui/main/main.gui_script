@@ -10,6 +10,7 @@ local scroll_page = require("example.page.scroll_page")
 local slider_page = require("example.page.slider_page")
 local input_page = require("example.page.input_page")
 local grid_page = require("example.page.grid_page")
+local infinity_page = require("example.page.infinity_page")
 
 local pages = {
 	"main_page",
@@ -19,6 +20,7 @@ local pages = {
 	"slider_page",
 	"input_page",
 	"grid_page",
+	"infinity_page",
 }
 
 local function on_control_button(self, delta)
@@ -65,7 +67,7 @@ function init(self)
 
 	init_swipe_control(self)
 
-	self.page = 1
+	self.page = 8
 	main_page.setup_page(self)
 	text_page.setup_page(self)
 	button_page.setup_page(self)
@@ -73,6 +75,7 @@ function init(self)
 	slider_page.setup_page(self)
 	input_page.setup_page(self)
 	grid_page.setup_page(self)
+	infinity_page.setup_page(self)
 
 	init_top_panel(self)
 
