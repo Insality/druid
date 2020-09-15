@@ -17,7 +17,7 @@ end
 
 local function setup_infinity_list(self)
     local data = {}
-    for i = 1, 2500 do
+    for i = 1, 250 do
         table.insert(data, i)
     end
 
@@ -27,7 +27,7 @@ local function setup_infinity_list(self)
     end)
 
     -- scroll to some index
-    local pos = self.infinity_grid:get_pos(950)
+    local pos = self.infinity_grid:get_pos(100)
     self.infinity_scroll:scroll_to(pos, true)
 end
 

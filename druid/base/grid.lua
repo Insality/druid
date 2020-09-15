@@ -43,7 +43,10 @@ function M.init(self, parent, element, in_row)
 	self.anchor = vmath.vector3(0.5 + pivot.x, 0.5 - pivot.y, 0)
 
 	self.in_row = in_row or 1
-	self.node_size = gui.get_size(self:get_node(element))
+	local node = self:get_node(element)
+	self.node_size = gui.get_size(node)
+	self.node_pivot = const.PIVOTS[gui.get_pivot(node)]
+
 	self.border = vmath.vector4(0)
 	self.border_offset = vmath.vector3(0)
 
@@ -58,11 +61,12 @@ end
 
 local function _update_border(self, pos, border)
 	local size = self.node_size
+	local pivot = self.node_pivot
 
-	local left = pos.x - size.x/2 + self.border_offset.x
-	local right = pos.x + size.x/2 + self.border_offset.x
-	local top = pos.y + size.y/2 + self.border_offset.y
-	local bottom = pos.y - size.y/2 + self.border_offset.y
+	local left = pos.x - size.x/2 - (size.x * pivot.x) + self.border_offset.x
+	local right = pos.x + size.x/2 - (size.x * pivot.x) + self.border_offset.x
+	local top = pos.y + size.y/2 - (size.y * pivot.y) + self.border_offset.y
+	local bottom = pos.y - size.y/2 - (size.y * pivot.y)+ self.border_offset.y
 
 	border.x = math.min(border.x, left)
 	border.y = math.max(border.y, top)
