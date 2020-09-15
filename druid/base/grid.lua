@@ -125,8 +125,10 @@ function M.get_index(self, pos)
 	local col = (pos.x + self.border_offset.x) / (self.node_size.x + self.offset.x)
 	local row = -(pos.y + self.border_offset.y) / (self.node_size.y + self.offset.y)
 
-	local index = col + (row * self.in_row) + 1
-	return math.floor(index)
+	row = math.floor(row)
+
+	local index = col + (row * self.in_row)
+	return math.ceil(index)
 end
 
 

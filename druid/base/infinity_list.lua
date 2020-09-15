@@ -23,7 +23,7 @@ function M:init(data_list, scroll, grid, create_function)
     self.components = {}
 
     self.elements_view_count = vmath.vector3(
-        math.ceil(self.view_size.x / self.prefab_size.x),
+        math.min(math.ceil(self.view_size.x / self.prefab_size.x), self.grid.in_row),
         math.ceil(self.view_size.y / self.prefab_size.y),
         0)
 
@@ -89,8 +89,9 @@ end
 function M:_check_elements()
     local pos = gui.get_position(self.scroll.content_node)
     pos.y = -pos.y
+
     local top_index = self.grid:get_index(pos)
-    local last_index = top_index + (self.elements_view_count.x * self.elements_view_count.y) + 1
+    local last_index = top_index + (self.elements_view_count.x * self.elements_view_count.y) + self.grid.in_row - 1
 
     -- Clear outside elements
     for index, _ in pairs(self.nodes) do
