@@ -37,6 +37,7 @@ function M.init(self, parent, element, in_row)
 	self.nodes = {}
 
 	self.offset = vmath.vector3(0)
+	self.grid_mode = const.GRID_MODE.DYNAMIC
 
 	local pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
 	self.anchor = vmath.vector3(0.5 + pivot.x, 0.5 - pivot.y, 0)
@@ -50,22 +51,29 @@ function M.init(self, parent, element, in_row)
 	self.on_remove_item = Event()
 	self.on_clear = Event()
 	self.on_update_positions = Event()
+
+	self._set_position_function = gui.set_position
 end
 
 
-local function check_border(self, pos)
-	local border = self.border
+local function _update_border(self, pos, border)
 	local size = self.node_size
 
-	local W = pos.x - size.x/2 + self.border_offset.x
-	local E = pos.x + size.x/2 + self.border_offset.x
-	local N = pos.y + size.y/2 + self.border_offset.y
-	local S = pos.y - size.y/2 + self.border_offset.y
+	local left = pos.x - size.x/2 + self.border_offset.x
+	local right = pos.x + size.x/2 + self.border_offset.x
+	local top = pos.y + size.y/2 + self.border_offset.y
+	local bottom = pos.y - size.y/2 + self.border_offset.y
 
-	border.x = math.min(border.x, W)
-	border.y = math.max(border.y, N)
-	border.z = math.max(border.z, E)
-	border.w = math.min(border.w, S)
+	border.x = math.min(border.x, left)
+	border.y = math.max(border.y, top)
+	border.z = math.max(border.z, right)
+	border.w = math.min(border.w, bottom)
+end
+
+
+local function update_border_offset(self, pos)
+	local border = self.border
+	_update_border(self, pos, border)
 
 	self.border_offset = vmath.vector3(
 		(border.x + (border.z - border.x) * self.anchor.x),
@@ -75,8 +83,25 @@ local function check_border(self, pos)
 end
 
 
+local function update_pos(self, is_instant)
+	for i, node in pairs(self.nodes) do
+		if is_instant then
+			gui.set_position(node, self:get_pos(i))
+		else
+			self._set_position_function(node, self:get_pos(i))
+		end
+	end
+
+	self.on_update_positions:trigger(self:get_context())
+end
+
+
 local temp_pos = vmath.vector3(0)
-local function get_pos(self, index)
+--- Return pos for grid node index
+-- @function grid:get_pos
+-- @tparam number index The grid element index
+-- @treturn vector3 Node position
+function M.get_pos(self, index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
@@ -88,13 +113,16 @@ local function get_pos(self, index)
 end
 
 
-local function update_pos(self, is_instant)
-	for i = 1, #self.nodes do
-		local node = self.nodes[i]
-		gui.set_position(node, get_pos(self, i))
-	end
+--- Return index for grid pos
+-- @function grid:get_index
+-- @tparam vector3 pos The node position in the grid
+-- @treturn number The node index
+function M.get_index(self, pos)
+	local col = (pos.x + self.border_offset.x) / (self.node_size.x + self.offset.x)
+	local row = -(pos.y + self.border_offset.y) / (self.node_size.y + self.offset.y)
 
-	self.on_update_positions:trigger(self:get_context())
+	local index = col + (row * self.in_row) + 1
+	return math.floor(index)
 end
 
 
@@ -127,25 +155,74 @@ end
 -- @tparam[opt] number index The item position. By default add as last item
 function M.add(self, item, index)
 	index = index or (#self.nodes + 1)
-	table.insert(self.nodes, index, item)
+
+	if self.grid_mode == const.GRID_MODE.DYNAMIC then
+		table.insert(self.nodes, index, item)
+	else
+		self.nodes[index] = item
+	end
+
 	gui.set_parent(item, self.parent)
 
-	local pos = get_pos(self, index)
-	check_border(self, pos)
+	local pos = self:get_pos(index)
+	for i, _ in pairs(self.nodes) do
+		update_border_offset(self, self:get_pos(i))
+	end
+
+	-- Add new item instantly in new pos
+	gui.set_position(item, pos)
 	update_pos(self)
 
 	self.on_add_item:trigger(self:get_context(), item, index)
 end
 
 
+function M:remove(index, delete_node)
+	assert(self.nodes[index], "No grid item at given index " .. index)
+
+	local parent_node = self.nodes[index]
+	if delete_node then
+		gui.delete_node(parent_node)
+	end
+
+	if self.grid_mode == const.GRID_MODE.DYNAMIC then
+		table.remove(self.nodes, index)
+	else
+		self.nodes[index] = nil
+	end
+
+	-- Recalculate borders
+	self.border = vmath.vector4(0)
+	update_border_offset(self, self:get_pos(1))
+	for i, _ in pairs(self.nodes) do
+		local pos = self:get_pos(i)
+		update_border_offset(self, pos)
+	end
+
+	update_pos(self)
+end
+
+
 --- Return grid content size
 -- @function grid:get_size
 -- @treturn vector3 The grid content size
-function M.get_size(self)
+function M.get_size(self, border)
+	border = border or self.border
 	return vmath.vector3(
-		self.border.z - self.border.x,
-		self.border.y - self.border.w,
+		border.z - border.x,
+		border.y - border.w,
 		0)
+end
+
+
+function M:get_size_for_elements_count(count)
+	local border = vmath.vector4(0)
+	for i = 1, count do
+		local pos = self:get_pos(i)
+		_update_border(self, pos, border)
+	end
+
+	return M.get_size(self, border)
 end
 
 
@@ -154,11 +231,20 @@ end
 -- @treturn vector3[] All grid node positions
 function M.get_all_pos(self)
 	local result = {}
-	for i = 1, #self.nodes do
-		table.insert(result,	gui.get_position(self.nodes[i]))
+	for i, node in pairs(self.nodes) do
+		table.insert(result, gui.get_position(node))
 	end
 
 	return result
+end
+
+
+--- Change set position function for grid nodes. It will call on
+-- update poses on grid elements. Default: gui.set_position
+-- @function grid:set_position_function
+-- @tparam function callback Function on node set position
+function M.set_position_function(self, callback)
+	self._set_position_function = callback or gui.set_position
 end
 
 
@@ -172,6 +258,13 @@ function M.clear(self)
 	self.border.z = 0
 
 	self.nodes = {}
+end
+
+
+function M:set_grid_mode(grid_mode)
+	assert(grid_mode == const.GRID_MODE.STATIC or grid_mode == const.GRID_MODE.DYNAMIC)
+
+	self.grid_mode = grid_mode
 end
 
 

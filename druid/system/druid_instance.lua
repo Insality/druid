@@ -17,6 +17,7 @@
 -- @see druid.radio_group
 -- @see druid.swipe
 -- @see druid.drag
+-- @see druid.infinity_list
 
 local const = require("druid.const")
 local druid_input = require("druid.helper.druid_input")
@@ -40,6 +41,7 @@ local radio_group = require("druid.base.radio_group")
 local input = require("druid.base.input")
 local swipe = require("druid.base.swipe")
 local drag = require("druid.base.drag")
+local infinity_list = require("druid.base.infinity_list")
 -- local infinity_scroll = require("druid.base.infinity_scroll")
 
 -- @classmod Druid
@@ -477,9 +479,18 @@ end
 --- Create drag basic component
 -- @function druid:new_drag
 -- @tparam args ... drag init args
--- @treturn Componetn drag component
+-- @treturn Component drag component
 function Druid.new_drag(self, ...)
 	return Druid.create(self, drag, ...)
+end
+
+
+--- Create infinity list basic component
+-- @function druid:new_infinity_list
+-- @tparam args ... drag init args
+-- @treturn Component drag component
+function Druid.new_infinity_list(self, ...)
+	return Druid.create(self, infinity_list, ...)
 end
 
 
