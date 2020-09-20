@@ -27,7 +27,7 @@ local Event = require("druid.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("grid", { const.ON_LAYOUT_CHANGE })
+local M = component.create("static_grid", { const.ON_LAYOUT_CHANGE })
 
 
 --- Component init function
@@ -222,7 +222,7 @@ function M.add(self, item, index)
 end
 
 
---- Remove the item from the grid. Node that gui node will be not deleted
+--- Remove the item from the grid. Note that gui node will be not deleted
 -- @function static_grid:remove
 -- @tparam number index The grid node index to remove
 -- @tparam bool is_shift_nodes If true, will shift nodes left after index
@@ -314,6 +314,15 @@ function M.clear(self)
 
 	self.nodes = {}
 	_update_indexes(self)
+end
+
+
+
+--- Return the grid nodes table
+-- @function static_grid:get_nodes
+-- @treturn table<index, node> The grid nodes
+function M.get_nodes(self)
+	return self.nodes
 end
 
 
