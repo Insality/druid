@@ -27,7 +27,7 @@ local Event = require("druid.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("static_grid", { const.ON_LAYOUT_CHANGE })
+local StaticGrid = component.create("static_grid", { const.ON_LAYOUT_CHANGE })
 
 
 --- Component init function
@@ -35,7 +35,7 @@ local M = component.create("static_grid", { const.ON_LAYOUT_CHANGE })
 -- @tparam node parent The gui node parent, where items will be placed
 -- @tparam node element Element prefab. Need to get it size
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
-function M.init(self, parent, element, in_row)
+function StaticGrid:init(parent, element, in_row)
 	self.parent = self:get_node(parent)
 	self.nodes = {}
 
@@ -46,9 +46,9 @@ function M.init(self, parent, element, in_row)
 
 	self.in_row = in_row or 1
 
-	local node = self:get_node(element)
-	self.node_size = gui.get_size(node)
-	self.node_pivot = const.PIVOTS[gui.get_pivot(node)]
+	self._prefab = self:get_node(element)
+	self.node_size = gui.get_size(self._prefab)
+	self.node_pivot = const.PIVOTS[gui.get_pivot(self._prefab)]
 
 	self.border = vmath.vector4(0) -- Current grid content size
 	self.border_offset = vmath.vector3(0) -- Content offset for match the grid anchoring
@@ -63,66 +63,12 @@ function M.init(self, parent, element, in_row)
 end
 
 
-local function _update_indexes(self)
-	self.first_index = nil
-	self.last_index = nil
-	for index in pairs(self.nodes) do
-		self.first_index = self.first_index or index
-		self.last_index = self.last_index or index
-
-		self.first_index = math.min(self.first_index, index)
-		self.last_index = math.max(self.last_index, index)
-	end
-end
-
-
-local function _update_border(self, pos, border)
-	local size = self.node_size
-	local pivot = self.node_pivot
-
-	local left = pos.x - size.x/2 - (size.x * pivot.x) + self.border_offset.x
-	local right = pos.x + size.x/2 - (size.x * pivot.x) + self.border_offset.x
-	local top = pos.y + size.y/2 - (size.y * pivot.y) + self.border_offset.y
-	local bottom = pos.y - size.y/2 - (size.y * pivot.y) + self.border_offset.y
-
-	border.x = math.min(border.x, left)
-	border.y = math.max(border.y, top)
-	border.z = math.max(border.z, right)
-	border.w = math.min(border.w, bottom)
-end
-
-
-local function update_border_offset(self, pos)
-	local border = self.border
-	_update_border(self, pos, border)
-
-	self.border_offset = vmath.vector3(
-		(border.x + (border.z - border.x) * self.anchor.x),
-		(border.y + (border.w - border.y) * self.anchor.y),
-		0
-	)
-end
-
-
-local function update_pos(self, is_instant)
-	for i, node in pairs(self.nodes) do
-		if is_instant then
-			gui.set_position(node, self:get_pos(i))
-		else
-			self._set_position_function(node, self:get_pos(i))
-		end
-	end
-
-	self.on_update_positions:trigger(self:get_context())
-end
-
-
 local _temp_pos = vmath.vector3(0)
 --- Return pos for grid node index
 -- @function static_grid:get_pos
 -- @tparam number index The grid element index
 -- @treturn vector3 Node position
-function M.get_pos(self, index)
+function StaticGrid:get_pos(index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
@@ -138,7 +84,7 @@ end
 -- @function static_grid:get_index
 -- @tparam vector3 pos The node position in the grid
 -- @treturn number The node index
-function M.get_index(self, pos)
+function StaticGrid:get_index(pos)
 	local col = (pos.x + self.border_offset.x) / (self.node_size.x + self.offset.x) + 1
 	local row = -(pos.y + self.border_offset.y) / (self.node_size.y + self.offset.y)
 
@@ -154,7 +100,7 @@ end
 -- @function static_grid:get_index_by_node
 -- @tparam node node The gui node in the grid
 -- @treturn number The node index
-function M.get_index_by_node(self, node)
+function StaticGrid:get_index_by_node(node)
 	for index, grid_node in pairs(self.nodes) do
 		if node == grid_node then
 			return index
@@ -165,26 +111,26 @@ function M.get_index_by_node(self, node)
 end
 
 
-function M.on_layout_change(self)
-	update_pos(self, true)
+function StaticGrid:on_layout_change()
+	self:_update_pos(true)
 end
 
 
 --- Set grid items offset, the distance between items
 -- @function static_grid:set_offset
 -- @tparam vector3 offset Offset
-function M.set_offset(self, offset)
+function StaticGrid:set_offset(offset)
 	self.offset = offset
-	update_pos(self)
+	self:_update_pos()
 end
 
 
 --- Set grid anchor. Default anchor is equal to anchor of grid parent node
 -- @function static_grid:set_anchor
 -- @tparam vector3 anchor Anchor
-function M.set_anchor(self, anchor)
+function StaticGrid:set_anchor(anchor)
 	self.anchor = anchor
-	update_pos(self)
+	self:_update_pos()
 end
 
 
@@ -192,7 +138,7 @@ end
 -- @function static_grid:add
 --	@tparam node item Gui node
 -- @tparam[opt] number index The item position. By default add as last item
-function M.add(self, item, index)
+function StaticGrid:add(item, index)
 	index = index or ((self.last_index or 0) + 1)
 
 	if self.nodes[index] then
@@ -211,11 +157,11 @@ function M.add(self, item, index)
 	gui.set_position(item, pos)
 
 	for i, _ in pairs(self.nodes) do
-		update_border_offset(self, self:get_pos(i))
+		self:_update_border_offset(self:get_pos(i))
 	end
-	update_pos(self)
 
-	_update_indexes(self)
+	self:_update_pos()
+	self:_update_indexes()
 
 	self.on_add_item:trigger(self:get_context(), item, index)
 	self.on_change_items:trigger(self:get_context(), index)
@@ -226,7 +172,7 @@ end
 -- @function static_grid:remove
 -- @tparam number index The grid node index to remove
 -- @tparam bool is_shift_nodes If true, will shift nodes left after index
-function M:remove(index, is_shift_nodes)
+function StaticGrid:remove(index, is_shift_nodes)
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
 	self.nodes[index] = nil
@@ -239,13 +185,13 @@ function M:remove(index, is_shift_nodes)
 
 	-- Recalculate borders
 	self.border = vmath.vector4(0)
-	update_border_offset(self, self:get_pos(1))
+	self:_update_border_offset(self:get_pos(1))
 	for i, _ in pairs(self.nodes) do
-		update_border_offset(self, self:get_pos(i))
+		self:_update_border_offset(self:get_pos(i))
 	end
 
-	update_pos(self)
-	_update_indexes(self)
+	self:_update_pos()
+	self:_update_indexes()
 
 	self.on_add_item:trigger(self:get_context(), index)
 	self.on_change_items:trigger(self:get_context(), index)
@@ -255,7 +201,7 @@ end
 --- Return grid content size
 -- @function static_grid:get_size
 -- @treturn vector3 The grid content size
-function M.get_size(self, border)
+function StaticGrid:get_size(border)
 	border = border or self.border
 	return vmath.vector3(
 		border.z - border.x,
@@ -268,21 +214,21 @@ end
 -- @function static_grid:get_size_for_elements_count
 -- @tparam number count The grid content node amount
 -- @treturn vector3 The grid content size
-function M:get_size_for_elements_count(count)
+function StaticGrid:get_size_for_elements_count(count)
 	local border = vmath.vector4(0)
 	for i = 1, count do
 		local pos = self:get_pos(i)
-		_update_border(self, pos, border)
+		self:_update_border(pos, border)
 	end
 
-	return M.get_size(self, border)
+	return self:get_size(border)
 end
 
 
 --- Return array of all node positions
 -- @function static_grid:get_all_pos
 -- @treturn vector3[] All grid node positions
-function M.get_all_pos(self)
+function StaticGrid:get_all_pos()
 	local result = {}
 	for i, node in pairs(self.nodes) do
 		table.insert(result, gui.get_position(node))
@@ -296,7 +242,7 @@ end
 -- update poses on grid elements. Default: gui.set_position
 -- @function static_grid:set_position_function
 -- @tparam function callback Function on node set position
-function M.set_position_function(self, callback)
+function StaticGrid:set_position_function(callback)
 	self._set_position_function = callback or gui.set_position
 end
 
@@ -304,16 +250,16 @@ end
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
 -- @function static_grid:clear
-function M.clear(self)
+function StaticGrid:clear()
 	self.border.x = 0
 	self.border.y = 0
 	self.border.w = 0
 	self.border.z = 0
 
-	update_border_offset(self, self:get_pos(1))
+	self:_update_border_offset(self:get_pos(1))
 
 	self.nodes = {}
-	_update_indexes(self)
+	self:_update_indexes()
 end
 
 
@@ -321,9 +267,63 @@ end
 --- Return the grid nodes table
 -- @function static_grid:get_nodes
 -- @treturn table<index, node> The grid nodes
-function M.get_nodes(self)
+function StaticGrid:get_nodes()
 	return self.nodes
 end
 
 
-return M
+function StaticGrid:_update_indexes()
+	self.first_index = nil
+	self.last_index = nil
+	for index in pairs(self.nodes) do
+		self.first_index = self.first_index or index
+		self.last_index = self.last_index or index
+
+		self.first_index = math.min(self.first_index, index)
+		self.last_index = math.max(self.last_index, index)
+	end
+end
+
+
+function StaticGrid:_update_border(pos, border)
+	local size = self.node_size
+	local pivot = self.node_pivot
+
+	local left = pos.x - size.x/2 - (size.x * pivot.x) + self.border_offset.x
+	local right = pos.x + size.x/2 - (size.x * pivot.x) + self.border_offset.x
+	local top = pos.y + size.y/2 - (size.y * pivot.y) + self.border_offset.y
+	local bottom = pos.y - size.y/2 - (size.y * pivot.y) + self.border_offset.y
+
+	border.x = math.min(border.x, left)
+	border.y = math.max(border.y, top)
+	border.z = math.max(border.z, right)
+	border.w = math.min(border.w, bottom)
+end
+
+
+function StaticGrid:_update_border_offset(pos)
+	local border = self.border
+	self:_update_border(pos, border)
+
+	self.border_offset = vmath.vector3(
+		(border.x + (border.z - border.x) * self.anchor.x),
+		(border.y + (border.w - border.y) * self.anchor.y),
+		0
+	)
+end
+
+
+function StaticGrid:_update_pos(is_instant)
+	for i, node in pairs(self.nodes) do
+		if is_instant then
+			gui.set_position(node, self:get_pos(i))
+		else
+			self._set_position_function(node, self:get_pos(i))
+		end
+	end
+
+	self.on_update_positions:trigger(self:get_context())
+end
+
+
+return StaticGrid

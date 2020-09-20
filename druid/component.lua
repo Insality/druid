@@ -41,9 +41,9 @@ end
 
 
 --- Get current component nodes
--- @function component:get_nodes
+-- @function component:get_component_nodes
 -- @treturn table Component nodes table
-function Component.get_nodes(self)
+function Component.get_component_nodes(self)
 	return self._meta.nodes
 end
 
@@ -103,7 +103,7 @@ end
 -- @treturn node Gui node
 function Component.get_node(self, node_or_name)
 	local template_name = self:get_template() or const.EMPTY_STRING
-	local nodes = self:get_nodes()
+	local nodes = self:get_component_nodes()
 
 	if template_name ~= const.EMPTY_STRING then
 		template_name = template_name .. "/"

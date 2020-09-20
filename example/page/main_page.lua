@@ -51,7 +51,7 @@ end
 
 
 local function setup_grid(self)
-	local grid = self.druid:new_grid("grid", "button_template/button", 3)
+	local grid = self.druid:new_static_grid("grid", "button_template/button", 3)
 
 	for i = 1, 12 do
 		local nodes = gui.clone_tree(gui.get_node("button_template/button"))
