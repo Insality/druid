@@ -9,6 +9,7 @@ local button_page = require("example.page.button_page")
 local scroll_page = require("example.page.scroll_page")
 local slider_page = require("example.page.slider_page")
 local input_page = require("example.page.input_page")
+local grid_page = require("example.page.grid_page")
 
 local pages = {
 	"main_page",
@@ -17,6 +18,7 @@ local pages = {
 	"scroll_page",
 	"slider_page",
 	"input_page",
+	"grid_page",
 }
 
 local function on_control_button(self, delta)
@@ -70,6 +72,7 @@ function init(self)
 	scroll_page.setup_page(self)
 	slider_page.setup_page(self)
 	input_page.setup_page(self)
+	grid_page.setup_page(self)
 
 	init_top_panel(self)
 

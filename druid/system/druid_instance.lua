@@ -135,6 +135,8 @@ function Druid.initialize(self, context, style)
 	self._context = context
 	self._style = style or settings.default_style
 	self._deleted = false
+	self._is_input_processing = false
+	self._late_remove = {}
 	self.url = msg.url()
 
 	self.components = {}
@@ -182,10 +184,15 @@ end
 -- @function druid:remove
 -- @tparam Component component Component instance
 function Druid.remove(self, component)
+	if self._is_input_processing then
+		table.insert(self._late_remove, component)
+		return
+	end
+
 	local all_components = self.components[const.ALL]
 
 	-- Recursive remove all children of component
-	for i = 1, #all_components do
+	for i = #all_components, 1, -1 do
 		local inst = all_components[i]
 		if inst:is_child_of(component) then
 			self:remove(inst)
@@ -197,7 +204,7 @@ function Druid.remove(self, component)
 			if component.on_remove then
 				component:on_remove()
 			end
-			table.remove(self, i)
+			table.remove(all_components, i)
 		end
 	end
 
@@ -230,6 +237,8 @@ end
 -- @tparam hash action_id Action_id from on_input
 -- @tparam table action Action from on_input
 function Druid.on_input(self, action_id, action)
+	self._is_input_processing = true
+
 	local is_input_consumed = false
 
 	is_input_consumed = process_input(action_id, action,
@@ -237,6 +246,15 @@ function Druid.on_input(self, action_id, action)
 
 	is_input_consumed = process_input(action_id, action,
 		self.components[const.ON_INPUT], is_input_consumed)
+
+	self._is_input_processing = false
+
+	if #self._late_remove > 0 then
+		for i = 1, #self._late_remove do
+			self:remove(self._late_remove[i])
+		end
+		self._late_remove = {}
+	end
 
 	return is_input_consumed
 end

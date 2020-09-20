@@ -20,7 +20,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("progress", { const.ON_UPDATE })
+local M = component.create("progress", { const.ON_UPDATE, const.ON_LAYOUT_CHANGE })
 
 
 local function check_steps(self, from, to, exactly)
@@ -103,6 +103,11 @@ function M.init(self, node, key, init_value)
 	self.on_change = Event()
 
 	self:set_to(init_value or 1)
+end
+
+
+function M.on_layout_change(self)
+	self:set_to(self.last_value)
 end
 
 

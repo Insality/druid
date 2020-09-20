@@ -7,8 +7,8 @@ local function setup_druid()
 		sound.play("kenney:/sound#" .. name)
 	end)
 
-	druid.set_text_function(function(lang_id)
-		return lang.get_locale(lang_id)
+	druid.set_text_function(function(lang_id, ...)
+		return lang.get_locale(lang_id, ...)
 	end)
 
 	druid.on_language_change()

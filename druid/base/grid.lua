@@ -24,7 +24,7 @@ local Event = require("druid.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("grid")
+local M = component.create("grid", { const.ON_LAYOUT_CHANGE })
 
 
 --- Component init function
@@ -120,6 +120,11 @@ function M.get_index(self, pos)
 
 	local index = col + (row * self.in_row) + 1
 	return math.floor(index)
+end
+
+
+function M.on_layout_change(self)
+	update_pos(self, true)
 end
 
 
