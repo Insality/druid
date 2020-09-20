@@ -46,7 +46,7 @@ function M.init(self, parent, element, in_row)
 	self.node_size = gui.get_size(node)
 	self.node_pivot = const.PIVOTS[gui.get_pivot(node)]
 
-	self.border = vmath.vector4(0)
+	self.border = vmath.vector4(0) -- Current grid content size
 	self.border_offset = vmath.vector3(0)
 
 	self.on_add_item = Event()

@@ -431,6 +431,15 @@ function Druid.new_grid(self, ...)
 end
 
 
+--- Create staic grid basic component
+-- @function druid:new_staic_grid
+-- @tparam args ... grid init args
+-- @treturn Component grid component
+function Druid.new_static_grid(self, ...)
+	return Druid.create(self, static_grid, ...)
+end
+
+
 --- Create scroll basic component
 -- @function druid:new_scroll
 -- @tparam args ... scroll init args

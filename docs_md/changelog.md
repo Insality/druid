@@ -102,5 +102,6 @@ Druid 0.5.0:
 - **Fix #76:** Add params for lang text localization component
 - **Fix #79:** Fix druid:remove inside on_input callback
 - **Fix #80:** Fix hover set_enable typo function call
+- _druid:create_ deprecated. Use _druid:new_ instead (for custom components)
 - Add `component.tempalte.lua` as template for Druid custom component
 

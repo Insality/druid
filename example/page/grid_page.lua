@@ -5,11 +5,19 @@ local function add_node(self)
 	local prefab = gui.get_node("grid_nodes_prefab")
 	local cloned = gui.clone_tree(prefab)
 	gui.set_enabled(cloned["grid_nodes_prefab"], true)
-	local index = #self.grid_nodes + 1
+	local index = #self.grid_nodes.nodes + 1
 	gui.set_text(cloned["grid_nodes_text"], index)
 
-	local button = self.druid:new_button(cloned["grid_nodes_prefab"], function()
-		print(index)
+	local button = self.druid:new_button(cloned["grid_nodes_prefab"], function(_, params, button)
+		gui.delete_node(button.node)
+		self.druid:remove(button)
+		self.grid_nodes:remove(index)
+		for i = 1, #self.grid_node_buttons do
+			if self.grid_node_buttons[i] == button then
+				table.remove(self.grid_node_buttons, i)
+				break
+			end
+		end
 	end)
 	table.insert(self.grid_node_buttons, button)
 
@@ -19,8 +27,8 @@ end
 
 local function clear_nodes(self)
 	local nodes = self.grid_nodes.nodes
-	for i = 1, #nodes do
-		gui.delete_node(nodes[i])
+	for i, node in pairs(nodes) do
+		gui.delete_node(node)
 	end
 
 	for i = 1, #self.grid_node_buttons do
@@ -38,7 +46,10 @@ end
 
 
 function M.setup_page(self)
-	self.grid_nodes = self.druid:new_grid("grid_nodes", "grid_nodes_prefab", 5)
+	self.grid_nodes = self.druid:new_static_grid("grid_nodes", "grid_nodes_prefab", 5)
+	self.grid_nodes:set_position_function(function(node, pos)
+		gui.animate(node, "position", pos, gui.EASING_OUTSINE, 0.2)
+	end)
 	self.grid_node_buttons = {}
 	gui.set_enabled(gui.get_node("grid_nodes_prefab"), false)
 
