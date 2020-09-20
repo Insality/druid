@@ -151,7 +151,24 @@ end
 -- @function druid:create
 -- @tparam Component component Component module
 -- @tparam args ... Other component params to pass it to component:init function
-function Druid.create(self, component, ...)
+-- @deprecated
+function Druid:create(component, ...)
+	helper.deprecated("The druid:create is deprecated. Please use druid:new instead")
+	local instance = create(self, component)
+
+	if instance.init then
+		instance:init(...)
+	end
+
+	return instance
+end
+
+
+--- Create new druid component
+-- @function druid:new
+-- @tparam Component component Component module
+-- @tparam args ... Other component params to pass it to component:init function
+function Druid.new(self, component, ...)
 	local instance = create(self, component)
 
 	if instance.init then
@@ -407,6 +424,7 @@ end
 -- @function druid:new_grid
 -- @tparam args ... grid init args
 -- @treturn Component grid component
+-- @deprecated
 function Druid.new_grid(self, ...)
 	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
 	return Druid.create(self, static_grid, ...)
