@@ -22,6 +22,7 @@ local const = require("druid.const")
 local druid_input = require("druid.helper.druid_input")
 local settings = require("druid.system.settings")
 local class = require("druid.system.middleclass")
+local helper = require("druid.helper")
 
 local button = require("druid.base.button")
 local blocker = require("druid.base.blocker")
@@ -31,7 +32,7 @@ local text = require("druid.base.text")
 local lang_text = require("druid.base.lang_text")
 local timer = require("druid.base.timer")
 local progress = require("druid.base.progress")
-local grid = require("druid.base.grid")
+local static_grid = require("druid.base.static_grid")
 local scroll = require("druid.base.scroll")
 local slider = require("druid.base.slider")
 local checkbox = require("druid.base.checkbox")
@@ -407,7 +408,8 @@ end
 -- @tparam args ... grid init args
 -- @treturn Component grid component
 function Druid.new_grid(self, ...)
-	return Druid.create(self, grid, ...)
+	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
+	return Druid.create(self, static_grid, ...)
 end
 
 

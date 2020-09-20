@@ -188,4 +188,19 @@ function M.get_border(node)
 	)
 end
 
+
+--- Show deprecated message. Once time per message
+-- @function helper.deprecated
+-- @tparam string message The deprecated message
+local _deprecated_messages = {}
+function M.deprecated(message)
+	if _deprecated_messages[message] then
+		return
+	end
+
+	print("[Druid]: " .. message)
+	_deprecated_messages[message] = true
+end
+
+
 return M
