@@ -1,6 +1,6 @@
 --- Component to handle placing components by row and columns.
 -- Grid can anchor your elements, get content size and other
--- @module druid.grid
+-- @module druid.static_grid
 
 --- Component events
 -- @table Events
@@ -28,7 +28,7 @@ local M = component.create("grid", { const.ON_LAYOUT_CHANGE })
 
 
 --- Component init function
--- @function grid:init
+-- @function static_grid:init
 -- @tparam node parent The gui node parent, where items will be placed
 -- @tparam node element Element prefab. Need to get it size
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
@@ -101,7 +101,7 @@ end
 
 local _temp_pos = vmath.vector3(0)
 --- Return pos for grid node index
--- @function grid:get_pos
+-- @function static_grid:get_pos
 -- @tparam number index The grid element index
 -- @treturn vector3 Node position
 function M.get_pos(self, index)
@@ -117,7 +117,7 @@ end
 
 
 --- Return index for grid pos
--- @function grid:get_index
+-- @function static_grid:get_index
 -- @tparam vector3 pos The node position in the grid
 -- @treturn number The node index
 function M.get_index(self, pos)
@@ -137,7 +137,7 @@ end
 
 
 --- Set grid items offset, the distance between items
--- @function grid:set_offset
+-- @function static_grid:set_offset
 -- @tparam vector3 offset Offset
 function M.set_offset(self, offset)
 	self.offset = offset
@@ -146,7 +146,7 @@ end
 
 
 --- Set grid anchor
--- @function grid:set_anchor
+-- @function static_grid:set_anchor
 -- @tparam vector3 acnhor Anchor
 function M.set_anchor(self, anchor)
 	self.anchor = anchor
@@ -155,7 +155,7 @@ end
 
 
 --- Add new item to the grid
--- @function grid:add
+-- @function static_grid:add
 --	@tparam node item Gui node
 -- @tparam[opt] number index The item position. By default add as last item
 function M.add(self, item, index)
@@ -178,13 +178,8 @@ function M.add(self, item, index)
 end
 
 
-function M:remove(index, delete_node)
+function M:remove(index)
 	assert(self.nodes[index], "No grid item at given index " .. index)
-
-	local parent_node = self.nodes[index]
-	if delete_node then
-		gui.delete_node(parent_node)
-	end
 
 	self.nodes[index] = nil
 
@@ -201,7 +196,7 @@ end
 
 
 --- Return grid content size
--- @function grid:get_size
+-- @function static_grid:get_size
 -- @treturn vector3 The grid content size
 function M.get_size(self, border)
 	border = border or self.border
@@ -224,7 +219,7 @@ end
 
 
 --- Return array of all node positions
--- @function grid:get_all_pos
+-- @function static_grid:get_all_pos
 -- @treturn vector3[] All grid node positions
 function M.get_all_pos(self)
 	local result = {}
@@ -238,7 +233,7 @@ end
 
 --- Change set position function for grid nodes. It will call on
 -- update poses on grid elements. Default: gui.set_position
--- @function grid:set_position_function
+-- @function static_grid:set_position_function
 -- @tparam function callback Function on node set position
 function M.set_position_function(self, callback)
 	self._set_position_function = callback or gui.set_position
@@ -246,8 +241,8 @@ end
 
 
 --- Clear grid nodes array. GUI nodes will be not deleted!
--- If you want to delete GUI nodes, use grid.nodes array before grid:clear
--- @function grid:clear
+-- If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
+-- @function static_grid:clear
 function M.clear(self)
 	self.border.x = 0
 	self.border.y = 0
