@@ -14,6 +14,8 @@
 -- @table Fields
 -- @tfield node parent Parent gui node
 -- @tfield node[] nodes List of all grid nodes
+-- @tfield number first_index The first index of node in grid
+-- @tfield number last_index The last index of node in grid
 -- @tfield vector3 offset Item distance between each other items
 -- @tfield vector3 anchor Item anchor
 -- @tfield vector3 node_size Item size
@@ -42,16 +44,14 @@ function M.init(self, parent, element, in_row)
 	local pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
 	self.anchor = vmath.vector3(0.5 + pivot.x, 0.5 - pivot.y, 0)
 
-	self.first_index = nil
-	self.last_index = nil
-
 	self.in_row = in_row or 1
+
 	local node = self:get_node(element)
 	self.node_size = gui.get_size(node)
 	self.node_pivot = const.PIVOTS[gui.get_pivot(node)]
 
 	self.border = vmath.vector4(0) -- Current grid content size
-	self.border_offset = vmath.vector3(0)
+	self.border_offset = vmath.vector3(0) -- Content offset for match the grid anchoring
 
 	self.on_add_item = Event()
 	self.on_remove_item = Event()
@@ -83,7 +83,7 @@ local function _update_border(self, pos, border)
 	local left = pos.x - size.x/2 - (size.x * pivot.x) + self.border_offset.x
 	local right = pos.x + size.x/2 - (size.x * pivot.x) + self.border_offset.x
 	local top = pos.y + size.y/2 - (size.y * pivot.y) + self.border_offset.y
-	local bottom = pos.y - size.y/2 - (size.y * pivot.y)+ self.border_offset.y
+	local bottom = pos.y - size.y/2 - (size.y * pivot.y) + self.border_offset.y
 
 	border.x = math.min(border.x, left)
 	border.y = math.max(border.y, top)
@@ -139,10 +139,11 @@ end
 -- @tparam vector3 pos The node position in the grid
 -- @treturn number The node index
 function M.get_index(self, pos)
-	local col = (pos.x + self.border_offset.x) / (self.node_size.x + self.offset.x)
+	local col = (pos.x + self.border_offset.x) / (self.node_size.x + self.offset.x) + 1
 	local row = -(pos.y + self.border_offset.y) / (self.node_size.y + self.offset.y)
 
-	row = math.floor(row)
+	col = helper.round(col)
+	row = helper.round(row)
 
 	local index = col + (row * self.in_row)
 	return math.ceil(index)
