@@ -16,7 +16,7 @@ local function remove_node(self, button)
 end
 
 
-local function add_node(self)
+local function add_node(self, index)
 	local prefab = gui.get_node("grid_nodes_prefab")
 	local cloned = gui.clone_tree(prefab)
 	gui.set_enabled(cloned["grid_nodes_prefab"], true)
@@ -26,7 +26,7 @@ local function add_node(self)
 	end)
 	table.insert(self.grid_node_buttons, button)
 
-	self.grid_nodes:add(cloned["grid_nodes_prefab"])
+	self.grid_nodes:add(cloned["grid_nodes_prefab"], index)
 end
 
 
@@ -54,7 +54,7 @@ function M.setup_page(self)
 	gui.set_enabled(gui.get_node("grid_nodes_prefab"), false)
 
 	for i = 1, 15 do
-		add_node(self)
+		add_node(self, i)
 	end
 
 	self.druid:new_button("button_add/button", add_node)

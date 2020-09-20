@@ -236,8 +236,7 @@ function M:remove(index, is_shift_nodes)
 	self.border = vmath.vector4(0)
 	update_border_offset(self, self:get_pos(1))
 	for i, _ in pairs(self.nodes) do
-		local pos = self:get_pos(i)
-		update_border_offset(self, pos)
+		update_border_offset(self, self:get_pos(i))
 	end
 
 	update_pos(self)
@@ -301,6 +300,8 @@ function M.clear(self)
 	self.border.y = 0
 	self.border.w = 0
 	self.border.z = 0
+
+	update_border_offset(self, self:get_pos(1))
 
 	self.nodes = {}
 	_update_indexes(self)
