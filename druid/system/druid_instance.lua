@@ -9,7 +9,8 @@
 -- @see druid.lang_text
 -- @see druid.timer
 -- @see druid.progress
--- @see druid.grid
+-- @see druid.static_grid
+-- @see druid.dynamic_grid
 -- @see druid.scroll
 -- @see druid.slider
 -- @see druid.checkbox
@@ -33,6 +34,7 @@ local lang_text = require("druid.base.lang_text")
 local timer = require("druid.base.timer")
 local progress = require("druid.base.progress")
 local static_grid = require("druid.base.static_grid")
+local dynamic_grid = require("druid.base.dynamic_grid")
 local scroll = require("druid.base.scroll")
 local slider = require("druid.base.slider")
 local checkbox = require("druid.base.checkbox")
@@ -414,12 +416,21 @@ function Druid.new_grid(self, ...)
 end
 
 
---- Create staic grid basic component
--- @function druid:new_staic_grid
+--- Create static grid basic component
+-- @function druid:new_static_grid
 -- @tparam args ... grid init args
 -- @treturn Component grid component
 function Druid.new_static_grid(self, ...)
 	return Druid.create(self, static_grid, ...)
+end
+
+
+--- Create dynamic grid basic component
+-- @function druid:new_dynamic_grid
+-- @tparam args ... grid init args
+-- @treturn Component grid component
+function Druid.new_dynamic_grid(self, ...)
+	return Druid.create(self, dynamic_grid, ...)
 end
 
 
