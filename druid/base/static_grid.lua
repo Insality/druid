@@ -6,6 +6,7 @@
 -- @table Events
 -- @tfield druid_event on_add_item On item add callback
 -- @tfield druid_event on_remove_item On item remove callback
+-- @tfield druid_event on_change_items On item add or remove callback
 -- @tfield druid_event on_clear On grid clear callback
 -- @tfield druid_event on_update_positions On update item positions callback
 
@@ -41,6 +42,9 @@ function M.init(self, parent, element, in_row)
 	local pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
 	self.anchor = vmath.vector3(0.5 + pivot.x, 0.5 - pivot.y, 0)
 
+	self.first_index = nil
+	self.last_index = nil
+
 	self.in_row = in_row or 1
 	local node = self:get_node(element)
 	self.node_size = gui.get_size(node)
@@ -51,10 +55,24 @@ function M.init(self, parent, element, in_row)
 
 	self.on_add_item = Event()
 	self.on_remove_item = Event()
+	self.on_change_items = Event()
 	self.on_clear = Event()
 	self.on_update_positions = Event()
 
 	self._set_position_function = gui.set_position
+end
+
+
+local function _update_indexes(self)
+	self.first_index = nil
+	self.last_index = nil
+	for index in pairs(self.nodes) do
+		self.first_index = self.first_index or index
+		self.last_index = self.last_index or index
+
+		self.first_index = math.min(self.first_index, index)
+		self.last_index = math.max(self.last_index, index)
+	end
 end
 
 
@@ -131,6 +149,21 @@ function M.get_index(self, pos)
 end
 
 
+--- Return grid index by node
+-- @function static_grid:get_index_by_node
+-- @tparam node node The gui node in the grid
+-- @treturn number The node index
+function M.get_index_by_node(self, node)
+	for index, grid_node in pairs(self.nodes) do
+		if node == grid_node then
+			return index
+		end
+	end
+
+	return nil
+end
+
+
 function M.on_layout_change(self)
 	update_pos(self, true)
 end
@@ -159,29 +192,45 @@ end
 --	@tparam node item Gui node
 -- @tparam[opt] number index The item position. By default add as last item
 function M.add(self, item, index)
-	index = index or (#self.nodes + 1)
+	index = index or ((self.last_index or 0) + 1)
+
+	if self.nodes[index] then
+		-- Move nodes to right
+		for i = self.last_index, index, -1 do
+			self.nodes[i + 1] = self.nodes[i]
+		end
+	end
 
 	self.nodes[index] = item
 
 	gui.set_parent(item, self.parent)
 
 	local pos = self:get_pos(index)
+	-- Add new item instantly in new pos
+	gui.set_position(item, pos)
+
 	for i, _ in pairs(self.nodes) do
 		update_border_offset(self, self:get_pos(i))
 	end
-
-	-- Add new item instantly in new pos
-	gui.set_position(item, pos)
 	update_pos(self)
 
+	_update_indexes(self)
+
 	self.on_add_item:trigger(self:get_context(), item, index)
+	self.on_change_items:trigger(self:get_context(), index)
 end
 
 
-function M:remove(index)
+function M:remove(index, is_shift_nodes)
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
 	self.nodes[index] = nil
+
+	if is_shift_nodes then
+		for i = index, self.last_index do
+			self.nodes[i] = self.nodes[i + 1]
+		end
+	end
 
 	-- Recalculate borders
 	self.border = vmath.vector4(0)
@@ -192,6 +241,10 @@ function M:remove(index)
 	end
 
 	update_pos(self)
+	_update_indexes(self)
+
+	self.on_add_item:trigger(self:get_context(), index)
+	self.on_change_items:trigger(self:get_context(), index)
 end
 
 
@@ -250,6 +303,7 @@ function M.clear(self)
 	self.border.z = 0
 
 	self.nodes = {}
+	_update_indexes(self)
 end
 
 

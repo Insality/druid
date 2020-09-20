@@ -1,23 +1,28 @@
 local M = {}
 
 
+local function remove_node(self, button)
+	gui.delete_node(button.node)
+
+	self.druid:remove(button)
+	local index = self.grid_nodes:get_index_by_node(button.node)
+	self.grid_nodes:remove(index, true)
+	for i = 1, #self.grid_node_buttons do
+		if self.grid_node_buttons[i] == button then
+			table.remove(self.grid_node_buttons, i)
+			break
+		end
+	end
+end
+
+
 local function add_node(self)
 	local prefab = gui.get_node("grid_nodes_prefab")
 	local cloned = gui.clone_tree(prefab)
 	gui.set_enabled(cloned["grid_nodes_prefab"], true)
-	local index = #self.grid_nodes.nodes + 1
-	gui.set_text(cloned["grid_nodes_text"], index)
 
 	local button = self.druid:new_button(cloned["grid_nodes_prefab"], function(_, params, button)
-		gui.delete_node(button.node)
-		self.druid:remove(button)
-		self.grid_nodes:remove(index)
-		for i = 1, #self.grid_node_buttons do
-			if self.grid_node_buttons[i] == button then
-				table.remove(self.grid_node_buttons, i)
-				break
-			end
-		end
+		remove_node(self, button)
 	end)
 	table.insert(self.grid_node_buttons, button)
 
@@ -37,11 +42,6 @@ local function clear_nodes(self)
 	self.grid_node_buttons = {}
 
 	self.grid_nodes:clear()
-end
-
-
-local function remove_node(self)
-	-- Remove is not implemented yet
 end
 
 

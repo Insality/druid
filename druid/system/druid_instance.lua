@@ -151,24 +151,7 @@ end
 -- @function druid:create
 -- @tparam Component component Component module
 -- @tparam args ... Other component params to pass it to component:init function
--- @deprecated
-function Druid:create(component, ...)
-	helper.deprecated("The druid:create is deprecated. Please use druid:new instead")
-	local instance = create(self, component)
-
-	if instance.init then
-		instance:init(...)
-	end
-
-	return instance
-end
-
-
---- Create new druid component
--- @function druid:new
--- @tparam Component component Component module
--- @tparam args ... Other component params to pass it to component:init function
-function Druid.new(self, component, ...)
+function Druid.create(self, component, ...)
 	local instance = create(self, component)
 
 	if instance.init then

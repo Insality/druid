@@ -10392,8 +10392,8 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: 0.0
+    x: 1.0
+    y: 2.0
     z: 0.0
     w: 1.0
   }
@@ -10423,7 +10423,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "1"
+  text: "X"
   font: "game"
   id: "grid_nodes_text"
   xanchor: XANCHOR_NONE
