@@ -102,12 +102,6 @@ M.SWIPE = {
 }
 
 
-M.GRID_MODE = {
-	STATIC = "static",
-	DYNAMIC = "dynamic",
-}
-
-
 M.EMPTY_FUNCTION = function() end
 M.EMPTY_STRING = ""
 M.SPACE_STRING = " "

@@ -37,7 +37,6 @@ function M.init(self, parent, element, in_row)
 	self.nodes = {}
 
 	self.offset = vmath.vector3(0)
-	self.grid_mode = const.GRID_MODE.DYNAMIC
 
 	local pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
 	self.anchor = vmath.vector3(0.5 + pivot.x, 0.5 - pivot.y, 0)
@@ -100,7 +99,7 @@ local function update_pos(self, is_instant)
 end
 
 
-local temp_pos = vmath.vector3(0)
+local _temp_pos = vmath.vector3(0)
 --- Return pos for grid node index
 -- @function grid:get_pos
 -- @tparam number index The grid element index
@@ -109,11 +108,11 @@ function M.get_pos(self, index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
-	temp_pos.x = col * (self.node_size.x + self.offset.x) - self.border_offset.x
-	temp_pos.y = -row * (self.node_size.y + self.offset.y) - self.border_offset.y
-	temp_pos.z = 0
+	_temp_pos.x = col * (self.node_size.x + self.offset.x) - self.border_offset.x
+	_temp_pos.y = -row * (self.node_size.y + self.offset.y) - self.border_offset.y
+	_temp_pos.z = 0
 
-	return temp_pos
+	return _temp_pos
 end
 
 
@@ -162,11 +161,7 @@ end
 function M.add(self, item, index)
 	index = index or (#self.nodes + 1)
 
-	if self.grid_mode == const.GRID_MODE.DYNAMIC then
-		table.insert(self.nodes, index, item)
-	else
-		self.nodes[index] = item
-	end
+	self.nodes[index] = item
 
 	gui.set_parent(item, self.parent)
 
@@ -191,11 +186,7 @@ function M:remove(index, delete_node)
 		gui.delete_node(parent_node)
 	end
 
-	if self.grid_mode == const.GRID_MODE.DYNAMIC then
-		table.remove(self.nodes, index)
-	else
-		self.nodes[index] = nil
-	end
+	self.nodes[index] = nil
 
 	-- Recalculate borders
 	self.border = vmath.vector4(0)
@@ -264,13 +255,6 @@ function M.clear(self)
 	self.border.z = 0
 
 	self.nodes = {}
-end
-
-
-function M:set_grid_mode(grid_mode)
-	assert(grid_mode == const.GRID_MODE.STATIC or grid_mode == const.GRID_MODE.DYNAMIC)
-
-	self.grid_mode = grid_mode
 end
 
 
