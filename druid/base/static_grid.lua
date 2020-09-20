@@ -179,9 +179,9 @@ function M.set_offset(self, offset)
 end
 
 
---- Set grid anchor
+--- Set grid anchor. Default anchor is equal to anchor of grid parent node
 -- @function static_grid:set_anchor
--- @tparam vector3 acnhor Anchor
+-- @tparam vector3 anchor Anchor
 function M.set_anchor(self, anchor)
 	self.anchor = anchor
 	update_pos(self)
@@ -222,6 +222,10 @@ function M.add(self, item, index)
 end
 
 
+--- Remove the item from the grid. Node that gui node will be not deleted
+-- @function static_grid:remove
+-- @tparam number index The grid node index to remove
+-- @tparam bool is_shift_nodes If true, will shift nodes left after index
 function M:remove(index, is_shift_nodes)
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
@@ -260,6 +264,10 @@ function M.get_size(self, border)
 end
 
 
+--- Return grid size for amount of nodes in this grid
+-- @function static_grid:get_size_for_elements_count
+-- @tparam number count The grid content node amount
+-- @treturn vector3 The grid content size
 function M:get_size_for_elements_count(count)
 	local border = vmath.vector4(0)
 	for i = 1, count do
