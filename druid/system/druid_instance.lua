@@ -19,28 +19,29 @@
 -- @see druid.drag
 
 local const = require("druid.const")
+local helper = require("druid.helper")
 local druid_input = require("druid.helper.druid_input")
 local settings = require("druid.system.settings")
 local class = require("druid.system.middleclass")
 
-local button = require("druid.base.button")
-local blocker = require("druid.base.blocker")
 local back_handler = require("druid.base.back_handler")
-local hover = require("druid.base.hover")
-local text = require("druid.base.text")
-local lang_text = require("druid.base.lang_text")
-local timer = require("druid.base.timer")
-local progress = require("druid.base.progress")
-local grid = require("druid.base.grid")
-local scroll = require("druid.base.scroll")
-local slider = require("druid.base.slider")
-local checkbox = require("druid.base.checkbox")
-local checkbox_group = require("druid.base.checkbox_group")
-local radio_group = require("druid.base.radio_group")
-local input = require("druid.base.input")
-local swipe = require("druid.base.swipe")
+local blocker = require("druid.base.blocker")
+local button = require("druid.base.button")
 local drag = require("druid.base.drag")
--- local infinity_scroll = require("druid.base.infinity_scroll")
+local grid = require("druid.base.grid")
+local hover = require("druid.base.hover")
+local lang_text = require("druid.base.lang_text")
+local scroll = require("druid.base.scroll")
+local swipe = require("druid.base.swipe")
+local text = require("druid.base.text")
+
+local checkbox = require("druid.extended.checkbox")
+local checkbox_group = require("druid.extended.checkbox_group")
+local input = require("druid.extended.input")
+local progress = require("druid.extended.progress")
+local radio_group = require("druid.extended.radio_group")
+local slider = require("druid.extended.slider")
+local timer = require("druid.extended.timer")
 
 -- @classmod Druid
 local Druid = class("druid.druid_instance")
@@ -384,24 +385,6 @@ function Druid.new_lang_text(self, ...)
 end
 
 
---- Create timer basic component
--- @function druid:new_timer
--- @tparam args ... timer init args
--- @treturn Component timer component
-function Druid.new_timer(self, ...)
-	return Druid.create(self, timer, ...)
-end
-
-
---- Create progress basic component
--- @function druid:new_progress
--- @tparam args ... progress init args
--- @treturn Component progress component
-function Druid.new_progress(self, ...)
-	return Druid.create(self, progress, ...)
-end
-
-
 --- Create grid basic component
 -- @function druid:new_grid
 -- @tparam args ... grid init args
@@ -420,51 +403,6 @@ function Druid.new_scroll(self, ...)
 end
 
 
---- Create slider basic component
--- @function druid:new_slider
--- @tparam args ... slider init args
--- @treturn Component slider component
-function Druid.new_slider(self, ...)
-	return Druid.create(self, slider, ...)
-end
-
-
---- Create checkbox basic component
--- @function druid:new_checkbox
--- @tparam args ... checkbox init args
--- @treturn Component checkbox component
-function Druid.new_checkbox(self, ...)
-	return Druid.create(self, checkbox, ...)
-end
-
-
---- Create input basic component
--- @function druid:new_input
--- @tparam args ... input init args
--- @treturn Component input component
-function Druid.new_input(self, ...)
-	return Druid.create(self, input, ...)
-end
-
-
---- Create checkbox_group basic component
--- @function druid:new_checkbox_group
--- @tparam args ... checkbox_group init args
--- @treturn Component checkbox_group component
-function Druid.new_checkbox_group(self, ...)
-	return Druid.create(self, checkbox_group, ...)
-end
-
-
---- Create radio_group basic component
--- @function druid:new_radio_group
--- @tparam args ... radio_group init args
--- @treturn Component radio_group component
-function Druid.new_radio_group(self, ...)
-	return Druid.create(self, radio_group, ...)
-end
-
-
 --- Create swipe basic component
 -- @function druid:new_swipe
 -- @tparam args ... swipe init args
@@ -480,6 +418,76 @@ end
 -- @treturn Componetn drag component
 function Druid.new_drag(self, ...)
 	return Druid.create(self, drag, ...)
+end
+
+
+--- Create slider basic component
+-- @function druid:new_slider
+-- @tparam args ... slider init args
+-- @treturn Component slider component
+function Druid.new_slider(self, ...)
+	-- return helper.extended_component("slider")
+	return Druid.create(self, slider, ...)
+end
+
+
+--- Create checkbox basic component
+-- @function druid:new_checkbox
+-- @tparam args ... checkbox init args
+-- @treturn Component checkbox component
+function Druid.new_checkbox(self, ...)
+	-- return helper.extended_component("checkbox")
+	return Druid.create(self, checkbox, ...)
+end
+
+
+--- Create input basic component
+-- @function druid:new_input
+-- @tparam args ... input init args
+-- @treturn Component input component
+function Druid.new_input(self, ...)
+	-- return helper.extended_component("input")
+	return Druid.create(self, input, ...)
+end
+
+
+--- Create checkbox_group basic component
+-- @function druid:new_checkbox_group
+-- @tparam args ... checkbox_group init args
+-- @treturn Component checkbox_group component
+function Druid.new_checkbox_group(self, ...)
+	-- return helper.extended_component("checkbox_group")
+	return Druid.create(self, checkbox_group, ...)
+end
+
+
+--- Create radio_group basic component
+-- @function druid:new_radio_group
+-- @tparam args ... radio_group init args
+-- @treturn Component radio_group component
+function Druid.new_radio_group(self, ...)
+	-- return helper.extended_component("radio_group")
+	return Druid.create(self, radio_group, ...)
+end
+
+
+--- Create timer basic component
+-- @function druid:new_timer
+-- @tparam args ... timer init args
+-- @treturn Component timer component
+function Druid.new_timer(self, ...)
+	-- return helper.extended_component("timer")
+	return Druid.create(self, timer, ...)
+end
+
+
+--- Create progress basic component
+-- @function druid:new_progress
+-- @tparam args ... progress init args
+-- @treturn Component progress component
+function Druid.new_progress(self, ...)
+	-- return helper.extended_component("progress")
+	return Druid.create(self, progress, ...)
 end
 
 

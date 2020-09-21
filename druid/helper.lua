@@ -188,4 +188,13 @@ function M.get_border(node)
 	)
 end
 
+
+-- Show message to require extended component
+function M.extended_component(component_name)
+	print(string.format("[Druid]: The component %s is extended component. You have to register it via druid.register to use it", component_name))
+	print("[Druid]: Use next code:")
+	print(string.format('local %s = require("druid.extended.%s")', component_name, component_name))
+	print(string.format('druid.register("%s", %s)', component_name, component_name))
+end
+
 return M
