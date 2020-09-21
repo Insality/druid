@@ -10,6 +10,7 @@ local function remove_node(self, button)
 	for i = 1, #self.grid_node_buttons do
 		if self.grid_node_buttons[i] == button then
 			table.remove(self.grid_node_buttons, i)
+			self.grid_static_scroll:set_size(self.grid_nodes:get_size())
 			break
 		end
 	end
@@ -27,6 +28,8 @@ local function add_node(self, index)
 	table.insert(self.grid_node_buttons, button)
 
 	self.grid_nodes:add(cloned["grid_nodes_prefab"], index)
+
+	self.grid_static_scroll:set_size(self.grid_nodes:get_size())
 end
 
 
@@ -79,19 +82,21 @@ local function init_dynamic_grid(self)
 	self.prefab_dynamic = gui.get_node("grid_dynamic_prefab")
 	gui.set_enabled(self.prefab_dynamic, false)
 
-	for i = 1, 15 do
+	for i = 1, 20 do
 		add_node_dynamic(self, i)
 	end
 
-	local area = gui.get_node("grid_area")
-	gui.set_size(area, self.dynamic_grid:get_size())
-	gui.set_position(area, self.dynamic_grid:get_center_position())
-	print(self.dynamic_grid:get_center_position())
+	self.grid_dynamic_scroll:set_size(self.dynamic_grid:get_size())
 end
 
 
 function M.setup_page(self)
 	self.grid_page_scroll = self.druid:new_scroll("grid_page", "grid_page_content")
+
+	self.grid_static_scroll = self.druid:new_scroll("grid_nodes_view", "grid_nodes")
+		:set_horizontal_scroll(false)
+	self.grid_dynamic_scroll = self.druid:new_scroll("grid_dynamic_view", "grid_dynamic_nodes")
+		:set_horizontal_scroll(false)
 
 	init_static_grid(self)
 	init_dynamic_grid(self)

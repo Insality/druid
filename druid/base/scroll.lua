@@ -283,8 +283,8 @@ local function update_size(self)
 	self.available_pos = get_border_vector(view_border - content_border)
 	self.available_size = get_size_vector(self.available_pos)
 
-	self.drag.can_x = self.available_size.x > 0
-	self.drag.can_y = self.available_size.y > 0
+	self.drag.can_x = self.available_size.x > 0 and self._is_horizontal_scroll
+	self.drag.can_y = self.available_size.y > 0 and self._is_vertical_scroll
 
 	-- Extra content size calculation
 	-- We add extra size only if scroll is available
@@ -371,6 +371,8 @@ function M.init(self, view_node, content_node)
 
 	self.selected = nil
 	self.is_animate = false
+	self._is_horizontal_scroll = true
+	self._is_vertical_scroll = true
 
 	update_size(self)
 end
@@ -543,6 +545,28 @@ function M.set_points(self, points)
 
 	check_threshold(self)
 
+	return self
+end
+
+
+--- Lock or unlock horizontal scroll
+-- @function scroll:set_horizontal_scroll
+-- @tparam bool state True, if horizontal scroll is enabled
+-- @treturn druid.scroll Current scroll instance
+function M:set_horizontal_scroll(state)
+	self._is_horizontal_scroll = state
+	self.drag.can_x = self.available_size.x > 0 and state
+	return self
+end
+
+
+--- Lock or unlock vertical scroll
+-- @function scroll:set_vertical_scroll
+-- @tparam bool state True, if vertical scroll is enabled
+-- @treturn druid.scroll Current scroll instance
+function M:set_vertical_scroll(state)
+	self._is_vertical_scroll = state
+	self.drag.can_y = self.available_size.y > 0 and state
 	return self
 end
 
