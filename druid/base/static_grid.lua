@@ -263,7 +263,6 @@ function StaticGrid:clear()
 end
 
 
-
 --- Return the grid nodes table
 -- @function static_grid:get_nodes
 -- @treturn table<index, node> The grid nodes

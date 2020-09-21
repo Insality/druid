@@ -45,7 +45,7 @@ local function clear_nodes(self)
 end
 
 
-function M.setup_page(self)
+local function init_static_grid(self)
 	self.grid_nodes = self.druid:new_static_grid("grid_nodes", "grid_nodes_prefab", 5)
 	self.grid_nodes:set_position_function(function(node, pos)
 		gui.animate(node, "position", pos, gui.EASING_OUTSINE, 0.2)
@@ -62,6 +62,39 @@ function M.setup_page(self)
 
 	local remove_button = self.druid:new_button("button_remove/button", remove_node)
 	gui.set_enabled(remove_button.node, false)
+end
+
+
+local function add_node_dynamic(self, index)
+	local node = gui.clone(self.prefab_dynamic)
+	gui.set_enabled(node, true)
+	gui.set_size(node, vmath.vector3(250, math.random(60, 150), 0))
+	self.dynamic_grid:add(node)
+end
+
+
+local function init_dynamic_grid(self)
+	self.dynamic_grid = self.druid:new_dynamic_grid("grid_dynamic_nodes", "vertical")
+
+	self.prefab_dynamic = gui.get_node("grid_dynamic_prefab")
+	gui.set_enabled(self.prefab_dynamic, false)
+
+	for i = 1, 15 do
+		add_node_dynamic(self, i)
+	end
+
+	local area = gui.get_node("grid_area")
+	gui.set_size(area, self.dynamic_grid:get_size())
+	gui.set_position(area, self.dynamic_grid:get_center_position())
+	print(self.dynamic_grid:get_center_position())
+end
+
+
+function M.setup_page(self)
+	self.grid_page_scroll = self.druid:new_scroll("grid_page", "grid_page_content")
+
+	init_static_grid(self)
+	init_dynamic_grid(self)
 end
 
 
