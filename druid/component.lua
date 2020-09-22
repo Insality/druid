@@ -24,27 +24,11 @@ function Component:set_style(druid_style)
 end
 
 
---- Get current component template name
--- @function component:get_template
--- @treturn string Component template name
-function Component:get_template()
-	return self._meta.template
-end
-
-
 --- Set current component template name
 -- @function component:set_template
 -- @tparam string template Component template name
 function Component:set_template(template)
 	self._meta.template = template
-end
-
-
---- Get current component nodes
--- @function component:get_nodes
--- @treturn table Component nodes table
-function Component:get_nodes()
-	return self._meta.nodes
 end
 
 
@@ -61,22 +45,6 @@ end
 -- @treturn table Component context
 function Component:get_context(context)
 	return self._meta.context
-end
-
-
---- Set current component context
--- @function component:set_context
--- @tparam table context Druid context. Usually it is self of script
-function Component:set_context(context)
-	self._meta.context = context
-end
-
-
---- Get current component interests
--- @function component:get_interests
--- @treturn table List of component interests
-function Component:get_interests()
-	return self._component.interest
 end
 
 
@@ -102,8 +70,8 @@ end
 -- @tparam string|node node_or_name Node name or node itself
 -- @treturn node Gui node
 function Component:get_node(node_or_name)
-	local template_name = self:get_template() or const.EMPTY_STRING
-	local nodes = self:get_nodes()
+	local template_name = self:__get_template() or const.EMPTY_STRING
+	local nodes = self:__get_nodes()
 
 	if template_name ~= const.EMPTY_STRING then
 		template_name = template_name .. "/"
@@ -134,14 +102,6 @@ function Component:get_druid()
 end
 
 
---- Return true, if current component is child of another component
--- @function component:is_child_of
--- @treturn bool True, if current component is child of another
-function Component:is_child_of(component)
-	return self:get_context() == component
-end
-
-
 --- Return component name
 -- @function component:get_name
 -- @treturn string The component name
@@ -166,6 +126,9 @@ function Component:set_input_enabled(state)
 end
 
 
+--- Return the parent for current component
+-- @function component:get_parent_component
+-- @treturn Component|nil The druid component instance or nil
 function Component:get_parent_component()
 	local context = self:get_context()
 
@@ -177,26 +140,12 @@ function Component:get_parent_component()
 end
 
 
-function Component:add_children(children)
-	table.insert(self._meta.children, children)
-end
-
-
-function Component:remove_children(children)
-	for i = #self._meta.children, 1, -1 do
-		if self._meta.children[i] == children then
-			table.remove(self._meta.children, i)
-		end
-	end
-end
-
-
 --- Setup component context and his style table
 -- @function component:setup_component
 -- @tparam druid_instance table The parent druid instance
 -- @tparam context table Druid context. Usually it is self of script
 -- @tparam style table Druid style module
--- @treturn Component Component itself
+-- @treturn component Component itself
 function Component:setup_component(druid_instance, context, style)
 	self._meta = {
 		template = nil,
@@ -209,12 +158,12 @@ function Component:setup_component(druid_instance, context, style)
 		children = {}
 	}
 
-	self:set_context(context)
+	self:__set_context(context)
 	self:set_style(style)
 
 	local parent = self:get_parent_component()
 	if parent then
-		parent:add_children(self)
+		parent:__add_children(self)
 	end
 
 	return self
@@ -239,6 +188,58 @@ end
 
 function Component:__tostring()
 	return self._component.name
+end
+
+
+--- Set current component context
+-- @function component:__set_context
+-- @tparam table context Druid context. Usually it is self of script
+function Component:__set_context(context)
+	self._meta.context = context
+end
+
+
+--- Get current component interests
+-- @function component:__get_interests
+-- @treturn table List of component interests
+function Component:__get_interests()
+	return self._component.interest
+end
+
+
+--- Get current component template name
+-- @function component:__get_template
+-- @treturn string Component template name
+function Component:__get_template()
+	return self._meta.template
+end
+
+
+--- Get current component nodes
+-- @function component:__get_nodes
+-- @treturn table Component nodes table
+function Component:__get_nodes()
+	return self._meta.nodes
+end
+
+
+--- Add child to component children list
+-- @function component:__add_children
+-- @tparam component children The druid component instance
+function Component:__add_children(children)
+	table.insert(self._meta.children, children)
+end
+
+
+--- Remove child from component children list
+-- @function component:__remove_children
+-- @tparam component children The druid component instance
+function Component:__remove_children(children)
+	for i = #self._meta.children, 1, -1 do
+		if self._meta.children[i] == children then
+			table.remove(self._meta.children, i)
+		end
+	end
 end
 
 

@@ -78,7 +78,7 @@ local function create(self, instance_class)
 
 	table.insert(self.components[const.ALL], instance)
 
-	local register_to = instance:get_interests()
+	local register_to = instance:__get_interests()
 	for i = 1, #register_to do
 		local interest = register_to[i]
 		table.insert(self.components[interest], instance)
@@ -199,7 +199,7 @@ function Druid.remove(self, component)
 		self:remove(children[i])
 		local parent = children[i]:get_parent_component()
 		if parent then
-			parent:remove_children(children[i])
+			parent:__remove_children(children[i])
 		end
 	end
 	component._meta.children = {}
@@ -214,7 +214,7 @@ function Druid.remove(self, component)
 		end
 	end
 
-	local interests = component:get_interests()
+	local interests = component:__get_interests()
 	for i = 1, #interests do
 		local interest = interests[i]
 		local components = self.components[interest]
