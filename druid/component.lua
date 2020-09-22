@@ -150,6 +150,22 @@ function Component:get_name()
 end
 
 
+--- Set component input state. By default it enabled
+-- You can disable any input of component by this function
+-- @function component:set_input_enabled
+-- @tparam bool state The component input state
+--	@treturn Component Component itself
+function Component:set_input_enabled(state)
+	self._meta.input_enabled = state
+
+	for index = 1, #self._meta.children do
+		self._meta.children[index]:set_input_enabled(state)
+	end
+
+	return self
+end
+
+
 function Component:get_parent_component()
 	local context = self:get_context()
 

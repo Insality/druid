@@ -100,7 +100,8 @@ local function process_input(action_id, action, components, is_input_consumed)
 	for i = #components, 1, -1 do
 		local component = components[i]
 		-- Process increased input priority first
-		if component._meta.increased_input_priority then
+		local meta = component._meta
+		if meta.input_enabled and meta.increased_input_priority then
 			if not is_input_consumed then
 				is_input_consumed = component:on_input(action_id, action)
 			else
@@ -113,7 +114,9 @@ local function process_input(action_id, action, components, is_input_consumed)
 
 	for i = #components, 1, -1 do
 		local component = components[i]
-		if not component._meta.increased_input_priority then
+		-- Process usual input priority next
+		local meta = component._meta
+		if meta.input_enabled and not meta.increased_input_priority then
 			if not is_input_consumed then
 				is_input_consumed = component:on_input(action_id, action)
 			else
