@@ -94,6 +94,19 @@ Druid 0.4.0:
 
 
 Druid 0.5.0:
+- **#77** Grid update:
+	- The _grid_ component now is __deprecated__. Use _static_grid_ instead. Druid will show you deprecated message, if you still using _grid_ component
+	- Add _static_grid_ component
+		- The behaviour like previous _grid_ component
+		- Have constant element size, so have ability to precalculate positions, indexes and size of content
+		- By default, not shifting elements on removing element. Add _is_shift_ flag to _static_grid:remove_ function
+		- This grid can spawn elements with several rows and collumns
+	- Add _dynamic_grid_ component
+		- Have dynamic element size. So have no ability to precalculate stuff like _static_grid_
+		- Element size got from _gui.get_size_ * _gui.get_scale_
+		- This grid can not have spaces between elements. You will get the error, if spawn element far away from other elements
+		- The grid can spawn elements only in row or in collumn
+- **#37** Add _on_layout_change_ support. Druid will keep and restore GUI component data between changing game layout. Override function _on_layout_change_ in your custom components to do stuff you need.
 - **Fix #61:** Button component: fix button animation node creation
 - **Fix #64:** Hover component: wrong mouse_hover default state
 - **Fix #71:** Blocker: blocker now correct block mouse hover event
