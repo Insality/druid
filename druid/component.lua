@@ -189,6 +189,11 @@ function Component.initialize(self, name, interest)
 end
 
 
+function Component:__tostring()
+	return self._component.name
+end
+
+
 --- Create new component. It will inheritance from basic
 -- druid component.
 -- @function Component.create
