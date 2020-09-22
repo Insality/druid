@@ -14,7 +14,7 @@ local Component = class("druid.component")
 -- their style changing and store all style params
 -- @function component:set_style
 -- @tparam table style Druid style module
-function Component.set_style(self, druid_style)
+function Component:set_style(druid_style)
 	self._meta.style = druid_style or const.EMPTY_TABLE
 	local component_style = self._meta.style[self._component.name] or const.EMPTY_TABLE
 
@@ -24,34 +24,18 @@ function Component.set_style(self, druid_style)
 end
 
 
---- Get current component template name
--- @function component:get_template
--- @treturn string Component template name
-function Component.get_template(self)
-	return self._meta.template
-end
-
-
 --- Set current component template name
 -- @function component:set_template
 -- @tparam string template Component template name
-function Component.set_template(self, template)
+function Component:set_template(template)
 	self._meta.template = template
-end
-
-
---- Get current component nodes
--- @function component:get_nodes
--- @treturn table Component nodes table
-function Component.get_nodes(self)
-	return self._meta.nodes
 end
 
 
 --- Set current component nodes
 -- @function component:set_nodes
 -- @tparam table nodes Component nodes table
-function Component.set_nodes(self, nodes)
+function Component:set_nodes(nodes)
 	self._meta.nodes = nodes
 end
 
@@ -59,37 +43,21 @@ end
 --- Get current component context
 -- @function component:get_context
 -- @treturn table Component context
-function Component.get_context(self, context)
+function Component:get_context(context)
 	return self._meta.context
-end
-
-
---- Set current component context
--- @function component:set_context
--- @tparam table context Druid context. Usually it is self of script
-function Component.set_context(self, context)
-	self._meta.context = context
-end
-
-
---- Get current component interests
--- @function component:get_interests
--- @treturn table List of component interests
-function Component.get_interests(self)
-	return self._component.interest
 end
 
 
 --- Increase input priority in current input stack
 -- @function component:increase_input_priority
-function Component.increase_input_priority(self)
+function Component:increase_input_priority()
 	self._meta.increased_input_priority = true
 end
 
 
 --- Reset input priority in current input stack
 -- @function component:reset_input_priority
-function Component.reset_input_priority(self)
+function Component:reset_input_priority()
 	self._meta.increased_input_priority = false
 end
 
@@ -101,9 +69,9 @@ end
 -- @function component:get_node
 -- @tparam string|node node_or_name Node name or node itself
 -- @treturn node Gui node
-function Component.get_node(self, node_or_name)
-	local template_name = self:get_template() or const.EMPTY_STRING
-	local nodes = self:get_nodes()
+function Component:get_node(node_or_name)
+	local template_name = self:__get_template() or const.EMPTY_STRING
+	local nodes = self:__get_nodes()
 
 	if template_name ~= const.EMPTY_STRING then
 		template_name = template_name .. "/"
@@ -128,25 +96,47 @@ end
 -- Use it to create component inside of other components.
 -- @function component:get_druid
 -- @treturn Druid Druid instance with component context
-function Component.get_druid(self)
+function Component:get_druid()
 	local context = { _context = self }
 	return setmetatable(context, { __index = self._meta.druid })
-end
-
-
---- Return true, if current component is child of another component
--- @function component:is_child_of
--- @treturn bool True, if current component is child of another
-function Component.is_child_of(self, component)
-	return self:get_context() == component
 end
 
 
 --- Return component name
 -- @function component:get_name
 -- @treturn string The component name
-function Component.get_name(self)
+function Component:get_name()
 	return self._component.name
+end
+
+
+--- Set component input state. By default it enabled
+-- You can disable any input of component by this function
+-- @function component:set_input_enabled
+-- @tparam bool state The component input state
+--	@treturn Component Component itself
+function Component:set_input_enabled(state)
+	self._meta.input_enabled = state
+
+	for index = 1, #self._meta.children do
+		self._meta.children[index]:set_input_enabled(state)
+	end
+
+	return self
+end
+
+
+--- Return the parent for current component
+-- @function component:get_parent_component
+-- @treturn Component|nil The druid component instance or nil
+function Component:get_parent_component()
+	local context = self:get_context()
+
+	if context.isInstanceOf and context:isInstanceOf(Component) then
+		return context
+	end
+
+	return nil
 end
 
 
@@ -155,19 +145,26 @@ end
 -- @tparam druid_instance table The parent druid instance
 -- @tparam context table Druid context. Usually it is self of script
 -- @tparam style table Druid style module
--- @treturn Component Component itself
-function Component.setup_component(self, druid_instance, context, style)
+-- @treturn component Component itself
+function Component:setup_component(druid_instance, context, style)
 	self._meta = {
 		template = nil,
 		context = nil,
 		nodes = nil,
 		style = nil,
 		druid = druid_instance,
-		increased_input_priority = false
+		increased_input_priority = false,
+		input_enabled = true,
+		children = {}
 	}
 
-	self:set_context(context)
+	self:__set_context(context)
 	self:set_style(style)
+
+	local parent = self:get_parent_component()
+	if parent then
+		parent:__add_children(self)
+	end
 
 	return self
 end
@@ -179,13 +176,70 @@ end
 -- @tparam string name Component name
 -- @tparam[opt={}] table interest List of component's interest
 -- @local
-function Component.initialize(self, name, interest)
+function Component:initialize(name, interest)
 	interest = interest or {}
 
 	self._component = {
 		name = name,
 		interest = interest
 	}
+end
+
+
+function Component:__tostring()
+	return self._component.name
+end
+
+
+--- Set current component context
+-- @function component:__set_context
+-- @tparam table context Druid context. Usually it is self of script
+function Component:__set_context(context)
+	self._meta.context = context
+end
+
+
+--- Get current component interests
+-- @function component:__get_interests
+-- @treturn table List of component interests
+function Component:__get_interests()
+	return self._component.interest
+end
+
+
+--- Get current component template name
+-- @function component:__get_template
+-- @treturn string Component template name
+function Component:__get_template()
+	return self._meta.template
+end
+
+
+--- Get current component nodes
+-- @function component:__get_nodes
+-- @treturn table Component nodes table
+function Component:__get_nodes()
+	return self._meta.nodes
+end
+
+
+--- Add child to component children list
+-- @function component:__add_children
+-- @tparam component children The druid component instance
+function Component:__add_children(children)
+	table.insert(self._meta.children, children)
+end
+
+
+--- Remove child from component children list
+-- @function component:__remove_children
+-- @tparam component children The druid component instance
+function Component:__remove_children(children)
+	for i = #self._meta.children, 1, -1 do
+		if self._meta.children[i] == children then
+			table.remove(self._meta.children, i)
+		end
+	end
 end
 
 

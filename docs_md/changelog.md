@@ -102,5 +102,6 @@ Druid 0.5.0:
 - **Fix #76:** Add params for lang text localization component
 - **Fix #79:** Fix druid:remove inside on_input callback
 - **Fix #80:** Fix hover set_enable typo function call
+- **FIX #88:** Add _component:set_input_enabled_ function to enable/disable input for druid component
 - Add `component.tempalte.lua` as template for Druid custom component
 

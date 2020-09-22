@@ -78,7 +78,7 @@ local function create(self, instance_class)
 
 	table.insert(self.components[const.ALL], instance)
 
-	local register_to = instance:get_interests()
+	local register_to = instance:__get_interests()
 	for i = 1, #register_to do
 		local interest = register_to[i]
 		table.insert(self.components[interest], instance)
@@ -100,7 +100,8 @@ local function process_input(action_id, action, components, is_input_consumed)
 	for i = #components, 1, -1 do
 		local component = components[i]
 		-- Process increased input priority first
-		if component._meta.increased_input_priority then
+		local meta = component._meta
+		if meta.input_enabled and meta.increased_input_priority then
 			if not is_input_consumed then
 				is_input_consumed = component:on_input(action_id, action)
 			else
@@ -113,7 +114,9 @@ local function process_input(action_id, action, components, is_input_consumed)
 
 	for i = #components, 1, -1 do
 		local component = components[i]
-		if not component._meta.increased_input_priority then
+		-- Process usual input priority next
+		local meta = component._meta
+		if meta.input_enabled and not meta.increased_input_priority then
 			if not is_input_consumed then
 				is_input_consumed = component:on_input(action_id, action)
 			else
@@ -190,16 +193,18 @@ function Druid.remove(self, component)
 		return
 	end
 
-	local all_components = self.components[const.ALL]
-
 	-- Recursive remove all children of component
-	for i = #all_components, 1, -1 do
-		local inst = all_components[i]
-		if inst:is_child_of(component) then
-			self:remove(inst)
+	local children = component._meta.children
+	for i = 1, #children do
+		self:remove(children[i])
+		local parent = children[i]:get_parent_component()
+		if parent then
+			parent:__remove_children(children[i])
 		end
 	end
+	component._meta.children = {}
 
+	local all_components = self.components[const.ALL]
 	for i = #all_components, 1, -1 do
 		if all_components[i] == component then
 			if component.on_remove then
@@ -209,7 +214,7 @@ function Druid.remove(self, component)
 		end
 	end
 
-	local interests = component:get_interests()
+	local interests = component:__get_interests()
 	for i = 1, #interests do
 		local interest = interests[i]
 		local components = self.components[interest]
