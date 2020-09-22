@@ -150,24 +150,56 @@ function Component:get_name()
 end
 
 
+function Component:get_parent_component()
+	local context = self:get_context()
+
+	if context.isInstanceOf and context:isInstanceOf(Component) then
+		return context
+	end
+
+	return nil
+end
+
+
+function Component:add_children(children)
+	table.insert(self._meta.children, children)
+end
+
+
+function Component:remove_children(children)
+	for i = #self._meta.children, 1, -1 do
+		if self._meta.children[i] == children then
+			table.remove(self._meta.children, i)
+		end
+	end
+end
+
+
 --- Setup component context and his style table
 -- @function component:setup_component
 -- @tparam druid_instance table The parent druid instance
 -- @tparam context table Druid context. Usually it is self of script
 -- @tparam style table Druid style module
 -- @treturn Component Component itself
-function Component.setup_component(self, druid_instance, context, style)
+function Component:setup_component(druid_instance, context, style)
 	self._meta = {
 		template = nil,
 		context = nil,
 		nodes = nil,
 		style = nil,
 		druid = druid_instance,
-		increased_input_priority = false
+		increased_input_priority = false,
+		input_enabled = true,
+		children = {}
 	}
 
 	self:set_context(context)
 	self:set_style(style)
+
+	local parent = self:get_parent_component()
+	if parent then
+		parent:add_children(self)
+	end
 
 	return self
 end
