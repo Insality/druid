@@ -14,7 +14,7 @@ local Component = class("druid.component")
 -- their style changing and store all style params
 -- @function component:set_style
 -- @tparam table style Druid style module
-function Component.set_style(self, druid_style)
+function Component:set_style(druid_style)
 	self._meta.style = druid_style or const.EMPTY_TABLE
 	local component_style = self._meta.style[self._component.name] or const.EMPTY_TABLE
 
@@ -27,7 +27,7 @@ end
 --- Get current component template name
 -- @function component:get_template
 -- @treturn string Component template name
-function Component.get_template(self)
+function Component:get_template()
 	return self._meta.template
 end
 
@@ -35,7 +35,7 @@ end
 --- Set current component template name
 -- @function component:set_template
 -- @tparam string template Component template name
-function Component.set_template(self, template)
+function Component:set_template(template)
 	self._meta.template = template
 end
 
@@ -43,7 +43,7 @@ end
 --- Get current component nodes
 -- @function component:get_nodes
 -- @treturn table Component nodes table
-function Component.get_nodes(self)
+function Component:get_nodes()
 	return self._meta.nodes
 end
 
@@ -51,7 +51,7 @@ end
 --- Set current component nodes
 -- @function component:set_nodes
 -- @tparam table nodes Component nodes table
-function Component.set_nodes(self, nodes)
+function Component:set_nodes(nodes)
 	self._meta.nodes = nodes
 end
 
@@ -59,7 +59,7 @@ end
 --- Get current component context
 -- @function component:get_context
 -- @treturn table Component context
-function Component.get_context(self, context)
+function Component:get_context(context)
 	return self._meta.context
 end
 
@@ -67,7 +67,7 @@ end
 --- Set current component context
 -- @function component:set_context
 -- @tparam table context Druid context. Usually it is self of script
-function Component.set_context(self, context)
+function Component:set_context(context)
 	self._meta.context = context
 end
 
@@ -75,21 +75,21 @@ end
 --- Get current component interests
 -- @function component:get_interests
 -- @treturn table List of component interests
-function Component.get_interests(self)
+function Component:get_interests()
 	return self._component.interest
 end
 
 
 --- Increase input priority in current input stack
 -- @function component:increase_input_priority
-function Component.increase_input_priority(self)
+function Component:increase_input_priority()
 	self._meta.increased_input_priority = true
 end
 
 
 --- Reset input priority in current input stack
 -- @function component:reset_input_priority
-function Component.reset_input_priority(self)
+function Component:reset_input_priority()
 	self._meta.increased_input_priority = false
 end
 
@@ -101,7 +101,7 @@ end
 -- @function component:get_node
 -- @tparam string|node node_or_name Node name or node itself
 -- @treturn node Gui node
-function Component.get_node(self, node_or_name)
+function Component:get_node(node_or_name)
 	local template_name = self:get_template() or const.EMPTY_STRING
 	local nodes = self:get_nodes()
 
@@ -128,7 +128,7 @@ end
 -- Use it to create component inside of other components.
 -- @function component:get_druid
 -- @treturn Druid Druid instance with component context
-function Component.get_druid(self)
+function Component:get_druid()
 	local context = { _context = self }
 	return setmetatable(context, { __index = self._meta.druid })
 end
@@ -137,7 +137,7 @@ end
 --- Return true, if current component is child of another component
 -- @function component:is_child_of
 -- @treturn bool True, if current component is child of another
-function Component.is_child_of(self, component)
+function Component:is_child_of(component)
 	return self:get_context() == component
 end
 
@@ -145,7 +145,7 @@ end
 --- Return component name
 -- @function component:get_name
 -- @treturn string The component name
-function Component.get_name(self)
+function Component:get_name()
 	return self._component.name
 end
 
@@ -179,7 +179,7 @@ end
 -- @tparam string name Component name
 -- @tparam[opt={}] table interest List of component's interest
 -- @local
-function Component.initialize(self, name, interest)
+function Component:initialize(name, interest)
 	interest = interest or {}
 
 	self._component = {
