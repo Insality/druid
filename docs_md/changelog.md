@@ -98,10 +98,12 @@ Druid 0.5.0:
 - **Fix #64:** Hover component: wrong mouse_hover default state
 - **Fix #71:** Blocker: blocker now correct block mouse hover event
 - **Fix #72:** Fix `return nil` in some `on_input` functions
-- **Fix #74:** Fix typo: strech -> stretch. Scroll function `set_extra_stretch_size` renamed
+- **Fix #74:** __[BREAKING]__ Fix typo: strech -> stretch. Scroll function `set_extra_stretch_size` renamed
 - **Fix #76:** Add params for lang text localization component
 - **Fix #79:** Fix druid:remove inside on_input callback
 - **Fix #80:** Fix hover set_enable typo function call
 - _druid:create_ deprecated. Use _druid:new_ instead (for custom components)
-- Add `component.tempalte.lua` as template for Druid custom component
+- Add _scroll:set_vertical_scroll_ and _scroll:set_horizontal_scroll_ for disable scroll sides
+- **#85** Move several components from `base` folder to `extended`. In future, to use them, you have to register them manually. This is need for decrease build size by excluding unused components
+- Add `component.template.lua` as template for Druid custom component
 
