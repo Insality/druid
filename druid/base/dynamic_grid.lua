@@ -27,29 +27,32 @@ local component = require("druid.component")
 
 local DynamicGrid = component.create("dynamic_grid", { const.ON_LAYOUT_CHANGE })
 
+local SIDE_VECTORS = {
+	LEFT = vmath.vector3(-1, 0, 0),
+	RIGHT = vmath.vector3(1, 0, 0),
+	TOP = vmath.vector3(0, -1, 0),
+	BOT = vmath.vector3(0, 1, 0),
+}
 
 --- Component init function
 -- @function dynamic_grid:init
 -- @tparam node parent The gui node parent, where items will be placed
+-- @tparam enum.side side The grid side. By default - vertical
 function DynamicGrid:init(parent, side)
+	self.nodes = {}
+	self.side = side or const.SIDE.Y
 	self.parent = self:get_node(parent)
 
-	self.nodes = {}
-
 	self.offset = vmath.vector3(0)
-
+	self.border = vmath.vector4(0) -- Current grid content size
 	self.pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
 	self.anchor = vmath.vector3(0.5 + self.pivot.x, 0.5 - self.pivot.y, 0)
-
-	self.border = vmath.vector4(0) -- Current grid content size
 
 	self.on_add_item = Event()
 	self.on_remove_item = Event()
 	self.on_change_items = Event()
 	self.on_clear = Event()
 	self.on_update_positions = Event()
-
-	self.center_pos = vmath.vector3(0)
 
 	self._set_position_function = gui.set_position
 end
@@ -69,18 +72,17 @@ function DynamicGrid:get_pos(index, node)
 		local size = self:_get_node_size(node)
 		local pivot = const.PIVOTS[gui.get_pivot(node)]
 		return vmath.vector3(
-			size.x * pivot.x + size.x * self.pivot.x,
+			size.x * pivot.x - size.x * self.pivot.x,
 			size.y * pivot.y - size.y * self.pivot.y,
 			0)
 	end
 
-	-- For now it works only by vertical
 	if prev_node then
-		return self:_get_next_node_pos(index - 1, node, vmath.vector3(0, 1, 0))
+		return self:_get_next_node_pos(index - 1, node, self:_get_side_vector(self.side, 1))
 	end
 
 	if next_node then
-		return self:_get_next_node_pos(index + 1, node, vmath.vector3(0, -1, 0))
+		return self:_get_next_node_pos(index + 1, node, self:_get_side_vector(self.side, -1))
 	end
 end
 
@@ -209,7 +211,6 @@ function DynamicGrid:clear()
 end
 
 
-
 --- Return the grid nodes table
 -- @function dynamic_grid:get_nodes
 -- @treturn table<index, node> The grid nodes
@@ -269,28 +270,18 @@ end
 
 function DynamicGrid:_get_next_node_pos(origin_node_index, new_node, place_side)
 	local node = self.nodes[origin_node_index]
-	local pos = node.pos
-	local size = node.size
-	local anchor = node.pivot
 
 	local new_node_size = self:_get_node_size(new_node)
-	local new_anchor = const.PIVOTS[gui.get_pivot(new_node)]
+	local new_pivot = const.PIVOTS[gui.get_pivot(new_node)]
 
-	local dist = vmath.vector3(
-		(size.x/2 + new_node_size.x/2) * place_side.x,
-		(size.y/2 + new_node_size.y/2) * place_side.y,
-		0
-	)
-
-	local node_center = vmath.vector3(
-		pos.x - size.x * anchor.x,
-		pos.y - size.y * anchor.y,
-		0
-	)
+	local dist_x = (node.size.x/2 + new_node_size.x/2) * place_side.x
+	local dist_y = (node.size.y/2 + new_node_size.y/2) * place_side.y
+	local node_center_x = node.pos.x - node.size.x * node.pivot.x
+	local node_center_y = node.pos.y - node.size.y * node.pivot.y
 
 	return vmath.vector3(
-		node_center.x + dist.x + new_node_size.x * new_anchor.x,
-		node_center.y - dist.y + new_node_size.y * new_anchor.y,
+		node_center_x + dist_x + new_node_size.x * new_pivot.x,
+		node_center_y - dist_y + new_node_size.y * new_pivot.y,
 		0
 	)
 end
@@ -312,6 +303,17 @@ function DynamicGrid:_add_node(node, index)
 	-- Add new item instantly in new pos
 	gui.set_parent(node, self.parent)
 	gui.set_position(node, self.nodes[index].pos)
+end
+
+
+function DynamicGrid:_get_side_vector(side, is_forward)
+	if side == const.SIDE.X then
+		return is_forward and SIDE_VECTORS.RIGHT or SIDE_VECTORS.LEFT
+	end
+
+	if side == const.SIDE.Y then
+		return is_forward and SIDE_VECTORS.BOT or SIDE_VECTORS.TOP
+	end
 end
 
 

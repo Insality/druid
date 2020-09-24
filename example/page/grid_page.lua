@@ -1,3 +1,5 @@
+local druid_const = require("druid.const")
+
 local M = {}
 
 
@@ -77,12 +79,12 @@ end
 
 
 local function init_dynamic_grid(self)
-	self.dynamic_grid = self.druid:new_dynamic_grid("grid_dynamic_nodes", "vertical")
+	self.dynamic_grid = self.druid:new_dynamic_grid("grid_dynamic_nodes", druid_const.SIDE.Y)
 
 	self.prefab_dynamic = gui.get_node("grid_dynamic_prefab")
 	gui.set_enabled(self.prefab_dynamic, false)
 
-	for i = 1, 20 do
+	for i = 1, 8 do
 		add_node_dynamic(self, i)
 	end
 
