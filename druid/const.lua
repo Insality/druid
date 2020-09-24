@@ -102,6 +102,11 @@ M.SWIPE = {
 }
 
 
+M.ERRORS = {
+	GRID_DYNAMIC_ANCHOR = "The pivot of dynamic grid node should be West or North"
+}
+
+
 M.EMPTY_FUNCTION = function() end
 M.EMPTY_STRING = ""
 M.SPACE_STRING = " "

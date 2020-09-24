@@ -37,16 +37,19 @@ local SIDE_VECTORS = {
 --- Component init function
 -- @function dynamic_grid:init
 -- @tparam node parent The gui node parent, where items will be placed
--- @tparam enum.side side The grid side. By default - vertical
 function DynamicGrid:init(parent, side)
-	self.nodes = {}
-	self.side = side or const.SIDE.Y
 	self.parent = self:get_node(parent)
+	local parent_pivot = gui.get_pivot(self.parent)
 
+	self.pivot = helper.get_pivot_offset(parent_pivot)
+	self.anchor = vmath.vector3(0.5 + self.pivot.x, 0.5 - self.pivot.y, 0)
+
+	assert(parent_pivot == gui.PIVOT_W or parent_pivot == gui.PIVOT_N, const.ERRORS.GRID_DYNAMIC_ANCHOR)
+	self.side = (parent_pivot == gui.PIVOT_W and const.SIDE.X or const.SIDE.Y)
+
+	self.nodes = {}
 	self.offset = vmath.vector3(0)
 	self.border = vmath.vector4(0) -- Current grid content size
-	self.pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
-	self.anchor = vmath.vector3(0.5 + self.pivot.x, 0.5 - self.pivot.y, 0)
 
 	self.on_add_item = Event()
 	self.on_remove_item = Event()

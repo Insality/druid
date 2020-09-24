@@ -106,6 +106,7 @@ Druid 0.5.0:
 		- Element size got from _gui.get_size_ * _gui.get_scale_
 		- This grid can not have spaces between elements. You will get the error, if spawn element far away from other elements
 		- The grid can spawn elements only in row or in collumn
+		- The grid node should have West or North pivot (vertical or horizontal element placement)
 - **#37** Add _on_layout_change_ support. Druid will keep and restore GUI component data between changing game layout. Override function _on_layout_change_ in your custom components to do stuff you need.
 - **#85** Move several components from `base` folder to `extended`. In future, to use them, you have to register them manually. This is need for decrease build size by excluding unused components
 - Add _scroll:set_vertical_scroll_ and _scroll:set_horizontal_scroll_ for disable scroll sides
