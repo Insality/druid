@@ -218,14 +218,18 @@ end
 -- update poses on grid elements. Default: gui.set_position
 -- @function static_grid:set_position_function
 -- @tparam function callback Function on node set position
+-- @treturn druid.static_grid Current grid instance
 function StaticGrid:set_position_function(callback)
 	self._set_position_function = callback or gui.set_position
+
+	return self
 end
 
 
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
 -- @function static_grid:clear
+-- @treturn druid.static_grid Current grid instance
 function StaticGrid:clear()
 	self.border.x = 0
 	self.border.y = 0
@@ -234,6 +238,8 @@ function StaticGrid:clear()
 
 	self.nodes = {}
 	self:_update()
+
+	return self
 end
 
 

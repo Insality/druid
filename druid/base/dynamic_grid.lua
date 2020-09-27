@@ -245,17 +245,21 @@ end
 -- update poses on grid elements. Default: gui.set_position
 -- @function dynamic_grid:set_position_function
 -- @tparam function callback Function on node set position
+-- @treturn druid.dynamic_grid Current grid instance
 function DynamicGrid:set_position_function(callback)
 	self._set_position_function = callback or gui.set_position
+	return self
 end
 
 
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use dynamic_grid.nodes array before grid:clear
 -- @function dynamic_grid:clear
+-- @treturn druid.dynamic_grid Current grid instance
 function DynamicGrid:clear()
 	self.nodes = {}
 	self:_update()
+	return self
 end
 
 

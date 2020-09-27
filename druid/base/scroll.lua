@@ -118,8 +118,11 @@ function Scroll:init(view_node, content_node)
 
 	self.selected = nil
 	self.is_animate = false
+
 	self._is_horizontal_scroll = true
 	self._is_vertical_scroll = true
+	self._grid_on_change = nil
+	self._grid_on_change_callback = nil
 
 	self:_update_size()
 end
@@ -136,6 +139,11 @@ function Scroll:update(dt)
 	else
 		self:_update_free_scroll(dt)
 	end
+end
+
+
+function Scroll:on_remove()
+	self:bind_grid(nil)
 end
 
 
@@ -314,6 +322,28 @@ end
 function Scroll:set_vertical_scroll(state)
 	self._is_vertical_scroll = state
 	self.drag.can_y = self.available_size.y > 0 and state
+	return self
+end
+
+
+
+function Scroll:bind_grid(grid)
+	if self._grid_on_change then
+		self._grid_on_change:unsubscribe(self._grid_on_change_callback)
+
+		self._grid_on_change = nil
+		self._grid_on_change_callback = nil
+	end
+
+	if not grid then
+		return
+	end
+
+	self._grid_on_change = grid.on_change_items
+	self._grid_on_change_callback = self._grid_on_change:subscribe(function()
+		self:set_size(grid:get_size())
+	end)
+
 	return self
 end
 
