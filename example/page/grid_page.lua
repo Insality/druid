@@ -85,7 +85,6 @@ local function remove_dynamic_node(self, button)
 		if self.dynamic_node_buttons[i] == button then
 			table.remove(self.dynamic_node_buttons, i)
 			self.grid_dynamic_scroll:set_size(self.dynamic_grid:get_size())
-			self.grid_dynamic_scroll:set_scroll_offset(self.dynamic_grid:get_zero_offset())
 			break
 		end
 	end
@@ -103,7 +102,6 @@ local function add_node_dynamic(self, index, is_shift_left)
 	end)
 	button:set_click_zone(self.grid_dynamic_scroll.view_node)
 	self.grid_dynamic_scroll:set_size(self.dynamic_grid:get_size())
-	self.grid_dynamic_scroll:set_scroll_offset(self.dynamic_grid:get_zero_offset())
 	table.insert(self.dynamic_node_buttons, button)
 end
 
@@ -114,7 +112,6 @@ local function add_node_dynamic_hor(self, index)
 	gui.set_size(node, vmath.vector3(80 + math.random(0, 80), 80, 0))
 	self.dynamic_hor_grid:add(node, index)
 	self.grid_dynamic_hor_scroll:set_size(self.dynamic_hor_grid:get_size())
-	self.grid_dynamic_hor_scroll:set_scroll_offset(self.dynamic_hor_grid:get_zero_offset())
 end
 
 

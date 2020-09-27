@@ -131,13 +131,10 @@ function DynamicGrid:add(node, index, is_shift_left)
 		local start_index = is_shift_left and self.first_index or self.last_index
 		for i = start_index, index, -delta do
 			self.nodes[i + delta] = self.nodes[i]
-			print("move", i + delta, i)
 		end
 	end
 
-	-- TODO: we must choose anchor node to add this node (next or previous)
 	self:_add_node(node, index, index - delta)
-	print("Add", index, "From", index - delta)
 
 	-- After shifting we should recalc node poses
 	if is_shift then
@@ -145,10 +142,10 @@ function DynamicGrid:add(node, index, is_shift_left)
 		local target_index = is_shift_left and self.first_index or self.last_index
 		for i = index + delta, target_index + delta, delta do
 			local move_node = self.nodes[i]
-			print("Recalc", i, i - delta)
 			move_node.pos = self:get_pos(i, move_node.node, i - delta)
 		end
 	end
+
 
 	-- Sync grid data
 	self:_update()
@@ -310,11 +307,13 @@ end
 
 
 function DynamicGrid:_update_pos(is_instant)
+	local offset = self:get_zero_offset()
+
 	for index, node in pairs(self.nodes) do
 		if is_instant then
-			gui.set_position(node.node, node.pos)
+			gui.set_position(node.node, node.pos + offset)
 		else
-			self._set_position_function(node.node, node.pos)
+			self._set_position_function(node.node, node.pos + offset)
 		end
 	end
 
@@ -363,7 +362,7 @@ function DynamicGrid:_add_node(node, index, origin_index)
 
 	-- Add new item instantly in new pos
 	gui.set_parent(node, self.parent)
-	gui.set_position(node, self.nodes[index].pos)
+	gui.set_position(node, self.nodes[index].pos + self:get_zero_offset())
 end
 
 

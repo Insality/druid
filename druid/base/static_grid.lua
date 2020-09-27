@@ -41,8 +41,8 @@ function StaticGrid:init(parent, element, in_row)
 
 	self.offset = vmath.vector3(0)
 
-	local pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
-	self.anchor = vmath.vector3(0.5 + pivot.x, 0.5 - pivot.y, 0)
+	self.pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
+	self.anchor = vmath.vector3(0.5 + self.pivot.x, 0.5 - self.pivot.y, 0)
 
 	self.in_row = in_row or 1
 
@@ -51,7 +51,6 @@ function StaticGrid:init(parent, element, in_row)
 	self.node_pivot = const.PIVOTS[gui.get_pivot(self._prefab)]
 
 	self.border = vmath.vector4(0) -- Current grid content size
-	self.border_offset = vmath.vector3(0) -- Content offset for match the grid anchoring
 
 	self.on_add_item = Event()
 	self.on_remove_item = Event()
@@ -72,8 +71,8 @@ function StaticGrid:get_pos(index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
-	_temp_pos.x = col * (self.node_size.x + self.offset.x) - self.border_offset.x
-	_temp_pos.y = -row * (self.node_size.y + self.offset.y) - self.border_offset.y
+	_temp_pos.x = col * (self.node_size.x + self.offset.x)
+	_temp_pos.y = -row * (self.node_size.y + self.offset.y)
 	_temp_pos.z = 0
 
 	return _temp_pos
@@ -85,8 +84,8 @@ end
 -- @tparam vector3 pos The node position in the grid
 -- @treturn number The node index
 function StaticGrid:get_index(pos)
-	local col = (pos.x + self.border_offset.x) / (self.node_size.x + self.offset.x) + 1
-	local row = -(pos.y + self.border_offset.y) / (self.node_size.y + self.offset.y)
+	local col = pos.x / (self.node_size.x + self.offset.x) + 1
+	local row = -pos.y / (self.node_size.y + self.offset.y)
 
 	col = helper.round(col)
 	row = helper.round(row)
@@ -112,7 +111,7 @@ end
 
 
 function StaticGrid:on_layout_change()
-	self:_update_pos(true)
+	self:_update(true)
 end
 
 
@@ -121,7 +120,7 @@ end
 -- @tparam vector3 offset Offset
 function StaticGrid:set_offset(offset)
 	self.offset = offset
-	self:_update_pos()
+	self:_update()
 end
 
 
@@ -130,7 +129,7 @@ end
 -- @tparam vector3 anchor Anchor
 function StaticGrid:set_anchor(anchor)
 	self.anchor = anchor
-	self:_update_pos()
+	self:_update()
 end
 
 
@@ -156,12 +155,7 @@ function StaticGrid:add(item, index)
 	-- Add new item instantly in new pos
 	gui.set_position(item, pos)
 
-	for i, _ in pairs(self.nodes) do
-		self:_update_border_offset(self:get_pos(i))
-	end
-
-	self:_update_pos()
-	self:_update_indexes()
+	self:_update()
 
 	self.on_add_item:trigger(self:get_context(), item, index)
 	self.on_change_items:trigger(self:get_context(), index)
@@ -185,13 +179,8 @@ function StaticGrid:remove(index, is_shift_nodes)
 
 	-- Recalculate borders
 	self.border = vmath.vector4(0)
-	self:_update_border_offset(self:get_pos(1))
-	for i, _ in pairs(self.nodes) do
-		self:_update_border_offset(self:get_pos(i))
-	end
 
-	self:_update_pos()
-	self:_update_indexes()
+	self:_update()
 
 	self.on_add_item:trigger(self:get_context(), index)
 	self.on_change_items:trigger(self:get_context(), index)
@@ -207,21 +196,6 @@ function StaticGrid:get_size(border)
 		border.z - border.x,
 		border.y - border.w,
 		0)
-end
-
-
---- Return grid size for amount of nodes in this grid
--- @function static_grid:get_size_for_elements_count
--- @tparam number count The grid content node amount
--- @treturn vector3 The grid content size
-function StaticGrid:get_size_for_elements_count(count)
-	local border = vmath.vector4(0)
-	for i = 1, count do
-		local pos = self:get_pos(i)
-		self:_update_border(pos, border)
-	end
-
-	return self:get_size(border)
 end
 
 
@@ -256,10 +230,18 @@ function StaticGrid:clear()
 	self.border.w = 0
 	self.border.z = 0
 
-	self:_update_border_offset(self:get_pos(1))
-
 	self.nodes = {}
-	self:_update_indexes()
+	self:_update()
+end
+
+
+function StaticGrid:get_zero_offset()
+	-- zero offset: center pos - border size * anchor
+	return vmath.vector3(
+		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
+		-((self.border.y + self.border.w)/2 + (self.border.y - self.border.w) * self.pivot.y),
+		0
+	)
 end
 
 
@@ -268,6 +250,13 @@ end
 -- @treturn table<index, node> The grid nodes
 function StaticGrid:get_nodes()
 	return self.nodes
+end
+
+
+function StaticGrid:_update(is_instant)
+	self:_update_indexes()
+	self:_update_borders()
+	self:_update_pos(is_instant)
 end
 
 
@@ -284,40 +273,44 @@ function StaticGrid:_update_indexes()
 end
 
 
-function StaticGrid:_update_border(pos, border)
+function StaticGrid:_update_borders()
+	if not self.first_index then
+		self.border = vmath.vector4(0)
+		return
+	end
+
+	self.border = vmath.vector4(math.huge, -math.huge, -math.huge, math.huge)
+
 	local size = self.node_size
 	local pivot = self.node_pivot
+	for index, node in pairs(self.nodes) do
+		local pos = self:get_pos(index)
 
-	local left = pos.x - size.x/2 - (size.x * pivot.x) + self.border_offset.x
-	local right = pos.x + size.x/2 - (size.x * pivot.x) + self.border_offset.x
-	local top = pos.y + size.y/2 - (size.y * pivot.y) + self.border_offset.y
-	local bottom = pos.y - size.y/2 - (size.y * pivot.y) + self.border_offset.y
+		local left = pos.x - size.x/2 - (size.x * pivot.x)
+		local right = pos.x + size.x/2 - (size.x * pivot.x)
+		local top = pos.y + size.y/2 - (size.y * pivot.y)
+		local bottom = pos.y - size.y/2 - (size.y * pivot.y)
 
-	border.x = math.min(border.x, left)
-	border.y = math.max(border.y, top)
-	border.z = math.max(border.z, right)
-	border.w = math.min(border.w, bottom)
-end
-
-
-function StaticGrid:_update_border_offset(pos)
-	local border = self.border
-	self:_update_border(pos, border)
-
-	self.border_offset = vmath.vector3(
-		(border.x + (border.z - border.x) * self.anchor.x),
-		(border.y + (border.w - border.y) * self.anchor.y),
-		0
-	)
+		self.border.x = math.min(self.border.x, left)
+		self.border.y = math.max(self.border.y, top)
+		self.border.z = math.max(self.border.z, right)
+		self.border.w = math.min(self.border.w, bottom)
+	end
 end
 
 
 function StaticGrid:_update_pos(is_instant)
+	local zero_offset = self:get_zero_offset()
+
 	for i, node in pairs(self.nodes) do
+		local pos = self:get_pos(i)
+		pos.x = pos.x + zero_offset.x
+		pos.y = pos.y + zero_offset.y
+
 		if is_instant then
-			gui.set_position(node, self:get_pos(i))
+			gui.set_position(node, pos)
 		else
-			self._set_position_function(node, self:get_pos(i))
+			self._set_position_function(node, pos)
 		end
 	end
 
