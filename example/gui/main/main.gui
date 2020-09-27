@@ -10651,7 +10651,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: ""
+  texture: "kenney/empty"
   id: "grid_dynamic_nodes"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -10809,14 +10809,14 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.4
-    y: 0.3019608
-    z: 0.7019608
+    x: 1.0
+    y: 1.0
+    z: 1.0
     w: 1.0
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: ""
+  texture: "kenney/empty"
   id: "grid_dynamic_hor_nodes"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE

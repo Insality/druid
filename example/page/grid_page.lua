@@ -85,6 +85,7 @@ local function remove_dynamic_node(self, button)
 		if self.dynamic_node_buttons[i] == button then
 			table.remove(self.dynamic_node_buttons, i)
 			self.grid_dynamic_scroll:set_size(self.dynamic_grid:get_size())
+			self.grid_dynamic_scroll:set_scroll_offset(self.dynamic_grid:get_zero_offset())
 			break
 		end
 	end
@@ -132,7 +133,7 @@ local function init_dynamic_grid(self)
 		add_node_dynamic(self, i)
 	end
 	self.druid:new_button("button_add_start_dynamic/button", function()
-		add_node_dynamic(self, 3, true)
+		add_node_dynamic(self, 1)
 	end)
 	self.druid:new_button("button_add_end_dynamic/button", function()
 		add_node_dynamic(self)
