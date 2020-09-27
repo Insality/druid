@@ -327,7 +327,7 @@ end
 
 
 
---- Bind the grid component (Static or Dynamic) to recalc
+--- Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
 -- @function scroll:bind_grid
 -- @tparam druid.static_grid|druid.dynamic_grid Druid grid component

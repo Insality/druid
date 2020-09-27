@@ -166,9 +166,6 @@ function StaticGrid:remove(index, is_shift_nodes)
 		end
 	end
 
-	-- Recalculate borders
-	self.border = vmath.vector4(0)
-
 	self:_update()
 
 	self.on_add_item:trigger(self:get_context(), index)
@@ -179,11 +176,10 @@ end
 --- Return grid content size
 -- @function static_grid:get_size
 -- @treturn vector3 The grid content size
-function StaticGrid:get_size(border)
-	border = border or self.border
+function StaticGrid:get_size()
 	return vmath.vector3(
-		border.z - border.x,
-		border.y - border.w,
+		self.border.z - self.border.x,
+		self.border.y - self.border.w,
 		0)
 end
 

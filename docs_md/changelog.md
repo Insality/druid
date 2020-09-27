@@ -96,6 +96,7 @@ Druid 0.4.0:
 Druid 0.5.0:
 - **#77** Grid update:
 	- The _grid_ component now is __deprecated__. Use _static_grid_ instead. Druid will show you deprecated message, if you still using _grid_ component
+	- __[BREAKING]__ Remove the _grid:set_offset_ grid functions. To adjust the distance between nodes inside grid - setup correct node sizes
 	- Add _static_grid_ component
 		- The behaviour like previous _grid_ component
 		- Have constant element size, so have ability to precalculate positions, indexes and size of content
@@ -103,22 +104,24 @@ Druid 0.5.0:
 		- This grid can spawn elements with several rows and collumns
 	- Add _dynamic_grid_ component
 		- Have dynamic element size. So have no ability to precalculate stuff like _static_grid_
-		- Element size got from _gui.get_size_ * _gui.get_scale_
-		- This grid can not have spaces between elements. You will get the error, if spawn element far away from other elements
+		- This grid can't have gaps between elements. You will get the error, if spawn element far away from other elements
 		- The grid can spawn elements only in row or in collumn
-		- The grid node should have West or North pivot (vertical or horizontal element placement)
+		- The grid node should have __West__ or __North__ pivot (vertical or horizontal element placement)
+		- Able to shift nodes left or right on _grid:add_/_grid:remove_ functions
+- Scroll update:
+	- Add _scroll:set_vertical_scroll_ and _scroll:set_horizontal_scroll_ for disable scroll sides
+	- Add _scroll:bind_grid_ function. It's allow bind grid component (static or dynamic) to the scroll for auto refresh the scroll size on grid nodes changing
 - **#37** Add _on_layout_change_ support. Druid will keep and restore GUI component data between changing game layout. Override function _on_layout_change_ in your custom components to do stuff you need.
-- **#85** Move several components from `base` folder to `extended`. In future, to use them, you have to register them manually. This is need for decrease build size by excluding unused components
-- Add _scroll:set_vertical_scroll_ and _scroll:set_horizontal_scroll_ for disable scroll sides
+- **#85** Move several components from `base` folder to `extended`. In future to use them, you have to register them manually. This is done for decrease build size by excluding unused components
 - **Fix #61:** Button component: fix button animation node creation
 - **Fix #64:** Hover component: wrong mouse_hover default state
 - **Fix #71:** Blocker: blocker now correct block mouse hover event
 - **Fix #72:** Fix `return nil` in some `on_input` functions
 - **Fix #74:** __[BREAKING]__ Fix typo: strech -> stretch. Scroll function `set_extra_stretch_size` renamed
 - **Fix #76:** Add params for lang text localization component
-- **Fix #79:** Fix druid:remove inside on_input callback
-- **Fix #80:** Fix hover set_enable typo function call
-- **Fix #88:** Add _component:set_input_enabled_ function to enable/disable input for druid component
+- **Fix #79:** Fix _druid:remove_ inside on_input callback
+- **Fix #80:** Fix _hover:set_enable_ typo function call
+- **Fix #88:** Add _component:set_input_enabled_ function to enable/disable input for druid component. Now you can disable input of any druid component, even complex (with other components inside)
 - Add `component.tempalte.lua` as template for Druid custom component
 >>>>>>> develop
 
