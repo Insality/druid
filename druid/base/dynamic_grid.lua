@@ -105,47 +105,34 @@ end
 -- @tparam[opt] number index The node position. By default add as last node
 -- @tparam[opt=false] bool is_shift_left If true, shift all nodes to the left, otherwise shift nodes to the right
 function DynamicGrid:add(node, index, is_shift_left)
+	local delta = is_shift_left and -1 or 1
+
+	-- By default add node at end
 	index = index or ((self.last_index or 0) + 1)
 
-	print("if shift left", is_shift_left)
-
+	-- If node exist at index place, shifting them
 	if self.nodes[index] then
-		if not is_shift_left then
-			-- Move nodes to right
-			for i = self.last_index, index, -1 do
-				self.nodes[i + 1] = self.nodes[i]
-			end
-		else
-			-- Move nodes to left
-			for i = self.first_index, index do
-				self.nodes[i - 1] = self.nodes[i]
-				print("Move", i-1, i)
-			end
+		-- We need to iterate from index to start or end grid, depends of shift side
+		local start_index = is_shift_left and self.first_index or self.last_index
+		for i = start_index, index, -delta do
+			self.nodes[i + delta] = self.nodes[i]
 		end
 	end
 
 	-- TODO: we must choose anchor node to add this node (next or previous)
-	local koef = is_shift_left and -1 or 1
-	self:_add_node(node, index, index - koef)
-	print("Add at", index)
+	self:_add_node(node, index, index - delta)
 
-	-- Now we can setup poses
+	-- After shifting we should recalc node poses
 	if self.last_index then
-		if not is_shift_left then
-			for i = index + 1, self.last_index + 1 do
-				local move_node = self.nodes[i]
-				move_node.pos = self:get_pos(i, move_node.node, i - 1)
-			end
-		else
-			for i = index - 1, self.first_index - 1, -1 do
-				local move_node = self.nodes[i]
-				move_node.pos = self:get_pos(i, move_node.node, i + 1)
-				print("Recalct", i)
-			end
+		-- We need to iterate from placed node to start or end grid, depends of shift side
+		local target_index = is_shift_left and self.first_index or self.last_index
+		for i = index + delta, target_index + delta, delta do
+			local move_node = self.nodes[i]
+			move_node.pos = self:get_pos(i, move_node.node, i - delta)
 		end
 	end
 
-
+	-- Sync grid data
 	self:_update()
 
 	self.on_add_item:trigger(self:get_context(), node, index)
@@ -162,10 +149,20 @@ function DynamicGrid:remove(index, is_shift_left)
 
 	self.nodes[index] = nil
 
-	for i = index, self.last_index do
-		self.nodes[i] = self.nodes[i + 1]
-		if self.nodes[i] then
-			self.nodes[i].pos = self:get_pos(i, self.nodes[i].node, i - 1)
+	-- Move other nodes closer to deleted index
+	if not is_shift_left then
+		for i = index, self.last_index do
+			self.nodes[i] = self.nodes[i + 1]
+			if self.nodes[i] then
+				self.nodes[i].pos = self:get_pos(i, self.nodes[i].node, i - 1)
+			end
+		end
+	else
+		for i = index, self.first_index, -1 do
+			self.nodes[i] = self.nodes[i - 1]
+			if self.nodes[i] then
+				self.nodes[i].pos = self:get_pos(i, self.nodes[i].node, i + 1)
+			end
 		end
 	end
 
