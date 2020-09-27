@@ -106,7 +106,7 @@ Druid 0.5.0:
 		- Have dynamic element size. So have no ability to precalculate stuff like _static_grid_
 		- This grid can't have gaps between elements. You will get the error, if spawn element far away from other elements
 		- The grid can spawn elements only in row or in collumn
-		- The grid node should have __West__ or __North__ pivot (vertical or horizontal element placement)
+		- The grid node should have __West__, __East__, __South__ or __North__ pivot (vertical or horizontal element placement)
 		- Able to shift nodes left or right on _grid:add_/_grid:remove_ functions
 - Scroll update:
 	- Add _scroll:set_vertical_scroll_ and _scroll:set_horizontal_scroll_ for disable scroll sides

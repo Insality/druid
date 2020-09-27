@@ -103,7 +103,7 @@ M.SWIPE = {
 
 
 M.ERRORS = {
-	GRID_DYNAMIC_ANCHOR = "The pivot of dynamic grid node should be West or North"
+	GRID_DYNAMIC_ANCHOR = "The pivot of dynamic grid node should be West, East, South or North"
 }
 
 

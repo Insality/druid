@@ -10297,7 +10297,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -814.0
+    y: -1320.0
     z: 0.0
     w: 1.0
   }
@@ -10331,7 +10331,7 @@ nodes {
   id: "grid_dynamic_view"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_N
+  pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_FIT
   parent: "grid_page_content"
   layer: ""
@@ -10386,7 +10386,7 @@ nodes {
   id: "grid_dynamic_nodes"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_N
+  pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_FIT
   parent: "grid_dynamic_view"
   layer: ""
@@ -10461,7 +10461,7 @@ nodes {
 }
 nodes {
   position {
-    x: -250.0
+    x: 250.0
     y: -1464.0
     z: 0.0
     w: 1.0
@@ -10479,7 +10479,7 @@ nodes {
     w: 1.0
   }
   size {
-    x: 500.0
+    x: -500.0
     y: 100.0
     z: 0.0
     w: 1.0

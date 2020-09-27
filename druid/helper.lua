@@ -131,6 +131,16 @@ function M.lerp(a, b, t)
 end
 
 
+function M.contains(t, value)
+	for i = 1, #t do
+		if t[i] == value then
+			return i
+		end
+	end
+	return false
+end
+
+
 --- Check if node is enabled in gui hierarchy.
 -- Return false, if node or any his parent is disabled
 -- @function helper.is_enabled

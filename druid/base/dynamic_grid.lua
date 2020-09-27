@@ -32,6 +32,13 @@ local SIDE_VECTORS = {
 	BOT = vmath.vector3(0, 1, 0),
 }
 
+local AVAILABLE_PIVOTS = {
+	gui.PIVOT_N,
+	gui.PIVOT_S,
+	gui.PIVOT_W,
+	gui.PIVOT_E,
+}
+
 
 --- Component init function
 -- @function dynamic_grid:init
@@ -42,8 +49,9 @@ function DynamicGrid:init(parent, side)
 	local parent_pivot = gui.get_pivot(self.parent)
 	self.pivot = helper.get_pivot_offset(parent_pivot)
 
-	assert(parent_pivot == gui.PIVOT_W or parent_pivot == gui.PIVOT_N, const.ERRORS.GRID_DYNAMIC_ANCHOR)
-	self.side = (parent_pivot == gui.PIVOT_W and const.SIDE.X or const.SIDE.Y)
+	assert(helper.contains(AVAILABLE_PIVOTS, parent_pivot), const.ERRORS.GRID_DYNAMIC_ANCHOR)
+	self.side = ((parent_pivot == gui.PIVOT_W or parent_pivot == gui.PIVOT_E)
+			and const.SIDE.X or const.SIDE.Y)
 
 	self.nodes = {}
 	self.border = vmath.vector4(0) -- Current grid content size
