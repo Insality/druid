@@ -3,12 +3,12 @@ local druid_const = require("druid.const")
 local M = {}
 
 
-local function remove_node(self, button)
+local function remove_node(self, button, is_shift)
 	gui.delete_node(button.node)
 
 	self.druid:remove(button)
 	local index = self.grid_nodes:get_index_by_node(button.node)
-	self.grid_nodes:remove(index, true)
+	self.grid_nodes:remove(index, is_shift)
 	for i = 1, #self.grid_node_buttons do
 		if self.grid_node_buttons[i] == button then
 			table.remove(self.grid_node_buttons, i)
@@ -25,8 +25,12 @@ local function add_node(self, index)
 	gui.set_enabled(cloned["grid_nodes_prefab"], true)
 
 	local button = self.druid:new_button(cloned["grid_nodes_prefab"], function(_, params, button)
+		remove_node(self, button, true)
+	end)
+	button.on_long_click:subscribe(function()
 		remove_node(self, button)
 	end)
+
 	table.insert(self.grid_node_buttons, button)
 
 	self.grid_nodes:add(cloned["grid_nodes_prefab"], index)
@@ -78,17 +82,37 @@ local function add_node_dynamic(self, index)
 end
 
 
+local function add_node_dynamic_hor(self, index)
+	local node = gui.clone(self.prefab_hor_dynamic)
+	gui.set_enabled(node, true)
+	gui.set_size(node, vmath.vector3(80 + math.random(0, 80), 80, 0))
+	self.dynamic_hor_grid:add(node)
+end
+
+
 local function init_dynamic_grid(self)
 	self.dynamic_grid = self.druid:new_dynamic_grid("grid_dynamic_nodes")
 
 	self.prefab_dynamic = gui.get_node("grid_dynamic_prefab")
 	gui.set_enabled(self.prefab_dynamic, false)
 
-	for i = 1, 8 do
+	for i = 1, 10 do
 		add_node_dynamic(self, i)
 	end
 
 	self.grid_dynamic_scroll:set_size(self.dynamic_grid:get_size())
+
+
+	self.dynamic_hor_grid = self.druid:new_dynamic_grid("grid_dynamic_hor_nodes")
+
+	self.prefab_hor_dynamic = gui.get_node("grid_dynamic_hor_prefab")
+	gui.set_enabled(self.prefab_hor_dynamic, false)
+
+	for i = 1, 10 do
+		add_node_dynamic_hor(self, i)
+	end
+
+	self.grid_dynamic_hor_scroll:set_size(self.dynamic_hor_grid:get_size())
 end
 
 
@@ -99,6 +123,8 @@ function M.setup_page(self)
 		:set_horizontal_scroll(false)
 	self.grid_dynamic_scroll = self.druid:new_scroll("grid_dynamic_view", "grid_dynamic_nodes")
 		:set_horizontal_scroll(false)
+	self.grid_dynamic_hor_scroll = self.druid:new_scroll("grid_dynamic_hor_view", "grid_dynamic_hor_nodes")
+		:set_vertical_scroll(false)
 
 	init_static_grid(self)
 	init_dynamic_grid(self)
