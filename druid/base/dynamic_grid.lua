@@ -15,7 +15,6 @@
 -- @tfield node[] nodes List of all grid nodes
 -- @tfield number first_index The first index of node in grid
 -- @tfield number last_index The last index of node in grid
--- @tfield vector3 offset Item distance between each other items
 -- @tfield vector3 node_size Item size
 -- @tfield vector4 border The size of item content
 
@@ -101,15 +100,6 @@ function DynamicGrid:get_pos(index, node, origin_index)
 		local delta = is_forward and 1 or -1
 		return self:_get_next_node_pos(index - delta, node, self:_get_side_vector(self.side, is_forward))
 	end
-end
-
-
---- Set grid items offset, the distance between items
--- @function dynamic_grid:set_offset
--- @tparam vector3 offset Offset
-function DynamicGrid:set_offset(offset)
-	self.offset = offset
-	self:_update()
 end
 
 

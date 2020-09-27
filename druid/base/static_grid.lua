@@ -16,11 +16,9 @@
 -- @tfield node[] nodes List of all grid nodes
 -- @tfield number first_index The first index of node in grid
 -- @tfield number last_index The last index of node in grid
--- @tfield vector3 offset Item distance between each other items
 -- @tfield vector3 anchor Item anchor
 -- @tfield vector3 node_size Item size
 -- @tfield vector4 border The size of item content
--- @tfield vector3 border_offer The border offset for correct anchor calculations
 
 local const = require("druid.const")
 local Event = require("druid.event")
@@ -38,8 +36,6 @@ local StaticGrid = component.create("static_grid", { const.ON_LAYOUT_CHANGE })
 function StaticGrid:init(parent, element, in_row)
 	self.parent = self:get_node(parent)
 	self.nodes = {}
-
-	self.offset = vmath.vector3(0)
 
 	self.pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
 	self.anchor = vmath.vector3(0.5 + self.pivot.x, 0.5 - self.pivot.y, 0)
@@ -71,8 +67,8 @@ function StaticGrid:get_pos(index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
-	_temp_pos.x = col * (self.node_size.x + self.offset.x)
-	_temp_pos.y = -row * (self.node_size.y + self.offset.y)
+	_temp_pos.x = col * self.node_size.x
+	_temp_pos.y = -row * self.node_size.y
 	_temp_pos.z = 0
 
 	return _temp_pos
@@ -84,8 +80,8 @@ end
 -- @tparam vector3 pos The node position in the grid
 -- @treturn number The node index
 function StaticGrid:get_index(pos)
-	local col = pos.x / (self.node_size.x + self.offset.x) + 1
-	local row = -pos.y / (self.node_size.y + self.offset.y)
+	local col = pos.x / self.node_size.x + 1
+	local row = -pos.y / self.node_size.y
 
 	col = helper.round(col)
 	row = helper.round(row)
@@ -112,15 +108,6 @@ end
 
 function StaticGrid:on_layout_change()
 	self:_update(true)
-end
-
-
---- Set grid items offset, the distance between items
--- @function static_grid:set_offset
--- @tparam vector3 offset Offset
-function StaticGrid:set_offset(offset)
-	self.offset = offset
-	self:_update()
 end
 
 
