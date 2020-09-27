@@ -67,8 +67,21 @@ end
 function DynamicGrid:get_pos(index, node, origin_index)
 	local origin_node = self.nodes[origin_index]
 
+	-- If anchor node is not exist, check around nodes
 	if not origin_node then
-		-- TODO: assert no elements in grid now
+		if self.nodes[index + 1] then
+			origin_index = index + 1
+		end
+		if self.nodes[index - 1] then
+			origin_index = index - 1
+		end
+		origin_node = self.nodes[origin_index]
+	end
+
+	if not origin_node then
+		assert(not self.first_index, "Dynamic Grid can't have gaps between nodes. Error on grid:add")
+
+		-- If not origin node, so it should be first element in the grid
 		local size = self:_get_node_size(node)
 		local pivot = const.PIVOTS[gui.get_pivot(node)]
 		return vmath.vector3(
@@ -78,6 +91,7 @@ function DynamicGrid:get_pos(index, node, origin_index)
 	end
 
 	if origin_node then
+		-- Other nodes spawn from other side of the origin node
 		local is_forward = origin_index < index
 		local delta = is_forward and 1 or -1
 		return self:_get_next_node_pos(index - delta, node, self:_get_side_vector(self.side, is_forward))
@@ -111,23 +125,27 @@ function DynamicGrid:add(node, index, is_shift_left)
 	index = index or ((self.last_index or 0) + 1)
 
 	-- If node exist at index place, shifting them
-	if self.nodes[index] then
+	local is_shift = self.nodes[index]
+	if is_shift then
 		-- We need to iterate from index to start or end grid, depends of shift side
 		local start_index = is_shift_left and self.first_index or self.last_index
 		for i = start_index, index, -delta do
 			self.nodes[i + delta] = self.nodes[i]
+			print("move", i + delta, i)
 		end
 	end
 
 	-- TODO: we must choose anchor node to add this node (next or previous)
 	self:_add_node(node, index, index - delta)
+	print("Add", index, "From", index - delta)
 
 	-- After shifting we should recalc node poses
-	if self.last_index then
+	if is_shift then
 		-- We need to iterate from placed node to start or end grid, depends of shift side
 		local target_index = is_shift_left and self.first_index or self.last_index
 		for i = index + delta, target_index + delta, delta do
 			local move_node = self.nodes[i]
+			print("Recalc", i, i - delta)
 			move_node.pos = self:get_pos(i, move_node.node, i - delta)
 		end
 	end
@@ -145,27 +163,23 @@ end
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=false] bool is_shift_left If true, shift all nodes to the left, otherwise shift nodes to the right
 function DynamicGrid:remove(index, is_shift_left)
+	local delta = is_shift_left and -1 or 1
+
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
+	-- Just set nil for delete node data
 	self.nodes[index] = nil
 
-	-- Move other nodes closer to deleted index
-	if not is_shift_left then
-		for i = index, self.last_index do
-			self.nodes[i] = self.nodes[i + 1]
-			if self.nodes[i] then
-				self.nodes[i].pos = self:get_pos(i, self.nodes[i].node, i - 1)
-			end
-		end
-	else
-		for i = index, self.first_index, -1 do
-			self.nodes[i] = self.nodes[i - 1]
-			if self.nodes[i] then
-				self.nodes[i].pos = self:get_pos(i, self.nodes[i].node, i + 1)
-			end
+	-- After delete node, we should shift nodes and recalc their poses, depends from is_shift_left
+	local target_index = is_shift_left and self.first_index or self.last_index
+	for i = index, target_index, delta do
+		self.nodes[i] = self.nodes[i + delta]
+		if self.nodes[i] then
+			self.nodes[i].pos = self:get_pos(i, self.nodes[i].node, i - delta)
 		end
 	end
 
+	-- Sync grid data
 	self:_update()
 
 	self.on_add_item:trigger(self:get_context(), index)

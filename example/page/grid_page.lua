@@ -80,7 +80,7 @@ local function remove_dynamic_node(self, button)
 
 	self.druid:remove(button)
 	local index = self.dynamic_grid:get_index_by_node(button.node)
-	self.dynamic_grid:remove(index, true)
+	self.dynamic_grid:remove(index)
 	for i = 1, #self.dynamic_node_buttons do
 		if self.dynamic_node_buttons[i] == button then
 			table.remove(self.dynamic_node_buttons, i)
@@ -99,7 +99,7 @@ local function add_node_dynamic(self, index, is_shift_left)
 	self.dynamic_grid:add(node, index, is_shift_left)
 
 	local button = self.druid:new_button(node, function(_, params, button)
-		remove_dynamic_node(self, button, true)
+		remove_dynamic_node(self, button)
 	end)
 	button:set_click_zone(self.grid_dynamic_scroll.view_node)
 	self.grid_dynamic_scroll:set_size(self.dynamic_grid:get_size())
@@ -133,7 +133,8 @@ local function init_dynamic_grid(self)
 		add_node_dynamic(self, i)
 	end
 	self.druid:new_button("button_add_start_dynamic/button", function()
-		add_node_dynamic(self, 1)
+		local start_index = (self.dynamic_grid.first_index or 2) - 1
+		add_node_dynamic(self, start_index)
 	end)
 	self.druid:new_button("button_add_end_dynamic/button", function()
 		add_node_dynamic(self)
