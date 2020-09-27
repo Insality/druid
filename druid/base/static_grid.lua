@@ -151,11 +151,13 @@ function StaticGrid:add(item, index)
 
 	gui.set_parent(item, self.parent)
 
-	local pos = self:get_pos(index)
-	-- Add new item instantly in new pos
-	gui.set_position(item, pos)
+	-- Add new item instantly in new pos. Break update function for correct positioning
+	self:_update_indexes()
+	self:_update_borders()
 
-	self:_update()
+	gui.set_position(item, self:get_pos(index) + self:get_zero_offset())
+
+	self:_update_pos()
 
 	self.on_add_item:trigger(self:get_context(), item, index)
 	self.on_change_items:trigger(self:get_context(), index)

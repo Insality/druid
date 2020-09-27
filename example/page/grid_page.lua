@@ -67,7 +67,9 @@ local function init_static_grid(self)
 		add_node(self, i)
 	end
 
-	self.druid:new_button("button_add/button", add_node)
+	self.druid:new_button("button_add/button", function()
+		add_node(self)
+	end)
 	self.druid:new_button("button_clear/button", clear_nodes)
 
 	local remove_button = self.druid:new_button("button_remove/button", remove_node)
