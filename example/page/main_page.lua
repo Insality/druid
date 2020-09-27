@@ -50,22 +50,6 @@ local function setup_progress(self)
 end
 
 
-local function setup_grid(self)
-	local grid = self.druid:new_static_grid("grid", "button_template/button", 3)
-
-	for i = 1, 12 do
-		local nodes = gui.clone_tree(gui.get_node("button_template/button"))
-
-		local root = nodes["button_template/button"]
-		self.druid:new_button(root, function(context, param)
-			grid:set_offset(vmath.vector3(param))
-		end, i)
-		self.druid:new_text(nodes["button_template/text"], "Grid"..i)
-		grid:add(root)
-	end
-end
-
-
 local function setup_slider(self)
 	local slider = self.druid:new_slider("slider_pin", vmath.vector3(95, 0, 0), function(_, value)
 		gui.set_text(gui.get_node("text_progress_slider"), math.ceil(value * 100) .. "%")
@@ -96,11 +80,6 @@ local function setup_timer(self)
 end
 
 
-local function setup_scroll(self)
-	self.druid:new_scroll("main_page", "scroll_content")
-end
-
-
 local function setup_back_handler(self)
 	self.druid:new_back_handler(empty_callback, "back button")
 end
@@ -117,10 +96,8 @@ function M.setup_page(self)
 
 	setup_button(self)
 	setup_progress(self)
-	setup_grid(self)
 	setup_timer(self)
 	setup_checkbox(self)
-	setup_scroll(self)
 	setup_slider(self)
 	setup_back_handler(self)
 	setup_input(self)
