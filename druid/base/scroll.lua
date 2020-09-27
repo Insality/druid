@@ -103,6 +103,7 @@ function Scroll:init(view_node, content_node)
 
 	self.view_node = self:get_node(view_node)
 	self.content_node = self:get_node(content_node)
+	self.scroll_offset = vmath.vector3(0)
 
 	self.position = gui.get_position(self.content_node)
 	self.target_position = vmath.vector3(self.position)
@@ -230,6 +231,19 @@ end
 -- @treturn druid.scroll Current scroll instance
 function Scroll:set_size(size)
 	gui.set_size(self.content_node, size)
+	self:_update_size()
+
+	return self
+end
+
+
+--- Set scroll content size by borders
+-- It will change content gui node sizes
+-- @function scroll:set_border
+-- @tparam vector4 border The new scroll borders for content node
+-- @treturn druid.Scroll Current scroll instance
+function Scroll:set_scroll_offset(offset)
+	self.scroll_offset = offset
 	self:_update_size()
 
 	return self
@@ -538,6 +552,10 @@ function Scroll:_update_size()
 
 	self.available_pos = get_border_vector(view_border - content_border)
 	self.available_size = get_size_vector(self.available_pos)
+	self.available_pos.x = self.available_pos.x + self.scroll_offset.x
+	self.available_pos.z = self.available_pos.z + self.scroll_offset.x
+	self.available_pos.y = self.available_pos.y + self.scroll_offset.y
+	self.available_pos.w = self.available_pos.w + self.scroll_offset.y
 
 	self.drag.can_x = self.available_size.x > 0 and self._is_horizontal_scroll
 	self.drag.can_y = self.available_size.y > 0 and self._is_vertical_scroll
@@ -567,6 +585,10 @@ function Scroll:_update_size()
 
 	self.available_pos_extra = get_border_vector(view_border - content_border_extra)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
+	self.available_pos_extra.x = self.available_pos_extra.x + self.scroll_offset.x
+	self.available_pos_extra.z = self.available_pos_extra.z + self.scroll_offset.x
+	self.available_pos_extra.y = self.available_pos_extra.y + self.scroll_offset.y
+	self.available_pos_extra.w = self.available_pos_extra.w + self.scroll_offset.y
 end
 
 
