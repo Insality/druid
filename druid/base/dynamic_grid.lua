@@ -33,20 +33,20 @@ local SIDE_VECTORS = {
 	BOT = vmath.vector3(0, 1, 0),
 }
 
+
 --- Component init function
 -- @function dynamic_grid:init
 -- @tparam node parent The gui node parent, where items will be placed
 function DynamicGrid:init(parent, side)
 	self.parent = self:get_node(parent)
-	local parent_pivot = gui.get_pivot(self.parent)
 
+	local parent_pivot = gui.get_pivot(self.parent)
 	self.pivot = helper.get_pivot_offset(parent_pivot)
 
 	assert(parent_pivot == gui.PIVOT_W or parent_pivot == gui.PIVOT_N, const.ERRORS.GRID_DYNAMIC_ANCHOR)
 	self.side = (parent_pivot == gui.PIVOT_W and const.SIDE.X or const.SIDE.Y)
 
 	self.nodes = {}
-	self.offset = vmath.vector3(0)
 	self.border = vmath.vector4(0) -- Current grid content size
 
 	self.on_add_item = Event()
@@ -56,6 +56,11 @@ function DynamicGrid:init(parent, side)
 	self.on_update_positions = Event()
 
 	self._set_position_function = gui.set_position
+end
+
+
+function DynamicGrid:on_layout_change()
+	self:_update(true)
 end
 
 
@@ -96,11 +101,6 @@ function DynamicGrid:get_pos(index, node, origin_index)
 		local delta = is_forward and 1 or -1
 		return self:_get_next_node_pos(index - delta, node, self:_get_side_vector(self.side, is_forward))
 	end
-end
-
-
-function DynamicGrid:on_layout_change()
-	self:_update(true)
 end
 
 
@@ -211,23 +211,6 @@ function DynamicGrid:get_index_by_node(node)
 end
 
 
-function DynamicGrid:get_center_position()
-	return vmath.vector3(
-		(self.border.x + self.border.z)/2,
-		(self.border.y + self.border.w)/2,
-		0)
-end
-
-
-function DynamicGrid:get_zero_offset()
-	-- zero offset: center pos - border size * anchor
-	return vmath.vector3(
-		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
-		-((self.border.y + self.border.w)/2 + (self.border.y - self.border.w) * self.pivot.y),
-		0)
-end
-
-
 --- Return array of all node positions
 -- @function dynamic_grid:get_all_pos
 -- @treturn vector3[] All grid node positions
@@ -263,14 +246,34 @@ function DynamicGrid:clear()
 end
 
 
---- Return the grid nodes table
--- @function dynamic_grid:get_nodes
--- @treturn table<index, node> The grid nodes
-function DynamicGrid:get_nodes()
-	return self.nodes
+function DynamicGrid:_add_node(node, index, origin_index)
+	self.nodes[index] = {
+		node = node,
+		pos = self:get_pos(index, node, origin_index),
+		size = self:_get_node_size(node),
+		pivot = const.PIVOTS[gui.get_pivot(node)]
+	}
+
+	-- Add new item instantly in new pos
+	gui.set_parent(node, self.parent)
+	gui.set_position(node, self.nodes[index].pos + self:_get_zero_offset())
 end
 
 
+--- Update grid inner state
+-- @function dynamic_grid:_update
+-- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @local
+function DynamicGrid:_update(is_instant)
+	self:_update_indexes()
+	self:_update_borders()
+	self:_update_pos(is_instant)
+end
+
+
+--- Update first and last indexes of grid nodes
+-- @function dynamic_grid:_update_indexes
+-- @local
 function DynamicGrid:_update_indexes()
 	self.first_index = nil
 	self.last_index = nil
@@ -284,6 +287,9 @@ function DynamicGrid:_update_indexes()
 end
 
 
+--- Update grid content borders, recalculate min and max values
+-- @function dynamic_grid:_update_borders
+-- @local
 function DynamicGrid:_update_borders()
 	if not self.first_index then
 		self.border = vmath.vector4(0)
@@ -310,8 +316,12 @@ function DynamicGrid:_update_borders()
 end
 
 
+--- Update grid nodes position
+-- @function dynamic_grid:_update_indexes
+-- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @local
 function DynamicGrid:_update_pos(is_instant)
-	local offset = self:get_zero_offset()
+	local offset = self:_get_zero_offset()
 
 	for index, node in pairs(self.nodes) do
 		if is_instant then
@@ -322,13 +332,6 @@ function DynamicGrid:_update_pos(is_instant)
 	end
 
 	self.on_update_positions:trigger(self:get_context())
-end
-
-
-function DynamicGrid:_update(is_instant)
-	self:_update_indexes()
-	self:_update_borders()
-	self:_update_pos(is_instant)
 end
 
 
@@ -356,17 +359,12 @@ function DynamicGrid:_get_node_size(node)
 end
 
 
-function DynamicGrid:_add_node(node, index, origin_index)
-	self.nodes[index] = {
-		node = node,
-		pos = self:get_pos(index, node, origin_index),
-		size = self:_get_node_size(node),
-		pivot = const.PIVOTS[gui.get_pivot(node)]
-	}
-
-	-- Add new item instantly in new pos
-	gui.set_parent(node, self.parent)
-	gui.set_position(node, self.nodes[index].pos + self:get_zero_offset())
+function DynamicGrid:_get_zero_offset()
+	-- zero offset: center pos - border size * anchor
+	return vmath.vector3(
+		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
+		-((self.border.y + self.border.w)/2 + (self.border.y - self.border.w) * self.pivot.y),
+		0)
 end
 
 

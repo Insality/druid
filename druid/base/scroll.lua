@@ -327,6 +327,11 @@ end
 
 
 
+--- Bind the grid component (Static or Dynamic) to recalc
+-- scroll size on grid changes
+-- @function scroll:bind_grid
+-- @tparam druid.static_grid|druid.dynamic_grid Druid grid component
+-- @treturn druid.scroll Current scroll instance
 function Scroll:bind_grid(grid)
 	if self._grid_on_change then
 		self._grid_on_change:unsubscribe(self._grid_on_change_callback)
@@ -343,6 +348,7 @@ function Scroll:bind_grid(grid)
 	self._grid_on_change_callback = self._grid_on_change:subscribe(function()
 		self:set_size(grid:get_size())
 	end)
+	self:set_size(grid:get_size())
 
 	return self
 end
@@ -568,10 +574,6 @@ function Scroll:_update_size()
 
 	self.available_pos = get_border_vector(view_border - content_border)
 	self.available_size = get_size_vector(self.available_pos)
-	self.available_pos.x = self.available_pos.x
-	self.available_pos.z = self.available_pos.z
-	self.available_pos.y = self.available_pos.y
-	self.available_pos.w = self.available_pos.w
 
 	self.drag.can_x = self.available_size.x > 0 and self._is_horizontal_scroll
 	self.drag.can_y = self.available_size.y > 0 and self._is_vertical_scroll
@@ -601,10 +603,6 @@ function Scroll:_update_size()
 
 	self.available_pos_extra = get_border_vector(view_border - content_border_extra)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
-	self.available_pos_extra.x = self.available_pos_extra.x
-	self.available_pos_extra.z = self.available_pos_extra.z
-	self.available_pos_extra.y = self.available_pos_extra.y
-	self.available_pos_extra.w = self.available_pos_extra.w
 end
 
 

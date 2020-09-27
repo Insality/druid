@@ -155,7 +155,7 @@ function StaticGrid:add(item, index)
 	self:_update_indexes()
 	self:_update_borders()
 
-	gui.set_position(item, self:get_pos(index) + self:get_zero_offset())
+	gui.set_position(item, self:get_pos(index) + self:_get_zero_offset())
 
 	self:_update_pos()
 
@@ -243,7 +243,7 @@ function StaticGrid:clear()
 end
 
 
-function StaticGrid:get_zero_offset()
+function StaticGrid:_get_zero_offset()
 	-- zero offset: center pos - border size * anchor
 	return vmath.vector3(
 		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
@@ -253,14 +253,10 @@ function StaticGrid:get_zero_offset()
 end
 
 
---- Return the grid nodes table
--- @function static_grid:get_nodes
--- @treturn table<index, node> The grid nodes
-function StaticGrid:get_nodes()
-	return self.nodes
-end
-
-
+--- Update grid inner state
+-- @function static_grid:_update
+-- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @local
 function StaticGrid:_update(is_instant)
 	self:_update_indexes()
 	self:_update_borders()
@@ -268,6 +264,9 @@ function StaticGrid:_update(is_instant)
 end
 
 
+--- Update first and last indexes of grid nodes
+-- @function static_grid:_update_indexes
+-- @local
 function StaticGrid:_update_indexes()
 	self.first_index = nil
 	self.last_index = nil
@@ -281,6 +280,9 @@ function StaticGrid:_update_indexes()
 end
 
 
+--- Update grid content borders, recalculate min and max values
+-- @function static_grid:_update_borders
+-- @local
 function StaticGrid:_update_borders()
 	if not self.first_index then
 		self.border = vmath.vector4(0)
@@ -307,8 +309,12 @@ function StaticGrid:_update_borders()
 end
 
 
+--- Update grid nodes position
+-- @function static_grid:_update_indexes
+-- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @local
 function StaticGrid:_update_pos(is_instant)
-	local zero_offset = self:get_zero_offset()
+	local zero_offset = self:_get_zero_offset()
 
 	for i, node in pairs(self.nodes) do
 		local pos = self:get_pos(i)
