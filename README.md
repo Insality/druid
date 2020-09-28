@@ -231,8 +231,8 @@ _Will fill later_
 
 ## License
 
-- Original created by [AGulev](https://github.com/AGulev)
 - Developed and supporting by [Insality](https://github.com/Insality)
+- Original idea by [AGulev](https://github.com/AGulev)
 - Assets from [Kenney](http://www.kenney.nl/)
 
 **MIT** License

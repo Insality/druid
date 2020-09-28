@@ -357,6 +357,11 @@ function DynamicGrid:_get_node_size(node)
 end
 
 
+--- Return elements offset for correct posing nodes. Correct posing at
+-- parent pivot node (0:0) with adjusting of node sizes and anchoring
+-- @function dynamic_grid:_get_zero_offset
+-- @treturn vector3 The offset vector
+-- @local
 function DynamicGrid:_get_zero_offset()
 	-- zero offset: center pos - border size * anchor
 	return vmath.vector3(
@@ -366,6 +371,7 @@ function DynamicGrid:_get_zero_offset()
 end
 
 
+--- Return side vector to correct node shifting
 function DynamicGrid:_get_side_vector(side, is_forward)
 	if side == const.SIDE.X then
 		return is_forward and SIDE_VECTORS.RIGHT or SIDE_VECTORS.LEFT
