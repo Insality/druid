@@ -43,7 +43,7 @@ local AVAILABLE_PIVOTS = {
 --- Component init function
 -- @function dynamic_grid:init
 -- @tparam node parent The gui node parent, where items will be placed
-function DynamicGrid:init(parent, side)
+function DynamicGrid:init(parent)
 	self.parent = self:get_node(parent)
 
 	local parent_pivot = gui.get_pivot(self.parent)

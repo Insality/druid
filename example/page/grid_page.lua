@@ -41,7 +41,7 @@ end
 
 
 local function clear_nodes(self)
-	local nodes = self.grid_nodes.nodes
+	local nodes = self.grid_static_grid.nodes
 	for i, node in pairs(nodes) do
 		gui.delete_node(node)
 	end
