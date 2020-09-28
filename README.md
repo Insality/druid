@@ -94,6 +94,7 @@ druid.on_window_callback(event)
 - **[Drag](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#drag)** - System Druid component, handle drag input on node 
 
 **Druid** also provides next *extended* components:
+
 ***Note**: In future, to use extended components, you should register them first. It's required for make **Druid** modular - to exclude unused components from build*
 
 - **[Checkbox](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#checkbox)** - Checkbox component

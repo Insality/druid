@@ -248,7 +248,9 @@ Create timer component with druid: `timer = druid:new_timer(text_node, from_seco
 [Static Grid API here](https://insality.github.io/druid/modules/druid.static_grid.html)
 
 ### Overview
-Component for manage node positions. Static grid have constant node size, so it possible to calculate node positions before placement. Nodes can be placed with gaps. Static grid can shift elements on add/remove functions.
+Component for manage node positions.
+Static grid have constant node size, so it possible to calculate node positions before placement. Nodes can be placed with gaps.
+Static grid can shift elements on add/remove functions.
 
 ### Setup
 Create  component with druid: `grid = druid:new_static_grid(parent_node, prefab_node, max_in_row_elements)`
@@ -267,7 +269,10 @@ Create  component with druid: `grid = druid:new_static_grid(parent_node, prefab_
 [Dynamic Grid API here](https://insality.github.io/druid/modules/druid.dynamic_grid.html)
 
 ### Overview
-Component for manage node positions with different node sizes. Unlike Static Grid, Dynamic Grid can place nodes only in one row or in one column. Dynamic Grid can't have gaps between elements - you will get error, if try spawn element far away from others. Dynamic Grid should have __West__, __East__, __South__ or __North__ pivot (vertical or horizontal element placement)
+Component for manage node positions with different node sizes.
+Unlike Static Grid, Dynamic Grid can place nodes only in one row or in one column.
+Dynamic Grid can't have gaps between elements - you will get error, if try spawn element far away from others.
+Dynamic Grid should have __West__, __East__, __South__ or __North__ pivot (vertical or horizontal element placement)
 
 ### Setup
 Create  component with druid: `grid = druid:new_dynamic_grid(parent_node)`
