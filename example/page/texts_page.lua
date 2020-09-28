@@ -27,7 +27,7 @@ local function setup_texts(self)
 	timer.delay(0.3, true, function()
 		anchoring:set_pivot(pivots[pivot_index])
 
-		pivot_index = pivot_index + 1
+		pivot_index = pivot_index + 1 
 		if pivot_index > #pivots then
 			pivot_index = 1
 		end

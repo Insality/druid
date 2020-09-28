@@ -9,7 +9,8 @@
 -- @see druid.lang_text
 -- @see druid.timer
 -- @see druid.progress
--- @see druid.grid
+-- @see druid.static_grid
+-- @see druid.dynamic_grid
 -- @see druid.scroll
 -- @see druid.slider
 -- @see druid.checkbox
@@ -28,16 +29,17 @@ local back_handler = require("druid.base.back_handler")
 local blocker = require("druid.base.blocker")
 local button = require("druid.base.button")
 local drag = require("druid.base.drag")
-local grid = require("druid.base.grid")
 local hover = require("druid.base.hover")
-local lang_text = require("druid.base.lang_text")
 local scroll = require("druid.base.scroll")
+local static_grid = require("druid.base.static_grid")
 local swipe = require("druid.base.swipe")
 local text = require("druid.base.text")
 
 local checkbox = require("druid.extended.checkbox")
 local checkbox_group = require("druid.extended.checkbox_group")
+local dynamic_grid = require("druid.extended.dynamic_grid")
 local input = require("druid.extended.input")
+local lang_text = require("druid.extended.lang_text")
 local progress = require("druid.extended.progress")
 local radio_group = require("druid.extended.radio_group")
 local slider = require("druid.extended.slider")
@@ -381,21 +383,23 @@ function Druid.new_text(self, ...)
 end
 
 
---- Create lang_text basic component
--- @function druid:new_lang_text
--- @tparam args ... lang_text init args
--- @treturn Component lang_text component
-function Druid.new_lang_text(self, ...)
-	return Druid.create(self, lang_text, ...)
-end
-
-
 --- Create grid basic component
 -- @function druid:new_grid
 -- @tparam args ... grid init args
 -- @treturn Component grid component
+-- @deprecated
 function Druid.new_grid(self, ...)
-	return Druid.create(self, grid, ...)
+	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
+	return Druid.create(self, static_grid, ...)
+end
+
+
+--- Create static grid basic component
+-- @function druid:new_static_grid
+-- @tparam args ... grid init args
+-- @treturn Component grid component
+function Druid.new_static_grid(self, ...)
+	return Druid.create(self, static_grid, ...)
 end
 
 
@@ -426,7 +430,27 @@ function Druid.new_drag(self, ...)
 end
 
 
---- Create slider basic component
+--- Create dynamic grid component
+-- @function druid:new_dynamic_grid
+-- @tparam args ... grid init args
+-- @treturn Component grid component
+function Druid.new_dynamic_grid(self, ...)
+	-- return helper.extended_component("dynamic_grid")
+	return Druid.create(self, dynamic_grid, ...)
+end
+
+
+--- Create lang_text component
+-- @function druid:new_lang_text
+-- @tparam args ... lang_text init args
+-- @treturn Component lang_text component
+function Druid.new_lang_text(self, ...)
+		-- return helper.extended_component("lang_text")
+	return Druid.create(self, lang_text, ...)
+end
+
+
+--- Create slider component
 -- @function druid:new_slider
 -- @tparam args ... slider init args
 -- @treturn Component slider component
@@ -436,7 +460,7 @@ function Druid.new_slider(self, ...)
 end
 
 
---- Create checkbox basic component
+--- Create checkbox component
 -- @function druid:new_checkbox
 -- @tparam args ... checkbox init args
 -- @treturn Component checkbox component
@@ -446,7 +470,7 @@ function Druid.new_checkbox(self, ...)
 end
 
 
---- Create input basic component
+--- Create input component
 -- @function druid:new_input
 -- @tparam args ... input init args
 -- @treturn Component input component
@@ -456,7 +480,7 @@ function Druid.new_input(self, ...)
 end
 
 
---- Create checkbox_group basic component
+--- Create checkbox_group component
 -- @function druid:new_checkbox_group
 -- @tparam args ... checkbox_group init args
 -- @treturn Component checkbox_group component
@@ -466,7 +490,7 @@ function Druid.new_checkbox_group(self, ...)
 end
 
 
---- Create radio_group basic component
+--- Create radio_group component
 -- @function druid:new_radio_group
 -- @tparam args ... radio_group init args
 -- @treturn Component radio_group component
@@ -476,7 +500,7 @@ function Druid.new_radio_group(self, ...)
 end
 
 
---- Create timer basic component
+--- Create timer component
 -- @function druid:new_timer
 -- @tparam args ... timer init args
 -- @treturn Component timer component
@@ -486,7 +510,7 @@ function Druid.new_timer(self, ...)
 end
 
 
---- Create progress basic component
+--- Create progress component
 -- @function druid:new_progress
 -- @tparam args ... progress init args
 -- @treturn Component progress component

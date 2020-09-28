@@ -27,6 +27,8 @@ function M.subscribe(self, callback)
 	assert(type(callback) == "function", "Callback should be function")
 
 	table.insert(self._callbacks, callback)
+
+	return callback
 end
 
 
