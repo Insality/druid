@@ -143,7 +143,7 @@ function on_input(self, action_id, action)
 end
 ```
 
-Learn **Druid** instance functions [here]([https://insality.github.io/druid/modules/druid_instance.html](https://insality.github.io/druid/modules/druid_instance.html))
+Learn **Druid** instance [functions here](https://insality.github.io/druid/modules/druid_instance.html))
 
 ## Druid Events
 
@@ -197,7 +197,7 @@ Recommended is fully integrate all **Druid** lifecycles functions
 - Druid input goes as stack. Last created button will checked first. So create your GUI from back
 - Don't forget about `return` in `on_input`: `return self.druid:on_input()`. It need, if you have more than 1 acquire inputs (several Druid, other input system, etc)
 - Druid by default do _acquire_input_focus_. So you don't need do it manually. Buy only if you have components, which requires _on_input_ 
-- If you want to delete declared Druid component, don't forget to remove them via `druid:remove(component)`
+- If you want to delete node with declared Druid component, don't forget to remove them via `druid:remove(component)`
 
 See full [See FAQ here](master/docs_md/FAQ.md)
 
