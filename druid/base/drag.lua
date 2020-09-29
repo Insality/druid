@@ -27,7 +27,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("drag", { const.ON_INPUT_HIGH })
+local Drag = component.create("drag", { const.ON_INPUT_HIGH })
 
 
 local function start_touch(self, touch)
@@ -129,7 +129,7 @@ end
 -- or create your own style
 -- @table Style
 -- @tfield[opt=10] number DRAG_DEADZONE Distance in pixels to start dragging
-function M.on_style_change(self, style)
+function Drag:on_style_change(style)
 	self.style = {}
 	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
 end
@@ -139,7 +139,7 @@ end
 -- @tparam node node GUI node to detect dragging
 -- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
 -- @function drag:init
-function M.init(self, node, on_drag_callback)
+function Drag:init(node, on_drag_callback)
 	self.node = self:get_node(node)
 
 	self.dx = 0
@@ -163,14 +163,14 @@ function M.init(self, node, on_drag_callback)
 end
 
 
-function M.on_input_interrupt(self)
+function Drag:on_input_interrupt()
 	if self.is_drag or self.is_touch then
 		end_touch(self)
 	end
 end
 
 
-function M.on_input(self, action_id, action)
+function Drag:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
 		return false
 	end
@@ -243,9 +243,9 @@ end
 -- restrict events outside stencil node
 -- @function drag:set_click_zone
 -- @tparam node zone Gui node
-function M.set_click_zone(self, zone)
+function Drag:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
 end
 
 
-return M
+return Drag

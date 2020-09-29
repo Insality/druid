@@ -5,7 +5,7 @@ local function init_scroll_with_grid(self)
 	local prefab = gui.get_node("grid_prefab")
 
 	local grid_scroll = self.druid:new_scroll("scroll_with_grid_size", "grid_content")
-	local grid = self.druid:new_grid("grid_content", "grid_prefab", 20)
+	local grid = self.druid:new_static_grid("grid_content", "grid_prefab", 20)
 
 	for i = 1, 40 do
 		local clone_prefab = gui.clone_tree(prefab)

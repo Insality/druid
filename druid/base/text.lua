@@ -24,7 +24,7 @@ local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("text")
+local Text = component.create("text", { const.ON_LAYOUT_CHANGE })
 
 
 local function update_text_size(self)
@@ -81,7 +81,7 @@ end
 -- @tparam node node Gui text node
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
 -- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
-function M.init(self, node, value, no_adjust)
+function Text:init(node, value, no_adjust)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)
 
@@ -107,10 +107,15 @@ function M.init(self, node, value, no_adjust)
 end
 
 
+function Text:on_layout_change()
+	self:set_to(self.last_value)
+end
+
+
 --- Calculate text width with font with respect to trailing space
 -- @function text:get_text_width
 -- @tparam[opt] string text
-function M.get_text_width(self, text)
+function Text:get_text_width(text)
 	text = text or self.last_value
 	local font = gui.get_font(self.node)
 	local scale = gui.get_scale(self.node)
@@ -131,7 +136,7 @@ end
 --- Set text to text field
 -- @function text:set_to
 -- @tparam string set_to Text for node
-function M.set_to(self, set_to)
+function Text:set_to(set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, set_to)
 
@@ -146,7 +151,7 @@ end
 --- Set color
 -- @function text:set_color
 -- @tparam vector4 color Color for node
-function M.set_color(self, color)
+function Text:set_color(color)
 	self.color = color
 	gui.set_color(self.node, color)
 end
@@ -155,7 +160,7 @@ end
 --- Set alpha
 -- @function text:set_alpha
 -- @tparam number alpha Alpha for node
-function M.set_alpha(self, alpha)
+function Text:set_alpha(alpha)
 	self.color.w = alpha
 	gui.set_color(self.node, self.color)
 end
@@ -164,7 +169,7 @@ end
 --- Set scale
 -- @function text:set_scale
 -- @tparam vector3 scale Scale for node
-function M.set_scale(self, scale)
+function Text:set_scale(scale)
 	self.last_scale = scale
 	gui.set_scale(self.node, scale)
 end
@@ -174,7 +179,7 @@ end
 -- his text area
 -- @function text:set_pivot
 -- @tparam gui.pivot pivot Gui pivot constant
-function M.set_pivot(self, pivot)
+function Text:set_pivot(pivot)
 	local prev_pivot = gui.get_pivot(self.node)
 	local prev_offset = const.PIVOTS[prev_pivot]
 
@@ -197,9 +202,9 @@ end
 --- Return true, if text with line break
 -- @function text:is_multiline
 -- @treturn bool Is text node with line break
-function M.is_multiline(self)
+function Text:is_multiline()
 	return gui.get_line_break(self.node)
 end
 
 
-return M
+return Text

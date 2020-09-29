@@ -41,23 +41,24 @@
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
+  <li><a href="../modules/druid.static_grid.html">druid.static_grid</a></li>
+  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><strong>component</strong></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
-  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
-  <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.dynamic_grid.html">druid.dynamic_grid</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
-  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
-  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
-  <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
-  <li><strong>component</strong></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
@@ -68,7 +69,8 @@
   <li><a href="../topics/03-styles.md.html">Styles</a></li>
   <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
   <li><a href="../topics/05-examples.md.html">Examples</a></li>
-  <li><a href="../topics/changelog.md.html">changelog</a></li>
+  <li><a href="../topics/changelog.md.html">Druid 0.3.0:</a></li>
+  <li><a href="../topics/faq.md.html">faq</a></li>
   <li><a href="../topics/README.md.html">README</a></li>
 </ul>
 
@@ -88,16 +90,8 @@
 	<td class="summary">Set current component style table.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_template">get_template()</a></td>
-	<td class="summary">Get current component template name</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#set_template">set_template(template)</a></td>
 	<td class="summary">Set current component template name</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_nodes">get_nodes()</a></td>
-	<td class="summary">Get current component nodes</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_nodes">set_nodes(nodes)</a></td>
@@ -106,14 +100,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#get_context">get_context()</a></td>
 	<td class="summary">Get current component context</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_context">set_context(context)</a></td>
-	<td class="summary">Set current component context</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_interests">get_interests()</a></td>
-	<td class="summary">Get current component interests</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#increase_input_priority">increase_input_priority()</a></td>
@@ -132,16 +118,44 @@
 	<td class="summary">Return druid with context of calling component.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#is_child_of">is_child_of()</a></td>
-	<td class="summary">Return true, if current component is child of another component</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#get_name">get_name()</a></td>
 	<td class="summary">Return component name</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#set_input_enabled">set_input_enabled(state)</a></td>
+	<td class="summary">Set component input state.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_parent_component">get_parent_component()</a></td>
+	<td class="summary">Return the parent for current component</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#setup_component">setup_component(table, table, table)</a></td>
 	<td class="summary">Setup component context and his style table</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__set_context">__set_context(context)</a></td>
+	<td class="summary">Set current component context</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__get_interests">__get_interests()</a></td>
+	<td class="summary">Get current component interests</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__get_template">__get_template()</a></td>
+	<td class="summary">Get current component template name</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__get_nodes">__get_nodes()</a></td>
+	<td class="summary">Get current component nodes</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__add_children">__add_children(children)</a></td>
+	<td class="summary">Add child to component children list</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#__remove_children">__remove_children(children)</a></td>
+	<td class="summary">Remove child from component children list</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Component.create">Component.create(name[, interest={}])</a></td>
@@ -180,26 +194,6 @@
 
 </dd>
     <dt>
-    <a name = "get_template"></a>
-    <strong>get_template()</strong>
-    </dt>
-    <dd>
-    Get current component template name
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
-        Component template name
-    </ol>
-
-
-
-
-</dd>
-    <dt>
     <a name = "set_template"></a>
     <strong>set_template(template)</strong>
     </dt>
@@ -215,26 +209,6 @@
         </li>
     </ul>
 
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_nodes"></a>
-    <strong>get_nodes()</strong>
-    </dt>
-    <dd>
-    Get current component nodes
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-        Component nodes table
-    </ol>
 
 
 
@@ -275,47 +249,6 @@
 
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
         Component context
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_context"></a>
-    <strong>set_context(context)</strong>
-    </dt>
-    <dd>
-    Set current component context
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">context</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-         Druid context. Usually it is self of script
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_interests"></a>
-    <strong>get_interests()</strong>
-    </dt>
-    <dd>
-    Get current component interests
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
-        List of component interests
     </ol>
 
 
@@ -402,26 +335,6 @@
 
 </dd>
     <dt>
-    <a name = "is_child_of"></a>
-    <strong>is_child_of()</strong>
-    </dt>
-    <dd>
-    Return true, if current component is child of another component
-
-
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">bool</span></span>
-        True, if current component is child of another
-    </ol>
-
-
-
-
-</dd>
-    <dt>
     <a name = "get_name"></a>
     <strong>get_name()</strong>
     </dt>
@@ -435,6 +348,54 @@
 
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
         The component name
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_input_enabled"></a>
+    <strong>set_input_enabled(state)</strong>
+    </dt>
+    <dd>
+    Set component input state.  By default it enabled
+ You can disable any input of component by this function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">bool</span></span>
+         The component input state
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span></span>
+        Component itself
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_parent_component"></a>
+    <strong>get_parent_component()</strong>
+    </dt>
+    <dd>
+    Return the parent for current component
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Component</span> or <span class="type">nil</span></span>
+        The druid component instance or nil
     </ol>
 
 
@@ -468,9 +429,132 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Component</span></span>
+           <span class="types"><span class="type">component</span></span>
         Component itself
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__set_context"></a>
+    <strong>__set_context(context)</strong>
+    </dt>
+    <dd>
+    Set current component context
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">context</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Druid context. Usually it is self of script
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__get_interests"></a>
+    <strong>__get_interests()</strong>
+    </dt>
+    <dd>
+    Get current component interests
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+        List of component interests
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__get_template"></a>
+    <strong>__get_template()</strong>
+    </dt>
+    <dd>
+    Get current component template name
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+        Component template name
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__get_nodes"></a>
+    <strong>__get_nodes()</strong>
+    </dt>
+    <dd>
+    Get current component nodes
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+        Component nodes table
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__add_children"></a>
+    <strong>__add_children(children)</strong>
+    </dt>
+    <dd>
+    Add child to component children list
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">children</span>
+            <span class="types"><span class="type">component</span></span>
+         The druid component instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "__remove_children"></a>
+    <strong>__remove_children(children)</strong>
+    </dt>
+    <dd>
+    Remove child from component children list
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">children</span>
+            <span class="types"><span class="type">component</span></span>
+         The druid component instance
+        </li>
+    </ul>
+
 
 
 
@@ -510,7 +594,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-06-14 20:13:02 </i>
+<i style="float:right;">Last updated 2020-09-29 23:46:16 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

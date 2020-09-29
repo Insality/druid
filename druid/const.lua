@@ -33,7 +33,7 @@ M.ON_MESSAGE = hash("on_message")
 M.ON_INPUT_HIGH = hash("on_input_high")
 M.ON_FOCUS_LOST = hash("on_focus_lost")
 M.ON_FOCUS_GAINED = hash("on_focus_gained")
-M.ON_LAYOUT_CHANGE = hash("on_layout_change")
+M.ON_LAYOUT_CHANGE = hash("layout_changed")
 M.ON_LANGUAGE_CHANGE = hash("on_language_change")
 
 
@@ -63,6 +63,7 @@ M.PIVOTS = {
 }
 
 
+-- Value is method name of component
 M.SPECIFIC_UI_MESSAGES = {
 	[M.ON_FOCUS_LOST] = "on_focus_lost",
 	[M.ON_FOCUS_GAINED] = "on_focus_gained",
@@ -98,6 +99,11 @@ M.SWIPE = {
 	DOWN = "down",
 	LEFT = "left",
 	RIGHT = "right",
+}
+
+
+M.ERRORS = {
+	GRID_DYNAMIC_ANCHOR = "The pivot of dynamic grid node should be West, East, South or North"
 }
 
 

@@ -39,7 +39,8 @@
   <li><a href="../topics/03-styles.md.html">Styles</a></li>
   <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
   <li><a href="../topics/05-examples.md.html">Examples</a></li>
-  <li><strong>changelog</strong></li>
+  <li><strong>Druid 0.3.0:</strong></li>
+  <li><a href="../topics/faq.md.html">faq</a></li>
   <li><a href="../topics/README.md.html">README</a></li>
 </ul>
 <h2>Modules</h2>
@@ -47,23 +48,24 @@
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
+  <li><a href="../modules/druid.static_grid.html">druid.static_grid</a></li>
+  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
-  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
-  <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.dynamic_grid.html">druid.dynamic_grid</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
-  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
-  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
-  <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
@@ -72,7 +74,8 @@
 
 <div id="content">
 
-    Druid 0.3.0:</p>
+
+<h3>Druid 0.3.0:</h3>
 
 <ul>
     <li><p><code>Druid:final()</code> now is important function for correct working</p></li>
@@ -119,7 +122,7 @@
 - Space is <span class="keyword">not</span> working <span class="keyword">in</span> HTML5
 </pre>
 
-<p>Druid 0.4.0:</p></li>
+<h3>Druid 0.4.0:</h3></li>
     <li><p>Add <em>Drag</em> basic component</p>
 
 <pre>
@@ -157,7 +160,7 @@
 
 <pre>
 - Anchor by default equals to node pivot (so, more component settings <span class="keyword">in</span> _.gui_ settings) (#<span class="number">51</span>)
-- Function <span class="backtick"><a href="../modules/druid.grid.html#clear">grid:clear</a></span> now don't delete any GUI nodes. Druid will <span class="keyword">not</span> care about <span class="backtick"><code>gui.delete_node</code></span> logic anymore (#<span class="number">56</span>)
+- Function <span class="backtick"><code>grid:clear</code></span> now don't delete any GUI nodes. Druid will <span class="keyword">not</span> care about <span class="backtick"><code>gui.delete_node</code></span> logic anymore (#<span class="number">56</span>)
 </pre>
 </li>
     <li><p>Druid <em>Hover</em> component now have two <em>hover</em> events (#49):</p>
@@ -188,18 +191,61 @@
 </ul>
 
 
-<p>Druid 0.5.0:
-- <strong>Fix #61:</strong> Button component: fix button animation node creation
-- <strong>Fix #64:</strong> Hover component: wrong mouse_hover default state
-- <strong>Fix #71:</strong> Blocker: blocker now correct block mouse hover event
-- <strong>Fix #72:</strong> Fix <code>return nil</code> in some <code>on_input</code> functions
-- <strong>Fix #74:</strong> Fix typo: strech -> stretch. Scroll function <code>set_extra_stretch_size</code> renamed
+<h3>Druid 0.5.0:</h3>
+
+<p>Besides a lot of fixes (thanks for feedback!) two components was add: <em>StaticGrid</em> and <em>DynamicGrid</em> instead of usual <em>Grid</em> component (it is deprecated now).
+Add <em>component:set</em>input<em>enabled</em> for basic component class. So you can enable/disable user input for any component.
+Finaly implemented <em>on</em>layout<em>changed</em> support. Druid components now will try keep their data between layout changing! You also can use this callback in your custom components.
+Also check <em>component.template.lua</em> what you can use for your own custom components!</p>
+
+<ul>
+    <li><strong>#77</strong> Grid update:
+
+<pre>
+- The _grid_ component now is __deprecated__. Use _static_grid_ instead. Druid will show you deprecated message, <span class="keyword">if</span> you still using _grid_ component
+- __[BREAKING]__ Remove the _grid:set_offset_ grid functions. To adjust the distance between nodes inside grid - setup correct node sizes
+- Add _static_grid_ component
+    - The behaviour like previous _grid_ component
+    - Have constant element size, so have ability to precalculate positions, indexes <span class="keyword">and</span> size of content
+    - By default, <span class="keyword">not</span> shifting elements on removing element. Add _is_shift_ flag to _static_grid:remove_ <span class="keyword">function</span>
+    - This grid can spawn elements with several rows <span class="keyword">and</span> columns
+- Add _dynamic_grid_ component
+    - Can have different element size. So have no ability to precalculate stuff like _static_grid_
+    - This grid can't have gaps between elements. You will get the <span class="global">error</span>, <span class="keyword">if</span> spawn element far away from other elements
+    - The grid can spawn elements only <span class="keyword">in</span> row <span class="keyword">or</span> <span class="keyword">in</span> column
+    - The grid node should have __West__, __East__, __South__ <span class="keyword">or</span> __North__ pivot (vertical <span class="keyword">or</span> horizontal element placement)
+    - Able to shift nodes left <span class="keyword">or</span> right on _grid:add_ / _grid:remove_ functions
+</pre>
+</li>
+    <li>Scroll update:
+
+<pre>
+- Add _scroll:set_vertical_scroll_ <span class="keyword">and</span> _scroll:set_horizontal_scroll_ <span class="keyword">for</span> disable scroll sides
+- Add _scroll:bind_grid_ <span class="keyword">function</span>. Now is possible to bind Druid Grid component (Static <span class="keyword">or</span> Dynamic) to the scroll <span class="keyword">for</span> auto refresh the scroll size on grid nodes changing
+</pre>
+</li>
+    <li><strong>#37</strong> Add <em>on</em>layout<em>change</em> support. Druid will keep and restore GUI component data between changing game layout. Override function <em>on</em>layout<em>change</em> in your custom components to do stuff you need.</li>
+    <li><strong>#85</strong> Move several components from <code>base</code> folder to <code>extended</code>. In future to use them, you have to register them manually. This is done for decrease build size by excluding unused components</li>
+    <li><strong>Fix #61:</strong> Button component: fix button animation node creation</li>
+    <li><strong>Fix #64:</strong> Hover component: wrong mouse_hover default state</li>
+    <li><strong>Fix #71:</strong> Blocker: blocker now correct block mouse hover event</li>
+    <li><strong>Fix #72:</strong> Fix <code>return nil</code> in some <code>on_input</code> functions</li>
+    <li><strong>Fix #74:</strong> <strong>[BREAKING]</strong> Fix typo: strech -> stretch. Scroll function <code>set_extra_stretch_size</code> renamed</li>
+    <li><strong>Fix #76:</strong> Add params for lang text localization component</li>
+    <li><strong>Fix #79:</strong> Fix <em>druid:remove</em> inside on_input callback</li>
+    <li><strong>Fix #80:</strong> Fix <em>hover:set</em>enable_ typo function call</li>
+    <li><strong>Fix #88:</strong> Add <em>component:set</em>input<em>enabled</em> function to enable/disable input for druid component. Now you can disable input of any druid component, even complex (with other components inside)</li>
+    <li>Add <code>component.template.lua</code> as template for Druid custom component</li>
+    <li>Update the example app</li>
+</ul>
+
+
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-06-14 20:13:02 </i>
+<i style="float:right;">Last updated 2020-09-29 23:46:16 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

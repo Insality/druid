@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
+  <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
+  <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
+  <li><a href="../modules/druid.static_grid.html">druid.static_grid</a></li>
+  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
+  <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
+  <li><strong>druid.dynamic_grid</strong></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
+  <li><a href="../modules/druid.progress.html">druid.progress</a></li>
+  <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
+  <li><a href="../modules/druid.slider.html">druid.slider</a></li>
+  <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/druid_instance.html">druid_instance</a></li>
+</ul>
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/01-components.md.html">01-components</a></li>
+  <li><a href="../topics/02-creating_custom_components.md.html">Creating custom components</a></li>
+  <li><a href="../topics/03-styles.md.html">Styles</a></li>
+  <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
+  <li><a href="../topics/05-examples.md.html">Examples</a></li>
+  <li><a href="../topics/changelog.md.html">Druid 0.3.0:</a></li>
+  <li><a href="../topics/faq.md.html">faq</a></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>druid.dynamic_grid</code></h1>
+<p>Component to handle placing components in row</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#init">init(parent)</a></td>
+	<td class="summary">Component init function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_pos">get_pos(index, node)</a></td>
+	<td class="summary">Return pos for grid node index</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#add">add(node[, index[, is_shift_left=false]])</a></td>
+	<td class="summary">Add new node to the grid</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#remove">remove(index[, is_shift_left=false])</a></td>
+	<td class="summary">Remove the item from the grid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_size">get_size()</a></td>
+	<td class="summary">Return grid content size</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_index_by_node">get_index_by_node(node)</a></td>
+	<td class="summary">Return grid index by node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_all_pos">get_all_pos()</a></td>
+	<td class="summary">Return array of all node positions</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_position_function">set_position_function(callback)</a></td>
+	<td class="summary">Change set position function for grid nodes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clear">clear()</a></td>
+	<td class="summary">Clear grid nodes array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DynamicGrid:_get_side_vector">DynamicGrid:_get_side_vector(side, is_forward)</a></td>
+	<td class="summary">Return side vector to correct node shifting</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Events">Events</a></td>
+	<td class="summary">Component events</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Fields">Fields</a></td>
+	<td class="summary">Component fields</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init(parent)</strong>
+    </dt>
+    <dd>
+    Component init function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">parent</span>
+            <span class="types"><span class="type">node</span></span>
+         The gui node parent, where items will be placed
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_pos"></a>
+    <strong>get_pos(index, node)</strong>
+    </dt>
+    <dd>
+    Return pos for grid node index
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
+         The grid element index
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         The node to be placed
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        Node position
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "add"></a>
+    <strong>add(node[, index[, is_shift_left=false]])</strong>
+    </dt>
+    <dd>
+    Add new node to the grid
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
+         The node position. By default add as last node
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">is_shift_left</span>
+            <span class="types"><span class="type">bool</span></span>
+         If true, shift all nodes to the left, otherwise shift nodes to the right
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "remove"></a>
+    <strong>remove(index[, is_shift_left=false])</strong>
+    </dt>
+    <dd>
+    Remove the item from the grid.  Note that gui node will be not deleted
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
+         The grid node index to remove
+        </li>
+        <li><span class="parameter">is_shift_left</span>
+            <span class="types"><span class="type">bool</span></span>
+         If true, shift all nodes to the left, otherwise shift nodes to the right
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_size"></a>
+    <strong>get_size()</strong>
+    </dt>
+    <dd>
+    Return grid content size
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        The grid content size
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_index_by_node"></a>
+    <strong>get_index_by_node(node)</strong>
+    </dt>
+    <dd>
+    Return grid index by node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         The gui node in the grid
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The node index
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_all_pos"></a>
+    <strong>get_all_pos()</strong>
+    </dt>
+    <dd>
+    Return array of all node positions
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3[]</span></span>
+        All grid node positions
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_position_function"></a>
+    <strong>set_position_function(callback)</strong>
+    </dt>
+    <dd>
+    Change set position function for grid nodes.  It will call on
+ update poses on grid elements. Default: gui.set_position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Function on node set position
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.dynamic_grid</span></span>
+        Current grid instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "clear"></a>
+    <strong>clear()</strong>
+    </dt>
+    <dd>
+    Clear grid nodes array.  GUI nodes will be not deleted!
+ If you want to delete GUI nodes, use dynamic_grid.nodes array before grid:clear
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.dynamic_grid</span></span>
+        Current grid instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "DynamicGrid:_get_side_vector"></a>
+    <strong>DynamicGrid:_get_side_vector(side, is_forward)</strong>
+    </dt>
+    <dd>
+    Return side vector to correct node shifting
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">side</span>
+
+
+
+        </li>
+        <li><span class="parameter">is_forward</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Events"></a>
+    <strong>Events</strong>
+    </dt>
+    <dd>
+    Component events
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">on_add_item</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On item add callback
+        </li>
+        <li><span class="parameter">on_remove_item</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On item remove callback
+        </li>
+        <li><span class="parameter">on_change_items</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On item add or remove callback
+        </li>
+        <li><span class="parameter">on_clear</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On grid clear callback
+        </li>
+        <li><span class="parameter">on_update_positions</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         On update item positions callback
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Fields"></a>
+    <strong>Fields</strong>
+    </dt>
+    <dd>
+    Component fields
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">parent</span>
+            <span class="types"><span class="type">node</span></span>
+         Parent gui node
+        </li>
+        <li><span class="parameter">nodes</span>
+            <span class="types"><span class="type">node[]</span></span>
+         List of all grid nodes
+        </li>
+        <li><span class="parameter">first_index</span>
+            <span class="types"><span class="type">number</span></span>
+         The first index of node in grid
+        </li>
+        <li><span class="parameter">last_index</span>
+            <span class="types"><span class="type">number</span></span>
+         The last index of node in grid
+        </li>
+        <li><span class="parameter">node_size</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Item size
+        </li>
+        <li><span class="parameter">border</span>
+            <span class="types"><span class="type">vector4</span></span>
+         The size of item content
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-09-29 23:46:16 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
