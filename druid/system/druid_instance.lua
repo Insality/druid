@@ -1,5 +1,12 @@
---- Druid main class. Create instance of this
--- to start creating components
+--- Instance of Druid. Make one instance per gui_script with next code:
+--
+--    local druid = require("druid.druid")
+--    function init(self)
+--        self.druid = druid.new(self)
+--        local button = self.druid:new_button(...)
+--    end
+--
+-- Learn Druid instance function here
 -- @module druid_instance
 -- @see druid.button
 -- @see druid.blocker

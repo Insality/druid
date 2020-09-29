@@ -1,6 +1,9 @@
 
 # Druid FAQ
 
+>_Have questions about Druid? Ask me!_
+> _Here is questions you might have_
+
 ### Q: Why I want use Druid?
 **A:** ---
 
@@ -48,7 +51,8 @@ The usual Druid way after add button to the scroll do:
 button:set_click_zone(scroll.view_node)
  ```
 
-### Q: How to use EmmyLua annotations?
+
+### Q: How to use EmmyLua annotations? _(from Druid 0.6.0)_
 **A:** Since the dependencies can't be processed by external editors, for use generated EmmyLua annotations you should copy the _annotations.lua_ to your project. For EmmyLua it will be enough. Remember you can _restart emmylua server_ for refresh the changes, if something goes wrong.
 After the annotations is processed, you should point the type of druid in requires:
 ```lua
@@ -57,3 +61,7 @@ local druid = require("druid.druid")
 
 -- Now the autocomplete is working
 ```
+
+
+### Q: When I should use *on_layout_change*?
+**A:** ---
