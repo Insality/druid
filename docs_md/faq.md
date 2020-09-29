@@ -49,7 +49,7 @@ The usual Druid way after add button to the scroll do:
 ```lua
 -- Scroll view node usually is stencil node
 button:set_click_zone(scroll.view_node)
- ```
+```
 
 
 ### Q: How to use EmmyLua annotations? _(from Druid 0.6.0)_

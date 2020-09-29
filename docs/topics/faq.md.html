@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Topics</h2>
+<ul class="">
+  <li><a href="../topics/01-components.md.html">01-components</a></li>
+  <li><a href="../topics/02-creating_custom_components.md.html">Creating custom components</a></li>
+  <li><a href="../topics/03-styles.md.html">Styles</a></li>
+  <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
+  <li><a href="../topics/05-examples.md.html">Examples</a></li>
+  <li><a href="../topics/changelog.md.html">Druid 0.3.0:</a></li>
+  <li><strong>faq</strong></li>
+  <li><a href="../topics/README.md.html">README</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
+  <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
+  <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
+  <li><a href="../modules/druid.static_grid.html">druid.static_grid</a></li>
+  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
+  <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
+  <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
+  <li><a href="../modules/druid.dynamic_grid.html">druid.dynamic_grid</a></li>
+  <li><a href="../modules/druid.input.html">druid.input</a></li>
+  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
+  <li><a href="../modules/druid.progress.html">druid.progress</a></li>
+  <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
+  <li><a href="../modules/druid.slider.html">druid.slider</a></li>
+  <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/druid_instance.html">druid_instance</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+
+
+<h1>Druid FAQ</h1>
+
+<blockquote>
+    <p><em>Have questions about Druid? Ask me!</em>
+    <em>Here is questions you might have</em></p>
+</blockquote>
+
+<h3>Q: Why I want use Druid?</h3>
+<p><strong>A:</strong> ---</p>
+
+
+<h3>Q: How to remove the Druid component instance?</h3>
+<p><strong>A:</strong> Any created <strong>Druid</strong> component can be removed with <em>druid:remove</em>. <a href="https://insality.github.io/druid/modules/druid_instance.html#druid:remove">API reference link</a>.</p>
+
+
+<h3>Q: How to make scroll work?</h3>
+<p><strong>A:</strong> ---</p>
+
+
+<h3>Q: How the input is processing?</h3>
+<p><strong>A:</strong>
+<em>SImply</em>: the <strong>Druid</strong> has a LIFO queue to check input. Last added buttons have more priority than first. Placing your buttons from behind to the front is correct in most cases.</p>
+
+
+<h3>Q: For what purpose Blocker component is exist?</h3>
+<p><strong>A:</strong> Component explanation <a href="https://github.com/Insality/druid/blob/master/docs_md/01-components.md#notes-2">here</a>.
+With Blocker you can block input in some zone. It is useful for make unclickable zone in buttons or kind of buttons panel on other big button (ex. close windows on window background click)</p>
+
+
+<h3>Q: Which stuff can I do with custom components?</h3>
+<p><strong>A:</strong> Any of you can imagine! There is a lot of examples, but in general: custom components allow you place component and some game logic separately from other stuff. It will be reusable, easier for testing and developing.</p>
+
+<p>For example it can be element in scroll with buttons, your custom GUI widget or even component with your game logic. Usually custom components going with templates. You can do several templates for single component module (for different visuals!)</p>
+
+<p>Some examples of custom components you can find <a href="https://github.com/Insality/druid-assets">here</a>.</p>
+
+
+<h3>Q: How *self:get_node()* is working?</h3>
+<p><strong>A:</strong> The node can be placed in gui directly or can be cloned via *gui.clone_tree()*. Also nodes can be placed as templates, so full node id will be composed from template name and node name (in cloned nodes too).</p>
+
+<p><strong>Druid</strong> component *self:get<em>node()* trying to search in all of this places. Use *self:set</em>template()* and *self:set<em>component</em>nodes()* for correct setup component nodes before any call of *self:get_node()*.</p>
+
+<p>Remember, usually you should pass <em><strong>string name</strong> of the node</em>, not gui node itself. It's better and more druid-way. </p>
+
+
+<h3>Q: My button in scroll is clickable outside the stencil node</h3>
+<p><strong>A:</strong> Since <strong>Druid</strong> checking click node with <em>gui.pick</em>node_, stencil is not prevent this. You can setup additional click zone on your buttons with <em>button:set</em>click<em>zone</em>.</p>
+
+<p>The usual Druid way after add button to the scroll do:</p>
+
+<pre>
+<span class="comment">-- Scroll view node usually is stencil node
+</span>button:set_click_zone(scroll.view_node)
+</pre>
+
+
+
+<h3>Q: How to use EmmyLua annotations? <em>(from Druid 0.6.0)</em></h3>
+<p><strong>A:</strong> Since the dependencies can't be processed by external editors, for use generated EmmyLua annotations you should copy the <em>annotations.lua</em> to your project. For EmmyLua it will be enough. Remember you can <em>restart emmylua server</em> for refresh the changes, if something goes wrong.
+After the annotations is processed, you should point the type of druid in requires:</p>
+
+<pre>
+<span class="comment">---@type druid
+</span><span class="keyword">local</span> druid = <span class="global">require</span>(<span class="string">"druid.druid"</span>)
+
+<span class="comment">-- Now the autocomplete is working</span>
+</pre>
+
+
+
+<h3>Q: When I should use *on<em>layout</em>change*?</h3>
+<p><strong>A:</strong> ---</p>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-09-29 23:46:16 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -391,10 +391,10 @@ end
 
 
 --- Create grid basic component
+-- Deprecated
 -- @function druid:new_grid
 -- @tparam args ... grid init args
 -- @treturn Component grid component
--- @deprecated
 function Druid:new_grid(...)
 	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
 	return Druid.create(self, static_grid, ...)

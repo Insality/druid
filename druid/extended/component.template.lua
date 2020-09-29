@@ -1,3 +1,6 @@
+--- Druid component template
+-- @module druid.component
+-- @local
 local const = require("druid.const")
 local component = require("druid.component")
 

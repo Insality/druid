@@ -42,23 +42,24 @@
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><strong>druid.scroll</strong></li>
+  <li><a href="../modules/druid.static_grid.html">druid.static_grid</a></li>
+  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
-  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
-  <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.dynamic_grid.html">druid.dynamic_grid</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
-  <li><strong>druid.scroll</strong></li>
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
-  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
-  <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
@@ -69,7 +70,8 @@
   <li><a href="../topics/03-styles.md.html">Styles</a></li>
   <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
   <li><a href="../topics/05-examples.md.html">Examples</a></li>
-  <li><a href="../topics/changelog.md.html">changelog</a></li>
+  <li><a href="../topics/changelog.md.html">Druid 0.3.0:</a></li>
+  <li><a href="../topics/faq.md.html">faq</a></li>
   <li><a href="../topics/README.md.html">README</a></li>
 </ul>
 
@@ -132,6 +134,23 @@
 	<tr>
 	<td class="name" nowrap><a href="#set_points">set_points(points)</a></td>
 	<td class="summary">Set points of interest.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_horizontal_scroll">set_horizontal_scroll(state)</a></td>
+	<td class="summary">Lock or unlock horizontal scroll</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_vertical_scroll">set_vertical_scroll(state)</a></td>
+	<td class="summary">Lock or unlock vertical scroll</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#bind_grid">bind_grid(Druid)</a></td>
+	<td class="summary">Bind the grid component (Static or Dynamic) to recalculate
+ scroll size on grid changes</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Scroll:_cancel_animate">Scroll:_cancel_animate()</a></td>
+	<td class="summary">Cancel animation on other animation or input touch</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -444,6 +463,102 @@
 
 
 </dd>
+    <dt>
+    <a name = "set_horizontal_scroll"></a>
+    <strong>set_horizontal_scroll(state)</strong>
+    </dt>
+    <dd>
+    Lock or unlock horizontal scroll
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">bool</span></span>
+         True, if horizontal scroll is enabled
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.scroll</span></span>
+        Current scroll instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_vertical_scroll"></a>
+    <strong>set_vertical_scroll(state)</strong>
+    </dt>
+    <dd>
+    Lock or unlock vertical scroll
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">bool</span></span>
+         True, if vertical scroll is enabled
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.scroll</span></span>
+        Current scroll instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "bind_grid"></a>
+    <strong>bind_grid(Druid)</strong>
+    </dt>
+    <dd>
+    Bind the grid component (Static or Dynamic) to recalculate
+ scroll size on grid changes
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">Druid</span>
+            <span class="types"><span class="type">druid.static_grid</span> or <span class="type">druid.dynamic_grid</span></span>
+         grid component
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.scroll</span></span>
+        Current scroll instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Scroll:_cancel_animate"></a>
+    <strong>Scroll:_cancel_animate()</strong>
+    </dt>
+    <dd>
+    Cancel animation on other animation or input touch
+
+
+
+
+
+
+
+</dd>
 </dl>
     <h2 class="section-header "><a name="Tables"></a>Tables</h2>
 
@@ -610,7 +725,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-06-14 20:13:02 </i>
+<i style="float:right;">Last updated 2020-09-29 23:46:16 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

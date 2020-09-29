@@ -45,7 +45,8 @@
 <li><a href="#Checkbox_group">Checkbox group </a></li>
 <li><a href="#Radio_group">Radio group </a></li>
 <li><a href="#Timer">Timer </a></li>
-<li><a href="#Grid">Grid </a></li>
+<li><a href="#Static_Grid">Static Grid </a></li>
+<li><a href="#Dynamic_Grid">Dynamic Grid </a></li>
 <li><a href="#Hover">Hover </a></li>
 <li><a href="#Swipe">Swipe </a></li>
 <li><a href="#Drag">Drag </a></li>
@@ -59,7 +60,8 @@
   <li><a href="../topics/03-styles.md.html">Styles</a></li>
   <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
   <li><a href="../topics/05-examples.md.html">Examples</a></li>
-  <li><a href="../topics/changelog.md.html">changelog</a></li>
+  <li><a href="../topics/changelog.md.html">Druid 0.3.0:</a></li>
+  <li><a href="../topics/faq.md.html">faq</a></li>
   <li><a href="../topics/README.md.html">README</a></li>
 </ul>
 <h2>Modules</h2>
@@ -67,23 +69,24 @@
   <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
   <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
   <li><a href="../modules/druid.button.html">druid.button</a></li>
+  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
+  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
+  <li><a href="../modules/druid.static_grid.html">druid.static_grid</a></li>
+  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
+  <li><a href="../modules/druid.text.html">druid.text</a></li>
+  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
   <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
-  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
-  <li><a href="../modules/druid.grid.html">druid.grid</a></li>
-  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
+  <li><a href="../modules/druid.dynamic_grid.html">druid.dynamic_grid</a></li>
   <li><a href="../modules/druid.input.html">druid.input</a></li>
   <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
   <li><a href="../modules/druid.progress.html">druid.progress</a></li>
   <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
-  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
   <li><a href="../modules/druid.slider.html">druid.slider</a></li>
-  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
-  <li><a href="../modules/druid.text.html">druid.text</a></li>
   <li><a href="../modules/druid.timer.html">druid.timer</a></li>
-  <li><a href="../modules/component.html">component</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/druid_event.html">druid_event</a></li>
   <li><a href="../modules/druid.helper.html">druid.helper</a></li>
   <li><a href="../modules/druid_instance.html">druid_instance</a></li>
 </ul>
@@ -108,6 +111,9 @@
 <h3>Setup</h3>
 <p>Create button with druid: <code>button = druid:new_button(node_name, callback, [params], [animation_node])</code>
 Where node name is name of node from GUI scene. You can use <code>node_name</code> as input trigger zone and point another node for animation via <code>animation_node</code></p>
+
+<h3>Usecase</h3>
+<p><em>fill example usecases</em></p>
 
 <h3>Notes</h3>
 <p>- Button callback have next params: (self, params, button_instance)</p>
@@ -262,6 +268,7 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 - Progress bar can fill only by vertical or horizontal size. If you want make diagonal progress bar, just rotate node in GUI scene
 - If you have glitchy or dark texture bug with progress bar, try to disable mipmaps in your texture profiles</p>
 
+
 <p><a name="Slider"></a></p>
 <h2>Slider</h2>
 <p><a href="https://insality.github.io/druid/modules/druid.slider.html">Slider API here</a></p>
@@ -278,12 +285,13 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 <p>- You can setup points of interests on slider via <a href="../modules/druid.slider.html#set_steps">slider:set_steps</a>. If steps are exist, slider values will be only from this steps (notched slider)
 - For now, start pos and end pos should be on vertical or horizontal line (their x or y value should be equal)</p>
 
+
 <p><a name="Input"></a></p>
 <h2>Input</h2>
 <p><a href="https://insality.github.io/druid/modules/druid.input.html">Input API here</a></p>
 
 <h3>Overview</h3>
-<p>Basic Druid text input component (unimplemented)</p>
+<p>Basic Druid text input component</p>
 
 <h3>Setup</h3>
 <p>Create input component with druid: <code>input = druid:new_input(button_node_name, text_node_name, keyboard_type)</code></p>
@@ -312,6 +320,7 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 <h3>Notes</h3>
 <p>- Checkbox uses button to handle click
 - You can setup another node to handle input with click_node arg in component init: <code>druid:new_checkbox(node, callback, [click_node])</code></p>
+
 
 <p><a name="Checkbox_group"></a></p>
 <h2>Checkbox group</h2>
@@ -343,6 +352,7 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 - You can get/set radio_group state with <code>group:set_state()</code> and <code>group:get_state()</code>
 - Only different from checkbox_group: on click another checkboxes in this group will be unchecked</p>
 
+
 <p><a name="Timer"></a></p>
 <h2>Timer</h2>
 <p><a href="https://insality.github.io/druid/modules/druid.timer.html">Timer API here</a></p>
@@ -358,22 +368,53 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 - Timer will setup text node with current timer value
 - Timer uses update function to handle time</p>
 
-<p><a name="Grid"></a></p>
-<h2>Grid</h2>
-<p><a href="https://insality.github.io/druid/modules/druid.grid.html">Grid API here</a></p>
+
+<p><a name="Static_Grid"></a></p>
+<h2>Static Grid</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.static_grid.html">Static Grid API here</a></p>
 
 <h3>Overview</h3>
-<p>Component for manage node positions. Very simple implementation for nodes with equal size</p>
+<p>Component for manage node positions.
+Static grid have constant node size, so it possible to calculate node positions before placement. Nodes can be placed with gaps.
+Static grid can shift elements on add/remove functions.</p>
 
 <h3>Setup</h3>
-<p>Create  component with druid: <code>grid = druid:new_grid(parent_node, prefab_node, max_in_row_elements)</code></p>
+<p>Create  component with druid: <code>grid = druid:new_static_grid(parent_node, prefab_node, max_in_row_elements)</code></p>
 
 <h3>Notes</h3>
-<p>- Grid on <em>adding elements</em> will setup parent to <em>parent</em>node_
+<p>- On <em>add node</em> grid will set node parent to <em>parent</em>node_
 - You can get array of position of every element for setup points of interest in scroll component
 - You can get size of all elements for setup size in scroll component
-- You can adjust anchor and border between elements
-- <em>Prefab node</em> in component init used to get grid item size</p>
+- You can also bind the grid to the scroll component for auto resize scroll content size
+- Pivot of parent_node matter for node placement
+- <em>Prefab node</em> used to get node size and anchor
+- You can point *position_function* for animations with <em>static</em>grid:set<em>position</em>function(node, pos)_ callback. Default - *gui.set_position()*</p>
+
+
+<p><a name="Dynamic_Grid"></a></p>
+<h2>Dynamic Grid</h2>
+<p><a href="https://insality.github.io/druid/modules/druid.dynamic_grid.html">Dynamic Grid API here</a></p>
+
+<h3>Overview</h3>
+<p>Component for manage node positions with different node sizes.
+Unlike Static Grid, Dynamic Grid can place nodes only in one row or in one column.
+Dynamic Grid can't have gaps between elements - you will get error, if try spawn element far away from others.
+Dynamic Grid should have <strong>West</strong>, <strong>East</strong>, <strong>South</strong> or <strong>North</strong> pivot (vertical or horizontal element placement)</p>
+
+<h3>Setup</h3>
+<p>Create  component with druid: <code>grid = druid:new_dynamic_grid(parent_node)</code></p>
+
+<p>Check the <em>parent</em>node_ have correct pivot point. You will get the error otherwise.</p>
+
+<h3>Notes</h3>
+<p>- On <em>add node</em> grid will set node parent to <em>parent</em>node_
+- You can get array of position of every element for setup points of interest in scroll component
+- You can get size of all elements for setup size in scroll component
+- You can also bind the grid to the scroll component for auto resize scroll content size
+- Pivot of parent<em>node matter for node placement
+- You can point *position</em>function* for animations with <em>static</em>grid:set<em>position</em>function(node, pos)_ callback. Default - *gui.set_position()*
+- First node placed at Grid pivot point. Other nodes placed nearby of other nodes.
+- On <em>add/remove</em> nodes always shifted. You can point the shift side in this functions (*is<em>shift</em>left* boolean argument)</p>
 
 <p><a name="Hover"></a></p>
 <h2>Hover</h2>
@@ -465,7 +506,7 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-06-14 20:13:02 </i>
+<i style="float:right;">Last updated 2020-09-29 23:46:16 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
