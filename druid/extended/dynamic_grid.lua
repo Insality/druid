@@ -25,6 +25,7 @@ local component = require("druid.component")
 
 local DynamicGrid = component.create("dynamic_grid", { const.ON_LAYOUT_CHANGE })
 
+
 local SIDE_VECTORS = {
 	LEFT = vmath.vector3(-1, 0, 0),
 	RIGHT = vmath.vector3(1, 0, 0),

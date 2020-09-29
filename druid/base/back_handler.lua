@@ -13,14 +13,14 @@ local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("back_handler", { const.ON_INPUT })
+local BackHandler = component.create("back_handler", { const.ON_INPUT })
 
 
 --- Component init function
 -- @function back_handler:init
 -- @tparam callback callback On back button
 -- @tparam[opt] params Callback argument
-function M.init(self, callback, params)
+function BackHandler:init(callback, params)
 	self.params = params
 
 	self.on_back = Event(callback)
@@ -31,7 +31,7 @@ end
 -- @function back_handler:on_input
 -- @tparam string action_id on_input action id
 -- @tparam table action on_input action
-function M.on_input(self, action_id, action)
+function BackHandler:on_input(action_id, action)
 	if not action[const.RELEASED] then
 		return false
 	end
@@ -45,4 +45,4 @@ function M.on_input(self, action_id, action)
 end
 
 
-return M
+return BackHandler

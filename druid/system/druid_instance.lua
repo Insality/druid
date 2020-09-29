@@ -137,7 +137,7 @@ end
 -- @function druid:initialize
 -- @tparam context table Druid context. Usually it is self of script
 -- @tparam style table Druid style module
-function Druid.initialize(self, context, style)
+function Druid:initialize(context, style)
 	self._context = context
 	self._style = style or settings.default_style
 	self._deleted = false
@@ -156,7 +156,7 @@ end
 -- @function druid:create
 -- @tparam Component component Component module
 -- @tparam args ... Other component params to pass it to component:init function
-function Druid.create(self, component, ...)
+function Druid:create(component, ...)
 	local instance = create(self, component)
 
 	if instance.init then
@@ -170,7 +170,7 @@ end
 --- Call on final function on gui_script. It will call on_remove
 -- on all druid components
 -- @function druid:final
-function Druid.final(self)
+function Druid:final()
 	local components = self.components[const.ALL]
 
 	for i = #components, 1, -1 do
@@ -189,7 +189,7 @@ end
 -- Component `on_remove` function will be invoked, if exist.
 -- @function druid:remove
 -- @tparam Component component Component instance
-function Druid.remove(self, component)
+function Druid:remove(component)
 	if self._is_input_processing then
 		table.insert(self._late_remove, component)
 		return
@@ -232,7 +232,7 @@ end
 --- Druid update function
 -- @function druid:update
 -- @tparam number dt Delta time
-function Druid.update(self, dt)
+function Druid:update(dt)
 	local components = self.components[const.ON_UPDATE]
 	for i = 1, #components do
 		components[i]:update(dt)
@@ -244,7 +244,7 @@ end
 -- @function druid:on_input
 -- @tparam hash action_id Action_id from on_input
 -- @tparam table action Action from on_input
-function Druid.on_input(self, action_id, action)
+function Druid:on_input(action_id, action)
 	self._is_input_processing = true
 
 	local is_input_consumed = false
@@ -273,7 +273,7 @@ end
 -- @tparam hash message_id Message_id from on_message
 -- @tparam table message Message from on_message
 -- @tparam hash sender Sender from on_message
-function Druid.on_message(self, message_id, message, sender)
+function Druid:on_message(message_id, message, sender)
 	local specific_ui_message = const.SPECIFIC_UI_MESSAGES[message_id]
 
 	if specific_ui_message then
@@ -296,7 +296,7 @@ end
 --- Druid on focus lost interest function.
 -- This one called by on_window_callback by global window listener
 -- @function druid:on_focus_lost
-function Druid.on_focus_lost(self)
+function Druid:on_focus_lost()
 	local components = self.components[const.ON_FOCUS_LOST]
 	for i = 1, #components do
 		components[i]:on_focus_lost()
@@ -307,7 +307,7 @@ end
 --- Druid on focus gained interest function.
 -- This one called by on_window_callback by global window listener
 -- @function druid:on_focus_gained
-function Druid.on_focus_gained(self)
+function Druid:on_focus_gained()
 	local components = self.components[const.ON_FOCUS_GAINED]
 	for i = 1, #components do
 		components[i]:on_focus_gained()
@@ -318,7 +318,7 @@ end
 --- Druid on layout change function.
 -- Called on update gui layout
 -- @function druid:on_layout_change
-function Druid.on_layout_change(self)
+function Druid:on_layout_change()
 	local components = self.components[const.ON_LAYOUT_CHANGE]
 	for i = 1, #components do
 		components[i]:on_layout_change()
@@ -330,7 +330,7 @@ end
 -- This one called by global gruid.on_language_change, but can be
 -- call manualy to update all translations
 -- @function druid.on_language_change
-function Druid.on_language_change(self)
+function Druid:on_language_change()
 	local components = self.components[const.ON_LANGUAGE_CHANGE]
 	for i = 1, #components do
 		components[i]:on_language_change()
@@ -342,7 +342,7 @@ end
 -- @function druid:new_button
 -- @tparam args ... button init args
 -- @treturn Component button component
-function Druid.new_button(self, ...)
+function Druid:new_button(...)
 	return Druid.create(self, button, ...)
 end
 
@@ -351,7 +351,7 @@ end
 -- @function druid:new_blocker
 -- @tparam args ... blocker init args
 -- @treturn Component blocker component
-function Druid.new_blocker(self, ...)
+function Druid:new_blocker(...)
 	return Druid.create(self, blocker, ...)
 end
 
@@ -360,7 +360,7 @@ end
 -- @function druid:new_back_handler
 -- @tparam args ... back_handler init args
 -- @treturn Component back_handler component
-function Druid.new_back_handler(self, ...)
+function Druid:new_back_handler(...)
 	return Druid.create(self, back_handler, ...)
 end
 
@@ -369,7 +369,7 @@ end
 -- @function druid:new_hover
 -- @tparam args ... hover init args
 -- @treturn Component hover component
-function Druid.new_hover(self, ...)
+function Druid:new_hover(...)
 	return Druid.create(self, hover, ...)
 end
 
@@ -378,7 +378,7 @@ end
 -- @function druid:new_text
 -- @tparam args ... text init args
 -- @treturn Component text component
-function Druid.new_text(self, ...)
+function Druid:new_text(...)
 	return Druid.create(self, text, ...)
 end
 
@@ -388,7 +388,7 @@ end
 -- @tparam args ... grid init args
 -- @treturn Component grid component
 -- @deprecated
-function Druid.new_grid(self, ...)
+function Druid:new_grid(...)
 	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
 	return Druid.create(self, static_grid, ...)
 end
@@ -398,7 +398,7 @@ end
 -- @function druid:new_static_grid
 -- @tparam args ... grid init args
 -- @treturn Component grid component
-function Druid.new_static_grid(self, ...)
+function Druid:new_static_grid(...)
 	return Druid.create(self, static_grid, ...)
 end
 
@@ -407,7 +407,7 @@ end
 -- @function druid:new_scroll
 -- @tparam args ... scroll init args
 -- @treturn Component scroll component
-function Druid.new_scroll(self, ...)
+function Druid:new_scroll(...)
 	return Druid.create(self, scroll, ...)
 end
 
@@ -416,7 +416,7 @@ end
 -- @function druid:new_swipe
 -- @tparam args ... swipe init args
 -- @treturn Component swipe component
-function Druid.new_swipe(self, ...)
+function Druid:new_swipe(...)
 	return Druid.create(self, swipe, ...)
 end
 
@@ -425,7 +425,7 @@ end
 -- @function druid:new_drag
 -- @tparam args ... drag init args
 -- @treturn Componetn drag component
-function Druid.new_drag(self, ...)
+function Druid:new_drag(...)
 	return Druid.create(self, drag, ...)
 end
 
@@ -434,7 +434,7 @@ end
 -- @function druid:new_dynamic_grid
 -- @tparam args ... grid init args
 -- @treturn Component grid component
-function Druid.new_dynamic_grid(self, ...)
+function Druid:new_dynamic_grid(...)
 	-- return helper.extended_component("dynamic_grid")
 	return Druid.create(self, dynamic_grid, ...)
 end
@@ -444,7 +444,7 @@ end
 -- @function druid:new_lang_text
 -- @tparam args ... lang_text init args
 -- @treturn Component lang_text component
-function Druid.new_lang_text(self, ...)
+function Druid:new_lang_text(...)
 		-- return helper.extended_component("lang_text")
 	return Druid.create(self, lang_text, ...)
 end
@@ -454,7 +454,7 @@ end
 -- @function druid:new_slider
 -- @tparam args ... slider init args
 -- @treturn Component slider component
-function Druid.new_slider(self, ...)
+function Druid:new_slider(...)
 	-- return helper.extended_component("slider")
 	return Druid.create(self, slider, ...)
 end
@@ -464,7 +464,7 @@ end
 -- @function druid:new_checkbox
 -- @tparam args ... checkbox init args
 -- @treturn Component checkbox component
-function Druid.new_checkbox(self, ...)
+function Druid:new_checkbox(...)
 	-- return helper.extended_component("checkbox")
 	return Druid.create(self, checkbox, ...)
 end
@@ -474,7 +474,7 @@ end
 -- @function druid:new_input
 -- @tparam args ... input init args
 -- @treturn Component input component
-function Druid.new_input(self, ...)
+function Druid:new_input(...)
 	-- return helper.extended_component("input")
 	return Druid.create(self, input, ...)
 end
@@ -484,7 +484,7 @@ end
 -- @function druid:new_checkbox_group
 -- @tparam args ... checkbox_group init args
 -- @treturn Component checkbox_group component
-function Druid.new_checkbox_group(self, ...)
+function Druid:new_checkbox_group(...)
 	-- return helper.extended_component("checkbox_group")
 	return Druid.create(self, checkbox_group, ...)
 end
@@ -494,7 +494,7 @@ end
 -- @function druid:new_radio_group
 -- @tparam args ... radio_group init args
 -- @treturn Component radio_group component
-function Druid.new_radio_group(self, ...)
+function Druid:new_radio_group(...)
 	-- return helper.extended_component("radio_group")
 	return Druid.create(self, radio_group, ...)
 end
@@ -504,7 +504,7 @@ end
 -- @function druid:new_timer
 -- @tparam args ... timer init args
 -- @treturn Component timer component
-function Druid.new_timer(self, ...)
+function Druid:new_timer(...)
 	-- return helper.extended_component("timer")
 	return Druid.create(self, timer, ...)
 end
@@ -514,7 +514,7 @@ end
 -- @function druid:new_progress
 -- @tparam args ... progress init args
 -- @treturn Component progress component
-function Druid.new_progress(self, ...)
+function Druid:new_progress(...)
 	-- return helper.extended_component("progress")
 	return Druid.create(self, progress, ...)
 end

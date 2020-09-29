@@ -12,7 +12,7 @@
 local Event = require("druid.event")
 local component = require("druid.component")
 
-local M = component.create("checkbox_group")
+local CheckboxGroup = component.create("checkbox_group")
 
 
 --- Component init function
@@ -20,7 +20,7 @@ local M = component.create("checkbox_group")
 -- @tparam node[] node Array of gui node
 -- @tparam function callback Checkbox callback
 -- @tparam[opt=node] node[] click node Array of trigger nodes, by default equals to nodes
-function M.init(self, nodes, callback, click_nodes)
+function CheckboxGroup:init(nodes, callback, click_nodes)
 	self.druid = self:get_druid()
 	self.checkboxes = {}
 
@@ -40,7 +40,7 @@ end
 --- Set checkbox group state
 -- @function checkbox_group:set_state
 -- @tparam bool[] indexes Array of checkbox state
-function M.set_state(self, indexes)
+function CheckboxGroup:set_state(indexes)
 	for i = 1, #indexes do
 		if self.checkboxes[i] then
 			self.checkboxes[i]:set_state(indexes[i], true)
@@ -52,7 +52,7 @@ end
 --- Return checkbox group state
 -- @function checkbox_group:get_state
 -- @treturn bool[] Array if checkboxes state
-function M.get_state(self)
+function CheckboxGroup:get_state()
 	local result = {}
 
 	for i = 1, #self.checkboxes do
@@ -63,4 +63,4 @@ function M.get_state(self)
 end
 
 
-return M
+return CheckboxGroup

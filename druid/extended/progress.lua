@@ -20,7 +20,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("progress", { const.ON_UPDATE, const.ON_LAYOUT_CHANGE })
+local Progress = component.create("progress", { const.ON_UPDATE, const.ON_LAYOUT_CHANGE })
 
 
 local function check_steps(self, from, to, exactly)
@@ -71,7 +71,7 @@ end
 -- @table Style
 -- @tfield[opt=5] number SPEED Progress bas fill rate. More -> faster
 -- @tfield[opt=0.005] number MIN_DELTA Minimum step to fill progress bar
-function M.on_style_change(self, style)
+function Progress:on_style_change(style)
 	self.style = {}
 	self.style.SPEED = style.SPEED or 5
 	self.style.MIN_DELTA = style.MIN_DELTA or 0.005
@@ -83,7 +83,7 @@ end
 -- @tparam string|node node Progress bar fill node or node name
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
 -- @tparam[opt=1] number init_value Initial value of progress bar
-function M.init(self, node, key, init_value)
+function Progress:init(node, key, init_value)
 	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
 	self.prop = hash("scale."..key)
@@ -106,12 +106,12 @@ function M.init(self, node, key, init_value)
 end
 
 
-function M.on_layout_change(self)
+function Progress:on_layout_change()
 	self:set_to(self.last_value)
 end
 
 
-function M.update(self, dt)
+function Progress:update(dt)
 	if self.target then
 		local prev_value = self.last_value
 		local step = math.abs(self.last_value - self.target) * (self.style.SPEED*dt)
@@ -133,14 +133,14 @@ end
 
 --- Fill a progress bar and stop progress animation
 -- @function progress:fill
-function M.fill(self)
+function Progress:fill()
 	set_bar_to(self, 1, true)
 end
 
 
 --- Empty a progress bar
 -- @function progress:empty
-function M.empty(self)
+function Progress:empty()
 	set_bar_to(self, 0, true)
 end
 
@@ -148,14 +148,14 @@ end
 --- Instant fill progress bar to value
 -- @function progress:set_to
 -- @tparam number to Progress bar value, from 0 to 1
-function M.set_to(self, to)
+function Progress:set_to(to)
 	set_bar_to(self, to)
 end
 
 
 --- Return current progress bar value
 -- @function progress:get
-function M.get(self)
+function Progress:get()
 	return self.last_value
 end
 
@@ -165,7 +165,7 @@ end
 -- @tparam number[] steps Array of progress bar values
 -- @tparam function callback Callback on intersect step value
 -- @usage progress:set_steps({0, 0.3, 0.6, 1}, function(self, step) end)
-function M.set_steps(self, steps, callback)
+function Progress:set_steps(steps, callback)
 	self.steps = steps
 	self.step_callback = callback
 end
@@ -175,7 +175,7 @@ end
 -- @function progress:to
 -- @tparam number to value between 0..1
 -- @tparam[opt] function callback Callback on animation ends
-function M.to(self, to, callback)
+function Progress:to(to, callback)
 	to = helper.clamp(to, 0, 1)
 	-- cause of float error
 	local value = helper.round(to, 5)
@@ -190,4 +190,4 @@ function M.to(self, to, callback)
 end
 
 
-return M
+return Progress

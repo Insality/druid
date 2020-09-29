@@ -22,7 +22,7 @@ local formats = require("druid.helper.formats")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("timer", { const.ON_UPDATE })
+local Timer = component.create("timer", { const.ON_UPDATE })
 
 
 --- Component init function
@@ -31,7 +31,7 @@ local M = component.create("timer", { const.ON_UPDATE })
 -- @tparam number seconds_from Start timer value in seconds
 -- @tparam[opt=0] number seconds_to End timer value in seconds
 -- @tparam[opt] function callback Function on timer end
-function M.init(self, node, seconds_from, seconds_to, callback)
+function Timer:init(node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
 	seconds_from = math.max(seconds_from, 0)
 	seconds_to = math.max(seconds_to or 0, 0)
@@ -52,7 +52,7 @@ function M.init(self, node, seconds_from, seconds_to, callback)
 end
 
 
-function M.update(self, dt)
+function Timer:update(dt)
 	if not self.is_on then
 		return
 	end
@@ -63,7 +63,7 @@ function M.update(self, dt)
 	if self.temp > dist then
 		self.temp = self.temp - dist
 		self.value = helper.step(self.value, self.target, 1)
-		M.set_to(self, self.value)
+		self:set_to(self.value)
 
 		self.on_tick:trigger(self:get_context(), self.value)
 
@@ -77,7 +77,7 @@ end
 --- Set text to text field
 -- @function timer:set_to
 -- @tparam number set_to Value in seconds
-function M.set_to(self, set_to)
+function Timer:set_to(set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, formats.second_string_min(set_to))
 end
@@ -86,7 +86,7 @@ end
 --- Called when update
 -- @function timer:set_state
 -- @tparam bool is_on Timer enable state
-function M.set_state(self, is_on)
+function Timer:set_state(is_on)
 	self.is_on = is_on
 
 	self.on_set_enabled:trigger(self:get_context(), is_on)
@@ -97,14 +97,14 @@ end
 -- @function timer:set_interval
 -- @tparam number from Start time in seconds
 -- @tparam number to Target time in seconds
-function M.set_interval(self, from, to)
+function Timer:set_interval(from, to)
 	self.from = from
 	self.value = from
 	self.temp = 0
 	self.target = to
-	M.set_state(self, true)
-	M.set_to(self, from)
+	self:set_state(true)
+	self:set_to(from)
 end
 
 
-return M
+return Timer
