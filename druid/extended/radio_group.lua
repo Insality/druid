@@ -12,7 +12,7 @@
 local Event = require("druid.event")
 local component = require("druid.component")
 
-local M = component.create("radio_group")
+local RadioGroup = component.create("radio_group")
 
 
 local function on_checkbox_click(self, index)
@@ -29,7 +29,7 @@ end
 -- @tparam node[] node Array of gui node
 -- @tparam function callback Radio callback
 -- @tparam[opt=node] node[] click node Array of trigger nodes, by default equals to nodes
-function M.init(self, nodes, callback, click_nodes)
+function RadioGroup:init(nodes, callback, click_nodes)
 	self.druid = self:get_druid()
 	self.checkboxes = {}
 
@@ -49,7 +49,7 @@ end
 --- Set radio group state
 -- @function radio_group:set_state
 -- @tparam number index Index in radio group
-function M.set_state(self, index)
+function RadioGroup:set_state(index)
 	on_checkbox_click(self, index)
 end
 
@@ -57,7 +57,7 @@ end
 --- Return radio group state
 -- @function radio_group:get_state
 -- @treturn number Index in radio group
-function M.get_state(self)
+function RadioGroup:get_state()
 	local result = -1
 
 	for i = 1, #self.checkboxes do
@@ -71,4 +71,4 @@ function M.get_state(self)
 end
 
 
-return M
+return RadioGroup

@@ -22,7 +22,7 @@ local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local M = component.create("slider", { const.ON_INPUT_HIGH, const.ON_LAYOUT_CHANGE })
+local Slider = component.create("slider", { const.ON_INPUT_HIGH, const.ON_LAYOUT_CHANGE })
 
 
 local function on_change_value(self)
@@ -41,7 +41,7 @@ end
 -- @tparam node node Gui pin node
 -- @tparam vector3 end_pos The end position of slider
 -- @tparam[opt] function callback On slider change callback
-function M.init(self, node, end_pos, callback)
+function Slider:init(node, end_pos, callback)
 	self.node = self:get_node(node)
 
 	self.start_pos = gui.get_position(self.node)
@@ -59,12 +59,12 @@ function M.init(self, node, end_pos, callback)
 end
 
 
-function M.on_layout_change(self)
+function Slider:on_layout_change()
 	self:set(self.value, true)
 end
 
 
-function M.on_input(self, action_id, action)
+function Slider:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false
 	end
@@ -133,7 +133,7 @@ end
 -- @function slider:set
 -- @tparam number value Value from 0 to 1
 -- @tparam[opt] bool is_silent Don't trigger event if true
-function M.set(self, value, is_silent)
+function Slider:set(value, is_silent)
 	value = helper.clamp(value, 0, 1)
 	set_position(self, value)
 	self.value = value
@@ -148,9 +148,9 @@ end
 -- @function slider:set_steps
 -- @tparam number[] steps Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
-function M.set_steps(self, steps)
+function Slider:set_steps(steps)
 	self.steps = steps
 end
 
 
-return M
+return Slider

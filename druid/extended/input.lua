@@ -27,7 +27,7 @@ local const = require("druid.const")
 local component = require("druid.component")
 local utf8 = require("druid.system.utf8")
 
-local M = component.create("input", { const.ON_INPUT, const.ON_FOCUS_LOST })
+local Input = component.create("input", { const.ON_INPUT, const.ON_FOCUS_LOST })
 
 
 --- Mask text by replacing every character with a mask character
@@ -97,7 +97,7 @@ end
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
 -- @tfield table button_style Custom button style for input node
-function M.on_style_change(self, style)
+function Input:on_style_change(style)
 	self.style = {}
 
 	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
@@ -115,7 +115,7 @@ function M.on_style_change(self, style)
 end
 
 
-function M.init(self, click_node, text_node, keyboard_type)
+function Input:init(click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
 	self.text = self.druid:new_text(text_node)
 
@@ -149,7 +149,7 @@ function M.init(self, click_node, text_node, keyboard_type)
 end
 
 
-function M.on_input(self, action_id, action)
+function Input:on_input(action_id, action)
 	if self.selected then
 		local input_text = nil
 		if action_id == const.ACTION_TEXT then
@@ -213,12 +213,12 @@ function M.on_input(self, action_id, action)
 end
 
 
-function M.on_focus_lost(self)
+function Input:on_focus_lost()
 	unselect(self)
 end
 
 
-function M.on_input_interrupt(self)
+function Input:on_input_interrupt()
 	-- unselect(self)
 end
 
@@ -226,7 +226,7 @@ end
 --- Set text for input field
 -- @function input:set_text
 -- @tparam string input_text The string to apply for input field
-function M.set_text(self, input_text)
+function Input:set_text(input_text)
 	-- Case when update with marked text
 	if input_text then
 		self.value = input_text
@@ -273,7 +273,7 @@ end
 --- Return current input field text
 -- @function input:get_text
 -- @treturn string The current input field text
-function M.get_text(self)
+function Input:get_text()
 	return self.value .. self.marked_value
 end
 
@@ -283,7 +283,7 @@ end
 -- @function input:set_max_length
 -- @tparam number max_length Maximum length for input text field
 -- @treturn druid.input Current input instance
-function M.set_max_length(self, max_length)
+function Input:set_max_length(max_length)
 	self.max_length = max_length
 	return self
 end
@@ -295,7 +295,7 @@ end
 -- @function input:set_allowerd_characters
 -- @tparam string characters Regulax exp. for validate user input
 -- @treturn druid.input Current input instance
-function M.set_allowed_characters(self, characters)
+function Input:set_allowed_characters(characters)
 	self.allowed_characters = characters
 	return self
 end
@@ -303,10 +303,10 @@ end
 
 --- Reset current input selection and return previous value
 -- @function input:reset_changes
-function M.reset_changes(self)
+function Input:reset_changes()
 	self:set_text(self.previous_value)
 	unselect(self)
 end
 
 
-return M
+return Input

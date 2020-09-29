@@ -17,7 +17,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("swipe", { const.ON_INPUT })
+local Swipe = component.create("swipe", { const.ON_INPUT })
 
 
 local function start_swipe(self, action)
@@ -69,7 +69,7 @@ end
 -- @tfield[opt=0.4] number SWIPE_TIME Maximum time for swipe trigger
 -- @tfield[opt=50] number SWIPE_THRESHOLD Minimum distance for swipe trigger
 -- @tfield[opt=false] bool SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action
-function M.on_style_change(self, style)
+function Swipe:on_style_change(style)
 	self.style = {}
 	self.style.SWIPE_TIME = style.SWIPE_TIME or 0.4
 	self.style.SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50
@@ -81,7 +81,7 @@ end
 -- @function swipe:init
 -- @tparam node node Gui node
 -- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
-function M.init(self, node, on_swipe_callback)
+function Swipe:init(node, on_swipe_callback)
 	self._trigger_on_move = self.style.SWIPE_TRIGGER_ON_MOVE
 	self.node = self:get_node(node)
 
@@ -93,7 +93,7 @@ function M.init(self, node, on_swipe_callback)
 end
 
 
-function M.on_input(self, action_id, action)
+function Swipe:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false
 	end
@@ -126,7 +126,7 @@ function M.on_input(self, action_id, action)
 end
 
 
-function M.on_input_interrupt(self)
+function Swipe:on_input_interrupt()
 	reset_swipe(self)
 end
 
@@ -135,9 +135,9 @@ end
 -- restrict events outside stencil node
 -- @function swipe:set_click_zone
 -- @tparam node zone Gui node
-function M.set_click_zone(self, zone)
+function Swipe:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
 end
 
 
-return M
+return Swipe

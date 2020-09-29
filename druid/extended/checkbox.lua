@@ -15,11 +15,11 @@ local const = require("druid.const")
 local Event = require("druid.event")
 local component = require("druid.component")
 
-local M = component.create("checkbox", { const.ON_LAYOUT_CHANGE })
+local Checkbox = component.create("checkbox", { const.ON_LAYOUT_CHANGE })
 
 
 local function on_click(self)
-	M.set_state(self, not self.state)
+	self:set_state(not self.state)
 end
 
 
@@ -28,7 +28,7 @@ end
 -- or create your own style
 -- @table Style
 -- @tfield function on_change_state (self, node, state)
-function M.on_style_change(self, style)
+function Checkbox:on_style_change(style)
 	self.style = {}
 
 	self.style.on_change_state = style.on_change_state or function(_, node, state)
@@ -42,19 +42,19 @@ end
 -- @tparam node node Gui node
 -- @tparam function callback Checkbox callback
 -- @tparam[opt=node] node click node Trigger node, by default equals to node
-function M.init(self, node, callback, click_node)
+function Checkbox:init(node, callback, click_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 	self.click_node = self:get_node(click_node)
 
 	self.button = self.druid:new_button(self.click_node or self.node, on_click)
-	M.set_state(self, false, true)
+	self:set_state(false, true)
 
 	self.on_change_state = Event(callback)
 end
 
 
-function M.on_layout_change(self)
+function Checkbox:on_layout_change()
 	self:set_state(self.state, true)
 end
 
@@ -63,7 +63,7 @@ end
 -- @function checkbox:set_state
 -- @tparam bool state Checkbox state
 -- @tparam bool is_silent Don't trigger on_change_state if true
-function M.set_state(self, state, is_silent)
+function Checkbox:set_state(state, is_silent)
 	self.state = state
 	self.style.on_change_state(self, self.node, state)
 
@@ -76,9 +76,9 @@ end
 --- Return checkbox state
 -- @function checkbox:get_state
 -- @treturn bool Checkbox state
-function M.get_state(self)
+function Checkbox:get_state()
 	return self.state
 end
 
 
-return M
+return Checkbox

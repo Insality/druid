@@ -26,7 +26,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("button", { const.ON_INPUT })
+local Button = component.create("button", { const.ON_INPUT })
 
 
 local function is_input_match(self, action_id)
@@ -141,7 +141,7 @@ end
 -- @tfield function on_hover (self, node, hover_state)
 -- @tfield function on_mouse_hover (self, node, hover_state)
 -- @tfield function on_set_enabled (self, node, enabled_state)
-function M.on_style_change(self, style)
+function Button:on_style_change(style)
 	self.style = {}
 	self.style.LONGTAP_TIME = style.LONGTAP_TIME or 0.4
 	self.style.AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8
@@ -161,7 +161,7 @@ end
 -- @tparam function callback Button callback
 -- @tparam[opt] table params Button callback params
 -- @tparam[opt] node anim_node Button anim node (node, if not provided)
-function M.init(self, node, callback, params, anim_node)
+function Button:init(node, callback, params, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 
@@ -188,7 +188,7 @@ function M.init(self, node, callback, params, anim_node)
 end
 
 
-function M.on_input(self, action_id, action)
+function Button:on_input(action_id, action)
 	if not is_input_match(self, action_id) then
 		return false
 	end
@@ -257,7 +257,7 @@ function M.on_input(self, action_id, action)
 end
 
 
-function M.on_input_interrupt(self)
+function Button:on_input_interrupt()
 	self.can_action = false
 end
 
@@ -266,7 +266,7 @@ end
 -- @function button:set_enabled
 -- @tparam bool state Enabled state
 -- @treturn druid.button Current button instance
-function M.set_enabled(self, state)
+function Button:set_enabled(state)
 	self.disabled = not state
 	self.hover:set_enabled(state)
 	self.style.on_set_enabled(self, self.node, state)
@@ -278,7 +278,7 @@ end
 --- Return button enabled state
 -- @function button:is_enabled
 -- @treturn bool True, if button is enabled
-function M.is_enabled(self)
+function Button:is_enabled()
 	return not self.disabled
 end
 
@@ -288,7 +288,7 @@ end
 -- @function button:set_click_zone
 -- @tparam node zone Gui node
 -- @treturn druid.button Current button instance
-function M.set_click_zone(self, zone)
+function Button:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
 	self.hover:set_click_zone(zone)
 
@@ -300,7 +300,7 @@ end
 -- @function button:set_key_trigger
 -- @tparam hash key The action_id of the key
 -- @treturn druid.button Current button instance
-function M.set_key_trigger(self, key)
+function Button:set_key_trigger(key)
 	self.key_trigger = hash(key)
 
 	return self
@@ -310,9 +310,9 @@ end
 --- Get key-code to trigger this button
 -- @function button:get_key_trigger
 -- @treturn hash The action_id of the key
-function M.get_key_trigger(self)
+function Button:get_key_trigger()
 	return self.key_trigger
 end
 
 
-return M
+return Button
