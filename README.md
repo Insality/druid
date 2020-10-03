@@ -1,3 +1,4 @@
+
 [![](media/druid_logo.png)](https://insality.github.io/druid/)
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/insality/druid)](https://github.com/Insality/druid/releases)
@@ -71,47 +72,47 @@ druid.on_window_callback(event)
 
 **Druid** provides next *basic* components:
 
-- **[Button](master/docs_md/01-components.md#button)** - Basic Druid button input component. Handles all types of interaction (tap, long-tap, hold-tap, double-tap, simple key triggers, etc)
+- **[Button](docs_md/01-components.md#button)** - Basic Druid button input component. Handles all types of interaction (tap, long-tap, hold-tap, double-tap, simple key triggers, etc)
 
-- **[Text](master/docs_md/01-components.md#text)** - Basic Druid text component. Wrap on gui text node, handle text size adjusting.
+- **[Text](docs_md/01-components.md#text)** - Basic Druid text component. Wrap on gui text node, handle text size adjusting.
 
-- **[Scroll](master/docs_md/01-components.md#scroll)** - Basic Druid scroll component
+- **[Scroll](docs_md/01-components.md#scroll)** - Basic Druid scroll component
 
-- **[Blocker](master/docs_md/01-components.md#blocker)** - Block input in node zone component
+- **[Blocker](docs_md/01-components.md#blocker)** - Block input in node zone component
 
-- **[Back Handler](master/docs_md/01-components.md#back-handler)** - Handle back button (Android back button, backspace key)
+- **[Back Handler](docs_md/01-components.md#back-handler)** - Handle back button (Android back button, backspace key)
 
-- **[Static Grid](master/docs_md/01-components.md#static-grid)** - Component for manage node positions with equal sizes
+- **[Static Grid](docs_md/01-components.md#static-grid)** - Component for manage node positions with equal sizes
 
-- **[Hover](master/docs_md/01-components.md#hover)** - System Druid component, handle hover node state
+- **[Hover](docs_md/01-components.md#hover)** - System Druid component, handle hover node state
 
-- **[Swipe](master/docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
+- **[Swipe](docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
 
-- **[Drag](master/docs_md/01-components.md#drag)** - System Druid component, handle drag input on node 
+- **[Drag](docs_md/01-components.md#drag)** - System Druid component, handle drag input on node 
 
 **Druid** also provides next *extended* components:
 
 ***Note**: In future, to use extended components, you should register them first. It's required for make **Druid** modular - to exclude unused components from build*
 
-- **[Checkbox](master/docs_md/01-components.md#checkbox)** - Checkbox component
+- **[Checkbox](docs_md/01-components.md#checkbox)** - Checkbox component
 
-- **[Checkbox group](master/docs_md/01-components.md#checkbox-group)** - Several checkboxes in one group
+- **[Checkbox group](docs_md/01-components.md#checkbox-group)** - Several checkboxes in one group
 
-- **[Dynamic Grid](master/docs_md/01-components.md#dynamic-grid)** - Component for manage node positions with different sizes. Only in one row or column
+- **[Dynamic Grid](docs_md/01-components.md#dynamic-grid)** - Component for manage node positions with different sizes. Only in one row or column
 
-- **[Input](master/docs_md/01-components.md#input)** - User text input component
+- **[Input](docs_md/01-components.md#input)** - User text input component
 
-- **[Lang text](master/docs_md/01-components.md#lang-text)** - Wrap on Text component to handle localization
+- **[Lang text](docs_md/01-components.md#lang-text)** - Wrap on Text component to handle localization
 
-- **[Progress](master/docs_md/01-components.md#progress)** - Progress bar component
+- **[Progress](docs_md/01-components.md#progress)** - Progress bar component
 
-- **[Radio group](master/docs_md/01-components.md#radio-group)** - Several checkboxes in one group with single choice
+- **[Radio group](docs_md/01-components.md#radio-group)** - Several checkboxes in one group with single choice
 
-- **[Slider](master/docs_md/01-components.md#slider)** - Slider component
+- **[Slider](docs_md/01-components.md#slider)** - Slider component
 
-- **[Timer](master/docs_md/01-components.md#timer)** - Handle timer work on gui text node
+- **[Timer](docs_md/01-components.md#timer)** - Handle timer work on gui text node
 
-Full info see on _[components.md](master/docs_md/01-components.md)_
+Full info see on _[components.md](docs_md/01-components.md)_
 
 
 ## Basic usage
@@ -199,7 +200,7 @@ Recommended is fully integrate all **Druid** lifecycles functions
 - Druid by default do _acquire_input_focus_. So you don't need do it manually. Buy only if you have components, which requires _on_input_ 
 - If you want to delete node with declared Druid component, don't forget to remove them via `druid:remove(component)`
 
-See full [See FAQ here](master/docs_md/FAQ.md)
+See full [See FAQ here](docs_md/faq.md)
 
 
 ## Examples
@@ -214,11 +215,11 @@ Try the [HTML5 version](https://insality.github.io/druid/druid/) of the example 
 ## Documentation
 
 To learn **Druid** better, read next documentation:
-- [Druid components](master/docs_md/01-components.md)
-- [Create custom components](master/docs_md/02-creating_custom_components.md)
-- [See FAQ article](master/docs_md/FAQ.md)
-- [Druid styles](master/docs_md/03-styles.md)
-- [Druid asset store](master/docs_md/04-druid_assets.md)
+- [Druid components](docs_md/01-components.md)
+- [Create custom components](docs_md/02-creating_custom_components.md)
+- [See FAQ article](docs_md/faq.md)
+- [Druid styles](docs_md/03-styles.md)
+- [Druid asset store](docs_md/04-druid_assets.md)
 
 Full **Druid** documentation you can find here:
 https://insality.github.io/druid/
