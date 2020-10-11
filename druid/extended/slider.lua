@@ -74,7 +74,7 @@ function Slider.init(self, node, end_pos, callback)
 end
 
 
-function Slider.on_layout_change(self, )
+function Slider.on_layout_change(self)
 	self:set(self.value, true)
 end
 
