@@ -338,25 +338,25 @@
 ---@field create fun(self:druid_instance, component:Component, ...:args) Create new druid component
 ---@field final fun(self:druid_instance) Call on final function on gui_script.
 ---@field initialize fun(self:druid_instance, context:table, style:table) Druid class constructor
----@field new_back_handler fun(self:druid_instance, ...:args):Component Create back_handler basic component
----@field new_blocker fun(self:druid_instance, ...:args):Component Create blocker basic component
----@field new_button fun(self:druid_instance, ...:args):Component Create button basic component
----@field new_checkbox fun(self:druid_instance, ...:args):Component Create checkbox component
----@field new_checkbox_group fun(self:druid_instance, ...:args):Component Create checkbox_group component
----@field new_drag fun(self:druid_instance, ...:args):Componetn Create drag basic component
----@field new_dynamic_grid fun(self:druid_instance, ...:args):Component Create dynamic grid component
----@field new_grid fun(self:druid_instance, ...:args):Component Create grid basic component  Deprecated
----@field new_hover fun(self:druid_instance, ...:args):Component Create hover basic component
----@field new_input fun(self:druid_instance, ...:args):Component Create input component
----@field new_lang_text fun(self:druid_instance, ...:args):Component Create lang_text component
----@field new_progress fun(self:druid_instance, ...:args):Component Create progress component
----@field new_radio_group fun(self:druid_instance, ...:args):Component Create radio_group component
----@field new_scroll fun(self:druid_instance, ...:args):Component Create scroll basic component
----@field new_slider fun(self:druid_instance, ...:args):Component Create slider component
----@field new_static_grid fun(self:druid_instance, ...:args):Component Create static grid basic component
----@field new_swipe fun(self:druid_instance, ...:args):Component Create swipe basic component
----@field new_text fun(self:druid_instance, ...:args):Component Create text basic component
----@field new_timer fun(self:druid_instance, ...:args):Component Create timer component
+---@field new_back_handler fun(self:druid_instance, ...:args):druid.back_handler Create back_handler basic component
+---@field new_blocker fun(self:druid_instance, ...:args):druid.blocker Create blocker basic component
+---@field new_button fun(self:druid_instance, ...:args):druid.button Create button basic component
+---@field new_checkbox fun(self:druid_instance, ...:args):druid.checkbox Create checkbox component
+---@field new_checkbox_group fun(self:druid_instance, ...:args):druid.checkbox_group Create checkbox_group component
+---@field new_drag fun(self:druid_instance, ...:args):druid.drag Create drag basic component
+---@field new_dynamic_grid fun(self:druid_instance, ...:args):druid.dynamic_grid Create dynamic grid component
+---@field new_grid fun(self:druid_instance, ...:args):druid.static_grid Create grid basic component  Deprecated
+---@field new_hover fun(self:druid_instance, ...:args):druid.hover Create hover basic component
+---@field new_input fun(self:druid_instance, ...:args):druid.input Create input component
+---@field new_lang_text fun(self:druid_instance, ...:args):druid.lang_text Create lang_text component
+---@field new_progress fun(self:druid_instance, ...:args):druid.progress Create progress component
+---@field new_radio_group fun(self:druid_instance, ...:args):druid.radio_group Create radio_group component
+---@field new_scroll fun(self:druid_instance, ...:args):druid.scroll Create scroll basic component
+---@field new_slider fun(self:druid_instance, ...:args):druid.slider Create slider component
+---@field new_static_grid fun(self:druid_instance, ...:args):druid.static_grid Create static grid basic component
+---@field new_swipe fun(self:druid_instance, ...:args):druid.swipe Create swipe basic component
+---@field new_text fun(self:druid_instance, ...:args):Tet Create text basic component
+---@field new_timer fun(self:druid_instance, ...:args):druid.timer Create timer component
 ---@field on_focus_gained fun(self:druid_instance) Druid on focus gained interest function.
 ---@field on_focus_lost fun(self:druid_instance) Druid on focus lost interest function.
 ---@field on_input fun(self:druid_instance, action_id:hash, action:table) Druid on_input function
