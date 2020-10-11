@@ -1,6 +1,8 @@
 --- Basic progress bar component.
 -- For correct progress bar init it should be in max size from gui
 -- @module druid.progress
+-- @within BaseComponent
+-- @alias druid.progress
 
 --- Component events
 -- @table Events

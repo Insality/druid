@@ -1,5 +1,7 @@
 --- Component to handle hover node interaction
 -- @module druid.hover
+-- @within BaseComponent
+-- @alias druid.hover
 
 --- Component events
 -- @table Events

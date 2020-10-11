@@ -1,5 +1,7 @@
 --- Druid checkbox component
 -- @module druid.checkbox
+-- @within BaseComponent
+-- @alias druid.checkbox
 
 --- Component events
 -- @table Events

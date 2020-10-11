@@ -1,6 +1,8 @@
 --- Component to handle all GUI texts
 -- Good working with localization system
 -- @module druid.lang_text
+-- @within BaseComponent
+-- @alias druid.lang_text
 
 --- Component events
 -- @table Events

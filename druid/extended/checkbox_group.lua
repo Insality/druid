@@ -1,5 +1,7 @@
 --- Checkbox group module
 -- @module druid.checkbox_group
+-- @within BaseComponent
+-- @alias druid.checkbox_group
 
 --- Component events
 -- @table Events

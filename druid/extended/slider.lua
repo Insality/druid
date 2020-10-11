@@ -1,5 +1,7 @@
 --- Druid slider component
 -- @module druid.slider
+-- @within BaseComponent
+-- @alias druid.slider
 
 --- Component events
 -- @table Events

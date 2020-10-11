@@ -9,8 +9,8 @@
 -- Learn Druid instance function here
 -- @module druid_instance
 -- @see Button
--- @see druid.blocker
--- @see druid.back_handler
+-- @see Blocker
+-- @see BackHandler
 -- @see druid.input
 -- @see druid.text
 -- @see druid.lang_text

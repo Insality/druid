@@ -2,6 +2,8 @@
 -- Swipe will be triggered, if swipe was started and
 -- ended on one node
 -- @module druid.swipe
+-- @within BaseComponent
+-- @alias druid.swipe
 
 --- Components fields
 -- @table Fields

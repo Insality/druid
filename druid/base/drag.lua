@@ -3,6 +3,8 @@
 -- touched while dragging. Drag will be processed even
 -- the cursor is outside of node, if drag is already started
 -- @module druid.drag
+-- @within BaseComponent
+-- @alias druid.drag
 
 --- Component events
 -- @table Events

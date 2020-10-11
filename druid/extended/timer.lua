@@ -2,6 +2,8 @@
 -- Timer updating by game delta time. If game is not focused -
 -- timer will be not updated.
 -- @module druid.timer
+-- @within BaseComponent
+-- @alias druid.timer
 
 --- Component events
 -- @table Events

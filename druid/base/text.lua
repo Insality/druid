@@ -2,6 +2,8 @@
 -- Druid text can adjust itself for text node size
 -- Text will never will be outside of his text size (even multiline)
 -- @module druid.text
+-- @within BaseComponent
+-- @alias druid.text
 
 --- Component events
 -- @table Events

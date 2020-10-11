@@ -6,6 +6,8 @@
 -- size will be less than scroll_input size, no scroll is available. For scroll
 -- parent size should be more than input size
 -- @module druid.scroll
+-- @within BaseComponent
+-- @alias druid.scroll
 
 --- Component events
 -- @table Events

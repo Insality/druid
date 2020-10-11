@@ -1,5 +1,7 @@
 --- Radio group module
 -- @module druid.radio_group
+-- @within BaseComponent
+-- @alias druid.radio_group
 
 --- Component events
 -- @table Events

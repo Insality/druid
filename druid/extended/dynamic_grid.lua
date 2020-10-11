@@ -1,5 +1,7 @@
 --- Component to handle placing components in row
 -- @module druid.dynamic_grid
+-- @within BaseComponent
+-- @alias druid.dynamic_grid
 
 --- Component events
 -- @table Events

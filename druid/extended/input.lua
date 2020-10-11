@@ -2,6 +2,8 @@
 -- Carry on user text input
 -- @author Part of code from Britzl gooey input component
 -- @module druid.input
+-- @within BaseComponent
+-- @alias druid.input
 
 --- Component events
 -- @table Events
