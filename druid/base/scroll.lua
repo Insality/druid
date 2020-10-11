@@ -10,14 +10,14 @@
 -- @alias druid.scroll
 
 
---- On scroll move callback
--- @tfield druid_event on_scroll(self, position)
+--- On scroll move callback(self, position)
+-- @tfield druid_event on_scroll
 
 --- On scroll_to function callback(self, target, is_instant)
 -- @tfield druid_event on_scroll_to
 
---- On scroll_to_index function callback
--- @tfield druid_event on_point_scroll(self, index, point)
+--- On scroll_to_index function callback(self, index, point)
+-- @tfield druid_event on_point_scroll
 
 --- Scroll view node
 -- @tfield node view_node

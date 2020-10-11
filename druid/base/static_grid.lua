@@ -1,26 +1,45 @@
 --- Component to handle placing components by row and columns.
 -- Grid can anchor your elements, get content size and other
--- @module druid.static_grid
+-- @module StaticGrid
 -- @within BaseComponent
 -- @alias druid.static_grid
 
---- Component events
--- @table Events
--- @tfield druid_event on_add_item On item add callback
--- @tfield druid_event on_remove_item On item remove callback
--- @tfield druid_event on_change_items On item add or remove callback
--- @tfield druid_event on_clear On grid clear callback
--- @tfield druid_event on_update_positions On update item positions callback
+--- On item add callback(self, node, index)
+-- @tfield druid_event on_add_item
 
---- Component fields
--- @table Fields
--- @tfield node parent Parent gui node
--- @tfield node[] nodes List of all grid nodes
--- @tfield number first_index The first index of node in grid
--- @tfield number last_index The last index of node in grid
--- @tfield vector3 anchor Item anchor
--- @tfield vector3 node_size Item size
--- @tfield vector4 border The size of item content
+--- On item remove callback(self, index)
+-- @tfield druid_event on_remove_item
+
+--- On item add or remove callback(self, index)
+-- @tfield druid_event on_change_items
+
+--- On grid clear callback(self)
+-- @tfield druid_event on_clear
+
+--- On update item positions callback(self)
+-- @tfield druid_event on_update_positions
+
+--- Parent gui node
+-- @tfield node parent
+
+--- List of all grid nodes
+-- @tfield node[] nodes
+
+--- The first index of node in grid
+-- @tfield number first_index
+
+--- The last index of node in grid
+-- @tfield number last_index
+
+--- Item anchor
+-- @tfield vector3 anchor
+
+--- Item size
+-- @tfield vector3 node_size
+
+--- The size of item content
+-- @tfield vector4 border
+
 
 local const = require("druid.const")
 local Event = require("druid.event")
@@ -31,11 +50,11 @@ local StaticGrid = component.create("static_grid", { const.ON_LAYOUT_CHANGE })
 
 
 --- Component init function
--- @function static_grid:init
+-- @tparam StaticGrid self
 -- @tparam node parent The gui node parent, where items will be placed
 -- @tparam node element Element prefab. Need to get it size
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
-function StaticGrid:init(parent, element, in_row)
+function StaticGrid.init(self, parent, element, in_row)
 	self.parent = self:get_node(parent)
 	self.nodes = {}
 
@@ -62,10 +81,10 @@ end
 
 local _temp_pos = vmath.vector3(0)
 --- Return pos for grid node index
--- @function static_grid:get_pos
+-- @tparam StaticGrid self
 -- @tparam number index The grid element index
 -- @treturn vector3 Node position
-function StaticGrid:get_pos(index)
+function StaticGrid.get_pos(self, index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
@@ -78,10 +97,10 @@ end
 
 
 --- Return index for grid pos
--- @function static_grid:get_index
+-- @tparam StaticGrid self
 -- @tparam vector3 pos The node position in the grid
 -- @treturn number The node index
-function StaticGrid:get_index(pos)
+function StaticGrid.get_index(self, pos)
 	local col = pos.x / self.node_size.x + 1
 	local row = -pos.y / self.node_size.y
 
@@ -94,10 +113,10 @@ end
 
 
 --- Return grid index by node
--- @function static_grid:get_index_by_node
+-- @tparam StaticGrid self
 -- @tparam node node The gui node in the grid
 -- @treturn number The node index
-function StaticGrid:get_index_by_node(node)
+function StaticGrid.get_index_by_node(self, node)
 	for index, grid_node in pairs(self.nodes) do
 		if node == grid_node then
 			return index
@@ -108,25 +127,25 @@ function StaticGrid:get_index_by_node(node)
 end
 
 
-function StaticGrid:on_layout_change()
+function StaticGrid.on_layout_change(self)
 	self:_update(true)
 end
 
 
 --- Set grid anchor. Default anchor is equal to anchor of grid parent node
--- @function static_grid:set_anchor
+-- @tparam StaticGrid self
 -- @tparam vector3 anchor Anchor
-function StaticGrid:set_anchor(anchor)
+function StaticGrid.set_anchor(self, anchor)
 	self.anchor = anchor
 	self:_update()
 end
 
 
 --- Add new item to the grid
--- @function static_grid:add
+-- @tparam StaticGrid self
 --	@tparam node item Gui node
 -- @tparam[opt] number index The item position. By default add as last item
-function StaticGrid:add(item, index)
+function StaticGrid.add(self, item, index)
 	index = index or ((self.last_index or 0) + 1)
 
 	if self.nodes[index] then
@@ -154,10 +173,10 @@ end
 
 
 --- Remove the item from the grid. Note that gui node will be not deleted
--- @function static_grid:remove
+-- @tparam StaticGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam bool is_shift_nodes If true, will shift nodes left after index
-function StaticGrid:remove(index, is_shift_nodes)
+function StaticGrid.remove(self, index, is_shift_nodes)
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
 	self.nodes[index] = nil
@@ -170,15 +189,15 @@ function StaticGrid:remove(index, is_shift_nodes)
 
 	self:_update()
 
-	self.on_add_item:trigger(self:get_context(), index)
+	self.on_remove_item:trigger(self:get_context(), index)
 	self.on_change_items:trigger(self:get_context(), index)
 end
 
 
 --- Return grid content size
--- @function static_grid:get_size
+-- @tparam StaticGrid self
 -- @treturn vector3 The grid content size
-function StaticGrid:get_size()
+function StaticGrid.get_size(self)
 	return vmath.vector3(
 		self.border.z - self.border.x,
 		self.border.y - self.border.w,
@@ -187,9 +206,9 @@ end
 
 
 --- Return array of all node positions
--- @function static_grid:get_all_pos
+-- @tparam StaticGrid self
 -- @treturn vector3[] All grid node positions
-function StaticGrid:get_all_pos()
+function StaticGrid.get_all_pos(self)
 	local result = {}
 	for i, node in pairs(self.nodes) do
 		table.insert(result, gui.get_position(node))
@@ -201,10 +220,10 @@ end
 
 --- Change set position function for grid nodes. It will call on
 -- update poses on grid elements. Default: gui.set_position
--- @function static_grid:set_position_function
+-- @tparam StaticGrid self
 -- @tparam function callback Function on node set position
 -- @treturn druid.static_grid Current grid instance
-function StaticGrid:set_position_function(callback)
+function StaticGrid.set_position_function(self, callback)
 	self._set_position_function = callback or gui.set_position
 
 	return self
@@ -213,9 +232,9 @@ end
 
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
--- @function static_grid:clear
+-- @tparam StaticGrid self
 -- @treturn druid.static_grid Current grid instance
-function StaticGrid:clear()
+function StaticGrid.clear(self)
 	self.border.x = 0
 	self.border.y = 0
 	self.border.w = 0
@@ -224,16 +243,18 @@ function StaticGrid:clear()
 	self.nodes = {}
 	self:_update()
 
+	self.on_clear:trigger(self:get_context())
+
 	return self
 end
 
 
 --- Return elements offset for correct posing nodes. Correct posing at
 -- parent pivot node (0:0) with adjusting of node sizes and anchoring
--- @function static_grid:_get_zero_offset
+-- @tparam StaticGrid self
 -- @treturn vector3 The offset vector
 -- @local
-function StaticGrid:_get_zero_offset()
+function StaticGrid._get_zero_offset(self)
 	-- zero offset: center pos - border size * anchor
 	return vmath.vector3(
 		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
@@ -244,10 +265,10 @@ end
 
 
 --- Update grid inner state
--- @function static_grid:_update
+-- @tparam StaticGrid self
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
-function StaticGrid:_update(is_instant)
+function StaticGrid._update(self, is_instant)
 	self:_update_indexes()
 	self:_update_borders()
 	self:_update_pos(is_instant)
@@ -255,9 +276,9 @@ end
 
 
 --- Update first and last indexes of grid nodes
--- @function static_grid:_update_indexes
+-- @tparam StaticGrid self
 -- @local
-function StaticGrid:_update_indexes()
+function StaticGrid._update_indexes(self)
 	self.first_index = nil
 	self.last_index = nil
 	for index in pairs(self.nodes) do
@@ -271,9 +292,9 @@ end
 
 
 --- Update grid content borders, recalculate min and max values
--- @function static_grid:_update_borders
+-- @tparam StaticGrid self
 -- @local
-function StaticGrid:_update_borders()
+function StaticGrid._update_borders(self)
 	if not self.first_index then
 		self.border = vmath.vector4(0)
 		return
@@ -300,10 +321,10 @@ end
 
 
 --- Update grid nodes position
--- @function static_grid:_update_indexes
+-- @tparam StaticGrid self
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
-function StaticGrid:_update_pos(is_instant)
+function StaticGrid._update_pos(self, is_instant)
 	local zero_offset = self:_get_zero_offset()
 
 	for i, node in pairs(self.nodes) do
