@@ -1,26 +1,49 @@
 --- Druid input text component.
 -- Carry on user text input
 -- @author Part of code from Britzl gooey input component
--- @module druid.input
+-- @module Input
+-- @within BaseComponent
+-- @alias druid.input
 
---- Component events
--- @table Events
--- @tfield druid_event on_input_select (self, button_node) On input field select callback
--- @tfield druid_event on_input_unselect (self, button_node) On input field unselect callback
--- @tfield druid_event on_input_text (self, input_text) On input field text change callback
--- @tfield druid_event on_input_empty (self, input_text) On input field text change to empty string callback
--- @tfield druid_event on_input_full (self, input_text) On input field text change to max length string callback
--- @tfield druid_event on_input_wrong (self, params, button_instance) On trying user input with not allowed character callback
+--- On input field select callback(self, button_node)
+-- @tfield druid_event on_input_select
 
---- Component fields
--- @table Fields
--- @tfield druid.text text Text component
--- @tfield druid.button button Button component
--- @tfield bool is_selected Is current input selected now
--- @tfield bool is_empty Is current input is empty now
--- @tfield[opt] number max_length Max length for input text
--- @tfield[opt] string allowerd_characters Pattern matching for user input
--- @tfield number keyboard_type Gui keyboard type for input field
+--- On input field unselect callback(self, button_node)
+-- @tfield druid_event on_input_unselect
+
+--- On input field text change callback(self, input_text)
+-- @tfield druid_event on_input_text
+
+--- On input field text change to empty string callback(self, input_text)
+-- @tfield druid_event on_input_empty
+
+--- On input field text change to max length string callback(self, input_text)
+-- @tfield druid_event on_input_full
+
+--- On trying user input with not allowed character callback(self, params, button_instance)
+-- @tfield druid_event on_input_wrong
+
+--- Text component
+-- @tfield druid.text text
+
+--- Button component
+-- @tfield druid.button button
+
+--- Is current input selected now
+-- @tfield bool is_selected
+
+--- Is current input is empty now
+-- @tfield bool is_empty
+
+--- Max length for input text
+-- @tfield[opt] number max_length
+
+--- Pattern matching for user input
+-- @tfield[opt] string allowerd_characters
+
+--- Gui keyboard type for input field
+-- @tfield number keyboard_type
+
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -90,14 +113,14 @@ end
 --- Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
--- @table Style
+-- @table style
 -- @tfield[opt=false] bool IS_LONGTAP_ERASE Is long tap will erase current input data
 -- @tfield[opt=*] string MASK_DEFAULT_CHAR Default character mask for password input
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
 -- @tfield table button_style Custom button style for input node
-function Input:on_style_change(style)
+function Input.on_style_change(self, style)
 	self.style = {}
 
 	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
@@ -115,7 +138,7 @@ function Input:on_style_change(style)
 end
 
 
-function Input:init(click_node, text_node, keyboard_type)
+function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
 	self.text = self.druid:new_text(text_node)
 
@@ -149,7 +172,7 @@ function Input:init(click_node, text_node, keyboard_type)
 end
 
 
-function Input:on_input(action_id, action)
+function Input.on_input(self, action_id, action)
 	if self.selected then
 		local input_text = nil
 		if action_id == const.ACTION_TEXT then
@@ -213,20 +236,20 @@ function Input:on_input(action_id, action)
 end
 
 
-function Input:on_focus_lost()
+function Input.on_focus_lost(self)
 	unselect(self)
 end
 
 
-function Input:on_input_interrupt()
+function Input.on_input_interrupt(self)
 	-- unselect(self)
 end
 
 
 --- Set text for input field
--- @function input:set_text
+-- @tparam Input self
 -- @tparam string input_text The string to apply for input field
-function Input:set_text(input_text)
+function Input.set_text(self, input_text)
 	-- Case when update with marked text
 	if input_text then
 		self.value = input_text
@@ -271,19 +294,19 @@ end
 
 
 --- Return current input field text
--- @function input:get_text
+-- @tparam Input self
 -- @treturn string The current input field text
-function Input:get_text()
+function Input.get_text(self)
 	return self.value .. self.marked_value
 end
 
 
 --- Set maximum length for input field.
 -- Pass nil to make input field unliminted (by default)
--- @function input:set_max_length
+-- @tparam Input self
 -- @tparam number max_length Maximum length for input text field
 -- @treturn druid.input Current input instance
-function Input:set_max_length(max_length)
+function Input.set_max_length(self, max_length)
 	self.max_length = max_length
 	return self
 end
@@ -292,18 +315,18 @@ end
 --- Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
--- @function input:set_allowerd_characters
+-- @tparam Input self
 -- @tparam string characters Regulax exp. for validate user input
 -- @treturn druid.input Current input instance
-function Input:set_allowed_characters(characters)
+function Input.set_allowed_characters(self, characters)
 	self.allowed_characters = characters
 	return self
 end
 
 
 --- Reset current input selection and return previous value
--- @function input:reset_changes
-function Input:reset_changes()
+-- @tparam Input self
+function Input.reset_changes(self)
 	self:set_text(self.previous_value)
 	unselect(self)
 end

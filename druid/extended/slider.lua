@@ -1,20 +1,35 @@
 --- Druid slider component
--- @module druid.slider
+-- @module Slider
+-- @within BaseComponent
+-- @alias druid.slider
 
---- Component events
--- @table Events
--- @tfield druid_event on_change_value On change value callback
+--- On change value callback(self, value)
+-- @tfield druid_event on_change_value
 
---- Component fields
--- @table Fields
--- @tfield node node Slider pin node
--- @tfield vector3 start_pos Start pin node position
--- @tfield vector3 pos Current pin node position
--- @tfield vector3 target_pos Targer pin node position
--- @tfield vector3 end_pos End pin node position
--- @tfield number dist Length between start and end position
--- @tfield bool is_drag Current drag state
--- @tfield number value Current slider value
+--- Slider pin node
+-- @tfield node node
+
+--- Start pin node position
+-- @tfield vector3 start_pos
+
+--- Current pin node position
+-- @tfield vector3 pos
+
+--- Targer pin node position
+-- @tfield vector3 target_pos
+
+--- End pin node position
+-- @tfield vector3 end_pos
+
+--- Length between start and end position
+-- @tfield number dist
+
+--- Current drag state
+-- @tfield bool is_drag
+
+--- Current slider value
+-- @tfield number value
+
 
 
 local Event = require("druid.event")
@@ -37,11 +52,11 @@ end
 
 
 --- Component init function
--- @function slider:init
+-- @tparam Slider self
 -- @tparam node node Gui pin node
 -- @tparam vector3 end_pos The end position of slider
 -- @tparam[opt] function callback On slider change callback
-function Slider:init(node, end_pos, callback)
+function Slider.init(self, node, end_pos, callback)
 	self.node = self:get_node(node)
 
 	self.start_pos = gui.get_position(self.node)
@@ -59,12 +74,12 @@ function Slider:init(node, end_pos, callback)
 end
 
 
-function Slider:on_layout_change()
+function Slider.on_layout_change(self, )
 	self:set(self.value, true)
 end
 
 
-function Slider:on_input(action_id, action)
+function Slider.on_input(self, action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false
 	end
@@ -130,10 +145,10 @@ end
 
 
 --- Set value for slider
--- @function slider:set
+-- @tparam Slider self
 -- @tparam number value Value from 0 to 1
 -- @tparam[opt] bool is_silent Don't trigger event if true
-function Slider:set(value, is_silent)
+function Slider.set(self, value, is_silent)
 	value = helper.clamp(value, 0, 1)
 	set_position(self, value)
 	self.value = value
@@ -145,10 +160,10 @@ end
 
 --- Set slider steps. Pin node will
 -- apply closest step position
--- @function slider:set_steps
+-- @tparam Slider self
 -- @tparam number[] steps Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
-function Slider:set_steps(steps)
+function Slider.set_steps(self, steps)
 	self.steps = steps
 end
 

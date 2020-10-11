@@ -1,6 +1,7 @@
 --- Druid constants
 -- @local
--- @module const
+-- @module DruidConst
+-- @alias druid_const
 
 local M = {}
 

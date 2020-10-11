@@ -1,25 +1,50 @@
 --- Component to handle basic GUI button
--- @module druid.button
+-- @module Button
+-- @within BaseComponent
+-- @alias druid.button
 
---- Component events
--- @table Events
--- @tfield druid_event on_click (self, params, button_instance) On release button callback
--- @tfield druid_event on_repeated_click (self, params, button_instance, click_amount) On repeated action button callback
--- @tfield druid_event on_long_click (self, params, button_instance, time) On long tap button callback
--- @tfield druid_event on_double_click (self, params, button_instance, click_amount) On double tap button callback
--- @tfield druid_event on_hold_callback (self, params, button_instance, time) On button hold before long_click callback
--- @tfield druid_event on_click_outside (self, params, button_instance) On click outside of button
+--- On release button callback(self, params, button_instance)
+-- @tfield druid_event on_click
 
---- Component fields
--- @table Fields
--- @tfield node node Trigger node
--- @tfield[opt=node] node anim_node Animation node
--- @tfield vector3 start_scale Initial scale of anim_node
--- @tfield vector3 start_pos Initial pos of anim_node
--- @tfield vector3 pos Initial pos of anim_node
--- @tfield any params Params to click callbacks
--- @tfield druid.hover hover Druid hover logic component
--- @tfield[opt] node click_zone Restriction zone
+--- On repeated action button callback(self, params, button_instance, click_amount)
+-- @tfield druid_event on_repeated_click
+
+---On long tap button callback(self, params, button_instance, time)
+-- @tfield druid_event on_long_click
+
+---On double tap button callback(self, params, button_instance, click_amount)
+-- @tfield druid_event on_double_click
+
+---On button hold before long_click callback(self, params, button_instance, time)
+-- @tfield druid_event on_hold_callback
+
+---On click outside of button(self, params, button_instance)
+-- @tfield druid_event on_click_outside
+
+---Trigger node
+-- @tfield node node
+
+---Animation node
+-- @tfield[opt=node] node anim_node
+
+---Initial scale of anim_node
+-- @tfield vector3 start_scale
+
+---Initial pos of anim_node
+-- @tfield vector3 start_pos
+
+---Initial pos of anim_node
+-- @tfield vector3 pos
+
+---Params to click callbacks
+-- @tfield any params
+
+---Druid hover logic component
+-- @tfield druid.hover hover
+
+---Restriction zone
+-- @tfield[opt] node click_zone
+
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -132,7 +157,7 @@ end
 --- Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
--- @table Style
+-- @table style
 -- @tfield[opt=0.4] number LONGTAP_TIME Minimum time to trigger on_hold_callback
 -- @tfield[opt=0.8] number AUTOHOLD_TRIGGER Maximum hold time to trigger button release while holding
 -- @tfield[opt=0.4] number DOUBLETAP_TIME Time between double taps
@@ -141,7 +166,7 @@ end
 -- @tfield function on_hover (self, node, hover_state)
 -- @tfield function on_mouse_hover (self, node, hover_state)
 -- @tfield function on_set_enabled (self, node, enabled_state)
-function Button:on_style_change(style)
+function Button.on_style_change(self, style)
 	self.style = {}
 	self.style.LONGTAP_TIME = style.LONGTAP_TIME or 0.4
 	self.style.AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8
@@ -156,12 +181,12 @@ end
 
 
 --- Component init function
--- @function button:init
+-- @tparam Button self
 -- @tparam node node Gui node
 -- @tparam function callback Button callback
 -- @tparam[opt] table params Button callback params
 -- @tparam[opt] node anim_node Button anim node (node, if not provided)
-function Button:init(node, callback, params, anim_node)
+function Button.init(self, node, callback, params, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 
@@ -188,7 +213,7 @@ function Button:init(node, callback, params, anim_node)
 end
 
 
-function Button:on_input(action_id, action)
+function Button.on_input(self, action_id, action)
 	if not is_input_match(self, action_id) then
 		return false
 	end
@@ -257,16 +282,16 @@ function Button:on_input(action_id, action)
 end
 
 
-function Button:on_input_interrupt()
+function Button.on_input_interrupt(self)
 	self.can_action = false
 end
 
 
 --- Set enabled button component state
--- @function button:set_enabled
+-- @tparam Button self
 -- @tparam bool state Enabled state
--- @treturn druid.button Current button instance
-function Button:set_enabled(state)
+-- @treturn Button Current button instance
+function Button.set_enabled(self, state)
 	self.disabled = not state
 	self.hover:set_enabled(state)
 	self.style.on_set_enabled(self, self.node, state)
@@ -276,19 +301,19 @@ end
 
 
 --- Return button enabled state
--- @function button:is_enabled
+-- @tparam Button self
 -- @treturn bool True, if button is enabled
-function Button:is_enabled()
+function Button.is_enabled(self)
 	return not self.disabled
 end
 
 
 --- Strict button click area. Useful for
 -- no click events outside stencil node
--- @function button:set_click_zone
+-- @tparam Button self
 -- @tparam node zone Gui node
--- @treturn druid.button Current button instance
-function Button:set_click_zone(zone)
+-- @treturn Button Current button instance
+function Button.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
 	self.hover:set_click_zone(zone)
 
@@ -297,10 +322,10 @@ end
 
 
 --- Set key-code to trigger this button
--- @function button:set_key_trigger
+-- @tparam Button self
 -- @tparam hash key The action_id of the key
--- @treturn druid.button Current button instance
-function Button:set_key_trigger(key)
+-- @treturn Button Current button instance
+function Button.set_key_trigger(self, key)
 	self.key_trigger = hash(key)
 
 	return self
@@ -308,9 +333,9 @@ end
 
 
 --- Get key-code to trigger this button
--- @function button:get_key_trigger
+-- @tparam Button self
 -- @treturn hash The action_id of the key
-function Button:get_key_trigger()
+function Button.get_key_trigger(self)
 	return self.key_trigger
 end
 
