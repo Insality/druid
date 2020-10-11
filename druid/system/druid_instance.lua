@@ -8,7 +8,7 @@
 --
 -- Learn Druid instance function here
 -- @module druid_instance
--- @see druid.button
+-- @see Button
 -- @see druid.blocker
 -- @see druid.back_handler
 -- @see druid.input

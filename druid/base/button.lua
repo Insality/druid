@@ -1,7 +1,7 @@
 --- Component to handle basic GUI button
 -- @module Button
+-- @within BaseComponent
 -- @alias druid.button
--- @within component
 
 --- On release button callback(self, params, button_instance)
 -- @tfield druid_event on_click
@@ -181,7 +181,7 @@ end
 
 
 --- Component init function
--- @tparam druid.button self
+-- @tparam Button self
 -- @tparam node node Gui node
 -- @tparam function callback Button callback
 -- @tparam[opt] table params Button callback params
@@ -288,9 +288,9 @@ end
 
 
 --- Set enabled button component state
--- @tparam druid.button self
+-- @tparam Button self
 -- @tparam bool state Enabled state
--- @treturn druid.button Current button instance
+-- @treturn Button Current button instance
 function Button.set_enabled(self, state)
 	self.disabled = not state
 	self.hover:set_enabled(state)
@@ -301,7 +301,7 @@ end
 
 
 --- Return button enabled state
--- @tparam druid.button self
+-- @tparam Button self
 -- @treturn bool True, if button is enabled
 function Button.is_enabled(self)
 	return not self.disabled
@@ -310,9 +310,9 @@ end
 
 --- Strict button click area. Useful for
 -- no click events outside stencil node
--- @tparam druid.button self
+-- @tparam Button self
 -- @tparam node zone Gui node
--- @treturn druid.button Current button instance
+-- @treturn Button Current button instance
 function Button.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
 	self.hover:set_click_zone(zone)
@@ -322,9 +322,9 @@ end
 
 
 --- Set key-code to trigger this button
--- @tparam druid.button self
+-- @tparam Button self
 -- @tparam hash key The action_id of the key
--- @treturn druid.button Current button instance
+-- @treturn Button Current button instance
 function Button.set_key_trigger(self, key)
 	self.key_trigger = hash(key)
 
@@ -333,7 +333,7 @@ end
 
 
 --- Get key-code to trigger this button
--- @tparam druid.button self
+-- @tparam Button self
 -- @treturn hash The action_id of the key
 function Button.get_key_trigger(self)
 	return self.key_trigger
