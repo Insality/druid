@@ -13,7 +13,7 @@
 -- @see Blocker
 -- @see BackHandler
 -- @see druid.input
--- @see druid.text
+-- @see Text
 -- @see druid.lang_text
 -- @see druid.timer
 -- @see druid.progress
@@ -21,10 +21,10 @@
 -- @see druid.dynamic_grid
 -- @see Scroll
 -- @see druid.slider
--- @see druid.checkbox
--- @see druid.checkbox_group
+-- @see Checkbox
+-- @see CheckboxGroup
 -- @see druid.radio_group
--- @see druid.swipe
+-- @see Swipe
 -- @see Drag
 -- @see Hover
 
@@ -529,4 +529,4 @@ function DruidInstance.new_progress(self, ...)
 end
 
 
-return DruidInstanceInstance
+return DruidInstance

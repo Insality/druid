@@ -1,6 +1,4 @@
 ---@class druid
----@field checkbox druid.checkbox Submodule
----@field checkbox_group druid.checkbox_group Submodule
 ---@field dynamic_grid druid.dynamic_grid Submodule
 ---@field helper druid.helper Submodule
 ---@field input druid.input Submodule
@@ -8,9 +6,6 @@
 ---@field progress druid.progress Submodule
 ---@field radio_group druid.radio_group Submodule
 ---@field slider druid.slider Submodule
----@field static_grid druid.static_grid Submodule
----@field swipe druid.swipe Submodule
----@field text druid.text Submodule
 ---@field timer druid.timer Submodule
 ---@field new fun(context:table, style:table):druid_instance Create Druid instance.
 ---@field on_language_change fun() Druid on language change.
@@ -79,36 +74,22 @@
 ---@field on_set_enabled field  (self, node, enabled_state)
 
 ---@class druid.checkbox : druid.base_component
----@field Events druid.checkbox.Events Component events
----@field Fields druid.checkbox.Fields Component fields
----@field Style druid.checkbox.Style Component style params.
----@field get_state fun():bool Return checkbox state
----@field init fun(node:node, callback:function, click:node) Component init function
----@field set_state fun(state:bool, is_silent:bool) Set checkbox state
+---@field click_node node Button trigger node
+---@field node node Visual node
+---@field on_change_state druid_event On change state callback(self, state)
+---@field style druid.checkbox.style Component style params.
+---@field get_state fun(self:druid.checkbox):bool Return checkbox state
+---@field init fun(self:druid.checkbox, node:node, callback:function, click_node:node) Component init function
+---@field set_state fun(self:druid.checkbox, state:bool, is_silent:bool) Set checkbox state
 
----@class druid.checkbox.Events
----@field on_change_state field  On change state callback
-
----@class druid.checkbox.Fields
----@field button field  Button component from click_node
----@field click_node field  Button trigger node
----@field node field  Visual node
-
----@class druid.checkbox.Style
+---@class druid.checkbox.style
 ---@field on_change_state field  (self, node, state)
 
 ---@class druid.checkbox_group : druid.base_component
----@field Events druid.checkbox_group.Events Component events
----@field Fields druid.checkbox_group.Fields Component fields
----@field get_state fun():bool[] Return checkbox group state
----@field init fun(node:node[], callback:function, click:node[]) Component init function
----@field set_state fun(indexes:bool[]) Set checkbox group state
-
----@class druid.checkbox_group.Events
----@field on_checkbox_click field  On any checkbox click
-
----@class druid.checkbox_group.Fields
----@field checkboxes field  Array of checkbox components
+---@field on_checkbox_click druid_event On any checkbox click callback(self, index)
+---@field get_state fun(self:druid.checkbox_group):bool[] Return checkbox group state
+---@field init fun(self:druid.checkbox_group, nodes:node[], callback:function, click_nodes:node[]) Component init function
+---@field set_state fun(self:druid.checkbox_group, indexes:bool[]) Set checkbox group state
 
 ---@class druid.drag : druid.base_component
 ---@field can_x bool Is drag component process vertical dragging.
@@ -271,8 +252,8 @@
 ---@field drag Drag Drag Druid component
 ---@field inertion vector3 Current inert speed
 ---@field is_inert bool Flag, if scroll now moving by inertion
----@field on_point_scroll druid_event On scroll_to_index function callback
----@field on_scroll druid_event On scroll move callback
+---@field on_point_scroll druid_event On scroll_to_index function callback(self, index, point)
+---@field on_scroll druid_event On scroll move callback(self, position)
 ---@field on_scroll_to druid_event On scroll_to function callback(self, target, is_instant)
 ---@field position vector3 Current scroll posisition
 ---@field selected number Current index of points of interests
@@ -327,81 +308,60 @@
 ---@field value field  Current slider value
 
 ---@class druid.static_grid : druid.base_component
----@field Events druid.static_grid.Events Component events
----@field Fields druid.static_grid.Fields Component fields
----@field add fun(item:node, index:number) Add new item to the grid
----@field clear fun():druid.static_grid Clear grid nodes array.
----@field get_all_pos fun():vector3[] Return array of all node positions
----@field get_index fun(pos:vector3):number Return index for grid pos
----@field get_index_by_node fun(node:node):number Return grid index by node
----@field get_pos fun(index:number):vector3 Return pos for grid node index
----@field get_size fun():vector3 Return grid content size
----@field init fun(parent:node, element:node, in_row:number) Component init function
----@field remove fun(index:number, is_shift_nodes:bool) Remove the item from the grid.
----@field set_anchor fun(anchor:vector3) Set grid anchor.
----@field set_position_function fun(callback:function):druid.static_grid Change set position function for grid nodes.
-
----@class druid.static_grid.Events
----@field on_add_item field  On item add callback
----@field on_change_items field  On item add or remove callback
----@field on_clear field  On grid clear callback
----@field on_remove_item field  On item remove callback
----@field on_update_positions field  On update item positions callback
-
----@class druid.static_grid.Fields
----@field anchor field  Item anchor
----@field border field  The size of item content
----@field first_index field  The first index of node in grid
----@field last_index field  The last index of node in grid
----@field node_size field  Item size
----@field nodes field  List of all grid nodes
----@field parent field  Parent gui node
+---@field anchor vector3 Item anchor
+---@field first_index number The first index of node in grid
+---@field last_index number The last index of node in grid
+---@field node_size vector3 Item size
+---@field nodes node[] List of all grid nodes
+---@field on_add_item druid_event On item add callback(self, node, index)
+---@field on_change_items druid_event On item add or remove callback(self, index)
+---@field on_clear druid_event On grid clear callback(self)
+---@field on_remove_item druid_event On item remove callback(self, index)
+---@field on_update_positions druid_event On update item positions callback(self)
+---@field parent node Parent gui node
+---@field add fun(self:druid.static_grid, item:node, index:number) Add new item to the grid
+---@field clear fun(self:druid.static_grid):druid.static_grid Clear grid nodes array.
+---@field get_all_pos fun(self:druid.static_grid):vector3[] Return array of all node positions
+---@field get_index fun(self:druid.static_grid, pos:vector3):number Return index for grid pos
+---@field get_index_by_node fun(self:druid.static_grid, node:node):number Return grid index by node
+---@field get_pos fun(self:druid.static_grid, index:number):vector3 Return pos for grid node index
+---@field get_size fun(self:druid.static_grid):vector3 Return grid content size
+---@field init fun(self:druid.static_grid, parent:node, element:node, in_row:number) Component init function
+---@field remove fun(self:druid.static_grid, index:number, is_shift_nodes:bool) Remove the item from the grid.
+---@field set_anchor fun(self:druid.static_grid, anchor:vector3) Set grid anchor.
+---@field set_position_function fun(self:druid.static_grid, callback:function):druid.static_grid Change set position function for grid nodes.
 
 ---@class druid.swipe : druid.base_component
----@field Events druid.swipe.Events Component events
----@field Fields druid.swipe.Fields Components fields
----@field Style druid.swipe.Style Component style params.
----@field init fun(node:node, on_swipe_callback:function) Component init function
----@field set_click_zone fun(zone:node) Strict swipe click area.
+---@field click_zone node Restriction zone
+---@field node node Swipe node
+---@field style druid.swipe.style Component style params.
+---@field init fun(self:druid.swipe, node:node, on_swipe_callback:function) Component init function
+---@field set_click_zone fun(self:druid.swipe, zone:node) Strict swipe click area.
 
----@class druid.swipe.Events
----@field on_swipe field  Trigger on swipe event
-
----@class druid.swipe.Fields
----@field click_zone field  Restriction zone
----@field node field  Swipe node
-
----@class druid.swipe.Style
+---@class druid.swipe.style
 ---@field SWIPE_THRESHOLD field  Minimum distance for swipe trigger
 ---@field SWIPE_TIME field  Maximum time for swipe trigger
 ---@field SWIPE_TRIGGER_ON_MOVE field  If true, trigger on swipe moving, not only release action
 
 ---@class druid.text : druid.base_component
----@field Events druid.text.Events Component events
----@field Fields druid.text.Fields Component fields
----@field get_text_width fun(text:string) Calculate text width with font with respect to trailing space
----@field init fun(node:node, value:string, no_adjust:bool) Component init function
----@field is_multiline fun():bool Return true, if text with line break
----@field set_alpha fun(alpha:number) Set alpha
----@field set_color fun(color:vector4) Set color
----@field set_pivot fun(pivot:gui.pivot) Set text pivot.
----@field set_scale fun(scale:vector3) Set scale
----@field set_to fun(set_to:string) Set text to text field
-
----@class druid.text.Events
----@field on_set_pivot field  On change pivot callback
----@field on_set_text field  On set text callback
----@field on_update_text_scale field  On adjust text size callback
-
----@class druid.text.Fields
----@field color field  Current text color
----@field is_no_adjust field  Current text size adjust settings
----@field node field  Text node
----@field pos field  Current text position
----@field scale field  Current text node scale
----@field start_scale field  Initial text node scale
----@field start_size field  Initial text node size
----@field text_area field  Current text node available are
+---@field is_no_adjust bool Current text size adjust settings
+---@field node node Text node
+---@field on_set_pivot druid_event On change pivot callback(self, pivot)
+---@field on_set_text druid_event On set text callback(self, text)
+---@field on_update_text_scale druid_event On adjust text size callback(self, new_scale)
+---@field pos vector3 Current text position
+---@field scale vector3 Current text node scale
+---@field start_scale vector3 Initial text node scale
+---@field start_size vector3 Initial text node size
+---@field text_area vector3 Current text node available are
+---@field get_text_width fun(self:druid.text, text:string) Calculate text width with font with respect to trailing space
+---@field init fun(self:druid.text, node:node, value:string, no_adjust:bool) Component init function
+---@field is_multiline fun(self:druid.text):bool Return true, if text with line break
+---@field set_alpha fun(self:druid.text, alpha:number) Set alpha
+---@field set_color fun(self:druid.text, color:vector4) Set color
+---@field set_pivot fun(self:druid.text, pivot:gui.pivot) Set text pivot.
+---@field set_scale fun(self:druid.text, scale:vector3) Set scale
+---@field set_to fun(self:druid.text, set_to:string) Set text to text field
 
 ---@class druid.timer : druid.base_component
 ---@field Events druid.timer.Events Component events
@@ -423,43 +383,43 @@
 ---@field value field  Current timer value
 
 ---@class druid_event
----@field Event fun(initial_callback:function) Event constructur
----@field event:clear fun() Clear the all event handlers
----@field event:is_exist fun():bool Return true, if event have at lease one handler
----@field event:subscribe fun(callback:function) Subscribe callback on event
----@field event:trigger fun(...:unknown) Trigger the event and call all subscribed callbacks
----@field event:unsubscribe fun(callback:function) Unsubscribe callback on event
+---@field clear fun(self:druid_event) Clear the all event handlers
+---@field initialize fun(self:druid_event, initial_callback:function) Event constructur
+---@field is_exist fun(self:druid_event):bool Return true, if event have at lease one handler
+---@field subscribe fun(self:druid_event, callback:function) Subscribe callback on event
+---@field trigger fun(self:druid_event, ...:any) Trigger the event and call all subscribed callbacks
+---@field unsubscribe fun(self:druid_event, callback:function) Unsubscribe callback on event
 
 ---@class druid_instance
----@field druid:create fun(component:Component, ...:args) Create new druid component
----@field druid:final fun() Call on final function on gui_script.
----@field druid:initialize fun(table:context, table:style) Druid class constructor
----@field druid:new_back_handler fun(...:args):Component Create back_handler basic component
----@field druid:new_blocker fun(...:args):Component Create blocker basic component
----@field druid:new_button fun(...:args):Component Create button basic component
----@field druid:new_checkbox fun(...:args):Component Create checkbox component
----@field druid:new_checkbox_group fun(...:args):Component Create checkbox_group component
----@field druid:new_drag fun(...:args):Componetn Create drag basic component
----@field druid:new_dynamic_grid fun(...:args):Component Create dynamic grid component
----@field druid:new_grid fun(...:args):Component Create grid basic component  Deprecated
----@field druid:new_hover fun(...:args):Component Create hover basic component
----@field druid:new_input fun(...:args):Component Create input component
----@field druid:new_lang_text fun(...:args):Component Create lang_text component
----@field druid:new_progress fun(...:args):Component Create progress component
----@field druid:new_radio_group fun(...:args):Component Create radio_group component
----@field druid:new_scroll fun(...:args):Component Create scroll basic component
----@field druid:new_slider fun(...:args):Component Create slider component
----@field druid:new_static_grid fun(...:args):Component Create static grid basic component
----@field druid:new_swipe fun(...:args):Component Create swipe basic component
----@field druid:new_text fun(...:args):Component Create text basic component
----@field druid:new_timer fun(...:args):Component Create timer component
----@field druid:on_focus_gained fun() Druid on focus gained interest function.
----@field druid:on_focus_lost fun() Druid on focus lost interest function.
----@field druid:on_input fun(action_id:hash, action:table) Druid on_input function
----@field druid:on_layout_change fun() Druid on layout change function.
----@field druid:on_message fun(message_id:hash, message:table, sender:hash) Druid on_message function
----@field druid:remove fun(component:Component) Remove component from druid instance.
----@field druid:update fun(dt:number) Druid update function
+---@field create fun(self:druid_instance, component:Component, ...:args) Create new druid component
+---@field final fun(self:druid_instance) Call on final function on gui_script.
+---@field initialize fun(self:druid_instance, context:table, style:table) Druid class constructor
+---@field new_back_handler fun(self:druid_instance, ...:args):Component Create back_handler basic component
+---@field new_blocker fun(self:druid_instance, ...:args):Component Create blocker basic component
+---@field new_button fun(self:druid_instance, ...:args):Component Create button basic component
+---@field new_checkbox fun(self:druid_instance, ...:args):Component Create checkbox component
+---@field new_checkbox_group fun(self:druid_instance, ...:args):Component Create checkbox_group component
+---@field new_drag fun(self:druid_instance, ...:args):Componetn Create drag basic component
+---@field new_dynamic_grid fun(self:druid_instance, ...:args):Component Create dynamic grid component
+---@field new_grid fun(self:druid_instance, ...:args):Component Create grid basic component  Deprecated
+---@field new_hover fun(self:druid_instance, ...:args):Component Create hover basic component
+---@field new_input fun(self:druid_instance, ...:args):Component Create input component
+---@field new_lang_text fun(self:druid_instance, ...:args):Component Create lang_text component
+---@field new_progress fun(self:druid_instance, ...:args):Component Create progress component
+---@field new_radio_group fun(self:druid_instance, ...:args):Component Create radio_group component
+---@field new_scroll fun(self:druid_instance, ...:args):Component Create scroll basic component
+---@field new_slider fun(self:druid_instance, ...:args):Component Create slider component
+---@field new_static_grid fun(self:druid_instance, ...:args):Component Create static grid basic component
+---@field new_swipe fun(self:druid_instance, ...:args):Component Create swipe basic component
+---@field new_text fun(self:druid_instance, ...:args):Component Create text basic component
+---@field new_timer fun(self:druid_instance, ...:args):Component Create timer component
+---@field on_focus_gained fun(self:druid_instance) Druid on focus gained interest function.
+---@field on_focus_lost fun(self:druid_instance) Druid on focus lost interest function.
+---@field on_input fun(self:druid_instance, action_id:hash, action:table) Druid on_input function
+---@field on_layout_change fun(self:druid_instance) Druid on layout change function.
+---@field on_message fun(self:druid_instance, message_id:hash, message:table, sender:hash) Druid on_message function
+---@field remove fun(self:druid_instance, component:Component) Remove component from druid instance.
+---@field update fun(self:druid_instance, dt:number) Druid update function
 
 ---@class helper
 ---@field is_mobile fun() Check if device is mobile (Android or iOS)
