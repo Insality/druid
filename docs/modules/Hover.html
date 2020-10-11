@@ -33,91 +33,78 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
-<li><a href="#Tables">Tables</a></li>
+<li><a href="#Fields">Fields</a></li>
 </ul>
 
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
-  <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
-  <li><a href="../modules/druid.button.html">druid.button</a></li>
-  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
-  <li><strong>druid.hover</strong></li>
-  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
-  <li><a href="../modules/druid.static_grid.html">druid.static_grid</a></li>
-  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
-  <li><a href="../modules/druid.text.html">druid.text</a></li>
-  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><strong>Hover</strong></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/druid_event.html">druid_event</a></li>
-  <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
-  <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
-  <li><a href="../modules/druid.dynamic_grid.html">druid.dynamic_grid</a></li>
-  <li><a href="../modules/druid.input.html">druid.input</a></li>
-  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
-  <li><a href="../modules/druid.progress.html">druid.progress</a></li>
-  <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
-  <li><a href="../modules/druid.slider.html">druid.slider</a></li>
-  <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
   <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/druid_instance.html">druid_instance</a></li>
-</ul>
-<h2>Topics</h2>
-<ul class="">
-  <li><a href="../topics/01-components.md.html">01-components</a></li>
-  <li><a href="../topics/02-creating_custom_components.md.html">Creating custom components</a></li>
-  <li><a href="../topics/03-styles.md.html">Styles</a></li>
-  <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
-  <li><a href="../topics/05-examples.md.html">Examples</a></li>
-  <li><a href="../topics/changelog.md.html">Druid 0.3.0:</a></li>
-  <li><a href="../topics/faq.md.html">faq</a></li>
-  <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
 </ul>
 
 </div>
 
 <div id="content">
 
-<h1>Module <code>druid.hover</code></h1>
+<h1>Module <code>Hover</code></h1>
 <p>Component to handle hover node interaction</p>
-<p>
-
-</p>
+<p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(node, on_hover_callback)</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node, on_hover_callback)</a></td>
 	<td class="summary">Component init function</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_hover">set_hover(state)</a></td>
+	<td class="name" nowrap><a href="#set_hover">set_hover(self, state)</a></td>
 	<td class="summary">Set hover state</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_mouse_hover">set_mouse_hover(state)</a></td>
+	<td class="name" nowrap><a href="#set_mouse_hover">set_mouse_hover(self, state)</a></td>
 	<td class="summary">Set mouse hover state</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(zone)</a></td>
+	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, zone)</a></td>
 	<td class="summary">Strict hover click area.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_enabled">set_enabled(state)</a></td>
+	<td class="name" nowrap><a href="#set_enabled">set_enabled(self, state)</a></td>
 	<td class="summary">Set enable state of hover component.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#is_enabled">is_enabled()</a></td>
+	<td class="name" nowrap><a href="#is_enabled">is_enabled(self)</a></td>
 	<td class="summary">Return current hover enabled state</td>
 	</tr>
 </table>
-<h2><a href="#Tables">Tables</a></h2>
+<h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#Events">Events</a></td>
-	<td class="summary">Component events</td>
+	<td class="name" nowrap><a href="#on_hover">on_hover</a></td>
+	<td class="summary">On hover callback(self, state)</td>
 	</tr>
 </table>
 
@@ -130,7 +117,7 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(node, on_hover_callback)</strong>
+    <strong>init(self, node, on_hover_callback)</strong>
     </dt>
     <dd>
     Component init function
@@ -138,6 +125,10 @@
 
     <h3>Parameters:</h3>
     <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+
+        </li>
         <li><span class="parameter">node</span>
             <span class="types"><span class="type">node</span></span>
          Gui node
@@ -155,7 +146,7 @@
 </dd>
     <dt>
     <a name = "set_hover"></a>
-    <strong>set_hover(state)</strong>
+    <strong>set_hover(self, state)</strong>
     </dt>
     <dd>
     Set hover state
@@ -163,6 +154,10 @@
 
     <h3>Parameters:</h3>
     <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+
+        </li>
         <li><span class="parameter">state</span>
             <span class="types"><span class="type">bool</span></span>
          The hover state
@@ -176,7 +171,7 @@
 </dd>
     <dt>
     <a name = "set_mouse_hover"></a>
-    <strong>set_mouse_hover(state)</strong>
+    <strong>set_mouse_hover(self, state)</strong>
     </dt>
     <dd>
     Set mouse hover state
@@ -184,6 +179,10 @@
 
     <h3>Parameters:</h3>
     <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+
+        </li>
         <li><span class="parameter">state</span>
             <span class="types"><span class="type">bool</span></span>
          The mouse hover state
@@ -197,7 +196,7 @@
 </dd>
     <dt>
     <a name = "set_click_zone"></a>
-    <strong>set_click_zone(zone)</strong>
+    <strong>set_click_zone(self, zone)</strong>
     </dt>
     <dd>
     Strict hover click area.  Useful for
@@ -206,6 +205,10 @@
 
     <h3>Parameters:</h3>
     <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+
+        </li>
         <li><span class="parameter">zone</span>
             <span class="types"><span class="type">node</span></span>
          Gui node
@@ -219,7 +222,7 @@
 </dd>
     <dt>
     <a name = "set_enabled"></a>
-    <strong>set_enabled(state)</strong>
+    <strong>set_enabled(self, state)</strong>
     </dt>
     <dd>
     Set enable state of hover component.
@@ -229,6 +232,10 @@
 
     <h3>Parameters:</h3>
     <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+
+        </li>
         <li><span class="parameter">state</span>
             <span class="types"><span class="type">bool</span></span>
          The hover enabled state
@@ -242,12 +249,19 @@
 </dd>
     <dt>
     <a name = "is_enabled"></a>
-    <strong>is_enabled()</strong>
+    <strong>is_enabled(self)</strong>
     </dt>
     <dd>
     Return current hover enabled state
 
 
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+
+        </li>
+    </ul>
 
     <h3>Returns:</h3>
     <ol>
@@ -261,26 +275,21 @@
 
 </dd>
 </dl>
-    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
 
     <dl class="function">
     <dt>
-    <a name = "Events"></a>
-    <strong>Events</strong>
+    <a name = "on_hover"></a>
+    <strong>on_hover</strong>
     </dt>
     <dd>
-    Component events
+    On hover callback(self, state)
 
 
-    <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">on_hover</span>
             <span class="types"><span class="type">druid_event</span></span>
-         On hover callback (Touch pressed)
-        </li>
-        <li><span class="parameter">on_mouse_hover</span>
-            <span class="types"><span class="type">druid_event</span></span>
-         On mouse hover callback (Touch over without action_id)
+
         </li>
     </ul>
 
@@ -296,7 +305,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-09-29 23:46:16 </i>
+<i style="float:right;">Last updated 2020-10-12 00:29:49 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

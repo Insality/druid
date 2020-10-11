@@ -1,0 +1,1110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><strong>DruidInstance</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>DruidInstance</code></h1>
+<p>Instance of Druid.</p>
+<p> Make one instance per gui_script with next code:
+<p>    local druid = require("druid.druid")
+    function init(self)
+        self.druid = druid.new(self)
+        local button = self.druid:new_button(...)
+    end
+<p> Learn Druid instance function here</p>
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../modules/Button.html#">Button</a></li>
+         <li><a href="../modules/Blocker.html#">Blocker</a></li>
+         <li><a href="../modules/BackHandler.html#">BackHandler</a></li>
+         <li><a href="../modules/Input.html#">Input</a></li>
+         <li><a href="../modules/Text.html#">Text</a></li>
+         <li><a href="../modules/LangText.html#">LangText</a></li>
+         <li><a href="../modules/Timer.html#">Timer</a></li>
+         <li><a href="../modules/Progress.html#">Progress</a></li>
+         <li><a href="../modules/StaticGrid.html#">StaticGrid</a></li>
+         <li><a href="../modules/DynamicGrid.html#">DynamicGrid</a></li>
+         <li><a href="../modules/Scroll.html#">Scroll</a></li>
+         <li><a href="../modules/Slider.html#">Slider</a></li>
+         <li><a href="../modules/Checkbox.html#">Checkbox</a></li>
+         <li><a href="../modules/CheckboxGroup.html#">CheckboxGroup</a></li>
+         <li><a href="../modules/RadioGroup.html#">RadioGroup</a></li>
+         <li><a href="../modules/Swipe.html#">Swipe</a></li>
+         <li><a href="../modules/Drag.html#">Drag</a></li>
+         <li><a href="../modules/Hover.html#">Hover</a></li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#initialize">initialize(self, context, style)</a></td>
+	<td class="summary">Druid class constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#create">create(self, component, ...)</a></td>
+	<td class="summary">Create new druid component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#final">final(self)</a></td>
+	<td class="summary">Call on final function on gui_script.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#remove">remove(self, component)</a></td>
+	<td class="summary">Remove component from druid instance.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#update">update(self, dt)</a></td>
+	<td class="summary">Druid update function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_input">on_input(self, action_id, action)</a></td>
+	<td class="summary">Druid on_input function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_message">on_message(self, message_id, message, sender)</a></td>
+	<td class="summary">Druid on_message function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_focus_lost">on_focus_lost(self)</a></td>
+	<td class="summary">Druid on focus lost interest function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_focus_gained">on_focus_gained(self)</a></td>
+	<td class="summary">Druid on focus gained interest function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_layout_change">on_layout_change(self)</a></td>
+	<td class="summary">Druid on layout change function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#druid.on_language_change">druid.on_language_change()</a></td>
+	<td class="summary">Druid on language change.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_button">new_button(self, ...)</a></td>
+	<td class="summary">Create button basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_blocker">new_blocker(self, ...)</a></td>
+	<td class="summary">Create blocker basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_back_handler">new_back_handler(self, ...)</a></td>
+	<td class="summary">Create back_handler basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_hover">new_hover(self, ...)</a></td>
+	<td class="summary">Create hover basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_text">new_text(self, ...)</a></td>
+	<td class="summary">Create text basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_grid">new_grid(self, ...)</a></td>
+	<td class="summary">Create grid basic component
+ Deprecated</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_static_grid">new_static_grid(self, ...)</a></td>
+	<td class="summary">Create static grid basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_scroll">new_scroll(self, ...)</a></td>
+	<td class="summary">Create scroll basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_swipe">new_swipe(self, ...)</a></td>
+	<td class="summary">Create swipe basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_drag">new_drag(self, ...)</a></td>
+	<td class="summary">Create drag basic component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_dynamic_grid">new_dynamic_grid(self, ...)</a></td>
+	<td class="summary">Create dynamic grid component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_lang_text">new_lang_text(self, ...)</a></td>
+	<td class="summary">Create lang_text component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_slider">new_slider(self, ...)</a></td>
+	<td class="summary">Create slider component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_checkbox">new_checkbox(self, ...)</a></td>
+	<td class="summary">Create checkbox component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_input">new_input(self, ...)</a></td>
+	<td class="summary">Create input component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_checkbox_group">new_checkbox_group(self, ...)</a></td>
+	<td class="summary">Create checkbox_group component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_radio_group">new_radio_group(self, ...)</a></td>
+	<td class="summary">Create radio_group component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_timer">new_timer(self, ...)</a></td>
+	<td class="summary">Create timer component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_progress">new_progress(self, ...)</a></td>
+	<td class="summary">Create progress component</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "initialize"></a>
+    <strong>initialize(self, context, style)</strong>
+    </dt>
+    <dd>
+    Druid class constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">context</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Druid context. Usually it is self of script
+        </li>
+        <li><span class="parameter">style</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Druid style module
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "create"></a>
+    <strong>create(self, component, ...)</strong>
+    </dt>
+    <dd>
+    Create new druid component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">component</span>
+            <span class="types"><span class="type">Component</span></span>
+         Component module
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         Other component params to pass it to component:init function
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "final"></a>
+    <strong>final(self)</strong>
+    </dt>
+    <dd>
+    Call on final function on gui_script.  It will call on_remove
+ on all druid components
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "remove"></a>
+    <strong>remove(self, component)</strong>
+    </dt>
+    <dd>
+    Remove component from druid instance.
+ Component `on_remove` function will be invoked, if exist.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">component</span>
+            <span class="types"><span class="type">Component</span></span>
+         Component instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "update"></a>
+    <strong>update(self, dt)</strong>
+    </dt>
+    <dd>
+    Druid update function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">dt</span>
+            <span class="types"><span class="type">number</span></span>
+         Delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_input"></a>
+    <strong>on_input(self, action_id, action)</strong>
+    </dt>
+    <dd>
+    Druid on_input function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">action_id</span>
+            <span class="types"><span class="type">hash</span></span>
+         Action_id from on_input
+        </li>
+        <li><span class="parameter">action</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Action from on_input
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_message"></a>
+    <strong>on_message(self, message_id, message, sender)</strong>
+    </dt>
+    <dd>
+    Druid on_message function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">message_id</span>
+            <span class="types"><span class="type">hash</span></span>
+         Message_id from on_message
+        </li>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Message from on_message
+        </li>
+        <li><span class="parameter">sender</span>
+            <span class="types"><span class="type">hash</span></span>
+         Sender from on_message
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_focus_lost"></a>
+    <strong>on_focus_lost(self)</strong>
+    </dt>
+    <dd>
+    Druid on focus lost interest function.
+ This one called by on_window_callback by global window listener
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_focus_gained"></a>
+    <strong>on_focus_gained(self)</strong>
+    </dt>
+    <dd>
+    Druid on focus gained interest function.
+ This one called by on_window_callback by global window listener
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_layout_change"></a>
+    <strong>on_layout_change(self)</strong>
+    </dt>
+    <dd>
+    Druid on layout change function.
+ Called on update gui layout
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "druid.on_language_change"></a>
+    <strong>druid.on_language_change()</strong>
+    </dt>
+    <dd>
+    Druid on language change.
+ This one called by global gruid.on_language_change, but can be
+ call manualy to update all translations
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_button"></a>
+    <strong>new_button(self, ...)</strong>
+    </dt>
+    <dd>
+    Create button basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         button init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        button component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_blocker"></a>
+    <strong>new_blocker(self, ...)</strong>
+    </dt>
+    <dd>
+    Create blocker basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         blocker init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Blocker</span></span>
+        blocker component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_back_handler"></a>
+    <strong>new_back_handler(self, ...)</strong>
+    </dt>
+    <dd>
+    Create back_handler basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         back_handler init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">BackHandler</span></span>
+        back_handler component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_hover"></a>
+    <strong>new_hover(self, ...)</strong>
+    </dt>
+    <dd>
+    Create hover basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         hover init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Hover</span></span>
+        hover component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_text"></a>
+    <strong>new_text(self, ...)</strong>
+    </dt>
+    <dd>
+    Create text basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         text init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Tet</span></span>
+        text component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_grid"></a>
+    <strong>new_grid(self, ...)</strong>
+    </dt>
+    <dd>
+    Create grid basic component
+ Deprecated
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         grid init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">StaticGrid</span></span>
+        grid component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_static_grid"></a>
+    <strong>new_static_grid(self, ...)</strong>
+    </dt>
+    <dd>
+    Create static grid basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         grid init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">StaticGrid</span></span>
+        grid component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_scroll"></a>
+    <strong>new_scroll(self, ...)</strong>
+    </dt>
+    <dd>
+    Create scroll basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         scroll init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Scroll</span></span>
+        scroll component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_swipe"></a>
+    <strong>new_swipe(self, ...)</strong>
+    </dt>
+    <dd>
+    Create swipe basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         swipe init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Swipe</span></span>
+        swipe component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_drag"></a>
+    <strong>new_drag(self, ...)</strong>
+    </dt>
+    <dd>
+    Create drag basic component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         drag init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Drag</span></span>
+        drag component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_dynamic_grid"></a>
+    <strong>new_dynamic_grid(self, ...)</strong>
+    </dt>
+    <dd>
+    Create dynamic grid component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         grid init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">DynamicGrid</span></span>
+        grid component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_lang_text"></a>
+    <strong>new_lang_text(self, ...)</strong>
+    </dt>
+    <dd>
+    Create lang_text component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         lang_text init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">LangText</span></span>
+        lang_text component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_slider"></a>
+    <strong>new_slider(self, ...)</strong>
+    </dt>
+    <dd>
+    Create slider component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         slider init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Slider</span></span>
+        slider component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_checkbox"></a>
+    <strong>new_checkbox(self, ...)</strong>
+    </dt>
+    <dd>
+    Create checkbox component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         checkbox init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Checkbox</span></span>
+        checkbox component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_input"></a>
+    <strong>new_input(self, ...)</strong>
+    </dt>
+    <dd>
+    Create input component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         input init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Input</span></span>
+        input component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_checkbox_group"></a>
+    <strong>new_checkbox_group(self, ...)</strong>
+    </dt>
+    <dd>
+    Create checkbox_group component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         checkbox_group init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">CheckboxGroup</span></span>
+        checkbox_group component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_radio_group"></a>
+    <strong>new_radio_group(self, ...)</strong>
+    </dt>
+    <dd>
+    Create radio_group component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         radio_group init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">RadioGroup</span></span>
+        radio_group component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_timer"></a>
+    <strong>new_timer(self, ...)</strong>
+    </dt>
+    <dd>
+    Create timer component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         timer init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Timer</span></span>
+        timer component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_progress"></a>
+    <strong>new_progress(self, ...)</strong>
+    </dt>
+    <dd>
+    Create progress component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         progress init args
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Progress</span></span>
+        progress component
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-10-12 00:29:49 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

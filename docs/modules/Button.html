@@ -1,0 +1,695 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><strong>Button</strong></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Button</code></h1>
+<p>Component to handle basic GUI button</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, node, callback[, params[, anim_node]])</a></td>
+	<td class="summary">Component init function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_enabled">set_enabled(self, state)</a></td>
+	<td class="summary">Set enabled button component state</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_enabled">is_enabled(self)</a></td>
+	<td class="summary">Return button enabled state</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, zone)</a></td>
+	<td class="summary">Strict button click area.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_key_trigger">set_key_trigger(self, key)</a></td>
+	<td class="summary">Set key-code to trigger this button</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_key_trigger">get_key_trigger(self)</a></td>
+	<td class="summary">Get key-code to trigger this button</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#style">style</a></td>
+	<td class="summary">Component style params.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#on_click">on_click</a></td>
+	<td class="summary">On release button callback(self, params, button_instance)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_repeated_click">on_repeated_click</a></td>
+	<td class="summary">On repeated action button callback(self, params, button_instance, click_amount)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_long_click">on_long_click</a></td>
+	<td class="summary">On long tap button callback(self, params, button_instance, time)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_double_click">on_double_click</a></td>
+	<td class="summary">On double tap button callback(self, params, button_instance, click_amount)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_hold_callback">on_hold_callback</a></td>
+	<td class="summary">On button hold before long_click callback(self, params, button_instance, time)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_click_outside">on_click_outside</a></td>
+	<td class="summary">On click outside of button(self, params, button_instance)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Trigger node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#anim_node">anim_node</a></td>
+	<td class="summary">Animation node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#start_scale">start_scale</a></td>
+	<td class="summary">Initial scale of anim_node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#start_pos">start_pos</a></td>
+	<td class="summary">Initial pos of anim_node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pos">pos</a></td>
+	<td class="summary">Initial pos of anim_node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#params">params</a></td>
+	<td class="summary">Params to click callbacks</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hover">hover</a></td>
+	<td class="summary">Druid hover logic component</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, node, callback[, params[, anim_node]])</strong>
+    </dt>
+    <dd>
+    Component init function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
+         Gui node
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Button callback
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+         Button callback params
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">anim_node</span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
+         Button anim node (node, if not provided)
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_enabled"></a>
+    <strong>set_enabled(self, state)</strong>
+    </dt>
+    <dd>
+    Set enabled button component state
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+
+        </li>
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">bool</span></span>
+         Enabled state
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        Current button instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_enabled"></a>
+    <strong>is_enabled(self)</strong>
+    </dt>
+    <dd>
+    Return button enabled state
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True, if button is enabled
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_click_zone"></a>
+    <strong>set_click_zone(self, zone)</strong>
+    </dt>
+    <dd>
+    Strict button click area.  Useful for
+ no click events outside stencil node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+
+        </li>
+        <li><span class="parameter">zone</span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
+         Gui node
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        Current button instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_key_trigger"></a>
+    <strong>set_key_trigger(self, key)</strong>
+    </dt>
+    <dd>
+    Set key-code to trigger this button
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+
+        </li>
+        <li><span class="parameter">key</span>
+            <span class="types"><span class="type">hash</span></span>
+         The action_id of the key
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        Current button instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_key_trigger"></a>
+    <strong>get_key_trigger(self)</strong>
+    </dt>
+    <dd>
+    Get key-code to trigger this button
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">hash</span></span>
+        The action_id of the key
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "style"></a>
+    <strong>style</strong>
+    </dt>
+    <dd>
+    Component style params.
+ You can override this component styles params in druid styles table
+ or create your own style
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">LONGTAP_TIME</span>
+            <span class="types"><span class="type">number</span></span>
+         Minimum time to trigger on_hold_callback
+         (<em>default</em> 0.4)
+        </li>
+        <li><span class="parameter">AUTOHOLD_TRIGGER</span>
+            <span class="types"><span class="type">number</span></span>
+         Maximum hold time to trigger button release while holding
+         (<em>default</em> 0.8)
+        </li>
+        <li><span class="parameter">DOUBLETAP_TIME</span>
+            <span class="types"><span class="type">number</span></span>
+         Time between double taps
+         (<em>default</em> 0.4)
+        </li>
+        <li><span class="parameter">on_click</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node)
+        </li>
+        <li><span class="parameter">on_click_disabled</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node)
+        </li>
+        <li><span class="parameter">on_hover</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node, hover_state)
+        </li>
+        <li><span class="parameter">on_mouse_hover</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node, hover_state)
+        </li>
+        <li><span class="parameter">on_set_enabled</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node, enabled_state)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "on_click"></a>
+    <strong>on_click</strong>
+    </dt>
+    <dd>
+    On release button callback(self, params, button_instance)
+
+
+    <ul>
+        <li><span class="parameter">on_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_repeated_click"></a>
+    <strong>on_repeated_click</strong>
+    </dt>
+    <dd>
+    On repeated action button callback(self, params, button_instance, click_amount)
+
+
+    <ul>
+        <li><span class="parameter">on_repeated_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_long_click"></a>
+    <strong>on_long_click</strong>
+    </dt>
+    <dd>
+    On long tap button callback(self, params, button_instance, time)
+
+
+    <ul>
+        <li><span class="parameter">on_long_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_double_click"></a>
+    <strong>on_double_click</strong>
+    </dt>
+    <dd>
+    On double tap button callback(self, params, button_instance, click_amount)
+
+
+    <ul>
+        <li><span class="parameter">on_double_click</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_hold_callback"></a>
+    <strong>on_hold_callback</strong>
+    </dt>
+    <dd>
+    On button hold before long_click callback(self, params, button_instance, time)
+
+
+    <ul>
+        <li><span class="parameter">on_hold_callback</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_click_outside"></a>
+    <strong>on_click_outside</strong>
+    </dt>
+    <dd>
+    On click outside of button(self, params, button_instance)
+
+
+    <ul>
+        <li><span class="parameter">on_click_outside</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Trigger node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "anim_node"></a>
+    <strong>anim_node</strong>
+    </dt>
+    <dd>
+    Animation node
+
+
+    <ul>
+        <li><span class="parameter">anim_node</span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
+
+         (<em>default</em> node)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "start_scale"></a>
+    <strong>start_scale</strong>
+    </dt>
+    <dd>
+    Initial scale of anim_node
+
+
+    <ul>
+        <li><span class="parameter">start_scale</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "start_pos"></a>
+    <strong>start_pos</strong>
+    </dt>
+    <dd>
+    Initial pos of anim_node
+
+
+    <ul>
+        <li><span class="parameter">start_pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pos"></a>
+    <strong>pos</strong>
+    </dt>
+    <dd>
+    Initial pos of anim_node
+
+
+    <ul>
+        <li><span class="parameter">pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "params"></a>
+    <strong>params</strong>
+    </dt>
+    <dd>
+    Params to click callbacks
+
+
+    <ul>
+        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">any</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hover"></a>
+    <strong>hover</strong>
+    </dt>
+    <dd>
+    Druid hover logic component
+
+
+    <ul>
+        <li><span class="parameter">hover</span>
+            <span class="types"><span class="type">druid.hover</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-10-12 00:29:49 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

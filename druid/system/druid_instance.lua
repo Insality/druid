@@ -350,7 +350,7 @@ end
 --- Create button basic component
 -- @tparam DruidInstance self
 -- @tparam args ... button init args
--- @treturn Component button component
+-- @treturn Button button component
 function DruidInstance.new_button(self, ...)
 	return DruidInstance.create(self, button, ...)
 end
@@ -359,7 +359,7 @@ end
 --- Create blocker basic component
 -- @tparam DruidInstance self
 -- @tparam args ... blocker init args
--- @treturn Component blocker component
+-- @treturn Blocker blocker component
 function DruidInstance.new_blocker(self, ...)
 	return DruidInstance.create(self, blocker, ...)
 end
@@ -368,7 +368,7 @@ end
 --- Create back_handler basic component
 -- @tparam DruidInstance self
 -- @tparam args ... back_handler init args
--- @treturn Component back_handler component
+-- @treturn BackHandler back_handler component
 function DruidInstance.new_back_handler(self, ...)
 	return DruidInstance.create(self, back_handler, ...)
 end
@@ -377,7 +377,7 @@ end
 --- Create hover basic component
 -- @tparam DruidInstance self
 -- @tparam args ... hover init args
--- @treturn Component hover component
+-- @treturn Hover hover component
 function DruidInstance.new_hover(self, ...)
 	return DruidInstance.create(self, hover, ...)
 end
@@ -386,7 +386,7 @@ end
 --- Create text basic component
 -- @tparam DruidInstance self
 -- @tparam args ... text init args
--- @treturn Component text component
+-- @treturn Tet text component
 function DruidInstance.new_text(self, ...)
 	return DruidInstance.create(self, text, ...)
 end
@@ -396,7 +396,7 @@ end
 -- Deprecated
 -- @tparam DruidInstance self
 -- @tparam args ... grid init args
--- @treturn Component grid component
+-- @treturn StaticGrid grid component
 function DruidInstance.new_grid(self, ...)
 	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
 	return DruidInstance.create(self, static_grid, ...)
@@ -406,7 +406,7 @@ end
 --- Create static grid basic component
 -- @tparam DruidInstance self
 -- @tparam args ... grid init args
--- @treturn Component grid component
+-- @treturn StaticGrid grid component
 function DruidInstance.new_static_grid(self, ...)
 	return DruidInstance.create(self, static_grid, ...)
 end
@@ -415,7 +415,7 @@ end
 --- Create scroll basic component
 -- @tparam DruidInstance self
 -- @tparam args ... scroll init args
--- @treturn Component scroll component
+-- @treturn Scroll scroll component
 function DruidInstance.new_scroll(self, ...)
 	return DruidInstance.create(self, scroll, ...)
 end
@@ -424,7 +424,7 @@ end
 --- Create swipe basic component
 -- @tparam DruidInstance self
 -- @tparam args ... swipe init args
--- @treturn Component swipe component
+-- @treturn Swipe swipe component
 function DruidInstance.new_swipe(self, ...)
 	return DruidInstance.create(self, swipe, ...)
 end
@@ -433,7 +433,7 @@ end
 --- Create drag basic component
 -- @tparam DruidInstance self
 -- @tparam args ... drag init args
--- @treturn Componetn drag component
+-- @treturn Drag drag component
 function DruidInstance.new_drag(self, ...)
 	return DruidInstance.create(self, drag, ...)
 end
@@ -442,7 +442,7 @@ end
 --- Create dynamic grid component
 -- @tparam DruidInstance self
 -- @tparam args ... grid init args
--- @treturn Component grid component
+-- @treturn DynamicGrid grid component
 function DruidInstance.new_dynamic_grid(self, ...)
 	-- return helper.extended_component("dynamic_grid")
 	return DruidInstance.create(self, dynamic_grid, ...)
@@ -452,7 +452,7 @@ end
 --- Create lang_text component
 -- @tparam DruidInstance self
 -- @tparam args ... lang_text init args
--- @treturn Component lang_text component
+-- @treturn LangText lang_text component
 function DruidInstance.new_lang_text(self, ...)
 		-- return helper.extended_component("lang_text")
 	return DruidInstance.create(self, lang_text, ...)
@@ -462,7 +462,7 @@ end
 --- Create slider component
 -- @tparam DruidInstance self
 -- @tparam args ... slider init args
--- @treturn Component slider component
+-- @treturn Slider slider component
 function DruidInstance.new_slider(self, ...)
 	-- return helper.extended_component("slider")
 	return DruidInstance.create(self, slider, ...)
@@ -472,7 +472,7 @@ end
 --- Create checkbox component
 -- @tparam DruidInstance self
 -- @tparam args ... checkbox init args
--- @treturn Component checkbox component
+-- @treturn Checkbox checkbox component
 function DruidInstance.new_checkbox(self, ...)
 	-- return helper.extended_component("checkbox")
 	return DruidInstance.create(self, checkbox, ...)
@@ -482,7 +482,7 @@ end
 --- Create input component
 -- @tparam DruidInstance self
 -- @tparam args ... input init args
--- @treturn Component input component
+-- @treturn Input input component
 function DruidInstance.new_input(self, ...)
 	-- return helper.extended_component("input")
 	return DruidInstance.create(self, input, ...)
@@ -492,7 +492,7 @@ end
 --- Create checkbox_group component
 -- @tparam DruidInstance self
 -- @tparam args ... checkbox_group init args
--- @treturn Component checkbox_group component
+-- @treturn CheckboxGroup checkbox_group component
 function DruidInstance.new_checkbox_group(self, ...)
 	-- return helper.extended_component("checkbox_group")
 	return DruidInstance.create(self, checkbox_group, ...)
@@ -502,7 +502,7 @@ end
 --- Create radio_group component
 -- @tparam DruidInstance self
 -- @tparam args ... radio_group init args
--- @treturn Component radio_group component
+-- @treturn RadioGroup radio_group component
 function DruidInstance.new_radio_group(self, ...)
 	-- return helper.extended_component("radio_group")
 	return DruidInstance.create(self, radio_group, ...)
@@ -512,7 +512,7 @@ end
 --- Create timer component
 -- @tparam DruidInstance self
 -- @tparam args ... timer init args
--- @treturn Component timer component
+-- @treturn Timer timer component
 function DruidInstance.new_timer(self, ...)
 	-- return helper.extended_component("timer")
 	return DruidInstance.create(self, timer, ...)
@@ -522,7 +522,7 @@ end
 --- Create progress component
 -- @tparam DruidInstance self
 -- @tparam args ... progress init args
--- @treturn Component progress component
+-- @treturn Progress progress component
 function DruidInstance.new_progress(self, ...)
 	-- return helper.extended_component("progress")
 	return DruidInstance.create(self, progress, ...)
