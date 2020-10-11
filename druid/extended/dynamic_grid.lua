@@ -1,24 +1,41 @@
 --- Component to handle placing components in row
--- @module druid.dynamic_grid
+-- @module DynamicGrid
 -- @within BaseComponent
 -- @alias druid.dynamic_grid
 
---- Component events
--- @table Events
--- @tfield druid_event on_add_item On item add callback
--- @tfield druid_event on_remove_item On item remove callback
--- @tfield druid_event on_change_items On item add or remove callback
--- @tfield druid_event on_clear On grid clear callback
--- @tfield druid_event on_update_positions On update item positions callback
+--- On item add callback(self, node, index)
+-- @tfield druid_event on_add_item
 
---- Component fields
--- @table Fields
--- @tfield node parent Parent gui node
--- @tfield node[] nodes List of all grid nodes
--- @tfield number first_index The first index of node in grid
--- @tfield number last_index The last index of node in grid
--- @tfield vector3 node_size Item size
--- @tfield vector4 border The size of item content
+--- On item remove callback(self, index)
+-- @tfield druid_event on_remove_item
+
+--- On item add or remove callback(self, index)
+-- @tfield druid_event on_change_items
+
+--- On grid clear callback(self)
+-- @tfield druid_event on_clear
+
+--- On update item positions callback(self)
+-- @tfield druid_event on_update_positions
+
+--- Parent gui node
+-- @tfield node parent
+
+--- List of all grid nodes
+-- @tfield node[] nodes
+
+--- The first index of node in grid
+-- @tfield number first_index
+
+--- The last index of node in grid
+-- @tfield number last_index
+
+--- Item size
+-- @tfield vector3 node_size
+
+--- The size of item content
+-- @tfield vector4 border
+
 
 local const = require("druid.const")
 local Event = require("druid.event")
@@ -44,9 +61,9 @@ local AVAILABLE_PIVOTS = {
 
 
 --- Component init function
--- @function dynamic_grid:init
+-- @tparam DynamicGrid self
 -- @tparam node parent The gui node parent, where items will be placed
-function DynamicGrid:init(parent)
+function DynamicGrid.init(self, parent)
 	self.parent = self:get_node(parent)
 
 	local parent_pivot = gui.get_pivot(self.parent)
@@ -69,17 +86,18 @@ function DynamicGrid:init(parent)
 end
 
 
-function DynamicGrid:on_layout_change()
+function DynamicGrid.on_layout_change(self)
 	self:_update(true)
 end
 
 
 --- Return pos for grid node index
--- @function dynamic_grid:get_pos
+-- @tparam DynamicGrid self
 -- @tparam number index The grid element index
 -- @tparam node node The node to be placed
+-- @tparam[opt] number origin_index Index of nearby node
 -- @treturn vector3 Node position
-function DynamicGrid:get_pos(index, node, origin_index)
+function DynamicGrid.get_pos(self, index, node, origin_index)
 	local origin_node = self.nodes[origin_index]
 
 	-- If anchor node is not exist, check around nodes
@@ -115,11 +133,11 @@ end
 
 
 --- Add new node to the grid
--- @function dynamic_grid:add
+-- @tparam DynamicGrid self
 --	@tparam node node Gui node
 -- @tparam[opt] number index The node position. By default add as last node
 -- @tparam[opt=false] bool is_shift_left If true, shift all nodes to the left, otherwise shift nodes to the right
-function DynamicGrid:add(node, index, is_shift_left)
+function DynamicGrid.add(self, node, index, is_shift_left)
 	local delta = is_shift_left and -1 or 1
 
 	-- By default add node at end
@@ -157,10 +175,10 @@ end
 
 
 --- Remove the item from the grid. Note that gui node will be not deleted
--- @function dynamic_grid:remove
+-- @tparam DynamicGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=false] bool is_shift_left If true, shift all nodes to the left, otherwise shift nodes to the right
-function DynamicGrid:remove(index, is_shift_left)
+function DynamicGrid.remove(self, index, is_shift_left)
 	local delta = is_shift_left and -1 or 1
 
 	assert(self.nodes[index], "No grid item at given index " .. index)
@@ -180,15 +198,16 @@ function DynamicGrid:remove(index, is_shift_left)
 	-- Sync grid data
 	self:_update()
 
-	self.on_add_item:trigger(self:get_context(), index)
+	self.on_remove_item:trigger(self:get_context(), index)
 	self.on_change_items:trigger(self:get_context(), index)
 end
 
 
 --- Return grid content size
--- @function dynamic_grid:get_size
+-- @tparam DynamicGrid self
+-- @tparam vector3 border
 -- @treturn vector3 The grid content size
-function DynamicGrid:get_size(border)
+function DynamicGrid.get_size(self, border)
 	border = border or self.border
 	return vmath.vector3(
 		border.z - border.x,
@@ -198,10 +217,10 @@ end
 
 
 --- Return grid index by node
--- @function dynamic_grid:get_index_by_node
+-- @tparam DynamicGrid self
 -- @tparam node node The gui node in the grid
 -- @treturn number The node index
-function DynamicGrid:get_index_by_node(node)
+function DynamicGrid.get_index_by_node(self, node)
 	for index, node_info in pairs(self.nodes) do
 		if node == node_info.node then
 			return index
@@ -213,9 +232,9 @@ end
 
 
 --- Return array of all node positions
--- @function dynamic_grid:get_all_pos
+-- @tparam DynamicGrid self
 -- @treturn vector3[] All grid node positions
-function DynamicGrid:get_all_pos()
+function DynamicGrid.get_all_pos(self)
 	local result = {}
 	for i, node in pairs(self.nodes) do
 		table.insert(result, gui.get_position(node))
@@ -227,10 +246,10 @@ end
 
 --- Change set position function for grid nodes. It will call on
 -- update poses on grid elements. Default: gui.set_position
--- @function dynamic_grid:set_position_function
+-- @tparam DynamicGrid self
 -- @tparam function callback Function on node set position
 -- @treturn druid.dynamic_grid Current grid instance
-function DynamicGrid:set_position_function(callback)
+function DynamicGrid.set_position_function(self, callback)
 	self._set_position_function = callback or gui.set_position
 	return self
 end
@@ -238,16 +257,19 @@ end
 
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use dynamic_grid.nodes array before grid:clear
--- @function dynamic_grid:clear
+-- @tparam DynamicGrid self
 -- @treturn druid.dynamic_grid Current grid instance
-function DynamicGrid:clear()
+function DynamicGrid.clear(self)
 	self.nodes = {}
 	self:_update()
+
+	self.on_clear:trigger(self:get_context())
+
 	return self
 end
 
 
-function DynamicGrid:_add_node(node, index, origin_index)
+function DynamicGrid._add_node(self, node, index, origin_index)
 	self.nodes[index] = {
 		node = node,
 		pos = self:get_pos(index, node, origin_index),
@@ -262,10 +284,10 @@ end
 
 
 --- Update grid inner state
--- @function dynamic_grid:_update
+-- @tparam DynamicGrid self
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
-function DynamicGrid:_update(is_instant)
+function DynamicGrid._update(self, is_instant)
 	self:_update_indexes()
 	self:_update_borders()
 	self:_update_pos(is_instant)
@@ -273,9 +295,9 @@ end
 
 
 --- Update first and last indexes of grid nodes
--- @function dynamic_grid:_update_indexes
+-- @tparam DynamicGrid self
 -- @local
-function DynamicGrid:_update_indexes()
+function DynamicGrid._update_indexes(self)
 	self.first_index = nil
 	self.last_index = nil
 	for index in pairs(self.nodes) do
@@ -289,9 +311,9 @@ end
 
 
 --- Update grid content borders, recalculate min and max values
--- @function dynamic_grid:_update_borders
+-- @tparam DynamicGrid self
 -- @local
-function DynamicGrid:_update_borders()
+function DynamicGrid._update_borders(self)
 	if not self.first_index then
 		self.border = vmath.vector4(0)
 		return
@@ -318,10 +340,10 @@ end
 
 
 --- Update grid nodes position
--- @function dynamic_grid:_update_indexes
+-- @tparam DynamicGrid self
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
-function DynamicGrid:_update_pos(is_instant)
+function DynamicGrid._update_pos(self, is_instant)
 	local offset = self:_get_zero_offset()
 
 	for index, node in pairs(self.nodes) do
@@ -336,7 +358,7 @@ function DynamicGrid:_update_pos(is_instant)
 end
 
 
-function DynamicGrid:_get_next_node_pos(origin_node_index, new_node, place_side)
+function DynamicGrid._get_next_node_pos(self, origin_node_index, new_node, place_side)
 	local node = self.nodes[origin_node_index]
 
 	local new_node_size = self:_get_node_size(new_node)
@@ -355,17 +377,17 @@ function DynamicGrid:_get_next_node_pos(origin_node_index, new_node, place_side)
 end
 
 
-function DynamicGrid:_get_node_size(node)
+function DynamicGrid._get_node_size(self, node)
 	return vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
 end
 
 
 --- Return elements offset for correct posing nodes. Correct posing at
 -- parent pivot node (0:0) with adjusting of node sizes and anchoring
--- @function dynamic_grid:_get_zero_offset
+-- @tparam DynamicGrid self
 -- @treturn vector3 The offset vector
 -- @local
-function DynamicGrid:_get_zero_offset()
+function DynamicGrid._get_zero_offset(self)
 	-- zero offset: center pos - border size * anchor
 	return vmath.vector3(
 		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
@@ -375,7 +397,7 @@ end
 
 
 --- Return side vector to correct node shifting
-function DynamicGrid:_get_side_vector(side, is_forward)
+function DynamicGrid._get_side_vector(self, side, is_forward)
 	if side == const.SIDE.X then
 		return is_forward and SIDE_VECTORS.RIGHT or SIDE_VECTORS.LEFT
 	end
