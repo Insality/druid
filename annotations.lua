@@ -1,15 +1,12 @@
 ---@class druid
 ---@field checkbox druid.checkbox Submodule
 ---@field checkbox_group druid.checkbox_group Submodule
----@field drag druid.drag Submodule
 ---@field dynamic_grid druid.dynamic_grid Submodule
 ---@field helper druid.helper Submodule
----@field hover druid.hover Submodule
 ---@field input druid.input Submodule
 ---@field lang_text druid.lang_text Submodule
 ---@field progress druid.progress Submodule
 ---@field radio_group druid.radio_group Submodule
----@field scroll druid.scroll Submodule
 ---@field slider druid.slider Submodule
 ---@field static_grid druid.static_grid Submodule
 ---@field swipe druid.swipe Submodule
@@ -114,29 +111,22 @@
 ---@field checkboxes field  Array of checkbox components
 
 ---@class druid.drag : druid.base_component
----@field Events druid.drag.Events Component events
----@field Fields druid.drag.Fields Components fields
----@field Style druid.drag.Style Component style params.
----@field init fun(node:node, on_drag_callback:function) Drag component constructor
----@field set_click_zone fun(zone:node) Strict drag click area.
+---@field can_x bool Is drag component process vertical dragging.
+---@field can_y bool Is drag component process horizontal.
+---@field is_drag bool Is component now dragging
+---@field is_touch bool Is component now touching
+---@field on_drag druid_event on drag progress callback(self, dx, dy)
+---@field on_drag_end druid_event Event on drag end callback(self)
+---@field on_drag_start druid_event Event on drag start callback(self)
+---@field on_touch_end druid_event Event on touch end callback(self)
+---@field on_touch_start druid_event Event on touch start callback(self)
+---@field style druid.drag.style Component style params.
+---@field x number Current touch x position
+---@field y number Current touch y position
+---@field init fun(self:druid.drag, node:node, on_drag_callback:function) Drag component constructor
+---@field set_click_zone fun(self:druid.drag, zone:node) Strict drag click area.
 
----@class druid.drag.Events
----@field on_drag field  (self, dx, dy) Event on drag progress
----@field on_drag_end field  (self) Event on drag end
----@field on_drag_start field  (self) Event on drag start
----@field on_touch_end field  (self) Event on touch end
----@field on_touch_start field  (self) Event on touch start
-
----@class druid.drag.Fields
----@field can_x field  Is drag component process vertical dragging. Default - true
----@field can_y field  Is drag component process horizontal. Default - true
----@field is_drag field  Is component now dragging
----@field is_touch field  Is component now touching
----@field touch_start_pos field  Touch start position
----@field x field  Current touch x position
----@field y field  Current touch y position
-
----@class druid.drag.Style
+---@class druid.drag.style
 ---@field DRAG_DEADZONE field  Distance in pixels to start dragging
 
 ---@class druid.dynamic_grid : druid.base_component
@@ -178,17 +168,13 @@
 ---@field is_web fun() Check if device is HTML5
 
 ---@class druid.hover : druid.base_component
----@field Events druid.hover.Events Component events
----@field init fun(node:node, on_hover_callback:function) Component init function
----@field is_enabled fun():bool Return current hover enabled state
----@field set_click_zone fun(zone:node) Strict hover click area.
----@field set_enabled fun(state:bool) Set enable state of hover component.
----@field set_hover fun(state:bool) Set hover state
----@field set_mouse_hover fun(state:bool) Set mouse hover state
-
----@class druid.hover.Events
----@field on_hover field  On hover callback (Touch pressed)
----@field on_mouse_hover field  On mouse hover callback (Touch over without action_id)
+---@field on_hover druid_event On hover callback(self, state)
+---@field init fun(self:druid.hover, node:node, on_hover_callback:function) Component init function
+---@field is_enabled fun(self:druid.hover):bool Return current hover enabled state
+---@field set_click_zone fun(self:druid.hover, zone:node) Strict hover click area.
+---@field set_enabled fun(self:druid.hover, state:bool) Set enable state of hover component.
+---@field set_hover fun(self:druid.hover, state:bool) Set hover state
+---@field set_mouse_hover fun(self:druid.hover, state:bool) Set mouse hover state
 
 ---@class druid.input : druid.base_component
 ---@field Events druid.input.Events Component events
@@ -279,44 +265,37 @@
 ---@field checkboxes field  Array of checkbox components
 
 ---@class druid.scroll : druid.base_component
----@field Events druid.scroll.Events Component events
----@field Fields druid.scroll.Fields Component fields
----@field Style druid.scroll.Style Component style params.
----@field Scroll:_cancel_animate fun() Cancel animation on other animation or input touch
----@field bind_grid fun(Druid:druid.static_grid|druid.dynamic_grid):druid.scroll Bind the grid component (Static or Dynamic) to recalculate  scroll size on grid changes
----@field get_percent fun():vector3 Return current scroll progress status.
----@field get_scroll_size fun():vector3 Return vector of scroll size with width and height.
----@field init fun(view_node:node, content_node:node) Scroll constructor.
----@field is_inert fun():bool Return if scroll have inertion.
----@field scroll_to fun(vector3:point, is_instant:bool) Start scroll to target point.
----@field scroll_to_index fun(index:number, skip_cb:bool) Scroll to item in scroll by point index.
----@field scroll_to_percent fun(vector3:point, is_instant:bool) Start scroll to target scroll percent
----@field set_extra_stretch_size fun(stretch_size:number):druid.scroll Set extra size for scroll stretching.
----@field set_horizontal_scroll fun(state:bool):druid.scroll Lock or unlock horizontal scroll
----@field set_inert fun(state:bool):druid.scroll Enable or disable scroll inert.
----@field set_points fun(points:table):druid.scroll Set points of interest.
----@field set_size fun(size:vector3):druid.scroll Set scroll content size.
----@field set_vertical_scroll fun(state:bool):druid.scroll Lock or unlock vertical scroll
+---@field available_pos vector4 Available position for content node: (min_x, max_y, max_x, min_y)
+---@field available_size vector3 Size of available positions: (width, height, 0)
+---@field content_node node Scroll content node
+---@field drag Drag Drag Druid component
+---@field inertion vector3 Current inert speed
+---@field is_inert bool Flag, if scroll now moving by inertion
+---@field on_point_scroll druid_event On scroll_to_index function callback
+---@field on_scroll druid_event On scroll move callback
+---@field on_scroll_to druid_event On scroll_to function callback(self, target, is_instant)
+---@field position vector3 Current scroll posisition
+---@field selected number Current index of points of interests
+---@field style druid.scroll.style Component style params.
+---@field target_position vector3 Current scroll target position
+---@field view_node node Scroll view node
+---@field _cancel_animate fun(self:unknown) Cancel animation on other animation or input touch
+---@field bind_grid fun(self:druid.scroll, grid:StaticGrid|DynamicGrid):druid.scroll Bind the grid component (Static or Dynamic) to recalculate  scroll size on grid changes
+---@field get_percent fun(self:druid.scroll):vector3 Return current scroll progress status.
+---@field get_scroll_size fun(self:druid.scroll):vector3 Return vector of scroll size with width and height.
+---@field init fun(self:druid.scroll, view_node:node, content_node:node) Scroll constructor
+---@field is_inert fun(self:druid.scroll):bool Return if scroll have inertion.
+---@field scroll_to fun(self:druid.scroll, point:vector3, is_instant:bool) Start scroll to target point.
+---@field scroll_to_index fun(self:druid.scroll, index:number, skip_cb:bool) Scroll to item in scroll by point index.
+---@field scroll_to_percent fun(self:druid.scroll, percent:vector3, is_instant:bool) Start scroll to target scroll percent
+---@field set_extra_stretch_size fun(self:druid.scroll, stretch_size:number):druid.scroll Set extra size for scroll stretching.
+---@field set_horizontal_scroll fun(self:druid.scroll, state:bool):druid.scroll Lock or unlock horizontal scroll
+---@field set_inert fun(self:druid.scroll, state:bool):druid.scroll Enable or disable scroll inert.
+---@field set_points fun(self:druid.scroll, points:table):druid.scroll Set points of interest.
+---@field set_size fun(self:druid.scroll, size:vector3):druid.scroll Set scroll content size.
+---@field set_vertical_scroll fun(self:druid.scroll, state:bool):druid.scroll Lock or unlock vertical scroll
 
----@class druid.scroll.Events
----@field on_point_scroll field  On scroll_to_index function callback
----@field on_scroll field  On scroll move callback
----@field on_scroll_to field  On scroll_to function callback
-
----@class druid.scroll.Fields
----@field Current field  index of points of interests
----@field available_pos field  Available position for content node: (min_x, max_y, max_x, min_y)
----@field available_size field  Size of available positions: (width, height, 0)
----@field content_node field  Scroll content node
----@field drag field  Drag component
----@field inertion field  Current inert speed
----@field is_animate field  Flag, if scroll now animating by gui.animate
----@field is_inert field  Flag, if scroll now moving by inertion
----@field position field  Current scroll posisition
----@field target_position field  Current scroll target position
----@field view_node field  Scroll view node
-
----@class druid.scroll.Style
+---@class druid.scroll.style
 ---@field ANIM_SPEED field  Scroll gui.animation speed for scroll_to function
 ---@field BACK_SPEED field  Scroll back returning lerp speed
 ---@field EXTRA_STRETCH_SIZE field  extra size in pixels outside of scroll (stretch effect)

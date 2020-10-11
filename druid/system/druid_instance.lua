@@ -18,13 +18,14 @@
 -- @see druid.progress
 -- @see druid.static_grid
 -- @see druid.dynamic_grid
--- @see druid.scroll
+-- @see Scroll
 -- @see druid.slider
 -- @see druid.checkbox
 -- @see druid.checkbox_group
 -- @see druid.radio_group
 -- @see druid.swipe
--- @see druid.drag
+-- @see Drag
+-- @see Hover
 
 local const = require("druid.const")
 local helper = require("druid.helper")
