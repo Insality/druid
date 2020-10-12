@@ -1,3 +1,4 @@
+---@type druid
 local druid = require("druid.druid")
 
 local empty_style = require("druid.styles.empty.style")
