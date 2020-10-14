@@ -1,24 +1,43 @@
 --- Component to handle all GUI texts.
 -- Druid text can adjust itself for text node size
 -- Text will never will be outside of his text size (even multiline)
--- @module druid.text
+-- @module Text
+-- @within BaseComponent
+-- @alias druid.text
 
---- Component events
--- @table Events
--- @tfield druid_event on_set_text On set text callback
--- @tfield druid_event on_update_text_scale On adjust text size callback
--- @tfield druid_event on_set_pivot On change pivot callback
+--- On set text callback(self, text)
+-- @tfield druid_event on_set_text
 
---- Component fields
--- @table Fields
--- @tfield node node Text node
--- @tfield vector3 pos Current text position
--- @tfield vector3 start_scale Initial text node scale
--- @tfield vector3 scale Current text node scale
--- @tfield vector3 start_size Initial text node size
--- @tfield vector3 text_area Current text node available are
--- @tfield bool is_no_adjust Current text size adjust settings
--- @tfield vector3 color Current text color
+--- On adjust text size callback(self, new_scale)
+-- @tfield druid_event on_update_text_scale
+
+--- On change pivot callback(self, pivot)
+-- @tfield druid_event on_set_pivot
+
+--- Text node
+-- @tfield node node
+
+--- Current text position
+-- @tfield vector3 pos
+
+--- Initial text node scale
+-- @tfield vector3 start_scale
+
+--- Current text node scale
+-- @tfield vector3 scale
+
+--- Initial text node size
+-- @tfield vector3 start_size
+
+--- Current text node available are
+-- @tfield vector3 text_area
+
+--- Current text size adjust settings
+-- @tfield bool is_no_adjust
+
+--- Current text color
+-- @tfield vector3 color
+
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -77,11 +96,11 @@ end
 
 
 --- Component init function
--- @function text:init
+-- @tparam Text self
 -- @tparam node node Gui text node
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
 -- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
-function Text:init(node, value, no_adjust)
+function Text.init(self, node, value, no_adjust)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)
 
@@ -107,15 +126,15 @@ function Text:init(node, value, no_adjust)
 end
 
 
-function Text:on_layout_change()
+function Text.on_layout_change(self)
 	self:set_to(self.last_value)
 end
 
 
 --- Calculate text width with font with respect to trailing space
--- @function text:get_text_width
+-- @tparam Text self
 -- @tparam[opt] string text
-function Text:get_text_width(text)
+function Text.get_text_width(self, text)
 	text = text or self.last_value
 	local font = gui.get_font(self.node)
 	local scale = gui.get_scale(self.node)
@@ -134,9 +153,9 @@ end
 
 
 --- Set text to text field
--- @function text:set_to
+-- @tparam Text self
 -- @tparam string set_to Text for node
-function Text:set_to(set_to)
+function Text.set_to(self, set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, set_to)
 
@@ -149,27 +168,27 @@ end
 
 
 --- Set color
--- @function text:set_color
+-- @tparam Text self
 -- @tparam vector4 color Color for node
-function Text:set_color(color)
+function Text.set_color(self, color)
 	self.color = color
 	gui.set_color(self.node, color)
 end
 
 
 --- Set alpha
--- @function text:set_alpha
+-- @tparam Text self
 -- @tparam number alpha Alpha for node
-function Text:set_alpha(alpha)
+function Text.set_alpha(self, alpha)
 	self.color.w = alpha
 	gui.set_color(self.node, self.color)
 end
 
 
 --- Set scale
--- @function text:set_scale
+-- @tparam Text self
 -- @tparam vector3 scale Scale for node
-function Text:set_scale(scale)
+function Text.set_scale(self, scale)
 	self.last_scale = scale
 	gui.set_scale(self.node, scale)
 end
@@ -177,9 +196,9 @@ end
 
 --- Set text pivot. Text will re-anchor inside
 -- his text area
--- @function text:set_pivot
+-- @tparam Text self
 -- @tparam gui.pivot pivot Gui pivot constant
-function Text:set_pivot(pivot)
+function Text.set_pivot(self, pivot)
 	local prev_pivot = gui.get_pivot(self.node)
 	local prev_offset = const.PIVOTS[prev_pivot]
 
@@ -200,9 +219,9 @@ end
 
 
 --- Return true, if text with line break
--- @function text:is_multiline
+-- @tparam Text self
 -- @treturn bool Is text node with line break
-function Text:is_multiline()
+function Text.is_multiline(self)
 	return gui.get_line_break(self.node)
 end
 

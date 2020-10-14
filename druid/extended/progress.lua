@@ -1,19 +1,30 @@
 --- Basic progress bar component.
 -- For correct progress bar init it should be in max size from gui
--- @module druid.progress
+-- @module Progress
+-- @within BaseComponent
+-- @alias druid.progress
 
---- Component events
--- @table Events
--- @tfield druid_event on_change On progress bar change callback
+--- On progress bar change callback(self, new_value)
+-- @tfield druid_event on_change
 
---- Component fields
--- @table Fields
--- @tfield node node Progress bar fill node
--- @tfield string key The progress bar direction
--- @tfield vector3 scale Current progress bar scale
--- @tfield vector3 size Current progress bar size
--- @tfield number max_size Maximum size of progress bar
--- @tfield vector4 slice Progress bar slice9 settings
+--- Progress bar fill node
+-- @tfield node node
+
+--- The progress bar direction
+-- @tfield string key
+
+--- Current progress bar scale
+-- @tfield vector3 scale
+
+--- Current progress bar size
+-- @tfield vector3 size
+
+--- Maximum size of progress bar
+-- @tfield number max_size
+
+--- Progress bar slice9 settings
+-- @tfield vector4 slice
+
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -68,10 +79,10 @@ end
 --- Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
--- @table Style
+-- @table style
 -- @tfield[opt=5] number SPEED Progress bas fill rate. More -> faster
 -- @tfield[opt=0.005] number MIN_DELTA Minimum step to fill progress bar
-function Progress:on_style_change(style)
+function Progress.on_style_change(self, style)
 	self.style = {}
 	self.style.SPEED = style.SPEED or 5
 	self.style.MIN_DELTA = style.MIN_DELTA or 0.005
@@ -79,11 +90,11 @@ end
 
 
 --- Component init function
--- @function progress:init
+-- @tparam Progress self
 -- @tparam string|node node Progress bar fill node or node name
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
 -- @tparam[opt=1] number init_value Initial value of progress bar
-function Progress:init(node, key, init_value)
+function Progress.init(self, node, key, init_value)
 	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
 	self.prop = hash("scale."..key)
@@ -106,12 +117,12 @@ function Progress:init(node, key, init_value)
 end
 
 
-function Progress:on_layout_change()
+function Progress.on_layout_change(self)
 	self:set_to(self.last_value)
 end
 
 
-function Progress:update(dt)
+function Progress.update(self, dt)
 	if self.target then
 		local prev_value = self.last_value
 		local step = math.abs(self.last_value - self.target) * (self.style.SPEED*dt)
@@ -132,50 +143,50 @@ end
 
 
 --- Fill a progress bar and stop progress animation
--- @function progress:fill
-function Progress:fill()
+-- @tparam Progress self
+function Progress.fill(self)
 	set_bar_to(self, 1, true)
 end
 
 
 --- Empty a progress bar
--- @function progress:empty
-function Progress:empty()
+-- @tparam Progress self
+function Progress.empty(self)
 	set_bar_to(self, 0, true)
 end
 
 
 --- Instant fill progress bar to value
--- @function progress:set_to
+-- @tparam Progress self
 -- @tparam number to Progress bar value, from 0 to 1
-function Progress:set_to(to)
+function Progress.set_to(self, to)
 	set_bar_to(self, to)
 end
 
 
 --- Return current progress bar value
--- @function progress:get
-function Progress:get()
+-- @tparam Progress self
+function Progress.get(self)
 	return self.last_value
 end
 
 
 --- Set points on progress bar to fire the callback
--- @function progress:set_steps
+-- @tparam Progress self
 -- @tparam number[] steps Array of progress bar values
 -- @tparam function callback Callback on intersect step value
 -- @usage progress:set_steps({0, 0.3, 0.6, 1}, function(self, step) end)
-function Progress:set_steps(steps, callback)
+function Progress.set_steps(self, steps, callback)
 	self.steps = steps
 	self.step_callback = callback
 end
 
 
 --- Start animation of a progress bar
--- @function progress:to
+-- @tparam Progress self
 -- @tparam number to value between 0..1
 -- @tparam[opt] function callback Callback on animation ends
-function Progress:to(to, callback)
+function Progress.to(self, to, callback)
 	to = helper.clamp(to, 0, 1)
 	-- cause of float error
 	local value = helper.round(to, 5)

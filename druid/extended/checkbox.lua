@@ -1,15 +1,20 @@
 --- Druid checkbox component
--- @module druid.checkbox
+-- @module Checkbox
+-- @within BaseComponent
+-- @alias druid.checkbox
 
---- Component events
--- @table Events
--- @tfield druid_event on_change_state On change state callback
+--- On change state callback(self, state)
+-- @tfield druid_event on_change_state
 
---- Component fields
--- @table Fields
--- @tfield node node Visual node
--- @tfield[opt=node] node click_node Button trigger node
--- @tfield druid.button button Button component from click_node
+--- Visual node
+-- @tfield node node
+
+--- Button trigger node
+-- @tfield[opt=node] node click_node
+
+--- Button component from click_node
+-- @tfield Button button
+
 
 local const = require("druid.const")
 local Event = require("druid.event")
@@ -26,9 +31,9 @@ end
 --- Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
--- @table Style
+-- @table style
 -- @tfield function on_change_state (self, node, state)
-function Checkbox:on_style_change(style)
+function Checkbox.on_style_change(self, style)
 	self.style = {}
 
 	self.style.on_change_state = style.on_change_state or function(_, node, state)
@@ -38,11 +43,11 @@ end
 
 
 --- Component init function
--- @function checkbox:init
+-- @tparam Checkbox self
 -- @tparam node node Gui node
 -- @tparam function callback Checkbox callback
--- @tparam[opt=node] node click node Trigger node, by default equals to node
-function Checkbox:init(node, callback, click_node)
+-- @tparam[opt=node] node click_node Trigger node, by default equals to node
+function Checkbox.init(self, node, callback, click_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 	self.click_node = self:get_node(click_node)
@@ -54,16 +59,16 @@ function Checkbox:init(node, callback, click_node)
 end
 
 
-function Checkbox:on_layout_change()
+function Checkbox.on_layout_change(self)
 	self:set_state(self.state, true)
 end
 
 
 --- Set checkbox state
--- @function checkbox:set_state
+-- @tparam Checkbox self
 -- @tparam bool state Checkbox state
 -- @tparam bool is_silent Don't trigger on_change_state if true
-function Checkbox:set_state(state, is_silent)
+function Checkbox.set_state(self, state, is_silent)
 	self.state = state
 	self.style.on_change_state(self, self.node, state)
 
@@ -74,9 +79,9 @@ end
 
 
 --- Return checkbox state
--- @function checkbox:get_state
+-- @tparam Checkbox self
 -- @treturn bool Checkbox state
-function Checkbox:get_state()
+function Checkbox.get_state(self)
 	return self.state
 end
 
