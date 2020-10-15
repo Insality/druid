@@ -206,7 +206,7 @@ function DruidInstance.remove(self, component)
 
 	-- Recursive remove all children of component
 	local children = component._meta.children
-	for i = 1, #children do
+	for i = #children, 1, -1do
 		self:remove(children[i])
 		local parent = children[i]:get_parent_component()
 		if parent then
