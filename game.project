@@ -11,6 +11,7 @@ height = 900
 [project]
 title = druid
 version = 0.5.0
+dependencies = https://github.com/insalitygames/deftest/archive/master.zip
 
 [library]
 include_dirs = druid
