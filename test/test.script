@@ -1,0 +1,16 @@
+local deftest = require "deftest.deftest"
+
+local tests = {
+	-- Test list
+}
+
+
+function init(self)
+	print('[DefTest]: Init of DefTest')
+	for i = 1, #tests do
+		deftest.add(tests[i])
+	end
+
+	local is_report = (sys.get_config("test.report") == "1")
+	deftest.run({ coverage = { enabled = is_report } })
+end
