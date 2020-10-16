@@ -1,6 +1,4 @@
 [liveupdate]
 mode = Zip
-zip-filepath = /Users/insality/code/defold/defold-eva/dist
-supported-versions = "1.0.0"
-publickey = /Users/insality/code/provisions/liveupdate/public.der
-privatekey = /Users/insality/code/provisions/liveupdate/private.der
+supported-versions = 
+
