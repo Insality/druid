@@ -138,6 +138,9 @@ function Input.on_style_change(self, style)
 end
 
 
+-- @tparam node click_node Button node to enabled input component
+-- @tparam node text_node Text node what will be changed on user input
+-- @tparam[opt] number keyboard_type Gui keyboard type for input field
 function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
 	self.text = self.druid:new_text(text_node)

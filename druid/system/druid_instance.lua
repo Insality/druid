@@ -349,183 +349,214 @@ end
 
 --- Create button basic component
 -- @tparam DruidInstance self
--- @tparam args ... button init args
+-- @tparam node node Gui node
+-- @tparam function callback Button callback
+-- @tparam[opt] table params Button callback params
+-- @tparam[opt] node anim_node Button anim node (node, if not provided)
 -- @treturn Button button component
-function DruidInstance.new_button(self, ...)
-	return DruidInstance.create(self, button, ...)
+function DruidInstance.new_button(self, node, callback, params, anim_node)
+	return DruidInstance.create(self, button, node, callback, params, anim_node)
 end
 
 
 --- Create blocker basic component
 -- @tparam DruidInstance self
--- @tparam args ... blocker init args
+-- @tparam node node Gui node
 -- @treturn Blocker blocker component
-function DruidInstance.new_blocker(self, ...)
-	return DruidInstance.create(self, blocker, ...)
+function DruidInstance.new_blocker(self, node)
+	return DruidInstance.create(self, blocker, node)
 end
 
 
 --- Create back_handler basic component
 -- @tparam DruidInstance self
--- @tparam args ... back_handler init args
+-- @tparam callback callback On back button
+-- @tparam[opt] any params Callback argument
 -- @treturn BackHandler back_handler component
-function DruidInstance.new_back_handler(self, ...)
-	return DruidInstance.create(self, back_handler, ...)
+function DruidInstance.new_back_handler(self, callback, params)
+	return DruidInstance.create(self, back_handler, callback, params)
 end
 
 
 --- Create hover basic component
 -- @tparam DruidInstance self
--- @tparam args ... hover init args
+-- @tparam node node Gui node
+-- @tparam function on_hover_callback Hover callback
 -- @treturn Hover hover component
-function DruidInstance.new_hover(self, ...)
-	return DruidInstance.create(self, hover, ...)
+function DruidInstance.new_hover(self, node, on_hover_callback)
+	return DruidInstance.create(self, hover, node, on_hover_callback)
 end
 
 
 --- Create text basic component
 -- @tparam DruidInstance self
--- @tparam args ... text init args
+-- @tparam node node Gui text node
+-- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
+-- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
 -- @treturn Tet text component
-function DruidInstance.new_text(self, ...)
-	return DruidInstance.create(self, text, ...)
+function DruidInstance.new_text(self, node, value, no_adjust)
+	return DruidInstance.create(self, text, node, value, no_adjust)
 end
 
 
 --- Create grid basic component
 -- Deprecated
 -- @tparam DruidInstance self
--- @tparam args ... grid init args
+-- @tparam node parent The gui node parent, where items will be placed
+-- @tparam node element Element prefab. Need to get it size
+-- @tparam[opt=1] number in_row How many nodes in row can be placed
 -- @treturn StaticGrid grid component
-function DruidInstance.new_grid(self, ...)
+function DruidInstance.new_grid(self, parent, element, in_row)
 	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
-	return DruidInstance.create(self, static_grid, ...)
+	return DruidInstance.create(self, static_grid, parent, element, in_row)
 end
 
 
 --- Create static grid basic component
 -- @tparam DruidInstance self
--- @tparam args ... grid init args
+-- @tparam node parent The gui node parent, where items will be placed
+-- @tparam node element Element prefab. Need to get it size
+-- @tparam[opt=1] number in_row How many nodes in row can be placed
 -- @treturn StaticGrid grid component
-function DruidInstance.new_static_grid(self, ...)
-	return DruidInstance.create(self, static_grid, ...)
+function DruidInstance.new_static_grid(self, parent, element, in_row)
+	return DruidInstance.create(self, static_grid, parent, element, in_row)
 end
 
 
 --- Create scroll basic component
 -- @tparam DruidInstance self
--- @tparam args ... scroll init args
+-- @tparam node view_node GUI view scroll node
+-- @tparam node content_node GUI content scroll node
 -- @treturn Scroll scroll component
-function DruidInstance.new_scroll(self, ...)
-	return DruidInstance.create(self, scroll, ...)
+function DruidInstance.new_scroll(self, view_node, content_node)
+	return DruidInstance.create(self, scroll, view_node, content_node)
 end
 
 
 --- Create swipe basic component
 -- @tparam DruidInstance self
--- @tparam args ... swipe init args
+-- @tparam node node Gui node
+-- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
 -- @treturn Swipe swipe component
-function DruidInstance.new_swipe(self, ...)
-	return DruidInstance.create(self, swipe, ...)
+function DruidInstance.new_swipe(self, node, on_swipe_callback)
+	return DruidInstance.create(self, swipe, node, on_swipe_callback)
 end
 
 
 --- Create drag basic component
 -- @tparam DruidInstance self
--- @tparam args ... drag init args
+-- @tparam node node GUI node to detect dragging
+-- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
 -- @treturn Drag drag component
-function DruidInstance.new_drag(self, ...)
-	return DruidInstance.create(self, drag, ...)
+function DruidInstance.new_drag(self, node, on_drag_callback)
+	return DruidInstance.create(self, drag, node, on_drag_callback)
 end
 
 
 --- Create dynamic grid component
 -- @tparam DruidInstance self
--- @tparam args ... grid init args
+-- @tparam node parent The gui node parent, where items will be placed
 -- @treturn DynamicGrid grid component
-function DruidInstance.new_dynamic_grid(self, ...)
+function DruidInstance.new_dynamic_grid(self, parent)
 	-- return helper.extended_component("dynamic_grid")
-	return DruidInstance.create(self, dynamic_grid, ...)
+	return DruidInstance.create(self, dynamic_grid, parent)
 end
 
 
 --- Create lang_text component
 -- @tparam DruidInstance self
--- @tparam args ... lang_text init args
+-- @tparam node node The text node
+-- @tparam string locale_id Default locale id
+-- @tparam bool no_adjust If true, will not correct text size
 -- @treturn LangText lang_text component
-function DruidInstance.new_lang_text(self, ...)
+function DruidInstance.new_lang_text(self, node, locale_id, no_adjust)
 		-- return helper.extended_component("lang_text")
-	return DruidInstance.create(self, lang_text, ...)
+	return DruidInstance.create(self, lang_text, node, locale_id, no_adjust)
 end
 
 
 --- Create slider component
 -- @tparam DruidInstance self
--- @tparam args ... slider init args
+-- @tparam node node Gui pin node
+-- @tparam vector3 end_pos The end position of slider
+-- @tparam[opt] function callback On slider change callback
 -- @treturn Slider slider component
-function DruidInstance.new_slider(self, ...)
+function DruidInstance.new_slider(self, node, end_pos, callback)
 	-- return helper.extended_component("slider")
-	return DruidInstance.create(self, slider, ...)
+	return DruidInstance.create(self, slider, node, end_pos, callback)
 end
 
 
 --- Create checkbox component
 -- @tparam DruidInstance self
--- @tparam args ... checkbox init args
+-- @tparam node node Gui node
+-- @tparam function callback Checkbox callback
+-- @tparam[opt=node] node click_node Trigger node, by default equals to node
 -- @treturn Checkbox checkbox component
-function DruidInstance.new_checkbox(self, ...)
+function DruidInstance.new_checkbox(self, node, callback, click_node)
 	-- return helper.extended_component("checkbox")
-	return DruidInstance.create(self, checkbox, ...)
+	return DruidInstance.create(self, checkbox, node, callback, click_node)
 end
 
 
 --- Create input component
 -- @tparam DruidInstance self
--- @tparam args ... input init args
+-- @tparam node click_node Button node to enabled input component
+-- @tparam node text_node Text node what will be changed on user input
+-- @tparam[opt] number keyboard_type Gui keyboard type for input field
 -- @treturn Input input component
-function DruidInstance.new_input(self, ...)
+function DruidInstance.new_input(self, click_node, text_node, keyboard_type)
 	-- return helper.extended_component("input")
-	return DruidInstance.create(self, input, ...)
+	return DruidInstance.create(self, input, click_node, text_node, keyboard_type)
 end
 
 
 --- Create checkbox_group component
 -- @tparam DruidInstance self
--- @tparam args ... checkbox_group init args
+-- @tparam node[] nodes Array of gui node
+-- @tparam function callback Checkbox callback
+-- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
 -- @treturn CheckboxGroup checkbox_group component
-function DruidInstance.new_checkbox_group(self, ...)
+function DruidInstance.new_checkbox_group(self, nodes, callback, click_nodes)
 	-- return helper.extended_component("checkbox_group")
-	return DruidInstance.create(self, checkbox_group, ...)
+	return DruidInstance.create(self, checkbox_group, nodes, callback, click_nodes)
 end
 
 
 --- Create radio_group component
 -- @tparam DruidInstance self
--- @tparam args ... radio_group init args
+-- @tparam node[] nodes Array of gui node
+-- @tparam function callback Radio callback
+-- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
 -- @treturn RadioGroup radio_group component
-function DruidInstance.new_radio_group(self, ...)
+function DruidInstance.new_radio_group(self, nodes, callback, click_nodes)
 	-- return helper.extended_component("radio_group")
-	return DruidInstance.create(self, radio_group, ...)
+	return DruidInstance.create(self, radio_group, nodes, callback, click_nodes)
 end
 
 
 --- Create timer component
 -- @tparam DruidInstance self
--- @tparam args ... timer init args
+-- @tparam node node Gui text node
+-- @tparam number seconds_from Start timer value in seconds
+-- @tparam[opt=0] number seconds_to End timer value in seconds
+-- @tparam[opt] function callback Function on timer end
 -- @treturn Timer timer component
-function DruidInstance.new_timer(self, ...)
+function DruidInstance.new_timer(self, node, seconds_from, seconds_to, callback)
 	-- return helper.extended_component("timer")
-	return DruidInstance.create(self, timer, ...)
+	return DruidInstance.create(self, timer, node, seconds_from, seconds_to, callback)
 end
 
 
 --- Create progress component
 -- @tparam DruidInstance self
--- @tparam args ... progress init args
+-- @tparam string|node node Progress bar fill node or node name
+-- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
+-- @tparam[opt=1] number init_value Initial value of progress bar
 -- @treturn Progress progress component
-function DruidInstance.new_progress(self, ...)
+function DruidInstance.new_progress(self, node, key, init_value)
 	-- return helper.extended_component("progress")
-	return DruidInstance.create(self, progress, ...)
+	return DruidInstance.create(self, progress, node, key, init_value)
 end
 
 
