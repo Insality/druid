@@ -176,9 +176,11 @@ end
 -- @tparam StaticGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam bool is_shift_nodes If true, will shift nodes left after index
+-- @treturn Node The deleted gui node from grid
 function StaticGrid.remove(self, index, is_shift_nodes)
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
+	local remove_node = self.nodes[index]
 	self.nodes[index] = nil
 
 	if is_shift_nodes then
@@ -191,6 +193,8 @@ function StaticGrid.remove(self, index, is_shift_nodes)
 
 	self.on_remove_item:trigger(self:get_context(), index)
 	self.on_change_items:trigger(self:get_context(), index)
+
+	return remove_node
 end
 
 

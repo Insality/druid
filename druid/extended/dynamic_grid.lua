@@ -178,12 +178,14 @@ end
 -- @tparam DynamicGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=false] bool is_shift_left If true, shift all nodes to the left, otherwise shift nodes to the right
+-- @treturn Node The deleted gui node from grid
 function DynamicGrid.remove(self, index, is_shift_left)
 	local delta = is_shift_left and -1 or 1
 
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
 	-- Just set nil for delete node data
+	local removed_node = self.nodes[index].node
 	self.nodes[index] = nil
 
 	-- After delete node, we should shift nodes and recalc their poses, depends from is_shift_left
@@ -200,6 +202,8 @@ function DynamicGrid.remove(self, index, is_shift_left)
 
 	self.on_remove_item:trigger(self:get_context(), index)
 	self.on_change_items:trigger(self:get_context(), index)
+
+	return removed_node
 end
 
 
