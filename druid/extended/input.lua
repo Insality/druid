@@ -71,11 +71,11 @@ end
 local function select(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
-	if not self.selected then
+	if not self.is_selected then
 		self:increase_input_priority()
 		self.button:increase_input_priority()
 		self.previous_value = self.value
-		self.selected = true
+		self.is_selected = true
 
 		gui.show_keyboard(self.keyboard_type, false)
 		self.on_input_select:trigger(self:get_context())
@@ -88,10 +88,10 @@ end
 local function unselect(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
-	if self.selected then
+	if self.is_selected then
 		self:reset_input_priority()
 		self.button:reset_input_priority()
-		self.selected = false
+		self.is_selected = false
 
 		gui.hide_keyboard()
 		self.on_input_unselect:trigger(self:get_context())
@@ -145,7 +145,7 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
 	self.text = self.druid:new_text(text_node)
 
-	self.selected = false
+	self.is_selected = false
 	self.value = self.text.last_value
 	self.previous_value = self.text.last_value
 	self.current_value = self.text.last_value
@@ -176,7 +176,7 @@ end
 
 
 function Input.on_input(self, action_id, action)
-	if self.selected then
+	if self.is_selected then
 		local input_text = nil
 		if action_id == const.ACTION_TEXT then
 			-- ignore return key
@@ -235,7 +235,7 @@ function Input.on_input(self, action_id, action)
 		end
 	end
 
-	return self.selected
+	return self.is_selected
 end
 
 

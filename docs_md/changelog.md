@@ -131,3 +131,10 @@ Also check _component.template.lua_ what you can use for your own custom compone
 - Add `component.template.lua` as template for Druid custom component
 - Update the example app
 
+
+### Druid 0.6.0:
+
+Desc
+
+- Input component: rename field _selected_ to _is_selected_ (according to the docs)
+- Add EmmyLua annotations. See how to use it FAQ
