@@ -1,6 +1,7 @@
 --- Druid constants
 -- @local
--- @module const
+-- @module DruidConst
+-- @alias druid_const
 
 local M = {}
 
@@ -102,9 +103,8 @@ M.SWIPE = {
 }
 
 
-M.GRID_MODE = {
-	STATIC = "static",
-	DYNAMIC = "dynamic",
+M.ERRORS = {
+	GRID_DYNAMIC_ANCHOR = "The pivot of dynamic grid node should be West, East, South or North"
 }
 
 

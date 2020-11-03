@@ -131,6 +131,16 @@ function M.lerp(a, b, t)
 end
 
 
+function M.contains(t, value)
+	for i = 1, #t do
+		if t[i] == value then
+			return i
+		end
+	end
+	return false
+end
+
+
 --- Check if node is enabled in gui hierarchy.
 -- Return false, if node or any his parent is disabled
 -- @function helper.is_enabled
@@ -187,5 +197,29 @@ function M.get_border(node)
 		-size.y*(0.5 + pivot_offset.y)
 	)
 end
+
+
+--- Show deprecated message. Once time per message
+-- @function helper.deprecated
+-- @tparam string message The deprecated message
+local _deprecated_messages = {}
+function M.deprecated(message)
+	if _deprecated_messages[message] then
+		return
+	end
+
+	print("[Druid]: " .. message)
+	_deprecated_messages[message] = true
+end
+
+
+-- Show message to require extended component
+function M.extended_component(component_name)
+	print(string.format("[Druid]: The component %s is extended component. You have to register it via druid.register to use it", component_name))
+	print("[Druid]: Use next code:")
+	print(string.format('local %s = require("druid.extended.%s")', component_name, component_name))
+	print(string.format('druid.register("%s", %s)', component_name, component_name))
+end
+
 
 return M

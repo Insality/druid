@@ -13,6 +13,9 @@ Basic Druid input component. Handle input on node and provide different callback
 Create button with druid: `button = druid:new_button(node_name, callback, [params], [animation_node])`
 Where node name is name of node from GUI scene. You can use `node_name` as input trigger zone and point another node for animation via `animation_node`
 
+### Usecase
+_fill example usecases_
+
 ### Notes
 - Button callback have next params: (self, params, button_instance)
 	- **self** - Druid self context
@@ -146,6 +149,7 @@ Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or ju
 - Progress bar can fill only by vertical or horizontal size. If you want make diagonal progress bar, just rotate node in GUI scene
 - If you have glitchy or dark texture bug with progress bar, try to disable mipmaps in your texture profiles
 
+
 ## Slider
 [Slider API here](https://insality.github.io/druid/modules/druid.slider.html)
 
@@ -161,11 +165,12 @@ Pin node (node_name in params) should be placed in zero position (initial). It w
 - You can setup points of interests on slider via `slider:set_steps`. If steps are exist, slider values will be only from this steps (notched slider)
 - For now, start pos and end pos should be on vertical or horizontal line (their x or y value should be equal)
 
+
 ## Input
 [Input API here](https://insality.github.io/druid/modules/druid.input.html)
 
 ### Overview
-Basic Druid text input component (unimplemented)
+Basic Druid text input component
 
 ### Setup
 Create input component with druid: `input = druid:new_input(button_node_name, text_node_name, keyboard_type)`
@@ -193,6 +198,7 @@ Create checkbox component with druid: `checkbox = druid:new_checkbox(node, callb
 ### Notes
 - Checkbox uses button to handle click
 - You can setup another node to handle input with click_node arg in component init: `druid:new_checkbox(node, callback, [click_node])`
+
 
 ## Checkbox group
 [Checkbox group API here](https://insality.github.io/druid/modules/druid.checkbox_group.html)
@@ -222,6 +228,7 @@ Create radio_group component with druid: `group = druid:new_radio_group(nodes[],
 - You can get/set radio_group state with `group:set_state()` and `group:get_state()`
 - Only different from checkbox_group: on click another checkboxes in this group will be unchecked
 
+
 ## Timer
 [Timer API here](https://insality.github.io/druid/modules/druid.timer.html)
 
@@ -233,24 +240,55 @@ Create timer component with druid: `timer = druid:new_timer(text_node, from_seco
 
 ### Notes
 - Timer fires callback, when timer value equals to _to_seconds_
-- Timer will setup text node with current timer value
+- Timer will set text node with current timer value
 - Timer uses update function to handle time
 
-## Grid
-[Grid API here](https://insality.github.io/druid/modules/druid.grid.html)
+
+## Static Grid
+[Static Grid API here](https://insality.github.io/druid/modules/druid.static_grid.html)
 
 ### Overview
-Component for manage node positions. Very simple implementation for nodes with equal size
+Component for manage node positions.
+Static grid have constant node size, so it possible to calculate node positions before placement. Nodes can be placed with gaps.
+Static grid can shift elements on add/remove functions.
 
 ### Setup
-Create  component with druid: `grid = druid:new_grid(parent_node, prefab_node, max_in_row_elements)`
+Create  component with druid: `grid = druid:new_static_grid(parent_node, prefab_node, max_in_row_elements)`
 
 ### Notes
-- Grid on _adding elements_ will setup parent to _parent_node_
+- On _add node_ grid will set nodeup parent to _parent_node_
 - You can get array of position of every element for setup points of interest in scroll component
 - You can get size of all elements for setup size in scroll component
-- You can adjust anchor and border between elements
-- _Prefab node_ in component init used to get grid item size
+- You can also bind the grid to the scroll component for auto resize scroll content size
+- Pivot of parent_node matter for node placement
+- _Prefab node_ used to get node size and anchor
+- You can point *position_function* for animations with _static_grid:set_position_function(node, pos)_ callback. Default - *gui.set_position()*
+
+
+## Dynamic Grid
+[Dynamic Grid API here](https://insality.github.io/druid/modules/druid.dynamic_grid.html)
+
+### Overview
+Component for manage node positions with different node sizes.
+Unlike Static Grid, Dynamic Grid can place nodes only in one row or in one column.
+Dynamic Grid can't have gaps between elements 
+- you will get error, if try spawn element far away from others.
+Dynamic Grid should have __West__, __East__, __South__ or __North__ pivot (vertical or horizontal element placement)
+
+### Setup
+Create  component with druid: `grid = druid:new_dynamic_grid(parent_node)`
+
+Check the _parent_node_ have correct pivot point. You will get the error otherwise.
+
+### Notes
+- On _add node_ grid will set node parent to _parent_node_
+- You can get array of position of every element for setup points of interest in scroll component
+- You can get size of all elements for setup size in scroll component
+- You can also bind the grid to the scroll component for auto resize scroll content size
+- Pivot of parent_node matter for node placement
+- You can point *position_function* for animations with _static_grid:set_position_function(node, pos)_ callback. Default - *gui.set_position()*
+- First node placed at Grid pivot point. Other nodes placed nearby of other nodes.
+- On *add/remove* nodes always shifted. You can point the shift side in this functions (*is_shift_left* boolean argumentp
 
 ## Hover
 [Hover API here](https://insality.github.io/druid/modules/druid.hover.html)

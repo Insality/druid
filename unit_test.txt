@@ -1,0 +1,9 @@
+[bootstrap]
+main_collection = /test/test.collectionc
+
+[display]
+height = 256
+width = 256
+
+[test]
+report = 1

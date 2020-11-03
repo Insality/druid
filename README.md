@@ -1,11 +1,11 @@
 
-
-
 [![](media/druid_logo.png)](https://insality.github.io/druid/)
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/insality/druid)](https://github.com/Insality/druid/releases)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/insality/druid/Run%20tests)](https://github.com/Insality/druid/actions)
+[![codecov](https://codecov.io/gh/Insality/druid/branch/master/graph/badge.svg)](https://codecov.io/gh/Insality/druid)
 
-**Druid** - powerful Defold component UI library. Use basic **Druid** components or make your own game-specific components to make amazing GUI in your games.
+**Druid** - powerful Defold component UI library. Use basic and extended **Druid** components or make your own game-specific components to make amazing GUI in your games.
 
 
 ## Setup
@@ -16,11 +16,11 @@ You can use the **Druid** extension in your own project by adding this project a
 
 > [https://github.com/Insality/druid/archive/master.zip](https://github.com/Insality/druid/archive/master.zip)
 
-Or point to the ZIP file of a  [specific release](https://github.com/Insality/druid/releases).
+Or point to the ZIP file of a [specific release](https://github.com/Insality/druid/releases).
 
 ### Input bindings
 
-For **Druid** to work requires next input bindings:
+**Druid** requires the following input bindings:
 
 - Mouse trigger - `Button 1` -> `touch` _For basic input components_
 - Key trigger - `Backspace` -> `key_backspace`  _For back_handler component, input component_
@@ -35,9 +35,9 @@ For **Druid** to work requires next input bindings:
 
 ### Input capturing [optional]
 
-By default, **Druid** will auto-capture input focus, if any input component will be created. So you don't need to call `msg.post(".", "acquire_input_focus)"`
+By default, **Druid** will auto-capture input focus, if any input component will be created. So you don't need to call `msg.post(".", "acquire_input_focus")`
 
-If you not need this behaviour, you can disable it by settings `druid.no_auto_input` field in _game.project_:
+If you don't need this behaviour, you can disable it by settings `druid.no_auto_input` field in _game.project_:
 ```
 [druid]
 no_auto_input = 1
@@ -64,10 +64,6 @@ druid.set_default_style(your_style)
 -- to retranslate all lang_text components:
 druid.on_language_change()
 
--- Call this function on layout changing in the game,
--- to reapply layouts
-druid.on_layout_change()
-
 -- Call this function inside window.set_listener
 -- to catch game focus lost/gained callbacks:
 druid.on_window_callback(event)
@@ -76,77 +72,91 @@ druid.on_window_callback(event)
 
 ## Components
 
-**Druid** provides next basic components:
+**Druid** provides the following *basic* components:
 
-- **[Button](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#button)** - Basic Druid input component
+- **[Button](docs_md/01-components.md#button)** - Basic Druid button input component. Handles all types of interactions (tap, long-tap, hold-tap, double-tap, simple key triggers, etc)
 
-- **[Text](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#text)** - Basic Druid text component
+- **[Text](docs_md/01-components.md#text)** - Basic Druid text component. Wrap on gui text node, handle text size adjusting.
 
-- **[Lang text](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#lang-text)** - Wrap on Text component to handle localization
+- **[Scroll](docs_md/01-components.md#scroll)** - Basic Druid scroll component
 
-- **[Scroll](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#scroll)** - Basic Druid scroll component
+- **[Blocker](docs_md/01-components.md#blocker)** - Block input in node zone component
 
-- **[Progress](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#progress)** - Basic Druid progress bar component
+- **[Back Handler](docs_md/01-components.md#back-handler)** - Handle back button (Android back button, backspace key)
 
-- **[Slider](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#slider)** - Basic Druid slider component
+- **[Static Grid](docs_md/01-components.md#static-grid)** - Component to manage node positions with equal sizes
 
-- **[Input](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#input)** - Basic Druid text input component (unimplemented)
+- **[Hover](docs_md/01-components.md#hover)** - System Druid component, handle hover node state
 
-- **[Checkbox](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#checkbox)** - Basic Druid checkbox component
+- **[Swipe](docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
 
-- **[Checkbox group](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#checkbox-group)** - Several checkboxes in one group
+- **[Drag](docs_md/01-components.md#drag)** - System Druid component, handle drag input on node 
 
-- **[Radio group](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#radio-group)** - Several checkboxes in one group with single choice
+**Druid** also provides the following *extended* components:
 
-- **[Blocker](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#blocker)** - Block input in node zone component
+***Note**: In the future, to use extended components, you should register them first. This is required to make **Druid** modular - to exclude unused components from builds*
 
-- **[Back Handler](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#back-handler)** - Handle back button (Android back, backspace)
+- **[Checkbox](docs_md/01-components.md#checkbox)** - Checkbox component
 
-- **[Timer](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#timer)** - Handle timer work on gui text node
+- **[Checkbox group](docs_md/01-components.md#checkbox-group)** - Several checkboxes in one group
 
-- **[Grid](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#grid)** - Component for manage node positions 
+- **[Dynamic Grid](docs_md/01-components.md#dynamic-grid)** - Component to manage node positions with different sizes. Only in one row or column
 
-- **[Hover](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#hover)** - System Druid component, handle hover node state
+- **[Input](docs_md/01-components.md#input)** - User text input component
 
-- **[Swipe](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
+- **[Lang text](docs_md/01-components.md#lang-text)** - Wrap on Text component to handle localization
 
-- **[Drag](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#drag)** - System Druid component, handle drag input on node 
+- **[Progress](docs_md/01-components.md#progress)** - Progress bar component
 
-Full info see on _[components.md](https://github.com/Insality/druid/blob/master/docs_md/01-components.md)_
+- **[Radio group](docs_md/01-components.md#radio-group)** - Several checkboxes in one group with a single choice
+
+- **[Slider](docs_md/01-components.md#slider)** - Slider component
+
+- **[Timer](docs_md/01-components.md#timer)** - Handle timer work on gui text node
+
+For a complete overview, see: _[components.md](docs_md/01-components.md)_.
 
 
 ## Basic usage
 
-For using **Druid**, first you should create Druid instance to spawn components. Pass to new Druid instance main engine functions: *update*, *on_message* and *on_input*
+To use **Druid**, first you should create a Druid instance to spawn components and add Druids main engine functions: *update*, *final*, *on_message* and *on_input*.
 
-All **Druid** components as arguments can apply node name string, you can don't do `gui.get_node()` before
+All **Druid** components take node name string as arguments, don't do `gui.get_node()` before.
 
-All **Druid** and component methods calling with `:` like `self.druid:new_button()`
+All **Druid** and component methods are called with `:` like `self.druid:new_button()`.
 
 ```lua
 local druid = require("druid.druid")
 
 local function button_callback(self)
-	print("Button was clicked!")
+    print("Button was clicked!")
 end
 
 function init(self)
-	self.druid = druid.new(self)
-	self.druid:new_button("button_node_name", button_callback)
+    self.druid = druid.new(self)
+    self.druid:new_button("button_node_name", button_callback)
 end
 
 function final(self)
-	self.druid:final()
+    self.druid:final()
 end
 
-function on_input(self, action_id, action)
-	return self.druid:on_input(action_id, action)
+function on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
 end
+
+
+function on_input(self, action_id, action)
+    return self.druid:on_input(action_id, action)
+end
+
 ```
+
+For all **Druid** instance functions, [see here](https://insality.github.io/druid/modules/druid_instance.html).
 
 ## Druid Events
 
-Any **Druid** components as callbacks uses [Druid Events](https://insality.github.io/druid/modules/druid_event.html). In component API ([button example](https://insality.github.io/druid/modules/druid.button.html#Events)) pointed list of component events. You can manually subscribe on this events by next API:
+Any **Druid** components as callbacks use [Druid Events](https://insality.github.io/druid/modules/druid_event.html). In component API ([button example](https://insality.github.io/druid/modules/druid.button.html#Events)) pointed list of component events. You can manually subscribe to those events with the following API:
 
 - **event:subscribe**(callback)
 
@@ -154,49 +164,51 @@ Any **Druid** components as callbacks uses [Druid Events](https://insality.githu
 
 - **event:clear**()
 
-Any events can handle several callbacks, if needed.
+You can subscribe several callbacks to a single event.
 
+## Druid Lifecycle
 
-## Druid lifecycle
-
-Here is full druid lifecycle setup in your ***.gui_script** file:
+Here is full Druid lifecycle setup for your ***.gui_script** file:
 ```lua
 local druid = require("druid.druid")
 
 function init(self)
-	self.druid = druid.new(self)
+    self.druid = druid.new(self)
 end
 
 function final(self)
-	self.druid:final()
+    self.druid:final()
 end
 
 function update(self, dt)
-	self.druid:update(dt)
+    self.druid:update(dt)
 end
 
 function on_input(self, action_id, action)
-	return self.druid:on_input(action_id, action)
+    return self.druid:on_input(action_id, action)
 end
 
 function on_message(self, message_id, message, sender)
-	self.druid:on_message(message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
 end
 ```
 
-- *final* required function for correct druid lifecycle
-- *on_input* used for almost all basic druid components
-- *update* used for progress bar, scroll and timer base components
-- *on_message* used for specific druid events, like language change or layout change
+- *final* is a **required** function for a correct Druid lifecycle
+- *on_input* is used in almost all Druid components
+- *update* in used in progress bar, scroll and timer base components
+- *on_message* is used for specific Druid events, like language change or layout change
 
-Recommended is fully integrate all druid lifecycles functions
+It is recommended to fully integrate all **Druid** lifecycles functions.
 
 
-## Features
+## Details
 
 - Druid input goes as stack. Last created button will checked first. So create your GUI from back
-- Don't forget about `return` in `on_input`: `return self.druid:on_input()`. It need, if you have more than 1 acquire inputs (several druid, other input system, etc)
-- Druid by default do _acquire_input_focus_. So you don't need do it manually. Buy only if you have components, which requires _on_input_ 
+- Don't forget about `return` in `on_input`: `return self.druid:on_input()`. It is needed if you have more than 1 acquire inputs (several Druid, other input system, etc)
+- By default, Druid will automatically _acquire_input_focus_. So you don't need do it manually. But only if you have components which require _on_input_
+- If you want to delete a node which has a Druid component, don't forget to remove it via `druid:remove(component)`
+
+[See full FAQ here](docs_md/FAQ.md)
 
 
 ## Examples
@@ -210,25 +222,26 @@ Try the [HTML5 version](https://insality.github.io/druid/druid/) of the example 
 
 ## Documentation
 
-To learn **Druid** better, read next documentation:
-- [Druid components](https://github.com/Insality/druid/blob/master/docs_md/01-components.md)
-- [Create custom components](https://github.com/Insality/druid/blob/master/docs_md/02-creating_custom_components.md)
-- [Druid styles](https://github.com/Insality/druid/blob/master/docs_md/03-styles.md)
-- [Druid asset store](https://github.com/Insality/druid/blob/master/docs_md/04-druid_assets.md)
+To better understand **Druid**, read the following documentation:
+- [Druid components](docs_md/01-components.md)
+- [Create custom components](docs_md/02-creating_custom_components.md)
+- [See FAQ article](docs_md/FAQ.md)
+- [Druid styles](docs_md/03-styles.md)
+- [Druid asset store](docs_md/04-druid_assets.md)
 
-Full **Druid** documentation you can find here:
+You can fund the full **Druid** documentation here:
 https://insality.github.io/druid/
 
 
 ## Games powered by Druid
 
-_Will fill later_
+_You published your game and you using Druid? Note me!_
 
 
 ## License
 
-- Original created by [AGulev](https://github.com/AGulev)
-- Developed and supporting by [Insality](https://github.com/Insality)
+- Developed and supported by [Insality](https://github.com/Insality)
+- Original idea by [AGulev](https://github.com/AGulev)
 - Assets from [Kenney](http://www.kenney.nl/)
 
 **MIT** License
@@ -236,4 +249,4 @@ _Will fill later_
 
 ## Issues and suggestions
 
-If you have any issues, questions or suggestions please  [create an issue](https://github.com/Insality/druid/issues)  or contact me:  [insality@gmail.com](mailto:insality@gmail.com)
+If you have any issues, questions or suggestions please [create an issue](https://github.com/Insality/druid/issues) or contact me: [insality@gmail.com](mailto:insality@gmail.com)

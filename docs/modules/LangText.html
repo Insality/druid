@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><strong>LangText</strong></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>LangText</code></h1>
+<p>Component to handle all GUI texts
+ Good working with localization system</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, node, locale_id, no_adjust)</a></td>
+	<td class="summary">Component init function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_to">set_to(self, text)</a></td>
+	<td class="summary">Setup raw text to lang_text component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#translate">translate(self, locale_id)</a></td>
+	<td class="summary">Translate the text by locale_id</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#on_change">on_change</a></td>
+	<td class="summary">On change text callback</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, node, locale_id, no_adjust)</strong>
+    </dt>
+    <dd>
+    Component init function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">LangText</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         The text node
+        </li>
+        <li><span class="parameter">locale_id</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+         Default locale id
+        </li>
+        <li><span class="parameter">no_adjust</span>
+            <span class="types"><span class="type">bool</span></span>
+         If true, will not correct text size
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_to"></a>
+    <strong>set_to(self, text)</strong>
+    </dt>
+    <dd>
+    Setup raw text to lang_text component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">LangText</span></span>
+
+        </li>
+        <li><span class="parameter">text</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+         Text for text node
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "translate"></a>
+    <strong>translate(self, locale_id)</strong>
+    </dt>
+    <dd>
+    Translate the text by locale_id
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">LangText</span></span>
+
+        </li>
+        <li><span class="parameter">locale_id</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+         Locale id
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "on_change"></a>
+    <strong>on_change</strong>
+    </dt>
+    <dd>
+    On change text callback
+
+
+    <ul>
+        <li><span class="parameter">on_change</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2020-10-12 00:44:30 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

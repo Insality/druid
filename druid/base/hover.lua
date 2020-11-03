@@ -1,24 +1,28 @@
 --- Component to handle hover node interaction
--- @module druid.hover
+-- @module Hover
+-- @within BaseComponent
+-- @alias druid.hover
 
---- Component events
--- @table Events
--- @tfield druid_event on_hover On hover callback (Touch pressed)
--- @tfield druid_event on_mouse_hover On mouse hover callback (Touch over without action_id)
+--- On hover callback(self, state)
+-- @tfield druid_event on_hover
+
+--- On mouse hover callback(self, state)
+-- @tfield druid_event on_mouse_hover
+
 
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("hover", { const.ON_INPUT })
+local Hover = component.create("hover", { const.ON_INPUT })
 
 
 --- Component init function
--- @function hover:init
+-- @tparam Hover self
 -- @tparam node node Gui node
 -- @tparam function on_hover_callback Hover callback
-function M.init(self, node, on_hover_callback)
+function Hover.init(self, node, on_hover_callback)
 	self.node = self:get_node(node)
 
 	self._is_hovered = false
@@ -31,7 +35,7 @@ function M.init(self, node, on_hover_callback)
 end
 
 
-function M.on_input(self, action_id, action)
+function Hover.on_input(self, action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= nil then
 		return false
 	end
@@ -49,7 +53,7 @@ function M.on_input(self, action_id, action)
 		is_pick = is_pick and gui.pick_node(self.click_zone, action.x, action.y)
 	end
 
-	local hover_function = action_id and M.set_hover or M.set_mouse_hover
+	local hover_function = action_id and self.set_hover or self.set_mouse_hover
 
 	if not is_pick then
 		hover_function(self, false)
@@ -64,15 +68,15 @@ function M.on_input(self, action_id, action)
 end
 
 
-function M.on_input_interrupt(self)
+function Hover.on_input_interrupt(self)
 	self:set_hover(false)
 end
 
 
 --- Set hover state
--- @function hover:set_hover
+-- @tparam Hover self
 -- @tparam bool state The hover state
-function M.set_hover(self, state)
+function Hover.set_hover(self, state)
 	if self._is_hovered ~= state then
 		self._is_hovered = state
 		self.on_hover:trigger(self:get_context(), state)
@@ -80,9 +84,9 @@ function M.set_hover(self, state)
 end
 
 --- Set mouse hover state
--- @function hover:set_mouse_hover
+-- @tparam Hover self
 -- @tparam bool state The mouse hover state
-function M.set_mouse_hover(self, state)
+function Hover.set_mouse_hover(self, state)
 	if self._is_mouse_hovered ~= state then
 		self._is_mouse_hovered = state
 		self.on_mouse_hover:trigger(self:get_context(), state)
@@ -92,9 +96,9 @@ end
 
 --- Strict hover click area. Useful for
 -- no click events outside stencil node
--- @function hover:set_click_zone
+-- @tparam Hover self
 -- @tparam node zone Gui node
-function M.set_click_zone(self, zone)
+function Hover.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
 end
 
@@ -102,9 +106,9 @@ end
 --- Set enable state of hover component.
 -- If hover is not enabled, it will not generate
 -- any hover events
--- @function hover:set_enabled
+-- @tparam Hover self
 -- @tparam bool state The hover enabled state
-function M.set_enabled(self, state)
+function Hover.set_enabled(self, state)
 	self._is_enabled = state
 
 	if not state then
@@ -119,11 +123,11 @@ end
 
 
 --- Return current hover enabled state
--- @function hover:is_enabled
+-- @tparam Hover self
 -- @treturn bool The hover enabled state
-function M.is_enabled(self)
+function Hover.is_enabled(self)
 	return self._is_enabled
 end
 
 
-return M
+return Hover
