@@ -524,27 +524,15 @@ function DruidInstance.new_checkbox_group(self, nodes, callback, click_nodes)
 end
 
 
-<<<<<<< HEAD
---- Create drag basic component
--- @function druid:new_drag
--- @tparam args ... drag init args
--- @treturn Component drag component
-function Druid.new_drag(self, ...)
-	return Druid.create(self, drag, ...)
-end
-
-
 --- Create infinity list basic component
 -- @function druid:new_infinity_list
 -- @tparam args ... drag init args
--- @treturn Component drag component
-function Druid.new_infinity_list(self, ...)
-	return Druid.create(self, infinity_list, ...)
+-- @treturn Component infinity list component
+function DruidInstance.new_infinity_list(self, ...)
+	return DruidInstance.create(self, infinity_list, ...)
 end
 
 
-return Druid
-=======
 --- Create radio_group component
 -- @tparam DruidInstance self
 -- @tparam node[] nodes Array of gui node
@@ -583,4 +571,3 @@ end
 
 
 return DruidInstance
->>>>>>> develop
