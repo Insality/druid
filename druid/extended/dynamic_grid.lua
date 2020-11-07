@@ -21,7 +21,7 @@
 --- Parent gui node
 -- @tfield node parent
 
---- List of all grid nodes
+--- List of all grid elements. Contains from node, pos, size, pivot
 -- @tfield node[] nodes
 
 --- The first index of node in grid
@@ -220,6 +220,14 @@ function DynamicGrid.get_size(self, border)
 end
 
 
+--- Return grid content borders
+-- @tparam DynamicGrid self
+-- @treturn vector3 The grid content borders
+function DynamicGrid.get_borders(self)
+	return self.border
+end
+
+
 --- Return grid index by node
 -- @tparam DynamicGrid self
 -- @tparam node node The gui node in the grid
@@ -283,7 +291,7 @@ function DynamicGrid._add_node(self, node, index, origin_index)
 
 	-- Add new item instantly in new pos
 	gui.set_parent(node, self.parent)
-	gui.set_position(node, self.nodes[index].pos + self:_get_zero_offset())
+	gui.set_position(node, self.nodes[index].pos)
 end
 
 
@@ -348,13 +356,11 @@ end
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function DynamicGrid._update_pos(self, is_instant)
-	local offset = self:_get_zero_offset()
-
 	for index, node in pairs(self.nodes) do
 		if is_instant then
-			gui.set_position(node.node, node.pos + offset)
+			gui.set_position(node.node, node.pos)
 		else
-			self._set_position_function(node.node, node.pos + offset)
+			self._set_position_function(node.node, node.pos)
 		end
 	end
 
@@ -386,17 +392,17 @@ function DynamicGrid._get_node_size(self, node)
 end
 
 
---- Return elements offset for correct posing nodes. Correct posing at
--- parent pivot node (0:0) with adjusting of node sizes and anchoring
--- @tparam DynamicGrid self
--- @treturn vector3 The offset vector
--- @local
-function DynamicGrid._get_zero_offset(self)
-	-- zero offset: center pos - border size * anchor
-	return vmath.vector3(
-		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
-		-((self.border.y + self.border.w)/2 + (self.border.y - self.border.w) * self.pivot.y),
+function DynamicGrid:get_offset()
+	-- return vector where content borders starts
+	local size = self:get_size()
+	local borders = self:get_borders()
+	local offset = vmath.vector3(
+		(borders.z + borders.x)/2 + size.x * self.pivot.x,
+		(borders.y + borders.w)/2 + size.y * self.pivot.y,
+		0,
 		0)
+
+	return offset
 end
 
 

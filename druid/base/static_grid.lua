@@ -49,6 +49,19 @@ local component = require("druid.component")
 local StaticGrid = component.create("static_grid", { const.ON_LAYOUT_CHANGE })
 
 
+local function _extend_border(border, pos, size, pivot)
+	local left = pos.x - size.x/2 - (size.x * pivot.x)
+	local right = pos.x + size.x/2 - (size.x * pivot.x)
+	local top = pos.y + size.y/2 - (size.y * pivot.y)
+	local bottom = pos.y - size.y/2 - (size.y * pivot.y)
+
+	border.x = math.min(border.x, left)
+	border.y = math.max(border.y, top)
+	border.z = math.max(border.z, right)
+	border.w = math.min(border.w, bottom)
+end
+
+
 --- Component init function
 -- @tparam StaticGrid self
 -- @tparam node parent The gui node parent, where items will be placed
@@ -66,6 +79,7 @@ function StaticGrid.init(self, parent, element, in_row)
 	self._prefab = self:get_node(element)
 	self.node_size = gui.get_size(self._prefab)
 	self.node_pivot = const.PIVOTS[gui.get_pivot(self._prefab)]
+	self.grid_zero_y = self.node_size.y * self.pivot.y -- Y pos at first grid line
 
 	self.border = vmath.vector4(0) -- Current grid content size
 
@@ -209,6 +223,14 @@ function StaticGrid.get_size(self)
 end
 
 
+--- Return grid content borders
+-- @tparam StaticGrid self
+-- @treturn vector3 The grid content borders
+function StaticGrid.get_borders(self)
+	return self.border
+end
+
+
 --- Return array of all node positions
 -- @tparam StaticGrid self
 -- @treturn vector3[] All grid node positions
@@ -262,9 +284,17 @@ function StaticGrid._get_zero_offset(self)
 	-- zero offset: center pos - border size * anchor
 	return vmath.vector3(
 		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
-		-((self.border.y + self.border.w)/2 + (self.border.y - self.border.w) * self.pivot.y),
+		-((self.grid_zero_y + self.border.w)/2 + (self.grid_zero_y - self.border.w) * self.pivot.y),
 		0
 	)
+end
+
+
+-- return vector where content borders starts
+function StaticGrid:get_offset()
+	local zero_offset = self:_get_zero_offset()
+	local borders = self:get_borders()
+	return vmath.vector3(0, zero_offset.y + borders.y, 0)
 end
 
 
@@ -309,17 +339,7 @@ function StaticGrid._update_borders(self)
 	local size = self.node_size
 	local pivot = self.node_pivot
 	for index, node in pairs(self.nodes) do
-		local pos = self:get_pos(index)
-
-		local left = pos.x - size.x/2 - (size.x * pivot.x)
-		local right = pos.x + size.x/2 - (size.x * pivot.x)
-		local top = pos.y + size.y/2 - (size.y * pivot.y)
-		local bottom = pos.y - size.y/2 - (size.y * pivot.y)
-
-		self.border.x = math.min(self.border.x, left)
-		self.border.y = math.max(self.border.y, top)
-		self.border.z = math.max(self.border.z, right)
-		self.border.w = math.min(self.border.w, bottom)
+		_extend_border(self.border, self:get_pos(index), size, pivot)
 	end
 end
 

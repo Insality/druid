@@ -69,14 +69,17 @@ end
 --- Update vector with next conditions:
 -- Field x have to <= field z
 -- Field y have to <= field w
-local function get_border_vector(vector)
+local function get_border_vector(vector, offset)
 	if vector.x > vector.z then
 		vector.x, vector.z = vector.z, vector.x
 	end
 	if vector.y > vector.w then
 		vector.y, vector.w = vector.w, vector.y
 	end
-
+	vector.x = vector.x - offset.x
+	vector.z = vector.z - offset.x
+	vector.y = vector.y - offset.y
+	vector.w = vector.w - offset.y
 	return vector
 end
 
@@ -145,6 +148,7 @@ function Scroll.init(self, view_node, content_node)
 	self.selected = nil
 	self.is_animate = false
 
+	self._offset = vmath.vector3(0)
 	self._is_horizontal_scroll = true
 	self._is_vertical_scroll = true
 	self._grid_on_change = nil
@@ -262,7 +266,10 @@ end
 -- @tparam Scroll self
 -- @tparam vector3 size The new size for content node
 -- @treturn druid.scroll Current scroll instance
-function Scroll.set_size(self, size)
+function Scroll.set_size(self, size, offset)
+	if offset then
+		self._offset = offset
+	end
 	gui.set_size(self.content_node, size)
 	self:_update_size()
 
@@ -372,9 +379,9 @@ function Scroll.bind_grid(self, grid)
 
 	self._grid_on_change = grid.on_change_items
 	self._grid_on_change_callback = self._grid_on_change:subscribe(function()
-		self:set_size(grid:get_size())
+		self:set_size(grid:get_size(), grid:get_offset())
 	end)
-	self:set_size(grid:get_size())
+	self:set_size(grid:get_size(), grid:get_offset())
 
 	return self
 end
@@ -598,7 +605,7 @@ function Scroll._update_size(self)
 	local content_border = helper.get_border(self.content_node)
 	local content_size = vmath.mul_per_elem(gui.get_size(self.content_node), gui.get_scale(self.content_node))
 
-	self.available_pos = get_border_vector(view_border - content_border)
+	self.available_pos = get_border_vector(view_border - content_border, self._offset)
 	self.available_size = get_size_vector(self.available_pos)
 
 	self.drag.can_x = self.available_size.x > 0 and self._is_horizontal_scroll
@@ -627,7 +634,7 @@ function Scroll._update_size(self)
 		self.drag.can_y = content_size.y > view_size.y
 	end
 
-	self.available_pos_extra = get_border_vector(view_border - content_border_extra)
+	self.available_pos_extra = get_border_vector(view_border - content_border_extra, self._offset)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
 end
 
