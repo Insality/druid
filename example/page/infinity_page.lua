@@ -1,4 +1,4 @@
-local M = {}
+    local M = {}
 
 
 local function create_infinity_instance(self, record, index)
@@ -30,7 +30,7 @@ end
 
 local function setup_infinity_list(self)
     local data = {}
-    for i = 1, 250 do
+    for i = 1, 50 do
         table.insert(data, i)
     end
 
@@ -40,7 +40,7 @@ local function setup_infinity_list(self)
     end)
 
     -- scroll to some index
-    local pos = self.infinity_grid:get_pos(100)
+    local pos = self.infinity_grid:get_pos(25)
     self.infinity_scroll:scroll_to(pos, true)
 
 
@@ -53,15 +53,14 @@ end
 
 function M.setup_page(self)
     self.infinity_scroll = self.druid:new_scroll("infinity_scroll_stencil", "infinity_scroll_content")
-    self.infinity_grid = self.druid:new_grid("infinity_scroll_content", "infinity_prefab", 1)
-    self.infinity_grid:set_offset(vmath.vector3(0, 8, 0))
-
+        :set_horizontal_scroll(false)
+    self.infinity_grid = self.druid:new_static_grid("infinity_scroll_content", "infinity_prefab", 1)
     self.infinity_prefab = gui.get_node("infinity_prefab")
     gui.set_enabled(self.infinity_prefab, false)
 
     self.infinity_scroll_3 = self.druid:new_scroll("infinity_scroll_3_stencil", "infinity_scroll_3_content")
-    self.infinity_grid_3 = self.druid:new_grid("infinity_scroll_3_content", "infinity_prefab_small", 3)
-
+        :set_horizontal_scroll(false)
+    self.infinity_grid_3 = self.druid:new_static_grid("infinity_scroll_3_content", "infinity_prefab_small", 3)
     self.infinity_prefab_small = gui.get_node("infinity_prefab_small")
     gui.set_enabled(self.infinity_prefab_small, false)
 
