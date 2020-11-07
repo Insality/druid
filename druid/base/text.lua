@@ -43,7 +43,7 @@ local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local Text = component.create("text", { const.ON_LAYOUT_CHANGE })
+local Text = component.create("text", { component.ON_LAYOUT_CHANGE })
 
 
 local function update_text_size(self)

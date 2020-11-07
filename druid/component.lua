@@ -6,7 +6,48 @@
 local const = require("druid.const")
 local class = require("druid.system.middleclass")
 
+
 local BaseComponent = class("druid.component")
+
+
+--- Component Interests
+BaseComponent.ALL = const.ALL
+BaseComponent.ON_INPUT = const.ON_INPUT
+BaseComponent.ON_UPDATE = const.ON_UPDATE
+BaseComponent.ON_MESSAGE = const.ON_MESSAGE
+BaseComponent.ON_INPUT_HIGH = const.ON_INPUT_HIGH
+BaseComponent.ON_FOCUS_LOST = const.ON_FOCUS_LOST
+BaseComponent.ON_FOCUS_GAINED = const.ON_FOCUS_GAINED
+BaseComponent.ON_LAYOUT_CHANGE = const.ON_LAYOUT_CHANGE
+BaseComponent.ON_LANGUAGE_CHANGE = const.ON_LANGUAGE_CHANGE
+
+
+BaseComponent.ALL_INTERESTS = {
+	BaseComponent.ALL,
+	BaseComponent.ON_INPUT,
+	BaseComponent.ON_UPDATE,
+	BaseComponent.ON_MESSAGE,
+	BaseComponent.ON_FOCUS_LOST,
+	BaseComponent.ON_INPUT_HIGH,
+	BaseComponent.ON_FOCUS_GAINED,
+	BaseComponent.ON_LAYOUT_CHANGE,
+	BaseComponent.ON_LANGUAGE_CHANGE,
+}
+
+
+-- Value is method name of component
+BaseComponent.SPECIFIC_UI_MESSAGES = {
+	[BaseComponent.ON_FOCUS_LOST] = "on_focus_lost",
+	[BaseComponent.ON_FOCUS_GAINED] = "on_focus_gained",
+	[BaseComponent.ON_LAYOUT_CHANGE] = "on_layout_change",
+	[BaseComponent.ON_LANGUAGE_CHANGE] = "on_language_change",
+}
+
+
+BaseComponent.UI_INPUT = {
+	[BaseComponent.ON_INPUT_HIGH] = true,
+	[BaseComponent.ON_INPUT] = true
+}
 
 
 --- Set current component style table.

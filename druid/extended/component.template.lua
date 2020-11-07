@@ -1,10 +1,9 @@
 --- Druid component template
 -- @module druid.component
 -- @local
-local const = require("druid.const")
 local component = require("druid.component")
 
-local Component = component.create("my_component_name", { const.ON_UPDATE })
+local Component = component.create("my_component_name", { component.ON_UPDATE })
 
 
 -- Component constructor
@@ -12,12 +11,12 @@ function Component:init(...)
 end
 
 
--- Call only if exist interest: const.ON_UPDATE
+-- Call only if exist interest: component.ON_UPDATE
 function Component:update(dt)
 end
 
 
--- Call only if exist interest: const.ON_INPUT or const.ON_INPUT_HIGH
+-- Call only if exist interest: component.ON_INPUT or component.ON_INPUT_HIGH
 function Component:on_input(action_id, action)
 	return false
 end
@@ -28,7 +27,7 @@ function Component:on_style_change(style)
 end
 
 
--- Call only if exist interest: const.ON_MESSAGE
+-- Call only if exist interest: component.ON_MESSAGE
 function Component:on_message(message_id, message, sender)
 end
 
