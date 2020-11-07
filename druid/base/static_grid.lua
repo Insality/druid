@@ -223,6 +223,27 @@ function StaticGrid.get_size(self)
 end
 
 
+
+function StaticGrid.get_size_for(self, count)
+	if count == 0 then
+		return vmath.vector3(0)
+	end
+
+	local border = vmath.vector4(math.huge, -math.huge, -math.huge, math.huge)
+
+	local size = self.node_size
+	local pivot = self.node_pivot
+	_extend_border(border, self:get_pos(1), size, pivot)
+	_extend_border(border, self:get_pos(self.in_row), size, pivot)
+	_extend_border(border, self:get_pos(count), size, pivot)
+
+	return vmath.vector3(
+		border.z - border.x,
+		border.y - border.w,
+		0)
+end
+
+
 --- Return grid content borders
 -- @tparam StaticGrid self
 -- @treturn vector3 The grid content borders
