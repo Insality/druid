@@ -435,19 +435,23 @@ function Scroll._check_soft_zone(self)
 
 	-- Right border (minimum x)
 	if target.x < border.x then
-		target.x = helper.step(target.x, border.x, math.abs(target.x - border.x) * speed)
+		local step = math.max(math.abs(target.x - border.x) * speed, 1)
+		target.x = helper.step(target.x, border.x, step)
 	end
 	-- Left border (maximum x)
 	if target.x > border.z then
-		target.x = helper.step(target.x, border.z, math.abs(target.x - border.z) * speed)
+		local step = math.max(math.abs(target.x - border.z) * speed, 1)
+		target.x = helper.step(target.x, border.z, step)
 	end
 	-- Top border (maximum y)
 	if target.y < border.y then
-		target.y = helper.step(target.y, border.y, math.abs(target.y - border.y) * speed)
+		local step = math.max(math.abs(target.y - border.y) * speed, 1)
+		target.y = helper.step(target.y, border.y, step)
 	end
 	-- Bot border (minimum y)
 	if target.y > border.w then
-		target.y = helper.step(target.y, border.w, math.abs(target.y - border.w) * speed)
+		local step = math.max(math.abs(target.y - border.w) * speed, 1)
+		target.y = helper.step(target.y, border.w, step)
 	end
 end
 
