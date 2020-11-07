@@ -48,7 +48,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Drag = component.create("drag", { const.ON_INPUT_HIGH })
+local Drag = component.create("drag", { component.ON_INPUT_HIGH })
 
 
 local function start_touch(self, touch)

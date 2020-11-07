@@ -16,11 +16,10 @@
 -- @tfield Button button
 
 
-local const = require("druid.const")
 local Event = require("druid.event")
 local component = require("druid.component")
 
-local Checkbox = component.create("checkbox", { const.ON_LAYOUT_CHANGE })
+local Checkbox = component.create("checkbox", { component.ON_LAYOUT_CHANGE })
 
 
 local function on_click(self)

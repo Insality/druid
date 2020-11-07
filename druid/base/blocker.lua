@@ -10,7 +10,7 @@
 local const = require("druid.const")
 local component = require("druid.component")
 
-local Blocker = component.create("blocker", { const.ON_INPUT })
+local Blocker = component.create("blocker", { component.ON_INPUT })
 
 
 --- Component init function

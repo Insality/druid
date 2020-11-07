@@ -24,10 +24,10 @@ M.PRESSED = "pressed"
 M.STRING = "string"
 M.TABLE = "table"
 M.ZERO = "0"
-M.ALL = "all"
 
 
 --- Component Interests
+M.ALL = "all"
 M.ON_INPUT = hash("on_input")
 M.ON_UPDATE = hash("on_update")
 M.ON_MESSAGE = hash("on_message")
@@ -36,19 +36,6 @@ M.ON_FOCUS_LOST = hash("on_focus_lost")
 M.ON_FOCUS_GAINED = hash("on_focus_gained")
 M.ON_LAYOUT_CHANGE = hash("layout_changed")
 M.ON_LANGUAGE_CHANGE = hash("on_language_change")
-
-
-M.ALL_INTERESTS = {
-	M.ALL,
-	M.ON_INPUT,
-	M.ON_UPDATE,
-	M.ON_MESSAGE,
-	M.ON_FOCUS_LOST,
-	M.ON_INPUT_HIGH,
-	M.ON_FOCUS_GAINED,
-	M.ON_LAYOUT_CHANGE,
-	M.ON_LANGUAGE_CHANGE,
-}
 
 
 M.PIVOTS = {
@@ -61,21 +48,6 @@ M.PIVOTS = {
 	[gui.PIVOT_SW] = vmath.vector3(-0.5, -0.5, 0),
 	[gui.PIVOT_W] = vmath.vector3(-0.5, 0, 0),
 	[gui.PIVOT_NW] = vmath.vector3(-0.5, 0.5, 0),
-}
-
-
--- Value is method name of component
-M.SPECIFIC_UI_MESSAGES = {
-	[M.ON_FOCUS_LOST] = "on_focus_lost",
-	[M.ON_FOCUS_GAINED] = "on_focus_gained",
-	[M.ON_LAYOUT_CHANGE] = "on_layout_change",
-	[M.ON_LANGUAGE_CHANGE] = "on_language_change",
-}
-
-
-M.UI_INPUT = {
-	[M.ON_INPUT_HIGH] = true,
-	[M.ON_INPUT] = true
 }
 
 
