@@ -89,8 +89,8 @@ function M:_check_elements()
     local pos = gui.get_position(self.scroll.content_node)
     pos.y = -pos.y
 
-    local top_index = self.grid:get_index(pos)
-    local last_index = top_index + (self.elements_view_count.x * self.elements_view_count.y) + self.grid.in_row - 1
+    local top_index = self.grid:get_index(pos) - self.grid.in_row
+    local last_index = (top_index - 1) + (self.elements_view_count.x * self.elements_view_count.y) + self.grid.in_row
 
     -- Clear outside elements
     for index, _ in pairs(self.nodes) do
@@ -109,7 +109,7 @@ end
 
 
 function M:_recalc_scroll_size()
-    local element_size = self.grid:get_size_for_elements_count(#self.data)
+    local element_size = self.grid:get_size_for(#self.data)
     self.scroll:set_size(element_size)
 end
 
