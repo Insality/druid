@@ -359,6 +359,23 @@ function Scroll.set_vertical_scroll(self, state)
 end
 
 
+function Scroll.is_node_in_view(self, node)
+	local node_border = helper.get_border(node, gui.get_position(node))
+	local view_border = helper.get_border(self.view_node, -self.position)
+
+	-- Check is vertical outside (Left or Right):
+	if node_border.z < view_border.x or node_border.x > view_border.z then
+		return false
+	end
+
+	-- Check is horizontal outside (Up or Down):
+	if node_border.w > view_border.y or node_border.y < view_border.w then
+		return false
+	end
+
+	return true
+end
+
 
 --- Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes

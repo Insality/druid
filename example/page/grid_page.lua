@@ -25,6 +25,7 @@ local function add_node(self, index)
 	local prefab = gui.get_node("grid_nodes_prefab")
 	local cloned = gui.clone_tree(prefab)
 	gui.set_enabled(cloned["grid_nodes_prefab"], true)
+	gui.set_text(cloned["grid_nodes_text"], index)
 
 	local button = self.druid:new_button(cloned["grid_nodes_prefab"], function(_, params, button)
 		remove_node(self, button, true)
