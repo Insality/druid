@@ -1,3 +1,5 @@
+local const = require("druid.const")
+
 local M = {}
 
 
@@ -6,12 +8,12 @@ local function simple_animate(node, pos)
 end
 
 
-local function remove_node(self, button, is_shift)
+local function remove_node(self, button, no_shift)
 	gui.delete_node(button.node)
 
 	self.druid:remove(button)
 	local index = self.grid_static_grid:get_index_by_node(button.node)
-	self.grid_static_grid:remove(index, is_shift)
+	self.grid_static_grid:remove(index, no_shift and const.SHIFT.NO_SHIFT or const.SHIFT.RIGHT)
 	for i = 1, #self.grid_node_buttons do
 		if self.grid_node_buttons[i] == button then
 			table.remove(self.grid_node_buttons, i)
@@ -27,10 +29,10 @@ local function add_node(self, index)
 	gui.set_enabled(cloned["grid_nodes_prefab"], true)
 
 	local button = self.druid:new_button(cloned["grid_nodes_prefab"], function(_, params, button)
-		remove_node(self, button, true)
+		remove_node(self, button)
 	end)
 	button.on_long_click:subscribe(function()
-		remove_node(self, button)
+		remove_node(self, button, true)
 	end)
 	button:set_click_zone(self.grid_static_scroll.view_node)
 
@@ -72,12 +74,12 @@ local function init_static_grid(self)
 end
 
 
-local function remove_dynamic_node(self, button, is_shift_left)
+local function remove_dynamic_node(self, button, shift_policy)
 	gui.delete_node(button.node)
 
 	self.druid:remove(button)
 	local index = self.grid_dynamic_grid:get_index_by_node(button.node)
-	self.grid_dynamic_grid:remove(index, is_shift_left)
+	self.grid_dynamic_grid:remove(index, shift_policy)
 	for i = 1, #self.dynamic_node_buttons do
 		if self.dynamic_node_buttons[i] == button then
 			table.remove(self.dynamic_node_buttons, i)
@@ -97,7 +99,7 @@ local function add_node_dynamic(self, index, is_shift_left)
 		remove_dynamic_node(self, button)
 	end)
 	button.on_long_click:subscribe(function()
-		remove_dynamic_node(self, button, true)
+		remove_dynamic_node(self, button, const.SHIFT.lEFT)
 	end)
 	button:set_click_zone(self.grid_dynamic_scroll.view_node)
 	table.insert(self.dynamic_node_buttons, button)

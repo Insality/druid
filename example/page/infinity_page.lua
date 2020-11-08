@@ -4,7 +4,7 @@
 local function create_infinity_instance(self, record, index)
     local instance = gui.clone_tree(self.infinity_prefab)
     gui.set_enabled(instance["infinity_prefab"], true)
-    gui.set_text(instance["infinity_text"], "Infinity record " .. index)
+    gui.set_text(instance["infinity_text"], "Record " .. index)
 
     local button = self.druid:new_button(instance["infinity_prefab"], function()
         print("Infinity click on", index)
@@ -27,13 +27,26 @@ local function create_infinity_instance_small(self, record, index)
 end
 
 
-
 local function create_infinity_instance_dynamic(self, record, index)
     local instance = gui.clone_tree(self.infinity_prefab_dynamic)
     gui.set_enabled(instance["infinity_prefab_dynamic"], true)
-    gui.set_text(instance["infinity_text_dynamic"], "Dynamic record " .. index)
+    gui.set_text(instance["infinity_text_dynamic"], "Record " .. index)
 
-    gui.set_size(instance["infinity_prefab_dynamic"], vmath.vector3(300, 60 + index * 5, 0))
+    gui.set_size(instance["infinity_prefab_dynamic"], vmath.vector3(200, 60 + index * 3, 0))
+    local button = self.druid:new_button(instance["infinity_prefab_dynamic"], function()
+        print("Dynamic click on", index)
+    end)
+
+    return instance["infinity_prefab_dynamic"], button
+end
+
+
+local function create_infinity_instance_dynamic_hor(self, record, index)
+    local instance = gui.clone_tree(self.infinity_prefab_dynamic)
+    gui.set_enabled(instance["infinity_prefab_dynamic"], true)
+    gui.set_text(instance["infinity_text_dynamic"], "Record " .. index)
+
+    gui.set_size(instance["infinity_prefab_dynamic"], vmath.vector3(150 + 2 * index, 60, 0))
     local button = self.druid:new_button(instance["infinity_prefab_dynamic"], function()
         print("Dynamic click on", index)
     end)
@@ -53,9 +66,17 @@ local function setup_infinity_list(self)
         return create_infinity_instance(self, record, index)
     end)
 
+    self.infinity_list_hor = self.druid:new_infinity_list(data, self.infinity_scroll_hor, self.infinity_grid_hor, function(record, index)
+        -- function should return gui_node, [druid_component]
+        return create_infinity_instance(self, record, index)
+    end)
+
     -- scroll to some index
     -- local pos = self.infinity_grid:get_pos(25)
     -- self.infinity_scroll:scroll_to(pos, true)
+    -- timer.delay(1, false, function()
+    --     self.infinity_list:scroll_to_index(1)
+    -- end)
 
 
     self.infinity_list_small = self.druid:new_infinity_list(data, self.infinity_scroll_3, self.infinity_grid_3, function(record, index)
@@ -67,29 +88,44 @@ local function setup_infinity_list(self)
         -- function should return gui_node, [druid_component]
         return create_infinity_instance_dynamic(self, record, index)
     end)
+
+    self.infinity_list_dynamic_hor = self.druid:new_infinity_list(data, self.infinity_scroll_dynamic_hor, self.infinity_grid_dynamic_hor, function(record, index)
+        -- function should return gui_node, [druid_component]
+        return create_infinity_instance_dynamic_hor(self, record, index)
+    end)
 end
 
 
 function M.setup_page(self)
     self.druid:new_scroll("infinity_page", "infinity_page_content")
 
+    self.infinity_prefab = gui.get_node("infinity_prefab")
+    self.infinity_prefab_small = gui.get_node("infinity_prefab_small")
+    self.infinity_prefab_dynamic = gui.get_node("infinity_prefab_dynamic")
+    gui.set_enabled(self.infinity_prefab, false)
+    gui.set_enabled(self.infinity_prefab_small, false)
+    gui.set_enabled(self.infinity_prefab_dynamic, false)
+
     self.infinity_scroll = self.druid:new_scroll("infinity_scroll_stencil", "infinity_scroll_content")
         :set_horizontal_scroll(false)
     self.infinity_grid = self.druid:new_static_grid("infinity_scroll_content", "infinity_prefab", 1)
-    self.infinity_prefab = gui.get_node("infinity_prefab")
-    gui.set_enabled(self.infinity_prefab, false)
+
+    self.infinity_scroll_hor = self.druid:new_scroll("infinity_scroll_stencil_hor", "infinity_scroll_content_hor")
+        :set_vertical_scroll(false)
+    self.infinity_grid_hor = self.druid:new_static_grid("infinity_scroll_content_hor", "infinity_prefab", 999)
 
     self.infinity_scroll_3 = self.druid:new_scroll("infinity_scroll_3_stencil", "infinity_scroll_3_content")
         :set_horizontal_scroll(false)
     self.infinity_grid_3 = self.druid:new_static_grid("infinity_scroll_3_content", "infinity_prefab_small", 3)
-    self.infinity_prefab_small = gui.get_node("infinity_prefab_small")
-    gui.set_enabled(self.infinity_prefab_small, false)
 
     self.infinity_scroll_dynamic = self.druid:new_scroll("infinity_scroll_stencil_dynamic", "infinity_scroll_content_dynamic")
         :set_horizontal_scroll(false)
-    self.infinity_grid_dynamic = self.druid:new_dynamic_grid("infinity_scroll_content_dynamic", "infinity_prefab", 1)
-    self.infinity_prefab_dynamic = gui.get_node("infinity_prefab_dynamic")
-    gui.set_enabled(self.infinity_prefab_dynamic, false)
+    self.infinity_grid_dynamic = self.druid:new_dynamic_grid("infinity_scroll_content_dynamic")
+
+    self.infinity_scroll_dynamic_hor = self.druid:new_scroll("infinity_scroll_stencil_dynamic_hor", "infinity_scroll_content_dynamic_hor")
+        :set_vertical_scroll(false)
+    self.infinity_grid_dynamic_hor = self.druid:new_dynamic_grid("infinity_scroll_content_dynamic_hor")
+
 
     setup_infinity_list(self)
 end
