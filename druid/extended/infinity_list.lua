@@ -15,16 +15,12 @@ function M:init(data_list, scroll, grid, create_function)
 
     self.data = data_list
     self.top_index = 1
+    self.last_index = 1
 
     self.create_function = create_function
 
     self.nodes = {}
     self.components = {}
-
-    self.elements_view_count = vmath.vector3(
-        math.min(math.ceil(self.view_size.x / self.prefab_size.x), self.grid.in_row),
-        math.ceil(self.view_size.y / self.prefab_size.y),
-        0)
 
     self:_refresh()
     self.scroll.on_scroll:subscribe(function() self._check_elements(self) end)
@@ -85,7 +81,7 @@ function M:_refresh()
 end
 
 
-function M:_check_elements()
+function M:_check_elements_old()
     local pos = gui.get_position(self.scroll.content_node)
     pos.y = -pos.y
 
@@ -105,6 +101,74 @@ function M:_check_elements()
             self:_add_at(index)
         end
     end
+end
+
+
+function M:_check_elements()
+    local top_index = self.top_index
+    self.last_index = self.top_index
+
+    for index, node in pairs(self.nodes) do
+        if self.scroll:is_node_in_view(node) then
+            top_index = index
+            break
+        end
+    end
+
+    -- make items from (top_index upside
+    local is_top_outside = false
+    local cur_index = top_index - 1
+    while not is_top_outside do
+        if not self.data[cur_index] then
+            break
+        end
+
+        if not self.nodes[cur_index] then
+            self:_add_at(cur_index)
+        end
+
+        if not self.scroll:is_node_in_view(self.nodes[cur_index]) then
+            is_top_outside = true
+
+            -- remove nexts:
+            local remove_index = cur_index - 1
+            while self.nodes[remove_index] do
+                self:_remove_at(remove_index)
+                remove_index = remove_index - 1
+            end
+        end
+
+        cur_index = cur_index - 1
+    end
+
+    -- make items from [top_index downsize
+    local is_bot_outside = false
+    cur_index = top_index
+    while not is_bot_outside do
+        if not self.data[cur_index] then
+            break
+        end
+
+        if not self.nodes[cur_index] then
+            self:_add_at(cur_index)
+        end
+        if not self.scroll:is_node_in_view(self.nodes[cur_index]) then
+            is_bot_outside = true
+
+            -- remove nexts:
+            local remove_index = cur_index + 1
+            while self.nodes[remove_index] do
+                self:_remove_at(remove_index)
+                remove_index = remove_index + 1
+            end
+        else
+            self.last_index = cur_index
+        end
+
+        cur_index = cur_index + 1
+    end
+
+    self.top_index = top_index
 end
 
 

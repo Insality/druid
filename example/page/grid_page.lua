@@ -25,7 +25,6 @@ local function add_node(self, index)
 	local prefab = gui.get_node("grid_nodes_prefab")
 	local cloned = gui.clone_tree(prefab)
 	gui.set_enabled(cloned["grid_nodes_prefab"], true)
-	gui.set_text(cloned["grid_nodes_text"], index)
 
 	local button = self.druid:new_button(cloned["grid_nodes_prefab"], function(_, params, button)
 		remove_node(self, button, true)
@@ -149,7 +148,7 @@ end
 
 
 function M.setup_page(self)
-	self.grid_page_scroll = self.druid:new_scroll("grid_page", "grid_page_content")
+	self.druid:new_scroll("grid_page", "grid_page_content")
 
 	self.grid_static_grid = self.druid:new_static_grid("grid_nodes", "grid_nodes_prefab", 5)
 		:set_position_function(simple_animate)
