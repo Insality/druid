@@ -224,14 +224,6 @@ function DynamicGrid.get_size(self, border)
 end
 
 
-function DynamicGrid.get_size_for(self, count)
-	return vmath.vector3(
-		self.border.z - self.border.x,
-		self.border.y - self.border.w,
-		0)
-end
-
-
 --- Return grid content borders
 -- @tparam DynamicGrid self
 -- @treturn vector3 The grid content borders

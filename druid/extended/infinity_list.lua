@@ -86,47 +86,22 @@ function M:_refresh()
         self:_remove_at(index)
     end
     self:_check_elements()
-    self:_recalc_scroll_size()
-end
-
-
-function M:_check_elements_old()
-    local pos = gui.get_position(self.scroll.content_node)
-    pos.y = -pos.y
-
-    local top_index = self.grid:get_index(pos) - self.grid.in_row
-    local last_index = (top_index - 1) + (self.elements_view_count.x * self.elements_view_count.y) + self.grid.in_row
-
-    -- Clear outside elements
-    for index, _ in pairs(self.nodes) do
-        if index < top_index or index > last_index then
-            self:_remove_at(index)
-        end
-    end
-
-    -- Spawn current elements
-    for index = top_index, last_index do
-        if self.data[index] and not self.nodes[index] then
-            self:_add_at(index)
-        end
-    end
 end
 
 
 function M:_check_elements()
-    local top_index = self.top_index
     self.last_index = self.top_index
 
     for index, node in pairs(self.nodes) do
         if self.scroll:is_node_in_view(node) then
-            top_index = index
+            self.top_index = index
             break
         end
     end
 
     -- make items from (top_index upside
     local is_top_outside = false
-    local cur_index = top_index - 1
+    local cur_index = self.top_index - 1
     while not is_top_outside do
         if not self.data[cur_index] then
             break
@@ -152,7 +127,7 @@ function M:_check_elements()
 
     -- make items from [top_index downsize
     local is_bot_outside = false
-    cur_index = top_index
+    cur_index = self.top_index
     while not is_bot_outside do
         if not self.data[cur_index] then
             break
@@ -176,14 +151,6 @@ function M:_check_elements()
 
         cur_index = cur_index + 1
     end
-
-    self.top_index = top_index
-end
-
-
-function M:_recalc_scroll_size()
-    local element_size = self.grid:get_size_for(#self.data)
-    self.scroll:set_size(element_size)
 end
 
 
