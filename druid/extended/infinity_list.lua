@@ -1,6 +1,7 @@
 --- Manage data for huge dataset in scroll
 --- It requires basic druid scroll and druid grid components
 local const = require("druid.const")
+local helper = require("druid.helper")
 local component = require("druid.component")
 
 local M = component.create("infinity_list", { const.ON_UPDATE })
@@ -12,6 +13,7 @@ function M:init(data_list, scroll, grid, create_function)
     self.druid = self:get_druid()
     self.scroll = scroll
     self.grid = grid
+    self.scroll:bind_grid(grid)
 
     self.data = data_list
     self.top_index = 1
@@ -46,20 +48,27 @@ function M:set_data(data_list)
 end
 
 
+function M:scroll_to_index(index)
+    self.top_index = helper.clamp(index, 1, #self.data)
+    self:_refresh()
+    self.scroll.on_scroll:trigger(self:get_context(), self)
+end
+
+
 function M:_add_at(index)
     if self.nodes[index] then
         self:_remove_at(index)
     end
 
     local node, instance = self.create_function(self.data[index], index)
-    self.grid:add(node, index)
+    self.grid:add(node, index, const.SHIFT.NO_SHIFT)
     self.nodes[index] = node
     self.components[index] = instance
 end
 
 
 function M:_remove_at(index)
-    self.grid:remove(index)
+    self.grid:remove(index, const.SHIFT.NO_SHIFT)
 
     local node = self.nodes[index]
     gui.delete_node(node)

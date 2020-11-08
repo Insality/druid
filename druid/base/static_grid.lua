@@ -159,13 +159,21 @@ end
 -- @tparam StaticGrid self
 --	@tparam node item Gui node
 -- @tparam[opt] number index The item position. By default add as last item
-function StaticGrid.add(self, item, index)
+-- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
+function StaticGrid.add(self, item, index, shift_policy)
+	shift_policy = shift_policy or const.SHIFT.RIGHT
 	index = index or ((self.last_index or 0) + 1)
 
 	if self.nodes[index] then
-		-- Move nodes to right
-		for i = self.last_index, index, -1 do
-			self.nodes[i + 1] = self.nodes[i]
+		if shift_policy == const.SHIFT.RIGHT then
+			for i = self.last_index, index, -1 do
+				self.nodes[i + 1] = self.nodes[i]
+			end
+		end
+		if shift_policy == const.SHIFT.LEFT then
+			for i = self.first_index, index do
+				self.nodes[i - 1] = self.nodes[i]
+			end
 		end
 	end
 
@@ -189,17 +197,23 @@ end
 --- Remove the item from the grid. Note that gui node will be not deleted
 -- @tparam StaticGrid self
 -- @tparam number index The grid node index to remove
--- @tparam bool is_shift_nodes If true, will shift nodes left after index
+-- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
 -- @treturn Node The deleted gui node from grid
-function StaticGrid.remove(self, index, is_shift_nodes)
+function StaticGrid.remove(self, index, shift_policy)
+	shift_policy = shift_policy or const.SHIFT.RIGHT
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
 	local remove_node = self.nodes[index]
 	self.nodes[index] = nil
 
-	if is_shift_nodes then
+	if shift_policy == const.SHIFT.RIGHT then
 		for i = index, self.last_index do
 			self.nodes[i] = self.nodes[i + 1]
+		end
+	end
+	if shift_policy == const.SHIFT.LEFT then
+		for i = index, self.first_index, -1 do
+			self.nodes[i] = self.nodes[i - 1]
 		end
 	end
 
