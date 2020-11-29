@@ -183,9 +183,11 @@ function M.is_web()
 end
 
 
---- Distance from node to size border
+--- Distance from node position to his borders
 -- @function helper.get_border
--- @return vector4 (left, top, right, down)
+-- @tparam node node The gui node to check
+-- @tparam vector3 offset The offset to add to result
+-- @return vector4 Vector with distance to node border: (left, top, right, down)
 function M.get_border(node, offset)
 	local pivot = gui.get_pivot(node)
 	local pivot_offset = M.get_pivot_offset(pivot)

@@ -224,6 +224,21 @@ function DynamicGrid.get_size(self, border)
 end
 
 
+--- Return DynamicGrid offset, where DynamicGrid content starts.
+-- @tparam DynamicGrid self The DynamicGrid instance
+-- @treturn vector3 The DynamicGrid offset
+function DynamicGrid.get_offset(self)
+	local size = self:get_size()
+	local borders = self:get_borders()
+	local offset = vmath.vector3(
+		(borders.z + borders.x)/2 + size.x * self.pivot.x,
+		(borders.y + borders.w)/2 + size.y * self.pivot.y,
+		0)
+
+	return offset
+end
+
+
 --- Return grid content borders
 -- @tparam DynamicGrid self
 -- @treturn vector3 The grid content borders
@@ -391,21 +406,9 @@ function DynamicGrid._get_next_node_pos(self, origin_node_index, new_node, place
 end
 
 
+
 function DynamicGrid._get_node_size(self, node)
 	return vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
-end
-
-
-function DynamicGrid:get_offset()
-	-- return vector where content borders starts
-	local size = self:get_size()
-	local borders = self:get_borders()
-	local offset = vmath.vector3(
-		(borders.z + borders.x)/2 + size.x * self.pivot.x,
-		(borders.y + borders.w)/2 + size.y * self.pivot.y,
-		0)
-
-	return offset
 end
 
 

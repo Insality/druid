@@ -318,7 +318,9 @@ function StaticGrid.clear(self)
 end
 
 
--- return vector where content borders starts
+--- Return StaticGrid offset, where StaticGrid content starts.
+-- @tparam StaticGrid self The StaticGrid instance
+-- @treturn vector3 The StaticGrid offset
 function StaticGrid:get_offset()
 	local borders = self:get_borders()
 	local size = self:get_size()

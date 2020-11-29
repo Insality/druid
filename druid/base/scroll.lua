@@ -267,6 +267,7 @@ end
 -- It will change content gui node size
 -- @tparam Scroll self
 -- @tparam vector3 size The new size for content node
+-- @tparam vector3 offset Offset value to set, where content is starts
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_size(self, size, offset)
 	if offset then
@@ -361,6 +362,10 @@ function Scroll.set_vertical_scroll(self, state)
 end
 
 
+--- Check node if it visible now on scroll
+-- @tparam Scroll self
+-- @tparma node node The node to check
+-- @treturn boolean True, if node in visible scroll area
 function Scroll.is_node_in_view(self, node)
 	local node_border = helper.get_border(node, gui.get_position(node))
 	local view_border = helper.get_border(self.view_node, -self.position)
