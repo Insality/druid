@@ -31,6 +31,10 @@ local function on_control_button(self, delta)
 
 	self.header:translate(pages[self.page])
 	local node = gui.get_node("C_Anchor")
+
+	for i = 1, #pages do
+		gui.set_enabled(gui.get_node(pages[i]), i == self.page)
+	end
 	gui.animate(node, "position.x", (self.page-1) * -600, gui.EASING_OUTSINE, 0.2)
 end
 

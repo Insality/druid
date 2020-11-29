@@ -3,9 +3,8 @@
 platforms:
     x86_64-osx:
         context:
-            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx","profilerext"]
-            excludeSymbols: ["ProfilerExt"]
-            libs: ["physics_null","record_null","profilerext_null"]
+            excludeLibs: ["physics","LinearMath","BulletDynamics","BulletCollision","Box2D","record","vpx"]
+            libs: ["physics_null","record_null"]
             linkFlags: []
 
     x86_64-linux:

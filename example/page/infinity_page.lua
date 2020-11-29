@@ -22,6 +22,7 @@ local function create_infinity_instance_small(self, record, index)
     local button = self.druid:new_button(instance["infinity_prefab_small"], function()
         print("Infinity click on", index)
     end)
+    button:set_click_zone(self.infinity_scroll_3.view_node)
 
     return instance["infinity_prefab_small"], button
 end
@@ -36,6 +37,7 @@ local function create_infinity_instance_dynamic(self, record, index)
     local button = self.druid:new_button(instance["infinity_prefab_dynamic"], function()
         print("Dynamic click on", index)
     end)
+    button:set_click_zone(self.infinity_scroll_dynamic.view_node)
 
     return instance["infinity_prefab_dynamic"], button
 end
@@ -50,6 +52,7 @@ local function create_infinity_instance_dynamic_hor(self, record, index)
     local button = self.druid:new_button(instance["infinity_prefab_dynamic"], function()
         print("Dynamic click on", index)
     end)
+    button:set_click_zone(self.infinity_scroll_dynamic_hor.view_node)
 
     return instance["infinity_prefab_dynamic"], button
 end
@@ -63,12 +66,16 @@ local function setup_infinity_list(self)
 
     self.infinity_list = self.druid:new_infinity_list(data, self.infinity_scroll, self.infinity_grid, function(record, index)
         -- function should return gui_node, [druid_component]
-        return create_infinity_instance(self, record, index)
+        local root, button = create_infinity_instance(self, record, index)
+        button:set_click_zone(self.infinity_scroll.view_node)
+        return root, button
     end)
 
     self.infinity_list_hor = self.druid:new_infinity_list(data, self.infinity_scroll_hor, self.infinity_grid_hor, function(record, index)
         -- function should return gui_node, [druid_component]
-        return create_infinity_instance(self, record, index)
+        local root, button = create_infinity_instance(self, record, index)
+        button:set_click_zone(self.infinity_scroll_hor.view_node)
+        return root, button
     end)
 
     -- scroll to some index
@@ -125,7 +132,6 @@ function M.setup_page(self)
     self.infinity_scroll_dynamic_hor = self.druid:new_scroll("infinity_scroll_stencil_dynamic_hor", "infinity_scroll_content_dynamic_hor")
         :set_vertical_scroll(false)
     self.infinity_grid_dynamic_hor = self.druid:new_dynamic_grid("infinity_scroll_content_dynamic_hor")
-
 
     setup_infinity_list(self)
 end

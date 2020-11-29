@@ -3149,7 +3149,7 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "kenney/empty"
-  id: "text_page"
+  id: "texts_page"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -3223,7 +3223,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3286,7 +3286,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3349,7 +3349,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3412,7 +3412,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3475,7 +3475,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3538,7 +3538,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3601,7 +3601,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3664,7 +3664,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3727,7 +3727,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: true
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3776,7 +3776,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "text_page"
+  parent: "texts_page"
   layer: "image"
   inherit_alpha: true
   slice9 {
@@ -3845,7 +3845,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3908,7 +3908,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -3971,7 +3971,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -4034,7 +4034,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -4083,7 +4083,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "text_page"
+  parent: "texts_page"
   layer: "image"
   inherit_alpha: true
   slice9 {
@@ -4152,7 +4152,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: true
-  parent: "text_page"
+  parent: "texts_page"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -10280,7 +10280,7 @@ nodes {
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   parent: "info_grid_static"
-  layer: ""
+  layer: "image"
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -10335,7 +10335,7 @@ nodes {
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   parent: "grid_nodes_prefab"
-  layer: ""
+  layer: "image"
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -10404,7 +10404,7 @@ nodes {
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
   parent: "grid_nodes_dot"
-  layer: ""
+  layer: "text"
   inherit_alpha: true
   alpha: 1.0
   outline_alpha: 0.0
@@ -10683,7 +10683,7 @@ nodes {
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   parent: "info_grid_dynamic"
-  layer: ""
+  layer: "image"
   inherit_alpha: true
   slice9 {
     x: 20.0
@@ -12161,7 +12161,7 @@ nodes {
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   parent: "infinity_page_content"
-  layer: ""
+  layer: "image"
   inherit_alpha: true
   slice9 {
     x: 20.0
@@ -12230,7 +12230,7 @@ nodes {
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
   parent: "infinity_prefab_small"
-  layer: ""
+  layer: "text"
   inherit_alpha: true
   alpha: 1.0
   outline_alpha: 1.0
@@ -12499,7 +12499,7 @@ nodes {
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   parent: "infinity_page_content"
-  layer: ""
+  layer: "image"
   inherit_alpha: true
   slice9 {
     x: 20.0
@@ -12568,7 +12568,7 @@ nodes {
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
   parent: "infinity_prefab"
-  layer: ""
+  layer: "text"
   inherit_alpha: true
   alpha: 1.0
   outline_alpha: 1.0
@@ -12617,7 +12617,7 @@ nodes {
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   parent: "infinity_page_content"
-  layer: ""
+  layer: "image"
   inherit_alpha: true
   slice9 {
     x: 20.0
@@ -12686,7 +12686,7 @@ nodes {
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
   parent: "infinity_prefab_dynamic"
-  layer: ""
+  layer: "text"
   inherit_alpha: true
   alpha: 1.0
   outline_alpha: 1.0
