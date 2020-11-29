@@ -133,6 +133,8 @@ function Scroll.init(self, view_node, content_node)
 	self.view_node = self:get_node(view_node)
 	self.content_node = self:get_node(content_node)
 
+	self.view_size = vmath.mul_per_elem(gui.get_size(self.view_node), gui.get_scale(self.view_node))
+
 	self.position = gui.get_position(self.content_node)
 	self.target_position = vmath.vector3(self.position)
 	self.inertion = vmath.vector3(0)
@@ -621,7 +623,6 @@ end
 
 function Scroll._update_size(self)
 	local view_border = helper.get_border(self.view_node)
-	local view_size = vmath.mul_per_elem(gui.get_size(self.view_node), gui.get_scale(self.view_node))
 
 	local content_border = helper.get_border(self.content_node)
 	local content_size = vmath.mul_per_elem(gui.get_size(self.content_node), gui.get_scale(self.content_node))
@@ -639,20 +640,20 @@ function Scroll._update_size(self)
 	local stretch_size = self.style.EXTRA_STRETCH_SIZE
 
 	if self.drag.can_x then
-		local sign = content_size.x > view_size.x and 1 or -1
+		local sign = content_size.x > self.view_size.x and 1 or -1
 		content_border_extra.x = content_border_extra.x - stretch_size * sign
 		content_border_extra.z = content_border_extra.z + stretch_size * sign
 	end
 
 	if self.drag.can_y then
-		local sign = content_size.y > view_size.y and 1 or -1
+		local sign = content_size.y > self.view_size.y and 1 or -1
 		content_border_extra.y = content_border_extra.y + stretch_size * sign
 		content_border_extra.w = content_border_extra.w - stretch_size * sign
 	end
 
 	if not self.style.SMALL_CONTENT_SCROLL then
-		self.drag.can_x = content_size.x > view_size.x
-		self.drag.can_y = content_size.y > view_size.y
+		self.drag.can_x = content_size.x > self.view_size.x
+		self.drag.can_y = content_size.y > self.view_size.y
 	end
 
 	self.available_pos_extra = get_border_vector(view_border - content_border_extra, self._offset)

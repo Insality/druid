@@ -152,7 +152,7 @@ function M:_check_elements_from(index, step)
             is_outside = true
 
             -- remove nexts:
-            local remove_index = index
+            local remove_index = index + step
             while self.nodes[remove_index] do
                 self:_remove_at(remove_index)
                 remove_index = remove_index + step
