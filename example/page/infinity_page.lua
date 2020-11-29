@@ -103,6 +103,17 @@ local function setup_infinity_list(self)
 end
 
 
+local function toggle_stencil(self)
+    self._is_stencil = not self._is_stencil
+    local mode = self._is_stencil and gui.CLIPPING_MODE_STENCIL or gui.CLIPPING_MODE_NONE
+    gui.set_clipping_mode(self.infinity_scroll.view_node, mode)
+    gui.set_clipping_mode(self.infinity_scroll_hor.view_node, mode)
+    gui.set_clipping_mode(self.infinity_scroll_3.view_node, mode)
+    gui.set_clipping_mode(self.infinity_scroll_dynamic.view_node, mode)
+    gui.set_clipping_mode(self.infinity_scroll_dynamic_hor.view_node, mode)
+end
+
+
 function M.setup_page(self)
     self.druid:new_scroll("infinity_page", "infinity_page_content")
 
@@ -132,6 +143,9 @@ function M.setup_page(self)
     self.infinity_scroll_dynamic_hor = self.druid:new_scroll("infinity_scroll_stencil_dynamic_hor", "infinity_scroll_content_dynamic_hor")
         :set_vertical_scroll(false)
     self.infinity_grid_dynamic_hor = self.druid:new_dynamic_grid("infinity_scroll_content_dynamic_hor")
+
+    self._is_stencil = true
+    self.druid:new_button("button_toggle_stencil/button", toggle_stencil)
 
     setup_infinity_list(self)
 end

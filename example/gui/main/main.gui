@@ -11731,7 +11731,167 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -128.0
+    y: -157.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "button_toggle_stencil"
+  parent: "infinity_page_content"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  template: "/example/templates/button.gui"
+  template_node_child: false
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 220.0
+    y: 60.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "kenney/button_blue"
+  id: "button_toggle_stencil/button"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "button_toggle_stencil"
+  layer: "image"
+  inherit_alpha: true
+  slice9 {
+    x: 15.0
+    y: 15.0
+    z: 15.0
+    w: 15.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  overridden_fields: 4
+  template_node_child: true
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 0.0
+    y: 7.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Toggle stencil"
+  font: "game"
+  id: "button_toggle_stencil/text"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.101960786
+    y: 0.2
+    z: 0.6
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
+  parent: "button_toggle_stencil/button"
+  layer: "text"
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 0.0
+  shadow_alpha: 0.78
+  overridden_fields: 8
+  template_node_child: true
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: 0.0
+    y: -249.0
     z: 0.0
     w: 1.0
   }
@@ -11794,7 +11954,7 @@ nodes {
 nodes {
   position {
     x: -150.0
-    y: -644.0
+    y: -765.0
     z: 0.0
     w: 1.0
   }
@@ -11904,7 +12064,7 @@ nodes {
 nodes {
   position {
     x: 150.0
-    y: -644.0
+    y: -765.0
     z: 0.0
     w: 1.0
   }
@@ -12014,7 +12174,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -968.0
+    y: -1089.0
     z: 0.0
     w: 1.0
   }
@@ -12124,7 +12284,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -1030.0
+    y: -1151.0
     z: 0.0
     w: 1.0
   }
@@ -12242,7 +12402,7 @@ nodes {
 nodes {
   position {
     x: -150.0
-    y: -176.0
+    y: -297.0
     z: 0.0
     w: 1.0
   }
@@ -12352,7 +12512,7 @@ nodes {
 nodes {
   position {
     x: 150.0
-    y: -176.0
+    y: -297.0
     z: 0.0
     w: 1.0
   }
@@ -12462,7 +12622,7 @@ nodes {
 nodes {
   position {
     x: 150.0
-    y: -820.0
+    y: -941.0
     z: 0.0
     w: 1.0
   }
@@ -12580,7 +12740,7 @@ nodes {
 nodes {
   position {
     x: 151.0
-    y: -356.0
+    y: -477.0
     z: 0.0
     w: 1.0
   }
