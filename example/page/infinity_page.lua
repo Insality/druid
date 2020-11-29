@@ -4,23 +4,43 @@
 local function create_infinity_instance(self, record, index)
     local instance = gui.clone_tree(self.infinity_prefab)
     gui.set_enabled(instance["infinity_prefab"], true)
-    gui.set_text(instance["infinity_text"], "Record " .. index)
+    gui.set_text(instance["infinity_text"], "Record " .. record)
 
     local button = self.druid:new_button(instance["infinity_prefab"], function()
-        print("Infinity click on", index)
+        print("Infinity click on", record)
+        self.infinity_list:add(self.infinity_list:get_length() + 1)
+    end)
+    button.on_long_click:subscribe(function()
+        self.infinity_list:remove_by_data(record)
     end)
 
     return instance["infinity_prefab"], button
 end
 
 
+local function create_infinity_instance_hor(self, record, index)
+    local instance = gui.clone_tree(self.infinity_prefab)
+    gui.set_enabled(instance["infinity_prefab"], true)
+    gui.set_text(instance["infinity_text"], "Record " .. record)
+
+    local button = self.druid:new_button(instance["infinity_prefab"], function()
+        print("Infinity click on", record)
+        self.infinity_list_hor:remove_by_data(record)
+    end)
+
+    return instance["infinity_prefab"], button
+end
+
+
+
 local function create_infinity_instance_small(self, record, index)
     local instance = gui.clone_tree(self.infinity_prefab_small)
     gui.set_enabled(instance["infinity_prefab_small"], true)
-    gui.set_text(instance["infinity_text_3"], index)
+    gui.set_text(instance["infinity_text_3"], record)
 
     local button = self.druid:new_button(instance["infinity_prefab_small"], function()
-        print("Infinity click on", index)
+        print("Infinity click on", record)
+        self.infinity_list_small:remove_by_data(record)
     end)
     button:set_click_zone(self.infinity_scroll_3.view_node)
 
@@ -31,11 +51,12 @@ end
 local function create_infinity_instance_dynamic(self, record, index)
     local instance = gui.clone_tree(self.infinity_prefab_dynamic)
     gui.set_enabled(instance["infinity_prefab_dynamic"], true)
-    gui.set_text(instance["infinity_text_dynamic"], "Record " .. index)
+    gui.set_text(instance["infinity_text_dynamic"], "Record " .. record)
 
     gui.set_size(instance["infinity_prefab_dynamic"], vmath.vector3(200, 60 + index * 3, 0))
     local button = self.druid:new_button(instance["infinity_prefab_dynamic"], function()
-        print("Dynamic click on", index)
+        print("Dynamic click on", record)
+        self.infinity_list_dynamic:remove_by_data(record)
     end)
     button:set_click_zone(self.infinity_scroll_dynamic.view_node)
 
@@ -46,11 +67,12 @@ end
 local function create_infinity_instance_dynamic_hor(self, record, index)
     local instance = gui.clone_tree(self.infinity_prefab_dynamic)
     gui.set_enabled(instance["infinity_prefab_dynamic"], true)
-    gui.set_text(instance["infinity_text_dynamic"], "Record " .. index)
+    gui.set_text(instance["infinity_text_dynamic"], "Record " .. record)
 
     gui.set_size(instance["infinity_prefab_dynamic"], vmath.vector3(150 + 2 * index, 60, 0))
     local button = self.druid:new_button(instance["infinity_prefab_dynamic"], function()
-        print("Dynamic click on", index)
+        print("Dynamic click on", record)
+        self.infinity_list_dynamic_hor:remove_by_data(record)
     end)
     button:set_click_zone(self.infinity_scroll_dynamic_hor.view_node)
 
@@ -73,7 +95,7 @@ local function setup_infinity_list(self)
 
     self.infinity_list_hor = self.druid:new_infinity_list(data, self.infinity_scroll_hor, self.infinity_grid_hor, function(record, index)
         -- function should return gui_node, [druid_component]
-        local root, button = create_infinity_instance(self, record, index)
+        local root, button = create_infinity_instance_hor(self, record, index)
         button:set_click_zone(self.infinity_scroll_hor.view_node)
         return root, button
     end)
