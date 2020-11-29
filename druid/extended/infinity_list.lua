@@ -4,7 +4,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("infinity_list", { const.ON_UPDATE })
+local M = component.create("infinity_list")
 
 
 function M:init(data_list, scroll, grid, create_function)
@@ -25,26 +25,56 @@ function M:init(data_list, scroll, grid, create_function)
     self.components = {}
 
     self:_refresh()
-    self.scroll.on_scroll:subscribe(function() self._check_elements(self) end)
+    self.scroll.on_scroll:subscribe(self._check_elements, self)
 end
 
 
 function M:on_remove()
-    -- TODO: make this work
-    -- self.scroll.on_scroll:unsubscribe(self._check_elements)
-end
-
-
-function M:update(dt)
-    if self.scroll.animate then
-        self:_check_elements()
-    end
+    self.scroll.on_scroll:unsubscribe(self._check_elements, self)
 end
 
 
 function M:set_data(data_list)
     self.data = data_list
     self:_refresh()
+end
+
+
+function M:add(data, index)
+    table.insert(self.data, index, data)
+    self:_refresh()
+end
+
+
+function M:remove(index, shift_policy)
+    table.remove(self.data, index)
+    self:_refresh()
+end
+
+
+function M:clear()
+    self.data = {}
+    self:_refresh()
+end
+
+
+function M:get_first_index()
+    return self.top_index
+end
+
+
+function M:get_last_index()
+    return self.last_index
+end
+
+
+function M:get_index(data)
+    for index, value in pairs(self.data) do
+        if value == data then
+            return index
+        end
+    end
+    return nil
 end
 
 
@@ -90,66 +120,46 @@ end
 
 
 function M:_check_elements()
-    self.last_index = self.top_index
-
     for index, node in pairs(self.nodes) do
         if self.scroll:is_node_in_view(node) then
             self.top_index = index
-            break
+            self.last_index = index
         end
     end
 
-    -- make items from (top_index upside
-    local is_top_outside = false
-    local cur_index = self.top_index - 1
-    while not is_top_outside do
-        if not self.data[cur_index] then
-            break
-        end
+    self:_check_elements_from(self.top_index - 1, -1)
+    self:_check_elements_from(self.top_index, 1)
 
-        if not self.nodes[cur_index] then
-            self:_add_at(cur_index)
-        end
-
-        if not self.scroll:is_node_in_view(self.nodes[cur_index]) then
-            is_top_outside = true
-
-            -- remove nexts:
-            local remove_index = cur_index - 1
-            while self.nodes[remove_index] do
-                self:_remove_at(remove_index)
-                remove_index = remove_index - 1
-            end
-        end
-
-        cur_index = cur_index - 1
+    for index, node in pairs(self.nodes) do
+        self.top_index = math.min(self.top_index or index, index)
+        self.last_index = math.max(self.last_index or index, index)
     end
+end
 
-    -- make items from [top_index downsize
-    local is_bot_outside = false
-    cur_index = self.top_index
-    while not is_bot_outside do
-        if not self.data[cur_index] then
+
+function M:_check_elements_from(index, step)
+    local is_outside = false
+    while not is_outside do
+        if not self.data[index] then
             break
         end
 
-        if not self.nodes[cur_index] then
-            self:_add_at(cur_index)
+        if not self.nodes[index] then
+            self:_add_at(index)
         end
-        if not self.scroll:is_node_in_view(self.nodes[cur_index]) then
-            is_bot_outside = true
+
+        if not self.scroll:is_node_in_view(self.nodes[index]) then
+            is_outside = true
 
             -- remove nexts:
-            local remove_index = cur_index + 1
+            local remove_index = index
             while self.nodes[remove_index] do
                 self:_remove_at(remove_index)
-                remove_index = remove_index + 1
+                remove_index = remove_index + step
             end
-        else
-            self.last_index = cur_index
         end
 
-        cur_index = cur_index + 1
+        index = index + step
     end
 end
 

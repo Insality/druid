@@ -22,11 +22,15 @@ end
 --- Subscribe callback on event
 -- @tparam DruidEvent self
 -- @tparam function callback Callback itself
-function DruidEvent.subscribe(self, callback)
+-- @tparam table context Additional context as first param to callback call
+function DruidEvent.subscribe(self, callback, context)
 	assert(type(self) == "table", "You should subscribe to event with : syntax")
 	assert(type(callback) == "function", "Callback should be function")
 
-	table.insert(self._callbacks, callback)
+	table.insert(self._callbacks, {
+		callback = callback,
+		context = context
+	})
 
 	return callback
 end
@@ -35,10 +39,11 @@ end
 --- Unsubscribe callback on event
 -- @tparam DruidEvent self
 -- @tparam function callback Callback itself
-function DruidEvent.unsubscribe(self, callback)
-	for i = 1, #self._callbacks do
-		if self._callbacks[i] == callback then
-			table.remove(self._callbacks, i)
+-- @tparam table context Additional context as first param to callback call
+function DruidEvent.unsubscribe(self, callback, context)
+	for index, callback_info in ipairs(self._callbacks) do
+		if callback_info.callback == callback and callback_info.context == context then
+			table.remove(self._callbacks, index)
 			return
 		end
 	end
@@ -64,8 +69,12 @@ end
 -- @tparam DruidEvent self
 -- @tparam any ... All event params
 function DruidEvent.trigger(self, ...)
-	for i = 1, #self._callbacks do
-		self._callbacks[i](...)
+	for index, callback_info in ipairs(self._callbacks) do
+		if callback_info.context then
+			callback_info.callback(callback_info.context, ...)
+			else
+			callback_info.callback(...)
+		end
 	end
 end
 
