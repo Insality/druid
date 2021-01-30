@@ -155,6 +155,7 @@ function Scroll.init(self, view_node, content_node)
 	self._is_vertical_scroll = true
 	self._grid_on_change = nil
 	self._grid_on_change_callback = nil
+	self._outside_offset_vector = vmath.vector3(0)
 
 	self:_update_size()
 end
@@ -166,6 +167,7 @@ end
 
 
 function Scroll.update(self, dt)
+	self:_update_params(dt)
 	if self.drag.is_drag then
 		self:_update_hand_scroll(dt)
 	else
@@ -362,13 +364,14 @@ function Scroll.set_vertical_scroll(self, state)
 end
 
 
---- Check node if it visible now on scroll
+--- Check node if it visible now on scroll.
+-- Extra border is not affected. Return true for elements in extra scroll zone
 -- @tparam Scroll self
 -- @tparma node node The node to check
 -- @treturn boolean True, if node in visible scroll area
 function Scroll.is_node_in_view(self, node)
 	local node_border = helper.get_border(node, gui.get_position(node))
-	local view_border = helper.get_border(self.view_node, -self.position)
+	local view_border = helper.get_border(self.view_node, -(self.position - self._outside_offset_vector))
 
 	-- Check is vertical outside (Left or Right):
 	if node_border.z < view_border.x or node_border.x > view_border.z then
@@ -663,6 +666,32 @@ function Scroll._update_size(self)
 
 	self.available_pos_extra = get_border_vector(view_border - content_border_extra, self._offset)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
+end
+
+
+function Scroll._update_params(self, dt)
+	local t = self.target_position
+	local b = self.available_pos
+
+	self._outside_offset_vector.x = 0
+	self._outside_offset_vector.y = 0
+
+	-- Right border (minimum x)
+	if t.x < b.x then
+		self._outside_offset_vector.x = t.x - b.x
+	end
+	-- Left border (maximum x)
+	if t.x > b.z then
+		self._outside_offset_vector.x = t.x - b.z
+	end
+	-- Top border (minimum y)
+	if t.y < b.y then
+		self._outside_offset_vector.y = t.y - b.y
+	end
+	-- Bot border (maximum y)
+	if t.y > b.w then
+		self._outside_offset_vector.y = t.y - b.w
+	end
 end
 
 

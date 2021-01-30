@@ -11,7 +11,7 @@ local function create_infinity_instance(self, record, index)
         self.infinity_list:add(self.infinity_list:get_length() + 1)
     end)
     button.on_long_click:subscribe(function()
-        self.infinity_list:remove_by_data(record)
+        -- self.infinity_list:remove_by_data(record)
     end)
 
     return instance["infinity_prefab"], button
@@ -25,7 +25,7 @@ local function create_infinity_instance_hor(self, record, index)
 
     local button = self.druid:new_button(instance["infinity_prefab"], function()
         print("Infinity click on", record)
-        self.infinity_list_hor:remove_by_data(record)
+        -- self.infinity_list_hor:remove_by_data(record)
     end)
 
     return instance["infinity_prefab"], button
@@ -40,7 +40,7 @@ local function create_infinity_instance_small(self, record, index)
 
     local button = self.druid:new_button(instance["infinity_prefab_small"], function()
         print("Infinity click on", record)
-        self.infinity_list_small:remove_by_data(record)
+        -- self.infinity_list_small:remove_by_data(record)
     end)
     button:set_click_zone(self.infinity_scroll_3.view_node)
 
@@ -56,7 +56,7 @@ local function create_infinity_instance_dynamic(self, record, index)
     gui.set_size(instance["infinity_prefab_dynamic"], vmath.vector3(200, 60 + index * 3, 0))
     local button = self.druid:new_button(instance["infinity_prefab_dynamic"], function()
         print("Dynamic click on", record)
-        self.infinity_list_dynamic:remove_by_data(record)
+        -- self.infinity_list_dynamic:remove_by_data(record)
     end)
     button:set_click_zone(self.infinity_scroll_dynamic.view_node)
 
@@ -72,7 +72,7 @@ local function create_infinity_instance_dynamic_hor(self, record, index)
     gui.set_size(instance["infinity_prefab_dynamic"], vmath.vector3(150 + 2 * index, 60, 0))
     local button = self.druid:new_button(instance["infinity_prefab_dynamic"], function()
         print("Dynamic click on", record)
-        self.infinity_list_dynamic_hor:remove_by_data(record)
+        -- self.infinity_list_dynamic_hor:remove_by_data(record)
     end)
     button:set_click_zone(self.infinity_scroll_dynamic_hor.view_node)
 

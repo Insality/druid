@@ -189,6 +189,8 @@ function M:_check_elements_from(index, step)
             is_outside = true
 
             -- remove nexts:
+            -- We add one more element, which is not in view to
+            -- check what it's always outside to stop spawning
             local remove_index = index + step
             while self._data_visual[remove_index] do
                 self:_remove_at(remove_index)
