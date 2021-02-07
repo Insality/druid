@@ -16,7 +16,7 @@ function Component:update(dt)
 end
 
 
--- Call only if exist interest: component.ON_INPUT or component.ON_INPUT_HIGH
+-- Call only if exist interest: component.ON_INPUT
 function Component:on_input(action_id, action)
 	return false
 end

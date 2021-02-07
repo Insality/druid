@@ -82,6 +82,21 @@ local function input_release(self)
 end
 
 
+local function sort_input_stack(self)
+	local input_components = self.components[base_component.ON_INPUT]
+	if not input_components then
+		return
+	end
+
+	table.sort(input_components, function(a, b)
+		if a:get_input_priority() ~= b:get_input_priority() then
+			return a:get_input_priority() < b:get_input_priority()
+		end
+		return a:get_uid() < b:get_uid()
+	end)
+end
+
+
 -- Create the component itself
 local function create(self, instance_class)
 	local instance = instance_class()
@@ -96,6 +111,7 @@ local function create(self, instance_class)
 
 		if base_component.UI_INPUT[interest] then
 			input_init(self)
+			sort_input_stack(self)
 		end
 	end
 
@@ -257,9 +273,6 @@ function DruidInstance.on_input(self, action_id, action)
 	self._is_input_processing = true
 
 	local is_input_consumed = false
-
-	is_input_consumed = process_input(action_id, action,
-		self.components[base_component.ON_INPUT_HIGH], is_input_consumed)
 
 	is_input_consumed = process_input(action_id, action,
 		self.components[base_component.ON_INPUT], is_input_consumed)

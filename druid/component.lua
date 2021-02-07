@@ -15,7 +15,6 @@ BaseComponent.ALL = const.ALL
 BaseComponent.ON_INPUT = const.ON_INPUT
 BaseComponent.ON_UPDATE = const.ON_UPDATE
 BaseComponent.ON_MESSAGE = const.ON_MESSAGE
-BaseComponent.ON_INPUT_HIGH = const.ON_INPUT_HIGH
 BaseComponent.ON_FOCUS_LOST = const.ON_FOCUS_LOST
 BaseComponent.ON_FOCUS_GAINED = const.ON_FOCUS_GAINED
 BaseComponent.ON_LAYOUT_CHANGE = const.ON_LAYOUT_CHANGE
@@ -28,7 +27,6 @@ BaseComponent.ALL_INTERESTS = {
 	BaseComponent.ON_UPDATE,
 	BaseComponent.ON_MESSAGE,
 	BaseComponent.ON_FOCUS_LOST,
-	BaseComponent.ON_INPUT_HIGH,
 	BaseComponent.ON_FOCUS_GAINED,
 	BaseComponent.ON_LAYOUT_CHANGE,
 	BaseComponent.ON_LANGUAGE_CHANGE,
@@ -45,9 +43,15 @@ BaseComponent.SPECIFIC_UI_MESSAGES = {
 
 
 BaseComponent.UI_INPUT = {
-	[BaseComponent.ON_INPUT_HIGH] = true,
 	[BaseComponent.ON_INPUT] = true
 }
+
+
+local uid = 0
+function BaseComponent.static.get_uid()
+	uid = uid + 1
+	return uid
+end
 
 
 --- Set current component style table.
@@ -151,6 +155,22 @@ function BaseComponent.get_name(self)
 end
 
 
+--- Return component input priority
+-- @tparam BaseComponent self
+-- @treturn number The component input priority
+function BaseComponent.get_input_priority(self)
+	return self._component.input_priority
+end
+
+
+--- Return component uid. UID generated in component creation order
+-- @tparam BaseComponent self
+-- @treturn number The component uid
+function BaseComponent.get_uid(self)
+	return self._component.uid
+end
+
+
 --- Set component input state. By default it enabled
 -- You can disable any input of component by this function
 -- @tparam BaseComponent self
@@ -216,13 +236,16 @@ end
 -- @tparam BaseComponent self
 -- @tparam string name BaseComponent name
 -- @tparam[opt={}] table interest List of component's interest
+-- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
 -- @local
-function BaseComponent.initialize(self, name, interest)
+function BaseComponent.initialize(self, name, interest, input_priority)
 	interest = interest or {}
 
 	self._component = {
 		name = name,
-		interest = interest
+		interest = interest,
+		input_priority = input_priority or const.PRIORITY_INPUT,
+		uid = BaseComponent.get_uid()
 	}
 end
 
@@ -294,13 +317,14 @@ end
 -- druid component.
 -- @tparam string name BaseComponent name
 -- @tparam[opt={}] table interest List of component's interest
+-- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
 -- @local
-function BaseComponent.static.create(name, interest)
+function BaseComponent.static.create(name, interest, input_priority)
 	-- Yea, inheritance here
 	local new_class = class(name, BaseComponent)
 
 	new_class.initialize = function(self)
-		BaseComponent.initialize(self, name, interest)
+		BaseComponent.initialize(self, name, interest, input_priority)
 	end
 
 	return new_class
