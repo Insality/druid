@@ -569,11 +569,11 @@ end
 function Scroll._check_threshold(self)
 	local is_stopped = false
 
-	if self.inertion.x ~= 0 and math.abs(self.inertion.x) < self.style.INERT_THRESHOLD then
+	if math.abs(self.inertion.x) < self.style.INERT_THRESHOLD then
 		is_stopped = true
 		self.inertion.x = 0
 	end
-	if self.inertion.y ~= 0 and math.abs(self.inertion.y) < self.style.INERT_THRESHOLD then
+	if math.abs(self.inertion.y) < self.style.INERT_THRESHOLD then
 		is_stopped = true
 		self.inertion.y = 0
 	end

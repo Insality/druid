@@ -71,8 +71,10 @@ local function end_touch(self)
 	end
 
 	self.is_drag = false
-	self.is_touch = false
-	self.on_touch_end:trigger(self:get_context())
+	if self.is_touch then
+		self.is_touch = false
+		self.on_touch_end:trigger(self:get_context())
+	end
 	self:reset_input_priority()
 	self.touch_id = 0
 end
