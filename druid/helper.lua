@@ -183,14 +183,14 @@ end
 --- Check if device is mobile (Android or iOS)
 -- @function helper..is_mobile
 function M.is_mobile()
-	return system_name == const.OS.IOS or SYSTEM_NAME == const.OS.ANDROID
+	return const.CURRENT_SYSTEM_NAME == const.OS.IOS or const.CURRENT_SYSTEM_NAME == const.OS.ANDROID
 end
 
 
 --- Check if device is HTML5
 -- @function helper.is_web
 function M.is_web()
-	return system_name == const.OS.BROWSER
+	return const.CURRENT_SYSTEM_NAME == const.OS.BROWSER
 end
 
 
