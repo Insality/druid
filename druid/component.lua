@@ -163,6 +163,26 @@ function BaseComponent.get_input_priority(self)
 end
 
 
+--- Set component input priority
+-- @tparam BaseComponent self
+-- @tparam number value The new input priority value
+-- @treturn number The component input priority
+function BaseComponent.set_input_priority(self, value)
+	assert(value)
+	self._component.input_priority = value
+	return self
+end
+
+
+--- Reset component input priority to default value
+-- @tparam BaseComponent self
+-- @treturn number The component input priority
+function BaseComponent.reset_input_priority(self)
+	self:set_input_priority(self._component.default_input_priority)
+	return self
+end
+
+
 --- Return component uid. UID generated in component creation order
 -- @tparam BaseComponent self
 -- @treturn number The component uid
@@ -245,6 +265,7 @@ function BaseComponent.initialize(self, name, interest, input_priority)
 		name = name,
 		interest = interest,
 		input_priority = input_priority or const.PRIORITY_INPUT,
+		default_input_priority = input_priority or const.PRIORITY_INPUT,
 		uid = BaseComponent.get_uid()
 	}
 end
