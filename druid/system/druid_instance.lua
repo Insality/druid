@@ -82,6 +82,22 @@ local function input_release(self)
 end
 
 
+local function sort_input_stack(self)
+	local input_components = self.components[base_component.ON_INPUT]
+	if not input_components then
+		return
+	end
+
+	table.sort(input_components, function(a, b)
+		if a:get_input_priority() ~= b:get_input_priority() then
+			return a:get_input_priority() < b:get_input_priority()
+		end
+
+		return a:get_uid() < b:get_uid()
+	end)
+end
+
+
 -- Create the component itself
 local function create(self, instance_class)
 	local instance = instance_class()
@@ -103,6 +119,27 @@ local function create(self, instance_class)
 end
 
 
+local function check_sort_input_stack(self, components)
+	if not components or #components == 0 then
+		return
+	end
+
+	local is_need_sort_input_stack = false
+
+	for i = #components, 1, -1 do
+		local component = components[i]
+		if component:_is_input_priority_changed() then
+			is_need_sort_input_stack = true
+		end
+		component:_reset_input_priority_changed()
+	end
+
+	if is_need_sort_input_stack then
+		sort_input_stack(self)
+	end
+end
+
+
 local function process_input(action_id, action, components, is_input_consumed)
 	if #components == 0 then
 		return is_input_consumed
@@ -110,24 +147,8 @@ local function process_input(action_id, action, components, is_input_consumed)
 
 	for i = #components, 1, -1 do
 		local component = components[i]
-		-- Process increased input priority first
 		local meta = component._meta
-		if meta.input_enabled and meta.increased_input_priority then
-			if not is_input_consumed then
-				is_input_consumed = component:on_input(action_id, action)
-			else
-				if component.on_input_interrupt then
-					component:on_input_interrupt()
-				end
-			end
-		end
-	end
-
-	for i = #components, 1, -1 do
-		local component = components[i]
-		-- Process usual input priority next
-		local meta = component._meta
-		if meta.input_enabled and not meta.increased_input_priority then
+		if meta.input_enabled then
 			if not is_input_consumed then
 				is_input_consumed = component:on_input(action_id, action)
 			else
@@ -257,12 +278,9 @@ function DruidInstance.on_input(self, action_id, action)
 	self._is_input_processing = true
 
 	local is_input_consumed = false
-
-	is_input_consumed = process_input(action_id, action,
-		self.components[base_component.ON_INPUT_HIGH], is_input_consumed)
-
-	is_input_consumed = process_input(action_id, action,
-		self.components[base_component.ON_INPUT], is_input_consumed)
+	local components = self.components[base_component.ON_INPUT]
+	check_sort_input_stack(self, components)
+	is_input_consumed = process_input(action_id, action, components, is_input_consumed)
 
 	self._is_input_processing = false
 

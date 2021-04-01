@@ -141,3 +141,14 @@ Desc
 - Lang text now can be initialized without default locale id
 - **#116** You can pass Text component in Input component instead of text node
 - **#124** Add _set_click_zone_ functon to Scroll component (just link to Drag:set_click_zone inside scroll component)
+- **#102** __[BREAKING]__ Removed _increase_input_priority_ component function. Use _component:set_input_priority_ function instead. The bigger priority value processed first. The value 10 is default for Druid components, the 100 value is maximum priority for acquire input in _drag_ and _input_ components
+-- Add constants for priorities: _const.PRIORITY_INPUT_, _const.PRIORITY_INPUT_HIGH_, _const.PRIORITY_INPUT_MAX_.
+-- __[BREAKING]__ If you use in you custom components interest: __component.ON_INPUT_HIGH__ you should replace it with __const.PRIORITY_INPUT_HIGH__ as third param, and place it with usual __component.ON_INPUT__. For example
+_before:_
+```lua
+local Drag = component.create("drag", { component.ON_INPUT_HIGH })
+```
+_after:_
+```lua
+local Drag = component.create("drag", { component.ON_INPUT }, const.PRIORITY_INPUT_HIGH)
+```

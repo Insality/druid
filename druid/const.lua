@@ -31,11 +31,15 @@ M.ALL = "all"
 M.ON_INPUT = hash("on_input")
 M.ON_UPDATE = hash("on_update")
 M.ON_MESSAGE = hash("on_message")
-M.ON_INPUT_HIGH = hash("on_input_high")
 M.ON_FOCUS_LOST = hash("on_focus_lost")
 M.ON_FOCUS_GAINED = hash("on_focus_gained")
 M.ON_LAYOUT_CHANGE = hash("layout_changed")
 M.ON_LANGUAGE_CHANGE = hash("on_language_change")
+
+
+M.PRIORITY_INPUT = 10
+M.PRIORITY_INPUT_HIGH = 20
+M.PRIORITY_INPUT_MAX = 100
 
 
 M.PIVOTS = {

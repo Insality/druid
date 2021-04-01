@@ -5,6 +5,7 @@
 
 local const = require("druid.const")
 local class = require("druid.system.middleclass")
+local helper = require("druid.helper")
 
 
 local BaseComponent = class("druid.component")
@@ -15,7 +16,6 @@ BaseComponent.ALL = const.ALL
 BaseComponent.ON_INPUT = const.ON_INPUT
 BaseComponent.ON_UPDATE = const.ON_UPDATE
 BaseComponent.ON_MESSAGE = const.ON_MESSAGE
-BaseComponent.ON_INPUT_HIGH = const.ON_INPUT_HIGH
 BaseComponent.ON_FOCUS_LOST = const.ON_FOCUS_LOST
 BaseComponent.ON_FOCUS_GAINED = const.ON_FOCUS_GAINED
 BaseComponent.ON_LAYOUT_CHANGE = const.ON_LAYOUT_CHANGE
@@ -28,7 +28,6 @@ BaseComponent.ALL_INTERESTS = {
 	BaseComponent.ON_UPDATE,
 	BaseComponent.ON_MESSAGE,
 	BaseComponent.ON_FOCUS_LOST,
-	BaseComponent.ON_INPUT_HIGH,
 	BaseComponent.ON_FOCUS_GAINED,
 	BaseComponent.ON_LAYOUT_CHANGE,
 	BaseComponent.ON_LANGUAGE_CHANGE,
@@ -45,9 +44,15 @@ BaseComponent.SPECIFIC_UI_MESSAGES = {
 
 
 BaseComponent.UI_INPUT = {
-	[BaseComponent.ON_INPUT_HIGH] = true,
 	[BaseComponent.ON_INPUT] = true
 }
+
+
+local uid = 0
+function BaseComponent.static.get_uid()
+	uid = uid + 1
+	return uid
+end
 
 
 --- Set current component style table.
@@ -91,16 +96,11 @@ end
 
 --- Increase input priority in current input stack
 -- @tparam BaseComponent self
+-- @local
 function BaseComponent.increase_input_priority(self)
-	self._meta.increased_input_priority = true
+	helper.deprecated("The component:increase_input_priority is deprecated. Please use component:set_input_priority(druid_const.PRIORITY_INPUT_MAX) instead")
 end
 
-
---- Reset input priority in current input stack
--- @tparam BaseComponent self
-function BaseComponent.reset_input_priority(self)
-	self._meta.increased_input_priority = false
-end
 
 
 --- Get node for component by name.
@@ -151,6 +151,47 @@ function BaseComponent.get_name(self)
 end
 
 
+--- Return component input priority
+-- @tparam BaseComponent self
+-- @treturn number The component input priority
+function BaseComponent.get_input_priority(self)
+	return self._component.input_priority
+end
+
+
+--- Set component input priority
+-- @tparam BaseComponent self
+-- @tparam number value The new input priority value
+-- @treturn number The component input priority
+function BaseComponent.set_input_priority(self, value)
+	assert(value)
+
+	if self._component.input_priority ~= value then
+		self._component.input_priority = value
+		self._component._is_input_priority_changed = true
+	end
+
+	return self
+end
+
+
+--- Reset component input priority to default value
+-- @tparam BaseComponent self
+-- @treturn number The component input priority
+function BaseComponent.reset_input_priority(self)
+	self:set_input_priority(self._component.default_input_priority)
+	return self
+end
+
+
+--- Return component uid. UID generated in component creation order
+-- @tparam BaseComponent self
+-- @treturn number The component uid
+function BaseComponent.get_uid(self)
+	return self._component._uid
+end
+
+
 --- Set component input state. By default it enabled
 -- You can disable any input of component by this function
 -- @tparam BaseComponent self
@@ -194,7 +235,6 @@ function BaseComponent.setup_component(self, druid_instance, context, style)
 		nodes = nil,
 		style = nil,
 		druid = druid_instance,
-		increased_input_priority = false,
 		input_enabled = true,
 		children = {}
 	}
@@ -216,14 +256,35 @@ end
 -- @tparam BaseComponent self
 -- @tparam string name BaseComponent name
 -- @tparam[opt={}] table interest List of component's interest
+-- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
 -- @local
-function BaseComponent.initialize(self, name, interest)
+function BaseComponent.initialize(self, name, interest, input_priority)
 	interest = interest or {}
 
 	self._component = {
 		name = name,
-		interest = interest
+		interest = interest,
+		input_priority = input_priority or const.PRIORITY_INPUT,
+		default_input_priority = input_priority or const.PRIORITY_INPUT,
+		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
+		_uid = BaseComponent.get_uid()
 	}
+end
+
+
+--- Return true, if input priority was changed
+-- @tparam BaseComponent self
+-- @local
+function BaseComponent._is_input_priority_changed(self)
+	return self._component._is_input_priority_changed
+end
+
+
+--- Reset is_input_priority_changed field
+-- @tparam BaseComponent self
+-- @local
+function BaseComponent._reset_input_priority_changed(self)
+	self._component._is_input_priority_changed = false
 end
 
 
@@ -294,13 +355,14 @@ end
 -- druid component.
 -- @tparam string name BaseComponent name
 -- @tparam[opt={}] table interest List of component's interest
+-- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
 -- @local
-function BaseComponent.static.create(name, interest)
+function BaseComponent.static.create(name, interest, input_priority)
 	-- Yea, inheritance here
 	local new_class = class(name, BaseComponent)
 
 	new_class.initialize = function(self)
-		BaseComponent.initialize(self, name, interest)
+		BaseComponent.initialize(self, name, interest, input_priority)
 	end
 
 	return new_class

@@ -37,7 +37,7 @@ local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local Slider = component.create("slider", { component.ON_INPUT_HIGH, component.ON_LAYOUT_CHANGE })
+local Slider = component.create("slider", { component.ON_INPUT, component.ON_LAYOUT_CHANGE }, const.PRIORITY_INPUT_HIGH)
 
 
 local function on_change_value(self)
