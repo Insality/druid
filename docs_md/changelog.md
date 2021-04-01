@@ -138,3 +138,4 @@ Desc
 
 - Input component: rename field _selected_ to _is_selected_ (according to the docs)
 - Add EmmyLua annotations. See how to use it FAQ
+- **#116** You can pass Text component in Input component instead of text node
