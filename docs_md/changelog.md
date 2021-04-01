@@ -157,3 +157,4 @@ local Drag = component.create("drag", { component.ON_INPUT }, const.PRIORITY_INP
 -- Mouse scroll working when cursor is hover on scroll view node
 -- Vertical scroll have more priority than horizontal
 -- Fix: When Hover component node became disabled, reset hover state (throw on_hover and on_mouse_hover events)
+-- This is basic implementation, it is work not perfect

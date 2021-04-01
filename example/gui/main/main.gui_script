@@ -72,7 +72,7 @@ function init(self)
 
 	init_swipe_control(self)
 
-	self.page = 8
+	self.page = 1
 	main_page.setup_page(self)
 	text_page.setup_page(self)
 	button_page.setup_page(self)

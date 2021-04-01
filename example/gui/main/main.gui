@@ -5984,7 +5984,7 @@ nodes {
 nodes {
   position {
     x: -300.0
-    y: 0.0
+    y: 150.0
     z: 0.0
     w: 1.0
   }
@@ -6018,7 +6018,7 @@ nodes {
   id: "grid_content"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_W
+  pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_FIT
   parent: "scroll_with_grid_size"
   layer: "image"
