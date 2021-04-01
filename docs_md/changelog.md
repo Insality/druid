@@ -139,6 +139,10 @@ Desc
 - Input component: rename field _selected_ to _is_selected_ (according to the docs)
 - Add EmmyLua annotations. See how to use it FAQ
 - Lang text now can be initialized without default locale id
+- **#92** Setup repo for CI and unit tests. (Yea, successful build and tests badges!)
+- **#103** Add `helper.centate_nodes` function. It can horizontal align several Box and Text nodes
+- **#105** Add `Input:select` and `Input:unselect` function.
+- **#106** Add `Input IS_UNSELECT_ON_RESELECT` style param. If true, it will be unselect input on click on input box, not only on outside click.
 - **#116** You can pass Text component in Input component instead of text node
 - **#124** Add `Scroll:set_click_zone` function. This is just link to `Drag:set_click_zone` function inside scroll component.
 - **#102** __[BREAKING]__ Removed `component:increase_input_priority` component function. Use `component:set_input_priority` function instead. The bigger priority value processed first. The value 10 is default for Druid components, the 100 value is maximum priority for acquire input in _drag_ and _input_ components
@@ -163,4 +167,6 @@ Desc
 - Add context argument to Druid Event. You can pass this argument to forward it first in your callbacks (for example - object context)
 - __[BREAKING]__ Add _SHIFT_POLICY_ for _Static_ and _Dynamic_ Grids. It mean how nodes will be shifted if you append data between nodes. There are `const.SHIFT.RIGHT`, `const.SHIFT.LEFT` and `const.SHIFT.NO_SHIFT`.
 	-- Please check your `StaticGrid:remove` and `DynamicGrid:remove` functions
+- **Fix #86** A lot of event triggers on scroll inertia moving 
+- **Fix #118** Druid.scroll freezes if held in one place for a long time
 
