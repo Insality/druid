@@ -4,10 +4,10 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local M = component.create("infinity_list")
+local DataList = component.create("data_list")
 
 
-function M:init(data_list, scroll, grid, create_function)
+function DataList.init(self, data, scroll, grid, create_function)
 	self.view_size = gui.get_size(scroll.view_node)
 	self.prefab_size = grid.node_size
 	self.druid = self:get_druid()
@@ -28,23 +28,23 @@ function M:init(data_list, scroll, grid, create_function)
 
 	self.scroll.on_scroll:subscribe(self._check_elements, self)
 
-	self:set_data(data_list)
+	self:set_data(data)
 end
 
 
-function M:on_remove()
+function DataList.on_remove(self)
 	self.scroll.on_scroll:unsubscribe(self._check_elements, self)
 end
 
 
-function M:set_data(data_list)
-	self._data = data_list
+function DataList.set_data(self, data)
+	self._data = data
 	self:_update_data_info()
 	self:_refresh()
 end
 
 
-function M:add(data, index, shift_policy)
+function DataList.add(self, data, index, shift_policy)
 	index = index or self._data_last_index + 1
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
@@ -66,13 +66,13 @@ function M:add(data, index, shift_policy)
 end
 
 
-function M:remove(index, shift_policy)
+function DataList.remove(self, index, shift_policy)
 	table.remove(self._data, index)
 	self:_refresh()
 end
 
 
-function M:remove_by_data(data, shift_policy)
+function DataList.remove_by_data(self, data, shift_policy)
 	local index = helper.contains(self._data, data)
 	if index then
 		table.remove(self._data, index)
@@ -81,28 +81,28 @@ function M:remove_by_data(data, shift_policy)
 end
 
 
-function M:clear()
+function DataList.clear(self)
 	self._data = {}
 	self:_refresh()
 end
 
 
-function M:get_first_index()
+function DataList.get_first_index(self)
 	return self._data_first_index
 end
 
 
-function M:get_last_index()
+function DataList.get_last_index(self)
 	return self._data_last_index
 end
 
 
-function M:get_length()
+function DataList.get_length(self)
 	return self._data_length
 end
 
 
-function M:get_index(data)
+function DataList.get_index(self, data)
 	for index, value in pairs(self._data) do
 		if value == data then
 			return index
@@ -113,14 +113,14 @@ function M:get_index(data)
 end
 
 
-function M:scroll_to_index(index)
+function DataList.scroll_to_index(self, index)
 	self.top_index = helper.clamp(index, 1, #self._data)
 	self:_refresh()
 	self.scroll.on_scroll:trigger(self:get_context(), self)
 end
 
 
-function M:_add_at(index)
+function DataList._add_at(self, index)
 	if self._data_visual[index] then
 		self:_remove_at(index)
 	end
@@ -134,7 +134,7 @@ function M:_add_at(index)
 end
 
 
-function M:_remove_at(index)
+function DataList._remove_at(self, index)
 	self.grid:remove(index, const.SHIFT.NO_SHIFT)
 
 	local node = self._data_visual[index].node
@@ -147,7 +147,7 @@ function M:_remove_at(index)
 end
 
 
-function M:_refresh()
+function DataList._refresh(self)
 	for index, _ in pairs(self._data_visual) do
 		self:_remove_at(index)
 	end
@@ -155,7 +155,7 @@ function M:_refresh()
 end
 
 
-function M:_check_elements()
+function DataList._check_elements(self)
 	for index, data in pairs(self._data_visual) do
 		if self.scroll:is_node_in_view(data.node) then
 			self.top_index = index
@@ -173,7 +173,7 @@ function M:_check_elements()
 end
 
 
-function M:_check_elements_from(index, step)
+function DataList._check_elements_from(self, index, step)
 	local is_outside = false
 	while not is_outside do
 		if not self._data[index] then
@@ -202,7 +202,7 @@ function M:_check_elements_from(index, step)
 end
 
 
-function M:_update_data_info()
+function DataList._update_data_info(self)
 	self._data_first_index = false
 	self._data_last_index = false
 	self._data_length = 0
@@ -220,4 +220,4 @@ function M:_update_data_info()
 end
 
 
-return M
+return DataList

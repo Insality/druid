@@ -53,7 +53,7 @@ local progress = require("druid.extended.progress")
 local radio_group = require("druid.extended.radio_group")
 local slider = require("druid.extended.slider")
 local timer = require("druid.extended.timer")
-local infinity_list = require("druid.extended.infinity_list")
+local data_list = require("druid.extended.data_list")
 
 
 local DruidInstance = class("druid.druid_instance")
@@ -542,12 +542,12 @@ function DruidInstance.new_checkbox_group(self, nodes, callback, click_nodes)
 end
 
 
---- Create infinity list basic component
--- @function druid:new_infinity_list
+--- Create data list basic component
+-- @function druid:new_data_list
 -- @tparam args ... drag init args
--- @treturn Component infinity list component
-function DruidInstance.new_infinity_list(self, ...)
-	return DruidInstance.create(self, infinity_list, ...)
+-- @treturn Component data list component
+function DruidInstance.new_data_list(self, ...)
+	return DruidInstance.create(self, data_list, ...)
 end
 
 
