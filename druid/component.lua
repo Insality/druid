@@ -5,6 +5,7 @@
 
 local const = require("druid.const")
 local class = require("druid.system.middleclass")
+local helper = require("druid.helper")
 
 
 local BaseComponent = class("druid.component")
@@ -95,16 +96,11 @@ end
 
 --- Increase input priority in current input stack
 -- @tparam BaseComponent self
+-- @local
 function BaseComponent.increase_input_priority(self)
-	self._meta.increased_input_priority = true
+	helper.deprecated("The component:increase_input_priority is deprecated. Please use component:set_input_priority(druid_const.PRIORITY_INPUT_MAX) instead")
 end
 
-
---- Reset input priority in current input stack
--- @tparam BaseComponent self
-function BaseComponent.reset_input_priority(self)
-	self._meta.increased_input_priority = false
-end
 
 
 --- Get node for component by name.
@@ -169,7 +165,12 @@ end
 -- @treturn number The component input priority
 function BaseComponent.set_input_priority(self, value)
 	assert(value)
-	self._component.input_priority = value
+
+	if self._component.input_priority ~= value then
+		self._component.input_priority = value
+		self._component._is_input_priority_changed = true
+	end
+
 	return self
 end
 
@@ -187,7 +188,7 @@ end
 -- @tparam BaseComponent self
 -- @treturn number The component uid
 function BaseComponent.get_uid(self)
-	return self._component.uid
+	return self._component._uid
 end
 
 
@@ -234,7 +235,6 @@ function BaseComponent.setup_component(self, druid_instance, context, style)
 		nodes = nil,
 		style = nil,
 		druid = druid_instance,
-		increased_input_priority = false,
 		input_enabled = true,
 		children = {}
 	}
@@ -266,8 +266,25 @@ function BaseComponent.initialize(self, name, interest, input_priority)
 		interest = interest,
 		input_priority = input_priority or const.PRIORITY_INPUT,
 		default_input_priority = input_priority or const.PRIORITY_INPUT,
-		uid = BaseComponent.get_uid()
+		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
+		_uid = BaseComponent.get_uid()
 	}
+end
+
+
+--- Return true, if input priority was changed
+-- @tparam BaseComponent self
+-- @local
+function BaseComponent._is_input_priority_changed(self)
+	return self._component._is_input_priority_changed
+end
+
+
+--- Reset is_input_priority_changed field
+-- @tparam BaseComponent self
+-- @local
+function BaseComponent._reset_input_priority_changed(self)
+	self._component._is_input_priority_changed = false
 end
 
 

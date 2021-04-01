@@ -271,8 +271,8 @@ function Input.select(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
 	if not self.is_selected then
-		self:increase_input_priority()
-		self.button:increase_input_priority()
+		self:set_input_priority(const.PRIORITY_INPUT_MAX)
+		self.button:set_input_priority(const.PRIORITY_INPUT_MAX)
 		self.previous_value = self.value
 		self.is_selected = true
 

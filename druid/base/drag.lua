@@ -91,7 +91,7 @@ local function process_touch(self, touch)
 	if not self.is_drag and distance >= self.style.DRAG_DEADZONE then
 		self.is_drag = true
 		self.on_drag_start:trigger(self:get_context())
-		self:increase_input_priority()
+		self:set_input_priority(const.PRIORITY_INPUT_MAX)
 	end
 end
 
