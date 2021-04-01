@@ -53,6 +53,7 @@ local progress = require("druid.extended.progress")
 local radio_group = require("druid.extended.radio_group")
 local slider = require("druid.extended.slider")
 local timer = require("druid.extended.timer")
+local data_list = require("druid.extended.data_list")
 
 
 local DruidInstance = class("druid.druid_instance")
@@ -538,6 +539,15 @@ end
 function DruidInstance.new_checkbox_group(self, nodes, callback, click_nodes)
 	-- return helper.extended_component("checkbox_group")
 	return DruidInstance.create(self, checkbox_group, nodes, callback, click_nodes)
+end
+
+
+--- Create data list basic component
+-- @function druid:new_data_list
+-- @tparam args ... drag init args
+-- @treturn Component data list component
+function DruidInstance.new_data_list(self, ...)
+	return DruidInstance.create(self, data_list, ...)
 end
 
 

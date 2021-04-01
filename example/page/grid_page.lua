@@ -1,3 +1,5 @@
+local const = require("druid.const")
+
 local M = {}
 
 
@@ -6,12 +8,12 @@ local function simple_animate(node, pos)
 end
 
 
-local function remove_node(self, button, is_shift)
+local function remove_node(self, button, no_shift)
 	gui.delete_node(button.node)
 
 	self.druid:remove(button)
 	local index = self.grid_static_grid:get_index_by_node(button.node)
-	self.grid_static_grid:remove(index, is_shift)
+	self.grid_static_grid:remove(index, no_shift and const.SHIFT.NO_SHIFT or const.SHIFT.RIGHT)
 	for i = 1, #self.grid_node_buttons do
 		if self.grid_node_buttons[i] == button then
 			table.remove(self.grid_node_buttons, i)
@@ -27,10 +29,10 @@ local function add_node(self, index)
 	gui.set_enabled(cloned["grid_nodes_prefab"], true)
 
 	local button = self.druid:new_button(cloned["grid_nodes_prefab"], function(_, params, button)
-		remove_node(self, button, true)
+		remove_node(self, button)
 	end)
 	button.on_long_click:subscribe(function()
-		remove_node(self, button)
+		remove_node(self, button, true)
 	end)
 	button:set_click_zone(self.grid_static_scroll.view_node)
 
@@ -72,12 +74,12 @@ local function init_static_grid(self)
 end
 
 
-local function remove_dynamic_node(self, button, is_shift_left)
+local function remove_dynamic_node(self, button, shift_policy)
 	gui.delete_node(button.node)
 
 	self.druid:remove(button)
 	local index = self.grid_dynamic_grid:get_index_by_node(button.node)
-	self.grid_dynamic_grid:remove(index, is_shift_left)
+	self.grid_dynamic_grid:remove(index, shift_policy)
 	for i = 1, #self.dynamic_node_buttons do
 		if self.dynamic_node_buttons[i] == button then
 			table.remove(self.dynamic_node_buttons, i)
@@ -89,6 +91,7 @@ end
 
 local function add_node_dynamic(self, index, is_shift_left)
 	local node = gui.clone(self.prefab_dynamic)
+	gui.set_color(node, vmath.vector4(math.random() * 0.2 + 0.8))
 	gui.set_enabled(node, true)
 	gui.set_size(node, vmath.vector3(250, math.random(60, 150), 0))
 	self.grid_dynamic_grid:add(node, index, is_shift_left)
@@ -97,24 +100,51 @@ local function add_node_dynamic(self, index, is_shift_left)
 		remove_dynamic_node(self, button)
 	end)
 	button.on_long_click:subscribe(function()
-		remove_dynamic_node(self, button, true)
+		remove_dynamic_node(self, button, const.SHIFT.LEFT)
 	end)
 	button:set_click_zone(self.grid_dynamic_scroll.view_node)
 	table.insert(self.dynamic_node_buttons, button)
 end
 
 
+local function remove_dynamic_hor_node(self, button, shift_policy)
+	gui.delete_node(button.node)
+
+	self.druid:remove(button)
+	local index = self.grid_dynamic_hor_grid:get_index_by_node(button.node)
+	self.grid_dynamic_hor_grid:remove(index, shift_policy)
+	for i = 1, #self.dynamic_node_hor_buttons do
+		if self.dynamic_node_hor_buttons[i] == button then
+			table.remove(self.dynamic_node_hor_buttons, i)
+			break
+		end
+	end
+end
+
+
 local function add_node_dynamic_hor(self, index)
 	local node = gui.clone(self.prefab_hor_dynamic)
+	gui.set_color(node, vmath.vector4(math.random() * 0.2 + 0.8))
 	gui.set_enabled(node, true)
 	gui.set_size(node, vmath.vector3(80 + math.random(0, 80), 80, 0))
+
+	local button = self.druid:new_button(node, function(_, params, button)
+		remove_dynamic_hor_node(self, button)
+	end)
+	button.on_long_click:subscribe(function()
+		remove_dynamic_hor_node(self, button, const.SHIFT.LEFT)
+	end)
+	button:set_click_zone(self.grid_dynamic_hor_scroll.view_node)
+
 	self.grid_dynamic_hor_grid:add(node, index)
+	table.insert(self.dynamic_node_hor_buttons, button)
 end
 
 
 local function init_dynamic_grid(self)
 	-- Vertical horizontal grid
 	self.dynamic_node_buttons = {}
+	self.dynamic_node_hor_buttons = {}
 
 	self.prefab_dynamic = gui.get_node("grid_dynamic_prefab")
 	gui.set_enabled(self.prefab_dynamic, false)
@@ -123,7 +153,7 @@ local function init_dynamic_grid(self)
 		add_node_dynamic(self, i)
 	end
 	self.druid:new_button("button_add_start_dynamic/button", function()
-		local start_index = (self.grid_dynamic_grid.first_index or 2) - 1
+		local start_index = self.grid_dynamic_grid.first_index or 1
 		add_node_dynamic(self, start_index)
 	end)
 	self.druid:new_button("button_add_end_dynamic/button", function()
@@ -139,7 +169,8 @@ local function init_dynamic_grid(self)
 	end
 
 	self.druid:new_button("button_add_start_dynamic_hor/button", function()
-		add_node_dynamic_hor(self, 1)
+		local start_index = self.grid_dynamic_hor_grid.first_index or 1
+		add_node_dynamic_hor(self, start_index)
 	end)
 	self.druid:new_button("button_add_end_dynamic_hor/button", function()
 		add_node_dynamic_hor(self)
@@ -148,7 +179,7 @@ end
 
 
 function M.setup_page(self)
-	self.grid_page_scroll = self.druid:new_scroll("grid_page", "grid_page_content")
+	self.druid:new_scroll("grid_page", "grid_page_content")
 
 	self.grid_static_grid = self.druid:new_static_grid("grid_nodes", "grid_nodes_prefab", 5)
 		:set_position_function(simple_animate)

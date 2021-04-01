@@ -21,7 +21,7 @@
 --- Parent gui node
 -- @tfield node parent
 
---- List of all grid nodes
+--- List of all grid elements. Contains from node, pos, size, pivot
 -- @tfield node[] nodes
 
 --- The first index of node in grid
@@ -136,18 +136,19 @@ end
 -- @tparam DynamicGrid self
 --	@tparam node node Gui node
 -- @tparam[opt] number index The node position. By default add as last node
--- @tparam[opt=false] bool is_shift_left If true, shift all nodes to the left, otherwise shift nodes to the right
-function DynamicGrid.add(self, node, index, is_shift_left)
-	local delta = is_shift_left and -1 or 1
+-- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
+function DynamicGrid.add(self, node, index, shift_policy)
+	shift_policy = shift_policy or const.SHIFT.RIGHT
+	local delta = shift_policy -- -1 or 1 or 0
 
 	-- By default add node at end
 	index = index or ((self.last_index or 0) + 1)
 
 	-- If node exist at index place, shifting them
-	local is_shift = self.nodes[index]
+	local is_shift = self.nodes[index] and shift_policy ~= const.SHIFT.NO_SHIFT
 	if is_shift then
 		-- We need to iterate from index to start or end grid, depends of shift side
-		local start_index = is_shift_left and self.first_index or self.last_index
+		local start_index = shift_policy == const.SHIFT.LEFT and self.first_index or self.last_index
 		for i = start_index, index, -delta do
 			self.nodes[i + delta] = self.nodes[i]
 		end
@@ -158,13 +159,12 @@ function DynamicGrid.add(self, node, index, is_shift_left)
 	-- After shifting we should recalc node poses
 	if is_shift then
 		-- We need to iterate from placed node to start or end grid, depends of shift side
-		local target_index = is_shift_left and self.first_index or self.last_index
+		local target_index = shift_policy == const.SHIFT.LEFT and self.first_index or self.last_index
 		for i = index + delta, target_index + delta, delta do
 			local move_node = self.nodes[i]
 			move_node.pos = self:get_pos(i, move_node.node, i - delta)
 		end
 	end
-
 
 	-- Sync grid data
 	self:_update()
@@ -178,9 +178,11 @@ end
 -- @tparam DynamicGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=false] bool is_shift_left If true, shift all nodes to the left, otherwise shift nodes to the right
+-- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
 -- @treturn Node The deleted gui node from grid
-function DynamicGrid.remove(self, index, is_shift_left)
-	local delta = is_shift_left and -1 or 1
+function DynamicGrid.remove(self, index, shift_policy)
+	shift_policy = shift_policy or const.SHIFT.RIGHT
+	local delta = shift_policy -- -1 or 1 or 0
 
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
@@ -189,11 +191,13 @@ function DynamicGrid.remove(self, index, is_shift_left)
 	self.nodes[index] = nil
 
 	-- After delete node, we should shift nodes and recalc their poses, depends from is_shift_left
-	local target_index = is_shift_left and self.first_index or self.last_index
-	for i = index, target_index, delta do
-		self.nodes[i] = self.nodes[i + delta]
-		if self.nodes[i] then
-			self.nodes[i].pos = self:get_pos(i, self.nodes[i].node, i - delta)
+	if shift_policy ~= const.SHIFT.NO_SHIFT then
+		local target_index = shift_policy == const.SHIFT.LEFT and self.first_index or self.last_index
+		for i = index, target_index, delta do
+			self.nodes[i] = self.nodes[i + delta]
+			if self.nodes[i] then
+				self.nodes[i].pos = self:get_pos(i, self.nodes[i].node, i - delta)
+			end
 		end
 	end
 
@@ -217,6 +221,29 @@ function DynamicGrid.get_size(self, border)
 		border.z - border.x,
 		border.y - border.w,
 		0)
+end
+
+
+--- Return DynamicGrid offset, where DynamicGrid content starts.
+-- @tparam DynamicGrid self The DynamicGrid instance
+-- @treturn vector3 The DynamicGrid offset
+function DynamicGrid.get_offset(self)
+	local size = self:get_size()
+	local borders = self:get_borders()
+	local offset = vmath.vector3(
+		(borders.z + borders.x)/2 + size.x * self.pivot.x,
+		(borders.y + borders.w)/2 + size.y * self.pivot.y,
+		0)
+
+	return offset
+end
+
+
+--- Return grid content borders
+-- @tparam DynamicGrid self
+-- @treturn vector3 The grid content borders
+function DynamicGrid.get_borders(self)
+	return self.border
 end
 
 
@@ -283,7 +310,7 @@ function DynamicGrid._add_node(self, node, index, origin_index)
 
 	-- Add new item instantly in new pos
 	gui.set_parent(node, self.parent)
-	gui.set_position(node, self.nodes[index].pos + self:_get_zero_offset())
+	gui.set_position(node, self.nodes[index].pos)
 end
 
 
@@ -348,13 +375,11 @@ end
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function DynamicGrid._update_pos(self, is_instant)
-	local offset = self:_get_zero_offset()
-
 	for index, node in pairs(self.nodes) do
 		if is_instant then
-			gui.set_position(node.node, node.pos + offset)
+			gui.set_position(node.node, node.pos)
 		else
-			self._set_position_function(node.node, node.pos + offset)
+			self._set_position_function(node.node, node.pos)
 		end
 	end
 
@@ -381,22 +406,9 @@ function DynamicGrid._get_next_node_pos(self, origin_node_index, new_node, place
 end
 
 
+
 function DynamicGrid._get_node_size(self, node)
 	return vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
-end
-
-
---- Return elements offset for correct posing nodes. Correct posing at
--- parent pivot node (0:0) with adjusting of node sizes and anchoring
--- @tparam DynamicGrid self
--- @treturn vector3 The offset vector
--- @local
-function DynamicGrid._get_zero_offset(self)
-	-- zero offset: center pos - border size * anchor
-	return vmath.vector3(
-		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
-		-((self.border.y + self.border.w)/2 + (self.border.y - self.border.w) * self.pivot.y),
-		0)
 end
 
 

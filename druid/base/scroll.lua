@@ -54,10 +54,11 @@
 
 
 local Event = require("druid.event")
+local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Scroll = component.create("scroll", { component.ON_UPDATE, component.ON_LAYOUT_CHANGE })
+local Scroll = component.create("scroll", { component.ON_INPUT, component.ON_UPDATE, component.ON_LAYOUT_CHANGE })
 
 
 local function inverse_lerp(min, max, current)
@@ -68,14 +69,17 @@ end
 --- Update vector with next conditions:
 -- Field x have to <= field z
 -- Field y have to <= field w
-local function get_border_vector(vector)
+local function get_border_vector(vector, offset)
 	if vector.x > vector.z then
 		vector.x, vector.z = vector.z, vector.x
 	end
 	if vector.y > vector.w then
 		vector.y, vector.w = vector.w, vector.y
 	end
-
+	vector.x = vector.x - offset.x
+	vector.z = vector.z - offset.x
+	vector.y = vector.y - offset.y
+	vector.w = vector.w - offset.y
 	return vector
 end
 
@@ -99,6 +103,8 @@ end
 -- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
 -- @tfield[opt=0] number EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect)
 -- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
+-- @tfield[opt=0] bool WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
+-- @tfield[opt=false] bool WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll
 function Scroll.on_style_change(self, style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
@@ -112,6 +118,8 @@ function Scroll.on_style_change(self, style)
 	self.style.INERT_SPEED = style.INERT_SPEED or 30
 	self.style.POINTS_DEADZONE = style.POINTS_DEADZONE or 20
 	self.style.SMALL_CONTENT_SCROLL = style.SMALL_CONTENT_SCROLL or false
+	self.style.WHEEL_SCROLL_SPEED = style.WHEEL_SCROLL_SPEED or 0
+	self.style.WHEEL_SCROLL_INVERTED = style.WHEEL_SCROLL_INVERTED or false
 
 	self._is_inert = not (self.style.FRICT == 0 or
 		self.style.FRICT_HOLD == 0 or
@@ -129,6 +137,8 @@ function Scroll.init(self, view_node, content_node)
 	self.view_node = self:get_node(view_node)
 	self.content_node = self:get_node(content_node)
 
+	self.view_size = vmath.mul_per_elem(gui.get_size(self.view_node), gui.get_scale(self.view_node))
+
 	self.position = gui.get_position(self.content_node)
 	self.target_position = vmath.vector3(self.position)
 	self.inertion = vmath.vector3(0)
@@ -137,6 +147,10 @@ function Scroll.init(self, view_node, content_node)
 	self.drag.on_touch_start:subscribe(self._on_touch_start)
 	self.drag.on_touch_end:subscribe(self._on_touch_end)
 
+	self.hover = self.druid:new_hover(view_node)
+	self.hover.on_mouse_hover:subscribe(self._on_mouse_hover)
+	self._is_mouse_hover = false
+
 	self.on_scroll = Event()
 	self.on_scroll_to = Event()
 	self.on_point_scroll = Event()
@@ -144,10 +158,12 @@ function Scroll.init(self, view_node, content_node)
 	self.selected = nil
 	self.is_animate = false
 
+	self._offset = vmath.vector3(0)
 	self._is_horizontal_scroll = true
 	self._is_vertical_scroll = true
 	self._grid_on_change = nil
 	self._grid_on_change_callback = nil
+	self._outside_offset_vector = vmath.vector3(0)
 
 	self:_update_size()
 end
@@ -159,11 +175,17 @@ end
 
 
 function Scroll.update(self, dt)
+	self:_update_params(dt)
 	if self.drag.is_drag then
 		self:_update_hand_scroll(dt)
 	else
 		self:_update_free_scroll(dt)
 	end
+end
+
+
+function Scroll.on_input(self, action_id, action)
+	return self:_process_scroll_wheel(action_id, action)
 end
 
 
@@ -260,8 +282,12 @@ end
 -- It will change content gui node size
 -- @tparam Scroll self
 -- @tparam vector3 size The new size for content node
+-- @tparam vector3 offset Offset value to set, where content is starts
 -- @treturn druid.scroll Current scroll instance
-function Scroll.set_size(self, size)
+function Scroll.set_size(self, size, offset)
+	if offset then
+		self._offset = offset
+	end
 	gui.set_size(self.content_node, size)
 	self:_update_size()
 
@@ -351,6 +377,28 @@ function Scroll.set_vertical_scroll(self, state)
 end
 
 
+--- Check node if it visible now on scroll.
+-- Extra border is not affected. Return true for elements in extra scroll zone
+-- @tparam Scroll self
+-- @tparma node node The node to check
+-- @treturn boolean True, if node in visible scroll area
+function Scroll.is_node_in_view(self, node)
+	local node_border = helper.get_border(node, gui.get_position(node))
+	local view_border = helper.get_border(self.view_node, -(self.position - self._outside_offset_vector))
+
+	-- Check is vertical outside (Left or Right):
+	if node_border.z < view_border.x or node_border.x > view_border.z then
+		return false
+	end
+
+	-- Check is horizontal outside (Up or Down):
+	if node_border.w > view_border.y or node_border.y < view_border.w then
+		return false
+	end
+
+	return true
+end
+
 
 --- Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
@@ -371,9 +419,9 @@ function Scroll.bind_grid(self, grid)
 
 	self._grid_on_change = grid.on_change_items
 	self._grid_on_change_callback = self._grid_on_change:subscribe(function()
-		self:set_size(grid:get_size())
+		self:set_size(grid:get_size(), grid:get_offset())
 	end)
-	self:set_size(grid:get_size())
+	self:set_size(grid:get_size(), grid:get_offset())
 
 	return self
 end
@@ -436,19 +484,23 @@ function Scroll._check_soft_zone(self)
 
 	-- Right border (minimum x)
 	if target.x < border.x then
-		target.x = helper.step(target.x, border.x, math.abs(target.x - border.x) * speed)
+		local step = math.max(math.abs(target.x - border.x) * speed, 1)
+		target.x = helper.step(target.x, border.x, step)
 	end
 	-- Left border (maximum x)
 	if target.x > border.z then
-		target.x = helper.step(target.x, border.z, math.abs(target.x - border.z) * speed)
+		local step = math.max(math.abs(target.x - border.z) * speed, 1)
+		target.x = helper.step(target.x, border.z, step)
 	end
 	-- Top border (maximum y)
 	if target.y < border.y then
-		target.y = helper.step(target.y, border.y, math.abs(target.y - border.y) * speed)
+		local step = math.max(math.abs(target.y - border.y) * speed, 1)
+		target.y = helper.step(target.y, border.y, step)
 	end
 	-- Bot border (minimum y)
 	if target.y > border.w then
-		target.y = helper.step(target.y, border.w, math.abs(target.y - border.w) * speed)
+		local step = math.max(math.abs(target.y - border.w) * speed, 1)
+		target.y = helper.step(target.y, border.w, step)
 	end
 end
 
@@ -539,11 +591,11 @@ end
 function Scroll._check_threshold(self)
 	local is_stopped = false
 
-	if self.inertion.x ~= 0 and math.abs(self.inertion.x) < self.style.INERT_THRESHOLD then
+	if math.abs(self.inertion.x) < self.style.INERT_THRESHOLD then
 		is_stopped = true
 		self.inertion.x = 0
 	end
-	if self.inertion.y ~= 0 and math.abs(self.inertion.y) < self.style.INERT_THRESHOLD then
+	if math.abs(self.inertion.y) < self.style.INERT_THRESHOLD then
 		is_stopped = true
 		self.inertion.y = 0
 	end
@@ -601,12 +653,11 @@ end
 
 function Scroll._update_size(self)
 	local view_border = helper.get_border(self.view_node)
-	local view_size = vmath.mul_per_elem(gui.get_size(self.view_node), gui.get_scale(self.view_node))
 
 	local content_border = helper.get_border(self.content_node)
 	local content_size = vmath.mul_per_elem(gui.get_size(self.content_node), gui.get_scale(self.content_node))
 
-	self.available_pos = get_border_vector(view_border - content_border)
+	self.available_pos = get_border_vector(view_border - content_border, self._offset)
 	self.available_size = get_size_vector(self.available_pos)
 
 	self.drag.can_x = self.available_size.x > 0 and self._is_horizontal_scroll
@@ -619,24 +670,79 @@ function Scroll._update_size(self)
 	local stretch_size = self.style.EXTRA_STRETCH_SIZE
 
 	if self.drag.can_x then
-		local sign = content_size.x > view_size.x and 1 or -1
+		local sign = content_size.x > self.view_size.x and 1 or -1
 		content_border_extra.x = content_border_extra.x - stretch_size * sign
 		content_border_extra.z = content_border_extra.z + stretch_size * sign
 	end
 
 	if self.drag.can_y then
-		local sign = content_size.y > view_size.y and 1 or -1
+		local sign = content_size.y > self.view_size.y and 1 or -1
 		content_border_extra.y = content_border_extra.y + stretch_size * sign
 		content_border_extra.w = content_border_extra.w - stretch_size * sign
 	end
 
 	if not self.style.SMALL_CONTENT_SCROLL then
-		self.drag.can_x = content_size.x > view_size.x
-		self.drag.can_y = content_size.y > view_size.y
+		self.drag.can_x = content_size.x > self.view_size.x
+		self.drag.can_y = content_size.y > self.view_size.y
 	end
 
-	self.available_pos_extra = get_border_vector(view_border - content_border_extra)
+	self.available_pos_extra = get_border_vector(view_border - content_border_extra, self._offset)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
+end
+
+
+function Scroll._update_params(self, dt)
+	local t = self.target_position
+	local b = self.available_pos
+
+	self._outside_offset_vector.x = 0
+	self._outside_offset_vector.y = 0
+
+	-- Right border (minimum x)
+	if t.x < b.x then
+		self._outside_offset_vector.x = t.x - b.x
+	end
+	-- Left border (maximum x)
+	if t.x > b.z then
+		self._outside_offset_vector.x = t.x - b.z
+	end
+	-- Top border (minimum y)
+	if t.y < b.y then
+		self._outside_offset_vector.y = t.y - b.y
+	end
+	-- Bot border (maximum y)
+	if t.y > b.w then
+		self._outside_offset_vector.y = t.y - b.w
+	end
+end
+
+
+function Scroll._process_scroll_wheel(self, action_id, action)
+	if not self._is_mouse_hover or self.style.WHEEL_SCROLL_SPEED == 0 then
+		return false
+	end
+
+	if action_id ~= const.ACTION_SCROLL_UP and action_id ~= const.ACTION_SCROLL_DOWN then
+		return false
+	end
+
+	local koef = (action_id == const.ACTION_SCROLL_UP) and 1 or -1
+	if self.style.WHEEL_SCROLL_INVERTED then
+		koef = -koef
+	end
+
+	if self.drag.can_y then
+		self.inertion.y = (self.inertion.y + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
+	else
+		self.inertion.x = (self.inertion.x + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
+	end
+
+	return true
+end
+
+
+function Scroll._on_mouse_hover(self, state)
+	self._is_mouse_hover = state
 end
 
 

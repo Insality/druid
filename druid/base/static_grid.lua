@@ -49,6 +49,19 @@ local component = require("druid.component")
 local StaticGrid = component.create("static_grid", { component.ON_LAYOUT_CHANGE })
 
 
+local function _extend_border(border, pos, size, pivot)
+	local left = pos.x - size.x/2 - (size.x * pivot.x)
+	local right = pos.x + size.x/2 - (size.x * pivot.x)
+	local top = pos.y + size.y/2 - (size.y * pivot.y)
+	local bottom = pos.y - size.y/2 - (size.y * pivot.y)
+
+	border.x = math.min(border.x, left)
+	border.y = math.max(border.y, top)
+	border.z = math.max(border.z, right)
+	border.w = math.min(border.w, bottom)
+end
+
+
 --- Component init function
 -- @tparam StaticGrid self
 -- @tparam node parent The gui node parent, where items will be placed
@@ -67,7 +80,14 @@ function StaticGrid.init(self, parent, element, in_row)
 	self.node_size = gui.get_size(self._prefab)
 	self.node_pivot = const.PIVOTS[gui.get_pivot(self._prefab)]
 
+	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
+	self._zero_offset = vmath.vector3(
+		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._grid_horizonal_offset,
+		self.node_size.y * self.node_pivot.y - self.node_size.y * self.pivot.y,
+		0)
+
 	self.border = vmath.vector4(0) -- Current grid content size
+
 
 	self.on_add_item = Event()
 	self.on_remove_item = Event()
@@ -88,8 +108,8 @@ function StaticGrid.get_pos(self, index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
-	_temp_pos.x = col * self.node_size.x
-	_temp_pos.y = -row * self.node_size.y
+	_temp_pos.x = col * self.node_size.x + self._zero_offset.x
+	_temp_pos.y = -row * self.node_size.y + self._zero_offset.y
 	_temp_pos.z = 0
 
 	return _temp_pos
@@ -145,25 +165,32 @@ end
 -- @tparam StaticGrid self
 --	@tparam node item Gui node
 -- @tparam[opt] number index The item position. By default add as last item
-function StaticGrid.add(self, item, index)
+-- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
+function StaticGrid.add(self, item, index, shift_policy)
+	shift_policy = shift_policy or const.SHIFT.RIGHT
 	index = index or ((self.last_index or 0) + 1)
 
 	if self.nodes[index] then
-		-- Move nodes to right
-		for i = self.last_index, index, -1 do
-			self.nodes[i + 1] = self.nodes[i]
+		if shift_policy == const.SHIFT.RIGHT then
+			for i = self.last_index, index, -1 do
+				self.nodes[i + 1] = self.nodes[i]
+			end
+		end
+		if shift_policy == const.SHIFT.LEFT then
+			for i = self.first_index, index do
+				self.nodes[i - 1] = self.nodes[i]
+			end
 		end
 	end
 
 	self.nodes[index] = item
-
 	gui.set_parent(item, self.parent)
 
 	-- Add new item instantly in new pos. Break update function for correct positioning
 	self:_update_indexes()
 	self:_update_borders()
 
-	gui.set_position(item, self:get_pos(index) + self:_get_zero_offset())
+	gui.set_position(item, self:get_pos(index))
 
 	self:_update_pos()
 
@@ -175,17 +202,23 @@ end
 --- Remove the item from the grid. Note that gui node will be not deleted
 -- @tparam StaticGrid self
 -- @tparam number index The grid node index to remove
--- @tparam bool is_shift_nodes If true, will shift nodes left after index
+-- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
 -- @treturn Node The deleted gui node from grid
-function StaticGrid.remove(self, index, is_shift_nodes)
+function StaticGrid.remove(self, index, shift_policy)
+	shift_policy = shift_policy or const.SHIFT.RIGHT
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
 	local remove_node = self.nodes[index]
 	self.nodes[index] = nil
 
-	if is_shift_nodes then
+	if shift_policy == const.SHIFT.RIGHT then
 		for i = index, self.last_index do
 			self.nodes[i] = self.nodes[i + 1]
+		end
+	end
+	if shift_policy == const.SHIFT.LEFT then
+		for i = index, self.first_index, -1 do
+			self.nodes[i] = self.nodes[i - 1]
 		end
 	end
 
@@ -206,6 +239,37 @@ function StaticGrid.get_size(self)
 		self.border.z - self.border.x,
 		self.border.y - self.border.w,
 		0)
+end
+
+
+
+function StaticGrid.get_size_for(self, count)
+	if not count or count == 0 then
+		return vmath.vector3(0)
+	end
+
+	local border = vmath.vector4(math.huge, -math.huge, -math.huge, math.huge)
+
+	local size = self.node_size
+	local pivot = self.node_pivot
+	_extend_border(border, self:get_pos(1), size, pivot)
+	_extend_border(border, self:get_pos(count), size, pivot)
+	if count >= self.in_row then
+		_extend_border(border, self:get_pos(self.in_row), size, pivot)
+	end
+
+	return vmath.vector3(
+		border.z - border.x,
+		border.y - border.w,
+		0)
+end
+
+
+--- Return grid content borders
+-- @tparam StaticGrid self
+-- @treturn vector3 The grid content borders
+function StaticGrid.get_borders(self)
+	return self.border
 end
 
 
@@ -253,18 +317,19 @@ function StaticGrid.clear(self)
 end
 
 
---- Return elements offset for correct posing nodes. Correct posing at
--- parent pivot node (0:0) with adjusting of node sizes and anchoring
--- @tparam StaticGrid self
--- @treturn vector3 The offset vector
--- @local
-function StaticGrid._get_zero_offset(self)
-	-- zero offset: center pos - border size * anchor
-	return vmath.vector3(
-		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
-		-((self.border.y + self.border.w)/2 + (self.border.y - self.border.w) * self.pivot.y),
-		0
-	)
+--- Return StaticGrid offset, where StaticGrid content starts.
+-- @tparam StaticGrid self The StaticGrid instance
+-- @treturn vector3 The StaticGrid offset
+function StaticGrid:get_offset()
+	local borders = self:get_borders()
+	local size = self:get_size()
+
+	local offset = vmath.vector3(
+		(borders.z + borders.x)/2 + size.x * self.pivot.x,
+		(borders.y + borders.w)/2 + size.y * self.pivot.y,
+		0)
+
+	return offset
 end
 
 
@@ -309,17 +374,7 @@ function StaticGrid._update_borders(self)
 	local size = self.node_size
 	local pivot = self.node_pivot
 	for index, node in pairs(self.nodes) do
-		local pos = self:get_pos(index)
-
-		local left = pos.x - size.x/2 - (size.x * pivot.x)
-		local right = pos.x + size.x/2 - (size.x * pivot.x)
-		local top = pos.y + size.y/2 - (size.y * pivot.y)
-		local bottom = pos.y - size.y/2 - (size.y * pivot.y)
-
-		self.border.x = math.min(self.border.x, left)
-		self.border.y = math.max(self.border.y, top)
-		self.border.z = math.max(self.border.z, right)
-		self.border.w = math.min(self.border.w, bottom)
+		_extend_border(self.border, self:get_pos(index), size, pivot)
 	end
 end
 
@@ -329,12 +384,8 @@ end
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function StaticGrid._update_pos(self, is_instant)
-	local zero_offset = self:_get_zero_offset()
-
 	for i, node in pairs(self.nodes) do
 		local pos = self:get_pos(i)
-		pos.x = pos.x + zero_offset.x
-		pos.y = pos.y + zero_offset.y
 
 		if is_instant then
 			gui.set_position(node, pos)
