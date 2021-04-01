@@ -118,6 +118,10 @@ local function setup_infinity_list(self)
 		return create_infinity_instance_dynamic(self, record, index)
 	end)
 
+	timer.delay(1, false, function()
+		self.infinity_list_dynamic:scroll_to_index(25)
+	end)
+
 	self.infinity_list_dynamic_hor = self.druid:new_infinity_list(data, self.infinity_scroll_dynamic_hor, self.infinity_grid_dynamic_hor, function(record, index)
 		-- function should return gui_node, [druid_component]
 		return create_infinity_instance_dynamic_hor(self, record, index)

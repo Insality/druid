@@ -184,7 +184,6 @@ function StaticGrid.add(self, item, index, shift_policy)
 	end
 
 	self.nodes[index] = item
-
 	gui.set_parent(item, self.parent)
 
 	-- Add new item instantly in new pos. Break update function for correct positioning

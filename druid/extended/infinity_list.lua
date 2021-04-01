@@ -18,14 +18,12 @@ function M:init(data_list, scroll, grid, create_function)
 	--- Current visual elements indexes
 	self.top_index = 1
 	self.last_index = 1
+	self.create_function = create_function
 
 	self._data = {}
 	self._data_first_index = false
 	self._data_last_index = false
 	self._data_length = 0
-
-	self.create_function = create_function
-
 	self._data_visual = {}
 
 	self.scroll.on_scroll:subscribe(self._check_elements, self)
@@ -165,8 +163,8 @@ function M:_check_elements()
 		end
 	end
 
-	self:_check_elements_from(self.top_index - 1, -1)
-	self:_check_elements_from(self.top_index, 1)
+	self:_check_elements_from(self.top_index, -1)
+	self:_check_elements_from(self.top_index + 1, 1)
 
 	for index, data in pairs(self._data_visual) do
 		self.top_index = math.min(self.top_index or index, index)
