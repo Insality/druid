@@ -54,10 +54,11 @@
 
 
 local Event = require("druid.event")
+local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Scroll = component.create("scroll", { component.ON_UPDATE, component.ON_LAYOUT_CHANGE })
+local Scroll = component.create("scroll", { component.ON_INPUT, component.ON_UPDATE, component.ON_LAYOUT_CHANGE })
 
 
 local function inverse_lerp(min, max, current)
@@ -102,6 +103,8 @@ end
 -- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
 -- @tfield[opt=0] number EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect)
 -- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
+-- @tfield[opt=25] bool WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
+-- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, invert direction for touchpad and mouse wheel scroll
 function Scroll.on_style_change(self, style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
@@ -115,6 +118,8 @@ function Scroll.on_style_change(self, style)
 	self.style.INERT_SPEED = style.INERT_SPEED or 30
 	self.style.POINTS_DEADZONE = style.POINTS_DEADZONE or 20
 	self.style.SMALL_CONTENT_SCROLL = style.SMALL_CONTENT_SCROLL or false
+	self.style.WHEEL_SCROLL_SPEED = style.WHEEL_SCROLL_SPEED or 25
+	self.style.WHEEL_SCROLL_INVERTED = style.WHEEL_SCROLL_INVERTED or false
 
 	self._is_inert = not (self.style.FRICT == 0 or
 		self.style.FRICT_HOLD == 0 or
@@ -141,6 +146,10 @@ function Scroll.init(self, view_node, content_node)
 	self.drag = self.druid:new_drag(view_node, self._on_scroll_drag)
 	self.drag.on_touch_start:subscribe(self._on_touch_start)
 	self.drag.on_touch_end:subscribe(self._on_touch_end)
+
+	self.hover = self.druid:new_hover(view_node)
+	self.hover.on_mouse_hover:subscribe(self._on_mouse_hover)
+	self._is_mouse_hover = false
 
 	self.on_scroll = Event()
 	self.on_scroll_to = Event()
@@ -172,6 +181,11 @@ function Scroll.update(self, dt)
 	else
 		self:_update_free_scroll(dt)
 	end
+end
+
+
+function Scroll.on_input(self, action_id, action)
+	return self:_process_scroll_wheel(action_id, action)
 end
 
 
@@ -700,6 +714,35 @@ function Scroll._update_params(self, dt)
 	if t.y > b.w then
 		self._outside_offset_vector.y = t.y - b.w
 	end
+end
+
+
+function Scroll._process_scroll_wheel(self, action_id, action)
+	if not self._is_mouse_hover or self.style.WHEEL_SCROLL_SPEED == 0 then
+		return false
+	end
+
+	if action_id ~= const.ACTION_SCROLL_UP and action_id ~= const.ACTION_SCROLL_DOWN then
+		return false
+	end
+
+	local koef = (action_id == const.ACTION_SCROLL_UP) and 1 or -1
+	if self.style.WHEEL_SCROLL_INVERTED then
+		koef = -koef
+	end
+
+	if self.drag.can_y then
+		self.inertion.y = (self.inertion.y + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
+	else
+		self.inertion.x = (self.inertion.x + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
+	end
+
+	return true
+end
+
+
+function Scroll._on_mouse_hover(self, state)
+	self._is_mouse_hover = state
 end
 
 

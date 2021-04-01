@@ -40,11 +40,14 @@ function Hover.on_input(self, action_id, action)
 		return false
 	end
 
+	-- Disable nil (it's mouse) hover or mobile platforms
 	if not action_id and helper.is_mobile() then
 		return false
 	end
 
 	if not helper.is_enabled(self.node) or not self._is_enabled then
+		self:set_hover(false)
+		self:set_mouse_hover(false)
 		return false
 	end
 

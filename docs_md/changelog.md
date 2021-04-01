@@ -152,3 +152,8 @@ _after:_
 ```lua
 local Drag = component.create("drag", { component.ON_INPUT }, const.PRIORITY_INPUT_HIGH)
 ```
+- **#123** Add scroll for Scroll component via mouse wheel or touchpad:
+-- Added Scroll style params: WHEEL_SCROLL_SPEED, WHEEL_SCROLL_INVERTED
+-- Mouse scroll working when cursor is hover on scroll view node
+-- Vertical scroll have more priority than horizontal
+-- Fix: When Hover component node became disabled, reset hover state (throw on_hover and on_mouse_hover events)
