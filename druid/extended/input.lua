@@ -50,7 +50,7 @@ local const = require("druid.const")
 local component = require("druid.component")
 local utf8 = require("druid.system.utf8")
 
-local Input = component.create("input", { const.ON_INPUT, const.ON_FOCUS_LOST })
+local Input = component.create("input", { component.ON_INPUT, component.ON_FOCUS_LOST })
 
 
 --- Mask text by replacing every character with a mask character
@@ -68,45 +68,12 @@ local function mask_text(text, mask)
 end
 
 
-local function select(self)
-	gui.reset_keyboard()
-	self.marked_value = ""
-	if not self.is_selected then
-		self:increase_input_priority()
-		self.button:increase_input_priority()
-		self.previous_value = self.value
-		self.is_selected = true
-
-		gui.show_keyboard(self.keyboard_type, false)
-		self.on_input_select:trigger(self:get_context())
-
-		self.style.on_select(self, self.button.node)
-	end
-end
-
-
-local function unselect(self)
-	gui.reset_keyboard()
-	self.marked_value = ""
-	if self.is_selected then
-		self:reset_input_priority()
-		self.button:reset_input_priority()
-		self.is_selected = false
-
-		gui.hide_keyboard()
-		self.on_input_unselect:trigger(self:get_context())
-
-		self.style.on_unselect(self, self.button.node)
-	end
-end
-
-
 local function clear_and_select(self)
 	if self.style.IS_LONGTAP_ERASE then
 		self:set_text("")
 	end
 
-	select(self)
+	self:select()
 end
 
 
@@ -116,6 +83,7 @@ end
 -- @table style
 -- @tfield[opt=false] bool IS_LONGTAP_ERASE Is long tap will erase current input data
 -- @tfield[opt=*] string MASK_DEFAULT_CHAR Default character mask for password input
+-- @tfield[opt=false] bool IS_UNSELECT_ON_RESELECT If true, call unselect on select selected input
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
@@ -125,6 +93,7 @@ function Input.on_style_change(self, style)
 
 	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
 	self.style.MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*"
+	self.style.IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false
 
 	self.style.on_select = style.on_select or function(_, button_node) end
 	self.style.on_unselect = style.on_unselect or function(_, button_node) end
@@ -139,11 +108,16 @@ end
 
 
 -- @tparam node click_node Button node to enabled input component
--- @tparam node text_node Text node what will be changed on user input
+-- @tparam node|druid.text text_node Text node what will be changed on user input. You can pass text component instead of text node name
 -- @tparam[opt] number keyboard_type Gui keyboard type for input field
 function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
-	self.text = self.druid:new_text(text_node)
+
+	if type(text_node) == const.TABLE then
+		self.text = text_node
+	else
+		self.text = self.druid:new_text(text_node)
+	end
 
 	self.is_selected = false
 	self.value = self.text.last_value
@@ -161,9 +135,9 @@ function Input.init(self, click_node, text_node, keyboard_type)
 
 	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_DEFAULT
 
-	self.button = self.druid:new_button(click_node, select)
+	self.button = self.druid:new_button(click_node, self.select)
 	self.button:set_style(self.button_style)
-	self.button.on_click_outside:subscribe(unselect)
+	self.button.on_click_outside:subscribe(self.unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
 
 	self.on_input_select = Event()
@@ -215,17 +189,17 @@ function Input.on_input(self, action_id, action)
 		end
 
 		if action_id == const.ACTION_ENTER and action.released then
-			unselect(self)
+			self:unselect()
 			return true
 		end
 
 		if action_id == const.ACTION_BACK and action.released then
-			unselect(self)
+			self:unselect()
 			return true
 		end
 
 		if action_id == const.ACTION_ESC and action.released then
-			unselect(self)
+			self:unselect()
 			return true
 		end
 
@@ -240,12 +214,12 @@ end
 
 
 function Input.on_focus_lost(self)
-	unselect(self)
+	self:unselect()
 end
 
 
 function Input.on_input_interrupt(self)
-	-- unselect(self)
+	-- self:unselect()
 end
 
 
@@ -296,6 +270,47 @@ function Input.set_text(self, input_text)
 end
 
 
+--- Select input field. It will show the keyboard and trigger on_select events
+-- @tparam Input self
+function Input.select(self)
+	gui.reset_keyboard()
+	self.marked_value = ""
+	if not self.is_selected then
+		self:set_input_priority(const.PRIORITY_INPUT_MAX)
+		self.button:set_input_priority(const.PRIORITY_INPUT_MAX)
+		self.previous_value = self.value
+		self.is_selected = true
+
+		gui.show_keyboard(self.keyboard_type, false)
+		self.on_input_select:trigger(self:get_context())
+
+		self.style.on_select(self, self.button.node)
+	else
+		if self.style.IS_UNSELECT_ON_RESELECT then
+			self:unselect(self)
+		end
+	end
+end
+
+
+--- Remove selection from input. It will hide the keyboard and trigger on_unselect events
+-- @tparam Input self
+function Input.unselect(self)
+	gui.reset_keyboard()
+	self.marked_value = ""
+	if self.is_selected then
+		self:reset_input_priority()
+		self.button:reset_input_priority()
+		self.is_selected = false
+
+		gui.hide_keyboard()
+		self.on_input_unselect:trigger(self:get_context())
+
+		self.style.on_unselect(self, self.button.node)
+	end
+end
+
+
 --- Return current input field text
 -- @tparam Input self
 -- @treturn string The current input field text
@@ -331,7 +346,7 @@ end
 -- @tparam Input self
 function Input.reset_changes(self)
 	self:set_text(self.previous_value)
-	unselect(self)
+	self:unselect()
 end
 
 

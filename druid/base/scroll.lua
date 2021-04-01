@@ -54,11 +54,10 @@
 
 
 local Event = require("druid.event")
-local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Scroll = component.create("scroll", { const.ON_UPDATE, const.ON_LAYOUT_CHANGE })
+local Scroll = component.create("scroll", { component.ON_UPDATE, component.ON_LAYOUT_CHANGE })
 
 
 local function inverse_lerp(min, max, current)
@@ -411,6 +410,15 @@ function Scroll.bind_grid(self, grid)
 	self:set_size(grid:get_size(), grid:get_offset())
 
 	return self
+end
+
+
+--- Strict drag scroll area. Useful for
+-- restrict events outside stencil node
+-- @tparam Drag self
+-- @tparam node node Gui node
+function Scroll.set_click_zone(self, node)
+	self.drag:set_click_zone(node)
 end
 
 

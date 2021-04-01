@@ -31,7 +31,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Progress = component.create("progress", { const.ON_UPDATE, const.ON_LAYOUT_CHANGE })
+local Progress = component.create("progress", { component.ON_UPDATE, component.ON_LAYOUT_CHANGE })
 
 
 local function check_steps(self, from, to, exactly)

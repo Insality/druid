@@ -48,7 +48,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Drag = component.create("drag", { const.ON_INPUT_HIGH })
+local Drag = component.create("drag", { component.ON_INPUT }, const.PRIORITY_INPUT_HIGH)
 
 
 local function start_touch(self, touch)
@@ -93,7 +93,7 @@ local function process_touch(self, touch)
 	if not self.is_drag and distance >= self.style.DRAG_DEADZONE then
 		self.is_drag = true
 		self.on_drag_start:trigger(self:get_context())
-		self:increase_input_priority()
+		self:set_input_priority(const.PRIORITY_INPUT_MAX)
 	end
 end
 
@@ -265,9 +265,9 @@ end
 --- Strict drag click area. Useful for
 -- restrict events outside stencil node
 -- @tparam Drag self
--- @tparam node zone Gui node
-function Drag.set_click_zone(self, zone)
-	self.click_zone = self:get_node(zone)
+-- @tparam node node Gui node
+function Drag.set_click_zone(self, node)
+	self.click_zone = self:get_node(node)
 end
 
 

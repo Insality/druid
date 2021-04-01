@@ -28,11 +28,11 @@
 -- @see Drag
 -- @see Hover
 
-local const = require("druid.const")
 local helper = require("druid.helper")
-local druid_input = require("druid.helper.druid_input")
-local settings = require("druid.system.settings")
 local class = require("druid.system.middleclass")
+local settings = require("druid.system.settings")
+local base_component = require("druid.component")
+local druid_input = require("druid.helper.druid_input")
 
 local back_handler = require("druid.base.back_handler")
 local blocker = require("druid.base.blocker")
@@ -83,24 +83,61 @@ local function input_release(self)
 end
 
 
+local function sort_input_stack(self)
+	local input_components = self.components[base_component.ON_INPUT]
+	if not input_components then
+		return
+	end
+
+	table.sort(input_components, function(a, b)
+		if a:get_input_priority() ~= b:get_input_priority() then
+			return a:get_input_priority() < b:get_input_priority()
+		end
+
+		return a:get_uid() < b:get_uid()
+	end)
+end
+
+
 -- Create the component itself
 local function create(self, instance_class)
 	local instance = instance_class()
 	instance:setup_component(self, self._context, self._style)
 
-	table.insert(self.components[const.ALL], instance)
+	table.insert(self.components[base_component.ALL], instance)
 
 	local register_to = instance:__get_interests()
 	for i = 1, #register_to do
 		local interest = register_to[i]
 		table.insert(self.components[interest], instance)
 
-		if const.UI_INPUT[interest] then
+		if base_component.UI_INPUT[interest] then
 			input_init(self)
 		end
 	end
 
 	return instance
+end
+
+
+local function check_sort_input_stack(self, components)
+	if not components or #components == 0 then
+		return
+	end
+
+	local is_need_sort_input_stack = false
+
+	for i = #components, 1, -1 do
+		local component = components[i]
+		if component:_is_input_priority_changed() then
+			is_need_sort_input_stack = true
+		end
+		component:_reset_input_priority_changed()
+	end
+
+	if is_need_sort_input_stack then
+		sort_input_stack(self)
+	end
 end
 
 
@@ -111,24 +148,8 @@ local function process_input(action_id, action, components, is_input_consumed)
 
 	for i = #components, 1, -1 do
 		local component = components[i]
-		-- Process increased input priority first
 		local meta = component._meta
-		if meta.input_enabled and meta.increased_input_priority then
-			if not is_input_consumed then
-				is_input_consumed = component:on_input(action_id, action)
-			else
-				if component.on_input_interrupt then
-					component:on_input_interrupt()
-				end
-			end
-		end
-	end
-
-	for i = #components, 1, -1 do
-		local component = components[i]
-		-- Process usual input priority next
-		local meta = component._meta
-		if meta.input_enabled and not meta.increased_input_priority then
+		if meta.input_enabled then
 			if not is_input_consumed then
 				is_input_consumed = component:on_input(action_id, action)
 			else
@@ -156,8 +177,8 @@ function DruidInstance.initialize(self, context, style)
 	self.url = msg.url()
 
 	self.components = {}
-	for i = 1, #const.ALL_INTERESTS do
-		self.components[const.ALL_INTERESTS[i]] = {}
+	for i = 1, #base_component.ALL_INTERESTS do
+		self.components[base_component.ALL_INTERESTS[i]] = {}
 	end
 end
 
@@ -181,7 +202,7 @@ end
 -- on all druid components
 -- @tparam DruidInstance self
 function DruidInstance.final(self)
-	local components = self.components[const.ALL]
+	local components = self.components[base_component.ALL]
 
 	for i = #components, 1, -1 do
 		if components[i].on_remove then
@@ -216,7 +237,7 @@ function DruidInstance.remove(self, component)
 	end
 	component._meta.children = {}
 
-	local all_components = self.components[const.ALL]
+	local all_components = self.components[base_component.ALL]
 	for i = #all_components, 1, -1 do
 		if all_components[i] == component then
 			if component.on_remove then
@@ -243,7 +264,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam number dt Delta time
 function DruidInstance.update(self, dt)
-	local components = self.components[const.ON_UPDATE]
+	local components = self.components[base_component.ON_UPDATE]
 	for i = 1, #components do
 		components[i]:update(dt)
 	end
@@ -258,12 +279,9 @@ function DruidInstance.on_input(self, action_id, action)
 	self._is_input_processing = true
 
 	local is_input_consumed = false
-
-	is_input_consumed = process_input(action_id, action,
-		self.components[const.ON_INPUT_HIGH], is_input_consumed)
-
-	is_input_consumed = process_input(action_id, action,
-		self.components[const.ON_INPUT], is_input_consumed)
+	local components = self.components[base_component.ON_INPUT]
+	check_sort_input_stack(self, components)
+	is_input_consumed = process_input(action_id, action, components, is_input_consumed)
 
 	self._is_input_processing = false
 
@@ -284,7 +302,7 @@ end
 -- @tparam table message Message from on_message
 -- @tparam hash sender Sender from on_message
 function DruidInstance.on_message(self, message_id, message, sender)
-	local specific_ui_message = const.SPECIFIC_UI_MESSAGES[message_id]
+	local specific_ui_message = base_component.SPECIFIC_UI_MESSAGES[message_id]
 
 	if specific_ui_message then
 		local components = self.components[message_id]
@@ -295,7 +313,7 @@ function DruidInstance.on_message(self, message_id, message, sender)
 			end
 		end
 	else
-		local components = self.components[const.ON_MESSAGE]
+		local components = self.components[base_component.ON_MESSAGE]
 		for i = 1, #components do
 			components[i]:on_message(message_id, message, sender)
 		end
@@ -307,7 +325,7 @@ end
 -- This one called by on_window_callback by global window listener
 -- @tparam DruidInstance self
 function DruidInstance.on_focus_lost(self)
-	local components = self.components[const.ON_FOCUS_LOST]
+	local components = self.components[base_component.ON_FOCUS_LOST]
 	for i = 1, #components do
 		components[i]:on_focus_lost()
 	end
@@ -318,7 +336,7 @@ end
 -- This one called by on_window_callback by global window listener
 -- @tparam DruidInstance self
 function DruidInstance.on_focus_gained(self)
-	local components = self.components[const.ON_FOCUS_GAINED]
+	local components = self.components[base_component.ON_FOCUS_GAINED]
 	for i = 1, #components do
 		components[i]:on_focus_gained()
 	end
@@ -329,7 +347,7 @@ end
 -- Called on update gui layout
 -- @tparam DruidInstance self
 function DruidInstance.on_layout_change(self)
-	local components = self.components[const.ON_LAYOUT_CHANGE]
+	local components = self.components[base_component.ON_LAYOUT_CHANGE]
 	for i = 1, #components do
 		components[i]:on_layout_change()
 	end
@@ -341,7 +359,7 @@ end
 -- call manualy to update all translations
 -- @function druid.on_language_change
 function DruidInstance.on_language_change(self)
-	local components = self.components[const.ON_LANGUAGE_CHANGE]
+	local components = self.components[base_component.ON_LANGUAGE_CHANGE]
 	for i = 1, #components do
 		components[i]:on_language_change()
 	end

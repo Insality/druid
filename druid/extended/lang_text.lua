@@ -12,17 +12,16 @@
 
 
 local Event = require("druid.event")
-local const = require("druid.const")
 local settings = require("druid.system.settings")
 local component = require("druid.component")
 
-local LangText = component.create("lang_text", { const.ON_LANGUAGE_CHANGE })
+local LangText = component.create("lang_text", { component.ON_LANGUAGE_CHANGE })
 
 
 --- Component init function
 -- @tparam LangText self
 -- @tparam node node The text node
--- @tparam string locale_id Default locale id
+-- @tparam string locale_id Default locale id, optional
 -- @tparam bool no_adjust If true, will not correct text size
 function LangText.init(self, node, locale_id, no_adjust)
 	self.druid = self:get_druid()
@@ -31,7 +30,9 @@ function LangText.init(self, node, locale_id, no_adjust)
 
 	self.on_change = Event()
 
-	self:translate(locale_id)
+	if locale_id then
+		self:translate(locale_id)
+	end
 
 	return self
 end
@@ -60,7 +61,7 @@ end
 function LangText.translate(self, locale_id, ...)
 	self.last_locale_args = {...}
 	self.last_locale = locale_id or self.last_locale
-	self.text:set_to(settings.get_text(self.last_locale, ...))
+	self.text:set_to(settings.get_text(self.last_locale, ...) or "")
 end
 
 
