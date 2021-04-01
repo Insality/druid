@@ -140,21 +140,26 @@ Desc
 - Add EmmyLua annotations. See how to use it FAQ
 - Lang text now can be initialized without default locale id
 - **#116** You can pass Text component in Input component instead of text node
-- **#124** Add _set_click_zone_ functon to Scroll component (just link to Drag:set_click_zone inside scroll component)
-- **#102** __[BREAKING]__ Removed _increase_input_priority_ component function. Use _component:set_input_priority_ function instead. The bigger priority value processed first. The value 10 is default for Druid components, the 100 value is maximum priority for acquire input in _drag_ and _input_ components
--- Add constants for priorities: _const.PRIORITY_INPUT_, _const.PRIORITY_INPUT_HIGH_, _const.PRIORITY_INPUT_MAX_.
--- __[BREAKING]__ If you use in you custom components interest: __component.ON_INPUT_HIGH__ you should replace it with __const.PRIORITY_INPUT_HIGH__ as third param, and place it with usual __component.ON_INPUT__. For example
-_before:_
-```lua
-local Drag = component.create("drag", { component.ON_INPUT_HIGH })
-```
-_after:_
-```lua
-local Drag = component.create("drag", { component.ON_INPUT }, const.PRIORITY_INPUT_HIGH)
-```
+- **#124** Add `Scroll:set_click_zone` function. This is just link to `Drag:set_click_zone` function inside scroll component.
+- **#102** __[BREAKING]__ Removed `component:increase_input_priority` component function. Use `component:set_input_priority` function instead. The bigger priority value processed first. The value 10 is default for Druid components, the 100 value is maximum priority for acquire input in _drag_ and _input_ components
+	-- Add constants for priorities: _const.PRIORITY_INPUT_, _const.PRIORITY_INPUT_HIGH_, _const.PRIORITY_INPUT_MAX_.
+	-- __[BREAKING]__ If you use in you custom components interest: `component.ON_INPUT_HIGH` you should replace it with `const.PRIORITY_INPUT_HIGH` as third param, and place it with usual `component.ON_INPUT`. For example:
+		_before:_
+		```lua
+		local Drag = component.create("drag", { component.ON_INPUT_HIGH })
+		```
+		_after:_
+		```lua
+		local Drag = component.create("drag", { component.ON_INPUT }, const.PRIORITY_INPUT_HIGH)
+		```
 - **#123** Add scroll for Scroll component via mouse wheel or touchpad:
--- Added Scroll style params: WHEEL_SCROLL_SPEED, WHEEL_SCROLL_INVERTED
--- Mouse scroll working when cursor is hover on scroll view node
--- Vertical scroll have more priority than horizontal
--- Fix: When Hover component node became disabled, reset hover state (throw on_hover and on_mouse_hover events)
--- This is basic implementation, it is work not perfect
+	-- Added Scroll style params: `WHEEL_SCROLL_SPEED`, `WHEEL_SCROLL_INVERTED`
+	-- Mouse scroll working when cursor is hover on scroll view node
+	-- Vertical scroll have more priority than horizontal
+	-- Fix: When Hover component node became disabled, reset hover state (throw on_hover and on_mouse_hover events)
+	-- This is basic implementation, it is work not perfect
+- **#43** Add Data List Druid extended component. Component used to manage huge amount of data to make stuff like "infinity" scroll.
+- Add context argument to Druid Event. You can pass this argument to forward it first in your callbacks (for example - object context)
+- __[BREAKING]__ Add _SHIFT_POLICY_ for _Static_ and _Dynamic_ Grids. It mean how nodes will be shifted if you append data between nodes. There are `const.SHIFT.RIGHT`, `const.SHIFT.LEFT` and `const.SHIFT.NO_SHIFT`.
+	-- Please check your `StaticGrid:remove` and `DynamicGrid:remove` functions
+
