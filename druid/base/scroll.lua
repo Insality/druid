@@ -103,8 +103,8 @@ end
 -- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
 -- @tfield[opt=0] number EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect)
 -- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
--- @tfield[opt=25] bool WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
--- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, invert direction for touchpad and mouse wheel scroll
+-- @tfield[opt=0] bool WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
+-- @tfield[opt=false] bool WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll
 function Scroll.on_style_change(self, style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
@@ -118,7 +118,7 @@ function Scroll.on_style_change(self, style)
 	self.style.INERT_SPEED = style.INERT_SPEED or 30
 	self.style.POINTS_DEADZONE = style.POINTS_DEADZONE or 20
 	self.style.SMALL_CONTENT_SCROLL = style.SMALL_CONTENT_SCROLL or false
-	self.style.WHEEL_SCROLL_SPEED = style.WHEEL_SCROLL_SPEED or 25
+	self.style.WHEEL_SCROLL_SPEED = style.WHEEL_SCROLL_SPEED or 0
 	self.style.WHEEL_SCROLL_INVERTED = style.WHEEL_SCROLL_INVERTED or false
 
 	self._is_inert = not (self.style.FRICT == 0 or

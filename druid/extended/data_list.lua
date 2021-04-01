@@ -1,5 +1,23 @@
---- Manage data for huge dataset in scroll
---- It requires basic druid scroll and druid grid components
+--- Component to manage data for huge dataset in scroll.
+-- It requires Druid Scroll and Druid Grid (Static or Dynamic) components
+-- @module DataList
+-- @within BaseComponent
+-- @alias druid.data_list
+
+
+--- The Druid scroll component
+-- @tfield Scroll scroll
+
+--- The Druid Grid component
+-- @tfield StaticGrid grid
+
+--- The current visual top data index
+-- @tfield number top_index
+
+--- The current visual last data index
+-- @tfield number last_index
+
+
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
@@ -7,9 +25,11 @@ local component = require("druid.component")
 local DataList = component.create("data_list")
 
 
+--- Data list constructor
+-- @tparam Scroll self
+-- @tparam node view_node GUI view scroll node
+-- @tparam node content_node GUI content scroll node
 function DataList.init(self, data, scroll, grid, create_function)
-	self.view_size = gui.get_size(scroll.view_node)
-	self.prefab_size = grid.node_size
 	self.druid = self:get_druid()
 	self.scroll = scroll
 	self.grid = grid
@@ -18,8 +38,8 @@ function DataList.init(self, data, scroll, grid, create_function)
 	--- Current visual elements indexes
 	self.top_index = 1
 	self.last_index = 1
-	self.create_function = create_function
 
+	self._create_function = create_function
 	self._data = {}
 	self._data_first_index = false
 	self._data_last_index = false
@@ -32,11 +52,16 @@ function DataList.init(self, data, scroll, grid, create_function)
 end
 
 
+--- Druid System on_remove function
+-- @tparam DataList self
 function DataList.on_remove(self)
 	self.scroll.on_scroll:unsubscribe(self._check_elements, self)
 end
 
 
+--- Set new data set for DataList component
+-- @tparam DataList self
+-- @tparam table data The new data array
 function DataList.set_data(self, data)
 	self._data = data
 	self:_update_data_info()
@@ -44,6 +69,12 @@ function DataList.set_data(self, data)
 end
 
 
+--- Add element to DataList. Currenly untested
+-- @tparam DataList self
+-- @tparam table data
+-- @tparam number index
+-- @tparam number shift_policy The constant from const.SHIFT.*
+-- @local
 function DataList.add(self, data, index, shift_policy)
 	index = index or self._data_last_index + 1
 	shift_policy = shift_policy or const.SHIFT.RIGHT
@@ -66,12 +97,22 @@ function DataList.add(self, data, index, shift_policy)
 end
 
 
+--- Remove element from DataList. Currenly untested
+-- @tparam DataList self
+-- @tparam number index
+-- @tparam number shift_policy The constant from const.SHIFT.*
+-- @local
 function DataList.remove(self, index, shift_policy)
 	table.remove(self._data, index)
 	self:_refresh()
 end
 
 
+--- Remove element from DataList by data value. Currenly untested
+-- @tparam DataList self
+-- @tparam tabe data
+-- @tparam number shift_policy The constant from const.SHIFT.*
+-- @local
 function DataList.remove_by_data(self, data, shift_policy)
 	local index = helper.contains(self._data, data)
 	if index then
@@ -81,27 +122,38 @@ function DataList.remove_by_data(self, data, shift_policy)
 end
 
 
+--- Clear the DataList and refresh visuals
+-- @tparam DataList self
 function DataList.clear(self)
 	self._data = {}
 	self:_refresh()
 end
 
 
+--- Return first index from data. It not always equals to 1
+-- @tparam DataList self
 function DataList.get_first_index(self)
 	return self._data_first_index
 end
 
 
+--- Return last index from data
+-- @tparam DataList self
 function DataList.get_last_index(self)
 	return self._data_last_index
 end
 
 
+--- Return amount of data
+-- @tparam DataList self
 function DataList.get_length(self)
 	return self._data_length
 end
 
 
+--- Return index for data value
+-- @tparam DataList self
+-- @tparam table data
 function DataList.get_index(self, data)
 	for index, value in pairs(self._data) do
 		if value == data then
@@ -113,6 +165,9 @@ function DataList.get_index(self, data)
 end
 
 
+--- Instant scroll to element with passed index
+-- @tparam DataList self
+-- @tparam number index
 function DataList.scroll_to_index(self, index)
 	self.top_index = helper.clamp(index, 1, #self._data)
 	self:_refresh()
@@ -120,12 +175,16 @@ function DataList.scroll_to_index(self, index)
 end
 
 
+--- Add element at passed index
+-- @tparam DataList self
+-- @tparam number index
+-- @local
 function DataList._add_at(self, index)
 	if self._data_visual[index] then
 		self:_remove_at(index)
 	end
 
-	local node, instance = self.create_function(self._data[index], index)
+	local node, instance = self._create_function(self._data[index], index)
 	self.grid:add(node, index, const.SHIFT.NO_SHIFT)
 	self._data_visual[index] = {
 		node = node,
@@ -134,6 +193,10 @@ function DataList._add_at(self, index)
 end
 
 
+--- Remove element from passed index
+-- @tparam DataList self
+-- @tparam number index
+-- @local
 function DataList._remove_at(self, index)
 	self.grid:remove(index, const.SHIFT.NO_SHIFT)
 
@@ -147,6 +210,9 @@ function DataList._remove_at(self, index)
 end
 
 
+--- Fully refresh all DataList elements
+-- @tparam DataList self
+-- @local
 function DataList._refresh(self)
 	for index, _ in pairs(self._data_visual) do
 		self:_remove_at(index)
@@ -155,6 +221,9 @@ function DataList._refresh(self)
 end
 
 
+--- Check elements which should be created
+-- @tparam DataList self
+-- @local
 function DataList._check_elements(self)
 	for index, data in pairs(self._data_visual) do
 		if self.scroll:is_node_in_view(data.node) then
@@ -173,6 +242,12 @@ function DataList._check_elements(self)
 end
 
 
+--- Check elements which should be created.
+-- Start from index with step until element is outside of scroll view
+-- @tparam DataList self
+-- @tparam number index
+-- @tparam number step
+-- @local
 function DataList._check_elements_from(self, index, step)
 	local is_outside = false
 	while not is_outside do
@@ -202,6 +277,10 @@ function DataList._check_elements_from(self, index, step)
 end
 
 
+
+--- Update actual data params
+-- @tparam DataList self
+-- @local
 function DataList._update_data_info(self)
 	self._data_first_index = false
 	self._data_last_index = false
