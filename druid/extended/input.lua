@@ -108,11 +108,16 @@ end
 
 
 -- @tparam node click_node Button node to enabled input component
--- @tparam node text_node Text node what will be changed on user input
+-- @tparam node|druid.text text_node Text node what will be changed on user input. You can pass text component instead of text node name
 -- @tparam[opt] number keyboard_type Gui keyboard type for input field
 function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
-	self.text = self.druid:new_text(text_node)
+
+	if type(text_node) == const.TABLE then
+		self.text = text_node
+	else
+		self.text = self.druid:new_text(text_node)
+	end
 
 	self.is_selected = false
 	self.value = self.text.last_value

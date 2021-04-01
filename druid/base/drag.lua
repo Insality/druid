@@ -263,9 +263,9 @@ end
 --- Strict drag click area. Useful for
 -- restrict events outside stencil node
 -- @tparam Drag self
--- @tparam node zone Gui node
-function Drag.set_click_zone(self, zone)
-	self.click_zone = self:get_node(zone)
+-- @tparam node node Gui node
+function Drag.set_click_zone(self, node)
+	self.click_zone = self:get_node(node)
 end
 
 

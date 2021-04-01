@@ -55,6 +55,10 @@ M.PIVOTS = {
 }
 
 
+M.SYS_INFO = sys.get_sys_info()
+M.CURRENT_SYSTEM_NAME = M.SYS_INFO.system_name
+
+
 M.OS = {
 	ANDROID = "Android",
 	IOS = "iPhone OS",
