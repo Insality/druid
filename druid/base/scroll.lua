@@ -379,6 +379,15 @@ function Scroll.bind_grid(self, grid)
 end
 
 
+--- Strict drag scroll area. Useful for
+-- restrict events outside stencil node
+-- @tparam Drag self
+-- @tparam node node Gui node
+function Scroll.set_click_zone(self, node)
+	self.drag:set_click_zone(node)
+end
+
+
 function Scroll._on_scroll_drag(self, dx, dy)
 	local t = self.target_position
 	local b = self.available_pos

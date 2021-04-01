@@ -139,3 +139,4 @@ Desc
 - Input component: rename field _selected_ to _is_selected_ (according to the docs)
 - Add EmmyLua annotations. See how to use it FAQ
 - Lang text now can be initialized without default locale id
+- **#124** Add _set_click_zone_ functon to Scroll component (just link to Drag:set_click_zone inside scroll component)
