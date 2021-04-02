@@ -5,8 +5,6 @@ local const = require("druid.const")
 
 local M = {}
 
-local system_name = sys.get_sys_info().system_name
-
 --- Text node or icon node can be nil
 local function get_text_width(text_node)
 	if text_node then
@@ -183,7 +181,8 @@ end
 --- Check if device is mobile (Android or iOS)
 -- @function helper..is_mobile
 function M.is_mobile()
-	return const.CURRENT_SYSTEM_NAME == const.OS.IOS or const.CURRENT_SYSTEM_NAME == const.OS.ANDROID
+	return const.CURRENT_SYSTEM_NAME == const.OS.IOS or
+			 const.CURRENT_SYSTEM_NAME == const.OS.ANDROID
 end
 
 

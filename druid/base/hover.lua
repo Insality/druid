@@ -27,8 +27,8 @@ function Hover.init(self, node, on_hover_callback)
 
 	self._is_hovered = false
 	self._is_mouse_hovered = false
-
 	self._is_enabled = true
+	self._is_mobile = helper.is_mobile()
 
 	self.on_hover = Event(on_hover_callback)
 	self.on_mouse_hover = Event()
@@ -41,7 +41,7 @@ function Hover.on_input(self, action_id, action)
 	end
 
 	-- Disable nil (it's mouse) hover or mobile platforms
-	if not action_id and helper.is_mobile() then
+	if self._is_mobile and not action_id then
 		return false
 	end
 
