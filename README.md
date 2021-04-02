@@ -1,4 +1,3 @@
-
 [![](media/druid_logo.png)](https://insality.github.io/druid/)
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/insality/druid)](https://github.com/Insality/druid/releases)
@@ -243,8 +242,6 @@ _You published your game and you using Druid? Note me!_
 - Developed and supported by [Insality](https://github.com/Insality)
 - Original idea by [AGulev](https://github.com/AGulev)
 - Assets from [Kenney](http://www.kenney.nl/)
-
-**MIT** License
 
 
 ## Issues and suggestions

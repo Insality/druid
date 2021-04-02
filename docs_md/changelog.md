@@ -143,6 +143,7 @@ Desc
 - **#103** Add `helper.centate_nodes` function. It can horizontal align several Box and Text nodes
 - **#105** Add `Input:select` and `Input:unselect` function.
 - **#106** Add `Input IS_UNSELECT_ON_RESELECT` style param. If true, it will be unselect input on click on input box, not only on outside click.
+- **#108** Add component interests const to `component.lua`
 - **#116** You can pass Text component in Input component instead of text node
 - **#124** Add `Scroll:set_click_zone` function. This is just link to `Drag:set_click_zone` function inside scroll component.
 - **#102** __[BREAKING]__ Removed `component:increase_input_priority` component function. Use `component:set_input_priority` function instead. The bigger priority value processed first. The value 10 is default for Druid components, the 100 value is maximum priority for acquire input in _drag_ and _input_ components
