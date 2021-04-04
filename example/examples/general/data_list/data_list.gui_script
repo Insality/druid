@@ -41,7 +41,10 @@ function init(self)
 	self.scroll = self.druid:new_scroll("data_list_view", "data_list_content")
 	self.scroll:set_horizontal_scroll(false)
 	self.grid = self.druid:new_static_grid("data_list_content", "prefab", 1)
+
+	-- Pass already created scroll and grid components to data_list:
 	self.data_list = self.druid:new_data_list(self.scroll, self.grid, create_function)
+
 	self.data_list:set_data(data)
 end
 

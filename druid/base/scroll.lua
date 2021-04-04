@@ -175,7 +175,8 @@ end
 
 
 function Scroll.update(self, dt)
-	self:_update_params(dt)
+	self:_update_params()
+
 	if self.drag.is_drag then
 		self:_update_hand_scroll(dt)
 	else
@@ -525,6 +526,7 @@ function Scroll._set_scroll_position(self, position)
 	if self.position.x ~= position.x or self.position.y ~= position.y then
 		self.position.x = position.x
 		self.position.y = position.y
+		self:_update_params()
 		gui.set_position(self.content_node, position)
 
 		self.on_scroll:trigger(self:get_context(), self.position)
@@ -688,10 +690,11 @@ function Scroll._update_size(self)
 
 	self.available_pos_extra = get_border_vector(view_border - content_border_extra, self._offset)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
+	self:_update_params()
 end
 
 
-function Scroll._update_params(self, dt)
+function Scroll._update_params(self)
 	local t = self.target_position
 	local b = self.available_pos
 

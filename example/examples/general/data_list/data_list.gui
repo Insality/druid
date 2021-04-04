@@ -391,7 +391,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/back_blue"
+  texture: "kenney/back_green"
   id: "icon"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
