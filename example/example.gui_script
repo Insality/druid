@@ -4,6 +4,10 @@ local monarch = require("monarch.monarch")
 local default_style = require("druid.styles.default.style")
 
 local function back_to_lobby(self)
+	if gui.set_enabled(self.button_menu.node) then
+		return
+	end
+
 	monarch.back()
 	gui.set_enabled(gui.get_node("C_Anchor"), true)
 	gui.set_enabled(self.button_menu.node, false)
@@ -24,14 +28,11 @@ end
 local function init_top_panel(self)
 	self.druid:new_blocker("panel_top")
 
-	self.button_menu = self.druid:new_button("button_menu/button", function()
-		back_to_lobby(self)
-	end)
+	self.button_menu = self.druid:new_button("button_menu/button", back_to_lobby)
+	self.druid:new_back_handler(back_to_lobby)
 	gui.set_enabled(self.button_menu.node, false)
 
-	self.button_api = self.druid:new_button("button_api/button", function()
-		sys.open_url("https://insality.github.io/druid/")
-	end)
+	self.button_api = self.druid:new_button("button_api/button", sys.open_url, "https://insality.github.io/druid/")
 
 	self.text_header = self.druid:new_text("text_header", "Druid")
 end
@@ -67,7 +68,7 @@ local function get_button(self, text, scene_name)
 end
 
 
-local function get_button_disabled(self, text, scene_name)
+local function get_button_disabled(self, text)
 	local prefab = gui.get_node("prefab_button")
 	local nodes = gui.clone_tree(prefab)
 	local root = nodes["prefab_button"]
@@ -116,6 +117,13 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "With dynamic grid", "scroll_scene"))
 	self.lobby_grid:add(get_button_disabled(self, "Add/remove elements", "scroll_scene"))
 	self.lobby_grid:add(get_button_disabled(self, "Navigate over elements", "scroll_scene"))
+
+	self.lobby_grid:add(get_title(self, "System"))
+	self.lobby_grid:add(get_button_disabled(self, "Styles"))
+	self.lobby_grid:add(get_button_disabled(self, "Custom components"))
+	self.lobby_grid:add(get_button_disabled(self, "Component interests"))
+	self.lobby_grid:add(get_button_disabled(self, "Nested Druids"))
+	self.lobby_grid:add(get_button_disabled(self, "Input priority"))
 end
 
 

@@ -79,11 +79,6 @@ local function setup_timer(self)
 end
 
 
-local function setup_back_handler(self)
-	self.druid:new_back_handler(empty_callback, "back button")
-end
-
-
 local function setup_input(self)
 	local input = self.druid:new_input("input_box", "input_text")
 	input:set_text("hello!")
@@ -98,7 +93,6 @@ function init(self)
 	setup_timer(self)
 	setup_checkbox(self)
 	setup_slider(self)
-	setup_back_handler(self)
 	setup_input(self)
 end
 
