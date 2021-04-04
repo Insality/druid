@@ -18,6 +18,7 @@ local en = {
 	ui_section_slider = "Slider",
 	ui_section_radio = "Radio",
 	ui_section_checkbox = "Checkbox",
+	ui_section_input = "Input",
 	ui_text_example = "Translated",
 	ui_text_change_lang = "Change lang",
 }
@@ -38,6 +39,7 @@ local ru = {
 	ui_section_slider = "Слайдер",
 	ui_section_radio = "Выбор",
 	ui_section_checkbox = "Мн. выбор",
+	ui_section_input = "Ввод текста",
 	ui_text_example = "Переведен",
 	ui_text_change_lang = "Сменить язык",
 }

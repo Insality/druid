@@ -1,0 +1,155 @@
+---@type druid
+local druid = require("druid.druid")
+local monarch = require("monarch.monarch")
+local default_style = require("druid.styles.default.style")
+
+local function back_to_lobby(self)
+	if gui.set_enabled(self.button_menu.node) then
+		return
+	end
+
+	monarch.back()
+	gui.set_enabled(gui.get_node("C_Anchor"), true)
+	gui.set_enabled(self.button_menu.node, false)
+
+	self.text_header:set_to("Druid")
+end
+
+
+local function show_scene(self, scene_name, text_header)
+	monarch.show(scene_name)
+	gui.set_enabled(gui.get_node("C_Anchor"), false)
+	gui.set_enabled(self.button_menu.node, true)
+
+	self.text_header:set_to(text_header)
+end
+
+
+local function init_top_panel(self)
+	self.druid:new_blocker("panel_top")
+
+	self.button_menu = self.druid:new_button("button_menu/button", back_to_lobby)
+	self.druid:new_back_handler(back_to_lobby)
+	gui.set_enabled(self.button_menu.node, false)
+
+	self.button_api = self.druid:new_button("button_api/button", sys.open_url, "https://insality.github.io/druid/")
+
+	self.text_header = self.druid:new_text("text_header", "Druid")
+end
+
+
+local function on_window_callback(self, event, data)
+	druid.on_window_callback(event, data)
+end
+
+
+local function get_title(self, text)
+	local prefab = gui.get_node("prefab_header")
+	local nodes = gui.clone_tree(prefab)
+	local root = nodes["prefab_header"]
+	gui.set_enabled(root, true)
+	gui.set_text(nodes["prefab_text"], text)
+	return root
+end
+
+
+local function get_button(self, text, scene_name)
+	local prefab = gui.get_node("prefab_button")
+	local nodes = gui.clone_tree(prefab)
+	local root = nodes["prefab_button"]
+	gui.set_enabled(root, true)
+	self.druid:new_button(root, function()
+		show_scene(self, scene_name, text)
+	end)
+		:set_click_zone(self.lobby_scroll.view_node)
+	gui.set_text(nodes["text_button_lobby"], text)
+
+	return root
+end
+
+
+local function get_button_disabled(self, text)
+	local prefab = gui.get_node("prefab_button")
+	local nodes = gui.clone_tree(prefab)
+	local root = nodes["prefab_button"]
+	gui.play_flipbook(nodes["icon_button"], "back_gray")
+	gui.set_enabled(root, true)
+	gui.set_text(nodes["text_button_lobby"], text)
+
+	return root
+end
+
+
+local function init_lobby(self)
+	gui.set_enabled(gui.get_node("prefabs"), false)
+
+	self.lobby_scroll = self.druid:new_scroll("lobby_view", "lobby_content")
+	self.lobby_grid = self.druid:new_dynamic_grid("lobby_content")
+	self.lobby_scroll:bind_grid(self.lobby_grid)
+
+	self.lobby_grid:add(get_title(self, "General examples"))
+	self.lobby_grid:add(get_button(self, "Overview", "general_overview"))
+	self.lobby_grid:add(get_button(self, "Buttons", "general_buttons"))
+	self.lobby_grid:add(get_button(self, "Texts", "general_texts"))
+	self.lobby_grid:add(get_button_disabled(self, "Lang Text", "scene_name"))
+	self.lobby_grid:add(get_button(self, "Sliders", "general_sliders"))
+	self.lobby_grid:add(get_button(self, "Scrolls", "general_scroll"))
+	self.lobby_grid:add(get_button(self, "Grids", "general_grid"))
+	self.lobby_grid:add(get_button_disabled(self, "Progress Bar", "scene_name"))
+	self.lobby_grid:add(get_button(self, "Data List", "general_data_list"))
+	self.lobby_grid:add(get_button_disabled(self, "Checkboxes", "scene_name"))
+	self.lobby_grid:add(get_button(self, "Input text", "general_input"))
+	self.lobby_grid:add(get_button_disabled(self, "Swipe", "scene_name"))
+	self.lobby_grid:add(get_button_disabled(self, "Drag", "scene_name"))
+
+	self.lobby_grid:add(get_title(self, "Scrolls"))
+	self.lobby_grid:add(get_button_disabled(self, "Nested scrolls", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "With points of interest", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Without inertion", "scroll_scene"))
+
+	self.lobby_grid:add(get_title(self, "Grids"))
+	self.lobby_grid:add(get_button_disabled(self, "Static grid", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Dynamic grid", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Scroll binding", "scroll_scene"))
+
+	self.lobby_grid:add(get_title(self, "Data list / Infinity scroll"))
+	self.lobby_grid:add(get_button_disabled(self, "With static grid", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "With dynamic grid", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Add/remove elements", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Navigate over elements", "scroll_scene"))
+
+	self.lobby_grid:add(get_title(self, "System"))
+	self.lobby_grid:add(get_button_disabled(self, "Styles"))
+	self.lobby_grid:add(get_button_disabled(self, "Custom components"))
+	self.lobby_grid:add(get_button_disabled(self, "Component interests"))
+	self.lobby_grid:add(get_button_disabled(self, "Nested Druids"))
+	self.lobby_grid:add(get_button_disabled(self, "Input priority"))
+end
+
+
+function init(self)
+	-- Main lobby have more render priority (top panel)
+	gui.set_render_order(10)
+
+	window.set_listener(on_window_callback)
+	druid.set_default_style(default_style)
+	self.druid = druid.new(self)
+
+	init_top_panel(self)
+	init_lobby(self)
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	self.druid:on_input(action_id, action)
+end

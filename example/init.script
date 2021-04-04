@@ -4,7 +4,7 @@ local lang = require("example.lang")
 
 local function setup_druid()
 	druid.set_sound_function(function(name)
-		sound.play("kenney:/sound#" .. name)
+		sound.play("example:/sound#" .. name)
 	end)
 
 	druid.set_text_function(function(lang_id, ...)

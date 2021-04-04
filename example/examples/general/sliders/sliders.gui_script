@@ -1,7 +1,9 @@
-local M = {}
+local druid = require("druid.druid")
 
 
-function M.setup_page(self)
+function init(self)
+	self.druid = druid.new(self)
+
 	local slider = self.druid:new_slider("slider_simple_pin", vmath.vector3(95, 0, 0), function(_, value)
 		gui.set_text(gui.get_node("slider_simple_text"), math.ceil(value * 100) .. "%")
 	end)
@@ -17,4 +19,21 @@ function M.setup_page(self)
 end
 
 
-return M
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

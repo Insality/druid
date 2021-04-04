@@ -1,4 +1,4 @@
-local M = {}
+local druid = require("druid.druid")
 
 local pivots = {
 	gui.PIVOT_CENTER,
@@ -11,6 +11,7 @@ local pivots = {
 	gui.PIVOT_W,
 	gui.PIVOT_NW
 }
+
 
 local function setup_texts(self)
 	self.druid:new_text("text_inline")
@@ -45,9 +46,27 @@ local function setup_texts(self)
 end
 
 
-function M.setup_page(self)
+function init(self)
+	self.druid = druid.new(self)
 	setup_texts(self)
 end
 
 
-return M
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

@@ -1,23 +1,26 @@
+local druid = require("druid.druid")
 local sprite_style = require("druid.styles.sprites.style")
-
-local M = {}
 
 
 local function usual_callback()
 	print("Usual callback")
 end
 
+
 local function long_tap_callback(self, params, button, hold_time)
 	print("Long tap callback", hold_time)
 end
+
 
 local function hold_callback(self, params, button, hold_time)
 	print("On hold callback", hold_time)
 end
 
+
 local function repeated_callback(self, params, button, click_in_row)
 	print("Repeated callback", click_in_row)
 end
+
 
 local function double_tap_callback(self, params, button, click_in_row)
 	print("Double tap callback", click_in_row)
@@ -48,9 +51,27 @@ local function setup_buttons(self)
 end
 
 
-function M.setup_page(self)
+function init(self)
+	self.druid = druid.new(self)
 	setup_buttons(self)
 end
 
 
-return M
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end
