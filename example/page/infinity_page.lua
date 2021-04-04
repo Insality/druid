@@ -86,19 +86,19 @@ local function setup_infinity_list(self)
 		table.insert(data, i)
 	end
 
-	self.infinity_list = self.druid:new_data_list(data, self.infinity_scroll, self.infinity_grid, function(record, index)
+	self.infinity_list = self.druid:new_data_list(self.infinity_scroll, self.infinity_grid, function(record, index)
 		-- function should return gui_node, [druid_component]
 		local root, button = create_infinity_instance(self, record, index)
 		button:set_click_zone(self.infinity_scroll.view_node)
 		return root, button
-	end)
+	end):set_data(data)
 
-	self.infinity_list_hor = self.druid:new_data_list(data, self.infinity_scroll_hor, self.infinity_grid_hor, function(record, index)
+	self.infinity_list_hor = self.druid:new_data_list(self.infinity_scroll_hor, self.infinity_grid_hor, function(record, index)
 		-- function should return gui_node, [druid_component]
 		local root, button = create_infinity_instance_hor(self, record, index)
 		button:set_click_zone(self.infinity_scroll_hor.view_node)
 		return root, button
-	end)
+	end):set_data(data)
 
 	-- scroll to some index
 	-- local pos = self.infinity_grid:get_pos(25)
@@ -108,24 +108,24 @@ local function setup_infinity_list(self)
 	end)
 
 
-	self.infinity_list_small = self.druid:new_data_list(data, self.infinity_scroll_3, self.infinity_grid_3, function(record, index)
+	self.infinity_list_small = self.druid:new_data_list(self.infinity_scroll_3, self.infinity_grid_3, function(record, index)
 		-- function should return gui_node, [druid_component]
 		return create_infinity_instance_small(self, record, index)
-	end)
+	end):set_data(data)
 
-	self.infinity_list_dynamic = self.druid:new_data_list(data, self.infinity_scroll_dynamic, self.infinity_grid_dynamic, function(record, index)
+	self.infinity_list_dynamic = self.druid:new_data_list(self.infinity_scroll_dynamic, self.infinity_grid_dynamic, function(record, index)
 		-- function should return gui_node, [druid_component]
 		return create_infinity_instance_dynamic(self, record, index)
-	end)
+	end):set_data(data)
 
 	timer.delay(1, false, function()
 		self.infinity_list_dynamic:scroll_to_index(25)
 	end)
 
-	self.infinity_list_dynamic_hor = self.druid:new_data_list(data, self.infinity_scroll_dynamic_hor, self.infinity_grid_dynamic_hor, function(record, index)
+	self.infinity_list_dynamic_hor = self.druid:new_data_list(self.infinity_scroll_dynamic_hor, self.infinity_grid_dynamic_hor, function(record, index)
 		-- function should return gui_node, [druid_component]
 		return create_infinity_instance_dynamic_hor(self, record, index)
-	end)
+	end):set_data(data)
 end
 
 

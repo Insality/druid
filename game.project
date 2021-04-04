@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/kenney.collectionc
+main_collection = /example/example.collectionc
 
 [script]
 shared_state = 1
@@ -11,7 +11,7 @@ height = 900
 [project]
 title = druid
 version = 0.5.0
-dependencies = https://github.com/insalitygames/deftest/archive/master.zip
+dependencies = https://github.com/insalitygames/deftest/archive/master.zip,https://github.com/britzl/monarch/archive/refs/tags/3.3.0.zip
 
 [library]
 include_dirs = druid

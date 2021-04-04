@@ -26,10 +26,11 @@ local DataList = component.create("data_list")
 
 
 --- Data list constructor
--- @tparam Scroll self
--- @tparam node view_node GUI view scroll node
--- @tparam node content_node GUI content scroll node
-function DataList.init(self, data, scroll, grid, create_function)
+-- @tparam DataList self
+-- @tparam druid.scroll The Scroll instance for Data List component
+-- @tparam druid.grid The Grid instance for Data List component
+-- @tparam function create_function The create function callback(data, index). Function should return (node, [component])
+function DataList.init(self, scroll, grid, create_function)
 	self.druid = self:get_druid()
 	self.scroll = scroll
 	self.grid = grid
@@ -47,8 +48,6 @@ function DataList.init(self, data, scroll, grid, create_function)
 	self._data_visual = {}
 
 	self.scroll.on_scroll:subscribe(self._check_elements, self)
-
-	self:set_data(data)
 end
 
 
@@ -62,10 +61,13 @@ end
 --- Set new data set for DataList component
 -- @tparam DataList self
 -- @tparam table data The new data array
+-- @treturn druid.data_list Current DataList instance
 function DataList.set_data(self, data)
-	self._data = data
+	self._data = data or {}
 	self:_update_data_info()
 	self:_refresh()
+
+	return self
 end
 
 
