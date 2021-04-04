@@ -169,5 +169,6 @@ Desc
 - __[BREAKING]__ Add _SHIFT_POLICY_ for _Static_ and _Dynamic_ Grids. It mean how nodes will be shifted if you append data between nodes. There are `const.SHIFT.RIGHT`, `const.SHIFT.LEFT` and `const.SHIFT.NO_SHIFT`.
 	-- Please check your `StaticGrid:remove` and `DynamicGrid:remove` functions
 - **Fix #86** A lot of event triggers on scroll inertia moving 
+- **Fix #101** Fix scroll to other node instead of swipe direction with scroll's points of intereset (without inert settings)
 - **Fix #118** Druid.scroll freezes if held in one place for a long time
 

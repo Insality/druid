@@ -544,7 +544,7 @@ function Scroll._check_points(self)
 	local inert = self.inertion
 	if not self._is_inert then
 		if math.abs(inert.x) > self.style.POINTS_DEADZONE then
-			self:scroll_to_index(self.selected - helper.sign(inert.x))
+			self:scroll_to_index(self.selected + helper.sign(inert.x))
 			return
 		end
 		if math.abs(inert.y) > self.style.POINTS_DEADZONE then
