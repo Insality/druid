@@ -1,6 +1,5 @@
 local druid = require("druid.druid")
 
-
 function init(self)
 	self.druid = druid.new(self)
 end
