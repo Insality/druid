@@ -136,16 +136,17 @@ Also check _component.template.lua_ what you can use for your own custom compone
 
 Desc
 
-- Input component: rename field _selected_ to _is_selected_ (according to the docs)
 - Add EmmyLua annotations. See how to use it FAQ
 - Lang text now can be initialized without default locale id
+- **Fix**: Input component: rename field _selected_ to _is_selected_ (according to the docs)
 - **#92** Setup repo for CI and unit tests. (Yea, successful build and tests badges!)
+- **#102** __[BREAKING]__ Removed `component:increase_input_priority` component function. Use `component:set_input_priority` function instead. The bigger priority value processed first. The value 10 is default for Druid components, the 100 value is maximum priority for acquire input in _drag_ and _input_ components
 - **#103** Add `helper.centate_nodes` function. It can horizontal align several Box and Text nodes
 - **#105** Add `Input:select` and `Input:unselect` function.
 - **#106** Add `Input IS_UNSELECT_ON_RESELECT` style param. If true, it will be unselect input on click on input box, not only on outside click.
+- **#108** Add component interests const to `component.lua`
 - **#116** You can pass Text component in Input component instead of text node
 - **#124** Add `Scroll:set_click_zone` function. This is just link to `Drag:set_click_zone` function inside scroll component.
-- **#102** __[BREAKING]__ Removed `component:increase_input_priority` component function. Use `component:set_input_priority` function instead. The bigger priority value processed first. The value 10 is default for Druid components, the 100 value is maximum priority for acquire input in _drag_ and _input_ components
 	-- Add constants for priorities: _const.PRIORITY_INPUT_, _const.PRIORITY_INPUT_HIGH_, _const.PRIORITY_INPUT_MAX_.
 	-- __[BREAKING]__ If you use in you custom components interest: `component.ON_INPUT_HIGH` you should replace it with `const.PRIORITY_INPUT_HIGH` as third param, and place it with usual `component.ON_INPUT`. For example:
 		_before:_
@@ -168,5 +169,6 @@ Desc
 - __[BREAKING]__ Add _SHIFT_POLICY_ for _Static_ and _Dynamic_ Grids. It mean how nodes will be shifted if you append data between nodes. There are `const.SHIFT.RIGHT`, `const.SHIFT.LEFT` and `const.SHIFT.NO_SHIFT`.
 	-- Please check your `StaticGrid:remove` and `DynamicGrid:remove` functions
 - **Fix #86** A lot of event triggers on scroll inertia moving 
+- **Fix #101** Fix scroll to other node instead of swipe direction with scroll's points of intereset (without inert settings)
 - **Fix #118** Druid.scroll freezes if held in one place for a long time
 

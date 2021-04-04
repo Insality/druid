@@ -11,7 +11,6 @@ Every component is the children of Basic Druid component. Read the [basic compon
 
 Basic custom component template looks like this:
 ```lua
-local const = require("druid.const")
 local component = require("druid.component")
 
 local M = component.create("my_component")
@@ -20,11 +19,11 @@ local M = component.create("my_component")
 function M.init(self, ...)
 end
 
--- Call only if exist interest: const.ON_UPDATE
+-- Call only if exist interest: component.ON_UPDATE
 function M.update(self, dt)
 end
 
--- Call only if exist interest: const.ON_INPUT or const.ON_INPUT_HIGH
+-- Call only if exist interest: component.ON_INPUT or component.ON_INPUT_HIGH
 function M.on_input(self, action_id, action)
 end
 
@@ -32,7 +31,7 @@ end
 function M.on_style_change(self, style)
 end
 
--- Call only if exist interest: const.ON_MESSAGE
+-- Call only if exist interest: component.ON_MESSAGE
 function M.on_message(self, message_id, message, sender)
 end
 
