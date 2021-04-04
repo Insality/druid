@@ -172,4 +172,5 @@ Desc
 - **Fix #86** A lot of event triggers on scroll inertia moving 
 - **Fix #101** Fix scroll to other node instead of swipe direction with scroll's points of intereset (without inert settings)
 - **Fix #118** Druid.scroll freezes if held in one place for a long time
+- **#127** The `druid:create` is deprecated. Use `druid:new` for creating custom components
 
