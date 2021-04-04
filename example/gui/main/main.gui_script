@@ -5,11 +5,7 @@ local monarch = require("monarch.monarch")
 local empty_style = require("druid.styles.empty.style")
 local default_style = require("druid.styles.default.style")
 
-local main_page = require("example.page.main_page")
-local text_page = require("example.page.texts_page")
-local button_page = require("example.page.button_page")
 local scroll_page = require("example.page.scroll_page")
-local slider_page = require("example.page.slider_page")
 local input_page = require("example.page.input_page")
 local grid_page = require("example.page.grid_page")
 local infinity_page = require("example.page.infinity_page")
@@ -20,15 +16,19 @@ local function back_to_lobby(self)
 	monarch.back()
 	gui.set_enabled(gui.get_node("C_Anchor"), true)
 	gui.set_enabled(self.button_menu.node, false)
+
+	self.text_header:set_to("Druid")
 end
+
 
 local function show_scene(self, scene_name, text_header)
 	monarch.show(scene_name)
-
-	self.text_header:set_to(text_header)
 	gui.set_enabled(gui.get_node("C_Anchor"), false)
 	gui.set_enabled(self.button_menu.node, true)
+
+	self.text_header:set_to(text_header)
 end
+
 
 local function init_top_panel(self)
 	self.druid:new_blocker("panel_top")
@@ -42,7 +42,7 @@ local function init_top_panel(self)
 		sys.open_url("https://insality.github.io/druid/")
 	end)
 
-	self.text_header = self.druid:new_text("text_header")
+	self.text_header = self.druid:new_text("text_header", "Druid")
 end
 
 
@@ -76,6 +76,18 @@ local function get_button(self, text, scene_name)
 end
 
 
+local function get_button_disabled(self, text, scene_name)
+	local prefab = gui.get_node("prefab_button")
+	local nodes = gui.clone_tree(prefab)
+	local root = nodes["prefab_button"]
+	gui.play_flipbook(nodes["icon_button"], "back_gray")
+	gui.set_enabled(root, true)
+	gui.set_text(nodes["text_button_lobby"], text)
+
+	return root
+end
+
+
 local function init_lobby(self)
 	gui.set_enabled(gui.get_node("prefabs"), false)
 
@@ -85,10 +97,10 @@ local function init_lobby(self)
 
 	self.lobby_grid:add(get_title(self, "General examples"))
 	self.lobby_grid:add(get_button(self, "Overview", "general_overview"))
-	self.lobby_grid:add(get_button(self, "Buttons", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Texts", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Lang Text", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Sliders", "scene_name"))
+	self.lobby_grid:add(get_button(self, "Buttons", "general_buttons"))
+	self.lobby_grid:add(get_button(self, "Texts", "general_texts"))
+	self.lobby_grid:add(get_button_disabled(self, "Lang Text", "scene_name"))
+	self.lobby_grid:add(get_button(self, "Sliders", "general_sliders"))
 	self.lobby_grid:add(get_button(self, "Scrolls", "scene_name"))
 	self.lobby_grid:add(get_button(self, "Grids", "scene_name"))
 	self.lobby_grid:add(get_button(self, "Progress Bar", "scene_name"))

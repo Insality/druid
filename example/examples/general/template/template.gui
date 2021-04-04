@@ -16,7 +16,7 @@ background_color {
 nodes {
   position {
     x: 300.0
-    y: 400.0
+    y: 415.0
     z: 0.0
     w: 1.0
   }
@@ -34,7 +34,7 @@ nodes {
   }
   size {
     x: 600.0
-    y: 800.0
+    y: 830.0
     z: 0.0
     w: 1.0
   }
@@ -129,6 +129,12 @@ nodes {
   template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0
+}
+layers {
+  name: "image"
+}
+layers {
+  name: "text"
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
