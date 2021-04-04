@@ -146,6 +146,7 @@ Desc
 - **#106** Add `Input IS_UNSELECT_ON_RESELECT` style param. If true, it will be unselect input on click on input box, not only on outside click.
 - **#108** Add component interests const to `component.lua`
 - **#116** You can pass Text component in Input component instead of text node
+- **#117** Move each Druid example in separate collection. It's a lot of easier now to learn via examples, check it!
 - **#124** Add `Scroll:set_click_zone` function. This is just link to `Drag:set_click_zone` function inside scroll component.
 	-- Add constants for priorities: _const.PRIORITY_INPUT_, _const.PRIORITY_INPUT_HIGH_, _const.PRIORITY_INPUT_MAX_.
 	-- __[BREAKING]__ If you use in you custom components interest: `component.ON_INPUT_HIGH` you should replace it with `const.PRIORITY_INPUT_HIGH` as third param, and place it with usual `component.ON_INPUT`. For example:
