@@ -72,7 +72,7 @@ function DruidEvent.trigger(self, ...)
 	for index, callback_info in ipairs(self._callbacks) do
 		if callback_info.context then
 			callback_info.callback(callback_info.context, ...)
-			else
+		else
 			callback_info.callback(...)
 		end
 	end
