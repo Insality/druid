@@ -1,7 +1,7 @@
 local druid = require("druid.druid")
 
 
-local function create_vertical_element(self, data, index)
+local function create_vertical_element(self, data, index, data_list)
 	local instance = gui.clone_tree(self.prefab)
 	gui.set_enabled(instance["prefab"], true)
 	gui.set_text(instance["text"], "Record " .. data)
@@ -12,12 +12,13 @@ local function create_vertical_element(self, data, index)
 	local button = self.druid:new_button(instance["prefab"], function()
 		print("Data list element click on", data)
 	end)
+	button:set_click_zone(data_list.scroll.view_node)
 
 	return instance["prefab"], button
 end
 
 
-local function create_horizontal_element(self, data, index)
+local function create_horizontal_element(self, data, index, data_list)
 	local instance = gui.clone_tree(self.prefab_square)
 	gui.set_enabled(instance["prefab_square"], true)
 	gui.set_text(instance["text_square"], data)
@@ -25,12 +26,13 @@ local function create_horizontal_element(self, data, index)
 	local button = self.druid:new_button(instance["prefab_square"], function()
 		print("Data list element click on", data)
 	end)
+	button:set_click_zone(data_list.scroll.view_node)
 
 	return instance["prefab_square"], button
 end
 
 
-local function create_matrix_element(self, data, index)
+local function create_matrix_element(self, data, index, data_list)
 	local instance = gui.clone_tree(self.prefab_square)
 	gui.set_enabled(instance["prefab_square"], true)
 	gui.set_text(instance["text_square"], data)
@@ -38,6 +40,7 @@ local function create_matrix_element(self, data, index)
 	local button = self.druid:new_button(instance["prefab_square"], function()
 		print("Data list element click on", data)
 	end)
+	button:set_click_zone(data_list.scroll.view_node)
 
 	return instance["prefab_square"], button
 end
@@ -65,7 +68,7 @@ function init(self)
 
 	-- We pass already created scroll and grid components with create function
 	self.data_list_vertical = self.druid:new_data_list(scroll_vertical, grid_vertical, create_vertical_element)
-		:set_data(self.data_set)
+	self.data_list_vertical:set_data(self.data_set)
 
 
 	local scroll_horizontal = self.druid:new_scroll("data_list_horizontal", "data_list_horizontal_content")
@@ -73,7 +76,7 @@ function init(self)
 	local grid_horizontal = self.druid:new_static_grid("data_list_horizontal_content", "prefab_square", 999)
 
 	self.data_list_horizontal = self.druid:new_data_list(scroll_horizontal, grid_horizontal, create_horizontal_element)
-		:set_data(self.data_set)
+	self.data_list_horizontal:set_data(self.data_set)
 
 
 	local scroll_matrix = self.druid:new_scroll("data_list_matrix_vertical", "data_list_matrix_vertical_content")
@@ -81,7 +84,7 @@ function init(self)
 	local grid_matrix = self.druid:new_static_grid("data_list_matrix_vertical_content", "prefab_square", 3)
 
 	self.data_list_matrix = self.druid:new_data_list(scroll_matrix, grid_matrix, create_matrix_element)
-		:set_data(self.data_set)
+	self.data_list_matrix:set_data(self.data_set)
 end
 
 

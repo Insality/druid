@@ -29,7 +29,7 @@ local DataList = component.create("data_list")
 -- @tparam DataList self
 -- @tparam druid.scroll The Scroll instance for Data List component
 -- @tparam druid.grid The Grid instance for Data List component
--- @tparam function create_function The create function callback(self, data, index). Function should return (node, [component])
+-- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 function DataList.init(self, scroll, grid, create_function)
 	self.druid = self:get_druid()
 	self.scroll = scroll
@@ -186,7 +186,7 @@ function DataList._add_at(self, index)
 		self:_remove_at(index)
 	end
 
-	local node, instance = self._create_function(self:get_context(), self._data[index], index)
+	local node, instance = self._create_function(self:get_context(), self._data[index], index, self)
 	self.grid:add(node, index, const.SHIFT.NO_SHIFT)
 	self._data_visual[index] = {
 		node = node,
