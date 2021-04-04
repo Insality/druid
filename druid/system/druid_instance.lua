@@ -187,7 +187,25 @@ end
 -- @tparam DruidInstance self
 -- @tparam Component component Component module
 -- @tparam args ... Other component params to pass it to component:init function
+-- @local
 function DruidInstance.create(self, component, ...)
+	helper.deprecated("The druid:create is deprecated. Please use druid:new instead")
+
+	local instance = create(self, component)
+
+	if instance.init then
+		instance:init(...)
+	end
+
+	return instance
+end
+
+
+--- Create new druid component
+-- @tparam DruidInstance self
+-- @tparam Component component Component module
+-- @tparam args ... Other component params to pass it to component:init function
+function DruidInstance.new(self, component, ...)
 	local instance = create(self, component)
 
 	if instance.init then
@@ -374,7 +392,7 @@ end
 -- @tparam[opt] node anim_node Button anim node (node, if not provided)
 -- @treturn Button button component
 function DruidInstance.new_button(self, node, callback, params, anim_node)
-	return DruidInstance.create(self, button, node, callback, params, anim_node)
+	return DruidInstance.new(self, button, node, callback, params, anim_node)
 end
 
 
@@ -383,7 +401,7 @@ end
 -- @tparam node node Gui node
 -- @treturn Blocker blocker component
 function DruidInstance.new_blocker(self, node)
-	return DruidInstance.create(self, blocker, node)
+	return DruidInstance.new(self, blocker, node)
 end
 
 
@@ -393,7 +411,7 @@ end
 -- @tparam[opt] any params Callback argument
 -- @treturn BackHandler back_handler component
 function DruidInstance.new_back_handler(self, callback, params)
-	return DruidInstance.create(self, back_handler, callback, params)
+	return DruidInstance.new(self, back_handler, callback, params)
 end
 
 
@@ -403,7 +421,7 @@ end
 -- @tparam function on_hover_callback Hover callback
 -- @treturn Hover hover component
 function DruidInstance.new_hover(self, node, on_hover_callback)
-	return DruidInstance.create(self, hover, node, on_hover_callback)
+	return DruidInstance.new(self, hover, node, on_hover_callback)
 end
 
 
@@ -414,7 +432,7 @@ end
 -- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
 -- @treturn Tet text component
 function DruidInstance.new_text(self, node, value, no_adjust)
-	return DruidInstance.create(self, text, node, value, no_adjust)
+	return DruidInstance.new(self, text, node, value, no_adjust)
 end
 
 
@@ -427,7 +445,7 @@ end
 -- @treturn StaticGrid grid component
 function DruidInstance.new_grid(self, parent, element, in_row)
 	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
-	return DruidInstance.create(self, static_grid, parent, element, in_row)
+	return DruidInstance.new(self, static_grid, parent, element, in_row)
 end
 
 
@@ -438,7 +456,7 @@ end
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
 -- @treturn StaticGrid grid component
 function DruidInstance.new_static_grid(self, parent, element, in_row)
-	return DruidInstance.create(self, static_grid, parent, element, in_row)
+	return DruidInstance.new(self, static_grid, parent, element, in_row)
 end
 
 
@@ -448,7 +466,7 @@ end
 -- @tparam node content_node GUI content scroll node
 -- @treturn Scroll scroll component
 function DruidInstance.new_scroll(self, view_node, content_node)
-	return DruidInstance.create(self, scroll, view_node, content_node)
+	return DruidInstance.new(self, scroll, view_node, content_node)
 end
 
 
@@ -458,7 +476,7 @@ end
 -- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
 -- @treturn Swipe swipe component
 function DruidInstance.new_swipe(self, node, on_swipe_callback)
-	return DruidInstance.create(self, swipe, node, on_swipe_callback)
+	return DruidInstance.new(self, swipe, node, on_swipe_callback)
 end
 
 
@@ -468,7 +486,7 @@ end
 -- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
 -- @treturn Drag drag component
 function DruidInstance.new_drag(self, node, on_drag_callback)
-	return DruidInstance.create(self, drag, node, on_drag_callback)
+	return DruidInstance.new(self, drag, node, on_drag_callback)
 end
 
 
@@ -478,7 +496,7 @@ end
 -- @treturn DynamicGrid grid component
 function DruidInstance.new_dynamic_grid(self, parent)
 	-- return helper.extended_component("dynamic_grid")
-	return DruidInstance.create(self, dynamic_grid, parent)
+	return DruidInstance.new(self, dynamic_grid, parent)
 end
 
 
@@ -490,7 +508,7 @@ end
 -- @treturn LangText lang_text component
 function DruidInstance.new_lang_text(self, node, locale_id, no_adjust)
 		-- return helper.extended_component("lang_text")
-	return DruidInstance.create(self, lang_text, node, locale_id, no_adjust)
+	return DruidInstance.new(self, lang_text, node, locale_id, no_adjust)
 end
 
 
@@ -502,7 +520,7 @@ end
 -- @treturn Slider slider component
 function DruidInstance.new_slider(self, node, end_pos, callback)
 	-- return helper.extended_component("slider")
-	return DruidInstance.create(self, slider, node, end_pos, callback)
+	return DruidInstance.new(self, slider, node, end_pos, callback)
 end
 
 
@@ -514,7 +532,7 @@ end
 -- @treturn Checkbox checkbox component
 function DruidInstance.new_checkbox(self, node, callback, click_node)
 	-- return helper.extended_component("checkbox")
-	return DruidInstance.create(self, checkbox, node, callback, click_node)
+	return DruidInstance.new(self, checkbox, node, callback, click_node)
 end
 
 
@@ -526,7 +544,7 @@ end
 -- @treturn Input input component
 function DruidInstance.new_input(self, click_node, text_node, keyboard_type)
 	-- return helper.extended_component("input")
-	return DruidInstance.create(self, input, click_node, text_node, keyboard_type)
+	return DruidInstance.new(self, input, click_node, text_node, keyboard_type)
 end
 
 
@@ -538,7 +556,7 @@ end
 -- @treturn CheckboxGroup checkbox_group component
 function DruidInstance.new_checkbox_group(self, nodes, callback, click_nodes)
 	-- return helper.extended_component("checkbox_group")
-	return DruidInstance.create(self, checkbox_group, nodes, callback, click_nodes)
+	return DruidInstance.new(self, checkbox_group, nodes, callback, click_nodes)
 end
 
 
@@ -547,7 +565,7 @@ end
 -- @tparam args ... drag init args
 -- @treturn Component data list component
 function DruidInstance.new_data_list(self, ...)
-	return DruidInstance.create(self, data_list, ...)
+	return DruidInstance.new(self, data_list, ...)
 end
 
 
@@ -559,7 +577,7 @@ end
 -- @treturn RadioGroup radio_group component
 function DruidInstance.new_radio_group(self, nodes, callback, click_nodes)
 	-- return helper.extended_component("radio_group")
-	return DruidInstance.create(self, radio_group, nodes, callback, click_nodes)
+	return DruidInstance.new(self, radio_group, nodes, callback, click_nodes)
 end
 
 
@@ -572,7 +590,7 @@ end
 -- @treturn Timer timer component
 function DruidInstance.new_timer(self, node, seconds_from, seconds_to, callback)
 	-- return helper.extended_component("timer")
-	return DruidInstance.create(self, timer, node, seconds_from, seconds_to, callback)
+	return DruidInstance.new(self, timer, node, seconds_from, seconds_to, callback)
 end
 
 
@@ -584,7 +602,7 @@ end
 -- @treturn Progress progress component
 function DruidInstance.new_progress(self, node, key, init_value)
 	-- return helper.extended_component("progress")
-	return DruidInstance.create(self, progress, node, key, init_value)
+	return DruidInstance.new(self, progress, node, key, init_value)
 end
 
 

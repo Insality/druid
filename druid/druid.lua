@@ -35,6 +35,7 @@ local function get_druid_instances()
 	return _instances
 end
 
+
 --- Register external druid component.
 -- After register you can create the component with
 -- druid_instance:new_{name}. For example `druid:new_button(...)`
@@ -45,7 +46,7 @@ function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
 	-- Current way is very implicit
 	druid_instance["new_" .. name] = function(self, ...)
-		return druid_instance.create(self, module, ...)
+		return druid_instance.new(self, module, ...)
 	end
 end
 
