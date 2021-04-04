@@ -1,4 +1,4 @@
-script: "/example/examples/general/template/template.gui_script"
+script: "/example/examples/template/template.gui_script"
 fonts {
   name: "game"
   font: "/example/assets/fonts/game.font"

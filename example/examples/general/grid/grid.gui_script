@@ -1,7 +1,5 @@
+local druid = require("druid.druid")
 local const = require("druid.const")
-
-local M = {}
-
 
 local function simple_animate(node, pos)
 	gui.animate(node, "position", pos, gui.EASING_OUTSINE, 0.2)
@@ -178,8 +176,10 @@ local function init_dynamic_grid(self)
 end
 
 
-function M.setup_page(self)
-	self.druid:new_scroll("grid_page", "grid_page_content")
+function init(self)
+	self.druid = druid.new(self)
+
+	self.druid:new_scroll("root", "grid_page_content")
 
 	self.grid_static_grid = self.druid:new_static_grid("grid_nodes", "grid_nodes_prefab", 5)
 		:set_position_function(simple_animate)
@@ -204,4 +204,21 @@ function M.setup_page(self)
 end
 
 
-return M
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

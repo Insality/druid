@@ -1,4 +1,4 @@
-	local M = {}
+local druid = require("druid.druid")
 
 
 local function create_infinity_instance(self, record, index)
@@ -104,7 +104,7 @@ local function setup_infinity_list(self)
 	-- local pos = self.infinity_grid:get_pos(25)
 	-- self.infinity_scroll:scroll_to(pos, true)
 	timer.delay(1, false, function()
-		self.infinity_list:scroll_to_index(25)
+		-- self.infinity_list:scroll_to_index(25)
 	end)
 
 
@@ -119,7 +119,7 @@ local function setup_infinity_list(self)
 	end):set_data(data)
 
 	timer.delay(1, false, function()
-		self.infinity_list_dynamic:scroll_to_index(25)
+		-- self.infinity_list_dynamic:scroll_to_index(25)
 	end)
 
 	self.infinity_list_dynamic_hor = self.druid:new_data_list(self.infinity_scroll_dynamic_hor, self.infinity_grid_dynamic_hor, function(record, index)
@@ -140,8 +140,9 @@ local function toggle_stencil(self)
 end
 
 
-function M.setup_page(self)
-	self.druid:new_scroll("infinity_page", "infinity_page_content")
+function init(self)
+	self.druid = druid.new(self)
+	self.druid:new_scroll("root", "infinity_page_content")
 
 	self.infinity_prefab = gui.get_node("infinity_prefab")
 	self.infinity_prefab_small = gui.get_node("infinity_prefab_small")
@@ -177,4 +178,21 @@ function M.setup_page(self)
 end
 
 
-return M
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

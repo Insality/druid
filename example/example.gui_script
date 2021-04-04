@@ -1,16 +1,7 @@
 ---@type druid
 local druid = require("druid.druid")
 local monarch = require("monarch.monarch")
-
-local empty_style = require("druid.styles.empty.style")
 local default_style = require("druid.styles.default.style")
-
-local scroll_page = require("example.page.scroll_page")
-local input_page = require("example.page.input_page")
-local grid_page = require("example.page.grid_page")
-local infinity_page = require("example.page.infinity_page")
-
-
 
 local function back_to_lobby(self)
 	monarch.back()
@@ -101,30 +92,30 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "Texts", "general_texts"))
 	self.lobby_grid:add(get_button_disabled(self, "Lang Text", "scene_name"))
 	self.lobby_grid:add(get_button(self, "Sliders", "general_sliders"))
-	self.lobby_grid:add(get_button(self, "Scrolls", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Grids", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Progress Bar", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Data List", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Checkboxes", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Input text", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Swipe", "scene_name"))
-	self.lobby_grid:add(get_button(self, "Drag", "scene_name"))
+	self.lobby_grid:add(get_button(self, "Scrolls", "general_scroll"))
+	self.lobby_grid:add(get_button(self, "Grids", "general_grid"))
+	self.lobby_grid:add(get_button_disabled(self, "Progress Bar", "scene_name"))
+	self.lobby_grid:add(get_button(self, "Data List", "general_data_list"))
+	self.lobby_grid:add(get_button_disabled(self, "Checkboxes", "scene_name"))
+	self.lobby_grid:add(get_button(self, "Input text", "general_input"))
+	self.lobby_grid:add(get_button_disabled(self, "Swipe", "scene_name"))
+	self.lobby_grid:add(get_button_disabled(self, "Drag", "scene_name"))
 
 	self.lobby_grid:add(get_title(self, "Scrolls"))
-	self.lobby_grid:add(get_button(self, "Nested scrolls", "scroll_scene"))
-	self.lobby_grid:add(get_button(self, "With points of interest", "scroll_scene"))
-	self.lobby_grid:add(get_button(self, "Without inertion", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Nested scrolls", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "With points of interest", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Without inertion", "scroll_scene"))
 
 	self.lobby_grid:add(get_title(self, "Grids"))
-	self.lobby_grid:add(get_button(self, "Static grid", "scroll_scene"))
-	self.lobby_grid:add(get_button(self, "Dynamic grid", "scroll_scene"))
-	self.lobby_grid:add(get_button(self, "Scroll binding", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Static grid", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Dynamic grid", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Scroll binding", "scroll_scene"))
 
 	self.lobby_grid:add(get_title(self, "Data list / Infinity scroll"))
-	self.lobby_grid:add(get_button(self, "With static grid", "scroll_scene"))
-	self.lobby_grid:add(get_button(self, "With dynamic grid", "scroll_scene"))
-	self.lobby_grid:add(get_button(self, "Add/remove elements", "scroll_scene"))
-	self.lobby_grid:add(get_button(self, "Navigate over elements", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "With static grid", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "With dynamic grid", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Add/remove elements", "scroll_scene"))
+	self.lobby_grid:add(get_button_disabled(self, "Navigate over elements", "scroll_scene"))
 end
 
 
