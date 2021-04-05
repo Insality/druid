@@ -34,7 +34,7 @@ function init(self)
 	-- Disable slider input, now we can not use slider with data list
 	self.slider_simple:set_input_enabled(false)
 	self.data_list_simple.on_scroll_progress_change:subscribe(function(_, progress)
-		self.slider_simple:set(progress)
+		self.slider_simple:set(progress, true)
 	end)
 
 	self.druid:new_button("button_simple_first/button", function()

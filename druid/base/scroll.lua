@@ -203,7 +203,10 @@ end
 -- @usage scroll:scroll_to(vmath.vector3(0), true)
 function Scroll.scroll_to(self, point, is_instant)
 	local b = self.available_pos
-	local target = vmath.vector3(-point.x, -point.y, 0)
+	local target = vmath.vector3(
+		self._is_horizontal_scroll and -point.x or self.target_position.x,
+		self._is_vertical_scroll and -point.y or self.target_position.y,
+		0)
 	target.x = helper.clamp(target.x, b.x, b.z)
 	target.y = helper.clamp(target.y, b.y, b.w)
 
@@ -690,7 +693,10 @@ function Scroll._update_size(self)
 
 	self.available_pos_extra = get_border_vector(view_border - content_border_extra, self._offset)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
-	self:_update_params()
+
+	self:_set_scroll_position(self.position)
+	self.target_position.x = self.position.x
+	self.target_position.y = self.position.y
 end
 
 

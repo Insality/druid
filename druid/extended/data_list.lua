@@ -178,9 +178,13 @@ end
 -- @tparam DataList self
 -- @tparam number index
 function DataList.scroll_to_index(self, index)
-	self.top_index = helper.clamp(index, 1, #self._data)
+	local target = helper.clamp(index, 1, #self._data)
+	self.top_index = target
 	self:_refresh()
-	self.scroll.on_scroll:trigger(self:get_context(), self)
+
+	if self._data_visual[target] then
+		self.scroll:scroll_to(gui.get_position(self._data_visual[target].node), true)
+	end
 end
 
 
@@ -241,8 +245,8 @@ function DataList._check_elements(self)
 		end
 	end
 
-	self:_check_elements_from(self.top_index + 1, 1)
 	self:_check_elements_from(self.top_index, -1)
+	self:_check_elements_from(self.top_index + 1, 1)
 
 	for index, data in pairs(self._data_visual) do
 		self.top_index = math.min(self.top_index or index, index)
