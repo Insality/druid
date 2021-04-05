@@ -17,10 +17,14 @@
 --- The current visual last data index
 -- @tfield number last_index
 
+--- The current progress of scroll posititon (approx.)
+-- @tfield number scroll_progress
+
 
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
+local Event = require("druid.event")
 
 local DataList = component.create("data_list")
 
@@ -39,6 +43,7 @@ function DataList.init(self, scroll, grid, create_function)
 	--- Current visual elements indexes
 	self.top_index = 1
 	self.last_index = 1
+	self.scroll_progress = 0
 
 	self._create_function = create_function
 	self._data = {}
@@ -48,6 +53,8 @@ function DataList.init(self, scroll, grid, create_function)
 	self._data_visual = {}
 
 	self.scroll.on_scroll:subscribe(self._check_elements, self)
+
+	self.on_scroll_progress_change = Event()
 end
 
 
@@ -234,12 +241,21 @@ function DataList._check_elements(self)
 		end
 	end
 
-	self:_check_elements_from(self.top_index, -1)
 	self:_check_elements_from(self.top_index + 1, 1)
+	self:_check_elements_from(self.top_index, -1)
 
 	for index, data in pairs(self._data_visual) do
 		self.top_index = math.min(self.top_index or index, index)
 		self.last_index = math.max(self.last_index or index, index)
+	end
+
+	local middle_index = (self.last_index + self.top_index) / 2
+	local progress = (middle_index - self._data_first_index) / (self._data_last_index - self._data_first_index)
+	progress = helper.clamp(progress, 0, 1)
+
+	if self.scroll_progress ~= progress then
+		self.scroll_progress = progress
+		self.on_scroll_progress_change:trigger(self:get_context(), progress)
 	end
 end
 
