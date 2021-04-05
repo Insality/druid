@@ -1,13 +1,15 @@
 --- Checkbox group module
--- @module druid.checkbox_group
+-- @module CheckboxGroup
+-- @within BaseComponent
+-- @alias druid.checkbox_group
 
---- Component events
--- @table Events
--- @tfield druid_event on_checkbox_click On any checkbox click
+--- On any checkbox click callback(self, index)
+-- @tfield druid_event on_checkbox_click
 
---- Component fields
--- @table Fields
--- @tfield table checkboxes Array of checkbox components
+--- Array of checkbox components
+-- @tfield table checkboxes
+
+---
 
 local Event = require("druid.event")
 local component = require("druid.component")
@@ -16,11 +18,11 @@ local CheckboxGroup = component.create("checkbox_group")
 
 
 --- Component init function
--- @function checkbox_group:init
--- @tparam node[] node Array of gui node
+-- @tparam CheckboxGroup self
+-- @tparam node[] nodes Array of gui node
 -- @tparam function callback Checkbox callback
--- @tparam[opt=node] node[] click node Array of trigger nodes, by default equals to nodes
-function CheckboxGroup:init(nodes, callback, click_nodes)
+-- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+function CheckboxGroup.init(self, nodes, callback, click_nodes)
 	self.druid = self:get_druid()
 	self.checkboxes = {}
 
@@ -38,9 +40,9 @@ end
 
 
 --- Set checkbox group state
--- @function checkbox_group:set_state
+-- @tparam CheckboxGroup self
 -- @tparam bool[] indexes Array of checkbox state
-function CheckboxGroup:set_state(indexes)
+function CheckboxGroup.set_state(self, indexes)
 	for i = 1, #indexes do
 		if self.checkboxes[i] then
 			self.checkboxes[i]:set_state(indexes[i], true)
@@ -50,9 +52,9 @@ end
 
 
 --- Return checkbox group state
--- @function checkbox_group:get_state
+-- @tparam CheckboxGroup self
 -- @treturn bool[] Array if checkboxes state
-function CheckboxGroup:get_state()
+function CheckboxGroup.get_state(self)
 	local result = {}
 
 	for i = 1, #self.checkboxes do

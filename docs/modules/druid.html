@@ -38,40 +38,30 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><a href="../modules/druid.back_handler.html">druid.back_handler</a></li>
-  <li><a href="../modules/druid.blocker.html">druid.blocker</a></li>
-  <li><a href="../modules/druid.button.html">druid.button</a></li>
-  <li><a href="../modules/druid.drag.html">druid.drag</a></li>
-  <li><a href="../modules/druid.hover.html">druid.hover</a></li>
-  <li><a href="../modules/druid.scroll.html">druid.scroll</a></li>
-  <li><a href="../modules/druid.static_grid.html">druid.static_grid</a></li>
-  <li><a href="../modules/druid.swipe.html">druid.swipe</a></li>
-  <li><a href="../modules/druid.text.html">druid.text</a></li>
-  <li><a href="../modules/component.html">component</a></li>
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><strong>druid</strong></li>
-  <li><a href="../modules/druid_event.html">druid_event</a></li>
-  <li><a href="../modules/druid.checkbox.html">druid.checkbox</a></li>
-  <li><a href="../modules/druid.checkbox_group.html">druid.checkbox_group</a></li>
-  <li><a href="../modules/druid.dynamic_grid.html">druid.dynamic_grid</a></li>
-  <li><a href="../modules/druid.input.html">druid.input</a></li>
-  <li><a href="../modules/druid.lang_text.html">druid.lang_text</a></li>
-  <li><a href="../modules/druid.progress.html">druid.progress</a></li>
-  <li><a href="../modules/druid.radio_group.html">druid.radio_group</a></li>
-  <li><a href="../modules/druid.slider.html">druid.slider</a></li>
-  <li><a href="../modules/druid.timer.html">druid.timer</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
   <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/druid_instance.html">druid_instance</a></li>
-</ul>
-<h2>Topics</h2>
-<ul class="">
-  <li><a href="../topics/01-components.md.html">01-components</a></li>
-  <li><a href="../topics/02-creating_custom_components.md.html">Creating custom components</a></li>
-  <li><a href="../topics/03-styles.md.html">Styles</a></li>
-  <li><a href="../topics/04-druid_assets.md.html">Druid assets</a></li>
-  <li><a href="../topics/05-examples.md.html">Examples</a></li>
-  <li><a href="../topics/changelog.md.html">Druid 0.3.0:</a></li>
-  <li><a href="../topics/faq.md.html">faq</a></li>
-  <li><a href="../topics/README.md.html">README</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
 </ul>
 
 </div>
@@ -81,23 +71,16 @@
 <h1>Module <code>druid</code></h1>
 <p>Druid UI Library.</p>
 <p>
-
-<p> Powerful Defold component based UI library. Use standart
+ Powerful Defold component based UI library. Use standart
  components or make your own game-specific components to
- make amazing GUI in your games.</p>
-
+ make amazing GUI in your games.
 <p> Contains the several basic components and examples
  to how to do your custom complex components to
- separate UI game logic to small files</p>
-
-
-<pre>
-<span class="global">require</span>(<span class="string">"druid.druid"</span>)
-<span class="keyword">function</span> init(self)
-    self.druid = druid.new(self)
-<span class="keyword">end</span>
-</pre>
-
+ separate UI game logic to small files
+<p>    require("druid.druid")
+    function init(self)
+        self.druid = druid.new(self)
+    end
 </p>
 
 
@@ -153,7 +136,7 @@
     <dd>
     Register external druid component.
  After register you can create the component with
- druid<em>instance:new</em>{name}. For example <code>druid:new_button(...)</code>
+ druid_instance:new_{name}. For example `druid:new_button(...)`
 
 
     <h3>Parameters:</h3>
@@ -233,7 +216,7 @@
     <dd>
     Set text function
  Druid locale component will call this function
- to get translated text.  After set<em>text</em>funtion
+ to get translated text.  After set_text_funtion
  all existing locale component will be updated
 
 
@@ -279,7 +262,7 @@
     </dt>
     <dd>
     Callback on global window event.
- Used to trigger on<em>focus</em>lost and on<em>focus</em>gain
+ Used to trigger on_focus_lost and on_focus_gain
 
 
     <h3>Parameters:</h3>
@@ -331,7 +314,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-09-29 23:46:16 </i>
+<i style="float:right;">Last updated 2021-04-06 00:03:14 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

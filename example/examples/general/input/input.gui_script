@@ -1,0 +1,31 @@
+local druid = require("druid.druid")
+
+function init(self)
+	self.druid = druid.new(self)
+
+	self.druid:new_input("input_box_usual", "input_text_usual")
+	self.druid:new_input("input_box_password", "input_text_password", gui.KEYBOARD_TYPE_PASSWORD)
+	self.druid:new_input("input_box_email", "input_text_email", gui.KEYBOARD_TYPE_EMAIL)
+	self.druid:new_input("input_box_numpad", "input_text_numpad", gui.KEYBOARD_TYPE_NUMBER_PAD)
+		:set_allowed_characters("[%d,.]")
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

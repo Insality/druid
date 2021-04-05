@@ -2,32 +2,54 @@
 -- Drag have correct handling for multitouch and swap
 -- touched while dragging. Drag will be processed even
 -- the cursor is outside of node, if drag is already started
--- @module druid.drag
+-- @module Drag
+-- @within BaseComponent
+-- @alias druid.drag
 
---- Component events
--- @table Events
--- @tfield druid_event on_touch_start (self) Event on touch start
--- @tfield druid_event on_touch_end (self) Event on touch end
--- @tfield druid_event on_drag_start (self) Event on drag start
--- @tfield druid_event on_drag (self, dx, dy) Event on drag progress
--- @tfield druid_event on_drag_end (self) Event on drag end
+--- Event on touch start callback(self)
+-- @tfield druid_event on_touch_start
 
---- Components fields
--- @table Fields
--- @tfield bool is_touch Is component now touching
--- @tfield bool is_drag Is component now dragging
--- @tfield bool can_x Is drag component process vertical dragging. Default - true
--- @tfield bool can_y Is drag component process horizontal. Default - true
--- @tfield number x Current touch x position
--- @tfield number y Current touch y position
--- @tfield vector3 touch_start_pos Touch start position
+--- Event on touch end callback(self)
+-- @tfield druid_event on_touch_end
+
+--- Event on drag start callback(self)
+-- @tfield druid_event on_drag_start
+
+--- on drag progress callback(self, dx, dy)
+-- @tfield druid_event on_drag Event
+
+--- Event on drag end callback(self)
+-- @tfield druid_event on_drag_end
+
+--- Is component now touching
+-- @tfield bool is_touch
+
+--- Is component now dragging
+-- @tfield bool is_drag
+
+--- Is drag component process vertical dragging. Default - true
+-- @tfield bool can_x
+
+--- Is drag component process horizontal. Default - true
+-- @tfield bool can_y
+
+--- Current touch x position
+-- @tfield number x
+
+--- Current touch y position
+-- @tfield number y
+
+--- Touch start position
+-- @tfield vector3 touch_start_pos
+
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Drag = component.create("drag", { const.ON_INPUT_HIGH })
+local Drag = component.create("drag", { component.ON_INPUT }, const.PRIORITY_INPUT_HIGH)
 
 
 local function start_touch(self, touch)
@@ -50,8 +72,10 @@ local function end_touch(self)
 	end
 
 	self.is_drag = false
-	self.is_touch = false
-	self.on_touch_end:trigger(self:get_context())
+	if self.is_touch then
+		self.is_touch = false
+		self.on_touch_end:trigger(self:get_context())
+	end
 	self:reset_input_priority()
 	self.touch_id = 0
 end
@@ -70,7 +94,7 @@ local function process_touch(self, touch)
 	if not self.is_drag and distance >= self.style.DRAG_DEADZONE then
 		self.is_drag = true
 		self.on_drag_start:trigger(self:get_context())
-		self:increase_input_priority()
+		self:set_input_priority(const.PRIORITY_INPUT_MAX)
 	end
 end
 
@@ -127,19 +151,19 @@ end
 --- Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
--- @table Style
+-- @table style
 -- @tfield[opt=10] number DRAG_DEADZONE Distance in pixels to start dragging
-function Drag:on_style_change(style)
+function Drag.on_style_change(self, style)
 	self.style = {}
 	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
 end
 
 
 --- Drag component constructor
+-- @tparam Drag self
 -- @tparam node node GUI node to detect dragging
 -- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
--- @function drag:init
-function Drag:init(node, on_drag_callback)
+function Drag.init(self, node, on_drag_callback)
 	self.node = self:get_node(node)
 
 	self.dx = 0
@@ -163,14 +187,14 @@ function Drag:init(node, on_drag_callback)
 end
 
 
-function Drag:on_input_interrupt()
+function Drag.on_input_interrupt(self)
 	if self.is_drag or self.is_touch then
 		end_touch(self)
 	end
 end
 
 
-function Drag:on_input(action_id, action)
+function Drag.on_input(self, action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
 		return false
 	end
@@ -241,10 +265,10 @@ end
 
 --- Strict drag click area. Useful for
 -- restrict events outside stencil node
--- @function drag:set_click_zone
--- @tparam node zone Gui node
-function Drag:set_click_zone(zone)
-	self.click_zone = self:get_node(zone)
+-- @tparam Drag self
+-- @tparam node node Gui node
+function Drag.set_click_zone(self, node)
+	self.click_zone = self:get_node(node)
 end
 
 

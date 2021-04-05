@@ -7,7 +7,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>druid 0.5.0</title>
+	<title>druid 0.6.459</title>
 	<style type='text/css'>
 	/* Disable user selection to avoid strange bug in Chrome on Windows:
 	* Selecting a text outside the canvas, then clicking+draging would
@@ -41,6 +41,10 @@
 		border: 0;
 		width: 100%;
 		vertical-align: bottom;
+	}
+
+	#canvas-container {
+		position: relative;
 	}
 
 	canvas:focus, canvas:active {
@@ -118,7 +122,9 @@
 
 <body>
 	<div id="app-container" class="canvas-app-container">
-		<canvas id="canvas" class="canvas-app-canvas" tabindex="1" width="600" height="900"></canvas>
+		<div id="canvas-container" class="canvas-app-canvas-container">
+			<canvas id="canvas" class="canvas-app-canvas" tabindex="1" width="600" height="900"></canvas>
+		</div>
 		<div class="buttons-background">
 		</div>
 	</div>
@@ -132,8 +138,11 @@
 		},
 		engine_arguments: ["--verify-graphics-calls=false",],
 		custom_heap_size: 67108864,
+		full_screen_container: "#canvas-container",
 		disable_context_menu: true
 	}
+
+	Module['INITIAL_MEMORY'] = extra_params.custom_heap_size;
 
 	Module['onRuntimeInitialized'] = function() {
 		Module.runApp("canvas", extra_params);
@@ -192,20 +201,10 @@
 	resize_game_canvas();
 	window.addEventListener('resize', resize_game_canvas, false);
 	window.addEventListener('orientationchange', resize_game_canvas, false);
-
-	function load_engine() {
-		var engineJS = document.createElement('script');
-		engineJS.type = 'text/javascript';
-		if (Module['isWASMSupported']) {
-			engineJS.src = 'druid_wasm.js';
-		} else {
-			engineJS.src = 'druid_asmjs.js';
-		}
-		document.head.appendChild(engineJS);
-	}
 	</script>
+
 	<script id='engine-start' type='text/javascript'>
-		load_engine();
+		EngineLoader.load("canvas", "druid");
 	</script>
 </body>
 </html>

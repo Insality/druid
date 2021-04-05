@@ -1,0 +1,95 @@
+local druid = require("druid.druid")
+
+
+local buttons = {
+	"button_blue",
+	"button_red",
+	"button_green",
+	"button_yellow",
+}
+
+
+local function create_vertical(self, data, index, data_list)
+	local instance = gui.clone_tree(self.prefab)
+	gui.set_enabled(instance["prefab"], true)
+	gui.set_text(instance["text"], "Record " .. data)
+
+	gui.set_size(instance["prefab"], vmath.vector3(200, 50 + math.random(100), 0))
+	gui.play_flipbook(instance["prefab"], buttons[math.random(#buttons)])
+
+	-- Since we have only 1 component, we can return this one
+	-- If we have several components, we should create custom component to
+	-- union them all
+	local button = self.druid:new_button(instance["prefab"], function()
+		print("Data list element click on", data)
+	end)
+	button:set_click_zone(data_list.scroll.view_node)
+
+	return instance["prefab"], button
+end
+
+
+local function create_horizontal(self, data, index, data_list)
+	local instance = gui.clone_tree(self.prefab)
+	gui.set_enabled(instance["prefab"], true)
+	gui.set_text(instance["text"], "N. " .. data)
+
+	gui.set_size(instance["prefab"], vmath.vector3(120 + math.random(100), 80, 0))
+	gui.play_flipbook(instance["prefab"], buttons[math.random(#buttons)])
+
+	local button = self.druid:new_button(instance["prefab"], function()
+		print("Data list element click on", data)
+	end)
+	button:set_click_zone(data_list.scroll.view_node)
+
+	return instance["prefab"], button
+end
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+	self.data_set = {}
+	for i = 1, 9999 do
+		table.insert(self.data_set, i)
+	end
+
+	self.prefab = gui.get_node("prefab")
+	gui.set_enabled(self.prefab, false)
+
+
+	local scroll_vertical = self.druid:new_scroll("data_list_vertical", "data_list_vertical_content")
+		:set_horizontal_scroll(false)
+	local grid_vertical = self.druid:new_dynamic_grid("data_list_vertical_content")
+
+	self.data_list_vertical = self.druid:new_data_list(scroll_vertical, grid_vertical, create_vertical)
+	self.data_list_vertical:set_data(self.data_set)
+
+
+	local scroll_horizontal = self.druid:new_scroll("data_list_horizontal", "data_list_horizontal_content")
+		:set_vertical_scroll(false)
+	local grid_horizontal = self.druid:new_dynamic_grid("data_list_horizontal_content")
+
+	self.data_list_horizontal = self.druid:new_data_list(scroll_horizontal, grid_horizontal, create_horizontal)
+	self.data_list_horizontal:set_data(self.data_set)
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

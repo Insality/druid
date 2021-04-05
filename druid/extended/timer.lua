@@ -1,37 +1,48 @@
 --- Component to handle GUI timers.
 -- Timer updating by game delta time. If game is not focused -
 -- timer will be not updated.
--- @module druid.timer
+-- @module Timer
+-- @within BaseComponent
+-- @alias druid.timer
 
---- Component events
--- @table Events
--- @tfield druid_event on_tick On timer tick callback. Fire every second
--- @tfield druid_event on_set_enabled On timer change enabled state callback
--- @tfield druid_event on_timer_end On timer end callback
+--- On timer tick. Fire every second callback(self, value)
+-- @tfield druid_event on_tick
 
---- Component fields
--- @table Fields
--- @tfield node node Trigger node
--- @tfield number from Initial timer value
--- @tfield number target Target timer value
--- @tfield number value Current timer value
+--- On timer change enabled state callback(self, is_enabled)
+-- @tfield druid_event on_set_enabled
+
+--- On timer end callback
+-- @tfield druid_event on_timer_end(self, Timer)
+
+--- Trigger node
+-- @tfield node node
+
+--- Initial timer value
+-- @tfield number from
+
+--- Target timer value
+-- @tfield number target
+
+--- Current timer value
+-- @tfield number value
+
+---
 
 local Event = require("druid.event")
-local const = require("druid.const")
 local formats = require("druid.helper.formats")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Timer = component.create("timer", { const.ON_UPDATE })
+local Timer = component.create("timer", { component.ON_UPDATE })
 
 
 --- Component init function
--- @function timer:init
+-- @tparam Timer self
 -- @tparam node node Gui text node
 -- @tparam number seconds_from Start timer value in seconds
 -- @tparam[opt=0] number seconds_to End timer value in seconds
 -- @tparam[opt] function callback Function on timer end
-function Timer:init(node, seconds_from, seconds_to, callback)
+function Timer.init(self, node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
 	seconds_from = math.max(seconds_from, 0)
 	seconds_to = math.max(seconds_to or 0, 0)
@@ -52,7 +63,7 @@ function Timer:init(node, seconds_from, seconds_to, callback)
 end
 
 
-function Timer:update(dt)
+function Timer.update(self, dt)
 	if not self.is_on then
 		return
 	end
@@ -75,18 +86,18 @@ function Timer:update(dt)
 end
 
 --- Set text to text field
--- @function timer:set_to
+-- @tparam Timer self
 -- @tparam number set_to Value in seconds
-function Timer:set_to(set_to)
+function Timer.set_to(self, set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, formats.second_string_min(set_to))
 end
 
 
 --- Called when update
--- @function timer:set_state
+-- @tparam Timer self
 -- @tparam bool is_on Timer enable state
-function Timer:set_state(is_on)
+function Timer.set_state(self, is_on)
 	self.is_on = is_on
 
 	self.on_set_enabled:trigger(self:get_context(), is_on)
@@ -94,10 +105,10 @@ end
 
 
 --- Set time interval
--- @function timer:set_interval
+-- @tparam Timer self
 -- @tparam number from Start time in seconds
 -- @tparam number to Target time in seconds
-function Timer:set_interval(from, to)
+function Timer.set_interval(self, from, to)
 	self.from = from
 	self.value = from
 	self.temp = 0

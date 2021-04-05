@@ -1,34 +1,28 @@
 --- Component to block input on specify zone by node
--- @module druid.blocker
+-- @module Blocker
+-- @within BaseComponent
+-- @alias druid.blocker
 
---- Component events
--- @table Events
--- @tfield druid_event on_click On release button callback
--- @tfield druid_event on_enable_change On enable/disable callback
+---Trigger node
+-- @tfield node node
 
---- Component fields
--- @table Fields
--- @tfield node node Trigger node
+---
 
-local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local Blocker = component.create("blocker", { const.ON_INPUT })
+local Blocker = component.create("blocker", { component.ON_INPUT })
 
 
 --- Component init function
--- @function blocker:init
+-- @tparam Blocker self
 -- @tparam node node Gui node
-function Blocker:init(node)
+function Blocker.init(self, node)
 	self.node = self:get_node(node)
-
-	self.on_click = Event()
-	self.on_enable_change = Event()
 end
 
 
-function Blocker:on_input(action_id, action)
+function Blocker.on_input(self, action_id, action)
 	if action_id ~= const.ACTION_TOUCH and
 		action_id ~= const.ACTION_MULTITOUCH and
 		action_id ~= nil then
@@ -48,17 +42,17 @@ end
 
 
 --- Set enabled blocker component state
--- @function blocker:set_enabled
+-- @tparam Blocker self
 -- @tparam bool state Enabled state
-function Blocker:set_enabled(state)
+function Blocker.set_enabled(self, state)
 	gui.set_enabled(self.node, state)
 end
 
 
 --- Return blocked enabled state
--- @function blocker:is_enabled
+-- @tparam Blocker self
 -- @treturn bool True, if blocker is enabled
-function Blocker:is_enabled(state)
+function Blocker.is_enabled(self)
 	return gui.is_enabled(self.node)
 end
 

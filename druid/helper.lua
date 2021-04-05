@@ -5,7 +5,6 @@ local const = require("druid.const")
 
 local M = {}
 
-
 --- Text node or icon node can be nil
 local function get_text_width(text_node)
 	if text_node then
@@ -28,6 +27,11 @@ local function get_icon_width(icon_node)
 end
 
 
+local function get_width(node)
+	return gui.get_text(node) and get_text_width(node) or get_icon_width(node)
+end
+
+
 --- Center two nodes.
 -- Nodes will be center around 0 x position
 -- text_node will be first (at left side)
@@ -36,22 +40,7 @@ end
 -- @tparam[opt] box icon_node Gui box node
 -- @tparam number margin Offset between nodes
 function M.centrate_text_with_icon(text_node, icon_node, margin)
-	margin = margin or 0
-	local text_width = get_text_width(text_node)
-	local icon_width = get_icon_width(icon_node)
-	local width = text_width + icon_width
-
-	if text_node then
-		local pos = gui.get_position(text_node)
-		pos.x = -width/2 + text_width - margin/2
-		gui.set_position(text_node, pos)
-	end
-
-	if icon_node then
-		local icon_pos = gui.get_position(icon_node)
-		icon_pos.x = width/2 - icon_width + margin/2
-		gui.set_position(icon_node, icon_pos)
-	end
+	M.centrate_nodes(margin, text_node, icon_node)
 end
 
 
@@ -63,21 +52,43 @@ end
 -- @tparam[opt] text text_node Gui text node
 -- @tparam[opt=0] number margin Offset between nodes
 function M.centrate_icon_with_text(icon_node, text_node, margin)
-	margin = margin or 0
-	local icon_width = get_icon_width(icon_node)
-	local text_width = get_text_width(text_node)
-	local width = text_width + icon_width
+	M.centrate_nodes(margin, icon_node, text_node)
+end
 
-	if text_node then
-		local pos = gui.get_position(text_node)
-		pos.x = width/2 - text_width + margin/2
-		gui.set_position(text_node, pos)
+
+--- Center several nodes nodes.
+-- Nodes will be center around 0 x position
+-- @function helper.centrate_nodes
+-- @tparam[opt=0] number margin Offset between nodes
+-- @tparam[opt] Node ... Any count of gui Node
+function M.centrate_nodes(margin, ...)
+	margin = margin or 0
+
+	local width = 0
+	local count = select("#", ...)
+	local node_widths = {}
+
+	-- We need to get total width
+	for i = 1, count do
+		local node = select(i, ...)
+		node_widths[i] = get_width(node)
+		width = width + node_widths[i]
 	end
 
-	if icon_node then
-		local icon_pos = gui.get_position(icon_node)
-		icon_pos.x = -width/2 + icon_width - margin/2
-		gui.set_position(icon_node, icon_pos)
+	-- Posing all elements
+	local pos_x = 0
+	for i = 1, count do
+		local node = select(i, ...)
+		local node_width = node_widths[i]
+		local pos = gui.get_position(node)
+
+		pos_x = pos_x + node_width/2 -- made offset for single item
+
+		local pivot_offset = M.get_pivot_offset(gui.get_pivot(node))
+		pos.x = pos_x - width/2 + pivot_offset.x * node_width -- centrate node
+		gui.set_position(node, pos)
+
+		pos_x = pos_x + node_widths[i]/2 + margin -- add second part of offset
 	end
 end
 
@@ -170,32 +181,42 @@ end
 --- Check if device is mobile (Android or iOS)
 -- @function helper..is_mobile
 function M.is_mobile()
-	local system_name = sys.get_sys_info().system_name
-	return system_name == const.OS.IOS or system_name == const.OS.ANDROID
+	return const.CURRENT_SYSTEM_NAME == const.OS.IOS or
+			 const.CURRENT_SYSTEM_NAME == const.OS.ANDROID
 end
 
 
 --- Check if device is HTML5
 -- @function helper.is_web
 function M.is_web()
-	local system_name = sys.get_sys_info().system_name
-	return system_name == const.OS.BROWSER
+	return const.CURRENT_SYSTEM_NAME == const.OS.BROWSER
 end
 
 
---- Distance from node to size border
+--- Distance from node position to his borders
 -- @function helper.get_border
--- @return vector4 (left, top, right, down)
-function M.get_border(node)
+-- @tparam node node The gui node to check
+-- @tparam vector3 offset The offset to add to result
+-- @return vector4 Vector with distance to node border: (left, top, right, down)
+function M.get_border(node, offset)
 	local pivot = gui.get_pivot(node)
 	local pivot_offset = M.get_pivot_offset(pivot)
 	local size = vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
-	return vmath.vector4(
+	local border = vmath.vector4(
 		-size.x*(0.5 + pivot_offset.x),
 		size.y*(0.5 - pivot_offset.y),
 		size.x*(0.5 - pivot_offset.x),
 		-size.y*(0.5 + pivot_offset.y)
 	)
+
+	if offset then
+		border.x = border.x + offset.x
+		border.y = border.y + offset.y
+		border.z = border.z + offset.x
+		border.w = border.w + offset.y
+	end
+
+	return border
 end
 
 

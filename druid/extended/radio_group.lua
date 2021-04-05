@@ -1,13 +1,15 @@
 --- Radio group module
--- @module druid.radio_group
+-- @module RadioGroup
+-- @within BaseComponent
+-- @alias druid.radio_group
 
---- Component events
--- @table Events
--- @tfield druid_event on_radio_click On any checkbox click
+--- On any checkbox click
+-- @tfield druid_event on_radio_click
 
---- Component fields
--- @table Fields
--- @tfield table checkboxes Array of checkbox components
+--- Array of checkbox components
+-- @tfield Checkbox[] checkboxes
+
+---
 
 local Event = require("druid.event")
 local component = require("druid.component")
@@ -25,11 +27,11 @@ end
 
 
 --- Component init function
--- @function radio_group:init
--- @tparam node[] node Array of gui node
+-- @tparam RadioGroup self
+-- @tparam node[] nodes Array of gui node
 -- @tparam function callback Radio callback
--- @tparam[opt=node] node[] click node Array of trigger nodes, by default equals to nodes
-function RadioGroup:init(nodes, callback, click_nodes)
+-- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+function RadioGroup.init(self, nodes, callback, click_nodes)
 	self.druid = self:get_druid()
 	self.checkboxes = {}
 
@@ -47,17 +49,17 @@ end
 
 
 --- Set radio group state
--- @function radio_group:set_state
+-- @tparam RadioGroup self
 -- @tparam number index Index in radio group
-function RadioGroup:set_state(index)
+function RadioGroup.set_state(self, index)
 	on_checkbox_click(self, index)
 end
 
 
 --- Return radio group state
--- @function radio_group:get_state
+-- @tparam RadioGroup self
 -- @treturn number Index in radio group
-function RadioGroup:get_state()
+function RadioGroup.get_state(self)
 	local result = -1
 
 	for i = 1, #self.checkboxes do

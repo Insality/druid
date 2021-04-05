@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><strong>Drag</strong></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Drag</code></h1>
+<p>Component to handle drag action on node.</p>
+<p>
+ Drag have correct handling for multitouch and swap
+ touched while dragging. Drag will be processed even
+ the cursor is outside of node, if drag is already started</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, node, on_drag_callback)</a></td>
+	<td class="summary">Drag component constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, node)</a></td>
+	<td class="summary">Strict drag click area.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#style">style</a></td>
+	<td class="summary">Component style params.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#on_touch_start">on_touch_start</a></td>
+	<td class="summary">Event on touch start callback(self)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_touch_end">on_touch_end</a></td>
+	<td class="summary">Event on touch end callback(self)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_drag_start">on_drag_start</a></td>
+	<td class="summary">Event on drag start callback(self)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_drag">on_drag</a></td>
+	<td class="summary">on drag progress callback(self, dx, dy)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_drag_end">on_drag_end</a></td>
+	<td class="summary">Event on drag end callback(self)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_touch">is_touch</a></td>
+	<td class="summary">Is component now touching</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_drag">is_drag</a></td>
+	<td class="summary">Is component now dragging</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#can_x">can_x</a></td>
+	<td class="summary">Is drag component process vertical dragging.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#can_y">can_y</a></td>
+	<td class="summary">Is drag component process horizontal.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#x">x</a></td>
+	<td class="summary">Current touch x position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#y">y</a></td>
+	<td class="summary">Current touch y position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#touch_start_pos">touch_start_pos</a></td>
+	<td class="summary">Touch start position</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, node, on_drag_callback)</strong>
+    </dt>
+    <dd>
+    Drag component constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Drag</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         GUI node to detect dragging
+        </li>
+        <li><span class="parameter">on_drag_callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Callback for on_drag_event(self, dx, dy)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_click_zone"></a>
+    <strong>set_click_zone(self, node)</strong>
+    </dt>
+    <dd>
+    Strict drag click area.  Useful for
+ restrict events outside stencil node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Drag</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "style"></a>
+    <strong>style</strong>
+    </dt>
+    <dd>
+    Component style params.
+ You can override this component styles params in druid styles table
+ or create your own style
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">DRAG_DEADZONE</span>
+            <span class="types"><span class="type">number</span></span>
+         Distance in pixels to start dragging
+         (<em>default</em> 10)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "on_touch_start"></a>
+    <strong>on_touch_start</strong>
+    </dt>
+    <dd>
+    Event on touch start callback(self)
+
+
+    <ul>
+        <li><span class="parameter">on_touch_start</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_touch_end"></a>
+    <strong>on_touch_end</strong>
+    </dt>
+    <dd>
+    Event on touch end callback(self)
+
+
+    <ul>
+        <li><span class="parameter">on_touch_end</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_drag_start"></a>
+    <strong>on_drag_start</strong>
+    </dt>
+    <dd>
+    Event on drag start callback(self)
+
+
+    <ul>
+        <li><span class="parameter">on_drag_start</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_drag"></a>
+    <strong>on_drag</strong>
+    </dt>
+    <dd>
+    on drag progress callback(self, dx, dy)
+
+
+    <ul>
+        <li><span class="parameter">on_drag</span>
+            <span class="types"><span class="type">druid_event</span></span>
+         Event
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_drag_end"></a>
+    <strong>on_drag_end</strong>
+    </dt>
+    <dd>
+    Event on drag end callback(self)
+
+
+    <ul>
+        <li><span class="parameter">on_drag_end</span>
+            <span class="types"><span class="type">druid_event</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_touch"></a>
+    <strong>is_touch</strong>
+    </dt>
+    <dd>
+    Is component now touching
+
+
+    <ul>
+        <li><span class="parameter">is_touch</span>
+            <span class="types"><span class="type">bool</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_drag"></a>
+    <strong>is_drag</strong>
+    </dt>
+    <dd>
+    Is component now dragging
+
+
+    <ul>
+        <li><span class="parameter">is_drag</span>
+            <span class="types"><span class="type">bool</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "can_x"></a>
+    <strong>can_x</strong>
+    </dt>
+    <dd>
+    Is drag component process vertical dragging.  Default - true
+
+
+    <ul>
+        <li><span class="parameter">can_x</span>
+            <span class="types"><span class="type">bool</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "can_y"></a>
+    <strong>can_y</strong>
+    </dt>
+    <dd>
+    Is drag component process horizontal.  Default - true
+
+
+    <ul>
+        <li><span class="parameter">can_y</span>
+            <span class="types"><span class="type">bool</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "x"></a>
+    <strong>x</strong>
+    </dt>
+    <dd>
+    Current touch x position
+
+
+    <ul>
+        <li><span class="parameter">x</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "y"></a>
+    <strong>y</strong>
+    </dt>
+    <dd>
+    Current touch y position
+
+
+    <ul>
+        <li><span class="parameter">y</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "touch_start_pos"></a>
+    <strong>touch_start_pos</strong>
+    </dt>
+    <dd>
+    Touch start position
+
+
+    <ul>
+        <li><span class="parameter">touch_start_pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-04-06 00:03:14 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

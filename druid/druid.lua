@@ -15,8 +15,9 @@
 -- @module druid
 
 local const = require("druid.const")
-local druid_instance = require("druid.system.druid_instance")
+local base_component = require("druid.component")
 local settings = require("druid.system.settings")
+local druid_instance = require("druid.system.druid_instance")
 
 local default_style = require("druid.styles.default.style")
 
@@ -34,6 +35,7 @@ local function get_druid_instances()
 	return _instances
 end
 
+
 --- Register external druid component.
 -- After register you can create the component with
 -- druid_instance:new_{name}. For example `druid:new_button(...)`
@@ -44,7 +46,7 @@ function M.register(name, module)
 	-- TODO: Find better solution to creating elements?
 	-- Current way is very implicit
 	druid_instance["new_" .. name] = function(self, ...)
-		return druid_instance.create(self, module, ...)
+		return druid_instance.new(self, module, ...)
 	end
 end
 
@@ -105,13 +107,13 @@ function M.on_window_callback(event)
 
 	if event == window.WINDOW_EVENT_FOCUS_LOST then
 		for i = 1, #instances do
-			msg.post(instances[i].url, const.ON_FOCUS_LOST)
+			msg.post(instances[i].url, base_component.ON_FOCUS_LOST)
 		end
 	end
 
 	if event == window.WINDOW_EVENT_FOCUS_GAINED then
 		for i = 1, #instances do
-			msg.post(instances[i].url, const.ON_FOCUS_GAINED)
+			msg.post(instances[i].url, base_component.ON_FOCUS_GAINED)
 		end
 	end
 end
@@ -123,7 +125,7 @@ function M.on_layout_change()
 	local instances = get_druid_instances()
 
 	for i = 1, #instances do
-		msg.post(instances[i].url, const.ON_LAYOUT_CHANGE)
+		msg.post(instances[i].url, base_component.ON_LAYOUT_CHANGE)
 	end
 end
 
@@ -135,7 +137,7 @@ function M.on_language_change()
 	local instances = get_druid_instances()
 
 	for i = 1, #instances do
-		msg.post(instances[i].url, const.ON_LANGUAGE_CHANGE)
+		msg.post(instances[i].url, base_component.ON_LANGUAGE_CHANGE)
 	end
 end
 

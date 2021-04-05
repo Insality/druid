@@ -68,7 +68,7 @@ local function _declareInstanceMethod(aClass, name, f)
 end
 
 local function _tostring(self) return "class " .. self.name end
-local function _call(self, ...) return self:new(...) end
+local function _call(self, ...) return self:instantiate(...) end
 
 local function _createClass(name, super)
   local dict = {}
@@ -133,8 +133,8 @@ local DefaultMixin = {
       return setmetatable({ class = self }, self.__instanceDict)
     end,
 
-    new = function(self, ...)
-      assert(type(self) == 'table', "Make sure that you are using 'Class:new' instead of 'Class.new'")
+    instantiate = function(self, ...)
+      assert(type(self) == 'table', "Make sure that you are using 'Class:instantiate' instead of 'Class.instantiate'")
       local instance = self:allocate()
       instance:initialize(...)
       return instance

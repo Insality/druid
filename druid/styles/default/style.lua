@@ -65,9 +65,8 @@ M["scroll"] = {
 	INERT_SPEED = 30, -- koef. of inert speed
 	EXTRA_STRETCH_SIZE = 100, -- extra size in pixels outside of scroll (stretch effect)
 	POINTS_DEADZONE = 20, -- Speed to check points of interests in no_inertion mode
-
-	SCROLL_WHEEL_SPEED = 20,
-
+	WHEEL_SCROLL_SPEED = 0,
+	WHEEL_SCROLL_INVERTED = false,
 	SMALL_CONTENT_SCROLL = true, -- If true, content node with size less than view node size can be scrolled
 }
 
@@ -95,8 +94,9 @@ M["swipe"] = {
 
 M["input"] = {
 	IS_LONGTAP_ERASE = true,
-	BUTTON_SELECT_INCREASE = 1.1,
+	BUTTON_SELECT_INCREASE = 1.06,
 	MASK_DEFAULT_CHAR = "*",
+	IS_UNSELECT_ON_RESELECT = false,
 
 	on_select = function(self, button_node)
 		local target_scale = self.button.start_scale

@@ -1,0 +1,23 @@
+name: Run tests
+
+on: [push]
+
+jobs:
+    build_and_run:
+        name: Build and run tests
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v2
+            with:
+                lfs: true
+          - uses: actions/setup-java@v1
+            with:
+                java-version: '13'
+
+          - name: Build && Run
+            run: |
+              deployer_url="https://raw.githubusercontent.com/Insality/defold-deployer/1/deployer.sh"
+              curl -s ${deployer_url} | bash -s lbd --headless --settings ./unit_test.txt
+
+          - name: Upload test report
+            run: bash <(curl -s https://codecov.io/bash)

@@ -1,2 +1,4 @@
 #!/bin/bash
 use_latest_bob=false
+enable_incremental_version=true
+bob_sha="180:f34b08dc12af1101ae62c6e880b6373a03206174"

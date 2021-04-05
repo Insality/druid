@@ -1,0 +1,70 @@
+local druid = require("druid.druid")
+
+
+local function create_simple_element(self, data, index, data_list)
+	-- Here we will create elements without druid components, just nodes
+	local instance = gui.clone_tree(self.prefab_square)
+	gui.set_enabled(instance["prefab_square"], true)
+	gui.set_text(instance["text_square"], data)
+
+	local button = self.druid:new_button(instance["prefab_square"], function()
+		self.data_list:remove(index)
+	end)
+	button:set_click_zone(data_list.scroll.view_node)
+
+	return instance["prefab_square"], button
+end
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+	self.data_set = {}
+	for i = 1, 50 do
+		table.insert(self.data_set, i)
+	end
+
+	self.prefab_square = gui.get_node("prefab_square")
+	gui.set_enabled(self.prefab_square, false)
+
+	local scroll_simple = self.druid:new_scroll("data_list_simple", "data_list_simple_content")
+		:set_vertical_scroll(false)
+
+	--- The 999999 number in row - is kind of hack for single line static grid
+	local grid_simple = self.druid:new_static_grid("data_list_simple_content", "prefab_square", 999999)
+
+	self.data_list = self.druid:new_data_list(scroll_simple, grid_simple, create_simple_element)
+	self.data_list:set_data(self.data_set)
+
+	self.druid:new_button("button_simple_add_first/button", function()
+		local first_index = self.data_list:get_first_index()
+		self.data_list:add(first_index - 1, first_index - 1)
+	end)
+	self.druid:new_button("button_simple_add_10/button", function()
+		self.data_list:add(10, 10)
+	end)
+	self.druid:new_button("button_simple_add_last/button", function()
+		local last_index = self.data_list:get_last_index()
+		self.data_list:add(last_index + 1, last_index + 1)
+	end)
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

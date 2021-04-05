@@ -1,23 +1,27 @@
 --- Component to handle swipe gestures on node.
 -- Swipe will be triggered, if swipe was started and
 -- ended on one node
--- @module druid.swipe
+-- @module Swipe
+-- @within BaseComponent
+-- @alias druid.swipe
 
---- Components fields
--- @table Fields
--- @tparam node node Swipe node
--- @tparam[opt] node click_zone Restriction zone
+--- Swipe node
+-- @tparam node node
 
---- Component events
--- @table Events
--- @tfield druid_event on_swipe Trigger on swipe event
+--- Restriction zone
+-- @tparam[opt] node click_zone
+
+--- Trigger on swipe event(self, swipe_side, dist, delta_time
+-- @tfield druid_event on_swipe)
+
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Swipe = component.create("swipe", { const.ON_INPUT })
+local Swipe = component.create("swipe", { component.ON_INPUT })
 
 
 local function start_swipe(self, action)
@@ -65,11 +69,11 @@ end
 --- Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
--- @table Style
+-- @table style
 -- @tfield[opt=0.4] number SWIPE_TIME Maximum time for swipe trigger
 -- @tfield[opt=50] number SWIPE_THRESHOLD Minimum distance for swipe trigger
 -- @tfield[opt=false] bool SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action
-function Swipe:on_style_change(style)
+function Swipe.on_style_change(self, style)
 	self.style = {}
 	self.style.SWIPE_TIME = style.SWIPE_TIME or 0.4
 	self.style.SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50
@@ -78,10 +82,10 @@ end
 
 
 --- Component init function
--- @function swipe:init
+-- @tparam Swipe self
 -- @tparam node node Gui node
 -- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
-function Swipe:init(node, on_swipe_callback)
+function Swipe.init(self, node, on_swipe_callback)
 	self._trigger_on_move = self.style.SWIPE_TRIGGER_ON_MOVE
 	self.node = self:get_node(node)
 
@@ -93,7 +97,7 @@ function Swipe:init(node, on_swipe_callback)
 end
 
 
-function Swipe:on_input(action_id, action)
+function Swipe.on_input(self, action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false
 	end
@@ -126,16 +130,16 @@ function Swipe:on_input(action_id, action)
 end
 
 
-function Swipe:on_input_interrupt()
+function Swipe.on_input_interrupt(self)
 	reset_swipe(self)
 end
 
 
 --- Strict swipe click area. Useful for
 -- restrict events outside stencil node
--- @function swipe:set_click_zone
+-- @tparam Swipe self
 -- @tparam node zone Gui node
-function Swipe:set_click_zone(zone)
+function Swipe.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
 end
 

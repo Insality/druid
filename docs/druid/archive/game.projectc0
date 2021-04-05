@@ -1,8 +1,12 @@
 [project]
 title = druid
-version = 0.5.0
+version = 0.6.459
 write_log = 0
 compress_archive = 1
+publisher = Insality
+developer = Insality
+commit_sha = 015564f5b3e0d5e63e422056c69e53826ed689bf
+build_time = 2021-04-05T21:00:43Z
 
 [display]
 width = 600
@@ -14,6 +18,7 @@ update_frequency = 0
 vsync = 1
 display_profiles = /builtins/render/default.display_profilesc
 dynamic_orientation = 0
+display_device_info = 0
 
 [render]
 clear_color_red = 0
@@ -40,7 +45,7 @@ ray_cast_limit_3d = 128
 trigger_overlap_capacity = 16
 
 [bootstrap]
-main_collection = /example/kenney.collectionc
+main_collection = /example/example.collectionc
 render = /builtins/render/default.renderc
 
 [graphics]
@@ -51,6 +56,7 @@ max_characters = 8192
 max_debug_vertices = 10000
 texture_profiles = /example/custom.texture_profiles
 verify_graphics_calls = 1
+memory_size = 512
 
 [shader]
 output_spirv = 0
@@ -62,6 +68,7 @@ max_sound_buffers = 32
 max_sound_sources = 16
 max_sound_instances = 256
 max_component_count = 32
+use_thread = 1
 
 [resource]
 http_cache = 0
@@ -82,6 +89,9 @@ subpixels = 1
 max_count = 128
 
 [model]
+max_count = 128
+
+[mesh]
 max_count = 128
 
 [gui]
@@ -111,7 +121,7 @@ default_language = en
 localizations = en
 
 [android]
-version_code = 1
+version_code = 459
 minimum_sdk_version = 16
 target_sdk_version = 29
 package = com.insality.druid
@@ -125,6 +135,7 @@ debuggable = 0
 [osx]
 infoplist = /builtins/manifests/osx/Info.plist
 bundle_identifier = example.unnamed
+bundle_version = 1
 default_language = en
 localizations = en
 
@@ -151,6 +162,8 @@ auto_finish_transactions = 1
 
 [network]
 http_timeout = 0
+http_thread_count = 4
+http_cache_enabled = 1
 
 [library]
 include_dirs = druid
@@ -167,6 +180,7 @@ track_cpu = 0
 
 [liveupdate]
 settings = /liveupdate.settings
+enabled = 1
 
 [tilemap]
 max_count = 16

@@ -1,16 +1,16 @@
 --- Lua event small library
--- @module druid_event
+-- @module DruidEvent
+-- @alias druid_event
 
 local class = require("druid.system.middleclass")
 
--- @class DruidEvent
-local Event = class("druid.event")
+local DruidEvent = class("druid.event")
 
 
 --- Event constructur
--- @function Event
+-- @tparam DruidEvent self
 -- @tparam function initial_callback Subscribe the callback on new event, if callback exist
-function Event:initialize(initial_callback)
+function DruidEvent.initialize(self, initial_callback)
 	self._callbacks = {}
 
 	if initial_callback then
@@ -20,25 +20,30 @@ end
 
 
 --- Subscribe callback on event
--- @function event:subscribe
+-- @tparam DruidEvent self
 -- @tparam function callback Callback itself
-function Event:subscribe(callback)
+-- @tparam table context Additional context as first param to callback call
+function DruidEvent.subscribe(self, callback, context)
 	assert(type(self) == "table", "You should subscribe to event with : syntax")
 	assert(type(callback) == "function", "Callback should be function")
 
-	table.insert(self._callbacks, callback)
+	table.insert(self._callbacks, {
+		callback = callback,
+		context = context
+	})
 
 	return callback
 end
 
 
 --- Unsubscribe callback on event
--- @function event:unsubscribe
+-- @tparam DruidEvent self
 -- @tparam function callback Callback itself
-function Event:unsubscribe(callback)
-	for i = 1, #self._callbacks do
-		if self._callbacks[i] == callback then
-			table.remove(self._callbacks, i)
+-- @tparam table context Additional context as first param to callback call
+function DruidEvent.unsubscribe(self, callback, context)
+	for index, callback_info in ipairs(self._callbacks) do
+		if callback_info.callback == callback and callback_info.context == context then
+			table.remove(self._callbacks, index)
 			return
 		end
 	end
@@ -46,28 +51,32 @@ end
 
 
 --- Return true, if event have at lease one handler
--- @function event:is_exist
+-- @tparam DruidEvent self
 -- @treturn bool True if event have handlers
-function Event:is_exist()
+function DruidEvent.is_exist(self)
 	return #self._callbacks > 0
 end
 
 
 --- Clear the all event handlers
--- @function event:clear
-function Event:clear()
+-- @tparam DruidEvent self
+function DruidEvent.clear(self)
 	self._callbacks = {}
 end
 
 
 --- Trigger the event and call all subscribed callbacks
--- @function event:trigger
--- @param ... All event params
-function Event:trigger(...)
-	for i = 1, #self._callbacks do
-		self._callbacks[i](...)
+-- @tparam DruidEvent self
+-- @tparam any ... All event params
+function DruidEvent.trigger(self, ...)
+	for index, callback_info in ipairs(self._callbacks) do
+		if callback_info.context then
+			callback_info.callback(callback_info.context, ...)
+		else
+			callback_info.callback(...)
+		end
 	end
 end
 
 
-return Event
+return DruidEvent

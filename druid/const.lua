@@ -1,6 +1,7 @@
 --- Druid constants
 -- @local
--- @module const
+-- @module DruidConst
+-- @alias druid_const
 
 local M = {}
 
@@ -23,31 +24,22 @@ M.PRESSED = "pressed"
 M.STRING = "string"
 M.TABLE = "table"
 M.ZERO = "0"
-M.ALL = "all"
 
 
 --- Component Interests
+M.ALL = "all"
 M.ON_INPUT = hash("on_input")
 M.ON_UPDATE = hash("on_update")
 M.ON_MESSAGE = hash("on_message")
-M.ON_INPUT_HIGH = hash("on_input_high")
 M.ON_FOCUS_LOST = hash("on_focus_lost")
 M.ON_FOCUS_GAINED = hash("on_focus_gained")
 M.ON_LAYOUT_CHANGE = hash("layout_changed")
 M.ON_LANGUAGE_CHANGE = hash("on_language_change")
 
 
-M.ALL_INTERESTS = {
-	M.ALL,
-	M.ON_INPUT,
-	M.ON_UPDATE,
-	M.ON_MESSAGE,
-	M.ON_FOCUS_LOST,
-	M.ON_INPUT_HIGH,
-	M.ON_FOCUS_GAINED,
-	M.ON_LAYOUT_CHANGE,
-	M.ON_LANGUAGE_CHANGE,
-}
+M.PRIORITY_INPUT = 10
+M.PRIORITY_INPUT_HIGH = 20
+M.PRIORITY_INPUT_MAX = 100
 
 
 M.PIVOTS = {
@@ -63,19 +55,8 @@ M.PIVOTS = {
 }
 
 
--- Value is method name of component
-M.SPECIFIC_UI_MESSAGES = {
-	[M.ON_FOCUS_LOST] = "on_focus_lost",
-	[M.ON_FOCUS_GAINED] = "on_focus_gained",
-	[M.ON_LAYOUT_CHANGE] = "on_layout_change",
-	[M.ON_LANGUAGE_CHANGE] = "on_language_change",
-}
-
-
-M.UI_INPUT = {
-	[M.ON_INPUT_HIGH] = true,
-	[M.ON_INPUT] = true
-}
+M.SYS_INFO = sys.get_sys_info()
+M.CURRENT_SYSTEM_NAME = M.SYS_INFO.system_name
 
 
 M.OS = {
@@ -85,6 +66,13 @@ M.OS = {
 	LINUX = "Linux",
 	WINDOWS = "Windows",
 	BROWSER = "HTML5",
+}
+
+
+M.SHIFT = {
+	NO_SHIFT = 0,
+	LEFT = -1,
+	RIGHT = 1,
 }
 
 

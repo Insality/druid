@@ -1,0 +1,90 @@
+local druid = require("druid.druid")
+
+
+local function init_scroll_with_grid(self)
+	local prefab = gui.get_node("grid_prefab")
+
+	local grid_scroll = self.druid:new_scroll("scroll_with_grid_size", "grid_content")
+	local grid = self.druid:new_static_grid("grid_content", "grid_prefab", 20)
+
+	for i = 1, 40 do
+		local clone_prefab = gui.clone_tree(prefab)
+
+		grid:add(clone_prefab["grid_prefab"])
+		gui.set_text(clone_prefab["grid_prefab_text"], "Node " .. i)
+
+		local button = self.druid:new_button(clone_prefab["grid_button"], function()
+			local position = gui.get_position(clone_prefab["grid_prefab"])
+			grid_scroll:scroll_to(position)
+		end)
+		button:set_click_zone(gui.get_node("scroll_with_grid_size"))
+	end
+
+	gui.set_enabled(prefab, false)
+
+	grid_scroll:set_size(grid:get_size())
+
+	local scroll_slider = self.druid:new_slider("grid_scroll_pin", vmath.vector3(287, 0, 0), function(_, value)
+		grid_scroll:scroll_to_percent(vmath.vector3(value, 0, 0), true)
+	end)
+
+	grid_scroll.on_scroll:subscribe(function(_, point)
+		scroll_slider:set(grid_scroll:get_percent().x, true)
+	end)
+end
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+		-- Usual scroll for whole page
+	self.druid:new_scroll("root", "scroll_page_content")
+
+	-- Simple scroll with no adjust
+	self.druid:new_scroll("simple_scroll_input", "simple_scroll_content")
+
+	-- Scroll with grid example
+	init_scroll_with_grid(self)
+
+	-- Scroll contain children scrolls:
+	-- Parent scroll
+	self.druid:new_scroll("children_scroll", "children_scroll_content")
+	-- Childre scrolls
+	self.druid:new_scroll("children_scroll_1", "children_scroll_content_1")
+	self.druid:new_scroll("children_scroll_2", "children_scroll_content_2")
+	self.druid:new_scroll("children_scroll_3", "children_scroll_content_3")
+
+	-- Content with less size than view
+	self.druid:new_scroll("scroll_smaller_view", "scroll_smaller_content")
+		:set_extra_stretch_size(0)
+		:set_inert(false)
+
+	-- Scroll with points of interests
+	self.druid:new_scroll("scroll_with_points", "scroll_with_points_content")
+		:set_points({
+			vmath.vector3(300, 0, 0),
+			vmath.vector3(900, 0, 0),
+			vmath.vector3(1500, 0, 0),
+			vmath.vector3(2100, 0, 0),
+		})
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

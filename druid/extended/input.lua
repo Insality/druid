@@ -1,33 +1,57 @@
 --- Druid input text component.
 -- Carry on user text input
 -- @author Part of code from Britzl gooey input component
--- @module druid.input
+-- @module Input
+-- @within BaseComponent
+-- @alias druid.input
 
---- Component events
--- @table Events
--- @tfield druid_event on_input_select (self, button_node) On input field select callback
--- @tfield druid_event on_input_unselect (self, button_node) On input field unselect callback
--- @tfield druid_event on_input_text (self, input_text) On input field text change callback
--- @tfield druid_event on_input_empty (self, input_text) On input field text change to empty string callback
--- @tfield druid_event on_input_full (self, input_text) On input field text change to max length string callback
--- @tfield druid_event on_input_wrong (self, params, button_instance) On trying user input with not allowed character callback
+--- On input field select callback(self, button_node)
+-- @tfield druid_event on_input_select
 
---- Component fields
--- @table Fields
--- @tfield druid.text text Text component
--- @tfield druid.button button Button component
--- @tfield bool is_selected Is current input selected now
--- @tfield bool is_empty Is current input is empty now
--- @tfield[opt] number max_length Max length for input text
--- @tfield[opt] string allowerd_characters Pattern matching for user input
--- @tfield number keyboard_type Gui keyboard type for input field
+--- On input field unselect callback(self, button_node)
+-- @tfield druid_event on_input_unselect
+
+--- On input field text change callback(self, input_text)
+-- @tfield druid_event on_input_text
+
+--- On input field text change to empty string callback(self, input_text)
+-- @tfield druid_event on_input_empty
+
+--- On input field text change to max length string callback(self, input_text)
+-- @tfield druid_event on_input_full
+
+--- On trying user input with not allowed character callback(self, params, button_instance)
+-- @tfield druid_event on_input_wrong
+
+--- Text component
+-- @tfield druid.text text
+
+--- Button component
+-- @tfield druid.button button
+
+--- Is current input selected now
+-- @tfield bool is_selected
+
+--- Is current input is empty now
+-- @tfield bool is_empty
+
+--- Max length for input text
+-- @tfield[opt] number max_length
+
+--- Pattern matching for user input
+-- @tfield[opt] string allowerd_characters
+
+--- Gui keyboard type for input field
+-- @tfield number keyboard_type
+
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 local utf8 = require("druid.system.utf8")
 
-local Input = component.create("input", { const.ON_INPUT, const.ON_FOCUS_LOST })
+local Input = component.create("input", { component.ON_INPUT, component.ON_FOCUS_LOST })
 
 
 --- Mask text by replacing every character with a mask character
@@ -45,63 +69,32 @@ local function mask_text(text, mask)
 end
 
 
-local function select(self)
-	gui.reset_keyboard()
-	self.marked_value = ""
-	if not self.selected then
-		self:increase_input_priority()
-		self.button:increase_input_priority()
-		self.previous_value = self.value
-		self.selected = true
-
-		gui.show_keyboard(self.keyboard_type, false)
-		self.on_input_select:trigger(self:get_context())
-
-		self.style.on_select(self, self.button.node)
-	end
-end
-
-
-local function unselect(self)
-	gui.reset_keyboard()
-	self.marked_value = ""
-	if self.selected then
-		self:reset_input_priority()
-		self.button:reset_input_priority()
-		self.selected = false
-
-		gui.hide_keyboard()
-		self.on_input_unselect:trigger(self:get_context())
-
-		self.style.on_unselect(self, self.button.node)
-	end
-end
-
-
 local function clear_and_select(self)
 	if self.style.IS_LONGTAP_ERASE then
 		self:set_text("")
 	end
 
-	select(self)
+	self:select()
 end
 
 
 --- Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
--- @table Style
+-- @table style
 -- @tfield[opt=false] bool IS_LONGTAP_ERASE Is long tap will erase current input data
 -- @tfield[opt=*] string MASK_DEFAULT_CHAR Default character mask for password input
+-- @tfield[opt=false] bool IS_UNSELECT_ON_RESELECT If true, call unselect on select selected input
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
 -- @tfield table button_style Custom button style for input node
-function Input:on_style_change(style)
+function Input.on_style_change(self, style)
 	self.style = {}
 
 	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
 	self.style.MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*"
+	self.style.IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false
 
 	self.style.on_select = style.on_select or function(_, button_node) end
 	self.style.on_unselect = style.on_unselect or function(_, button_node) end
@@ -115,11 +108,19 @@ function Input:on_style_change(style)
 end
 
 
-function Input:init(click_node, text_node, keyboard_type)
+-- @tparam node click_node Button node to enabled input component
+-- @tparam node|druid.text text_node Text node what will be changed on user input. You can pass text component instead of text node name
+-- @tparam[opt] number keyboard_type Gui keyboard type for input field
+function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
-	self.text = self.druid:new_text(text_node)
 
-	self.selected = false
+	if type(text_node) == const.TABLE then
+		self.text = text_node
+	else
+		self.text = self.druid:new_text(text_node)
+	end
+
+	self.is_selected = false
 	self.value = self.text.last_value
 	self.previous_value = self.text.last_value
 	self.current_value = self.text.last_value
@@ -135,9 +136,9 @@ function Input:init(click_node, text_node, keyboard_type)
 
 	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_DEFAULT
 
-	self.button = self.druid:new_button(click_node, select)
+	self.button = self.druid:new_button(click_node, self.select)
 	self.button:set_style(self.button_style)
-	self.button.on_click_outside:subscribe(unselect)
+	self.button.on_click_outside:subscribe(self.unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
 
 	self.on_input_select = Event()
@@ -149,8 +150,8 @@ function Input:init(click_node, text_node, keyboard_type)
 end
 
 
-function Input:on_input(action_id, action)
-	if self.selected then
+function Input.on_input(self, action_id, action)
+	if self.is_selected then
 		local input_text = nil
 		if action_id == const.ACTION_TEXT then
 			-- ignore return key
@@ -189,17 +190,17 @@ function Input:on_input(action_id, action)
 		end
 
 		if action_id == const.ACTION_ENTER and action.released then
-			unselect(self)
+			self:unselect()
 			return true
 		end
 
 		if action_id == const.ACTION_BACK and action.released then
-			unselect(self)
+			self:unselect()
 			return true
 		end
 
 		if action_id == const.ACTION_ESC and action.released then
-			unselect(self)
+			self:unselect()
 			return true
 		end
 
@@ -209,24 +210,24 @@ function Input:on_input(action_id, action)
 		end
 	end
 
-	return self.selected
+	return self.is_selected
 end
 
 
-function Input:on_focus_lost()
-	unselect(self)
+function Input.on_focus_lost(self)
+	self:unselect()
 end
 
 
-function Input:on_input_interrupt()
-	-- unselect(self)
+function Input.on_input_interrupt(self)
+	-- self:unselect()
 end
 
 
 --- Set text for input field
--- @function input:set_text
+-- @tparam Input self
 -- @tparam string input_text The string to apply for input field
-function Input:set_text(input_text)
+function Input.set_text(self, input_text)
 	-- Case when update with marked text
 	if input_text then
 		self.value = input_text
@@ -270,20 +271,61 @@ function Input:set_text(input_text)
 end
 
 
+--- Select input field. It will show the keyboard and trigger on_select events
+-- @tparam Input self
+function Input.select(self)
+	gui.reset_keyboard()
+	self.marked_value = ""
+	if not self.is_selected then
+		self:set_input_priority(const.PRIORITY_INPUT_MAX)
+		self.button:set_input_priority(const.PRIORITY_INPUT_MAX)
+		self.previous_value = self.value
+		self.is_selected = true
+
+		gui.show_keyboard(self.keyboard_type, false)
+		self.on_input_select:trigger(self:get_context())
+
+		self.style.on_select(self, self.button.node)
+	else
+		if self.style.IS_UNSELECT_ON_RESELECT then
+			self:unselect(self)
+		end
+	end
+end
+
+
+--- Remove selection from input. It will hide the keyboard and trigger on_unselect events
+-- @tparam Input self
+function Input.unselect(self)
+	gui.reset_keyboard()
+	self.marked_value = ""
+	if self.is_selected then
+		self:reset_input_priority()
+		self.button:reset_input_priority()
+		self.is_selected = false
+
+		gui.hide_keyboard()
+		self.on_input_unselect:trigger(self:get_context())
+
+		self.style.on_unselect(self, self.button.node)
+	end
+end
+
+
 --- Return current input field text
--- @function input:get_text
+-- @tparam Input self
 -- @treturn string The current input field text
-function Input:get_text()
+function Input.get_text(self)
 	return self.value .. self.marked_value
 end
 
 
 --- Set maximum length for input field.
 -- Pass nil to make input field unliminted (by default)
--- @function input:set_max_length
+-- @tparam Input self
 -- @tparam number max_length Maximum length for input text field
 -- @treturn druid.input Current input instance
-function Input:set_max_length(max_length)
+function Input.set_max_length(self, max_length)
 	self.max_length = max_length
 	return self
 end
@@ -292,20 +334,20 @@ end
 --- Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
--- @function input:set_allowerd_characters
+-- @tparam Input self
 -- @tparam string characters Regulax exp. for validate user input
 -- @treturn druid.input Current input instance
-function Input:set_allowed_characters(characters)
+function Input.set_allowed_characters(self, characters)
 	self.allowed_characters = characters
 	return self
 end
 
 
 --- Reset current input selection and return previous value
--- @function input:reset_changes
-function Input:reset_changes()
+-- @tparam Input self
+function Input.reset_changes(self)
 	self:set_text(self.previous_value)
-	unselect(self)
+	self:unselect()
 end
 
 
