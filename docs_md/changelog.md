@@ -136,7 +136,7 @@ Also check _component.template.lua_ what you can use for your own custom compone
 
 Hey! Are you tired from **Druid** updates? _(It's a joke)_
 
-Finally, got a time to release component to process huge amount of data. So introducing: **DataList** component. I can't say what it's "infinity" scroll, but it can help to solve your problem with `GUI nodes limit reached` and helps with scroll optimization. Give feedback about it!
+Finally, got a time to release component to process huge amount of data. So introducing: **DataList** component. It can help solve your problem with `GUI nodes limit reached` and helps with scroll optimization. Give feedback about it!
 
 The next important stuff is **EmmyLua** docs. I'm implemented EmmyLua doc generator from LuaDoc and Protofiles, so now you can use EmmyLua annotations inside your IDE instead of website API looking or source code scanning.
 
@@ -144,7 +144,7 @@ Also the **Druid examples** is reworked, so each example will be in separate col
 
 Input priority got reworked too. Now instead of two input stacks: usual and high, Druid use simple input priority value.
 
-And I should note here is several breaking changes, take a look in changelogs.
+And I should note here are several breaking changes, take a look in changelogs.
 
 Wanna something more? [Add an issues!](https://github.com/Insality/druid/issues)
 Have a good day.
