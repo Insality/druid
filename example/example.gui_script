@@ -118,7 +118,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "With static grid", "data_list_static_grid"))
 	self.lobby_grid:add(get_button(self, "With dynamic grid", "data_list_dynamic_grid"))
 	self.lobby_grid:add(get_button_disabled(self, "Add/remove elements", "scroll_scene"))
-	self.lobby_grid:add(get_button_disabled(self, "Navigate over elements", "data_list_navigate"))
+	self.lobby_grid:add(get_button(self, "Navigate over elements", "data_list_navigate"))
 
 	self.lobby_grid:add(get_title(self, "System"))
 	self.lobby_grid:add(get_button_disabled(self, "Styles"))

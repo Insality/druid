@@ -19,16 +19,11 @@ end
 
 
 local function create_horizontal_element(self, data, index, data_list)
+	-- Here we will create elements without druid components, just nodes
 	local instance = gui.clone_tree(self.prefab_square)
 	gui.set_enabled(instance["prefab_square"], true)
 	gui.set_text(instance["text_square"], data)
-
-	local button = self.druid:new_button(instance["prefab_square"], function()
-		print("Data list element click on", data)
-	end)
-	button:set_click_zone(data_list.scroll.view_node)
-
-	return instance["prefab_square"], button
+	return instance["prefab_square"]
 end
 
 

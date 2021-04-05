@@ -273,7 +273,8 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Data List with horizontal Static Grid:"
+  text: "Data List with horizontal Static Grid,\n"
+  "without buttons:"
   font: "game"
   id: "text_hint_horizontal"
   xanchor: XANCHOR_NONE
