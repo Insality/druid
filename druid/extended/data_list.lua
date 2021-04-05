@@ -178,7 +178,7 @@ end
 -- @tparam DataList self
 -- @tparam number index
 function DataList.scroll_to_index(self, index)
-	local target = helper.clamp(index, 1, #self._data)
+	local target = helper.clamp(index, self:get_first_index(), self:get_last_index())
 	self.top_index = target
 	self:_refresh()
 
@@ -253,6 +253,7 @@ function DataList._check_elements(self)
 		self.last_index = math.max(self.last_index or index, index)
 	end
 
+	-- Progress report
 	local middle_index = (self.last_index + self.top_index) / 2
 	local progress = (middle_index - self._data_first_index) / (self._data_last_index - self._data_first_index)
 	progress = helper.clamp(progress, 0, 1)

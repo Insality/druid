@@ -6,7 +6,13 @@ local function create_simple_element(self, data, index, data_list)
 	local instance = gui.clone_tree(self.prefab_square)
 	gui.set_enabled(instance["prefab_square"], true)
 	gui.set_text(instance["text_square"], data)
-	return instance["prefab_square"]
+
+	local button = self.druid:new_button(instance["prefab_square"], function()
+		self.data_list:remove(index)
+	end)
+	button:set_click_zone(data_list.scroll.view_node)
+
+	return instance["prefab_square"], button
 end
 
 
@@ -14,13 +20,12 @@ function init(self)
 	self.druid = druid.new(self)
 
 	self.data_set = {}
-	for i = 1, 999 do
+	for i = 1, 50 do
 		table.insert(self.data_set, i)
 	end
 
 	self.prefab_square = gui.get_node("prefab_square")
 	gui.set_enabled(self.prefab_square, false)
-
 
 	local scroll_simple = self.druid:new_scroll("data_list_simple", "data_list_simple_content")
 		:set_vertical_scroll(false)
@@ -28,24 +33,19 @@ function init(self)
 	--- The 999999 number in row - is kind of hack for single line static grid
 	local grid_simple = self.druid:new_static_grid("data_list_simple_content", "prefab_square", 999999)
 
-	self.data_list_simple = self.druid:new_data_list(scroll_simple, grid_simple, create_simple_element)
-	self.data_list_simple:set_data(self.data_set)
+	self.data_list = self.druid:new_data_list(scroll_simple, grid_simple, create_simple_element)
+	self.data_list:set_data(self.data_set)
 
-	self.slider_simple = self.druid:new_slider("grid_scroll_pin", vmath.vector3(200, 0, 0))
-	-- Disable slider input, now we can not use slider with data list
-	self.slider_simple:set_input_enabled(false)
-	self.data_list_simple.on_scroll_progress_change:subscribe(function(_, progress)
-		self.slider_simple:set(progress, true)
+	self.druid:new_button("button_simple_add_first/button", function()
+		local first_index = self.data_list:get_first_index()
+		self.data_list:add(first_index - 1, first_index - 1)
 	end)
-
-	self.druid:new_button("button_simple_first/button", function()
-		self.data_list_simple:scroll_to_index(1)
+	self.druid:new_button("button_simple_add_10/button", function()
+		self.data_list:add(10, 10)
 	end)
-	self.druid:new_button("button_simple_hundred/button", function()
-		self.data_list_simple:scroll_to_index(100)
-	end)
-	self.druid:new_button("button_simple_last/button", function()
-		self.data_list_simple:scroll_to_index(#self.data_set)
+	self.druid:new_button("button_simple_add_last/button", function()
+		local last_index = self.data_list:get_last_index()
+		self.data_list:add(last_index + 1, last_index + 1)
 	end)
 end
 
