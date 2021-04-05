@@ -6,6 +6,7 @@
 ---Trigger node
 -- @tfield node node
 
+---
 
 local const = require("druid.const")
 local component = require("druid.component")

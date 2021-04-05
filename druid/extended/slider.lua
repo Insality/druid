@@ -30,6 +30,7 @@
 --- Current slider value
 -- @tfield number value
 
+---
 
 
 local Event = require("druid.event")

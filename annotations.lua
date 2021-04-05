@@ -43,6 +43,7 @@ function druid.set_text_function(callback) end
 
 ---@class druid.back_handler : druid.base_component
 ---@field on_back druid_event On back handler callback(self, params)
+---@field params any Params to back callback
 local druid__back_handler = {}
 
 --- Component init function
@@ -59,6 +60,7 @@ function druid__back_handler.on_input(self, action_id, action) end
 
 
 ---@class druid.base_component
+---@field ALL field Component Interests
 local druid__base_component = {}
 
 --- Get current component context
@@ -70,6 +72,11 @@ function druid__base_component.get_context(self) end
 ---@param self druid.base_component
 ---@return Druid Druid instance with component context
 function druid__base_component.get_druid(self) end
+
+--- Return component input priority
+---@param self druid.base_component
+---@return number The component input priority
+function druid__base_component.get_input_priority(self) end
 
 --- Return component name
 ---@param self druid.base_component
@@ -87,12 +94,14 @@ function druid__base_component.get_node(self, node_or_name) end
 ---@return druid.base_component|nil The druid component instance or nil
 function druid__base_component.get_parent_component(self) end
 
---- Increase input priority in current input stack
+--- Return component uid.
 ---@param self druid.base_component
-function druid__base_component.increase_input_priority(self) end
+---@return number The component uid
+function druid__base_component.get_uid(self) end
 
---- Reset input priority in current input stack
+--- Reset component input priority to default value
 ---@param self druid.base_component
+---@return number The component input priority
 function druid__base_component.reset_input_priority(self) end
 
 --- Set component input state.
@@ -100,6 +109,12 @@ function druid__base_component.reset_input_priority(self) end
 ---@param state bool The component input state
 ---@return druid.base_component BaseComponent itself
 function druid__base_component.set_input_enabled(self, state) end
+
+--- Set component input priority
+---@param self druid.base_component
+---@param value number The new input priority value
+---@return number The component input priority
+function druid__base_component.set_input_priority(self, value) end
 
 --- Set current component nodes
 ---@param self druid.base_component
@@ -126,6 +141,7 @@ function druid__base_component.setup_component(self, druid_instance, context, st
 
 
 ---@class druid.blocker : druid.base_component
+---@field node node Trigger node
 local druid__blocker = {}
 
 --- Component init function
@@ -146,6 +162,7 @@ function druid__blocker.set_enabled(self, state) end
 
 ---@class druid.button : druid.base_component
 ---@field anim_node node Animation node
+---@field click_zone node Restriction zone
 ---@field hover druid.hover Druid hover logic component
 ---@field node node Trigger node
 ---@field on_click druid_event On release button callback(self, params, button_instance)
@@ -211,6 +228,7 @@ local druid__button__style = {}
 
 
 ---@class druid.checkbox : druid.base_component
+---@field button Button Button component from click_node
 ---@field click_node node Button trigger node
 ---@field node node Visual node
 ---@field on_change_state druid_event On change state callback(self, state)
@@ -242,6 +260,7 @@ local druid__checkbox__style = {}
 
 
 ---@class druid.checkbox_group : druid.base_component
+---@field checkboxes table Array of checkbox components
 ---@field on_checkbox_click druid_event On any checkbox click callback(self, index)
 local druid__checkbox_group = {}
 
@@ -263,6 +282,59 @@ function druid__checkbox_group.init(self, nodes, callback, click_nodes) end
 function druid__checkbox_group.set_state(self, indexes) end
 
 
+---@class druid.data_list : druid.base_component
+---@field grid druid.static_grid The Druid Grid component
+---@field last_index number The current visual last data index
+---@field on_scroll_progress_change druid_event Event triggered when scroll progress is changed; event(self, progress_value)
+---@field scroll druid.scroll The Druid scroll component
+---@field scroll_progress number The current progress of scroll posititon
+---@field top_index number The current visual top data index
+local druid__data_list = {}
+
+--- Clear the DataList and refresh visuals
+---@param self druid.data_list
+function druid__data_list.clear(self) end
+
+--- Return first index from data.
+---@param self druid.data_list
+function druid__data_list.get_first_index(self) end
+
+--- Return index for data value
+---@param self druid.data_list
+---@param data table
+function druid__data_list.get_index(self, data) end
+
+--- Return last index from data
+---@param self druid.data_list
+function druid__data_list.get_last_index(self) end
+
+--- Return amount of data
+---@param self druid.data_list
+function druid__data_list.get_length(self) end
+
+--- Data list constructor
+---@param self druid.data_list
+---@param scroll druid.scroll The Scroll instance for Data List component
+---@param grid druid.grid The Grid instance for Data List component
+---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
+function druid__data_list.init(self, scroll, grid, create_function) end
+
+--- Druid System on_remove function
+---@param self druid.data_list
+function druid__data_list.on_remove(self) end
+
+--- Instant scroll to element with passed index
+---@param self druid.data_list
+---@param index number
+function druid__data_list.scroll_to_index(self, index) end
+
+--- Set new data set for DataList component
+---@param self druid.data_list
+---@param data table The new data array
+---@return druid.data_list Current DataList instance
+function druid__data_list.set_data(self, data) end
+
+
 ---@class druid.drag : druid.base_component
 ---@field can_x bool Is drag component process vertical dragging.
 ---@field can_y bool Is drag component process horizontal.
@@ -274,6 +346,7 @@ function druid__checkbox_group.set_state(self, indexes) end
 ---@field on_touch_end druid_event Event on touch end callback(self)
 ---@field on_touch_start druid_event Event on touch start callback(self)
 ---@field style druid.drag.style Component style params.
+---@field touch_start_pos vector3 Touch start position
 ---@field x number Current touch x position
 ---@field y number Current touch y position
 local druid__drag = {}
@@ -286,8 +359,8 @@ function druid__drag.init(self, node, on_drag_callback) end
 
 --- Strict drag click area.
 ---@param self druid.drag
----@param zone node Gui node
-function druid__drag.set_click_zone(self, zone) end
+---@param node node Gui node
+function druid__drag.set_click_zone(self, node) end
 
 
 ---@class druid.drag.style
@@ -296,10 +369,11 @@ local druid__drag__style = {}
 
 
 ---@class druid.dynamic_grid : druid.base_component
+---@field border vector4 The size of item content
 ---@field first_index number The first index of node in grid
 ---@field last_index number The last index of node in grid
 ---@field node_size vector3 Item size
----@field nodes node[] List of all grid nodes
+---@field nodes node[] List of all grid elements.
 ---@field on_add_item druid_event On item add callback(self, node, index)
 ---@field on_change_items druid_event On item add or remove callback(self, index)
 ---@field on_clear druid_event On grid clear callback(self)
@@ -318,8 +392,8 @@ function druid__dynamic_grid._get_side_vector(self, side, is_forward) end
 ---@param self druid.dynamic_grid
 ---@param node node Gui node
 ---@param index number The node position. By default add as last node
----@param is_shift_left bool If true, shift all nodes to the left, otherwise shift nodes to the right
-function druid__dynamic_grid.add(self, node, index, is_shift_left) end
+---@param shift_policy number How shift nodes, if required. See const.SHIFT
+function druid__dynamic_grid.add(self, node, index, shift_policy) end
 
 --- Clear grid nodes array.
 ---@param self druid.dynamic_grid
@@ -331,11 +405,21 @@ function druid__dynamic_grid.clear(self) end
 ---@return vector3[] All grid node positions
 function druid__dynamic_grid.get_all_pos(self) end
 
+--- Return grid content borders
+---@param self druid.dynamic_grid
+---@return vector3 The grid content borders
+function druid__dynamic_grid.get_borders(self) end
+
 --- Return grid index by node
 ---@param self druid.dynamic_grid
 ---@param node node The gui node in the grid
 ---@return number The node index
 function druid__dynamic_grid.get_index_by_node(self, node) end
+
+--- Return DynamicGrid offset, where DynamicGrid content starts.
+---@param self druid.dynamic_grid The DynamicGrid instance
+---@return vector3 The DynamicGrid offset
+function druid__dynamic_grid.get_offset(self) end
 
 --- Return pos for grid node index
 ---@param self druid.dynamic_grid
@@ -359,8 +443,9 @@ function druid__dynamic_grid.init(self, parent) end
 --- Remove the item from the grid.
 ---@param self druid.dynamic_grid
 ---@param index number The grid node index to remove
----@param is_shift_left bool If true, shift all nodes to the left, otherwise shift nodes to the right
-function druid__dynamic_grid.remove(self, index, is_shift_left) end
+---@param shift_policy number How shift nodes, if required. See const.SHIFT
+---@return Node The deleted gui node from grid
+function druid__dynamic_grid.remove(self, index, shift_policy) end
 
 --- Change set position function for grid nodes.
 ---@param self druid.dynamic_grid
@@ -371,6 +456,7 @@ function druid__dynamic_grid.set_position_function(self, callback) end
 
 ---@class druid.hover : druid.base_component
 ---@field on_hover druid_event On hover callback(self, state)
+---@field on_mouse_hover druid_event On mouse hover callback(self, state)
 local druid__hover = {}
 
 --- Component init function
@@ -410,6 +496,7 @@ function druid__hover.set_mouse_hover(self, state) end
 ---@field button druid.button Button component
 ---@field is_empty bool Is current input is empty now
 ---@field is_selected bool Is current input selected now
+---@field keyboard_type number Gui keyboard type for input field
 ---@field max_length number Max length for input text
 ---@field on_input_empty druid_event On input field text change to empty string callback(self, input_text)
 ---@field on_input_full druid_event On input field text change to max length string callback(self, input_text)
@@ -430,6 +517,10 @@ function druid__input.get_text(self) end
 ---@param self druid.input
 function druid__input.reset_changes(self) end
 
+--- Select input field.
+---@param self druid.input
+function druid__input.select(self) end
+
 --- Set allowed charaters for input field.
 ---@param self druid.input
 ---@param characters string Regulax exp. for validate user input
@@ -447,9 +538,14 @@ function druid__input.set_max_length(self, max_length) end
 ---@param input_text string The string to apply for input field
 function druid__input.set_text(self, input_text) end
 
+--- Remove selection from input.
+---@param self druid.input
+function druid__input.unselect(self) end
+
 
 ---@class druid.input.style
 ---@field IS_LONGTAP_ERASE field  Is long tap will erase current input data
+---@field IS_UNSELECT_ON_RESELECT field  If true, call unselect on select selected input
 ---@field MASK_DEFAULT_CHAR field  Default character mask for password input
 ---@field button_style field  Custom button style for input node
 ---@field on_input_wrong field  (self, button_node) Callback on wrong user input
@@ -460,12 +556,13 @@ local druid__input__style = {}
 
 ---@class druid.lang_text : druid.base_component
 ---@field on_change druid_event On change text callback
+---@field text Text The text component
 local druid__lang_text = {}
 
 --- Component init function
 ---@param self druid.lang_text
 ---@param node node The text node
----@param locale_id string Default locale id
+---@param locale_id string Default locale id, optional
 ---@param no_adjust bool If true, will not correct text size
 function druid__lang_text.init(self, node, locale_id, no_adjust) end
 
@@ -487,6 +584,7 @@ function druid__lang_text.translate(self, locale_id) end
 ---@field on_change druid_event On progress bar change callback(self, new_value)
 ---@field scale vector3 Current progress bar scale
 ---@field size vector3 Current progress bar size
+---@field slice vector4 Progress bar slice9 settings
 ---@field style druid.progress.style Component style params.
 local druid__progress = {}
 
@@ -534,6 +632,7 @@ local druid__progress__style = {}
 
 
 ---@class druid.radio_group : druid.base_component
+---@field checkboxes Checkbox[] Array of checkbox components
 ---@field on_radio_click druid_event On any checkbox click
 local druid__radio_group = {}
 
@@ -561,6 +660,7 @@ function druid__radio_group.set_state(self, index) end
 ---@field content_node node Scroll content node
 ---@field drag Drag Drag Druid component
 ---@field inertion vector3 Current inert speed
+---@field is_animate bool Flag, if scroll now animating by gui.animate
 ---@field is_inert bool Flag, if scroll now moving by inertion
 ---@field on_point_scroll druid_event On scroll_to_index function callback(self, index, point)
 ---@field on_scroll druid_event On scroll move callback(self, position)
@@ -603,6 +703,12 @@ function druid__scroll.init(self, view_node, content_node) end
 ---@return bool If scroll have inertion
 function druid__scroll.is_inert(self) end
 
+--- Check node if it visible now on scroll.
+---@param self druid.scroll
+---@param node node The node to check
+---@return boolean True if node in visible scroll area
+function druid__scroll.is_node_in_view(self, node) end
+
 --- Start scroll to target point.
 ---@param self druid.scroll
 ---@param point vector3 Target point
@@ -620,6 +726,11 @@ function druid__scroll.scroll_to_index(self, index, skip_cb) end
 ---@param percent vector3 target percent
 ---@param is_instant bool instant scroll flag
 function druid__scroll.scroll_to_percent(self, percent, is_instant) end
+
+--- Strict drag scroll area.
+---@param self druid.drag
+---@param node node Gui node
+function druid__scroll.set_click_zone(self, node) end
 
 --- Set extra size for scroll stretching.
 ---@param self druid.scroll
@@ -648,8 +759,9 @@ function druid__scroll.set_points(self, points) end
 --- Set scroll content size.
 ---@param self druid.scroll
 ---@param size vector3 The new size for content node
+---@param offset vector3 Offset value to set, where content is starts
 ---@return druid.scroll Current scroll instance
-function druid__scroll.set_size(self, size) end
+function druid__scroll.set_size(self, size, offset) end
 
 --- Lock or unlock vertical scroll
 ---@param self druid.scroll
@@ -668,6 +780,8 @@ function druid__scroll.set_vertical_scroll(self, state) end
 ---@field INERT_THRESHOLD field  Scroll speed to stop inertion
 ---@field POINTS_DEADZONE field  Speed to check points of interests in no_inertion mode
 ---@field SMALL_CONTENT_SCROLL field  If true, content node with size less than view node size can be scrolled
+---@field WHEEL_SCROLL_INVERTED field  If true, invert direction for touchpad and mouse wheel scroll
+---@field WHEEL_SCROLL_SPEED field  The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
 local druid__scroll__style = {}
 
 
@@ -680,6 +794,7 @@ local druid__scroll__style = {}
 ---@field pos vector3 Current pin node position
 ---@field start_pos vector3 Start pin node position
 ---@field target_pos vector3 Targer pin node position
+---@field value number Current slider value
 local druid__slider = {}
 
 --- Component init function
@@ -703,6 +818,7 @@ function druid__slider.set_steps(self, steps) end
 
 ---@class druid.static_grid : druid.base_component
 ---@field anchor vector3 Item anchor
+---@field border vector4 The size of item content
 ---@field first_index number The first index of node in grid
 ---@field last_index number The last index of node in grid
 ---@field node_size vector3 Item size
@@ -719,7 +835,8 @@ local druid__static_grid = {}
 ---@param self druid.static_grid
 ---@param item node Gui node
 ---@param index number The item position. By default add as last item
-function druid__static_grid.add(self, item, index) end
+---@param shift_policy number How shift nodes, if required. See const.SHIFT
+function druid__static_grid.add(self, item, index, shift_policy) end
 
 --- Clear grid nodes array.
 ---@param self druid.static_grid
@@ -730,6 +847,11 @@ function druid__static_grid.clear(self) end
 ---@param self druid.static_grid
 ---@return vector3[] All grid node positions
 function druid__static_grid.get_all_pos(self) end
+
+--- Return grid content borders
+---@param self druid.static_grid
+---@return vector3 The grid content borders
+function druid__static_grid.get_borders(self) end
 
 --- Return index for grid pos
 ---@param self druid.static_grid
@@ -742,6 +864,11 @@ function druid__static_grid.get_index(self, pos) end
 ---@param node node The gui node in the grid
 ---@return number The node index
 function druid__static_grid.get_index_by_node(self, node) end
+
+--- Return StaticGrid offset, where StaticGrid content starts.
+---@param self druid.static_grid The StaticGrid instance
+---@return vector3 The StaticGrid offset
+function druid__static_grid.get_offset(self) end
 
 --- Return pos for grid node index
 ---@param self druid.static_grid
@@ -764,8 +891,9 @@ function druid__static_grid.init(self, parent, element, in_row) end
 --- Remove the item from the grid.
 ---@param self druid.static_grid
 ---@param index number The grid node index to remove
----@param is_shift_nodes bool If true, will shift nodes left after index
-function druid__static_grid.remove(self, index, is_shift_nodes) end
+---@param shift_policy number How shift nodes, if required. See const.SHIFT
+---@return Node The deleted gui node from grid
+function druid__static_grid.remove(self, index, shift_policy) end
 
 --- Set grid anchor.
 ---@param self druid.static_grid
@@ -782,6 +910,7 @@ function druid__static_grid.set_position_function(self, callback) end
 ---@class druid.swipe : druid.base_component
 ---@field click_zone node Restriction zone
 ---@field node node Swipe node
+---@field on_swipe druid_event Trigger on swipe event(self, swipe_side, dist, delta_time
 ---@field style druid.swipe.style Component style params.
 local druid__swipe = {}
 
@@ -805,6 +934,7 @@ local druid__swipe__style = {}
 
 
 ---@class druid.text : druid.base_component
+---@field color vector3 Current text color
 ---@field is_no_adjust bool Current text size adjust settings
 ---@field node node Text node
 ---@field on_set_pivot druid_event On change pivot callback(self, pivot)
@@ -867,6 +997,7 @@ function druid__text.set_to(self, set_to) end
 ---@field on_tick druid_event On timer tick.
 ---@field on_timer_end druid_event On timer end callback
 ---@field target number Target timer value
+---@field value number Current timer value
 local druid__timer = {}
 
 --- Component init function
@@ -894,6 +1025,11 @@ function druid__timer.set_state(self, is_on) end
 function druid__timer.set_to(self, set_to) end
 
 
+---@class druid_const
+---@field ALL field Component Interests
+local druid_const = {}
+
+
 ---@class druid_event
 local druid_event = {}
 
@@ -914,7 +1050,8 @@ function druid_event.is_exist(self) end
 --- Subscribe callback on event
 ---@param self druid_event
 ---@param callback function Callback itself
-function druid_event.subscribe(self, callback) end
+---@param context table Additional context as first param to callback call
+function druid_event.subscribe(self, callback, context) end
 
 --- Trigger the event and call all subscribed callbacks
 ---@param self druid_event
@@ -924,17 +1061,19 @@ function druid_event.trigger(self, ...) end
 --- Unsubscribe callback on event
 ---@param self druid_event
 ---@param callback function Callback itself
-function druid_event.unsubscribe(self, callback) end
+---@param context table Additional context as first param to callback call
+function druid_event.unsubscribe(self, callback, context) end
 
 
 ---@class druid_instance
 local druid_instance = {}
 
---- Create new druid component
----@param self druid_instance
----@param component Component Component module
----@param ... args Other component params to pass it to component:init function
-function druid_instance.create(self, component, ...) end
+--- Create data list basic component
+---@param druid_scroll druid.scroll The Scroll instance for Data List component
+---@param druid_grid druid.grid The Grid instance for Data List component
+---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
+---@return druid.data_list data_list component
+function druid_instance.druid:new_data_list(druid_scroll, druid_grid, create_function) end
 
 --- Call on final function on gui_script.
 ---@param self druid_instance
@@ -946,119 +1085,156 @@ function druid_instance.final(self) end
 ---@param style table Druid style module
 function druid_instance.initialize(self, context, style) end
 
+--- Create new druid component
+---@param self druid_instance
+---@param component Component Component module
+---@param ... args Other component params to pass it to component:init function
+function druid_instance.new(self, component, ...) end
+
 --- Create back_handler basic component
 ---@param self druid_instance
----@param ... args back_handler init args
+---@param callback callback On back button
+---@param params any Callback argument
 ---@return druid.back_handler back_handler component
-function druid_instance.new_back_handler(self, ...) end
+function druid_instance.new_back_handler(self, callback, params) end
 
 --- Create blocker basic component
 ---@param self druid_instance
----@param ... args blocker init args
+---@param node node Gui node
 ---@return druid.blocker blocker component
-function druid_instance.new_blocker(self, ...) end
+function druid_instance.new_blocker(self, node) end
 
 --- Create button basic component
 ---@param self druid_instance
----@param ... args button init args
+---@param node node Gui node
+---@param callback function Button callback
+---@param params table Button callback params
+---@param anim_node node Button anim node (node, if not provided)
 ---@return druid.button button component
-function druid_instance.new_button(self, ...) end
+function druid_instance.new_button(self, node, callback, params, anim_node) end
 
 --- Create checkbox component
 ---@param self druid_instance
----@param ... args checkbox init args
+---@param node node Gui node
+---@param callback function Checkbox callback
+---@param click_node node Trigger node, by default equals to node
 ---@return druid.checkbox checkbox component
-function druid_instance.new_checkbox(self, ...) end
+function druid_instance.new_checkbox(self, node, callback, click_node) end
 
 --- Create checkbox_group component
 ---@param self druid_instance
----@param ... args checkbox_group init args
+---@param nodes node[] Array of gui node
+---@param callback function Checkbox callback
+---@param click_nodes node[] Array of trigger nodes, by default equals to nodes
 ---@return druid.checkbox_group checkbox_group component
-function druid_instance.new_checkbox_group(self, ...) end
+function druid_instance.new_checkbox_group(self, nodes, callback, click_nodes) end
 
 --- Create drag basic component
 ---@param self druid_instance
----@param ... args drag init args
+---@param node node GUI node to detect dragging
+---@param on_drag_callback function Callback for on_drag_event(self, dx, dy)
 ---@return druid.drag drag component
-function druid_instance.new_drag(self, ...) end
+function druid_instance.new_drag(self, node, on_drag_callback) end
 
 --- Create dynamic grid component
 ---@param self druid_instance
----@param ... args grid init args
+---@param parent node The gui node parent, where items will be placed
 ---@return druid.dynamic_grid grid component
-function druid_instance.new_dynamic_grid(self, ...) end
+function druid_instance.new_dynamic_grid(self, parent) end
 
 --- Create grid basic component  Deprecated
 ---@param self druid_instance
----@param ... args grid init args
+---@param parent node The gui node parent, where items will be placed
+---@param element node Element prefab. Need to get it size
+---@param in_row number How many nodes in row can be placed
 ---@return druid.static_grid grid component
-function druid_instance.new_grid(self, ...) end
+function druid_instance.new_grid(self, parent, element, in_row) end
 
 --- Create hover basic component
 ---@param self druid_instance
----@param ... args hover init args
+---@param node node Gui node
+---@param on_hover_callback function Hover callback
 ---@return druid.hover hover component
-function druid_instance.new_hover(self, ...) end
+function druid_instance.new_hover(self, node, on_hover_callback) end
 
 --- Create input component
 ---@param self druid_instance
----@param ... args input init args
+---@param click_node node Button node to enabled input component
+---@param text_node node Text node what will be changed on user input
+---@param keyboard_type number Gui keyboard type for input field
 ---@return druid.input input component
-function druid_instance.new_input(self, ...) end
+function druid_instance.new_input(self, click_node, text_node, keyboard_type) end
 
 --- Create lang_text component
 ---@param self druid_instance
----@param ... args lang_text init args
+---@param node node The text node
+---@param locale_id string Default locale id
+---@param no_adjust bool If true, will not correct text size
 ---@return druid.lang_text lang_text component
-function druid_instance.new_lang_text(self, ...) end
+function druid_instance.new_lang_text(self, node, locale_id, no_adjust) end
 
 --- Create progress component
 ---@param self druid_instance
----@param ... args progress init args
+---@param node string|node Progress bar fill node or node name
+---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
+---@param init_value number Initial value of progress bar
 ---@return druid.progress progress component
-function druid_instance.new_progress(self, ...) end
+function druid_instance.new_progress(self, node, key, init_value) end
 
 --- Create radio_group component
 ---@param self druid_instance
----@param ... args radio_group init args
+---@param nodes node[] Array of gui node
+---@param callback function Radio callback
+---@param click_nodes node[] Array of trigger nodes, by default equals to nodes
 ---@return druid.radio_group radio_group component
-function druid_instance.new_radio_group(self, ...) end
+function druid_instance.new_radio_group(self, nodes, callback, click_nodes) end
 
 --- Create scroll basic component
 ---@param self druid_instance
----@param ... args scroll init args
+---@param view_node node GUI view scroll node
+---@param content_node node GUI content scroll node
 ---@return druid.scroll scroll component
-function druid_instance.new_scroll(self, ...) end
+function druid_instance.new_scroll(self, view_node, content_node) end
 
 --- Create slider component
 ---@param self druid_instance
----@param ... args slider init args
+---@param node node Gui pin node
+---@param end_pos vector3 The end position of slider
+---@param callback function On slider change callback
 ---@return druid.slider slider component
-function druid_instance.new_slider(self, ...) end
+function druid_instance.new_slider(self, node, end_pos, callback) end
 
 --- Create static grid basic component
 ---@param self druid_instance
----@param ... args grid init args
+---@param parent node The gui node parent, where items will be placed
+---@param element node Element prefab. Need to get it size
+---@param in_row number How many nodes in row can be placed
 ---@return druid.static_grid grid component
-function druid_instance.new_static_grid(self, ...) end
+function druid_instance.new_static_grid(self, parent, element, in_row) end
 
 --- Create swipe basic component
 ---@param self druid_instance
----@param ... args swipe init args
+---@param node node Gui node
+---@param on_swipe_callback function Swipe callback for on_swipe_end event
 ---@return druid.swipe swipe component
-function druid_instance.new_swipe(self, ...) end
+function druid_instance.new_swipe(self, node, on_swipe_callback) end
 
 --- Create text basic component
 ---@param self druid_instance
----@param ... args text init args
+---@param node node Gui text node
+---@param value string Initial text. Default value is node text from GUI scene.
+---@param no_adjust bool If true, text will be not auto-adjust size
 ---@return Tet text component
-function druid_instance.new_text(self, ...) end
+function druid_instance.new_text(self, node, value, no_adjust) end
 
 --- Create timer component
 ---@param self druid_instance
----@param ... args timer init args
+---@param node node Gui text node
+---@param seconds_from number Start timer value in seconds
+---@param seconds_to number End timer value in seconds
+---@param callback function Function on timer end
 ---@return druid.timer timer component
-function druid_instance.new_timer(self, ...) end
+function druid_instance.new_timer(self, node, seconds_from, seconds_to, callback) end
 
 --- Druid on focus gained interest function.
 ---@param self druid_instance
@@ -1096,6 +1272,27 @@ function druid_instance.remove(self, component) end
 function druid_instance.update(self, dt) end
 
 
+---@class formats
+local formats = {}
+
+--- Return number with zero number prefix
+---@param num number Number for conversion
+---@param count number Count of numerals
+---@return  string with need count of zero (1,3) -> 001
+function formats.add_prefix_zeros(num, count) end
+
+--- Convert seconds to string minutes:seconds
+---@param sec number Seconds
+---@return  string minutes:seconds
+function formats.second_string_min(sec) end
+
+--- Interpolate string with named Parameters in Table
+---@param s string Target string
+---@param tab table Table with parameters
+---@return  string with replaced parameters
+function formats.second_string_min(s, tab) end
+
+
 ---@class helper
 local helper = {}
 
@@ -1104,6 +1301,11 @@ local helper = {}
 ---@param text_node text Gui text node
 ---@param margin number Offset between nodes
 function helper.centrate_icon_with_text(icon_node, text_node, margin) end
+
+--- Center several nodes nodes.
+---@param margin number Offset between nodes
+---@param ... Node Any count of gui Node
+function helper.centrate_nodes(margin, ...) end
 
 --- Center two nodes.
 ---@param text_node text Gui text node
@@ -1115,9 +1317,11 @@ function helper.centrate_text_with_icon(text_node, icon_node, margin) end
 ---@param message string The deprecated message
 function helper.deprecated(message) end
 
---- Distance from node to size border
----@return  vector4 (left, top, right, down)
-function helper.get_border() end
+--- Distance from node position to his borders
+---@param node node The gui node to check
+---@param offset vector3 The offset to add to result
+---@return  vector4 Vector with distance to node border: (left, top, right, down)
+function helper.get_border(node, offset) end
 
 --- Get node offset for given gui pivot
 ---@param pivot gui.pivot The node pivot

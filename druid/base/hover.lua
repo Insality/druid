@@ -9,6 +9,7 @@
 --- On mouse hover callback(self, state)
 -- @tfield druid_event on_mouse_hover
 
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")

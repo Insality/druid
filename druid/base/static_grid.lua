@@ -40,6 +40,7 @@
 --- The size of item content
 -- @tfield vector4 border
 
+---
 
 local const = require("druid.const")
 local Event = require("druid.event")

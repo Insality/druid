@@ -33,6 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
 </ul>
 
 
@@ -52,6 +53,7 @@
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
@@ -92,14 +94,6 @@
 	<td class="summary">Get current component context</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#increase_input_priority">increase_input_priority(self)</a></td>
-	<td class="summary">Increase input priority in current input stack</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#reset_input_priority">reset_input_priority(self)</a></td>
-	<td class="summary">Reset input priority in current input stack</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#get_node">get_node(self, node_or_name)</a></td>
 	<td class="summary">Get node for component by name.</td>
 	</tr>
@@ -112,6 +106,22 @@
 	<td class="summary">Return component name</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#get_input_priority">get_input_priority(self)</a></td>
+	<td class="summary">Return component input priority</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_input_priority">set_input_priority(self, value)</a></td>
+	<td class="summary">Set component input priority</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#reset_input_priority">reset_input_priority(self)</a></td>
+	<td class="summary">Reset component input priority to default value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_uid">get_uid(self)</a></td>
+	<td class="summary">Return component uid.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set_input_enabled">set_input_enabled(self, state)</a></td>
 	<td class="summary">Set component input state.</td>
 	</tr>
@@ -122,6 +132,13 @@
 	<tr>
 	<td class="name" nowrap><a href="#setup_component">setup_component(self, druid_instance, context, style)</a></td>
 	<td class="summary">Setup component context and his style table</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#ALL">ALL</a></td>
+	<td class="summary">Component Interests</td>
 	</tr>
 </table>
 
@@ -237,48 +254,6 @@
 
 </dd>
     <dt>
-    <a name = "increase_input_priority"></a>
-    <strong>increase_input_priority(self)</strong>
-    </dt>
-    <dd>
-    Increase input priority in current input stack
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BaseComponent</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "reset_input_priority"></a>
-    <strong>reset_input_priority(self)</strong>
-    </dt>
-    <dd>
-    Reset input priority in current input stack
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BaseComponent</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
     <a name = "get_node"></a>
     <strong>get_node(self, node_or_name)</strong>
     </dt>
@@ -361,6 +336,118 @@
 
            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
         The component name
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_input_priority"></a>
+    <strong>get_input_priority(self)</strong>
+    </dt>
+    <dd>
+    Return component input priority
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">BaseComponent</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The component input priority
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_input_priority"></a>
+    <strong>set_input_priority(self, value)</strong>
+    </dt>
+    <dd>
+    Set component input priority
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">BaseComponent</span></span>
+
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">number</span></span>
+         The new input priority value
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The component input priority
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "reset_input_priority"></a>
+    <strong>reset_input_priority(self)</strong>
+    </dt>
+    <dd>
+    Reset component input priority to default value
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">BaseComponent</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The component input priority
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_uid"></a>
+    <strong>get_uid(self)</strong>
+    </dt>
+    <dd>
+    Return component uid.  UID generated in component creation order
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">BaseComponent</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The component uid
     </ol>
 
 
@@ -466,13 +553,31 @@
 
 </dd>
 </dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "ALL"></a>
+    <strong>ALL</strong>
+    </dt>
+    <dd>
+    Component Interests
+
+
+
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-10-12 00:44:30 </i>
+<i style="float:right;">Last updated 2021-04-06 00:03:14 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

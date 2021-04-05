@@ -44,6 +44,7 @@
 --- Gui keyboard type for input field
 -- @tfield number keyboard_type
 
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")

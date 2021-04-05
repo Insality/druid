@@ -6,10 +6,10 @@
 
 
 --- The Druid scroll component
--- @tfield Scroll scroll
+-- @tfield druid.scroll scroll
 
 --- The Druid Grid component
--- @tfield StaticGrid grid
+-- @tfield druid.static_grid grid
 
 --- The current visual top data index
 -- @tfield number top_index
@@ -17,9 +17,13 @@
 --- The current visual last data index
 -- @tfield number last_index
 
---- The current progress of scroll posititon (approx.)
+--- The current progress of scroll posititon
 -- @tfield number scroll_progress
 
+--- Event triggered when scroll progress is changed; event(self, progress_value)
+-- @tfield druid_event on_scroll_progress_change
+
+---
 
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -31,8 +35,8 @@ local DataList = component.create("data_list")
 
 --- Data list constructor
 -- @tparam DataList self
--- @tparam druid.scroll The Scroll instance for Data List component
--- @tparam druid.grid The Grid instance for Data List component
+-- @tparam druid.scroll scroll The Scroll instance for Data List component
+-- @tparam druid.grid grid The Grid instance for Data List component
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 function DataList.init(self, scroll, grid, create_function)
 	self.druid = self:get_druid()
@@ -40,7 +44,7 @@ function DataList.init(self, scroll, grid, create_function)
 	self.grid = grid
 	self.scroll:bind_grid(grid)
 
-	--- Current visual elements indexes
+	-- Current visual elements indexes
 	self.top_index = 1
 	self.last_index = 1
 	self.scroll_progress = 0

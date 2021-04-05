@@ -14,6 +14,7 @@
 --- Trigger on swipe event(self, swipe_side, dist, delta_time
 -- @tfield druid_event on_swipe)
 
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")

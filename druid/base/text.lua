@@ -38,6 +38,7 @@
 --- Current text color
 -- @tfield vector3 color
 
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")

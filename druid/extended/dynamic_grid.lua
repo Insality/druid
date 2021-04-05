@@ -36,6 +36,7 @@
 --- The size of item content
 -- @tfield vector4 border
 
+---
 
 local const = require("druid.const")
 local Event = require("druid.event")
@@ -177,7 +178,6 @@ end
 --- Remove the item from the grid. Note that gui node will be not deleted
 -- @tparam DynamicGrid self
 -- @tparam number index The grid node index to remove
--- @tparam[opt=false] bool is_shift_left If true, shift all nodes to the left, otherwise shift nodes to the right
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
 -- @treturn Node The deleted gui node from grid
 function DynamicGrid.remove(self, index, shift_policy)

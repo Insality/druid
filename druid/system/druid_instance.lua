@@ -26,6 +26,7 @@
 -- @see RadioGroup
 -- @see Swipe
 -- @see Drag
+-- @see DataList
 -- @see Hover
 
 local helper = require("druid.helper")
@@ -562,10 +563,13 @@ end
 
 --- Create data list basic component
 -- @function druid:new_data_list
--- @tparam args ... drag init args
--- @treturn Component data list component
-function DruidInstance.new_data_list(self, ...)
-	return DruidInstance.new(self, data_list, ...)
+-- @tparam druid.scroll druid_scroll The Scroll instance for Data List component
+-- @tparam druid.grid druid_grid The Grid instance for Data List component
+-- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
+-- @treturn DataList data_list component
+function DruidInstance.new_data_list(self, druid_scroll, druid_grid, create_function)
+	-- return helper.extended_component("data_list")
+	return DruidInstance.new(self, data_list, druid_scroll, druid_grid, create_function)
 end
 
 

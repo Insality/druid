@@ -134,22 +134,44 @@ Also check _component.template.lua_ what you can use for your own custom compone
 
 ### Druid 0.6.0:
 
-Desc
+Hey! Are you tired from **Druid** updates? _(It's a joke)_
 
-- Add EmmyLua annotations. See how to use it FAQ
-- Lang text now can be initialized without default locale id
-- **Fix**: Input component: rename field _selected_ to _is_selected_ (according to the docs)
-- **#92** Setup repo for CI and unit tests. (Yea, successful build and tests badges!)
+Finally, got a time to release component to process huge amount of data. So introducing: **DataList** component. I can't say what it's "infinity" scroll, but it can help to solve your problem with `GUI nodes limit reached` and helps with scroll optimization. Give feedback about it!
+
+The next important stuff is **EmmyLua** docs. I'm implemented EmmyLua doc generator from LuaDoc and Protofiles, so now you can use EmmyLua annotations inside your IDE instead of website API looking or source code scanning.
+
+Also the **Druid examples** is reworked, so each example will be in separate collection. Now it's become a  much easier to learn Druid via examples. A lot of stuff in progress now, but you already can see on it!
+
+Input priority got reworked too. Now instead of two input stacks: usual and high, Druid use simple input priority value.
+
+And I should note here is several breaking changes, take a look in changelogs.
+
+Wanna something more? [Add an issues!](https://github.com/Insality/druid/issues)
+Have a good day.
+
+**Changelog 0.6.0**
+---
+
+- **#43** Add **DataList** Druid extended component. Component used to manage huge amount of data to make stuff like _infinity_ scroll.
+	- This versions is first basic implementation. But it should be enough for almost all basic stuff.
+	- Create Data List with `druid:new_data_list(scroll, grid, create_function)`.
+		-	_scroll_ - already created __Scroll__ component
+		-	_grid_ - already created __StaticGrid__ or __DynamicGrid__ component
+		-	_create_function_ - your function to create node instances. This callback have next parameters: `fun(self, data, index, data_list)`
+			-	_self_ - Script/Druid context
+			-	_data_- your element data
+			-	_index_ - element index
+			-	_data_list_ - current __DataList__ component
+	- Create function should return root node and optionaly, _Druid_ component. It's required to manage create/remove lifecycle
+	-	Set data with `data_list:set_data({...})`
+	-	In current version there is no `add/remove` functions
+- Add EmmyLua annotations (_ta-daaa_). See how to [use it FAQ](https://github.com/Insality/druid/blob/develop/docs_md/FAQ.md)!
+- Add context argument to Druid Event. You can pass this argument to forward it first in your callbacks (for example - object context)
+-  Add _SHIFT_POLICY_ for _Static_ and _Dynamic_ Grids. It mean how nodes will be shifted if you append data between nodes. There are `const.SHIFT.RIGHT`, `const.SHIFT.LEFT` and `const.SHIFT.NO_SHIFT`.
+	- __[BREAKING]__ Please check your `StaticGrid:remove` and `DynamicGrid:remove` functions
 - **#102** __[BREAKING]__ Removed `component:increase_input_priority` component function. Use `component:set_input_priority` function instead. The bigger priority value processed first. The value 10 is default for Druid components, the 100 value is maximum priority for acquire input in _drag_ and _input_ components
-- **#103** Add `helper.centate_nodes` function. It can horizontal align several Box and Text nodes
-- **#105** Add `Input:select` and `Input:unselect` function.
-- **#106** Add `Input IS_UNSELECT_ON_RESELECT` style param. If true, it will be unselect input on click on input box, not only on outside click.
-- **#108** Add component interests const to `component.lua`
-- **#116** You can pass Text component in Input component instead of text node
-- **#117** Move each Druid example in separate collection. It's a lot of easier now to learn via examples, check it!
-- **#124** Add `Scroll:set_click_zone` function. This is just link to `Drag:set_click_zone` function inside scroll component.
-	-- Add constants for priorities: _const.PRIORITY_INPUT_, _const.PRIORITY_INPUT_HIGH_, _const.PRIORITY_INPUT_MAX_.
-	-- __[BREAKING]__ If you use in you custom components interest: `component.ON_INPUT_HIGH` you should replace it with `const.PRIORITY_INPUT_HIGH` as third param, and place it with usual `component.ON_INPUT`. For example:
+	- Add constants for priorities: _const.PRIORITY_INPUT_, _const.PRIORITY_INPUT_HIGH_, _const.PRIORITY_INPUT_MAX_.
+	- __[BREAKING]__ If you use in you custom components interest: `component.ON_INPUT_HIGH` you should replace it with `component.ON_INPUT` and add `const.PRIORITY_INPUT_HIGH` as third param. For example:
 		_before:_
 		```lua
 		local Drag = component.create("drag", { component.ON_INPUT_HIGH })
@@ -158,19 +180,25 @@ Desc
 		```lua
 		local Drag = component.create("drag", { component.ON_INPUT }, const.PRIORITY_INPUT_HIGH)
 		```
+- Lang text now can be initialized without default locale id
+- Input component: rename field _selected_ to _is_selected_ (according to the docs)
+- **#92** Setup repo for CI and unit tests. (Yea, successful build and tests badges!)
+- **#86** Fix a lot of event triggers on scroll inertia moving 
+- **#101** Fix scroll to other node instead of swipe direction with scroll's points of interest (without inert settings)
+- **#103** Add `helper.centate_nodes` function. It can horizontal align several Box and Text nodes
+- **#105** Add `Input:select` and `Input:unselect` function.
+- **#106** Add `Input.style.IS_UNSELECT_ON_RESELECT` style param. If true, it will be unselect input on click on input box, not only on outside click.
+- **#108** Add component interests const to `component.lua`
+- **#116** You can pass Text component in Input component instead of text node
+- **#117** Move each Druid example in separate collection. It's a lot of easier now to learn via examples, check it!
+	- Examples in progress, so a lot of stuff are locked now, stay tuned!
+- **#118** Druid.scroll freezes if held in one place for a long time
 - **#123** Add scroll for Scroll component via mouse wheel or touchpad:
-	-- Added Scroll style params: `WHEEL_SCROLL_SPEED`, `WHEEL_SCROLL_INVERTED`
-	-- Mouse scroll working when cursor is hover on scroll view node
-	-- Vertical scroll have more priority than horizontal
-	-- Fix: When Hover component node became disabled, reset hover state (throw on_hover and on_mouse_hover events)
-	-- By default mouse scroll is disabled
-	-- This is basic implementation, it is work not perfect
-- **#43** Add Data List Druid extended component. Component used to manage huge amount of data to make stuff like "infinity" scroll.
-- Add context argument to Druid Event. You can pass this argument to forward it first in your callbacks (for example - object context)
-- __[BREAKING]__ Add _SHIFT_POLICY_ for _Static_ and _Dynamic_ Grids. It mean how nodes will be shifted if you append data between nodes. There are `const.SHIFT.RIGHT`, `const.SHIFT.LEFT` and `const.SHIFT.NO_SHIFT`.
-	-- Please check your `StaticGrid:remove` and `DynamicGrid:remove` functions
-- **Fix #86** A lot of event triggers on scroll inertia moving 
-- **Fix #101** Fix scroll to other node instead of swipe direction with scroll's points of intereset (without inert settings)
-- **Fix #118** Druid.scroll freezes if held in one place for a long time
+	- Added Scroll style params: `WHEEL_SCROLL_SPEED`, `WHEEL_SCROLL_INVERTED`
+	- Mouse scroll working when cursor is hover on scroll view node
+	- Vertical scroll have more priority than horizontal
+	- Fix: When Hover component node became disabled, reset hover state (throw on_hover and on_mouse_hover events)
+	- By default mouse scroll is disabled
+	- This is basic implementation, it is work not perfect
+- **#124** Add `Scroll:set_click_zone` function. This is just link to `Drag:set_click_zone` function inside scroll component.
 - **#127** The `druid:create` is deprecated. Use `druid:new` for creating custom components
-

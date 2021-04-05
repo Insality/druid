@@ -45,6 +45,7 @@
 ---Restriction zone
 -- @tfield[opt] node click_zone
 
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")

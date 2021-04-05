@@ -42,6 +42,7 @@
 --- Touch start position
 -- @tfield vector3 touch_start_pos
 
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")

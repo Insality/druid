@@ -52,6 +52,7 @@
 --- Flag, if scroll now animating by gui.animate
 -- @tfield bool is_animate
 
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")
@@ -384,8 +385,8 @@ end
 --- Check node if it visible now on scroll.
 -- Extra border is not affected. Return true for elements in extra scroll zone
 -- @tparam Scroll self
--- @tparma node node The node to check
--- @treturn boolean True, if node in visible scroll area
+-- @tparam node node The node to check
+-- @treturn boolean True if node in visible scroll area
 function Scroll.is_node_in_view(self, node)
 	local node_border = helper.get_border(node, gui.get_position(node))
 	local view_border = helper.get_border(self.view_node, -(self.position - self._outside_offset_vector))

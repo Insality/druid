@@ -9,6 +9,7 @@
 --- Array of checkbox components
 -- @tfield table checkboxes
 
+---
 
 local Event = require("druid.event")
 local component = require("druid.component")

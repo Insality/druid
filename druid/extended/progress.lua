@@ -25,6 +25,7 @@
 --- Progress bar slice9 settings
 -- @tfield vector4 slice
 
+---
 
 local Event = require("druid.event")
 local const = require("druid.const")

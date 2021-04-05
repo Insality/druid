@@ -53,6 +53,7 @@
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
   <li><strong>DynamicGrid</strong></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
@@ -84,16 +85,24 @@
 	<td class="summary">Return pos for grid node index</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#add">add(self, node[, index[, is_shift_left=false]])</a></td>
+	<td class="name" nowrap><a href="#add">add(self, node[, index[, shift_policy=SHIFT.RIGHT]])</a></td>
 	<td class="summary">Add new node to the grid</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#remove">remove(self, index[, is_shift_left=false])</a></td>
+	<td class="name" nowrap><a href="#remove">remove(self, index[, shift_policy=SHIFT.RIGHT])</a></td>
 	<td class="summary">Remove the item from the grid.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_size">get_size(self, border)</a></td>
 	<td class="summary">Return grid content size</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_offset">get_offset(self)</a></td>
+	<td class="summary">Return DynamicGrid offset, where DynamicGrid content starts.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_borders">get_borders(self)</a></td>
+	<td class="summary">Return grid content borders</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_index_by_node">get_index_by_node(self, node)</a></td>
@@ -144,7 +153,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#nodes">nodes</a></td>
-	<td class="summary">List of all grid nodes</td>
+	<td class="summary">List of all grid elements.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#first_index">first_index</a></td>
@@ -157,6 +166,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#node_size">node_size</a></td>
 	<td class="summary">Item size</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#border">border</a></td>
+	<td class="summary">The size of item content</td>
 	</tr>
 </table>
 
@@ -234,7 +247,7 @@
 </dd>
     <dt>
     <a name = "add"></a>
-    <strong>add(self, node[, index[, is_shift_left=false]])</strong>
+    <strong>add(self, node[, index[, shift_policy=SHIFT.RIGHT]])</strong>
     </dt>
     <dd>
     Add new node to the grid
@@ -255,10 +268,10 @@
          The node position. By default add as last node
          (<em>optional</em>)
         </li>
-        <li><span class="parameter">is_shift_left</span>
-            <span class="types"><span class="type">bool</span></span>
-         If true, shift all nodes to the left, otherwise shift nodes to the right
-         (<em>default</em> false)
+        <li><span class="parameter">shift_policy</span>
+            <span class="types"><span class="type">number</span></span>
+         How shift nodes, if required. See const.SHIFT
+         (<em>default</em> SHIFT.RIGHT)
         </li>
     </ul>
 
@@ -269,7 +282,7 @@
 </dd>
     <dt>
     <a name = "remove"></a>
-    <strong>remove(self, index[, is_shift_left=false])</strong>
+    <strong>remove(self, index[, shift_policy=SHIFT.RIGHT])</strong>
     </dt>
     <dd>
     Remove the item from the grid.  Note that gui node will be not deleted
@@ -285,13 +298,19 @@
             <span class="types"><span class="type">number</span></span>
          The grid node index to remove
         </li>
-        <li><span class="parameter">is_shift_left</span>
-            <span class="types"><span class="type">bool</span></span>
-         If true, shift all nodes to the left, otherwise shift nodes to the right
-         (<em>default</em> false)
+        <li><span class="parameter">shift_policy</span>
+            <span class="types"><span class="type">number</span></span>
+         How shift nodes, if required. See const.SHIFT
+         (<em>default</em> SHIFT.RIGHT)
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Node</span></span>
+        The deleted gui node from grid
+    </ol>
 
 
 
@@ -322,6 +341,60 @@
 
            <span class="types"><span class="type">vector3</span></span>
         The grid content size
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_offset"></a>
+    <strong>get_offset(self)</strong>
+    </dt>
+    <dd>
+    Return DynamicGrid offset, where DynamicGrid content starts.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         The DynamicGrid instance
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        The DynamicGrid offset
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_borders"></a>
+    <strong>get_borders(self)</strong>
+    </dt>
+    <dd>
+    Return grid content borders
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        The grid content borders
     </ol>
 
 
@@ -601,7 +674,7 @@
     <strong>nodes</strong>
     </dt>
     <dd>
-    List of all grid nodes
+    List of all grid elements.  Contains from node, pos, size, pivot
 
 
     <ul>
@@ -676,6 +749,26 @@
 
 
 </dd>
+    <dt>
+    <a name = "border"></a>
+    <strong>border</strong>
+    </dt>
+    <dd>
+    The size of item content
+
+
+    <ul>
+        <li><span class="parameter">border</span>
+            <span class="types"><span class="type">vector4</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
 </dl>
 
 
@@ -683,7 +776,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-10-12 00:44:30 </i>
+<i style="float:right;">Last updated 2021-04-06 00:03:14 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

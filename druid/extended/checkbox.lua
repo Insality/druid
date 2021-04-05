@@ -15,6 +15,7 @@
 --- Button component from click_node
 -- @tfield Button button
 
+---
 
 local Event = require("druid.event")
 local component = require("druid.component")

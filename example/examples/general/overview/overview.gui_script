@@ -1,5 +1,6 @@
-local lang = require("example.lang")
+--- @type druid
 local druid = require("druid.druid")
+local lang = require("example.lang")
 
 local function empty_callback(self, param)
 	print("Empty callback. Param", param)

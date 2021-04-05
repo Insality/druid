@@ -54,6 +54,7 @@
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
@@ -103,7 +104,7 @@
 	<td class="summary">Return current scroll progress status.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_size">set_size(self, size)</a></td>
+	<td class="name" nowrap><a href="#set_size">set_size(self, size, offset)</a></td>
 	<td class="summary">Set scroll content size.</td>
 	</tr>
 	<tr>
@@ -135,9 +136,17 @@
 	<td class="summary">Lock or unlock vertical scroll</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#is_node_in_view">is_node_in_view(self, node)</a></td>
+	<td class="summary">Check node if it visible now on scroll.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#bind_grid">bind_grid(self, grid)</a></td>
 	<td class="summary">Bind the grid component (Static or Dynamic) to recalculate
  scroll size on grid changes</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, node)</a></td>
+	<td class="summary">Strict drag scroll area.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#_cancel_animate">_cancel_animate(self)</a></td>
@@ -204,6 +213,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#selected">selected</a></td>
 	<td class="summary">Current index of points of interests</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_animate">is_animate</a></td>
+	<td class="summary">Flag, if scroll now animating by gui.animate</td>
 	</tr>
 </table>
 
@@ -372,7 +385,7 @@
 </dd>
     <dt>
     <a name = "set_size"></a>
-    <strong>set_size(self, size)</strong>
+    <strong>set_size(self, size, offset)</strong>
     </dt>
     <dd>
     Set scroll content size.
@@ -388,6 +401,10 @@
         <li><span class="parameter">size</span>
             <span class="types"><span class="type">vector3</span></span>
          The new size for content node
+        </li>
+        <li><span class="parameter">offset</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Offset value to set, where content is starts
         </li>
     </ul>
 
@@ -617,6 +634,38 @@
 
 </dd>
     <dt>
+    <a name = "is_node_in_view"></a>
+    <strong>is_node_in_view(self, node)</strong>
+    </dt>
+    <dd>
+    Check node if it visible now on scroll.
+ Extra border is not affected. Return true for elements in extra scroll zone
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Scroll</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         The node to check
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        True if node in visible scroll area
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "bind_grid"></a>
     <strong>bind_grid(self, grid)</strong>
     </dt>
@@ -643,6 +692,32 @@
            <span class="types"><span class="type">druid.scroll</span></span>
         Current scroll instance
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_click_zone"></a>
+    <strong>set_click_zone(self, node)</strong>
+    </dt>
+    <dd>
+    Strict drag scroll area.  Useful for
+ restrict events outside stencil node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Drag</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+    </ul>
+
 
 
 
@@ -727,6 +802,16 @@
         <li><span class="parameter">SMALL_CONTENT_SCROLL</span>
             <span class="types"><span class="type">bool</span></span>
          If true, content node with size less than view node size can be scrolled
+         (<em>default</em> false)
+        </li>
+        <li><span class="parameter">WHEEL_SCROLL_SPEED</span>
+            <span class="types"><span class="type">bool</span></span>
+         The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
+         (<em>default</em> 0)
+        </li>
+        <li><span class="parameter">WHEEL_SCROLL_INVERTED</span>
+            <span class="types"><span class="type">bool</span></span>
+         If true, invert direction for touchpad and mouse wheel scroll
          (<em>default</em> false)
         </li>
     </ul>
@@ -1001,6 +1086,26 @@
 
 
 </dd>
+    <dt>
+    <a name = "is_animate"></a>
+    <strong>is_animate</strong>
+    </dt>
+    <dd>
+    Flag, if scroll now animating by gui.animate
+
+
+    <ul>
+        <li><span class="parameter">is_animate</span>
+            <span class="types"><span class="type">bool</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
 </dl>
 
 
@@ -1008,7 +1113,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-10-12 00:44:30 </i>
+<i style="float:right;">Last updated 2021-04-06 00:03:14 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

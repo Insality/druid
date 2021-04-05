@@ -26,6 +26,7 @@
 --- Current timer value
 -- @tfield number value
 
+---
 
 local Event = require("druid.event")
 local formats = require("druid.helper.formats")
