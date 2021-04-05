@@ -17,7 +17,6 @@ end
 local function setup_button(self)
 	local b = self.druid:new_button("button_simple", lang.toggle_locale, "button_param")
 	self.druid:new_button("button_template/button", function()
-		msg.post("@system:", "toggle_profile")
 		print(b:is_enabled())
 		b:set_enabled(not b:is_enabled())
 	end, "button_param")

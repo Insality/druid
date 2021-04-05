@@ -257,6 +257,12 @@ function DataList._check_elements(self)
 	local middle_index = (self.last_index + self.top_index) / 2
 	local progress = (middle_index - self._data_first_index) / (self._data_last_index - self._data_first_index)
 	progress = helper.clamp(progress, 0, 1)
+	if self.last_index == self:get_last_index() then
+		progress = 1
+	end
+	if self.top_index == self:get_first_index() then
+		progress = 0
+	end
 
 	if self.scroll_progress ~= progress then
 		self.scroll_progress = progress
