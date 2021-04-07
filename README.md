@@ -101,7 +101,7 @@ druid.on_window_callback(event)
 
 - **[Dynamic Grid](docs_md/01-components.md#dynamic-grid)** - Component to manage node positions with different sizes. Only in one row or column
 
-- **[Dynamic Grid](docs_md/01-components.md#data-list)** - Component to manage data for huge dataset in scroll
+- **[Data List](docs_md/01-components.md#data-list)** - Component to manage data for huge dataset in scroll
 
 - **[Input](docs_md/01-components.md#input)** - User text input component
 
