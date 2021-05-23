@@ -113,6 +113,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "Static grid", "scroll_scene"))
 	self.lobby_grid:add(get_button_disabled(self, "Dynamic grid", "scroll_scene"))
 	self.lobby_grid:add(get_button_disabled(self, "Scroll binding", "scroll_scene"))
+	self.lobby_grid:add(get_button(self, "Add/Remove animations", "grid_animations"))
 
 	self.lobby_grid:add(get_title(self, "Data list / Infinity scroll"))
 	self.lobby_grid:add(get_button(self, "With static grid", "data_list_static_grid"))
