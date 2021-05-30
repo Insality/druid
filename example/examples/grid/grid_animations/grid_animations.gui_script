@@ -35,7 +35,7 @@ end
 
 function init(self)
 	self.druid = druid.new(self)
-	self.grid = self.druid:new_grid("grid", "prefab", 5)
+	self.grid = self.druid:new_static_grid("grid", "prefab", 5)
 
 	self.prefab = gui.get_node("prefab")
 	gui.set_enabled(self.prefab, false)

@@ -48,4 +48,5 @@ globals = {
   "buffer", 
   "resource",
   "defos",
+  "html5",
 }
