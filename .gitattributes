@@ -1,0 +1,18 @@
+# Defold GLSL Shaders
+*.fp linguist-language=GLSL
+*.vp linguist-language=GLSL
+
+# Defold Lua Files
+*.editor_script linguist-language=Lua
+*.render_script linguist-language=Lua
+*.script linguist-language=Lua
+*.gui_script linguist-language=Lua
+
+# Defold Files
+*.atlas linguist-language=JSON5
+*.collection linguist-language=JSON5
+*.font linguist-language=JSON5
+*.go linguist-language=JSON5
+*.gui linguist-language=JSON5
+*.tilemap linguist-language=JSON5
+*.tilesource linguist-language=JSON5
