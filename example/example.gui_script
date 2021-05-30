@@ -17,6 +17,8 @@ end
 
 
 local function show_scene(self, scene_name, text_header)
+	print("Show scene:", scene_name)
+
 	monarch.show(scene_name)
 	gui.set_enabled(gui.get_node("C_Anchor"), false)
 	gui.set_enabled(self.button_menu.node, true)
@@ -60,6 +62,9 @@ local function get_button(self, text, scene_name)
 	local nodes = gui.clone_tree(prefab)
 	local root = nodes["prefab_button"]
 	gui.set_enabled(root, true)
+
+	self.scene_names[scene_name] = text
+
 	self.druid:new_button(root, function()
 		show_scene(self, scene_name, text)
 	end):set_click_zone(self.lobby_scroll.view_node)
@@ -84,6 +89,7 @@ end
 
 local function init_lobby(self)
 	gui.set_enabled(gui.get_node("prefabs"), false)
+	self.scene_names = {}
 
 	self.lobby_scroll = self.druid:new_scroll("lobby_view", "lobby_content")
 	self.lobby_grid = self.druid:new_dynamic_grid("lobby_content")
@@ -113,6 +119,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "Static grid", "scroll_scene"))
 	self.lobby_grid:add(get_button_disabled(self, "Dynamic grid", "scroll_scene"))
 	self.lobby_grid:add(get_button_disabled(self, "Scroll binding", "scroll_scene"))
+	self.lobby_grid:add(get_button(self, "Add/Remove animations", "grid_animations"))
 
 	self.lobby_grid:add(get_title(self, "Data list / Infinity scroll"))
 	self.lobby_grid:add(get_button(self, "With static grid", "data_list_static_grid"))
@@ -129,6 +136,18 @@ local function init_lobby(self)
 end
 
 
+local function check_url(self)
+	if not html5 then
+		return
+	end
+	local example_arg = html5.run("new URLSearchParams(window.location.search).get('example')")
+	if example_arg and self.scene_names[example_arg] then
+		print("Start example: ", example_arg)
+		show_scene(self, example_arg, self.scene_names[example_arg] or "unknown")
+	end
+end
+
+
 function init(self)
 	-- Main lobby have more render priority (top panel)
 	gui.set_render_order(10)
@@ -139,6 +158,8 @@ function init(self)
 
 	init_top_panel(self)
 	init_lobby(self)
+
+	timer.delay(0, false, check_url)
 end
 
 
