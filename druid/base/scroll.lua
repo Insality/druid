@@ -743,7 +743,7 @@ function Scroll._process_scroll_wheel(self, action_id, action)
 
 	if self.drag.can_y then
 		self.inertion.y = (self.inertion.y + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
-	else
+	elseif self.drag.can_x then
 		self.inertion.x = (self.inertion.x + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
 	end
 
