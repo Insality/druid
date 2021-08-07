@@ -22,6 +22,8 @@ Or point to the ZIP file of a [specific release](https://github.com/Insality/dru
 **Druid** requires the following input bindings:
 
 - Mouse trigger - `Button 1` -> `touch` _For basic input components_
+- Mouse trigger - `Wheel up` -> `scroll_up` _For scroll component_
+- Mouse trigger - `Wheel down` -> `scroll_down` _For scroll component_
 - Key trigger - `Backspace` -> `key_backspace`  _For back_handler component, input component_
 - Key trigger - `Back` -> `key_back`  _For back_handler component, Android back button, input component_
 - Key trigger - `Enter` -> `key_enter` _For input component, optional_
