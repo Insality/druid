@@ -212,3 +212,4 @@ Have a good day.
 	- If true - Static Grid will by always align to content anchor.
 	- If false (currently behaviour) - all poses for static grid is predefined and not depends on element's count (see example: static grid and static grid with dynamic poses)
 - **#132** Add example with grid add/remove with animations
+- **#112** Allow remap default Druid input bindings.

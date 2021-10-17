@@ -34,6 +34,25 @@ Or point to the ZIP file of a [specific release](https://github.com/Insality/dru
 ![](media/input_binding_1.png)
 
 
+### Change key bindings [optional]
+If you have to use your own key bindings (and key name), you can change it in your *game.project* file.
+
+Here is current default values for key bindings:
+```
+[druid]
+input_text = text
+input_touch = touch
+input_marked_text = marked_text
+input_key_esc = key_esc
+input_key_back = key_back
+input_key_enter = key_enter
+input_key_backspace = key_backspace
+input_multitouch = multitouch
+input_scroll_up = scroll_up
+input_scroll_down = scroll_down
+```
+
+
 ### Input capturing [optional]
 
 By default, **Druid** will auto-capture input focus, if any input component will be created. So you don't need to call `msg.post(".", "acquire_input_focus")`
