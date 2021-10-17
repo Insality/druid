@@ -211,3 +211,4 @@ Have a good day.
 - **#131** [Static Grid] Add style param: IS_DYNAMIC_NODE_POSES (default: false). Always align by content size with node anchor.
 	- If true - Static Grid will by always align to content anchor.
 	- If false (currently behaviour) - all poses for static grid is predefined and not depends on element's count (see example: static grid and static grid with dynamic poses)
+- **#132** Add example with grid add/remove with animations
