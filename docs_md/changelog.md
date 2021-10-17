@@ -149,6 +149,7 @@ And I should note here are several breaking changes, take a look in changelogs.
 Wanna something more? [Add an issues!](https://github.com/Insality/druid/issues)
 Have a good day.
 
+
 **Changelog 0.6.0**
 ---
 
@@ -202,3 +203,11 @@ Have a good day.
 	- This is basic implementation, it is work not perfect
 - **#124** Add `Scroll:set_click_zone` function. This is just link to `Drag:set_click_zone` function inside scroll component.
 - **#127** The `druid:create` is deprecated. Use `druid:new` for creating custom components
+
+
+**Changelog 0.7.0**
+---
+
+- **#131** [Static Grid] Add style param: IS_DYNAMIC_NODE_POSES (default: false). Always align by content size with node anchor.
+	- If true - Static Grid will by always align to content anchor.
+	- If false (currently behaviour) - all poses for static grid is predefined and not depends on element's count (see example: static grid and static grid with dynamic poses)

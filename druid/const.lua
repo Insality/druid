@@ -54,7 +54,8 @@ M.PIVOTS = {
 	[gui.PIVOT_NW] = vmath.vector3(-0.5, 0.5, 0),
 }
 
-
+M.VECTOR_ZERO = vmath.vector3(0)
+M.VECTOR_ONE = vmath.vector3(1)
 M.SYS_INFO = sys.get_sys_info()
 M.CURRENT_SYSTEM_NAME = M.SYS_INFO.system_name
 

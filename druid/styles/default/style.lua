@@ -56,6 +56,11 @@ M["drag"] = {
 }
 
 
+M["static_grid"] = {
+	IS_DYNAMIC_NODE_POSES = false, -- Always align by content size with node anchor
+}
+
+
 M["scroll"] = {
 	ANIM_SPEED = 0.2, -- gui.animation speed to point
 	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
