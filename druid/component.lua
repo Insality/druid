@@ -169,6 +169,11 @@ function BaseComponent.set_input_priority(self, value)
 	if self._component.input_priority ~= value then
 		self._component.input_priority = value
 		self._component._is_input_priority_changed = true
+
+		local children = self:get_childrens()
+		for i = 1, #children do
+			children[i]:set_input_priority(value)
+		end
 	end
 
 	return self
