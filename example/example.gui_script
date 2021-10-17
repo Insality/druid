@@ -130,6 +130,7 @@ local function init_lobby(self)
 
 	self.lobby_grid:add(get_title(self, "System"))
 	self.lobby_grid:add(get_button_disabled(self, "Styles"))
+	self.lobby_grid:add(get_button(self, "Whitelist / Blacklist", "system_whitelist_blacklist"))
 	self.lobby_grid:add(get_button_disabled(self, "Custom components"))
 	self.lobby_grid:add(get_button_disabled(self, "Component interests"))
 	self.lobby_grid:add(get_button_disabled(self, "Nested Druids"))

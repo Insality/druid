@@ -213,3 +213,4 @@ Have a good day.
 	- If false (currently behaviour) - all poses for static grid is predefined and not depends on element's count (see example: static grid and static grid with dynamic poses)
 - **#132** Add example with grid add/remove with animations
 - **#112** Allow remap default Druid input bindings.
+- **#66** Add `druid:set_whitelist()` and `druid.set_blacklist()` functions. It's affects only on input process step, you can allow/forbid interact with list of specific components

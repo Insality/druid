@@ -351,6 +351,26 @@ function BaseComponent.__remove_children(self, children)
 end
 
 
+--- Return all children components, recursive
+-- @tparam BaseComponent self
+-- @treturn table Array of childrens if the Druid component instance
+function BaseComponent.get_childrens(self)
+	local childrens = {}
+
+	for i = 1, #self._meta.children do
+		local children = self._meta.children[i]
+
+		table.insert(childrens, children)
+		local recursive_childrens = children:get_childrens()
+		for j = 1, #recursive_childrens do
+			table.insert(childrens, recursive_childrens[j])
+		end
+	end
+
+	return childrens
+end
+
+
 --- Create new component. It will inheritance from basic
 -- druid component.
 -- @tparam string name BaseComponent name

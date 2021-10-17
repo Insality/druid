@@ -132,8 +132,8 @@ local function check_sort_input_stack(self, components)
 		local component = components[i]
 		if component:_is_input_priority_changed() then
 			is_need_sort_input_stack = true
+			component:_reset_input_priority_changed()
 		end
-		component:_reset_input_priority_changed()
 	end
 
 	if is_need_sort_input_stack then
@@ -142,7 +142,35 @@ local function check_sort_input_stack(self, components)
 end
 
 
-local function process_input(action_id, action, components, is_input_consumed)
+
+--- Check whitelists and blacklists for input components
+local function can_use_input_component(self, component)
+	local can_by_whitelist = true
+	local can_by_blacklist = true
+
+	if self._input_whitelist and #self._input_whitelist > 0 then
+		if helper.contains(self._input_whitelist, component) then
+			can_by_whitelist = true
+		else
+			can_by_whitelist = false
+		end
+	end
+
+	if self._input_blacklist and #self._input_blacklist > 0 then
+		if helper.contains(self._input_blacklist, component) then
+			can_by_blacklist = false
+		else
+			can_by_blacklist = true
+		end
+	end
+
+	return can_by_blacklist and can_by_whitelist
+end
+
+
+local function process_input(self, action_id, action, components)
+	local is_input_consumed = false
+
 	if #components == 0 then
 		return is_input_consumed
 	end
@@ -150,7 +178,7 @@ local function process_input(action_id, action, components, is_input_consumed)
 	for i = #components, 1, -1 do
 		local component = components[i]
 		local meta = component._meta
-		if meta.input_enabled then
+		if meta.input_enabled and can_use_input_component(self, component) then
 			if not is_input_consumed then
 				is_input_consumed = component:on_input(action_id, action)
 			else
@@ -176,6 +204,9 @@ function DruidInstance.initialize(self, context, style)
 	self._is_input_processing = false
 	self._late_remove = {}
 	self.url = msg.url()
+
+	self._input_blacklist = nil
+	self._input_whitelist = nil
 
 	self.components = {}
 	for i = 1, #base_component.ALL_INTERESTS do
@@ -294,13 +325,13 @@ end
 -- @tparam DruidInstance self
 -- @tparam hash action_id Action_id from on_input
 -- @tparam table action Action from on_input
+-- @treturn bool The boolean value is input was consumed
 function DruidInstance.on_input(self, action_id, action)
 	self._is_input_processing = true
 
-	local is_input_consumed = false
 	local components = self.components[base_component.ON_INPUT]
 	check_sort_input_stack(self, components)
-	is_input_consumed = process_input(action_id, action, components, is_input_consumed)
+	local is_input_consumed = process_input(self, action_id, action, components)
 
 	self._is_input_processing = false
 
@@ -376,12 +407,59 @@ end
 --- Druid on language change.
 -- This one called by global gruid.on_language_change, but can be
 -- call manualy to update all translations
+-- @tparam DruidInstance self
 -- @function druid.on_language_change
 function DruidInstance.on_language_change(self)
 	local components = self.components[base_component.ON_LANGUAGE_CHANGE]
 	for i = 1, #components do
 		components[i]:on_language_change()
 	end
+end
+
+
+--- Set whitelist components for input processing.
+-- If whitelist is not empty and component not contains in this list,
+-- component will be not processed on input step
+-- @tparam DruidInstance self
+-- @tparam[opt=nil] table|Component whitelist_components The array of component to whitelist
+-- @function druid.set_whitelist
+function DruidInstance.set_whitelist(self, whitelist_components)
+	if whitelist_components and whitelist_components.isInstanceOf then
+		whitelist_components = { whitelist_components }
+	end
+
+	for i = 1, #whitelist_components do
+		local component = whitelist_components[i]
+		local childrens = component:get_childrens()
+		for j = 1, #childrens do
+			table.insert(whitelist_components, childrens[j])
+		end
+	end
+
+	self._input_whitelist = whitelist_components
+end
+
+
+--- Set blacklist components for input processing.
+-- If blacklist is not empty and component contains in this list,
+-- component will be not processed on input step
+-- @tparam DruidInstance self
+-- @tparam[opt=nil] table|Component blacklist_components The array of component to blacklist
+-- @function druid.set_blacklist
+function DruidInstance.set_blacklist(self, blacklist_components)
+	if blacklist_components and blacklist_components.isInstanceOf then
+		blacklist_components = { blacklist_components }
+	end
+
+	for i = 1, #blacklist_components do
+		local component = blacklist_components[i]
+		local childrens = component:get_childrens()
+		for j = 1, #childrens do
+			table.insert(blacklist_components, childrens[j])
+		end
+	end
+
+	self._input_blacklist = blacklist_components
 end
 
 
