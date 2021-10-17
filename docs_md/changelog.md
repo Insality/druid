@@ -214,3 +214,4 @@ Have a good day.
 - **#132** Add example with grid add/remove with animations
 - **#112** Allow remap default Druid input bindings.
 - **#66** Add `druid:set_whitelist()` and `druid.set_blacklist()` functions. It's affects only on input process step, you can allow/forbid interact with list of specific components
+- **#125** Now `component:set_input_priority()` affects on all component's children too
