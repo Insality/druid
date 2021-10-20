@@ -215,6 +215,7 @@ Have a good day.
 - **#112** Allow remap default Druid input bindings.
 - **#66** Add `druid:set_whitelist()` and `druid.set_blacklist()` functions. It's affects only on input process step, you can allow/forbid interact with list of specific components
 - **#125** Now `component:set_input_priority()` affects on all component's children too
+- **#143** Update all lang components on ``druid.set_text_function` call
 - **#78** Update Text component:
 	- Add text adjust type instead of _no_adjust_ param.
 		- const.TEXT_ADJUST.DOWNSCALE - Change text's scale to fit in the text node size
