@@ -130,4 +130,9 @@ M["input"] = {
 }
 
 
+M["text"] = {
+	TRIM_POSTFIX = "..."
+}
+
+
 return M

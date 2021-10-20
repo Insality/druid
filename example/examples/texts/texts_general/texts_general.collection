@@ -4,7 +4,7 @@ embedded_instances {
   id: "go"
   data: "components {\n"
   "  id: \"texts\"\n"
-  "  component: \"/example/examples/general/texts/texts.gui\"\n"
+  "  component: \"/example/examples/texts/texts_general/texts_general.gui\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"

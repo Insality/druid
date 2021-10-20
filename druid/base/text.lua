@@ -33,7 +33,7 @@
 -- @tfield vector3 text_area
 
 --- Current text size adjust settings
--- @tfield bool is_no_adjust
+-- @tfield number adjust_type
 
 --- Current text color
 -- @tfield vector3 color
@@ -42,6 +42,7 @@
 
 local Event = require("druid.event")
 local const = require("druid.const")
+local utf8 = require("druid.system.utf8")
 local component = require("druid.component")
 
 local Text = component.create("text", { component.ON_LAYOUT_CHANGE })
@@ -57,10 +58,16 @@ local function update_text_size(self)
 end
 
 
---- Setup scale x, but can only be smaller, than start text scale
-local function update_text_area_size(self)
+--- Reset initial scale for text
+local function reset_default_scale(self)
 	gui.set_scale(self.node, self.start_scale)
 	gui.set_size(self.node, self.start_size)
+end
+
+
+--- Setup scale x, but can only be smaller, than start text scale
+local function update_text_area_size(self)
+	reset_default_scale(self)
 
 	local max_width = self.text_area.x
 	local max_height = self.text_area.y
@@ -74,6 +81,10 @@ local function update_text_area_size(self)
 	local scale_modifier_height = max_height / metrics.height
 	scale_modifier = math.min(scale_modifier, scale_modifier_height)
 
+	if self._minimal_scale then
+		scale_modifier = math.max(scale_modifier, self._minimal_scale)
+	end
+
 	local new_scale = vmath.vector3(scale_modifier, scale_modifier, cur_scale.z)
 	gui.set_scale(self.node, new_scale)
 	self.scale = new_scale
@@ -81,6 +92,33 @@ local function update_text_area_size(self)
 	update_text_size(self)
 
 	self.on_update_text_scale:trigger(self:get_context(), new_scale)
+end
+
+
+local function update_text_with_trim(self, trim_postfix)
+	local max_width = self.text_area.x
+	local text_width = self:get_text_width()
+
+	if text_width > max_width then
+		local text_length = utf8.len(self.last_value)
+		local new_text = self.last_value
+		while text_width > max_width do
+			text_length = text_length - 1
+			new_text = utf8.sub(self.last_value, 1, text_length)
+			text_width = self:get_text_width(new_text .. trim_postfix)
+		end
+
+		gui.set_text(self.node, new_text .. trim_postfix)
+	end
+end
+
+
+local function update_text_with_anchor_shift(self)
+	if self:get_text_width() >= self.text_area.x then
+		self:set_pivot(const.REVERSE_PIVOTS[self.start_pivot])
+	else
+		self:set_pivot(self.start_pivot)
+	end
 end
 
 
@@ -96,15 +134,56 @@ local function get_space_width(self, font)
 end
 
 
+local function update_adjust(self)
+	if not self.adjust_type or self.adjust_type == const.TEXT_ADJUST.NO_ADJUST then
+		reset_default_scale(self)
+		return
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.DOWNSCALE then
+		update_text_area_size(self)
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.TRIM then
+		update_text_with_trim(self, self.style.TRIM_POSTFIX)
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.DOWNSCALE_LIMITED then
+		update_text_area_size(self)
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.SCROLL then
+		update_text_with_anchor_shift(self)
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_SCROLL then
+		update_text_area_size(self)
+		update_text_with_anchor_shift(self)
+	end
+end
+
+
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table style
+-- @tfield[opt=...] string TRIM_POSTFIX The postfix for TRIM adjust type
+function Text.on_style_change(self, style)
+	self.style = {}
+	self.style.TRIM_POSTFIX = style.TRIM_POSTFIX or "..."
+end
+
+
 --- Component init function
 -- @tparam Text self
 -- @tparam node node Gui text node
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
--- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
-function Text.init(self, node, value, no_adjust)
+-- @tparam[opt=0] int adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+function Text.init(self, node, value, adjust_type)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)
 
+	self.start_pivot = gui.get_pivot(self.node)
 	self.start_scale = gui.get_scale(self.node)
 	self.scale = gui.get_scale(self.node)
 
@@ -113,7 +192,7 @@ function Text.init(self, node, value, no_adjust)
 	self.text_area.x = self.text_area.x * self.start_scale.x
 	self.text_area.y = self.text_area.y * self.start_scale.y
 
-	self.is_no_adjust = no_adjust
+	self.adjust_type = adjust_type or const.TEXT_ADJUST.DOWNSCALE
 	self.color = gui.get_color(self.node)
 
 	self.on_set_text = Event()
@@ -156,49 +235,59 @@ end
 --- Set text to text field
 -- @tparam Text self
 -- @tparam string set_to Text for node
+-- @treturn Text Current text instance
 function Text.set_to(self, set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, set_to)
 
 	self.on_set_text:trigger(self:get_context(), set_to)
 
-	if not self.is_no_adjust then
-		update_text_area_size(self)
-	end
+	update_adjust(self)
+
+	return self
 end
 
 
 --- Set color
 -- @tparam Text self
 -- @tparam vector4 color Color for node
+-- @treturn Text Current text instance
 function Text.set_color(self, color)
 	self.color = color
 	gui.set_color(self.node, color)
+
+	return self
 end
 
 
 --- Set alpha
 -- @tparam Text self
 -- @tparam number alpha Alpha for node
+-- @treturn Text Current text instance
 function Text.set_alpha(self, alpha)
 	self.color.w = alpha
 	gui.set_color(self.node, self.color)
+
+	return self
 end
 
 
 --- Set scale
 -- @tparam Text self
 -- @tparam vector3 scale Scale for node
+-- @treturn Text Current text instance
 function Text.set_scale(self, scale)
 	self.last_scale = scale
 	gui.set_scale(self.node, scale)
+
+	return self
 end
 
 
---- Set text pivot. Text will re-anchor inside
--- his text area
+--- Set text pivot. Text will re-anchor inside text area
 -- @tparam Text self
 -- @tparam gui.pivot pivot Gui pivot constant
+-- @treturn Text Current text instance
 function Text.set_pivot(self, pivot)
 	local prev_pivot = gui.get_pivot(self.node)
 	local prev_offset = const.PIVOTS[prev_pivot]
@@ -216,6 +305,8 @@ function Text.set_pivot(self, pivot)
 	gui.set_position(self.node, self.pos)
 
 	self.on_set_pivot:trigger(self:get_context(), pivot)
+
+	return self
 end
 
 
@@ -224,6 +315,38 @@ end
 -- @treturn bool Is text node with line break
 function Text.is_multiline(self)
 	return gui.get_line_break(self.node)
+end
+
+
+--- Set text adjust, refresh the current text visuals, if needed
+-- @tparam Text self
+-- @tparam[opt] number adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
+-- @tparam[opt] number minimal_scale If pass nil - not use minimal scale
+-- @treturn Text Current text instance
+function Text.set_text_adjust(self, adjust_type, minimal_scale)
+	self.adjust_type = adjust_type
+	self._minimal_scale = minimal_scale
+	self:set_to(self.last_value)
+
+	return self
+end
+
+
+--- Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
+-- @tparam Text self
+-- @tparam number minimal_scale If pass nil - not use minimal scale
+-- @treturn Text Current text instance
+function Text.set_minimal_scale(self, minimal_scale)
+	self._minimal_scale = minimal_scale
+
+	return self
+end
+
+
+--- Return current text adjust type
+-- @treturn number The current text adjust type
+function Text.get_text_adjust(self, adjust_type)
+	return self.adjust_type
 end
 
 

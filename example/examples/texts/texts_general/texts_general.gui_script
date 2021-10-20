@@ -1,4 +1,5 @@
 local druid = require("druid.druid")
+local const = require("druid.const")
 
 local pivots = {
 	gui.PIVOT_CENTER,
@@ -17,7 +18,7 @@ local function setup_texts(self)
 	self.druid:new_text("text_inline")
 	self.druid:new_text("text_multiline")
 	local anchoring = self.druid:new_text("text_anchoring")
-	self.druid:new_text("text_no_adjust", "Without adjust size", true)
+	self.druid:new_text("text_no_adjust", "Without adjust size", const.TEXT_ADJUST.NO_ADJUST)
 	self.druid:new_lang_text("text_locale", "ui_text_example")
 
 	local big_text = "Check max size"

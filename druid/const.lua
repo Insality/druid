@@ -54,6 +54,19 @@ M.PIVOTS = {
 	[gui.PIVOT_NW] = vmath.vector3(-0.5, 0.5, 0),
 }
 
+M.REVERSE_PIVOTS = {
+	[gui.PIVOT_CENTER] = gui.PIVOT_CENTER,
+	[gui.PIVOT_N] = gui.PIVOT_S,
+	[gui.PIVOT_NE] = gui.PIVOT_SW,
+	[gui.PIVOT_E] = gui.PIVOT_W,
+	[gui.PIVOT_SE] = gui.PIVOT_NW,
+	[gui.PIVOT_S] = gui.PIVOT_N,
+	[gui.PIVOT_SW] = gui.PIVOT_NE,
+	[gui.PIVOT_W] = gui.PIVOT_E,
+	[gui.PIVOT_NW] = gui.PIVOT_SE,
+}
+
+
 M.VECTOR_ZERO = vmath.vector3(0)
 M.VECTOR_ONE = vmath.vector3(1)
 M.SYS_INFO = sys.get_sys_info()
@@ -74,6 +87,16 @@ M.SHIFT = {
 	NO_SHIFT = 0,
 	LEFT = -1,
 	RIGHT = 1,
+}
+
+
+M.TEXT_ADJUST = {
+	DOWNSCALE = 0,
+	TRIM = 1,
+	NO_ADJUST = 2,
+	DOWNSCALE_LIMITED = 3,
+	SCROLL = 4,
+	SCALE_THEN_SCROLL = 5,
 }
 
 
