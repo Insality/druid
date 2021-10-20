@@ -1,3 +1,4 @@
+local const = require("druid.const")
 local settings = require("druid.system.settings")
 local anims = require("druid.styles.default.anims")
 
@@ -131,7 +132,8 @@ M["input"] = {
 
 
 M["text"] = {
-	TRIM_POSTFIX = "..."
+	TRIM_POSTFIX = "...",
+	DEFAULT_ADJUST = const.TEXT_ADJUST.DOWNSCALE
 }
 
 

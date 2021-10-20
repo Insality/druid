@@ -168,9 +168,11 @@ end
 -- or create your own style
 -- @table style
 -- @tfield[opt=...] string TRIM_POSTFIX The postfix for TRIM adjust type
+-- @tfield[opt=DOWNSCALE] string DEFAULT_ADJUST The default adjust type for any text component
 function Text.on_style_change(self, style)
 	self.style = {}
 	self.style.TRIM_POSTFIX = style.TRIM_POSTFIX or "..."
+	self.style.DEFAULT_ADJUST = style.DEFAULT_ADJUST or const.TEXT_ADJUST.DOWNSCALE
 end
 
 
@@ -192,7 +194,7 @@ function Text.init(self, node, value, adjust_type)
 	self.text_area.x = self.text_area.x * self.start_scale.x
 	self.text_area.y = self.text_area.y * self.start_scale.y
 
-	self.adjust_type = adjust_type or const.TEXT_ADJUST.DOWNSCALE
+	self.adjust_type = adjust_type or self.style.DEFAULT_ADJUST
 	self.color = gui.get_color(self.node)
 
 	self.on_set_text = Event()

@@ -215,3 +215,11 @@ Have a good day.
 - **#112** Allow remap default Druid input bindings.
 - **#66** Add `druid:set_whitelist()` and `druid.set_blacklist()` functions. It's affects only on input process step, you can allow/forbid interact with list of specific components
 - **#125** Now `component:set_input_priority()` affects on all component's children too
+- **#78** Update Text component:
+	- Add text adjust type instead of _no_adjust_ param.
+		- const.TEXT_ADJUST.DOWNSCALE - Change text's scale to fit in the text node size
+		- const.TEXT_ADJUST.TRIM - Trim the text with postfix (default - "...", override in styles) to fit in the text node size
+		- const.TEXT_ADJUST.NO_ADJUST - No any adjust, like default Defold text node
+		- const.TEXT_ADJUST.DOWNSCALE_LIMITED - Change text's scale list downscale, but there is limit for text's scale
+		- const.TEXT_ADJUST.SCROLL - Change text's pivot to imitate scrolling in the text box. Use with stencil node for better effect.
+		- const.TEXT_ADJUST.SCALE_THEN_SCROLL - Combine two modes: first limited downscale, then scroll

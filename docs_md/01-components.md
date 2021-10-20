@@ -1,5 +1,3 @@
-
-
 # Druid components
 
 
@@ -42,7 +40,7 @@ _fill example usecases_
 Basic Druid text component. Text components by default have the text size adjusting.
 
 ### Setup
-Create text node with druid: `text = druid:new_text(node_name, [initial_value], [is_disable_size_adjust])`
+Create text node with druid: `text = druid:new_text(node_name, [initial_value], [text_adjust_type])`
 
 ### Notes
 - Text component by default have auto adjust text sizing. Text never will be bigger, than text node size, which you can setup in GUI scene. It can be disabled on component creating by settings argument `is_no_adjust` to _true_
@@ -52,6 +50,14 @@ Create text node with druid: `text = druid:new_text(node_name, [initial_value], 
 - Text pivot can be changed with `text:set_pivot`, and text will save their position inside their text size box:
 
 ![](../media/text_anchor.gif)
+
+- There is several text adjust types. Default Downscale. You can change the default adjust type in the text style table.
+	- **const.TEXT_ADJUST.DOWNSCALE** - Change text's scale to fit in the text node size
+	- **const.TEXT_ADJUST.TRIM** - Trim the text with postfix (default - "...", override in styles) to fit in the text node size
+	- **const.TEXT_ADJUST.NO_ADJUST** - No any adjust, like default Defold text node
+	- **const.TEXT_ADJUST.DOWNSCALE_LIMITED** - Change text's scale list downscale, but there is limit for text's scale
+	- **const.TEXT_ADJUST.SCROLL** - Change text's pivot to imitate scrolling in the text box. Use with stencil node for better effect.
+	- **const.TEXT_ADJUST.SCALE_THEN_SCROLL** - Combine two modes: first limited downscale, then scroll
 
 
 ## Blocker
