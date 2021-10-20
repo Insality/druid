@@ -83,8 +83,7 @@ end
 -- @tparam function callback Get localized text function
 function M.set_text_function(callback)
 	settings.get_text = callback or const.EMPTY_FUNCTION
-	-- TODO: Update all localized text
-	-- Need to store all current druid instances to iterate over it?
+	M.on_language_change()
 end
 
 
