@@ -224,3 +224,15 @@ Have a good day.
 		- const.TEXT_ADJUST.DOWNSCALE_LIMITED - Change text's scale list downscale, but there is limit for text's scale
 		- const.TEXT_ADJUST.SCROLL - Change text's pivot to imitate scrolling in the text box. Use with stencil node for better effect.
 		- const.TEXT_ADJUST.SCALE_THEN_SCROLL - Combine two modes: first limited downscale, then scroll
+- **#81** Add ability to interact with Druid input via messages
+	- Currently add only Druid Button component:
+		- Send to _gui.script_ message: `druid_const.ON_MESSAGE_INPUT`. The message table params:
+			- `node_id` - the name of the node with button component on it
+			- `action` - value from `druid_const.MESSAGE_INPUT`. Available values:
+				- **BUTTON_CLICK** - usual button click callback
+				- **BUTTON_LONG_CLICK** - button long click callback
+				- **BUTTON_DOUBLE_CLICK** - button double click callback
+				- **BUTTON_REPEATED_CLICK** - button repeated click callback
+	- Add Druid component interest: `component.ON_MESSAGE_INPUT`
+	- Implement new interest via function `component:on_message_input(node_id, message)`
+	- See **System: Message input** example

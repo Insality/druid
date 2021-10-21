@@ -352,9 +352,21 @@ end
 -- @tparam table message Message from on_message
 -- @tparam hash sender Sender from on_message
 function DruidInstance.on_message(self, message_id, message, sender)
+	-- TODO: refactor for more juicy code
 	local specific_ui_message = base_component.SPECIFIC_UI_MESSAGES[message_id]
+	local on_message_input_message = base_component.SPECIFIC_UI_MESSAGES[base_component.ON_MESSAGE_INPUT]
 
-	if specific_ui_message then
+	if specific_ui_message == on_message_input_message then
+		local components = self.components[message_id]
+		if components then
+			for i = 1, #components do
+				local component = components[i]
+				if can_use_input_component(self, component) then
+					component[specific_ui_message](component, hash(message.node_id), message)
+				end
+			end
+		end
+	elseif specific_ui_message then
 		local components = self.components[message_id]
 		if components then
 			for i = 1, #components do

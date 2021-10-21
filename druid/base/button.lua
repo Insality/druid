@@ -24,6 +24,9 @@
 ---Trigger node
 -- @tfield node node
 
+---The hash of trigger node
+-- @tfield node_id hash
+
 ---Animation node
 -- @tfield[opt=node] node anim_node
 
@@ -52,7 +55,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Button = component.create("button", { component.ON_INPUT })
+local Button = component.create("button", { component.ON_INPUT, component.ON_MESSAGE_INPUT })
 
 
 local function is_input_match(self, action_id)
@@ -95,6 +98,7 @@ local function on_button_repeated_click(self)
 	self.style.on_click(self, self.anim_node)
 
 	self.click_in_row = self.click_in_row + 1
+
 	self.on_repeated_click:trigger(self:get_context(), self.params, self, self.click_in_row)
 end
 
@@ -190,6 +194,7 @@ end
 function Button.init(self, node, callback, params, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
+	self.node_id = gui.get_id(self.node)
 
 	self.anim_node = anim_node and self:get_node(anim_node) or self.node
 	self.start_scale = gui.get_scale(self.anim_node)
@@ -285,6 +290,31 @@ end
 
 function Button.on_input_interrupt(self)
 	self.can_action = false
+end
+
+
+function Button.on_message_input(self, node_id, message)
+	if node_id ~= self.node_id or self.disabled or not helper.is_enabled(self.node) then
+		return false
+	end
+
+	if message.action == const.MESSAGE_INPUT.BUTTON_CLICK then
+		on_button_click(self)
+	end
+
+	if message.action == const.MESSAGE_INPUT.BUTTON_LONG_CLICK then
+		on_button_long_click(self)
+	end
+
+	if message.action == const.MESSAGE_INPUT.BUTTON_DOUBLE_CLICK then
+		on_button_double_click(self)
+	end
+
+	if message.action == const.MESSAGE_INPUT.BUTTON_REPEATED_CLICK then
+		on_button_repeated_click(self)
+		self.is_repeated_started = false
+		self.last_pressed_time = socket.gettime()
+	end
 end
 
 

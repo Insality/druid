@@ -141,6 +141,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "Custom components"))
 	self.lobby_grid:add(get_button_disabled(self, "Component interests"))
 	self.lobby_grid:add(get_button_disabled(self, "Nested Druids"))
+	self.lobby_grid:add(get_button(self, "Message input", "system_message_input"))
 	self.lobby_grid:add(get_button_disabled(self, "Input priority"))
 end
 

@@ -34,12 +34,21 @@ M.ON_MESSAGE = hash("on_message")
 M.ON_FOCUS_LOST = hash("on_focus_lost")
 M.ON_FOCUS_GAINED = hash("on_focus_gained")
 M.ON_LAYOUT_CHANGE = hash("layout_changed")
+M.ON_MESSAGE_INPUT = hash("on_message_input")
 M.ON_LANGUAGE_CHANGE = hash("on_language_change")
 
 
 M.PRIORITY_INPUT = 10
 M.PRIORITY_INPUT_HIGH = 20
 M.PRIORITY_INPUT_MAX = 100
+
+
+M.MESSAGE_INPUT = {
+	BUTTON_CLICK = "button_click",
+	BUTTON_LONG_CLICK = "button_long_click",
+	BUTTON_DOUBLE_CLICK = "button_double_click",
+	BUTTON_REPEATED_CLICK = "button_repeated_click",
+}
 
 
 M.PIVOTS = {
