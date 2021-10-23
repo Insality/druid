@@ -78,19 +78,21 @@ local function update_text_area_size(self)
 	local max_height = self.text_area.y
 
 	local metrics = gui.get_text_metrics_from_node(self.node)
-	local cur_scale = gui.get_scale(self.node)
 
 	local scale_modifier = max_width / metrics.width
 	scale_modifier = math.min(scale_modifier, self.start_scale.x)
 
-	local scale_modifier_height = max_height / metrics.height
-	scale_modifier = math.min(scale_modifier, scale_modifier_height)
+	if self:is_multiline() then
+		local max_text_area_square = max_width * max_height
+		local cur_text_area_square = metrics.height * metrics.width * self.start_scale.x
+		scale_modifier = self.start_scale.x * math.sqrt(max_text_area_square / cur_text_area_square)
+	end
 
 	if self._minimal_scale then
 		scale_modifier = math.max(scale_modifier, self._minimal_scale)
 	end
 
-	local new_scale = vmath.vector3(scale_modifier, scale_modifier, cur_scale.z)
+	local new_scale = vmath.vector3(scale_modifier, scale_modifier, self.start_scale.z)
 	gui.set_scale(self.node, new_scale)
 	self.scale = new_scale
 
