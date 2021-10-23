@@ -50,6 +50,8 @@ M.MESSAGE_INPUT = {
 	BUTTON_LONG_CLICK = "button_long_click",
 	BUTTON_DOUBLE_CLICK = "button_double_click",
 	BUTTON_REPEATED_CLICK = "button_repeated_click",
+	-- (value)
+	TEXT_SET = "text_set",
 }
 
 

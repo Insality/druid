@@ -8,46 +8,50 @@ end
 
 
 local function trigger_callback(self, params)
-	msg.post(".", const.ON_MESSAGE_INPUT, {
-		node_id = params.node_id,
-		action = params.action
-	})
+	msg.post(".", const.ON_MESSAGE_INPUT, params)
+end
+
+
+local function set_random_text_callback(self, params)
+	params.value = "Value: " .. math.random(0, 99)
+
+	trigger_callback(self, params)
 end
 
 
 function init(self)
 	self.druid = druid.new(self)
 
-	self.button_left = self.druid:new_button("button_left/button", click_callback)
-	self.button_left.on_long_click:subscribe(function() print("long click") end)
-	self.button_left.on_double_click:subscribe(function() print("double click") end)
-	self.button_left.on_repeated_click:subscribe(function() print("repeated_click") end)
+	self.button_test = self.druid:new_button("button_test/button", click_callback)
+	self.button_test.on_long_click:subscribe(function() print("long click") end)
+	self.button_test.on_double_click:subscribe(function() print("double click") end)
+	self.button_test.on_repeated_click:subscribe(function() print("repeated_click") end)
 
-	self.button_right = self.druid:new_button("button_right/button", click_callback)
+	self.druid:new_text("text_random")
 
-	self.druid:new_button("button_trigger_left/button", trigger_callback, {
-		node_id = "button_left/button",
+	self.druid:new_button("button_trigger_click/button", trigger_callback, {
+		node_id = "button_test/button",
 		action = const.MESSAGE_INPUT.BUTTON_CLICK
 	})
 
-	self.druid:new_button("button_trigger_left_double/button", trigger_callback, {
-		node_id = "button_left/button",
+	self.druid:new_button("button_trigger_double/button", trigger_callback, {
+		node_id = "button_test/button",
 		action = const.MESSAGE_INPUT.BUTTON_DOUBLE_CLICK
 	})
 
-	self.druid:new_button("button_trigger_left_long/button", trigger_callback, {
-		node_id = "button_left/button",
+	self.druid:new_button("button_trigger_long/button", trigger_callback, {
+		node_id = "button_test/button",
 		action = const.MESSAGE_INPUT.BUTTON_LONG_CLICK
 	})
 
-	self.druid:new_button("button_trigger_left_repeated/button", trigger_callback, {
-		node_id = "button_left/button",
+	self.druid:new_button("button_trigger_repeated/button", trigger_callback, {
+		node_id = "button_test/button",
 		action = const.MESSAGE_INPUT.BUTTON_REPEATED_CLICK
 	})
 
-	self.druid:new_button("button_trigger_right/button", trigger_callback, {
-		node_id = "button_right/button",
-		action = const.MESSAGE_INPUT.BUTTON_CLICK
+	self.druid:new_button("button_text_random/button", set_random_text_callback, {
+		node_id = "text_random",
+		action = const.MESSAGE_INPUT.TEXT_SET
 	})
 end
 

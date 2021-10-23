@@ -217,7 +217,7 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "button_left"
+  id: "button_test"
   parent: "info_button"
   layer: ""
   inherit_alpha: true
@@ -259,12 +259,12 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "kenney/button_blue"
-  id: "button_left/button"
+  id: "button_test/button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "button_left"
+  parent: "button_test"
   layer: "image"
   inherit_alpha: true
   slice9 {
@@ -313,9 +313,9 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Left"
+  text: "Button"
   font: "game"
-  id: "button_left/text"
+  id: "button_test/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -333,7 +333,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "button_left/button"
+  parent: "button_test/button"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -347,7 +347,7 @@ nodes {
 nodes {
   position {
     x: 100.0
-    y: 0.0
+    y: 6.0
     z: 0.0
     w: 1.0
   }
@@ -358,103 +358,8 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEMPLATE
-  id: "button_right"
-  parent: "info_button"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  template: "/example/templates/button.gui"
-  template_node_child: false
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 130.0
-    y: 60.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/button_blue"
-  id: "button_right/button"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  parent: "button_right"
-  layer: "image"
-  inherit_alpha: true
-  slice9 {
-    x: 15.0
-    y: 15.0
-    z: 15.0
-    w: 15.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: true
-  size_mode: SIZE_MODE_MANUAL
-}
-nodes {
-  position {
-    x: 0.0
-    y: 7.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 0.7
-    y: 0.7
+    x: 0.8
+    y: 0.8
     z: 1.0
     w: 1.0
   }
@@ -472,34 +377,33 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Right"
+  text: "Value: 0"
   font: "game"
-  id: "button_right/text"
+  id: "text_random"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   outline {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  shadow {
     x: 1.0
     y: 1.0
     z: 1.0
     w: 1.0
   }
-  shadow {
-    x: 0.101960786
-    y: 0.2
-    z: 0.6
-    w: 1.0
-  }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "button_right/button"
-  layer: "text"
+  parent: "info_button"
+  layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 0.0
-  shadow_alpha: 0.78
-  overridden_fields: 8
-  template_node_child: true
+  outline_alpha: 1.0
+  shadow_alpha: 0.0
+  template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0
 }
@@ -653,7 +557,7 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "button_trigger_left"
+  id: "button_trigger_click"
   parent: "info_blacklist"
   layer: ""
   inherit_alpha: true
@@ -695,12 +599,12 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "kenney/button_blue"
-  id: "button_trigger_left/button"
+  id: "button_trigger_click/button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "button_trigger_left"
+  parent: "button_trigger_click"
   layer: "image"
   inherit_alpha: true
   slice9 {
@@ -749,9 +653,9 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Left"
+  text: "Click"
   font: "game"
-  id: "button_trigger_left/text"
+  id: "button_trigger_click/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -769,167 +673,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "button_trigger_left/button"
-  layer: "text"
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 0.0
-  shadow_alpha: 0.78
-  overridden_fields: 8
-  template_node_child: true
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: 100.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEMPLATE
-  id: "button_trigger_right"
-  parent: "info_blacklist"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  template: "/example/templates/button.gui"
-  template_node_child: false
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 130.0
-    y: 60.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/button_blue"
-  id: "button_trigger_right/button"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  parent: "button_trigger_right"
-  layer: "image"
-  inherit_alpha: true
-  slice9 {
-    x: 15.0
-    y: 15.0
-    z: 15.0
-    w: 15.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: true
-  size_mode: SIZE_MODE_MANUAL
-}
-nodes {
-  position {
-    x: 0.0
-    y: 7.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 0.7
-    y: 0.7
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Right\n"
-  ""
-  font: "game"
-  id: "button_trigger_right/text"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 0.101960786
-    y: 0.2
-    z: 0.6
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "button_trigger_right/button"
+  parent: "button_trigger_click/button"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -972,7 +716,7 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "button_trigger_left_double"
+  id: "button_trigger_double"
   parent: "info_blacklist"
   layer: ""
   inherit_alpha: true
@@ -1014,12 +758,12 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "kenney/button_blue"
-  id: "button_trigger_left_double/button"
+  id: "button_trigger_double/button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "button_trigger_left_double"
+  parent: "button_trigger_double"
   layer: "image"
   inherit_alpha: true
   slice9 {
@@ -1070,7 +814,7 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   text: "Double click"
   font: "game"
-  id: "button_trigger_left_double/text"
+  id: "button_trigger_double/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -1088,7 +832,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "button_trigger_left_double/button"
+  parent: "button_trigger_double/button"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -1132,7 +876,7 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "button_trigger_left_long"
+  id: "button_trigger_long"
   parent: "info_blacklist"
   layer: ""
   inherit_alpha: true
@@ -1174,12 +918,12 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "kenney/button_blue"
-  id: "button_trigger_left_long/button"
+  id: "button_trigger_long/button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "button_trigger_left_long"
+  parent: "button_trigger_long"
   layer: "image"
   inherit_alpha: true
   slice9 {
@@ -1230,7 +974,7 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   text: "Long click"
   font: "game"
-  id: "button_trigger_left_long/text"
+  id: "button_trigger_long/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -1248,7 +992,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "button_trigger_left_long/button"
+  parent: "button_trigger_long/button"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -1292,7 +1036,7 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "button_trigger_left_repeated"
+  id: "button_trigger_repeated"
   parent: "info_blacklist"
   layer: ""
   inherit_alpha: true
@@ -1334,12 +1078,12 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "kenney/button_blue"
-  id: "button_trigger_left_repeated/button"
+  id: "button_trigger_repeated/button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "button_trigger_left_repeated"
+  parent: "button_trigger_repeated"
   layer: "image"
   inherit_alpha: true
   slice9 {
@@ -1390,7 +1134,7 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   text: "Repeated"
   font: "game"
-  id: "button_trigger_left_repeated/text"
+  id: "button_trigger_repeated/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -1408,13 +1152,174 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "button_trigger_left_repeated/button"
+  parent: "button_trigger_repeated/button"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
   outline_alpha: 0.0
   shadow_alpha: 0.78
   overridden_fields: 8
+  template_node_child: true
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: 100.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "button_text_random"
+  parent: "info_blacklist"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  template: "/example/templates/button.gui"
+  template_node_child: false
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 130.0
+    y: 60.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "kenney/button_green"
+  id: "button_text_random/button"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "button_text_random"
+  layer: "image"
+  inherit_alpha: true
+  slice9 {
+    x: 15.0
+    y: 15.0
+    z: 15.0
+    w: 15.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  overridden_fields: 9
+  template_node_child: true
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 0.0
+    y: 7.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Set Text"
+  font: "game"
+  id: "button_text_random/text"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 0.101960786
+    y: 0.3019608
+    z: 0.3019608
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
+  parent: "button_text_random/button"
+  layer: "text"
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 0.0
+  shadow_alpha: 0.78
+  overridden_fields: 8
+  overridden_fields: 16
   template_node_child: true
   text_leading: 1.0
   text_tracking: 0.0

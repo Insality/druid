@@ -35,8 +35,12 @@ end
 function M.on_message(self, message_id, message, sender)
 end
 
--- Call only if component with ON_ANGUAGECHANinterest
-function M.on_anguagechanself)
+-- Call only if component with ON_LANGUAGE_CHANGE interest
+function M.on_language_change(self)
+end
+
+-- Call only if component with ON_MESSAGE_INPUT interest
+function M.on_message_input(self, node_id, message)
 end
 
 -- Call only if component with ON_LAYOUT_CHANGE interest
@@ -104,6 +108,8 @@ There is next interests in druid:
 - **ON_INPUT** - component will receive input from on_input, after other components with ON_INPUT_HIGH
 
 - **ON_LANGUAGE_CHANGE** - will call _on_language_change_ function on language change trigger
+
+- **ON_MESSAGE_INPUT** - will call _on_message_input_ function on Druid _const.ON_MESSAGE_INPUT_ message  
 
 - **ON_LAYOUT_CHANGE** will call _on_layout_change_ function on layout change trigger
 

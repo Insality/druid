@@ -19,6 +19,9 @@
 --- Text node
 -- @tfield node node
 
+--- The node id of text node
+-- @tfield hash node_id
+
 --- Current text position
 -- @tfield vector3 pos
 
@@ -47,7 +50,7 @@ local const = require("druid.const")
 local utf8 = require("druid.system.utf8")
 local component = require("druid.component")
 
-local Text = component.create("text", { component.ON_LAYOUT_CHANGE })
+local Text = component.create("text", { component.ON_LAYOUT_CHANGE, component.ON_MESSAGE_INPUT })
 
 
 local function update_text_size(self)
@@ -186,6 +189,7 @@ end
 function Text.init(self, node, value, adjust_type)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)
+	self.node_id = gui.get_id(self.node)
 
 	self.start_pivot = gui.get_pivot(self.node)
 	self.start_scale = gui.get_scale(self.node)
@@ -215,6 +219,17 @@ function Text.on_layout_change(self)
 end
 
 
+function Text.on_message_input(self, node_id, message)
+	if node_id ~= self.node_id  then
+		return false
+	end
+
+	if message.action == const.MESSAGE_INPUT.TEXT_SET then
+		Text.set_to(self, message.value)
+	end
+end
+
+
 --- Calculate text width with font with respect to trailing space
 -- @tparam Text self
 -- @tparam[opt] string text
@@ -241,6 +256,8 @@ end
 -- @tparam string set_to Text for node
 -- @treturn Text Current text instance
 function Text.set_to(self, set_to)
+	set_to = set_to or ""
+
 	self.last_value = set_to
 	gui.set_text(self.node, set_to)
 
