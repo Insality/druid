@@ -248,3 +248,4 @@ Have a good day.
 	- The `failure_callback`will be called if `check_function` will return false. It's callback for you if button is not available
 	- Example with `set_check_function` exists in general:buttons example collection
 - **#107** Better scale text adjust by height for multiline text nodes (but still not perfect)
+- **#144** Fix some glitches with scroll Points of Interest. Remove false detection of scroll stopped.
