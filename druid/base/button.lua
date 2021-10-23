@@ -136,7 +136,20 @@ local function on_button_release(self)
 		return false
 	end
 
-	if not self.disabled then
+	local check_function_result = true
+	if self._check_function then
+		check_function_result = self._check_function(self:get_context())
+	end
+
+	if self.disabled then
+		self.style.on_click_disabled(self, self.anim_node)
+		return true
+	elseif not check_function_result then
+		if self._failure_callback then
+			self._failure_callback(self:get_context())
+		end
+		return true
+	else
 		if self.can_action then
 			self.can_action = false
 
@@ -158,9 +171,6 @@ local function on_button_release(self)
 			self.last_released_time = time
 		end
 		return true
-	else
-		self.style.on_click_disabled(self, self.anim_node)
-		return false
 	end
 end
 
@@ -214,6 +224,9 @@ function Button.init(self, node, callback, params, anim_node)
 	self.last_released_time = 0
 	self.click_in_row = 0
 	self.key_trigger = nil
+
+	self._check_function = nil
+	self._failure_callback = nil
 
 	-- Event stubs
 	self.on_click = Event(callback)
@@ -384,6 +397,16 @@ end
 -- @treturn hash The action_id of the key
 function Button.get_key_trigger(self)
 	return self.key_trigger
+end
+
+
+--- Set function for additional check for button click availability
+-- @tparam[opt] function check_function Should return true or false. If true - button can be pressed.
+-- @tparam[opt] function failure_callback Function what will be called on button click, if check function return false
+-- @treturn Button Current button instance
+function Button.set_check_function(self, check_function, failure_callback)
+	self._check_function = check_function
+	self._failure_callback = failure_callback
 end
 
 

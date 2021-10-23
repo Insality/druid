@@ -27,6 +27,28 @@ local function double_tap_callback(self, params, button, click_in_row)
 end
 
 
+local function check_function(self)
+	self._some_test_value = self._some_test_value or 0
+	self._some_test_value = self._some_test_value + 1
+
+	return self._some_test_value % 2 == 0
+end
+
+
+local function failure_check_callback(self)
+	gui.set_text(gui.get_node("text_custom_result"), "Failure callback: true")
+end
+
+
+local function check_clicked_callback(self)
+	local node = gui.get_node("text_custom_result")
+	gui.set_text(node, "Failure callback: false")
+
+	gui.set_scale(node, vmath.vector3(0.75))
+	gui.animate(node, gui.PROP_SCALE, 0.5, gui.EASING_OUTSINE, 0.2)
+end
+
+
 local function setup_buttons(self)
 	self.druid:new_button("button_usual/button", usual_callback)
 
@@ -48,6 +70,9 @@ local function setup_buttons(self)
 
 	-- Button with another node for animating
 	self.druid:new_button("button_anim/button", usual_callback, nil, "anim_node_icon")
+
+	self.druid:new_button("button_custom_check/button", check_clicked_callback)
+		:set_check_function(check_function, failure_check_callback)
 end
 
 
