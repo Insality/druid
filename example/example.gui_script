@@ -38,6 +38,10 @@ local function init_top_panel(self)
 		sys.open_url("https://insality.github.io/druid/")
 	end)
 
+	-- self.button_code = self.druid:new_button("button_code/button", function()
+	-- 	sys.open_url("https://github.com/Insality/druid/blob/develop/example/examples/general/overview/overview.gui_script")
+	-- end)
+
 	self.text_header = self.druid:new_text("text_header", "Druid")
 end
 
@@ -98,8 +102,6 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_title(self, "General examples"))
 	self.lobby_grid:add(get_button(self, "Overview", "general_overview"))
 	self.lobby_grid:add(get_button(self, "Buttons", "general_buttons"))
-	self.lobby_grid:add(get_button(self, "Texts", "general_texts"))
-	self.lobby_grid:add(get_button_disabled(self, "Lang Text", "scene_name"))
 	self.lobby_grid:add(get_button(self, "Sliders", "general_sliders"))
 	self.lobby_grid:add(get_button(self, "Scrolls", "general_scroll"))
 	self.lobby_grid:add(get_button(self, "Grids", "general_grid"))
@@ -110,13 +112,19 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "Swipe", "scene_name"))
 	self.lobby_grid:add(get_button_disabled(self, "Drag", "scene_name"))
 
+	self.lobby_grid:add(get_title(self, "Texts"))
+	self.lobby_grid:add(get_button(self, "Texts", "texts_general"))
+	self.lobby_grid:add(get_button(self, "Adjust types", "texts_adjust"))
+	self.lobby_grid:add(get_button_disabled(self, "Lang Text", "texts_lang_text"))
+
 	self.lobby_grid:add(get_title(self, "Scrolls"))
 	self.lobby_grid:add(get_button_disabled(self, "Nested scrolls", "scroll_scene"))
 	self.lobby_grid:add(get_button_disabled(self, "With points of interest", "scroll_scene"))
 	self.lobby_grid:add(get_button_disabled(self, "Without inertion", "scroll_scene"))
 
 	self.lobby_grid:add(get_title(self, "Grids"))
-	self.lobby_grid:add(get_button_disabled(self, "Static grid", "scroll_scene"))
+	self.lobby_grid:add(get_button(self, "Static grid", "grid_static_grid"))
+	self.lobby_grid:add(get_button(self, "Static with dynamic pos", "grid_static_grid_dynamic_pos"))
 	self.lobby_grid:add(get_button_disabled(self, "Dynamic grid", "scroll_scene"))
 	self.lobby_grid:add(get_button_disabled(self, "Scroll binding", "scroll_scene"))
 	self.lobby_grid:add(get_button(self, "Add/Remove animations", "grid_animations"))
@@ -129,9 +137,11 @@ local function init_lobby(self)
 
 	self.lobby_grid:add(get_title(self, "System"))
 	self.lobby_grid:add(get_button_disabled(self, "Styles"))
+	self.lobby_grid:add(get_button(self, "Whitelist / Blacklist", "system_whitelist_blacklist"))
 	self.lobby_grid:add(get_button_disabled(self, "Custom components"))
 	self.lobby_grid:add(get_button_disabled(self, "Component interests"))
 	self.lobby_grid:add(get_button_disabled(self, "Nested Druids"))
+	self.lobby_grid:add(get_button(self, "Message input", "system_message_input"))
 	self.lobby_grid:add(get_button_disabled(self, "Input priority"))
 end
 

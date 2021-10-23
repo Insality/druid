@@ -22,6 +22,8 @@ Or point to the ZIP file of a [specific release](https://github.com/Insality/dru
 **Druid** requires the following input bindings:
 
 - Mouse trigger - `Button 1` -> `touch` _For basic input components_
+- Mouse trigger - `Wheel up` -> `scroll_up` _For scroll component_
+- Mouse trigger - `Wheel down` -> `scroll_down` _For scroll component_
 - Key trigger - `Backspace` -> `key_backspace`  _For back_handler component, input component_
 - Key trigger - `Back` -> `key_back`  _For back_handler component, Android back button, input component_
 - Key trigger - `Enter` -> `key_enter` _For input component, optional_
@@ -32,6 +34,25 @@ Or point to the ZIP file of a [specific release](https://github.com/Insality/dru
 ![](media/input_binding_1.png)
 
 
+### Change key bindings [optional]
+If you have to use your own key bindings (and key name), you can change it in your *game.project* file.
+
+Here is current default values for key bindings:
+```
+[druid]
+input_text = text
+input_touch = touch
+input_marked_text = marked_text
+input_key_esc = key_esc
+input_key_back = key_back
+input_key_enter = key_enter
+input_key_backspace = key_backspace
+input_multitouch = multitouch
+input_scroll_up = scroll_up
+input_scroll_down = scroll_down
+```
+
+
 ### Input capturing [optional]
 
 By default, **Druid** will auto-capture input focus, if any input component will be created. So you don't need to call `msg.post(".", "acquire_input_focus")`
@@ -40,6 +61,16 @@ If you don't need this behaviour, you can disable it by settings `druid.no_auto_
 ```
 [druid]
 no_auto_input = 1
+```
+
+
+### Stencil check [optional]
+
+When creating input components inside stencil nodes, you probably will use `component:set_click_zone()` to restrict clicks outside this stencil zone.
+Druid can do it automatically on _late_init_ component step. To enable this feature add next field in your _game.project_ file
+```
+[druid]
+stencil_check = 1
 ```
 
 ### Code [optional]

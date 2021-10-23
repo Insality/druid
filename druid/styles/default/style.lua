@@ -1,3 +1,6 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
+local const = require("druid.const")
 local settings = require("druid.system.settings")
 local anims = require("druid.styles.default.anims")
 
@@ -56,6 +59,11 @@ M["drag"] = {
 }
 
 
+M["static_grid"] = {
+	IS_DYNAMIC_NODE_POSES = false, -- Always align by content size with node anchor
+}
+
+
 M["scroll"] = {
 	ANIM_SPEED = 0.2, -- gui.animation speed to point
 	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
@@ -65,8 +73,9 @@ M["scroll"] = {
 	INERT_SPEED = 30, -- koef. of inert speed
 	EXTRA_STRETCH_SIZE = 100, -- extra size in pixels outside of scroll (stretch effect)
 	POINTS_DEADZONE = 20, -- Speed to check points of interests in no_inertion mode
-	WHEEL_SCROLL_SPEED = 0,
-	WHEEL_SCROLL_INVERTED = false,
+	WHEEL_SCROLL_SPEED = 0, -- Amount of pixels to scroll by one wheel event (0 to disable)
+	WHEEL_SCROLL_INVERTED = false, -- Boolean to invert wheel scroll side
+	WHEEL_SCROLL_BY_INERTION = false, -- If true, wheel will add inertion to scroll. Direct set position otherwise.
 	SMALL_CONTENT_SCROLL = true, -- If true, content node with size less than view node size can be scrolled
 }
 
@@ -122,6 +131,12 @@ M["input"] = {
 		AUTOHOLD_TRIGGER = 0.8,
 		DOUBLETAP_TIME = 0.4,
 	}
+}
+
+
+M["text"] = {
+	TRIM_POSTFIX = "...",
+	DEFAULT_ADJUST = const.TEXT_ADJUST.DOWNSCALE
 }
 
 

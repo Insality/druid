@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Component to handle placing components by row and columns.
 -- Grid can anchor your elements, get content size and other
 -- @module StaticGrid
@@ -60,6 +62,17 @@ local function _extend_border(border, pos, size, pivot)
 	border.y = math.max(border.y, top)
 	border.z = math.max(border.z, right)
 	border.w = math.min(border.w, bottom)
+end
+
+
+--- Component style params.
+-- You can override this component styles params in druid styles table
+-- or create your own style
+-- @table style
+-- @tfield[opt=false] bool IS_DYNAMIC_NODE_POSES If true, always center grid content as grid pivot sets
+function StaticGrid.on_style_change(self, style)
+	self.style = {}
+	self.style.IS_DYNAMIC_NODE_POSES = style.IS_DYNAMIC_NODE_POSES or false
 end
 
 
@@ -167,7 +180,8 @@ end
 --	@tparam node item Gui node
 -- @tparam[opt] number index The item position. By default add as last item
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
-function StaticGrid.add(self, item, index, shift_policy)
+-- @tparam[opt=false] boolean is_instance If true, update node positions instantly
+function StaticGrid.add(self, item, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	index = index or ((self.last_index or 0) + 1)
 
@@ -191,9 +205,9 @@ function StaticGrid.add(self, item, index, shift_policy)
 	self:_update_indexes()
 	self:_update_borders()
 
-	gui.set_position(item, self:get_pos(index))
+	gui.set_position(item, self:get_pos(index) + self:_get_zero_offset())
 
-	self:_update_pos()
+	self:_update_pos(is_instant)
 
 	self.on_add_item:trigger(self:get_context(), item, index)
 	self.on_change_items:trigger(self:get_context(), index)
@@ -204,8 +218,9 @@ end
 -- @tparam StaticGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
+-- @tparam[opt=false] boolean is_instance If true, update node positions instantly
 -- @treturn Node The deleted gui node from grid
-function StaticGrid.remove(self, index, shift_policy)
+function StaticGrid.remove(self, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
@@ -223,7 +238,7 @@ function StaticGrid.remove(self, index, shift_policy)
 		end
 	end
 
-	self:_update()
+	self:_update(is_instant)
 
 	self.on_remove_item:trigger(self:get_context(), index)
 	self.on_change_items:trigger(self:get_context(), index)
@@ -385,8 +400,12 @@ end
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function StaticGrid._update_pos(self, is_instant)
+	local zero_offset = self:_get_zero_offset()
+
 	for i, node in pairs(self.nodes) do
 		local pos = self:get_pos(i)
+		pos.x = pos.x + zero_offset.x
+		pos.y = pos.y + zero_offset.y
 
 		if is_instant then
 			gui.set_position(node, pos)
@@ -396,6 +415,25 @@ function StaticGrid._update_pos(self, is_instant)
 	end
 
 	self.on_update_positions:trigger(self:get_context())
+end
+
+
+--- Return elements offset for correct posing nodes. Correct posing at
+-- parent pivot node (0:0) with adjusting of node sizes and anchoring
+-- @function static_grid:_get_zero_offset
+-- @treturn vector3 The offset vector
+-- @local
+function StaticGrid:_get_zero_offset()
+	if not self.style.IS_DYNAMIC_NODE_POSES then
+		return const.VECTOR_ZERO
+	end
+
+	-- zero offset: center pos - border size * anchor
+	return vmath.vector3(
+		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
+		-((self.border.y + self.border.w)/2 + (self.border.y - self.border.w) * self.pivot.y),
+		0
+	)
 end
 
 

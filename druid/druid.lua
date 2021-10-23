@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Druid UI Library.
 -- Powerful Defold component based UI library. Use standart
 -- components or make your own game-specific components to
@@ -83,8 +85,7 @@ end
 -- @tparam function callback Get localized text function
 function M.set_text_function(callback)
 	settings.get_text = callback or const.EMPTY_FUNCTION
-	-- TODO: Update all localized text
-	-- Need to store all current druid instances to iterate over it?
+	M.on_language_change()
 end
 
 

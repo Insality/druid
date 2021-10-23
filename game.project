@@ -10,10 +10,11 @@ height = 900
 
 [project]
 title = druid
-version = 0.6.0
-dependencies = https://github.com/insalitygames/deftest/archive/master.zip,https://github.com/britzl/monarch/archive/refs/tags/3.3.0.zip
+version = 0.7.0
 publisher = Insality
 developer = Insality
+dependencies#0 = https://github.com/insalitygames/deftest/archive/master.zip
+dependencies#1 = https://github.com/britzl/monarch/archive/refs/tags/3.3.0.zip
 
 [library]
 include_dirs = druid
@@ -24,6 +25,17 @@ use_accelerometer = 0
 
 [druid]
 no_auto_input = 0
+stencil_check = 0
+input_text = text
+input_touch = touch
+input_marked_text = marked_text
+input_key_esc = key_esc
+input_key_back = key_back
+input_key_enter = key_enter
+input_key_backspace = key_backspace
+input_multitouch = multitouch
+input_scroll_up = scroll_up
+input_scroll_down = scroll_down
 
 [html5]
 engine_arguments = --verify-graphics-calls=false

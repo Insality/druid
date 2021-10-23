@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Component to handle placing components in row
 -- @module DynamicGrid
 -- @within BaseComponent
@@ -138,7 +140,8 @@ end
 --	@tparam node node Gui node
 -- @tparam[opt] number index The node position. By default add as last node
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
-function DynamicGrid.add(self, node, index, shift_policy)
+-- @tparam[opt=false] boolean is_instance If true, update node positions instantly
+function DynamicGrid.add(self, node, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	local delta = shift_policy -- -1 or 1 or 0
 
@@ -168,7 +171,7 @@ function DynamicGrid.add(self, node, index, shift_policy)
 	end
 
 	-- Sync grid data
-	self:_update()
+	self:_update(is_instant)
 
 	self.on_add_item:trigger(self:get_context(), node, index)
 	self.on_change_items:trigger(self:get_context(), index)
@@ -179,8 +182,9 @@ end
 -- @tparam DynamicGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
+-- @tparam[opt=false] boolean is_instance If true, update node positions instantly
 -- @treturn Node The deleted gui node from grid
-function DynamicGrid.remove(self, index, shift_policy)
+function DynamicGrid.remove(self, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	local delta = shift_policy -- -1 or 1 or 0
 
@@ -202,7 +206,7 @@ function DynamicGrid.remove(self, index, shift_policy)
 	end
 
 	-- Sync grid data
-	self:_update()
+	self:_update(is_instant)
 
 	self.on_remove_item:trigger(self:get_context(), index)
 	self.on_change_items:trigger(self:get_context(), index)

@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Component to handle hover node interaction
 -- @module Hover
 -- @within BaseComponent
@@ -16,7 +18,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Hover = component.create("hover", { component.ON_INPUT })
+local Hover = component.create("hover", { component.ON_INPUT, component.ON_LATE_INIT })
 
 
 --- Component init function
@@ -33,6 +35,16 @@ function Hover.init(self, node, on_hover_callback)
 
 	self.on_hover = Event(on_hover_callback)
 	self.on_mouse_hover = Event()
+end
+
+
+function Hover.on_late_init(self)
+	if not self.click_zone and const.IS_STENCIL_CHECK then
+		local stencil_node = helper.get_closest_stencil_node(self.node)
+		if stencil_node then
+			self:set_click_zone(stencil_node)
+		end
+	end
 end
 
 

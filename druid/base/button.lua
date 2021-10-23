@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Component to handle basic GUI button
 -- @module Button
 -- @within BaseComponent
@@ -23,6 +25,9 @@
 
 ---Trigger node
 -- @tfield node node
+
+---The hash of trigger node
+-- @tfield node_id hash
 
 ---Animation node
 -- @tfield[opt=node] node anim_node
@@ -52,7 +57,11 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Button = component.create("button", { component.ON_INPUT })
+local Button = component.create("button", {
+	component.ON_INPUT,
+	component.ON_MESSAGE_INPUT,
+	component.ON_LATE_INIT
+})
 
 
 local function is_input_match(self, action_id)
@@ -95,6 +104,7 @@ local function on_button_repeated_click(self)
 	self.style.on_click(self, self.anim_node)
 
 	self.click_in_row = self.click_in_row + 1
+
 	self.on_repeated_click:trigger(self:get_context(), self.params, self, self.click_in_row)
 end
 
@@ -126,7 +136,20 @@ local function on_button_release(self)
 		return false
 	end
 
-	if not self.disabled then
+	local check_function_result = true
+	if self._check_function then
+		check_function_result = self._check_function(self:get_context())
+	end
+
+	if self.disabled then
+		self.style.on_click_disabled(self, self.anim_node)
+		return true
+	elseif not check_function_result then
+		if self._failure_callback then
+			self._failure_callback(self:get_context())
+		end
+		return true
+	else
 		if self.can_action then
 			self.can_action = false
 
@@ -148,9 +171,6 @@ local function on_button_release(self)
 			self.last_released_time = time
 		end
 		return true
-	else
-		self.style.on_click_disabled(self, self.anim_node)
-		return false
 	end
 end
 
@@ -190,6 +210,7 @@ end
 function Button.init(self, node, callback, params, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
+	self.node_id = gui.get_id(self.node)
 
 	self.anim_node = anim_node and self:get_node(anim_node) or self.node
 	self.start_scale = gui.get_scale(self.anim_node)
@@ -204,6 +225,9 @@ function Button.init(self, node, callback, params, anim_node)
 	self.click_in_row = 0
 	self.key_trigger = nil
 
+	self._check_function = nil
+	self._failure_callback = nil
+
 	-- Event stubs
 	self.on_click = Event(callback)
 	self.on_repeated_click = Event()
@@ -211,6 +235,16 @@ function Button.init(self, node, callback, params, anim_node)
 	self.on_double_click = Event()
 	self.on_hold_callback = Event()
 	self.on_click_outside = Event()
+end
+
+
+function Button.on_late_init(self)
+	if not self.click_zone and const.IS_STENCIL_CHECK then
+		local stencil_node = helper.get_closest_stencil_node(self.node)
+		if stencil_node then
+			self:set_click_zone(stencil_node)
+		end
+	end
 end
 
 
@@ -288,6 +322,31 @@ function Button.on_input_interrupt(self)
 end
 
 
+function Button.on_message_input(self, node_id, message)
+	if node_id ~= self.node_id or self.disabled or not helper.is_enabled(self.node) then
+		return false
+	end
+
+	if message.action == const.MESSAGE_INPUT.BUTTON_CLICK then
+		on_button_click(self)
+	end
+
+	if message.action == const.MESSAGE_INPUT.BUTTON_LONG_CLICK then
+		on_button_long_click(self)
+	end
+
+	if message.action == const.MESSAGE_INPUT.BUTTON_DOUBLE_CLICK then
+		on_button_double_click(self)
+	end
+
+	if message.action == const.MESSAGE_INPUT.BUTTON_REPEATED_CLICK then
+		on_button_repeated_click(self)
+		self.is_repeated_started = false
+		self.last_pressed_time = socket.gettime()
+	end
+end
+
+
 --- Set enabled button component state
 -- @tparam Button self
 -- @tparam bool state Enabled state
@@ -338,6 +397,16 @@ end
 -- @treturn hash The action_id of the key
 function Button.get_key_trigger(self)
 	return self.key_trigger
+end
+
+
+--- Set function for additional check for button click availability
+-- @tparam[opt] function check_function Should return true or false. If true - button can be pressed.
+-- @tparam[opt] function failure_callback Function what will be called on button click, if check function return false
+-- @treturn Button Current button instance
+function Button.set_check_function(self, check_function, failure_callback)
+	self._check_function = check_function
+	self._failure_callback = failure_callback
 end
 
 

@@ -23,7 +23,7 @@ end
 function M.update(self, dt)
 end
 
--- Call only if exist interest: component.ON_INPUT or component.ON_INPUT_HIGH
+-- Call only if exist interest: component.ON_INPUT
 function M.on_input(self, action_id, action)
 end
 
@@ -35,8 +35,12 @@ end
 function M.on_message(self, message_id, message, sender)
 end
 
--- Call only if component with ON_ANGUAGECHANinterest
-function M.on_anguagechanself)
+-- Call only if component with ON_LANGUAGE_CHANGE interest
+function M.on_language_change(self)
+end
+
+-- Call only if component with ON_MESSAGE_INPUT interest
+function M.on_message_input(self, node_id, message)
 end
 
 -- Call only if component with ON_LAYOUT_CHANGE interest
@@ -54,6 +58,10 @@ end
 
 -- Call, if game gained focus. Need ON_FOCUS_GAINED intereset
 function M.on_focus_gained(self)
+end
+
+-- Call only if exist interest: component.ON_LATE_INIT
+function M.on_late_init(self)
 end
 
 -- Call on component remove or on druid:final
@@ -105,11 +113,15 @@ There is next interests in druid:
 
 - **ON_LANGUAGE_CHANGE** - will call _on_language_change_ function on language change trigger
 
+- **ON_MESSAGE_INPUT** - will call _on_message_input_ function on Druid _const.ON_MESSAGE_INPUT_ message  
+
 - **ON_LAYOUT_CHANGE** will call _on_layout_change_ function on layout change trigger
 
 - **ON_FOCUS_LOST** will call _on_focust_lost_ function in on focus lost event. You need to pass window_callback to global `druid:on_window_callback`
 
 - **ON_FOCUS_GAINED** will call _on_focust_gained_ function in on focus gained event. You need to pass window_callback to global `druid:on_window_callback`
+
+- **ON_LATE_INIT**  will call _on_late_init_ function once after component init on update step.
 
 ## Best practice on custom components
 On each component recommended describe component scheme in next way:

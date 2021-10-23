@@ -1,5 +1,5 @@
 #!/bin/bash
-# @license MIT, Insality 2020
+# @license MIT, Insality 2021
 # @source https://github.com/Insality/druid
 
 echo "Run bash for $1"

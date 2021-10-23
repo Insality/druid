@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Checkbox group module
 -- @module CheckboxGroup
 -- @within BaseComponent

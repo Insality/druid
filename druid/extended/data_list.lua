@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Component to manage data for huge dataset in scroll.
 -- It requires Druid Scroll and Druid Grid (Static or Dynamic) components
 -- @module DataList

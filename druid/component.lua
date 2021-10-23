@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Basic class for all Druid components.
 -- To create you component, use `component.create`
 -- @module BaseComponent
@@ -16,9 +18,11 @@ BaseComponent.ALL = const.ALL
 BaseComponent.ON_INPUT = const.ON_INPUT
 BaseComponent.ON_UPDATE = const.ON_UPDATE
 BaseComponent.ON_MESSAGE = const.ON_MESSAGE
+BaseComponent.ON_LATE_INIT = const.ON_LATE_INIT
 BaseComponent.ON_FOCUS_LOST = const.ON_FOCUS_LOST
 BaseComponent.ON_FOCUS_GAINED = const.ON_FOCUS_GAINED
 BaseComponent.ON_LAYOUT_CHANGE = const.ON_LAYOUT_CHANGE
+BaseComponent.ON_MESSAGE_INPUT = const.ON_MESSAGE_INPUT
 BaseComponent.ON_LANGUAGE_CHANGE = const.ON_LANGUAGE_CHANGE
 
 
@@ -27,9 +31,11 @@ BaseComponent.ALL_INTERESTS = {
 	BaseComponent.ON_INPUT,
 	BaseComponent.ON_UPDATE,
 	BaseComponent.ON_MESSAGE,
+	BaseComponent.ON_LATE_INIT,
 	BaseComponent.ON_FOCUS_LOST,
 	BaseComponent.ON_FOCUS_GAINED,
 	BaseComponent.ON_LAYOUT_CHANGE,
+	BaseComponent.ON_MESSAGE_INPUT,
 	BaseComponent.ON_LANGUAGE_CHANGE,
 }
 
@@ -39,6 +45,7 @@ BaseComponent.SPECIFIC_UI_MESSAGES = {
 	[BaseComponent.ON_FOCUS_LOST] = "on_focus_lost",
 	[BaseComponent.ON_FOCUS_GAINED] = "on_focus_gained",
 	[BaseComponent.ON_LAYOUT_CHANGE] = "on_layout_change",
+	[BaseComponent.ON_MESSAGE_INPUT] = "on_message_input",
 	[BaseComponent.ON_LANGUAGE_CHANGE] = "on_language_change",
 }
 
@@ -169,6 +176,11 @@ function BaseComponent.set_input_priority(self, value)
 	if self._component.input_priority ~= value then
 		self._component.input_priority = value
 		self._component._is_input_priority_changed = true
+
+		local children = self:get_childrens()
+		for i = 1, #children do
+			children[i]:set_input_priority(value)
+		end
 	end
 
 	return self
@@ -348,6 +360,26 @@ function BaseComponent.__remove_children(self, children)
 			table.remove(self._meta.children, i)
 		end
 	end
+end
+
+
+--- Return all children components, recursive
+-- @tparam BaseComponent self
+-- @treturn table Array of childrens if the Druid component instance
+function BaseComponent.get_childrens(self)
+	local childrens = {}
+
+	for i = 1, #self._meta.children do
+		local children = self._meta.children[i]
+
+		table.insert(childrens, children)
+		local recursive_childrens = children:get_childrens()
+		for j = 1, #recursive_childrens do
+			table.insert(childrens, recursive_childrens[j])
+		end
+	end
+
+	return childrens
 end
 
 
