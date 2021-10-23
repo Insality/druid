@@ -236,19 +236,19 @@ Good luck!
 		- const.TEXT_ADJUST.SCALE_THEN_SCROLL - Combine two modes: first limited downscale, then scroll
 - **#110** [Button] Add `Button:set_check_function(check_function, failure_callback)` function to add your custom click condition to button.
 	- `Button:set_enabled` has more priority than this to check button availability
-	- The `check_function` should return _true_ of _false_. If true - button can be clicked
-	- The `failure_callback`will be called if `check_function` will return false. It's callback for you if button is not available
-	- Example with `set_check_function` exists in general:buttons example collection
+	- The `check_function` should return _true_ of _false_. If true - button can be clicked by user
+	- The `failure_callback` will be called if `check_function` will return false
+	- Example with `set_check_function` in general:buttons example collection
 - **#66** Add `druid:set_whitelist()` and `druid.set_blacklist()` functions. It's affects only on input process step, you can allow/forbid interact with list of specific components
-- **#125** Now `component:set_input_priority()` affects on all component's children too
-- **#111** Add autocheck for input and stencil nodes. To enable this feature, add `druid.stencil_check = 1` to your game.project file.
-	- Add `helper.get_closest_stencil_node` function to get closest parent non inverted stencil node
-	- Add `component.ON_LATE_INIT` interest. If component with with interest, it will call `component.on_late_init` function once after component init on update step. This can be used to do something after all gui components are was initialized and setup.
+	- You can pass array of components, single component or nil in these functions
+- **#111** Add autocheck for input and stencil nodes. To enable this feature, add `druid.stencil_check = 1` to your _game.project_ file.
 	- This feature is using for auto setup `component:set_click_zone` to restrict clicks outside scrolls zone for example. Now you can don't think about click zone and let Druid do it instead of you!
-- **#81** Add ability to interact with Druid input via messages
+	- Add `helper.get_closest_stencil_node` function to get closest parent of non inverted stencil node
+	- Add `component.ON_LATE_INIT` interest. Component with this will call `component.on_late_init` function once after component init on update step. This can be used to do something after all gui components are inited
+- **#81** Add ability to interact with Druid input via messages:
 	- Currently add for Button and Text component only:
 		- Send to _gui.script_ message: `druid_const.ON_MESSAGE_INPUT`. The message table params:
-			- `node_id` - the name of the node with button component on it
+			- `node_id` - the name of the node with component on it
 			- `action` - value from `druid_const.MESSAGE_INPUT`. Available values:
 				- **BUTTON_CLICK** - usual button click callback
 				- **BUTTON_LONG_CLICK** - button long click callback
@@ -262,8 +262,9 @@ Good luck!
 - **#131** [Static Grid] Add style param: `IS_DYNAMIC_NODE_POSES` (default: false). Always align by content size with node anchor.
 	- If true - Static Grid will by always align to content anchor.
 	- If false (currently behaviour) - all poses for static grid is predefined and not depends on element's count (see example: static grid and static grid with dynamic poses)
+- **#125** Now `component:set_input_priority()` affects on all component's children too
 - **#143** Update all lang components on `druid.set_text_function` call
-- **#112** Allow remap default Druid input bindings.
+- **#112** Allow remap default Druid input bindings via `game.project`
 - **#107** [Text] Better scale text adjust by height for multiline text nodes (but still not perfect)
 - **#144** [Scroll] Fix some glitches with scroll Points of Interest. Remove false detection of scroll stopped.
 - **#142** [Scroll] Add Scroll style param `WHEEL_SCROLL_BY_INERTION` (default - false). If true - mouse wheel will add inertion to scroll, if false - set position directly per mouse wheel event.
