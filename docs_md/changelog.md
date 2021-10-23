@@ -249,3 +249,5 @@ Have a good day.
 	- Example with `set_check_function` exists in general:buttons example collection
 - **#107** Better scale text adjust by height for multiline text nodes (but still not perfect)
 - **#144** Fix some glitches with scroll Points of Interest. Remove false detection of scroll stopped.
+- **#142** Add Scroll style param `WHEEL_SCROLL_BY_INERTION` (default - false). If true - mouse wheel will add inertion to scroll, if false - set position directly per mouse wheel event.
+	- This fix caused, what Mac trackpad seems have additional mouse wheel events for simulate inertion. If you uncomfortable with this, you can disable `WHEEL_SCROLL_BY_INERTION` for more controllable scroll by mouse wheel.

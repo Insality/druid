@@ -113,6 +113,7 @@ end
 -- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
 -- @tfield[opt=0] bool WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
 -- @tfield[opt=false] bool WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll
+-- @tfield[opt=false] bool WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.
 function Scroll.on_style_change(self, style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
@@ -128,6 +129,7 @@ function Scroll.on_style_change(self, style)
 	self.style.SMALL_CONTENT_SCROLL = style.SMALL_CONTENT_SCROLL or false
 	self.style.WHEEL_SCROLL_SPEED = style.WHEEL_SCROLL_SPEED or 0
 	self.style.WHEEL_SCROLL_INVERTED = style.WHEEL_SCROLL_INVERTED or false
+	self.style.WHEEL_SCROLL_BY_INERTION = style.WHEEL_SCROLL_BY_INERTION or false
 
 	self._is_inert = not (self.style.FRICT == 0 or
 		self.style.FRICT_HOLD == 0 or
@@ -753,15 +755,28 @@ function Scroll._process_scroll_wheel(self, action_id, action)
 		return false
 	end
 
+
 	local koef = (action_id == const.ACTION_SCROLL_UP) and 1 or -1
 	if self.style.WHEEL_SCROLL_INVERTED then
 		koef = -koef
 	end
 
-	if self.drag.can_y then
-		self.inertion.y = (self.inertion.y + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
-	elseif self.drag.can_x then
-		self.inertion.x = (self.inertion.x + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
+	if self.style.WHEEL_SCROLL_BY_INERTION then
+		if self.drag.can_y then
+			self.inertion.y = (self.inertion.y + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
+		elseif self.drag.can_x then
+			self.inertion.x = (self.inertion.x + self.style.WHEEL_SCROLL_SPEED * koef) * self.style.FRICT_HOLD
+		end
+	else
+		if self.drag.can_y then
+			self.target_position.y = self.target_position.y + self.style.WHEEL_SCROLL_SPEED * koef
+			self.inertion.y = 0
+		elseif self.drag.can_x then
+			self.target_position.x = self.target_position.x + self.style.WHEEL_SCROLL_SPEED * koef
+			self.inertion.x = 0
+		end
+
+		self:_set_scroll_position(self.target_position)
 	end
 
 	return true
