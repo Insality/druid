@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Druid input text component.
 -- Carry on user text input
 -- @author Part of code from Britzl gooey input component

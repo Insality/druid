@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Component to handle placing components by row and columns.
 -- Grid can anchor your elements, get content size and other
 -- @module StaticGrid

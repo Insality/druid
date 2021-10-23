@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Component to handle back key (android, backspace)
 -- @module BackHandler
 -- @within BaseComponent

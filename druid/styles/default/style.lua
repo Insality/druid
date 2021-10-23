@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 local const = require("druid.const")
 local settings = require("druid.system.settings")
 local anims = require("druid.styles.default.anims")

@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Basic class for all Druid components.
 -- To create you component, use `component.create`
 -- @module BaseComponent

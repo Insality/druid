@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Instance of Druid. Make one instance per gui_script with next code:
 --
 --    local druid = require("druid.druid")

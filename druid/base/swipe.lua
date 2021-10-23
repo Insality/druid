@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Component to handle swipe gestures on node.
 -- Swipe will be triggered, if swipe was started and
 -- ended on one node

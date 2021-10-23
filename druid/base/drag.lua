@@ -1,3 +1,5 @@
+-- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
 --- Component to handle drag action on node.
 -- Drag have correct handling for multitouch and swap
 -- touched while dragging. Drag will be processed even
