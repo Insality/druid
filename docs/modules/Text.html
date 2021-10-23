@@ -33,6 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
 <li><a href="#Fields">Fields</a></li>
 </ul>
 
@@ -79,7 +80,7 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node[, value[, no_adjust]])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node[, value[, adjust_type=0]])</a></td>
 	<td class="summary">Component init function</td>
 	</tr>
 	<tr>
@@ -110,6 +111,25 @@
 	<td class="name" nowrap><a href="#is_multiline">is_multiline(self)</a></td>
 	<td class="summary">Return true, if text with line break</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_text_adjust">set_text_adjust(self[, adjust_type[, minimal_scale]])</a></td>
+	<td class="summary">Set text adjust, refresh the current text visuals, if needed</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_minimal_scale">set_minimal_scale(self, minimal_scale)</a></td>
+	<td class="summary">Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_text_adjust">get_text_adjust(self, adjust_type)</a></td>
+	<td class="summary">Return current text adjust type</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#style">style</a></td>
+	<td class="summary">Component style params.</td>
+	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
@@ -128,6 +148,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#node">node</a></td>
 	<td class="summary">Text node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#node_id">node_id</a></td>
+	<td class="summary">The node id of text node</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#pos">pos</a></td>
@@ -150,7 +174,7 @@
 	<td class="summary">Current text node available are</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#is_no_adjust">is_no_adjust</a></td>
+	<td class="name" nowrap><a href="#adjust_type">adjust_type</a></td>
 	<td class="summary">Current text size adjust settings</td>
 	</tr>
 	<tr>
@@ -168,7 +192,7 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node[, value[, no_adjust]])</strong>
+    <strong>init(self, node[, value[, adjust_type=0]])</strong>
     </dt>
     <dd>
     Component init function
@@ -189,10 +213,10 @@
          Initial text. Default value is node text from GUI scene.
          (<em>optional</em>)
         </li>
-        <li><span class="parameter">no_adjust</span>
-            <span class="types"><span class="type">bool</span></span>
-         If true, text will be not auto-adjust size
-         (<em>optional</em>)
+        <li><span class="parameter">adjust_type</span>
+            <span class="types"><span class="type">int</span></span>
+         Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+         (<em>default</em> 0)
         </li>
     </ul>
 
@@ -247,6 +271,12 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
 
 
 
@@ -272,6 +302,12 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
 
 
 
@@ -297,6 +333,12 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
 
 
 
@@ -322,6 +364,12 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
 
 
 
@@ -332,8 +380,7 @@
     <strong>set_pivot(self, pivot)</strong>
     </dt>
     <dd>
-    Set text pivot.  Text will re-anchor inside
- his text area
+    Set text pivot.  Text will re-anchor inside text area
 
 
     <h3>Parameters:</h3>
@@ -348,6 +395,12 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
 
 
 
@@ -375,6 +428,136 @@
            <span class="types"><span class="type">bool</span></span>
         Is text node with line break
     </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_text_adjust"></a>
+    <strong>set_text_adjust(self[, adjust_type[, minimal_scale]])</strong>
+    </dt>
+    <dd>
+    Set text adjust, refresh the current text visuals, if needed
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Text</span></span>
+
+        </li>
+        <li><span class="parameter">adjust_type</span>
+            <span class="types"><span class="type">number</span></span>
+         See const.TEXT_ADJUST. If pass nil - use current adjust type
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">minimal_scale</span>
+            <span class="types"><span class="type">number</span></span>
+         If pass nil - not use minimal scale
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_minimal_scale"></a>
+    <strong>set_minimal_scale(self, minimal_scale)</strong>
+    </dt>
+    <dd>
+    Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Text</span></span>
+
+        </li>
+        <li><span class="parameter">minimal_scale</span>
+            <span class="types"><span class="type">number</span></span>
+         If pass nil - not use minimal scale
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_text_adjust"></a>
+    <strong>get_text_adjust(self, adjust_type)</strong>
+    </dt>
+    <dd>
+    Return current text adjust type
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+        </li>
+        <li><span class="parameter">adjust_type</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The current text adjust type
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "style"></a>
+    <strong>style</strong>
+    </dt>
+    <dd>
+    Component style params.
+ You can override this component styles params in druid styles table
+ or create your own style
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">TRIM_POSTFIX</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+         The postfix for TRIM adjust type
+         (<em>default</em> ...)
+        </li>
+        <li><span class="parameter">DEFAULT_ADJUST</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+         The default adjust type for any text component
+         (<em>default</em> DOWNSCALE)
+        </li>
+    </ul>
+
 
 
 
@@ -455,6 +638,26 @@
     <ul>
         <li><span class="parameter">node</span>
             <span class="types"><a class="type" href="../modules/Text.html#node">node</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "node_id"></a>
+    <strong>node_id</strong>
+    </dt>
+    <dd>
+    The node id of text node
+
+
+    <ul>
+        <li><span class="parameter">node_id</span>
+            <span class="types"><span class="type">hash</span></span>
 
         </li>
     </ul>
@@ -565,16 +768,16 @@
 
 </dd>
     <dt>
-    <a name = "is_no_adjust"></a>
-    <strong>is_no_adjust</strong>
+    <a name = "adjust_type"></a>
+    <strong>adjust_type</strong>
     </dt>
     <dd>
     Current text size adjust settings
 
 
     <ul>
-        <li><span class="parameter">is_no_adjust</span>
-            <span class="types"><span class="type">bool</span></span>
+        <li><span class="parameter">adjust_type</span>
+            <span class="types"><span class="type">number</span></span>
 
         </li>
     </ul>
@@ -611,7 +814,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-04-06 00:03:14 </i>
+<i style="float:right;">Last updated 2021-10-23 17:32:40 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
