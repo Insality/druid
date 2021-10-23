@@ -63,6 +63,16 @@ If you don't need this behaviour, you can disable it by settings `druid.no_auto_
 no_auto_input = 1
 ```
 
+
+### Stencil check [optional]
+
+When creating input components inside stencil nodes, you probably will use `component:set_click_zone()` to restrict clicks outside this stencil zone.
+Druid can do it automatically on _late_init_ component step. To enable this feature add next field in your _game.project_ file
+```
+[druid]
+stencil_check = 1
+```
+
 ### Code [optional]
 
 Adjust **Druid** settings, if needed:

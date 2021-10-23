@@ -21,6 +21,9 @@ M.ACTION_SCROLL_UP = hash(sys.get_config("druid.input_scroll_up", "scroll_up"))
 M.ACTION_SCROLL_DOWN = hash(sys.get_config("druid.input_scroll_down", "scroll_down"))
 
 
+M.IS_STENCIL_CHECK = sys.get_config("druid.stencil_check") == 1
+
+
 M.RELEASED = "released"
 M.PRESSED = "pressed"
 M.STRING = "string"
@@ -33,6 +36,7 @@ M.ALL = "all"
 M.ON_INPUT = hash("on_input")
 M.ON_UPDATE = hash("on_update")
 M.ON_MESSAGE = hash("on_message")
+M.ON_LATE_INIT = hash("on_late_init")
 M.ON_FOCUS_LOST = hash("on_focus_lost")
 M.ON_FOCUS_GAINED = hash("on_focus_gained")
 M.ON_LAYOUT_CHANGE = hash("layout_changed")

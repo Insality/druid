@@ -238,3 +238,7 @@ Have a good day.
 	- Add Druid component interest: `component.ON_MESSAGE_INPUT`
 	- Implement new interest via function `component:on_message_input(node_id, message)`
 	- See **System: Message input** example
+- **#111**: Add autocheck for input and stencil nodes. To enable this feature, add `druid.stencil_check = 1` to your game.project file.
+	- Add `helper.get_closest_stencil_node` function to get closest parent non inverted stencil node
+	- Add `component.ON_LATE_INIT` interest. If component with with interest, it will call `component.on_late_init` function once after component init on update step. This can be used to do something after all gui components are was initialized and setup.
+	- This feature is using for auto setup `component:set_click_zone` to restrict clicks outside scrolls zone for example. Now you can don't think about click zone and let Druid do it instead of you!

@@ -18,6 +18,7 @@ BaseComponent.ALL = const.ALL
 BaseComponent.ON_INPUT = const.ON_INPUT
 BaseComponent.ON_UPDATE = const.ON_UPDATE
 BaseComponent.ON_MESSAGE = const.ON_MESSAGE
+BaseComponent.ON_LATE_INIT = const.ON_LATE_INIT
 BaseComponent.ON_FOCUS_LOST = const.ON_FOCUS_LOST
 BaseComponent.ON_FOCUS_GAINED = const.ON_FOCUS_GAINED
 BaseComponent.ON_LAYOUT_CHANGE = const.ON_LAYOUT_CHANGE
@@ -30,6 +31,7 @@ BaseComponent.ALL_INTERESTS = {
 	BaseComponent.ON_INPUT,
 	BaseComponent.ON_UPDATE,
 	BaseComponent.ON_MESSAGE,
+	BaseComponent.ON_LATE_INIT,
 	BaseComponent.ON_FOCUS_LOST,
 	BaseComponent.ON_FOCUS_GAINED,
 	BaseComponent.ON_LAYOUT_CHANGE,

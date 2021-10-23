@@ -61,7 +61,12 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Scroll = component.create("scroll", { component.ON_INPUT, component.ON_UPDATE, component.ON_LAYOUT_CHANGE })
+local Scroll = component.create("scroll", {
+	component.ON_INPUT,
+	component.ON_UPDATE,
+	component.ON_LAYOUT_CHANGE,
+	component.ON_LATE_INIT
+})
 
 
 local function inverse_lerp(min, max, current)
@@ -169,6 +174,16 @@ function Scroll.init(self, view_node, content_node)
 	self._outside_offset_vector = vmath.vector3(0)
 
 	self:_update_size()
+end
+
+
+function Scroll.on_late_init(self)
+	if not self.click_zone and const.IS_STENCIL_CHECK then
+		local stencil_node = helper.get_closest_stencil_node(self.node)
+		if stencil_node then
+			self:set_click_zone(stencil_node)
+		end
+	end
 end
 
 

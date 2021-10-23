@@ -23,7 +23,7 @@ end
 function M.update(self, dt)
 end
 
--- Call only if exist interest: component.ON_INPUT or component.ON_INPUT_HIGH
+-- Call only if exist interest: component.ON_INPUT
 function M.on_input(self, action_id, action)
 end
 
@@ -58,6 +58,10 @@ end
 
 -- Call, if game gained focus. Need ON_FOCUS_GAINED intereset
 function M.on_focus_gained(self)
+end
+
+-- Call only if exist interest: component.ON_LATE_INIT
+function M.on_late_init(self)
 end
 
 -- Call on component remove or on druid:final
@@ -116,6 +120,8 @@ There is next interests in druid:
 - **ON_FOCUS_LOST** will call _on_focust_lost_ function in on focus lost event. You need to pass window_callback to global `druid:on_window_callback`
 
 - **ON_FOCUS_GAINED** will call _on_focust_gained_ function in on focus gained event. You need to pass window_callback to global `druid:on_window_callback`
+
+- **ON_LATE_INIT**  will call _on_late_init_ function once after component init on update step.
 
 ## Best practice on custom components
 On each component recommended describe component scheme in next way:

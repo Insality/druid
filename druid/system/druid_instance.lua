@@ -225,13 +225,7 @@ end
 function DruidInstance.create(self, component, ...)
 	helper.deprecated("The druid:create is deprecated. Please use druid:new instead")
 
-	local instance = create(self, component)
-
-	if instance.init then
-		instance:init(...)
-	end
-
-	return instance
+	return DruidInstance.new(self, component, ...)
 end
 
 
@@ -316,6 +310,12 @@ end
 -- @tparam DruidInstance self
 -- @tparam number dt Delta time
 function DruidInstance.update(self, dt)
+	local late_init_components = self.components[base_component.ON_LATE_INIT]
+	while late_init_components[1] do
+		late_init_components[1]:on_late_init()
+		table.remove(late_init_components, 1)
+	end
+
 	local components = self.components[base_component.ON_UPDATE]
 	for i = 1, #components do
 		components[i]:update(dt)

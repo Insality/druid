@@ -171,6 +171,32 @@ function M.is_enabled(node)
 end
 
 
+
+--- Return closest non inverted clipping parent node for node
+-- @function helper.get_closest_stencil_node
+-- @tparam node node Gui node
+-- @treturn node|nil The clipping node
+function M.get_closest_stencil_node(node)
+	if not node then
+		return nil
+	end
+
+	local parent = gui.get_parent(node)
+	while parent do
+		local clipping_mode = gui.get_clipping_mode(parent)
+		local is_clipping_normal = not gui.get_clipping_inverted(parent)
+
+		if is_clipping_normal and clipping_mode == gui.CLIPPING_MODE_STENCIL then
+			return parent
+		end
+
+		parent = gui.get_parent(parent)
+	end
+
+	return nil
+end
+
+
 --- Get node offset for given gui pivot
 -- @function helper.get_pivot_offset
 -- @tparam gui.pivot pivot The node pivot

@@ -23,7 +23,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Swipe = component.create("swipe", { component.ON_INPUT })
+local Swipe = component.create("swipe", { component.ON_INPUT, component.ON_LATE_INIT })
 
 
 local function start_swipe(self, action)
@@ -96,6 +96,16 @@ function Swipe.init(self, node, on_swipe_callback)
 
 	self.click_zone = nil
 	self.on_swipe = Event(on_swipe_callback)
+end
+
+
+function Swipe.on_late_init(self)
+	if not self.click_zone and const.IS_STENCIL_CHECK then
+		local stencil_node = helper.get_closest_stencil_node(self.node)
+		if stencil_node then
+			self:set_click_zone(stencil_node)
+		end
+	end
 end
 
 

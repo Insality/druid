@@ -57,7 +57,11 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Button = component.create("button", { component.ON_INPUT, component.ON_MESSAGE_INPUT })
+local Button = component.create("button", {
+	component.ON_INPUT,
+	component.ON_MESSAGE_INPUT,
+	component.ON_LATE_INIT
+})
 
 
 local function is_input_match(self, action_id)
@@ -218,6 +222,16 @@ function Button.init(self, node, callback, params, anim_node)
 	self.on_double_click = Event()
 	self.on_hold_callback = Event()
 	self.on_click_outside = Event()
+end
+
+
+function Button.on_late_init(self)
+	if not self.click_zone and const.IS_STENCIL_CHECK then
+		local stencil_node = helper.get_closest_stencil_node(self.node)
+		if stencil_node then
+			self:set_click_zone(stencil_node)
+		end
+	end
 end
 
 

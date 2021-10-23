@@ -51,7 +51,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Drag = component.create("drag", { component.ON_INPUT }, const.PRIORITY_INPUT_HIGH)
+local Drag = component.create("drag", { component.ON_INPUT, component.ON_LATE_INIT }, const.PRIORITY_INPUT_HIGH)
 
 
 local function start_touch(self, touch)
@@ -186,6 +186,16 @@ function Drag.init(self, node, on_drag_callback)
 	self.on_drag_start = Event()
 	self.on_drag = Event(on_drag_callback)
 	self.on_drag_end = Event()
+end
+
+
+function Drag.on_late_init(self)
+	if not self.click_zone and const.IS_STENCIL_CHECK then
+		local stencil_node = helper.get_closest_stencil_node(self.node)
+		if stencil_node then
+			self:set_click_zone(stencil_node)
+		end
+	end
 end
 
 
