@@ -180,7 +180,8 @@ end
 --	@tparam node item Gui node
 -- @tparam[opt] number index The item position. By default add as last item
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
-function StaticGrid.add(self, item, index, shift_policy)
+-- @tparam[opt=false] boolean is_instance If true, update node positions instantly
+function StaticGrid.add(self, item, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	index = index or ((self.last_index or 0) + 1)
 
@@ -206,7 +207,7 @@ function StaticGrid.add(self, item, index, shift_policy)
 
 	gui.set_position(item, self:get_pos(index) + self:_get_zero_offset())
 
-	self:_update_pos()
+	self:_update_pos(is_instant)
 
 	self.on_add_item:trigger(self:get_context(), item, index)
 	self.on_change_items:trigger(self:get_context(), index)
@@ -217,8 +218,9 @@ end
 -- @tparam StaticGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
+-- @tparam[opt=false] boolean is_instance If true, update node positions instantly
 -- @treturn Node The deleted gui node from grid
-function StaticGrid.remove(self, index, shift_policy)
+function StaticGrid.remove(self, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
@@ -236,7 +238,7 @@ function StaticGrid.remove(self, index, shift_policy)
 		end
 	end
 
-	self:_update()
+	self:_update(is_instant)
 
 	self.on_remove_item:trigger(self:get_context(), index)
 	self.on_change_items:trigger(self:get_context(), index)
