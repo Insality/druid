@@ -1,12 +1,12 @@
 [project]
 title = druid
-version = 0.6.466
+version = 0.7.499
 write_log = 0
 compress_archive = 1
 publisher = Insality
 developer = Insality
-commit_sha = ffa3bafa002c561f6f4a31e8bbca228c3606b1cc
-build_time = 2021-05-30T08:51:36Z
+commit_sha = 1ae77e727fd29b01a514e73820b3e02213aeb7db
+build_time = 2021-10-23T14:38:03Z
 
 [display]
 width = 600
@@ -35,7 +35,7 @@ world_count = 4
 gravity_x = 0
 gravity_z = 0
 scale = 1
-allow_dynamic_transforms = 0
+allow_dynamic_transforms = 1
 debug_scale = 30
 max_collisions = 64
 max_contacts = 128
@@ -121,9 +121,9 @@ default_language = en
 localizations = en
 
 [android]
-version_code = 466
+version_code = 499
 minimum_sdk_version = 16
-target_sdk_version = 29
+target_sdk_version = 30
 package = com.insality.druid
 manifest = /builtins/manifests/android/AndroidManifest.xml
 iap_provider = GooglePlay
@@ -149,6 +149,7 @@ cssfile = /builtins/manifests/web/light_theme.css
 archive_location_prefix = archive
 show_fullscreen_button = 0
 show_made_with_defold = 0
+show_console_banner = 1
 scale_mode = fit
 engine_arguments = --verify-graphics-calls=false
 splash_image = /media/druid_logo.png
@@ -191,6 +192,17 @@ run_while_iconified = 0
 
 [druid]
 no_auto_input = 0
+stencil_check = 0
+input_text = text
+input_touch = touch
+input_marked_text = marked_text
+input_key_esc = key_esc
+input_key_back = key_back
+input_key_enter = key_enter
+input_key_backspace = key_backspace
+input_multitouch = multitouch
+input_scroll_up = scroll_up
+input_scroll_down = scroll_down
 
 [native_extension]
 app_manifest = /example/game.appmanifest
