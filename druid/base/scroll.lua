@@ -531,6 +531,9 @@ end
 
 --- Cancel animation on other animation or input touch
 function Scroll._cancel_animate(self)
+	self.inertion.x = 0
+	self.inertion.y = 0
+
 	if self.is_animate then
 		self.target_position = gui.get_position(self.content_node)
 		self.position.x = self.target_position.x
