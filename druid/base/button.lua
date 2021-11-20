@@ -88,10 +88,9 @@ end
 
 
 local function on_button_click(self)
-	self.style.on_click(self, self.anim_node)
-
 	self.click_in_row = 1
 	self.on_click:trigger(self:get_context(), self.params, self)
+	self.style.on_click(self, self.anim_node)
 end
 
 
@@ -101,28 +100,24 @@ local function on_button_repeated_click(self)
 		self.is_repeated_started = true
 	end
 
-	self.style.on_click(self, self.anim_node)
-
 	self.click_in_row = self.click_in_row + 1
-
 	self.on_repeated_click:trigger(self:get_context(), self.params, self, self.click_in_row)
+	self.style.on_click(self, self.anim_node)
 end
 
 
 local function on_button_long_click(self)
-	self.style.on_click(self, self.anim_node)
-
 	self.click_in_row = 1
 	local time = socket.gettime() - self.last_pressed_time
 	self.on_long_click:trigger(self:get_context(), self.params, self, time)
+	self.style.on_click(self, self.anim_node)
 end
 
 
 local function on_button_double_click(self)
-	self.style.on_click(self, self.anim_node)
-
 	self.click_in_row = self.click_in_row + 1
 	self.on_double_click:trigger(self:get_context(), self.params, self, self.click_in_row)
+	self.style.on_click(self, self.anim_node)
 end
 
 
