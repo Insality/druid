@@ -61,11 +61,20 @@ end
 --- Translate the text by locale_id
 -- @tparam LangText self
 -- @tparam string locale_id Locale id
-function LangText.translate(self, locale_id, ...)
-	self.last_locale_args = {...}
+-- @tparam string ... Locale arguments to pass in text function
+function LangText.translate(self, locale_id, a, b, c, d, e, f, g)
+	self.last_locale_args = { a, b, c, d, e, f, g }
 	self.last_locale = locale_id or self.last_locale
-	self.text:set_to(settings.get_text(self.last_locale, ...) or "")
+	self.text:set_to(settings.get_text(self.last_locale, a, b, c, d, e, f, g) or "")
 end
 
+
+--- Format string with new text params on localized text
+-- @tparam LangText self
+-- @tparam string ... Locale arguments to pass in text function
+function LangText.format(self, a, b, c, d, e, f, g)
+	self.last_locale_args = { a, b, c, d, e, f, g }
+	self.text:set_to(settings.get_text(self.last_locale, a, b, c, d, e, f, g) or "")
+end
 
 return LangText
