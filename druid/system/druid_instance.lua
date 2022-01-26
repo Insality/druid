@@ -63,7 +63,7 @@ local DruidInstance = class("druid.druid_instance")
 
 
 local function input_init(self)
-	if sys.get_config("druid.no_auto_input") == "1" then
+	if self._no_auto_input then
 		return
 	end
 
@@ -75,7 +75,7 @@ end
 
 
 local function input_release(self)
-	if sys.get_config("druid.no_auto_input") == "1" then
+	if self._no_auto_input then
 		return
 	end
 
@@ -113,10 +113,6 @@ local function create(self, instance_class)
 	for i = 1, #register_to do
 		local interest = register_to[i]
 		table.insert(self.components[interest], instance)
-
-		if base_component.UI_INPUT[interest] then
-			input_init(self)
-		end
 	end
 
 	return instance
@@ -209,6 +205,7 @@ function DruidInstance.initialize(self, context, style)
 
 	self._input_blacklist = nil
 	self._input_whitelist = nil
+	self._no_auto_input = (sys.get_config("druid.no_auto_input") == "1")
 
 	self.components = {}
 	for i = 1, #base_component.ALL_INTERESTS do
@@ -314,6 +311,11 @@ function DruidInstance.update(self, dt)
 	while late_init_components[1] do
 		late_init_components[1]:on_late_init()
 		table.remove(late_init_components, 1)
+	end
+
+	if not self.input_inited and #self.components[base_component.ON_INPUT] > 0 then
+		-- Input init on late init step, to be sure it goes after user go acquire input
+		input_init(self)
 	end
 
 	local components = self.components[base_component.ON_UPDATE]
@@ -622,10 +624,11 @@ end
 -- @tparam node node Gui node
 -- @tparam function callback Checkbox callback
 -- @tparam[opt=node] node click_node Trigger node, by default equals to node
+-- @tparam[opt=false] boolean initial_state The initial state of checkbox, default - false
 -- @treturn Checkbox checkbox component
-function DruidInstance.new_checkbox(self, node, callback, click_node)
+function DruidInstance.new_checkbox(self, node, callback, click_node, initial_state)
 	-- return helper.extended_component("checkbox")
-	return DruidInstance.new(self, checkbox, node, callback, click_node)
+	return DruidInstance.new(self, checkbox, node, callback, click_node, initial_state)
 end
 
 
