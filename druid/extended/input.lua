@@ -10,7 +10,7 @@
 --- On input field select callback(self, button_node)
 -- @tfield druid_event on_input_select
 
---- On input field unselect callback(self, button_node)
+--- On input field unselect callback(self, input_text)
 -- @tfield druid_event on_input_unselect
 
 --- On input field text change callback(self, input_text)
@@ -307,7 +307,7 @@ function Input.unselect(self)
 		self.is_selected = false
 
 		gui.hide_keyboard()
-		self.on_input_unselect:trigger(self:get_context())
+		self.on_input_unselect:trigger(self:get_context(), self:get_text())
 
 		self.style.on_unselect(self, self.button.node)
 	end
