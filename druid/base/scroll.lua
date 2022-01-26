@@ -282,7 +282,7 @@ function Scroll.scroll_to_percent(self, percent, is_instant)
 
 	local pos = vmath.vector3(
 		-helper.lerp(border.x, border.z, 1 - percent.x),
-		-helper.lerp(border.y, border.w, 1 - percent.y),
+		helper.lerp(border.y, border.w, 1 - percent.y),
 		0
 	)
 
