@@ -108,12 +108,12 @@ M.SHIFT = {
 
 
 M.TEXT_ADJUST = {
-	DOWNSCALE = 0,
-	TRIM = 1,
-	NO_ADJUST = 2,
-	DOWNSCALE_LIMITED = 3,
-	SCROLL = 4,
-	SCALE_THEN_SCROLL = 5,
+	DOWNSCALE = "downscale",
+	TRIM = "trim",
+	NO_ADJUST = "no_adjust",
+	DOWNSCALE_LIMITED = "downscale_limited",
+	SCROLL = "scroll",
+	SCALE_THEN_SCROLL = "scale_then_scroll",
 }
 
 
