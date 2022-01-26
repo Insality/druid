@@ -53,7 +53,7 @@ local const = require("druid.const")
 local component = require("druid.component")
 local utf8 = require("druid.system.utf8")
 
-local Input = component.create("input", { component.ON_INPUT, component.ON_FOCUS_LOST })
+local Input = component.create("input")
 
 
 --- Mask text by replacing every character with a mask character

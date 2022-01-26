@@ -61,12 +61,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Scroll = component.create("scroll", {
-	component.ON_INPUT,
-	component.ON_UPDATE,
-	component.ON_LAYOUT_CHANGE,
-	component.ON_LATE_INIT
-})
+local Scroll = component.create("scroll")
 
 
 local function inverse_lerp(min, max, current)

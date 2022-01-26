@@ -57,11 +57,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Button = component.create("button", {
-	component.ON_INPUT,
-	component.ON_MESSAGE_INPUT,
-	component.ON_LATE_INIT
-})
+local Button = component.create("button")
 
 
 local function is_input_match(self, action_id)

@@ -23,7 +23,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Swipe = component.create("swipe", { component.ON_INPUT, component.ON_LATE_INIT })
+local Swipe = component.create("swipe")
 
 
 local function start_swipe(self, action)

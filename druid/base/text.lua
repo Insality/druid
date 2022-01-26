@@ -50,7 +50,7 @@ local const = require("druid.const")
 local utf8 = require("druid.system.utf8")
 local component = require("druid.component")
 
-local Text = component.create("text", { component.ON_LAYOUT_CHANGE, component.ON_MESSAGE_INPUT })
+local Text = component.create("text")
 
 
 local function update_text_size(self)

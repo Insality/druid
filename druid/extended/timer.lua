@@ -35,7 +35,7 @@ local formats = require("druid.helper.formats")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Timer = component.create("timer", { component.ON_UPDATE })
+local Timer = component.create("timer")
 
 
 --- Component init function

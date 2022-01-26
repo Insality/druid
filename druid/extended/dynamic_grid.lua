@@ -45,7 +45,7 @@ local Event = require("druid.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local DynamicGrid = component.create("dynamic_grid", { component.ON_LAYOUT_CHANGE })
+local DynamicGrid = component.create("dynamic_grid")
 
 
 local SIDE_VECTORS = {

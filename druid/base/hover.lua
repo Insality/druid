@@ -18,7 +18,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Hover = component.create("hover", { component.ON_INPUT, component.ON_LATE_INIT })
+local Hover = component.create("hover")
 
 
 --- Component init function

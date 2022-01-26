@@ -87,7 +87,7 @@ end
 
 
 local function sort_input_stack(self)
-	local input_components = self.components[base_component.ON_INPUT]
+	local input_components = self.components_interest[base_component.ON_INPUT]
 	if not input_components then
 		return
 	end
@@ -107,12 +107,12 @@ local function create(self, instance_class)
 	local instance = instance_class()
 	instance:setup_component(self, self._context, self._style)
 
-	table.insert(self.components[base_component.ALL], instance)
+	table.insert(self.components_all, instance)
 
 	local register_to = instance:__get_interests()
 	for i = 1, #register_to do
 		local interest = register_to[i]
-		table.insert(self.components[interest], instance)
+		table.insert(self.components_interest[interest], instance)
 	end
 
 	return instance
@@ -207,9 +207,10 @@ function DruidInstance.initialize(self, context, style)
 	self._input_whitelist = nil
 	self._no_auto_input = (sys.get_config("druid.no_auto_input") == "1")
 
-	self.components = {}
+	self.components_interest = {}
+	self.components_all = {}
 	for i = 1, #base_component.ALL_INTERESTS do
-		self.components[base_component.ALL_INTERESTS[i]] = {}
+		self.components_interest[base_component.ALL_INTERESTS[i]] = {}
 	end
 end
 
@@ -245,7 +246,7 @@ end
 -- on all druid components
 -- @tparam DruidInstance self
 function DruidInstance.final(self)
-	local components = self.components[base_component.ALL]
+	local components = self.components_all
 
 	for i = #components, 1, -1 do
 		if components[i].on_remove then
@@ -280,7 +281,7 @@ function DruidInstance.remove(self, component)
 	end
 	component._meta.children = {}
 
-	local all_components = self.components[base_component.ALL]
+	local all_components = self.components_all
 	for i = #all_components, 1, -1 do
 		if all_components[i] == component then
 			if component.on_remove then
@@ -293,7 +294,7 @@ function DruidInstance.remove(self, component)
 	local interests = component:__get_interests()
 	for i = 1, #interests do
 		local interest = interests[i]
-		local components = self.components[interest]
+		local components = self.components_interest[interest]
 		for j = #components, 1, -1 do
 			if components[j] == component then
 				table.remove(components, j)
@@ -307,18 +308,18 @@ end
 -- @tparam DruidInstance self
 -- @tparam number dt Delta time
 function DruidInstance.update(self, dt)
-	local late_init_components = self.components[base_component.ON_LATE_INIT]
+	local late_init_components = self.components_interest[base_component.ON_LATE_INIT]
 	while late_init_components[1] do
 		late_init_components[1]:on_late_init()
 		table.remove(late_init_components, 1)
 	end
 
-	if not self.input_inited and #self.components[base_component.ON_INPUT] > 0 then
+	if not self.input_inited and #self.components_interest[base_component.ON_INPUT] > 0 then
 		-- Input init on late init step, to be sure it goes after user go acquire input
 		input_init(self)
 	end
 
-	local components = self.components[base_component.ON_UPDATE]
+	local components = self.components_interest[base_component.ON_UPDATE]
 	for i = 1, #components do
 		components[i]:update(dt)
 	end
@@ -333,7 +334,7 @@ end
 function DruidInstance.on_input(self, action_id, action)
 	self._is_input_processing = true
 
-	local components = self.components[base_component.ON_INPUT]
+	local components = self.components_interest[base_component.ON_INPUT]
 	check_sort_input_stack(self, components)
 	local is_input_consumed = process_input(self, action_id, action, components)
 
@@ -358,10 +359,10 @@ end
 function DruidInstance.on_message(self, message_id, message, sender)
 	-- TODO: refactor for more juicy code
 	local specific_ui_message = base_component.SPECIFIC_UI_MESSAGES[message_id]
-	local on_message_input_message = base_component.SPECIFIC_UI_MESSAGES[base_component.ON_MESSAGE_INPUT]
+	local on_message_input_message = base_component.ON_MESSAGE_INPUT
 
 	if specific_ui_message == on_message_input_message then
-		local components = self.components[message_id]
+		local components = self.components_interest[base_component.ON_MESSAGE_INPUT]
 		if components then
 			for i = 1, #components do
 				local component = components[i]
@@ -371,7 +372,7 @@ function DruidInstance.on_message(self, message_id, message, sender)
 			end
 		end
 	elseif specific_ui_message then
-		local components = self.components[message_id]
+		local components = self.components_interest[specific_ui_message]
 		if components then
 			for i = 1, #components do
 				local component = components[i]
@@ -379,7 +380,7 @@ function DruidInstance.on_message(self, message_id, message, sender)
 			end
 		end
 	else
-		local components = self.components[base_component.ON_MESSAGE]
+		local components = self.components_interest[base_component.ON_MESSAGE]
 		for i = 1, #components do
 			components[i]:on_message(message_id, message, sender)
 		end
@@ -391,7 +392,7 @@ end
 -- This one called by on_window_callback by global window listener
 -- @tparam DruidInstance self
 function DruidInstance.on_focus_lost(self)
-	local components = self.components[base_component.ON_FOCUS_LOST]
+	local components = self.components_interest[base_component.ON_FOCUS_LOST]
 	for i = 1, #components do
 		components[i]:on_focus_lost()
 	end
@@ -402,7 +403,7 @@ end
 -- This one called by on_window_callback by global window listener
 -- @tparam DruidInstance self
 function DruidInstance.on_focus_gained(self)
-	local components = self.components[base_component.ON_FOCUS_GAINED]
+	local components = self.components_interest[base_component.ON_FOCUS_GAINED]
 	for i = 1, #components do
 		components[i]:on_focus_gained()
 	end
@@ -413,7 +414,7 @@ end
 -- Called on update gui layout
 -- @tparam DruidInstance self
 function DruidInstance.on_layout_change(self)
-	local components = self.components[base_component.ON_LAYOUT_CHANGE]
+	local components = self.components_interest[base_component.ON_LAYOUT_CHANGE]
 	for i = 1, #components do
 		components[i]:on_layout_change()
 	end
@@ -426,7 +427,7 @@ end
 -- @tparam DruidInstance self
 -- @function druid.on_language_change
 function DruidInstance.on_language_change(self)
-	local components = self.components[base_component.ON_LANGUAGE_CHANGE]
+	local components = self.components_interest[base_component.ON_LANGUAGE_CHANGE]
 	for i = 1, #components do
 		components[i]:on_language_change()
 	end

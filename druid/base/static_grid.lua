@@ -49,7 +49,7 @@ local Event = require("druid.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local StaticGrid = component.create("static_grid", { component.ON_LAYOUT_CHANGE })
+local StaticGrid = component.create("static_grid")
 
 
 local function _extend_border(border, pos, size, pivot)

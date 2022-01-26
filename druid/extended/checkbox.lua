@@ -22,7 +22,7 @@
 local Event = require("druid.event")
 local component = require("druid.component")
 
-local Checkbox = component.create("checkbox", { component.ON_LAYOUT_CHANGE })
+local Checkbox = component.create("checkbox")
 
 
 local function on_click(self)

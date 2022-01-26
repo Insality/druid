@@ -18,7 +18,7 @@ local Event = require("druid.event")
 local settings = require("druid.system.settings")
 local component = require("druid.component")
 
-local LangText = component.create("lang_text", { component.ON_LANGUAGE_CHANGE })
+local LangText = component.create("lang_text")
 
 
 --- Component init function

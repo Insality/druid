@@ -5,7 +5,7 @@
 -- @local
 local component = require("druid.component")
 
-local Component = component.create("my_component_name", { component.ON_UPDATE })
+local Component = component.create("my_component_name")
 
 
 -- Component constructor
@@ -13,12 +13,12 @@ function Component:init(...)
 end
 
 
--- Call only if exist interest: component.ON_UPDATE
+-- Call every update step
 function Component:update(dt)
 end
 
 
--- Call only if exist interest: component.ON_INPUT
+-- Call default on_input from gui script
 function Component:on_input(action_id, action)
 	return false
 end
@@ -29,17 +29,17 @@ function Component:on_style_change(style)
 end
 
 
--- Call only if exist interest: component.ON_MESSAGE
+-- Call default on_message from gui script
 function Component:on_message(message_id, message, sender)
 end
 
 
--- Call only if component with ON_LANGUAGE_CHANGE interest
+-- Call if druid has triggered on_language_change
 function Component:on_language_change()
 end
 
 
--- Call only if component with ON_LAYOUT_CHANGE interest
+-- Call if game layout has changed and need to restore values in component
 function Component:on_layout_change()
 end
 
@@ -50,12 +50,12 @@ function Component:on_input_interrupt()
 end
 
 
--- Call, if game lost focus. Need ON_FOCUS_LOST intereset
+-- Call, if game lost focus
 function Component:on_focus_lost()
 end
 
 
--- Call, if game gained focus. Need ON_FOCUS_GAINED intereset
+-- Call, if game gained focus
 function Component:on_focus_gained()
 end
 
