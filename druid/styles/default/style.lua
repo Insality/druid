@@ -61,6 +61,7 @@ M["drag"] = {
 
 M["static_grid"] = {
 	IS_DYNAMIC_NODE_POSES = false, -- Always align by content size with node anchor
+	IS_ALIGN_LAST_ROW = true, -- Align the last row of grid
 }
 
 

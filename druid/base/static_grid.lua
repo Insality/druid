@@ -70,9 +70,11 @@ end
 -- or create your own style
 -- @table style
 -- @tfield[opt=false] bool IS_DYNAMIC_NODE_POSES If true, always center grid content as grid pivot sets
+-- @tfield[opt=false] bool IS_ALIGN_LAST_ROW If true, always align last row of the grid as grid pivot sets
 function StaticGrid.on_style_change(self, style)
 	self.style = {}
 	self.style.IS_DYNAMIC_NODE_POSES = style.IS_DYNAMIC_NODE_POSES or false
+	self.style.IS_ALIGN_LAST_ROW = style.IS_ALIGN_LAST_ROW or false
 end
 
 
@@ -122,7 +124,9 @@ function StaticGrid.get_pos(self, index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
-	_temp_pos.x = col * self.node_size.x + self._zero_offset.x
+	local zero_offset_x = self:_get_zero_offset_x(row)
+
+	_temp_pos.x = col * self.node_size.x + zero_offset_x
 	_temp_pos.y = -row * self.node_size.y + self._zero_offset.y
 	_temp_pos.z = 0
 
@@ -435,6 +439,29 @@ function StaticGrid:_get_zero_offset()
 		0
 	)
 end
+
+
+--- Return offset x for last row in grid. Used to align this row accorting to grid's anchor
+-- @function static:_grid:_get_zero_offset_x
+-- @treturn number The offset x value
+-- @local
+function StaticGrid:_get_zero_offset_x(row_index)
+	if not self.style.IS_DYNAMIC_NODE_POSES or not self.style.IS_ALIGN_LAST_ROW then
+		return self._zero_offset.x
+	end
+
+	local offset_x = self._zero_offset.x
+	local last_row = math.ceil(self.last_index / self.in_row) - 1
+
+	if last_row > 0 and last_row == row_index then
+		local elements_in_row = (self.last_index - (last_row * self.in_row)) - 1
+		local offset = elements_in_row * self.node_size.x * self.anchor.x
+		offset_x = self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - offset
+	end
+
+	return offset_x
+end
+
 
 
 return StaticGrid
