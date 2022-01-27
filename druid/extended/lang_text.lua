@@ -24,7 +24,7 @@ local LangText = component.create("lang_text")
 --- Component init function
 -- @tparam LangText self
 -- @tparam node node The text node
--- @tparam string locale_id Default locale id, optional
+-- @tparam string locale_id Default locale id or text from node as default
 -- @tparam bool no_adjust If true, will not correct text size
 function LangText.init(self, node, locale_id, no_adjust)
 	self.druid = self:get_druid()
@@ -34,9 +34,7 @@ function LangText.init(self, node, locale_id, no_adjust)
 
 	self.on_change = Event()
 
-	if locale_id then
-		self:translate(locale_id)
-	end
+	self:translate(locale_id or gui.get_text(self.node))
 
 	return self
 end
