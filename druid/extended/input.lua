@@ -166,8 +166,8 @@ function Input.on_input(self, action_id, action)
 			end)
 
 			-- ignore arrow keys
-			if not string.match(hex, "EF9C8[0-3]") then
-				if not self.allowed_characters or action.text:match(self.allowed_characters) then
+			if not utf8.match(hex, "EF9C8[0-3]") then
+				if not self.allowed_characters or utf8.match(action.text, self.allowed_characters) then
 					input_text = self.value .. action.text
 					if self.max_length then
 						input_text = utf8.sub(input_text, 1, self.max_length)
