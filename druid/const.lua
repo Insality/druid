@@ -32,16 +32,15 @@ M.ZERO = "0"
 
 
 --- Component Interests
-M.ALL = "all"
-M.ON_INPUT = hash("on_input")
-M.ON_UPDATE = hash("on_update")
-M.ON_MESSAGE = hash("on_message")
-M.ON_LATE_INIT = hash("on_late_init")
-M.ON_FOCUS_LOST = hash("on_focus_lost")
-M.ON_FOCUS_GAINED = hash("on_focus_gained")
-M.ON_LAYOUT_CHANGE = hash("layout_changed")
-M.ON_MESSAGE_INPUT = hash("on_message_input")
-M.ON_LANGUAGE_CHANGE = hash("on_language_change")
+M.ON_INPUT = "on_input"
+M.ON_UPDATE = "update"
+M.ON_MESSAGE = "on_message"
+M.ON_LATE_INIT = "on_late_init"
+M.ON_FOCUS_LOST = "on_focus_lost"
+M.ON_FOCUS_GAINED = "on_focus_gained"
+M.ON_LAYOUT_CHANGE = "on_layout_changed"
+M.ON_MESSAGE_INPUT = "on_message_input"
+M.ON_LANGUAGE_CHANGE = "on_language_change"
 
 
 M.PRIORITY_INPUT = 10
@@ -108,12 +107,12 @@ M.SHIFT = {
 
 
 M.TEXT_ADJUST = {
-	DOWNSCALE = 0,
-	TRIM = 1,
-	NO_ADJUST = 2,
-	DOWNSCALE_LIMITED = 3,
-	SCROLL = 4,
-	SCALE_THEN_SCROLL = 5,
+	DOWNSCALE = "downscale",
+	TRIM = "trim",
+	NO_ADJUST = "no_adjust",
+	DOWNSCALE_LIMITED = "downscale_limited",
+	SCROLL = "scroll",
+	SCALE_THEN_SCROLL = "scale_then_scroll",
 }
 
 

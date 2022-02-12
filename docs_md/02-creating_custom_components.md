@@ -19,52 +19,53 @@ local M = component.create("my_component")
 function M.init(self, ...)
 end
 
--- Call only if exist interest: component.ON_UPDATE
+-- [OPTIONAL] If declared, will call this on script.update function
 function M.update(self, dt)
 end
 
--- Call only if exist interest: component.ON_INPUT
+-- [OPTIONAL] If declared, will call this on script.on_input function
 function M.on_input(self, action_id, action)
 end
 
--- Call on component creation and on component:set_style() function
+-- [OPTIONAL] If declared, will call on component creation and on component:set_style() function
 function M.on_style_change(self, style)
 end
 
--- Call only if exist interest: component.ON_MESSAGE
+-- [OPTIONAL] If declared, will call this on script.on_message function
 function M.on_message(self, message_id, message, sender)
 end
 
--- Call only if component with ON_LANGUAGE_CHANGE interest
+-- [OPTIONAL] If declared, will call this on druid.on_language_change call
 function M.on_language_change(self)
 end
 
--- Call only if component with ON_MESSAGE_INPUT interest
+-- [OPTIONAL] If declared, will call this on const.ON_MESSAGE_INPUT message to Druid script instance
 function M.on_message_input(self, node_id, message)
 end
 
--- Call only if component with ON_LAYOUT_CHANGE interest
+-- [OPTIONAL] If declared, will call this on layout changing
 function M.on_layout_change(self)
 end
 
--- Call, if input was capturing before this component
+-- [OPTIONAL] If declared, will call this on layout changing, if input was capturing before this component
 -- Example: scroll is start scrolling, so you need unhover button
 function M.on_input_interrupt(self)
 end
 
--- Call, if game lost focus. Need ON_FOCUS_LOST intereset
+-- [OPTIONAL] If declared, will call this if game lost focus
 function M.on_focus_lost(self)
 end
 
--- Call, if game gained focus. Need ON_FOCUS_GAINED intereset
+-- [OPTIONAL] If declared, will call this if game gained focus
 function M.on_focus_gained(self)
 end
 
--- Call only if exist interest: component.ON_LATE_INIT
+
+-- [OPTIONAL] If declared, will call this if late init step (first frame on update)
 function M.on_late_init(self)
 end
 
--- Call on component remove or on druid:final
+-- [OPTIONAL] If declared, will call this on component remove from Druid instance
 function M.on_remove(self)
 end
 
@@ -99,29 +100,6 @@ function init(self)
 	local my_component = self.druid:create(my_component, ...)
 end
 ```
-
-### Interest
-Interest - is a way to indicate what events your component will respond to.
-There is next interests in druid:
-- **ON_MESSAGE** - component will receive messages from on_message
-
-- **ON_UPDATE** - component will be updated from update
-
-- **ON_INPUT_HIGH** - component will receive input from on_input, before other components with ON_INPUT
-
-- **ON_INPUT** - component will receive input from on_input, after other components with ON_INPUT_HIGH
-
-- **ON_LANGUAGE_CHANGE** - will call _on_language_change_ function on language change trigger
-
-- **ON_MESSAGE_INPUT** - will call _on_message_input_ function on Druid _const.ON_MESSAGE_INPUT_ message  
-
-- **ON_LAYOUT_CHANGE** will call _on_layout_change_ function on layout change trigger
-
-- **ON_FOCUS_LOST** will call _on_focust_lost_ function in on focus lost event. You need to pass window_callback to global `druid:on_window_callback`
-
-- **ON_FOCUS_GAINED** will call _on_focust_gained_ function in on focus gained event. You need to pass window_callback to global `druid:on_window_callback`
-
-- **ON_LATE_INIT**  will call _on_late_init_ function once after component init on update step.
 
 ## Best practice on custom components
 On each component recommended describe component scheme in next way:

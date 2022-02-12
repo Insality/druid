@@ -50,7 +50,7 @@ local const = require("druid.const")
 local utf8 = require("druid.system.utf8")
 local component = require("druid.component")
 
-local Text = component.create("text", { component.ON_LAYOUT_CHANGE, component.ON_MESSAGE_INPUT })
+local Text = component.create("text")
 
 
 local function update_text_size(self)
@@ -86,6 +86,7 @@ local function update_text_area_size(self)
 		local max_text_area_square = max_width * max_height
 		local cur_text_area_square = metrics.height * metrics.width * self.start_scale.x
 		scale_modifier = self.start_scale.x * math.sqrt(max_text_area_square / cur_text_area_square)
+		scale_modifier = math.min(scale_modifier, self.start_scale.x)
 	end
 
 	if self._minimal_scale then

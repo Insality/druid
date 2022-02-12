@@ -71,7 +71,7 @@ function druid__back_handler.on_input(self, action_id, action) end
 
 
 ---@class druid.base_component
----@field ALL field Component Interests
+---@field ON_INPUT field Component Interests
 local druid__base_component = {}
 
 --- Return all children components, recursive
@@ -268,13 +268,15 @@ function druid__checkbox.get_state(self) end
 ---@param node node Gui node
 ---@param callback function Checkbox callback
 ---@param click_node node Trigger node, by default equals to node
-function druid__checkbox.init(self, node, callback, click_node) end
+---@param initial_state boolean The initial state of checkbox, default - false
+function druid__checkbox.init(self, node, callback, click_node, initial_state) end
 
 --- Set checkbox state
 ---@param self druid.checkbox
 ---@param state bool Checkbox state
 ---@param is_silent bool Don't trigger on_change_state if true
-function druid__checkbox.set_state(self, state, is_silent) end
+---@param is_instant bool If instant checkbox change
+function druid__checkbox.set_state(self, state, is_silent, is_instant) end
 
 
 ---@class druid.checkbox.style
@@ -302,7 +304,8 @@ function druid__checkbox_group.init(self, nodes, callback, click_nodes) end
 --- Set checkbox group state
 ---@param self druid.checkbox_group
 ---@param indexes bool[] Array of checkbox state
-function druid__checkbox_group.set_state(self, indexes) end
+---@param is_instant boolean If instant state change
+function druid__checkbox_group.set_state(self, indexes, is_instant) end
 
 
 ---@class druid.data_list : druid.base_component
@@ -527,7 +530,7 @@ function druid__hover.set_mouse_hover(self, state) end
 ---@field on_input_full druid_event On input field text change to max length string callback(self, input_text)
 ---@field on_input_select druid_event On input field select callback(self, button_node)
 ---@field on_input_text druid_event On input field text change callback(self, input_text)
----@field on_input_unselect druid_event On input field unselect callback(self, button_node)
+---@field on_input_unselect druid_event On input field unselect callback(self, input_text)
 ---@field on_input_wrong druid_event On trying user input with not allowed character callback(self, params, button_instance)
 ---@field style druid.input.style Component style params.
 ---@field text druid.text Text component
@@ -584,22 +587,31 @@ local druid__input__style = {}
 ---@field text Text The text component
 local druid__lang_text = {}
 
+--- Format string with new text params on localized text
+---@param self druid.lang_text
+---@param ... string Locale arguments to pass in text function
+---@return druid.lang_text Current instance
+function druid__lang_text.format(self, ...) end
+
 --- Component init function
 ---@param self druid.lang_text
 ---@param node node The text node
----@param locale_id string Default locale id, optional
+---@param locale_id string Default locale id or text from node as default
 ---@param no_adjust bool If true, will not correct text size
 function druid__lang_text.init(self, node, locale_id, no_adjust) end
 
 --- Setup raw text to lang_text component
 ---@param self druid.lang_text
 ---@param text string Text for text node
+---@return druid.lang_text Current instance
 function druid__lang_text.set_to(self, text) end
 
 --- Translate the text by locale_id
 ---@param self druid.lang_text
 ---@param locale_id string Locale id
-function druid__lang_text.translate(self, locale_id) end
+---@param ... string Locale arguments to pass in text function
+---@return druid.lang_text Current instance
+function druid__lang_text.translate(self, locale_id, ...) end
 
 
 ---@class druid.progress : druid.base_component
@@ -676,7 +688,8 @@ function druid__radio_group.init(self, nodes, callback, click_nodes) end
 --- Set radio group state
 ---@param self druid.radio_group
 ---@param index number Index in radio group
-function druid__radio_group.set_state(self, index) end
+---@param is_instant boolean If is instant state change
+function druid__radio_group.set_state(self, index, is_instant) end
 
 
 ---@class druid.scroll : druid.base_component
@@ -937,6 +950,7 @@ function druid__static_grid.set_position_function(self, callback) end
 
 
 ---@class druid.static_grid.style
+---@field IS_ALIGN_LAST_ROW field  If true, always align last row of the grid as grid pivot sets
 ---@field IS_DYNAMIC_NODE_POSES field  If true, always center grid content as grid pivot sets
 local druid__static_grid__style = {}
 
@@ -1092,7 +1106,7 @@ function druid__timer.set_to(self, set_to) end
 
 
 ---@class druid_const
----@field ALL field Component Interests
+---@field ON_INPUT field Component Interests
 local druid_const = {}
 
 
@@ -1184,8 +1198,9 @@ function druid_instance.new_button(self, node, callback, params, anim_node) end
 ---@param node node Gui node
 ---@param callback function Checkbox callback
 ---@param click_node node Trigger node, by default equals to node
+---@param initial_state boolean The initial state of checkbox, default - false
 ---@return druid.checkbox checkbox component
-function druid_instance.new_checkbox(self, node, callback, click_node) end
+function druid_instance.new_checkbox(self, node, callback, click_node, initial_state) end
 
 --- Create checkbox_group component
 ---@param self druid_instance

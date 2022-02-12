@@ -210,7 +210,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Button:"
+  text: "ui_section_button"
   font: "game"
   id: "text_button"
   xanchor: XANCHOR_NONE
@@ -604,7 +604,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Text:"
+  text: "ui_section_text"
   font: "game"
   id: "text_text"
   xanchor: XANCHOR_NONE
@@ -848,7 +848,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Timer:"
+  text: "ui_section_timer"
   font: "game"
   id: "text_timer"
   xanchor: XANCHOR_NONE
@@ -1029,7 +1029,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Progress bar:"
+  text: "ui_section_progress"
   font: "game"
   id: "text_progress"
   xanchor: XANCHOR_NONE
@@ -1320,7 +1320,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Slider:"
+  text: "ui_section_slider"
   font: "game"
   id: "text_slider"
   xanchor: XANCHOR_NONE
@@ -1611,7 +1611,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Radio:"
+  text: "ui_section_radio"
   font: "game"
   id: "text_radio"
   xanchor: XANCHOR_NONE
@@ -2234,7 +2234,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Checkbox:"
+  text: "ui_section_checkbox"
   font: "game"
   id: "text_checkbox"
   xanchor: XANCHOR_NONE
@@ -2857,7 +2857,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Input:"
+  text: "ui_section_input"
   font: "game"
   id: "text_input"
   xanchor: XANCHOR_NONE

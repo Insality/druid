@@ -39,6 +39,10 @@ function init(self)
 		grid_e,
 	}
 
+	for i = 1, #grids do
+		grids[i].style.IS_DYNAMIC_NODE_POSES = false
+	end
+
 
 	local animate_grides = function()
 		for _, grid in ipairs(grids) do

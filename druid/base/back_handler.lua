@@ -17,7 +17,7 @@ local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local BackHandler = component.create("back_handler", { component.ON_INPUT })
+local BackHandler = component.create("back_handler")
 
 
 --- Component init function

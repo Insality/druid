@@ -19,9 +19,9 @@ local component = require("druid.component")
 local RadioGroup = component.create("radio_group")
 
 
-local function on_checkbox_click(self, index)
+local function on_checkbox_click(self, index, is_instant)
 	for i = 1, #self.checkboxes do
-		self.checkboxes[i]:set_state(i == index, true)
+		self.checkboxes[i]:set_state(i == index, true, is_instant)
 	end
 
 	self.on_radio_click:trigger(self:get_context(), index)
@@ -53,8 +53,9 @@ end
 --- Set radio group state
 -- @tparam RadioGroup self
 -- @tparam number index Index in radio group
-function RadioGroup.set_state(self, index)
-	on_checkbox_click(self, index)
+-- @tparam boolean is_instant If is instant state change
+function RadioGroup.set_state(self, index, is_instant)
+	on_checkbox_click(self, index, is_instant)
 end
 
 

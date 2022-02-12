@@ -76,6 +76,7 @@ function M.centrate_nodes(margin, ...)
 		node_widths[i] = get_width(node)
 		width = width + node_widths[i]
 	end
+	width = width + margin * (count - 1)
 
 	-- Posing all elements
 	local pos_x = 0

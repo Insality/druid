@@ -14,7 +14,6 @@ local BaseComponent = class("druid.component")
 
 
 --- Component Interests
-BaseComponent.ALL = const.ALL
 BaseComponent.ON_INPUT = const.ON_INPUT
 BaseComponent.ON_UPDATE = const.ON_UPDATE
 BaseComponent.ON_MESSAGE = const.ON_MESSAGE
@@ -27,7 +26,6 @@ BaseComponent.ON_LANGUAGE_CHANGE = const.ON_LANGUAGE_CHANGE
 
 
 BaseComponent.ALL_INTERESTS = {
-	BaseComponent.ALL,
 	BaseComponent.ON_INPUT,
 	BaseComponent.ON_UPDATE,
 	BaseComponent.ON_MESSAGE,
@@ -40,18 +38,13 @@ BaseComponent.ALL_INTERESTS = {
 }
 
 
--- Value is method name of component
+-- Mapping from on_message method to specific method name
 BaseComponent.SPECIFIC_UI_MESSAGES = {
-	[BaseComponent.ON_FOCUS_LOST] = "on_focus_lost",
-	[BaseComponent.ON_FOCUS_GAINED] = "on_focus_gained",
-	[BaseComponent.ON_LAYOUT_CHANGE] = "on_layout_change",
-	[BaseComponent.ON_MESSAGE_INPUT] = "on_message_input",
-	[BaseComponent.ON_LANGUAGE_CHANGE] = "on_language_change",
-}
-
-
-BaseComponent.UI_INPUT = {
-	[BaseComponent.ON_INPUT] = true
+	[hash(BaseComponent.ON_FOCUS_LOST)] = "on_focus_lost",
+	[hash(BaseComponent.ON_FOCUS_GAINED)] = "on_focus_gained",
+	[hash(BaseComponent.ON_LAYOUT_CHANGE)] = "on_layout_change",
+	[hash(BaseComponent.ON_MESSAGE_INPUT)] = "on_message_input",
+	[hash(BaseComponent.ON_LANGUAGE_CHANGE)] = "on_language_change",
 }
 
 
@@ -267,15 +260,11 @@ end
 -- by `BaseComponent.static.create`
 -- @tparam BaseComponent self
 -- @tparam string name BaseComponent name
--- @tparam[opt={}] table interest List of component's interest
 -- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
 -- @local
-function BaseComponent.initialize(self, name, interest, input_priority)
-	interest = interest or {}
-
+function BaseComponent.initialize(self, name, input_priority)
 	self._component = {
 		name = name,
-		interest = interest,
 		input_priority = input_priority or const.PRIORITY_INPUT,
 		default_input_priority = input_priority or const.PRIORITY_INPUT,
 		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
@@ -319,7 +308,15 @@ end
 -- @treturn table List of component interests
 -- @local
 function BaseComponent.__get_interests(self)
-	return self._component.interest
+	local interests = {}
+	for index = 1, #BaseComponent.ALL_INTERESTS do
+		local interest = BaseComponent.ALL_INTERESTS[index]
+		if self[interest] and type(self[interest]) == "function" then
+			table.insert(interests, interest)
+		end
+	end
+
+	return interests
 end
 
 
@@ -386,15 +383,14 @@ end
 --- Create new component. It will inheritance from basic
 -- druid component.
 -- @tparam string name BaseComponent name
--- @tparam[opt={}] table interest List of component's interest
 -- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
 -- @local
-function BaseComponent.static.create(name, interest, input_priority)
+function BaseComponent.static.create(name, input_priority)
 	-- Yea, inheritance here
 	local new_class = class(name, BaseComponent)
 
 	new_class.initialize = function(self)
-		BaseComponent.initialize(self, name, interest, input_priority)
+		BaseComponent.initialize(self, name, input_priority)
 	end
 
 	return new_class

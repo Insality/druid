@@ -61,12 +61,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Scroll = component.create("scroll", {
-	component.ON_INPUT,
-	component.ON_UPDATE,
-	component.ON_LAYOUT_CHANGE,
-	component.ON_LATE_INIT
-})
+local Scroll = component.create("scroll")
 
 
 local function inverse_lerp(min, max, current)
@@ -282,7 +277,7 @@ function Scroll.scroll_to_percent(self, percent, is_instant)
 
 	local pos = vmath.vector3(
 		-helper.lerp(border.x, border.z, 1 - percent.x),
-		-helper.lerp(border.w, border.y, 1 - percent.y),
+		helper.lerp(border.y, border.w, 1 - percent.y),
 		0
 	)
 
@@ -531,6 +526,9 @@ end
 
 --- Cancel animation on other animation or input touch
 function Scroll._cancel_animate(self)
+	self.inertion.x = 0
+	self.inertion.y = 0
+
 	if self.is_animate then
 		self.target_position = gui.get_position(self.content_node)
 		self.position.x = self.target_position.x
