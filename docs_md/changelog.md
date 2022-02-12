@@ -205,18 +205,28 @@ Have a good day.
 - **#127** The `druid:create` is deprecated. Use `druid:new` for creating custom components
 
 
+### Druid 0.7.0:
+
+Hello! Here I'm again with new Druid stuff for you!
+
+The feature I want a long time to deliver for you: the different Text size adjust modes. Druid use the text node sizes to fit the text into this box.
+There are new adjust modes such as Trim, Scroll, Downscale with restrictions and Downscale + Scroll. You can change default adjust mode via text style table, but by default there is no changes - it's downscale adjust mode as before.
+I'll hope it can be useful for you for in different cases and now it will be much easy to fit all your texts for different languages!
+
+The next features is made for add more control for availability of user input. So meet the whitelists, blacklists and custom check functions for Buttons. Now you can easily choose the more suitable way to enable/disable/restrict input for you users. I'm sure it can be useful for you tutorials.
+
+Another small, but cool feature on my mind is `druid.stencil_check`. If you did interactive elements inside the Scroll, probably you used `component:set_click_zone` to restrict input zone by stencil scroll view node. With this feature, Druid will do it automaticaly for you! You can enable this feature in your `game.project`. It will not override you existing `set_click_zone`.
+
+Now you even able to remap default input keys! Also there are several bugfixes with Scroll, Text, Grids.
+
+Wanna something more? [Add an issues!](https://github.com/Insality/druid/issues)
+Good luck!
+
+
 **Changelog 0.7.0**
 ---
 
-- **#131** [Static Grid] Add style param: IS_DYNAMIC_NODE_POSES (default: false). Always align by content size with node anchor.
-	- If true - Static Grid will by always align to content anchor.
-	- If false (currently behaviour) - all poses for static grid is predefined and not depends on element's count (see example: static grid and static grid with dynamic poses)
-- **#132** Add example with grid add/remove with animations
-- **#112** Allow remap default Druid input bindings.
-- **#66** Add `druid:set_whitelist()` and `druid.set_blacklist()` functions. It's affects only on input process step, you can allow/forbid interact with list of specific components
-- **#125** Now `component:set_input_priority()` affects on all component's children too
-- **#143** Update all lang components on ``druid.set_text_function` call
-- **#78** Update Text component:
+- **#78** [Text] Update Text component:
 	- Add text adjust type instead of _no_adjust_ param.
 		- const.TEXT_ADJUST.DOWNSCALE - Change text's scale to fit in the text node size
 		- const.TEXT_ADJUST.TRIM - Trim the text with postfix (default - "...", override in styles) to fit in the text node size
@@ -224,10 +234,21 @@ Have a good day.
 		- const.TEXT_ADJUST.DOWNSCALE_LIMITED - Change text's scale list downscale, but there is limit for text's scale
 		- const.TEXT_ADJUST.SCROLL - Change text's pivot to imitate scrolling in the text box. Use with stencil node for better effect.
 		- const.TEXT_ADJUST.SCALE_THEN_SCROLL - Combine two modes: first limited downscale, then scroll
-- **#81** Add ability to interact with Druid input via messages
+- **#110** [Button] Add `Button:set_check_function(check_function, failure_callback)` function to add your custom click condition to button.
+	- `Button:set_enabled` has more priority than this to check button availability
+	- The `check_function` should return _true_ of _false_. If true - button can be clicked by user
+	- The `failure_callback` will be called if `check_function` will return false
+	- Example with `set_check_function` in general:buttons example collection
+- **#66** Add `druid:set_whitelist()` and `druid.set_blacklist()` functions. It's affects only on input process step, you can allow/forbid interact with list of specific components
+	- You can pass array of components, single component or nil in these functions
+- **#111** Add autocheck for input and stencil nodes. To enable this feature, add `druid.stencil_check = 1` to your _game.project_ file.
+	- This feature is using for auto setup `component:set_click_zone` to restrict clicks outside scrolls zone for example. Now you can don't think about click zone and let Druid do it instead of you!
+	- Add `helper.get_closest_stencil_node` function to get closest parent of non inverted stencil node
+	- Add `component.ON_LATE_INIT` interest. Component with this will call `component.on_late_init` function once after component init on update step. This can be used to do something after all gui components are inited
+- **#81** Add ability to interact with Druid input via messages:
 	- Currently add for Button and Text component only:
 		- Send to _gui.script_ message: `druid_const.ON_MESSAGE_INPUT`. The message table params:
-			- `node_id` - the name of the node with button component on it
+			- `node_id` - the name of the node with component on it
 			- `action` - value from `druid_const.MESSAGE_INPUT`. Available values:
 				- **BUTTON_CLICK** - usual button click callback
 				- **BUTTON_LONG_CLICK** - button long click callback
@@ -238,16 +259,14 @@ Have a good day.
 	- Add Druid component interest: `component.ON_MESSAGE_INPUT`
 	- Implement new interest via function `component:on_message_input(node_id, message)`
 	- See **System: Message input** example
-- **#111** Add autocheck for input and stencil nodes. To enable this feature, add `druid.stencil_check = 1` to your game.project file.
-	- Add `helper.get_closest_stencil_node` function to get closest parent non inverted stencil node
-	- Add `component.ON_LATE_INIT` interest. If component with with interest, it will call `component.on_late_init` function once after component init on update step. This can be used to do something after all gui components are was initialized and setup.
-	- This feature is using for auto setup `component:set_click_zone` to restrict clicks outside scrolls zone for example. Now you can don't think about click zone and let Druid do it instead of you!
-- **#110** Add `Button:set_check_function(check_function, failure_callback)` function to add your custom click condition to button.
-	- `Button:set_enabled` has more priority than this to check button availability
-	- The `check_function` should return _true_ of _false_. If true - button can be clicked
-	- The `failure_callback`will be called if `check_function` will return false. It's callback for you if button is not available
-	- Example with `set_check_function` exists in general:buttons example collection
-- **#107** Better scale text adjust by height for multiline text nodes (but still not perfect)
-- **#144** Fix some glitches with scroll Points of Interest. Remove false detection of scroll stopped.
-- **#142** Add Scroll style param `WHEEL_SCROLL_BY_INERTION` (default - false). If true - mouse wheel will add inertion to scroll, if false - set position directly per mouse wheel event.
-	- This fix caused, what Mac trackpad seems have additional mouse wheel events for simulate inertion. If you uncomfortable with this, you can disable `WHEEL_SCROLL_BY_INERTION` for more controllable scroll by mouse wheel.
+- **#131** [Static Grid] Add style param: `IS_DYNAMIC_NODE_POSES` (default: false). Always align by content size with node anchor.
+	- If true - Static Grid will by always align to content anchor.
+	- If false (currently behaviour) - all poses for static grid is predefined and not depends on element's count (see example: static grid and static grid with dynamic poses)
+- **#125** Now `component:set_input_priority()` affects on all component's children too
+- **#143** Update all lang components on `druid.set_text_function` call
+- **#112** Allow remap default Druid input bindings via `game.project`
+- **#107** [Text] Better scale text adjust by height for multiline text nodes (but still not perfect)
+- **#144** [Scroll] Fix some glitches with scroll Points of Interest. Remove false detection of scroll stopped.
+- **#142** [Scroll] Add Scroll style param `WHEEL_SCROLL_BY_INERTION` (default - false). If true - mouse wheel will add inertion to scroll, if false - set position directly per mouse wheel event.
+	- This fix caused because Mac trackpad seems have additional mouse wheel events for simulate inertion. If you uncomfortable with this, you can disable `WHEEL_SCROLL_BY_INERTION` for more controllable scroll by mouse wheel.
+- **#132** Add example with grid add/remove with animations

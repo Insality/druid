@@ -7,7 +7,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>druid 0.6.466</title>
+	<title>druid 0.7.499</title>
 	<style type='text/css'>
 	/* Disable user selection to avoid strange bug in Chrome on Windows:
 	* Selecting a text outside the canvas, then clicking+draging would
@@ -160,7 +160,8 @@
 
 	var is_iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 	var buttonHeight = 0;
-	// Resize on init, screen resize and orientation change
+	var prevInnerWidth = -1;
+	var prevInnerHeight = -1;
 	function resize_game_canvas() {
 		// Hack for iOS when exit from Fullscreen mode
 		if (is_iOS) {
@@ -171,6 +172,12 @@
 		var game_canvas = document.getElementById('canvas');
 		var innerWidth = window.innerWidth;
 		var innerHeight = window.innerHeight - buttonHeight;
+		if (prevInnerWidth == innerWidth && prevInnerHeight == innerHeight)
+		{
+			return;
+		}
+		prevInnerWidth = innerWidth;
+		prevInnerHeight = innerHeight;
 		var width = 600;
 		var height = 900;
 		var targetRatio = width / height;
@@ -201,6 +208,7 @@
 	resize_game_canvas();
 	window.addEventListener('resize', resize_game_canvas, false);
 	window.addEventListener('orientationchange', resize_game_canvas, false);
+	window.addEventListener('focus', resize_game_canvas, false);
 	</script>
 
 	<script id='engine-start' type='text/javascript'>

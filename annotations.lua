@@ -11,7 +11,8 @@ local druid = {}
 function druid.new(context, style) end
 
 --- Druid on language change.
-function druid.on_language_change() end
+---@param self druid_instance
+function druid.on_language_change(self) end
 
 --- Callback on global language change event.
 function druid.on_language_change() end
@@ -28,6 +29,11 @@ function druid.on_window_callback(event) end
 ---@param module table lua table with component
 function druid.register(name, module) end
 
+--- Set blacklist components for input processing.
+---@param self druid_instance
+---@param blacklist_components table|Component The array of component to blacklist
+function druid.set_blacklist(self, blacklist_components) end
+
 --- Set new default style.
 ---@param style table Druid style module
 function druid.set_default_style(style) end
@@ -39,6 +45,11 @@ function druid.set_sound_function(callback) end
 --- Set text function  Druid locale component will call this function  to get translated text.
 ---@param callback function Get localized text function
 function druid.set_text_function(callback) end
+
+--- Set whitelist components for input processing.
+---@param self druid_instance
+---@param whitelist_components table|Component The array of component to whitelist
+function druid.set_whitelist(self, whitelist_components) end
 
 
 ---@class druid.back_handler : druid.base_component
@@ -62,6 +73,11 @@ function druid__back_handler.on_input(self, action_id, action) end
 ---@class druid.base_component
 ---@field ALL field Component Interests
 local druid__base_component = {}
+
+--- Return all children components, recursive
+---@param self druid.base_component
+---@return table Array of childrens if the Druid component instance
+function druid__base_component.get_childrens(self) end
 
 --- Get current component context
 ---@param self druid.base_component
@@ -163,6 +179,7 @@ function druid__blocker.set_enabled(self, state) end
 ---@class druid.button : druid.base_component
 ---@field anim_node node Animation node
 ---@field click_zone node Restriction zone
+---@field hash node_id The hash of trigger node
 ---@field hover druid.hover Druid hover logic component
 ---@field node node Trigger node
 ---@field on_click druid_event On release button callback(self, params, button_instance)
@@ -195,6 +212,12 @@ function druid__button.init(self, node, callback, params, anim_node) end
 ---@param self druid.button
 ---@return bool True, if button is enabled
 function druid__button.is_enabled(self) end
+
+--- Set function for additional check for button click availability
+---@param check_function function Should return true or false. If true - button can be pressed.
+---@param failure_callback function Function what will be called on button click, if check function return false
+---@return druid.button Current button instance
+function druid__button.set_check_function(check_function, failure_callback) end
 
 --- Strict button click area.
 ---@param self druid.button
@@ -393,7 +416,8 @@ function druid__dynamic_grid._get_side_vector(self, side, is_forward) end
 ---@param node node Gui node
 ---@param index number The node position. By default add as last node
 ---@param shift_policy number How shift nodes, if required. See const.SHIFT
-function druid__dynamic_grid.add(self, node, index, shift_policy) end
+---@param is_instance boolean If true, update node positions instantly
+function druid__dynamic_grid.add(self, node, index, shift_policy, is_instance) end
 
 --- Clear grid nodes array.
 ---@param self druid.dynamic_grid
@@ -444,8 +468,9 @@ function druid__dynamic_grid.init(self, parent) end
 ---@param self druid.dynamic_grid
 ---@param index number The grid node index to remove
 ---@param shift_policy number How shift nodes, if required. See const.SHIFT
+---@param is_instance boolean If true, update node positions instantly
 ---@return Node The deleted gui node from grid
-function druid__dynamic_grid.remove(self, index, shift_policy) end
+function druid__dynamic_grid.remove(self, index, shift_policy, is_instance) end
 
 --- Change set position function for grid nodes.
 ---@param self druid.dynamic_grid
@@ -780,6 +805,7 @@ function druid__scroll.set_vertical_scroll(self, state) end
 ---@field INERT_THRESHOLD field  Scroll speed to stop inertion
 ---@field POINTS_DEADZONE field  Speed to check points of interests in no_inertion mode
 ---@field SMALL_CONTENT_SCROLL field  If true, content node with size less than view node size can be scrolled
+---@field WHEEL_SCROLL_BY_INERTION field  If true, wheel will add inertion to scroll. Direct set position otherwise.
 ---@field WHEEL_SCROLL_INVERTED field  If true, invert direction for touchpad and mouse wheel scroll
 ---@field WHEEL_SCROLL_SPEED field  The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
 local druid__scroll__style = {}
@@ -829,6 +855,7 @@ function druid__slider.set_steps(self, steps) end
 ---@field on_remove_item druid_event On item remove callback(self, index)
 ---@field on_update_positions druid_event On update item positions callback(self)
 ---@field parent node Parent gui node
+---@field style druid.static_grid.style Component style params.
 local druid__static_grid = {}
 
 --- Add new item to the grid
@@ -836,7 +863,8 @@ local druid__static_grid = {}
 ---@param item node Gui node
 ---@param index number The item position. By default add as last item
 ---@param shift_policy number How shift nodes, if required. See const.SHIFT
-function druid__static_grid.add(self, item, index, shift_policy) end
+---@param is_instance boolean If true, update node positions instantly
+function druid__static_grid.add(self, item, index, shift_policy, is_instance) end
 
 --- Clear grid nodes array.
 ---@param self druid.static_grid
@@ -892,8 +920,9 @@ function druid__static_grid.init(self, parent, element, in_row) end
 ---@param self druid.static_grid
 ---@param index number The grid node index to remove
 ---@param shift_policy number How shift nodes, if required. See const.SHIFT
+---@param is_instance boolean If true, update node positions instantly
 ---@return Node The deleted gui node from grid
-function druid__static_grid.remove(self, index, shift_policy) end
+function druid__static_grid.remove(self, index, shift_policy, is_instance) end
 
 --- Set grid anchor.
 ---@param self druid.static_grid
@@ -905,6 +934,11 @@ function druid__static_grid.set_anchor(self, anchor) end
 ---@param callback function Function on node set position
 ---@return druid.static_grid Current grid instance
 function druid__static_grid.set_position_function(self, callback) end
+
+
+---@class druid.static_grid.style
+---@field IS_DYNAMIC_NODE_POSES field  If true, always center grid content as grid pivot sets
+local druid__static_grid__style = {}
 
 
 ---@class druid.swipe : druid.base_component
@@ -934,9 +968,10 @@ local druid__swipe__style = {}
 
 
 ---@class druid.text : druid.base_component
+---@field adjust_type number Current text size adjust settings
 ---@field color vector3 Current text color
----@field is_no_adjust bool Current text size adjust settings
 ---@field node node Text node
+---@field node_id hash The node id of text node
 ---@field on_set_pivot druid_event On change pivot callback(self, pivot)
 ---@field on_set_text druid_event On set text callback(self, text)
 ---@field on_update_text_scale druid_event On adjust text size callback(self, new_scale)
@@ -944,8 +979,15 @@ local druid__swipe__style = {}
 ---@field scale vector3 Current text node scale
 ---@field start_scale vector3 Initial text node scale
 ---@field start_size vector3 Initial text node size
+---@field style druid.text.style Component style params.
 ---@field text_area vector3 Current text node available are
 local druid__text = {}
+
+--- Return current text adjust type
+---@param self unknown
+---@param adjust_type unknown
+---@return number The current text adjust type
+function druid__text.get_text_adjust(self, adjust_type) end
 
 --- Calculate text width with font with respect to trailing space
 ---@param self druid.text
@@ -956,8 +998,8 @@ function druid__text.get_text_width(self, text) end
 ---@param self druid.text
 ---@param node node Gui text node
 ---@param value string Initial text. Default value is node text from GUI scene.
----@param no_adjust bool If true, text will be not auto-adjust size
-function druid__text.init(self, node, value, no_adjust) end
+---@param adjust_type int Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+function druid__text.init(self, node, value, adjust_type) end
 
 --- Return true, if text with line break
 ---@param self druid.text
@@ -967,27 +1009,51 @@ function druid__text.is_multiline(self) end
 --- Set alpha
 ---@param self druid.text
 ---@param alpha number Alpha for node
+---@return druid.text Current text instance
 function druid__text.set_alpha(self, alpha) end
 
 --- Set color
 ---@param self druid.text
 ---@param color vector4 Color for node
+---@return druid.text Current text instance
 function druid__text.set_color(self, color) end
+
+--- Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
+---@param self druid.text
+---@param minimal_scale number If pass nil - not use minimal scale
+---@return druid.text Current text instance
+function druid__text.set_minimal_scale(self, minimal_scale) end
 
 --- Set text pivot.
 ---@param self druid.text
 ---@param pivot gui.pivot Gui pivot constant
+---@return druid.text Current text instance
 function druid__text.set_pivot(self, pivot) end
 
 --- Set scale
 ---@param self druid.text
 ---@param scale vector3 Scale for node
+---@return druid.text Current text instance
 function druid__text.set_scale(self, scale) end
+
+--- Set text adjust, refresh the current text visuals, if needed
+---@param self druid.text
+---@param adjust_type number See const.TEXT_ADJUST. If pass nil - use current adjust type
+---@param minimal_scale number If pass nil - not use minimal scale
+---@return druid.text Current text instance
+function druid__text.set_text_adjust(self, adjust_type, minimal_scale) end
 
 --- Set text to text field
 ---@param self druid.text
 ---@param set_to string Text for node
+---@return druid.text Current text instance
 function druid__text.set_to(self, set_to) end
+
+
+---@class druid.text.style
+---@field DEFAULT_ADJUST field  The default adjust type for any text component
+---@field TRIM_POSTFIX field  The postfix for TRIM adjust type
+local druid__text__style = {}
 
 
 ---@class druid.timer : druid.base_component
@@ -1248,6 +1314,7 @@ function druid_instance.on_focus_lost(self) end
 ---@param self druid_instance
 ---@param action_id hash Action_id from on_input
 ---@param action table Action from on_input
+---@return bool The boolean value is input was consumed
 function druid_instance.on_input(self, action_id, action) end
 
 --- Druid on layout change function.
@@ -1322,6 +1389,11 @@ function helper.deprecated(message) end
 ---@param offset vector3 The offset to add to result
 ---@return  vector4 Vector with distance to node border: (left, top, right, down)
 function helper.get_border(node, offset) end
+
+--- Return closest non inverted clipping parent node for node
+---@param node node Gui node
+---@return node|nil The clipping node
+function helper.get_closest_stencil_node(node) end
 
 --- Get node offset for given gui pivot
 ---@param pivot gui.pivot The node pivot
