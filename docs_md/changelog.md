@@ -293,7 +293,7 @@ Have a nice day!
 	- The component interests now setup via function declaration inside your components. The functions are still the same.
 	- Now `component.create` function have next signature: _create(component_name, input_priority)_
 	- Your should remove interests list from your custom components if exists
-		- From `component.create("custom", { component.ON_INPUT, component.ON_LATE_INIT }, const.PRIORITY_INPUT_HIGH)` to 
+		- From `component.create("custom", { component.ON_INPUT, component.ON_LATE_INIT }, const.PRIORITY_INPUT_HIGH)` to
 `component.create("custom", const.PRIORITY_INPUT_HIGH)`
 -  **#166**  [Input] Fix issue with Cyrillic symbols in range "[А-я]"
 -  **#162** [Static Grid] Add last row alignment with dynamic content poses enabled
@@ -309,6 +309,7 @@ Have a nice day!
 -  [Input] Add current text argument to _on_input_unselect_ event
 -  **#152**  [Checkbox] Add _is_instant_ argument to  `set_state` function
 	- Add _initial_state_ argument to Checkbox component constructor
+	- Update Checkbox style, add _is_instant_ param
 -  **#149**  [Button] Call button style functions after actual callback
 -  **#153** System: Mode Druid acquire input to late_init step
 	- Required to solve issues, when go input acquire can be later, when gui input acquire (on init step)

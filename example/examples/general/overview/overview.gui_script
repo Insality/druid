@@ -69,8 +69,8 @@ local function setup_checkbox(self)
 		nil,
 		{"checkbox1/back", "checkbox2/back", "checkbox3/back"})
 
-	radio_group:set_state(2)
-	checkbox_group:set_state({true, false, true})
+	radio_group:set_state(2, true)
+	checkbox_group:set_state({true, false, true}, true)
 end
 
 

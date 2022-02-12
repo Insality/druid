@@ -304,7 +304,8 @@ function druid__checkbox_group.init(self, nodes, callback, click_nodes) end
 --- Set checkbox group state
 ---@param self druid.checkbox_group
 ---@param indexes bool[] Array of checkbox state
-function druid__checkbox_group.set_state(self, indexes) end
+---@param is_instant boolean If instant state change
+function druid__checkbox_group.set_state(self, indexes, is_instant) end
 
 
 ---@class druid.data_list : druid.base_component
@@ -687,7 +688,8 @@ function druid__radio_group.init(self, nodes, callback, click_nodes) end
 --- Set radio group state
 ---@param self druid.radio_group
 ---@param index number Index in radio group
-function druid__radio_group.set_state(self, index) end
+---@param is_instant boolean If is instant state change
+function druid__radio_group.set_state(self, index, is_instant) end
 
 
 ---@class druid.scroll : druid.base_component

@@ -88,9 +88,15 @@ M["progress"] = {
 
 
 M["checkbox"] = {
-	on_change_state = function(self, node, state)
+	on_change_state = function(self, node, state, is_instant)
 		local target = state and 1 or 0
-		gui.animate(node, "color.w", target, gui.EASING_OUTSINE, 0.1)
+		if not is_instant then
+			gui.animate(node, "color.w", target, gui.EASING_OUTSINE, 0.1)
+		else
+			local color = gui.get_color(node)
+			color.w = target
+			gui.set_color(node, color)
+		end
 	end
 }
 
