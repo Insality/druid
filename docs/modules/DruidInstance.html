@@ -209,7 +209,7 @@
 	<td class="summary">Create slider component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_checkbox">new_checkbox(self, node, callback[, click_node=node])</a></td>
+	<td class="name" nowrap><a href="#new_checkbox">new_checkbox(self, node, callback[, click_node=node[, initial_state=false]])</a></td>
 	<td class="summary">Create checkbox component</td>
 	</tr>
 	<tr>
@@ -260,11 +260,11 @@
 
         </li>
         <li><span class="parameter">context</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
          Druid context. Usually it is self of script
         </li>
         <li><span class="parameter">style</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
          Druid style module
         </li>
     </ul>
@@ -395,7 +395,7 @@
          Action_id from on_input
         </li>
         <li><span class="parameter">action</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
          Action from on_input
         </li>
     </ul>
@@ -430,7 +430,7 @@
          Message_id from on_message
         </li>
         <li><span class="parameter">message</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
          Message from on_message
         </li>
         <li><span class="parameter">sender</span>
@@ -550,7 +550,7 @@
 
         </li>
         <li><span class="parameter">whitelist_components</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a> or <span class="type">Component</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">Component</span></span>
          The array of component to whitelist
          (<em>default</em> nil)
         </li>
@@ -578,7 +578,7 @@
 
         </li>
         <li><span class="parameter">blacklist_components</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a> or <span class="type">Component</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">Component</span></span>
          The array of component to blacklist
          (<em>default</em> nil)
         </li>
@@ -612,7 +612,7 @@
          Button callback
         </li>
         <li><span class="parameter">params</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.6">table</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
          Button callback params
          (<em>optional</em>)
         </li>
@@ -755,7 +755,7 @@
          Gui text node
         </li>
         <li><span class="parameter">value</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Initial text. Default value is node text from GUI scene.
          (<em>optional</em>)
         </li>
@@ -1013,7 +1013,7 @@
          The text node
         </li>
         <li><span class="parameter">locale_id</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Default locale id
         </li>
         <li><span class="parameter">no_adjust</span>
@@ -1075,7 +1075,7 @@
 </dd>
     <dt>
     <a name = "new_checkbox"></a>
-    <strong>new_checkbox(self, node, callback[, click_node=node])</strong>
+    <strong>new_checkbox(self, node, callback[, click_node=node[, initial_state=false]])</strong>
     </dt>
     <dd>
     Create checkbox component
@@ -1099,6 +1099,11 @@
             <span class="types"><span class="type">node</span></span>
          Trigger node, by default equals to node
          (<em>default</em> node)
+        </li>
+        <li><span class="parameter">initial_state</span>
+            <span class="types"><span class="type">boolean</span></span>
+         The initial state of checkbox, default - false
+         (<em>default</em> false)
         </li>
     </ul>
 
@@ -1328,11 +1333,11 @@
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a> or <span class="type">node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
          Progress bar fill node or node name
         </li>
         <li><span class="parameter">key</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.3/manual.html#6.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Progress bar direction: const.SIDE.X or const.SIDE.Y
         </li>
         <li><span class="parameter">init_value</span>
@@ -1360,7 +1365,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-10-23 17:45:31 </i>
+<i style="float:right;">Last updated 2022-02-12 16:59:51 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

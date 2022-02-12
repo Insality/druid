@@ -184,7 +184,7 @@ Have a good day.
 - Lang text now can be initialized without default locale id
 - Input component: rename field _selected_ to _is_selected_ (according to the docs)
 - **#92** Setup repo for CI and unit tests. (Yea, successful build and tests badges!)
-- **#86** Fix a lot of event triggers on scroll inertia moving 
+- **#86** Fix a lot of event triggers on scroll inertia moving
 - **#101** Fix scroll to other node instead of swipe direction with scroll's points of interest (without inert settings)
 - **#103** Add `helper.centate_nodes` function. It can horizontal align several Box and Text nodes
 - **#105** Add `Input:select` and `Input:unselect` function.
@@ -270,3 +270,47 @@ Good luck!
 - **#142** [Scroll] Add Scroll style param `WHEEL_SCROLL_BY_INERTION` (default - false). If true - mouse wheel will add inertion to scroll, if false - set position directly per mouse wheel event.
 	- This fix caused because Mac trackpad seems have additional mouse wheel events for simulate inertion. If you uncomfortable with this, you can disable `WHEEL_SCROLL_BY_INERTION` for more controllable scroll by mouse wheel.
 - **#132** Add example with grid add/remove with animations
+
+
+### Druid 0.8.0
+Hello!
+
+In this Druid update no any huge special features. Mostly the bug fixes and reworking the component's interest points. If you used interests in your custom components, you should remove it from `component.create` and all should works as before.
+
+Also added last row allignment in Static Grid component with "dynamic content poses" style enabled. You can look how it is work here: https://insality.github.io/druid/druid/?example=grid_static_grid_dynamic_pos
+
+
+You can say thanks to me via stars on GitHub 3! :wink:
+Wanna something more? [Add an issues!](https://github.com/Insality/druid/issues)
+Have a nice day!
+
+
+**Changelog 0.8.0**
+
+---
+
+-  **#160** __[BREAKING]__ Remove component interests list
+	- The component interests now setup via function declaration inside your components. The functions are still the same.
+	- Now `component.create` function have next signature: _create(component_name, input_priority)_
+	- Your should remove interests list from your custom components if exists
+		- From `component.create("custom", { component.ON_INPUT, component.ON_LATE_INIT }, const.PRIORITY_INPUT_HIGH)` to 
+`component.create("custom", const.PRIORITY_INPUT_HIGH)`
+-  **#166**  [Input] Fix issue with Cyrillic symbols in range "[А-я]"
+-  **#162** [Static Grid] Add last row alignment with dynamic content poses enabled
+	- Add style param: _static_grid.IS_ALIGN_LAST_ROW_, true by default. Works only if _static_grid.IS_DYNAMIC_NODE_POSES_ enabled. See the "Static grid with dynamic poses" example.
+-  **#163** [Lang Text] Set default locale_id value from text node
+-  **#147** [Lang Text] Remove `...` from lang_text to fixed arguments, add _format_ function to change only string format arguments
+	- There are some issues with `...`. Now Lang Text will support up to 7 _string.format_ arguments
+- [Lang Text] Add more self chaining to Lang text component (_set_to_, _translate_ and _format_ functions)
+-  **#151**  [Text] Fix text adjust by height
+	- It still have not perfect fitting, but it's good enough!
+-  **#164 #150**  [Scroll] Fix `scroll:scroll_to_percent` by Y position
+-  **#148**  [Scroll] Remove scroll inertion after scroll `animate` or `set_to` functions
+-  [Input] Add current text argument to _on_input_unselect_ event
+-  **#152**  [Checkbox] Add _is_instant_ argument to  `set_state` function
+	- Add _initial_state_ argument to Checkbox component constructor
+-  **#149**  [Button] Call button style functions after actual callback
+-  **#153** System: Mode Druid acquire input to late_init step
+	- Required to solve issues, when go input acquire can be later, when gui input acquire (on init step)
+-  **#154** System: Change text adjust const to strings
+-  **#155** Fix: Add margin to total width calculation in `helper.centrate_nodes`
