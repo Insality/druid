@@ -12,7 +12,7 @@
 --- On item remove callback(self, index)
 -- @tfield druid_event on_remove_item
 
---- On item add or remove callback(self, index)
+--- On item add, remove or change in_row callback(self, index|nil)
 -- @tfield druid_event on_change_items
 
 --- On grid clear callback(self)
@@ -350,6 +350,20 @@ function StaticGrid:get_offset()
 		0)
 
 	return offset
+end
+
+
+--- Set new in_row elements for grid
+-- @tparam StaticGrid self
+-- @tparam number in_row The new in_row value
+-- @treturn druid.static_grid Current grid instance
+function StaticGrid:set_in_row(in_row)
+	self.in_row = in_row
+	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
+	self:_update(true)
+	self.on_change_items:trigger(self:get_context())
+
+	return self
 end
 
 
