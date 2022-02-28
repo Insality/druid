@@ -87,6 +87,12 @@ function Timer.update(self, dt)
 	end
 end
 
+
+function Timer.on_layout_change(self)
+	self:set_to(self.last_value)
+end
+
+
 --- Set text to text field
 -- @tparam Timer self
 -- @tparam number set_to Value in seconds

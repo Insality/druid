@@ -40,11 +40,11 @@ BaseComponent.ALL_INTERESTS = {
 
 -- Mapping from on_message method to specific method name
 BaseComponent.SPECIFIC_UI_MESSAGES = {
-	[hash(BaseComponent.ON_FOCUS_LOST)] = "on_focus_lost",
-	[hash(BaseComponent.ON_FOCUS_GAINED)] = "on_focus_gained",
-	[hash(BaseComponent.ON_LAYOUT_CHANGE)] = "on_layout_change",
-	[hash(BaseComponent.ON_MESSAGE_INPUT)] = "on_message_input",
-	[hash(BaseComponent.ON_LANGUAGE_CHANGE)] = "on_language_change",
+	[hash("layout_changed")] = BaseComponent.ON_LAYOUT_CHANGE, -- The message_id from Defold
+	[hash(BaseComponent.ON_FOCUS_LOST)] = BaseComponent.ON_FOCUS_LOST,
+	[hash(BaseComponent.ON_FOCUS_GAINED)] = BaseComponent.ON_FOCUS_GAINED,
+	[hash(BaseComponent.ON_MESSAGE_INPUT)] = BaseComponent.ON_MESSAGE_INPUT,
+	[hash(BaseComponent.ON_LANGUAGE_CHANGE)] = BaseComponent.ON_LANGUAGE_CHANGE,
 }
 
 

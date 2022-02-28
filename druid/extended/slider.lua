@@ -78,7 +78,7 @@ end
 
 
 function Slider.on_layout_change(self)
-	self:set(self.value, true)
+	self:set(self.value)
 end
 
 

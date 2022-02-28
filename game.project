@@ -7,10 +7,12 @@ shared_state = 1
 [display]
 width = 600
 height = 900
+display_profiles = /example/custom.display_profilesc
+dynamic_orientation = 1
 
 [project]
 title = druid
-version = 0.8.0
+version = 0.8.1
 publisher = Insality
 developer = Insality
 dependencies#0 = https://github.com/insalitygames/deftest/archive/master.zip
