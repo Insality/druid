@@ -38,7 +38,7 @@ M.ON_MESSAGE = "on_message"
 M.ON_LATE_INIT = "on_late_init"
 M.ON_FOCUS_LOST = "on_focus_lost"
 M.ON_FOCUS_GAINED = "on_focus_gained"
-M.ON_LAYOUT_CHANGE = "on_layout_changed"
+M.ON_LAYOUT_CHANGE = "on_layout_change"
 M.ON_MESSAGE_INPUT = "on_message_input"
 M.ON_LANGUAGE_CHANGE = "on_language_change"
 

@@ -1,0 +1,6 @@
+date,sha,version,build_size,build_time,platform,mode,is_cache_using,commits_count
+2022-02-28T19:06:43Z,3b329f9c25c9672e4030edb039b0225fa46f7ce1,0.8.521,4356,68,armv7-android,debug,true,521
+2022-02-28T19:14:56Z,3b329f9c25c9672e4030edb039b0225fa46f7ce1,0.8.521,4356,51,armv7-android,debug,true,521
+2022-02-28T19:16:23Z,3b329f9c25c9672e4030edb039b0225fa46f7ce1,0.8.521,4356,11,armv7-android,debug,true,521
+2022-02-28T19:19:46Z,3b329f9c25c9672e4030edb039b0225fa46f7ce1,0.8.521,4356,11,armv7-android,debug,true,521
+2022-02-28T19:22:51Z,3b329f9c25c9672e4030edb039b0225fa46f7ce1,0.8.521,4356,11,armv7-android,debug,true,521

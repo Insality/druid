@@ -7,6 +7,8 @@ shared_state = 1
 [display]
 width = 600
 height = 900
+display_profiles = /example/custom.display_profilesc
+dynamic_orientation = 1
 
 [project]
 title = druid

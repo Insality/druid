@@ -9,3 +9,5 @@ Thumbs.db
 .cproject
 builtins
 dist
+deployer_version_settings.txt
+.deployer_cache

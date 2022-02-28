@@ -1,0 +1,14 @@
+profiles {
+  name: "Landscape"
+  qualifiers {
+    width: 900
+    height: 600
+  }
+}
+profiles {
+  name: "Portrait"
+  qualifiers {
+    width: 600
+    height: 900
+  }
+}
