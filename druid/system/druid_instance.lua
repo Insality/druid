@@ -410,17 +410,6 @@ function DruidInstance.on_focus_gained(self)
 end
 
 
---- Druid on layout change function.
--- Called on update gui layout
--- @tparam DruidInstance self
-function DruidInstance.on_layout_change(self)
-	local components = self.components_interest[base_component.ON_LAYOUT_CHANGE]
-	for i = 1, #components do
-		components[i]:on_layout_change()
-	end
-end
-
-
 --- Druid on language change.
 -- This one called by global gruid.on_language_change, but can be
 -- call manualy to update all translations

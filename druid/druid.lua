@@ -120,17 +120,6 @@ function M.on_window_callback(event)
 end
 
 
---- Callback on global layout change event.
--- @function druid.on_layout_change
-function M.on_layout_change()
-	local instances = get_druid_instances()
-
-	for i = 1, #instances do
-		msg.post(instances[i].url, base_component.ON_LAYOUT_CHANGE)
-	end
-end
-
-
 --- Callback on global language change event.
 -- Use to update all lang texts
 -- @function druid.on_language_change
