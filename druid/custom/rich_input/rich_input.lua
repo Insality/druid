@@ -6,7 +6,7 @@
 -- @within Input
 -- @alias druid.rich_input
 
---- On input field select callback(self, button_node)
+--- The component druid instance
 -- @tfield DruidInstance druid @{DruidInstance}
 
 --- On input field text change callback(self, input_text)
