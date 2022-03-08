@@ -1,6 +1,6 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Lua event small library
+--- Druid lua event library
 -- @module DruidEvent
 -- @alias druid_event
 

@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle basic GUI button
 -- @module Button
@@ -392,6 +392,7 @@ end
 
 
 --- Set function for additional check for button click availability
+-- @tparam Button self
 -- @tparam[opt] function check_function Should return true or false. If true - button can be pressed.
 -- @tparam[opt] function failure_callback Function what will be called on button click, if check function return false
 -- @treturn Button Current button instance

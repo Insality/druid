@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle placing components in row
 -- @module DynamicGrid
@@ -140,7 +140,7 @@ end
 --	@tparam node node Gui node
 -- @tparam[opt] number index The node position. By default add as last node
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instance If true, update node positions instantly
+-- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 function DynamicGrid.add(self, node, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	local delta = shift_policy -- -1 or 1 or 0
@@ -182,7 +182,7 @@ end
 -- @tparam DynamicGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instance If true, update node positions instantly
+-- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 -- @treturn Node The deleted gui node from grid
 function DynamicGrid.remove(self, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT

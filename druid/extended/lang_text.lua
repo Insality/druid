@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle all GUI texts
 -- Good working with localization system
@@ -63,7 +63,13 @@ end
 --- Translate the text by locale_id
 -- @tparam LangText self
 -- @tparam string locale_id Locale id
--- @tparam string ... Locale arguments to pass in text function
+-- @tparam[opt] string a Optional param to string.format
+-- @tparam[opt] string b Optional param to string.format
+-- @tparam[opt] string c Optional param to string.format
+-- @tparam[opt] string d Optional param to string.format
+-- @tparam[opt] string e Optional param to string.format
+-- @tparam[opt] string f Optional param to string.format
+-- @tparam[opt] string g Optional param to string.format
 -- @treturn LangText Current instance
 function LangText.translate(self, locale_id, a, b, c, d, e, f, g)
 	self.last_locale_args = { a, b, c, d, e, f, g }
@@ -76,7 +82,13 @@ end
 
 --- Format string with new text params on localized text
 -- @tparam LangText self
--- @tparam string ... Locale arguments to pass in text function
+-- @tparam[opt] string a Optional param to string.format
+-- @tparam[opt] string b Optional param to string.format
+-- @tparam[opt] string c Optional param to string.format
+-- @tparam[opt] string d Optional param to string.format
+-- @tparam[opt] string e Optional param to string.format
+-- @tparam[opt] string f Optional param to string.format
+-- @tparam[opt] string g Optional param to string.format
 -- @treturn LangText Current instance
 function LangText.format(self, a, b, c, d, e, f, g)
 	self.last_locale_args = { a, b, c, d, e, f, g }

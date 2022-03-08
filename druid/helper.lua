@@ -1,7 +1,8 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
--- Druid helper module for gui layouts
--- @module helper
+--- Druid helper module for gui layouts
+-- @module Helper
+-- @alias druid.helper
 
 local const = require("druid.const")
 

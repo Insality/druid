@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle placing components by row and columns.
 -- Grid can anchor your elements, get content size and other
@@ -181,10 +181,10 @@ end
 
 --- Add new item to the grid
 -- @tparam StaticGrid self
---	@tparam node item Gui node
+-- @tparam node item Gui node
 -- @tparam[opt] number index The item position. By default add as last item
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instance If true, update node positions instantly
+-- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 function StaticGrid.add(self, item, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	index = index or ((self.last_index or 0) + 1)
@@ -222,7 +222,7 @@ end
 -- @tparam StaticGrid self
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instance If true, update node positions instantly
+-- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 -- @treturn Node The deleted gui node from grid
 function StaticGrid.remove(self, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
@@ -357,7 +357,7 @@ end
 -- @tparam StaticGrid self
 -- @tparam number in_row The new in_row value
 -- @treturn druid.static_grid Current grid instance
-function StaticGrid:set_in_row(in_row)
+function StaticGrid.set_in_row(self, in_row)
 	self.in_row = in_row
 	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
 	self:_update(true)
