@@ -7,10 +7,10 @@
 -- @alias druid.lang_text
 
 --- On change text callback
--- @tfield druid_event on_change
+-- @tfield DruidEvent on_change @{DruidEvent}
 
 --- The text component
--- @tfield Text text
+-- @tfield Text text @{Text}
 
 ---
 
@@ -22,7 +22,7 @@ local LangText = component.create("lang_text")
 
 
 --- Component init function
--- @tparam LangText self
+-- @tparam LangText self @{LangText}
 -- @tparam node node The text node
 -- @tparam string locale_id Default locale id or text from node as default
 -- @tparam bool no_adjust If true, will not correct text size
@@ -48,7 +48,7 @@ end
 
 
 --- Setup raw text to lang_text component
--- @tparam LangText self
+-- @tparam LangText self @{LangText}
 -- @tparam string text Text for text node
 -- @treturn LangText Current instance
 function LangText.set_to(self, text)
@@ -61,7 +61,7 @@ end
 
 
 --- Translate the text by locale_id
--- @tparam LangText self
+-- @tparam LangText self @{LangText}
 -- @tparam string locale_id Locale id
 -- @tparam[opt] string a Optional param to string.format
 -- @tparam[opt] string b Optional param to string.format
@@ -81,7 +81,7 @@ end
 
 
 --- Format string with new text params on localized text
--- @tparam LangText self
+-- @tparam LangText self @{LangText}
 -- @tparam[opt] string a Optional param to string.format
 -- @tparam[opt] string b Optional param to string.format
 -- @tparam[opt] string c Optional param to string.format

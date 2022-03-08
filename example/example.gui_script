@@ -144,6 +144,9 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "Add/remove elements", "data_list_add_remove_nodes"))
 	self.lobby_grid:add(get_button(self, "Navigate over elements", "data_list_navigate", "/data_list/navigate/navigate.gui_script"))
 
+	self.lobby_grid:add(get_title(self, "Custom components"))
+	self.lobby_grid:add(get_button(self, "Rich Input", "custom_rich_input", "/data_list/static_grid/static_grid.gui_script"))
+
 	self.lobby_grid:add(get_title(self, "System"))
 	self.lobby_grid:add(get_button_disabled(self, "Styles"))
 	self.lobby_grid:add(get_button(self, "Whitelist / Blacklist", "system_whitelist_blacklist", "/system/whitelist_blacklist/whitelist_blacklist.gui_script"))

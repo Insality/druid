@@ -7,7 +7,7 @@
 -- @alias druid.progress
 
 --- On progress bar change callback(self, new_value)
--- @tfield druid_event on_change
+-- @tfield DruidEvent on_change @{DruidEvent}
 
 --- Progress bar fill node
 -- @tfield node node
@@ -93,7 +93,7 @@ end
 
 
 --- Component init function
--- @tparam Progress self
+-- @tparam Progress self @{Progress}
 -- @tparam string|node node Progress bar fill node or node name
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
 -- @tparam[opt=1] number init_value Initial value of progress bar
@@ -146,21 +146,21 @@ end
 
 
 --- Fill a progress bar and stop progress animation
--- @tparam Progress self
+-- @tparam Progress self @{Progress}
 function Progress.fill(self)
 	set_bar_to(self, 1, true)
 end
 
 
 --- Empty a progress bar
--- @tparam Progress self
+-- @tparam Progress self @{Progress}
 function Progress.empty(self)
 	set_bar_to(self, 0, true)
 end
 
 
 --- Instant fill progress bar to value
--- @tparam Progress self
+-- @tparam Progress self @{Progress}
 -- @tparam number to Progress bar value, from 0 to 1
 function Progress.set_to(self, to)
 	set_bar_to(self, to)
@@ -168,14 +168,14 @@ end
 
 
 --- Return current progress bar value
--- @tparam Progress self
+-- @tparam Progress self @{Progress}
 function Progress.get(self)
 	return self.last_value
 end
 
 
 --- Set points on progress bar to fire the callback
--- @tparam Progress self
+-- @tparam Progress self @{Progress}
 -- @tparam number[] steps Array of progress bar values
 -- @tparam function callback Callback on intersect step value
 -- @usage progress:set_steps({0, 0.3, 0.6, 1}, function(self, step) end)
@@ -186,7 +186,7 @@ end
 
 
 --- Start animation of a progress bar
--- @tparam Progress self
+-- @tparam Progress self @{Progress}
 -- @tparam number to value between 0..1
 -- @tparam[opt] function callback Callback on animation ends
 function Progress.to(self, to, callback)

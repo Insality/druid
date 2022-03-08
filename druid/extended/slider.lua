@@ -6,7 +6,7 @@
 -- @alias druid.slider
 
 --- On change value callback(self, value)
--- @tfield druid_event on_change_value
+-- @tfield DruidEvent on_change_value @{DruidEvent}
 
 --- Slider pin node
 -- @tfield node node
@@ -55,7 +55,7 @@ end
 
 
 --- Component init function
--- @tparam Slider self
+-- @tparam Slider self @{Slider}
 -- @tparam node node Gui pin node
 -- @tparam vector3 end_pos The end position of slider
 -- @tparam[opt] function callback On slider change callback
@@ -148,7 +148,7 @@ end
 
 
 --- Set value for slider
--- @tparam Slider self
+-- @tparam Slider self @{Slider}
 -- @tparam number value Value from 0 to 1
 -- @tparam[opt] bool is_silent Don't trigger event if true
 function Slider.set(self, value, is_silent)
@@ -163,7 +163,7 @@ end
 
 --- Set slider steps. Pin node will
 -- apply closest step position
--- @tparam Slider self
+-- @tparam Slider self @{Slider}
 -- @tparam number[] steps Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
 function Slider.set_steps(self, steps)

@@ -14,7 +14,7 @@
 -- @tparam[opt] node click_zone
 
 --- Trigger on swipe event(self, swipe_side, dist, delta_time
--- @tfield druid_event on_swipe)
+-- @tfield DruidEvent on_swipe) @{DruidEvent}
 
 ---
 
@@ -84,7 +84,7 @@ end
 
 
 --- Component init function
--- @tparam Swipe self
+-- @tparam Swipe self @{Swipe}
 -- @tparam node node Gui node
 -- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
 function Swipe.init(self, node, on_swipe_callback)
@@ -149,7 +149,7 @@ end
 
 --- Strict swipe click area. Useful for
 -- restrict events outside stencil node
--- @tparam Swipe self
+-- @tparam Swipe self @{Swipe}
 -- @tparam node zone Gui node
 function Swipe.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)

@@ -9,19 +9,19 @@
 -- @alias druid.drag
 
 --- Event on touch start callback(self)
--- @tfield druid_event on_touch_start
+-- @tfield DruidEvent on_touch_start @{DruidEvent}
 
 --- Event on touch end callback(self)
--- @tfield druid_event on_touch_end
+-- @tfield DruidEvent on_touch_end @{DruidEvent}
 
 --- Event on drag start callback(self)
--- @tfield druid_event on_drag_start
+-- @tfield DruidEvent on_drag_start @{DruidEvent}
 
 --- on drag progress callback(self, dx, dy)
--- @tfield druid_event on_drag Event
+-- @tfield DruidEvent on_drag Event @{DruidEvent}
 
 --- Event on drag end callback(self)
--- @tfield druid_event on_drag_end
+-- @tfield DruidEvent on_drag_end @{DruidEvent}
 
 --- Is component now touching
 -- @tfield bool is_touch
@@ -162,7 +162,7 @@ end
 
 
 --- Drag component constructor
--- @tparam Drag self
+-- @tparam Drag self @{Drag}
 -- @tparam node node GUI node to detect dragging
 -- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
 function Drag.init(self, node, on_drag_callback)
@@ -277,7 +277,7 @@ end
 
 --- Strict drag click area. Useful for
 -- restrict events outside stencil node
--- @tparam Drag self
+-- @tparam Drag self @{Drag}
 -- @tparam node node Gui node
 function Drag.set_click_zone(self, node)
 	self.click_zone = self:get_node(node)

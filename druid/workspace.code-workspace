@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../test"
+		},
+		{
+			"path": "../editor_scripts"
+		},
+		{
+			"path": "../example"
+		},
+		{
+			"path": "../docs_md"
+		},
+		{
+			"path": "."
+		}
+	]
+}

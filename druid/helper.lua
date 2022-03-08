@@ -209,7 +209,7 @@ end
 
 
 --- Check if device is mobile (Android or iOS)
--- @function helper..is_mobile
+-- @function helper.is_mobile
 function M.is_mobile()
 	return const.CURRENT_SYSTEM_NAME == const.OS.IOS or
 			 const.CURRENT_SYSTEM_NAME == const.OS.ANDROID

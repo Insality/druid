@@ -8,7 +8,7 @@ file={"./druid",
 	}
 }
 package='druid'
-sort=false
+sort=true
 dir='./docs'
 style='!fixed'
 topics={}

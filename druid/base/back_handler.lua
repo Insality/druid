@@ -6,7 +6,7 @@
 -- @alias druid.back_handler
 
 --- On back handler callback(self, params)
--- @tfield druid_event on_back
+-- @tfield DruidEvent on_back @{DruidEvent}
 
 --- Params to back callback
 -- @tfield any params
@@ -21,7 +21,7 @@ local BackHandler = component.create("back_handler")
 
 
 --- Component init function
--- @tparam BackHandler self
+-- @tparam BackHandler self @{BackHandler}
 -- @tparam callback callback On back button
 -- @tparam[opt] any params Callback argument
 function BackHandler.init(self, callback, params)
@@ -31,7 +31,7 @@ end
 
 
 --- Input handler for component
--- @tparam BackHandler self
+-- @tparam BackHandler self @{BackHandler}
 -- @tparam string action_id on_input action id
 -- @tparam table action on_input action
 function BackHandler.on_input(self, action_id, action)
