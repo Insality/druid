@@ -137,7 +137,7 @@ end
 
 --- Add new node to the grid
 -- @tparam DynamicGrid self @{DynamicGrid}
---	@tparam node node Gui node
+-- @tparam node node Gui node
 -- @tparam[opt] number index The node position. By default add as last node
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
 -- @tparam[opt=false] boolean is_instant If true, update node positions instantly

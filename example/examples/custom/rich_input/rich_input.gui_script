@@ -1,0 +1,32 @@
+local druid = require("druid.druid")
+
+local rich_input = require("druid.custom.rich_input.rich_input")
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+	---@type druid.rich_input
+	self.rich_input = self.druid:new(rich_input, "rich_input")
+	self.rich_input:set_placeholder("Enter text here")
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

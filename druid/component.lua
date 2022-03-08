@@ -201,7 +201,7 @@ end
 -- You can disable any input of component by this function
 -- @tparam BaseComponent self
 -- @tparam bool state The component input state
---	@treturn BaseComponent BaseComponent itself
+-- @treturn BaseComponent BaseComponent itself
 function BaseComponent.set_input_enabled(self, state)
 	self._meta.input_enabled = state
 
@@ -215,7 +215,7 @@ end
 
 --- Return the parent for current component
 -- @tparam BaseComponent self
--- @treturn druid.base_component|nil The druid component instance or nil
+-- @treturn BaseComponent|nil The druid component instance or nil
 function BaseComponent.get_parent_component(self)
 	local context = self:get_context()
 
