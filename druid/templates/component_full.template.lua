@@ -1,5 +1,6 @@
 local component = require("druid.component")
 
+---@class component_name : druid.base_component
 local Component = component.create("component_name")
 
 -- Scheme of component gui nodes
