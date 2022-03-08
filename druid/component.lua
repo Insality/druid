@@ -55,7 +55,7 @@ function BaseComponent.static.get_uid()
 end
 
 
---- Set current component style table.
+--- Set current component style table (protected).
 -- Invoke `on_style_change` on component, if exist. BaseComponent should handle
 -- their style changing and store all style params
 -- @tparam BaseComponent self
@@ -70,7 +70,7 @@ function BaseComponent.set_style(self, druid_style)
 end
 
 
---- Set current component template name
+--- Set current component template name (protected)
 -- @tparam BaseComponent self
 -- @tparam string template BaseComponent template name
 function BaseComponent.set_template(self, template)
@@ -78,7 +78,7 @@ function BaseComponent.set_template(self, template)
 end
 
 
---- Set current component nodes
+--- Set current component nodes (protected)
 -- @tparam BaseComponent self
 -- @tparam table nodes BaseComponent nodes table
 function BaseComponent.set_nodes(self, nodes)
@@ -86,7 +86,7 @@ function BaseComponent.set_nodes(self, nodes)
 end
 
 
---- Get current component context
+--- Get current component context (protected)
 -- @tparam BaseComponent self
 -- @treturn table BaseComponent context
 function BaseComponent.get_context(self)
@@ -133,7 +133,7 @@ function BaseComponent.get_node(self, node_or_name)
 end
 
 
---- Return druid with context of calling component.
+--- Return druid with context of calling component (protected).
 -- Use it to create component inside of other components.
 -- @tparam BaseComponent self
 -- @treturn Druid Druid instance with component context
@@ -189,7 +189,8 @@ function BaseComponent.reset_input_priority(self)
 end
 
 
---- Return component uid. UID generated in component creation order
+--- Return component uid (protected).
+--- UID generated in component creation order
 -- @tparam BaseComponent self
 -- @treturn number The component uid
 function BaseComponent.get_uid(self)
@@ -213,7 +214,7 @@ function BaseComponent.set_input_enabled(self, state)
 end
 
 
---- Return the parent for current component
+--- Return the parent for current component (protected)
 -- @tparam BaseComponent self
 -- @treturn BaseComponent|nil The druid component instance or nil
 function BaseComponent.get_parent_component(self)
@@ -233,6 +234,7 @@ end
 -- @tparam table context Druid context. Usually it is self of script
 -- @tparam table style Druid style module
 -- @treturn component BaseComponent itself
+-- @local
 function BaseComponent.setup_component(self, druid_instance, context, style)
 	self._meta = {
 		template = nil,
@@ -360,7 +362,7 @@ function BaseComponent.__remove_children(self, children)
 end
 
 
---- Return all children components, recursive
+--- Return all children components, recursive (protected)
 -- @tparam BaseComponent self
 -- @treturn table Array of childrens if the Druid component instance
 function BaseComponent.get_childrens(self)
