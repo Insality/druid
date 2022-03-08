@@ -438,7 +438,6 @@ end
 
 --- Return elements offset for correct posing nodes. Correct posing at
 -- parent pivot node (0:0) with adjusting of node sizes and anchoring
--- @function static_grid:_get_zero_offset
 -- @treturn vector3 The offset vector
 -- @local
 function StaticGrid:_get_zero_offset()
@@ -456,7 +455,6 @@ end
 
 
 --- Return offset x for last row in grid. Used to align this row accorting to grid's anchor
--- @function static:_grid:_get_zero_offset_x
 -- @treturn number The offset x value
 -- @local
 function StaticGrid:_get_zero_offset_x(row_index)

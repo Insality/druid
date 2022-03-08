@@ -1,15 +1,27 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Druid component template
--- @module druid.component
--- @local
 local component = require("druid.component")
 
-local Component = component.create("my_component_name")
+local Component = component.create("component_name")
+
+-- Scheme of component gui nodes
+local SCHEME = {
+	ROOT = "root",
+	BUTTON = "button",
+}
 
 
 -- Component constructor
-function Component:init(...)
+function Component:init(template, nodes)
+	-- If your component is gui template, pass the template name and set it
+	self:set_template(template)
+
+	-- If your component is cloned my gui.clone_tree, pass nodes to component and set it
+	self:set_nodes(nodes)
+
+	-- self:get_node will auto process component template and nodes
+	self.root = self:get_node(SCHEME.ROOT)
+
+	-- Use inner druid instance to create components inside this component
+	self.druid = self:get_druid()
 end
 
 

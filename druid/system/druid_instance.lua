@@ -195,6 +195,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam table context Druid context. Usually it is self of script
 -- @tparam table style Druid style module
+-- @local
 function DruidInstance.initialize(self, context, style)
 	self._context = context
 	self._style = style or settings.default_style
@@ -391,6 +392,7 @@ end
 --- Druid on focus lost interest function.
 -- This one called by on_window_callback by global window listener
 -- @tparam DruidInstance self
+-- @local
 function DruidInstance.on_focus_lost(self)
 	local components = self.components_interest[base_component.ON_FOCUS_LOST]
 	for i = 1, #components do
@@ -401,8 +403,8 @@ end
 
 --- Druid on focus gained interest function.
 -- This one called by on_window_callback by global window listener
--- @function druid_instance.on_focus_gained
 -- @tparam DruidInstance self
+-- @local
 function DruidInstance.on_focus_gained(self)
 	local components = self.components_interest[base_component.ON_FOCUS_GAINED]
 	for i = 1, #components do
@@ -414,8 +416,8 @@ end
 --- Druid on language change.
 -- This one called by global gruid.on_language_change, but can be
 -- call manualy to update all translations
--- @function druid_instance.on_language_change
 -- @tparam DruidInstance self
+-- @local
 function DruidInstance.on_language_change(self)
 	local components = self.components_interest[base_component.ON_LANGUAGE_CHANGE]
 	for i = 1, #components do
@@ -427,7 +429,6 @@ end
 --- Set whitelist components for input processing.
 -- If whitelist is not empty and component not contains in this list,
 -- component will be not processed on input step
--- @function druid_instance.set_whitelist
 -- @tparam DruidInstance self
 -- @tparam[opt=nil] table|Component whitelist_components The array of component to whitelist
 function DruidInstance.set_whitelist(self, whitelist_components)
@@ -450,7 +451,6 @@ end
 --- Set blacklist components for input processing.
 -- If blacklist is not empty and component contains in this list,
 -- component will be not processed on input step
--- @function druid_instance.set_blacklist
 -- @tparam DruidInstance self
 -- @tparam[opt=nil] table|Component blacklist_components The array of component to blacklist
 function DruidInstance.set_blacklist(self, blacklist_components)
@@ -648,7 +648,7 @@ end
 
 
 --- Create data list basic component
--- @function druid:new_data_list
+-- @tparam DruidInstance self
 -- @tparam Scroll druid_scroll The Scroll instance for Data List component
 -- @tparam Grid druid_grid The Grid instance for Data List component
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
