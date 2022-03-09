@@ -94,6 +94,17 @@ function Slider.on_input(self, action_id, action)
 		end
 	end
 
+	if not self.is_drag and self._input_node and gui.pick_node(self._input_node, action.x, action.y) then
+		if action.pressed and gui.screen_to_local then
+			self.pos = gui.screen_to_local(self.node, vmath.vector3(action.screen_x, action.screen_y, 0))
+			self.pos.x = helper.clamp(self.pos.x, self.start_pos.x, self.end_pos.x)
+			self.pos.y = helper.clamp(self.pos.y, self.start_pos.y, self.end_pos.y)
+
+			gui.set_position(self.node, self.pos)
+			self.is_drag = true
+		end
+	end
+
 	if self.is_drag and not action.pressed then
 		-- move
 		self.pos.x = self.pos.x + action.dx
@@ -166,8 +177,23 @@ end
 -- @tparam Slider self @{Slider}
 -- @tparam number[] steps Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
+-- @treturn Slider @{Slider}
 function Slider.set_steps(self, steps)
 	self.steps = steps
+	return self
+end
+
+
+--- Set input zone for slider.
+-- User can touch any place of node, pin instantly will
+-- move at this position and node drag will start.
+-- This function require the Defold version 1.3.0+
+-- @tparam Slider self @{Slider}
+-- @tparam input_node Node
+-- @treturn Slider @{Slider}
+function Slider.set_input_node(self, input_node)
+	self._input_node = self:get_node(input_node)
+	return self
 end
 
 
