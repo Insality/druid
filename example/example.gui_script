@@ -156,6 +156,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "Nested Druids"))
 	self.lobby_grid:add(get_button(self, "Message input", "system_message_input", "/system/message_input/message_input.gui_script"))
 	self.lobby_grid:add(get_button_disabled(self, "Input priority"))
+	self.lobby_grid:add(get_button(self, "Inner templates", "system_inner_templates", "/system/inner_templates/inner_templates.gui_script"))
 end
 
 
