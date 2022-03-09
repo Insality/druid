@@ -1,5 +1,5 @@
 #!/bin/bash
-# @license MIT, Insality 2021
+# @license MIT, Insality 2022
 # @source https://github.com/Insality/druid
 
 echo "Run bash for $1"
@@ -11,4 +11,4 @@ if [ -z "$is_defree_installed" ]; then
     pip3 install deftree
 fi
 
-python3 $DIR/setup_layers.py $@
+python3 $DIR/create_druid_component.py $@
