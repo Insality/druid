@@ -3,6 +3,13 @@ local druid = require("druid.druid")
 local monarch = require("monarch.monarch")
 local default_style = require("druid.styles.default.style")
 
+local cache_path = sys.get_save_file("druid", "cache")
+
+
+local function save_cache(self)
+	sys.save(cache_path, self.cache)
+end
+
 
 local function back_to_lobby(self)
 	if gui.set_enabled(self.button_menu.node) then
@@ -15,8 +22,10 @@ local function back_to_lobby(self)
 	gui.set_enabled(self.button_code.node, false)
 	gui.set_enabled(self.button_api.node, true)
 
-
 	self.text_header:set_to("Druid")
+
+	self.cache.last_scene = nil
+	save_cache(self)
 end
 
 
@@ -30,6 +39,9 @@ local function show_scene(self, scene_name, text_header)
 	gui.set_enabled(self.button_api.node, false)
 
 	self.text_header:set_to(text_header)
+
+	self.cache.last_scene = scene_name
+	save_cache(self)
 end
 
 
@@ -164,10 +176,37 @@ local function check_url(self)
 	if not html5 then
 		return
 	end
+
 	local example_arg = html5.run("new URLSearchParams(window.location.search).get('example')")
 	if example_arg and self.scene_names[example_arg] then
 		print("Start example: ", example_arg)
 		show_scene(self, example_arg, self.scene_names[example_arg] or "unknown")
+		return true
+	end
+end
+
+
+local function check_cache(self)
+	local scroll_position = self.cache.scroll_position
+	if scroll_position then
+		self.lobby_scroll:scroll_to_percent(vmath.vector3(0, scroll_position, 0), true)
+	end
+
+	local last_scene = self.cache.last_scene
+	if last_scene then
+		show_scene(self, last_scene, self.scene_names[last_scene] or "unknown")
+		return true
+	end
+end
+
+
+local function check_loading(self)
+	if check_url(self) then
+		return
+	end
+
+	if check_cache(self) then
+		return
 	end
 end
 
@@ -179,17 +218,26 @@ function init(self)
 	window.set_listener(on_window_callback)
 	druid.set_default_style(default_style)
 	self.druid = druid.new(self)
+	self.cache = sys.load(cache_path) or {}
 
 	init_top_panel(self)
 	init_lobby(self)
 	self.current_script_url = ""
 
-	timer.delay(0, false, check_url)
+	timer.delay(0, false, check_loading)
 end
 
 
 function update(self, dt)
 	self.druid:update(dt)
+end
+
+
+function final(self)
+	self.cache.scroll_position = self.lobby_scroll:get_percent().y
+	save_cache(self)
+
+	self.druid:final()
 end
 
 
