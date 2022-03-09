@@ -104,7 +104,7 @@ local function get_button_disabled(self, text)
 	local prefab = gui.get_node("prefab_button")
 	local nodes = gui.clone_tree(prefab)
 	local root = nodes["prefab_button"]
-	gui.play_flipbook(nodes["icon_button"], "back_gray")
+	gui.play_flipbook(nodes["icon_button"], "progress_back")
 	gui.set_enabled(root, true)
 	gui.set_text(nodes["text_button_lobby"], text)
 

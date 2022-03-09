@@ -3,10 +3,6 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/example/assets/images/back/back_gray.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
   image: "/example/assets/images/back/back_green.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
@@ -32,14 +28,6 @@ images {
 }
 images {
   image: "/example/assets/images/progress/progress_back.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/example/assets/images/progress/progress_fill_green.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/example/assets/images/progress/progress_fill_red.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
