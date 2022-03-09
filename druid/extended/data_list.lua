@@ -312,7 +312,6 @@ function DataList._check_elements_from(self, index, step)
 end
 
 
-
 --- Update actual data params
 -- @tparam DataList self @{DataList}
 -- @local

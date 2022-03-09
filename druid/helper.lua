@@ -173,7 +173,6 @@ function M.is_enabled(node)
 end
 
 
-
 --- Return closest non inverted clipping parent node for node
 -- @function helper.get_closest_stencil_node
 -- @tparam node node Gui node

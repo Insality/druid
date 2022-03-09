@@ -410,7 +410,6 @@ function DynamicGrid._get_next_node_pos(self, origin_node_index, new_node, place
 end
 
 
-
 function DynamicGrid._get_node_size(self, node)
 	return vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
 end

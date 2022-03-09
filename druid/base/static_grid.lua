@@ -262,7 +262,6 @@ function StaticGrid.get_size(self)
 end
 
 
-
 function StaticGrid.get_size_for(self, count)
 	if not count or count == 0 then
 		return vmath.vector3(0)
@@ -473,7 +472,6 @@ function StaticGrid:_get_zero_offset_x(row_index)
 
 	return offset_x
 end
-
 
 
 return StaticGrid

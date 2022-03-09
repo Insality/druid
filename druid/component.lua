@@ -12,6 +12,8 @@ local helper = require("druid.helper")
 
 local BaseComponent = class("druid.component")
 
+local IS_AUTO_TEMPLATE = not (sys.get_config("druid.no_auto_template") == "1")
+
 
 --- Component Interests
 BaseComponent.ON_INPUT = const.ON_INPUT
@@ -79,7 +81,7 @@ function BaseComponent.set_template(self, template)
 	template = template or const.EMPTY_STRING
 
 	local parent = self:get_parent_component()
-	if parent then
+	if parent and IS_AUTO_TEMPLATE then
 		local parent_template = parent:get_template()
 		if #parent_template > 0 then
 			if #template > 0 then
@@ -138,7 +140,6 @@ function BaseComponent.increase_input_priority(self)
 end
 
 
-
 --- Get node for component by name.
 -- If component has nodes, node_or_name should be string
 -- It auto pick node by template name or from nodes by clone_tree
@@ -154,18 +155,25 @@ function BaseComponent.get_node(self, node_or_name)
 		template_name = template_name .. "/"
 	end
 
+	local node
 	local node_type = type(node_or_name)
 	if nodes then
 		assert(node_type == const.STRING, "You should pass node name instead of node")
-		return nodes[template_name .. node_or_name]
+		node = nodes[template_name .. node_or_name]
 	else
 		if node_type == const.STRING then
-			return gui.get_node(template_name .. node_or_name)
+			node = gui.get_node(template_name .. node_or_name)
 		else
 			-- Assume it's already node from gui.get_node
-			return node_or_name
+			node = node_or_name
 		end
 	end
+
+	if not node then
+		assert(node, "No component with name: " .. template_name .. node_or_name)
+	end
+
+	return node
 end
 
 

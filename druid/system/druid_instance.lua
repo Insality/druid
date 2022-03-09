@@ -140,7 +140,6 @@ local function check_sort_input_stack(self, components)
 end
 
 
-
 --- Check whitelists and blacklists for input components
 local function can_use_input_component(self, component)
 	local can_by_whitelist = true

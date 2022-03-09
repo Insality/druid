@@ -28,6 +28,7 @@ use_accelerometer = 0
 [druid]
 no_auto_input = 0
 stencil_check = 0
+no_auto_template = 0
 input_text = text
 input_touch = touch
 input_marked_text = marked_text
