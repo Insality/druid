@@ -57,10 +57,22 @@ input_scroll_down = scroll_down
 
 By default, **Druid** will auto-capture input focus, if any input component will be created. So you don't need to call `msg.post(".", "acquire_input_focus")`
 
-If you don't need this behaviour, you can disable it by settings `druid.no_auto_input` field in _game.project_:
+If you don't need this behaviour, you can disable it by setting `druid.no_auto_input` field in _game.project_:
 ```
 [druid]
 no_auto_input = 1
+```
+
+
+### Template name check [optional]
+
+By default, **Druid** will auto check the parent component template name to build the full template name for component.
+
+If for some reason you want to pass the full template name by yourself, you can disable it by setting `druid.no_auto_input` field in _game.project_:
+
+```
+[druid]
+no_auto_template = 1
 ```
 
 
@@ -72,6 +84,7 @@ Druid can do it automatically on _late_init_ component step. To enable this feat
 [druid]
 stencil_check = 1
 ```
+
 
 ### Code [optional]
 
@@ -263,11 +276,6 @@ To better understand **Druid**, read the following documentation:
 
 You can fund the full **Druid** documentation here:
 https://insality.github.io/druid/
-
-
-## Games powered by Druid
-
-_You published your game and you using Druid? Note me!_
 
 
 ## License

@@ -143,7 +143,8 @@ end
 --- Get node for component by name.
 -- If component has nodes, node_or_name should be string
 -- It auto pick node by template name or from nodes by clone_tree
--- if they was setup via component:set_nodes, component:set_template
+-- if they was setup via component:set_nodes, component:set_template.
+-- If node is not found, the exception will fired
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string|node node_or_name Node name or node itself
 -- @treturn node Gui node
