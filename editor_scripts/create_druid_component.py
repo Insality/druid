@@ -6,7 +6,7 @@ import sys
 import deftree
 
 current_filepath = os.path.abspath(os.path.dirname(__file__))
-TEMPLATE_FILE = open(current_filepath + "/component.lua_template", "r")
+TEMPLATE_PATH = current_filepath + "/component.lua_template"
 
 component_annotations = ""
 component_functions = ""
@@ -25,6 +25,10 @@ def process_component(node_name, component_name):
 	global component_annotations
 	global component_functions
 	global component_define
+
+	if node_name == "root":
+		component_annotations += "\n---@field root node"
+		component_define += "\n\tself.root = self:get_node(SCHEME.ROOT)"
 
 	if node_name.startswith("button"):
 		component_annotations += "\n---@field {0} druid.button".format(node_name)
@@ -112,7 +116,10 @@ def main():
 	if len(component_define) > 2:
 		component_define = "\n" + component_define
 
-	filedata = TEMPLATE_FILE.read()
+	template_file = open(TEMPLATE_PATH, "r")
+	filedata = template_file.read()
+	template_file.close()
+
 	filedata = filedata.replace("{COMPONENT_NAME}", component_name)
 	filedata = filedata.replace("{COMPONENT_TYPE}", component_type)
 	filedata = filedata.replace("{COMPONENT_PATH}", component_require_path)
@@ -124,7 +131,9 @@ def main():
 	output_file = open(output_full_path, "w")
 	output_file.write(filedata)
 	output_file.close()
+
 	print("Success: The file is created")
 	print("File:", output_full_path)
+
 
 main()

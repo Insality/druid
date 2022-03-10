@@ -8,18 +8,19 @@
 local component = require("druid.component")
 
 ---@class {COMPONENT_TYPE}: druid.base_component{COMPONENT_ANNOTATIONS}
+---@field druid druid_instance
 local {COMPONENT_NAME} = component.create("{COMPONENT_TYPE}")
 
 local SCHEME = {
 {SCHEME_LIST}
 }
-{COMPONENT_FUNCTIONS}
+
+
 ---@param template string
 ---@param nodes table<hash, node>
 function {COMPONENT_NAME}:init(template, nodes)
 	self:set_template(template)
 	self:set_nodes(nodes)
-	self.root = self:get_node(SCHEME.ROOT)
 	self.druid = self:get_druid(){COMPONENT_DEFINE}
 end
 
@@ -27,5 +28,5 @@ end
 function {COMPONENT_NAME}:on_remove()
 end
 
-
+{COMPONENT_FUNCTIONS}
 return {COMPONENT_NAME}
