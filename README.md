@@ -68,7 +68,7 @@ no_auto_input = 1
 
 By default, **Druid** will auto check the parent component template name to build the full template name for component.
 
-If for some reason you want to pass the full template name by yourself, you can disable it by setting `druid.no_auto_input` field in _game.project_:
+If for some reason you want to pass the full template name by yourself, you can disable it by setting `druid.no_auto_template` field in _game.project_:
 
 ```
 [druid]
@@ -133,7 +133,7 @@ druid.on_window_callback(event)
 
 - **[Swipe](docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
 
-- **[Drag](docs_md/01-components.md#drag)** - System Druid component, handle drag input on node 
+- **[Drag](docs_md/01-components.md#drag)** - System Druid component, handle drag input on node
 
 **Druid** also provides the following *extended* components:
 

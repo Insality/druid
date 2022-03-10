@@ -6,7 +6,7 @@ import sys
 import deftree
 
 current_filepath = os.path.abspath(os.path.dirname(__file__))
-TEMPLATE_FILE = open(current_filepath + "/component_template.lua", "r")
+TEMPLATE_FILE = open(current_filepath + "/component.lua_template", "r")
 
 component_annotations = ""
 component_functions = ""
