@@ -53,7 +53,7 @@ end
 function Checkbox.init(self, node, callback, click_node, initial_state)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
-	self.click_node = self:get_node(click_node)
+	self.click_node = self:get_node(click_node or node)
 
 	self.button = self.druid:new_button(self.click_node or self.node, on_click)
 	self:set_state(initial_state, true, true)
