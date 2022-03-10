@@ -1,7 +1,8 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
--- Druid helper module for gui layouts
--- @module helper
+--- Druid helper module for gui layouts
+-- @module Helper
+-- @alias druid.helper
 
 local const = require("druid.const")
 
@@ -172,7 +173,6 @@ function M.is_enabled(node)
 end
 
 
-
 --- Return closest non inverted clipping parent node for node
 -- @function helper.get_closest_stencil_node
 -- @tparam node node Gui node
@@ -208,7 +208,7 @@ end
 
 
 --- Check if device is mobile (Android or iOS)
--- @function helper..is_mobile
+-- @function helper.is_mobile
 function M.is_mobile()
 	return const.CURRENT_SYSTEM_NAME == const.OS.IOS or
 			 const.CURRENT_SYSTEM_NAME == const.OS.ANDROID

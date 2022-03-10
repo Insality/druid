@@ -9,6 +9,7 @@ function init(self)
 	end)
 
 	slider:set(0.2)
+	slider:set_input_node("slider_input")
 
 	local slider_notched = self.druid:new_slider("slider_notched_pin", vmath.vector3(95, 0, 0), function(_, value)
 		gui.set_text(gui.get_node("slider_notched_text"), math.ceil(value * 100) .. "%")
@@ -16,6 +17,7 @@ function init(self)
 
 	slider_notched:set_steps({0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1})
 	slider_notched:set(0.2)
+	slider_notched:set_input_node("slider_notched_input")
 end
 
 

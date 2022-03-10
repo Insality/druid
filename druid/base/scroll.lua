@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle scroll content.
 -- Scroll consist from two nodes: scroll parent and scroll input
@@ -13,13 +13,13 @@
 
 
 --- On scroll move callback(self, position)
--- @tfield druid_event on_scroll
+-- @tfield DruidEvent on_scroll @{DruidEvent}
 
 --- On scroll_to function callback(self, target, is_instant)
--- @tfield druid_event on_scroll_to
+-- @tfield DruidEvent on_scroll_to @{DruidEvent}
 
 --- On scroll_to_index function callback(self, index, point)
--- @tfield druid_event on_point_scroll
+-- @tfield DruidEvent on_point_scroll @{DruidEvent}
 
 --- Scroll view node
 -- @tfield node view_node
@@ -46,7 +46,7 @@
 -- @tfield vector3 available_size
 
 --- Drag Druid component
--- @tfield Drag drag
+-- @tfield Drag drag @{Drag}
 
 --- Current index of points of interests
 -- @tfield[opt] number selected
@@ -133,7 +133,7 @@ end
 
 
 --- Scroll constructor
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam node view_node GUI view scroll node
 -- @tparam node content_node GUI content scroll node
 function Scroll.init(self, view_node, content_node)
@@ -211,7 +211,7 @@ end
 
 
 --- Start scroll to target point.
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam vector3 point Target point
 -- @tparam[opt] bool is_instant Instant scroll flag
 -- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
@@ -245,7 +245,7 @@ end
 
 
 --- Scroll to item in scroll by point index.
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam number index Point index
 -- @tparam[opt] bool skip_cb If true, skip the point callback
 function Scroll.scroll_to_index(self, index, skip_cb)
@@ -268,7 +268,7 @@ end
 
 
 --- Start scroll to target scroll percent
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam vector3 percent target percent
 -- @tparam[opt] bool is_instant instant scroll flag
 -- @usage scroll:scroll_to_percent(vmath.vector3(0.5, 0, 0))
@@ -277,7 +277,7 @@ function Scroll.scroll_to_percent(self, percent, is_instant)
 
 	local pos = vmath.vector3(
 		-helper.lerp(border.x, border.z, 1 - percent.x),
-		helper.lerp(border.y, border.w, 1 - percent.y),
+		-helper.lerp(border.y, border.w, 1 - percent.y),
 		0
 	)
 
@@ -287,7 +287,7 @@ end
 
 --- Return current scroll progress status.
 -- Values will be in [0..1] interval
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @treturn vector3 New vector with scroll progress values
 function Scroll.get_percent(self)
 	local x_perc = 1 - inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
@@ -299,7 +299,7 @@ end
 
 --- Set scroll content size.
 -- It will change content gui node size
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam vector3 size The new size for content node
 -- @tparam vector3 offset Offset value to set, where content is starts
 -- @treturn druid.scroll Current scroll instance
@@ -317,7 +317,7 @@ end
 --- Enable or disable scroll inert.
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam bool state Inert scroll state
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_inert(self, state)
@@ -328,7 +328,7 @@ end
 
 
 --- Return if scroll have inertion.
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @treturn bool If scroll have inertion
 function Scroll.is_inert(self)
 	return self._is_inert
@@ -337,7 +337,7 @@ end
 
 --- Set extra size for scroll stretching.
 -- Set 0 to disable stretching effect
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam[opt=0] number stretch_size Size in pixels of additional scroll area
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_extra_stretch_size(self, stretch_size)
@@ -349,7 +349,7 @@ end
 
 
 --- Return vector of scroll size with width and height.
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @treturn vector3 Available scroll size
 function Scroll.get_scroll_size(self)
 	return self.available_size
@@ -358,7 +358,7 @@ end
 
 --- Set points of interest.
 -- Scroll will always centered on closer points
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam table points Array of vector3 points
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_points(self, points)
@@ -375,7 +375,7 @@ end
 
 
 --- Lock or unlock horizontal scroll
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam bool state True, if horizontal scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_horizontal_scroll(self, state)
@@ -386,7 +386,7 @@ end
 
 
 --- Lock or unlock vertical scroll
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam bool state True, if vertical scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_vertical_scroll(self, state)
@@ -398,7 +398,7 @@ end
 
 --- Check node if it visible now on scroll.
 -- Extra border is not affected. Return true for elements in extra scroll zone
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam node node The node to check
 -- @treturn boolean True if node in visible scroll area
 function Scroll.is_node_in_view(self, node)
@@ -421,7 +421,7 @@ end
 
 --- Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam StaticGrid|DynamicGrid grid Druid grid component
 -- @treturn druid.scroll Current scroll instance
 function Scroll.bind_grid(self, grid)
@@ -524,7 +524,7 @@ function Scroll._check_soft_zone(self)
 end
 
 
---- Cancel animation on other animation or input touch
+-- Cancel animation on other animation or input touch
 function Scroll._cancel_animate(self)
 	self.inertion.x = 0
 	self.inertion.y = 0

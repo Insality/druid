@@ -1,0 +1,49 @@
+local druid = require("druid.druid")
+
+local pin_knob = require("druid.custom.pin_knob.pin_knob")
+
+
+local function on_pin_change1(self, value)
+	self.text1:set_to(math.ceil(value))
+end
+
+
+local function on_pin_change2(self, value)
+	self.text2:set_to(math.ceil(value))
+end
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+	self.text1 = self.druid:new_text("text_value1", 0)
+	---@type druid.pin_knob
+	self.pin_knob = self.druid:new(pin_knob, on_pin_change1, "pin_knob1")
+	self.pin_knob:set_angle(-10, -270, 270)
+
+	self.text2 = self.druid:new_text("text_value2", 0)
+	---@type druid.pin_knob
+	self.pin_knob2 = self.druid:new(pin_knob, on_pin_change2, "pin_knob2")
+	self.pin_knob2:set_angle(0, -90, 90)
+	self.pin_knob2:set_friction(0.15)
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

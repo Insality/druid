@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid input text component.
 -- Carry on user text input
@@ -8,28 +8,28 @@
 -- @alias druid.input
 
 --- On input field select callback(self, button_node)
--- @tfield druid_event on_input_select
+-- @tfield DruidEvent on_input_select @{DruidEvent}
 
 --- On input field unselect callback(self, input_text)
--- @tfield druid_event on_input_unselect
+-- @tfield DruidEvent on_input_unselect @{DruidEvent}
 
 --- On input field text change callback(self, input_text)
--- @tfield druid_event on_input_text
+-- @tfield DruidEvent on_input_text @{DruidEvent}
 
 --- On input field text change to empty string callback(self, input_text)
--- @tfield druid_event on_input_empty
+-- @tfield DruidEvent on_input_empty @{DruidEvent}
 
 --- On input field text change to max length string callback(self, input_text)
--- @tfield druid_event on_input_full
+-- @tfield DruidEvent on_input_full @{DruidEvent}
 
 --- On trying user input with not allowed character callback(self, params, button_instance)
--- @tfield druid_event on_input_wrong
+-- @tfield DruidEvent on_input_wrong @{DruidEvent}
 
 --- Text component
--- @tfield druid.text text
+-- @tfield Text text @{Text}
 
 --- Button component
--- @tfield druid.button button
+-- @tfield Button button @{Button}
 
 --- Is current input selected now
 -- @tfield bool is_selected
@@ -110,8 +110,10 @@ function Input.on_style_change(self, style)
 end
 
 
+--- Component init function
+-- @tparam Input self @{Input}
 -- @tparam node click_node Button node to enabled input component
--- @tparam node|druid.text text_node Text node what will be changed on user input. You can pass text component instead of text node name
+-- @tparam node|Text text_node Text node what will be changed on user input. You can pass text component instead of text node name @{Text}
 -- @tparam[opt] number keyboard_type Gui keyboard type for input field
 function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
@@ -227,7 +229,7 @@ end
 
 
 --- Set text for input field
--- @tparam Input self
+-- @tparam Input self @{Input}
 -- @tparam string input_text The string to apply for input field
 function Input.set_text(self, input_text)
 	-- Case when update with marked text
@@ -274,7 +276,7 @@ end
 
 
 --- Select input field. It will show the keyboard and trigger on_select events
--- @tparam Input self
+-- @tparam Input self @{Input}
 function Input.select(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
@@ -297,7 +299,7 @@ end
 
 
 --- Remove selection from input. It will hide the keyboard and trigger on_unselect events
--- @tparam Input self
+-- @tparam Input self @{Input}
 function Input.unselect(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
@@ -315,7 +317,7 @@ end
 
 
 --- Return current input field text
--- @tparam Input self
+-- @tparam Input self @{Input}
 -- @treturn string The current input field text
 function Input.get_text(self)
 	return self.value .. self.marked_value
@@ -324,7 +326,7 @@ end
 
 --- Set maximum length for input field.
 -- Pass nil to make input field unliminted (by default)
--- @tparam Input self
+-- @tparam Input self @{Input}
 -- @tparam number max_length Maximum length for input text field
 -- @treturn druid.input Current input instance
 function Input.set_max_length(self, max_length)
@@ -336,7 +338,7 @@ end
 --- Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
--- @tparam Input self
+-- @tparam Input self @{Input}
 -- @tparam string characters Regulax exp. for validate user input
 -- @treturn druid.input Current input instance
 function Input.set_allowed_characters(self, characters)
@@ -346,7 +348,7 @@ end
 
 
 --- Reset current input selection and return previous value
--- @tparam Input self
+-- @tparam Input self @{Input}
 function Input.reset_changes(self)
 	self:set_text(self.previous_value)
 	self:unselect()

@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to block input on specify zone by node
 -- @module Blocker
@@ -17,7 +17,7 @@ local Blocker = component.create("blocker")
 
 
 --- Component init function
--- @tparam Blocker self
+-- @tparam Blocker self @{Blocker}
 -- @tparam node node Gui node
 function Blocker.init(self, node)
 	self.node = self:get_node(node)
@@ -44,7 +44,7 @@ end
 
 
 --- Set enabled blocker component state
--- @tparam Blocker self
+-- @tparam Blocker self @{Blocker}
 -- @tparam bool state Enabled state
 function Blocker.set_enabled(self, state)
 	gui.set_enabled(self.node, state)
@@ -52,7 +52,7 @@ end
 
 
 --- Return blocked enabled state
--- @tparam Blocker self
+-- @tparam Blocker self @{Blocker}
 -- @treturn bool True, if blocker is enabled
 function Blocker.is_enabled(self)
 	return gui.is_enabled(self.node)

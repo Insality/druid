@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle hover node interaction
 -- @module Hover
@@ -6,10 +6,10 @@
 -- @alias druid.hover
 
 --- On hover callback(self, state)
--- @tfield druid_event on_hover
+-- @tfield DruidEvent on_hover @{DruidEvent}
 
 --- On mouse hover callback(self, state)
--- @tfield druid_event on_mouse_hover
+-- @tfield DruidEvent on_mouse_hover @{DruidEvent}
 
 ---
 
@@ -22,7 +22,7 @@ local Hover = component.create("hover")
 
 
 --- Component init function
--- @tparam Hover self
+-- @tparam Hover self @{Hover}
 -- @tparam node node Gui node
 -- @tparam function on_hover_callback Hover callback
 function Hover.init(self, node, on_hover_callback)
@@ -90,7 +90,7 @@ end
 
 
 --- Set hover state
--- @tparam Hover self
+-- @tparam Hover self @{Hover}
 -- @tparam bool state The hover state
 function Hover.set_hover(self, state)
 	if self._is_hovered ~= state then
@@ -100,7 +100,7 @@ function Hover.set_hover(self, state)
 end
 
 --- Set mouse hover state
--- @tparam Hover self
+-- @tparam Hover self @{Hover}
 -- @tparam bool state The mouse hover state
 function Hover.set_mouse_hover(self, state)
 	if self._is_mouse_hovered ~= state then
@@ -112,7 +112,7 @@ end
 
 --- Strict hover click area. Useful for
 -- no click events outside stencil node
--- @tparam Hover self
+-- @tparam Hover self @{Hover}
 -- @tparam node zone Gui node
 function Hover.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
@@ -122,7 +122,7 @@ end
 --- Set enable state of hover component.
 -- If hover is not enabled, it will not generate
 -- any hover events
--- @tparam Hover self
+-- @tparam Hover self @{Hover}
 -- @tparam bool state The hover enabled state
 function Hover.set_enabled(self, state)
 	self._is_enabled = state
@@ -139,7 +139,7 @@ end
 
 
 --- Return current hover enabled state
--- @tparam Hover self
+-- @tparam Hover self @{Hover}
 -- @treturn bool The hover enabled state
 function Hover.is_enabled(self)
 	return self._is_enabled

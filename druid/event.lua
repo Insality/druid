@@ -1,8 +1,8 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Lua event small library
+--- Druid lua event library
 -- @module DruidEvent
--- @alias druid_event
+-- @alias druid.event
 
 local class = require("druid.system.middleclass")
 
@@ -10,7 +10,7 @@ local DruidEvent = class("druid.event")
 
 
 --- Event constructur
--- @tparam DruidEvent self
+-- @tparam DruidEvent self @{DruidEvent}
 -- @tparam function initial_callback Subscribe the callback on new event, if callback exist
 function DruidEvent.initialize(self, initial_callback)
 	self._callbacks = {}
@@ -22,7 +22,7 @@ end
 
 
 --- Subscribe callback on event
--- @tparam DruidEvent self
+-- @tparam DruidEvent self @{DruidEvent}
 -- @tparam function callback Callback itself
 -- @tparam table context Additional context as first param to callback call
 function DruidEvent.subscribe(self, callback, context)
@@ -39,7 +39,7 @@ end
 
 
 --- Unsubscribe callback on event
--- @tparam DruidEvent self
+-- @tparam DruidEvent self @{DruidEvent}
 -- @tparam function callback Callback itself
 -- @tparam table context Additional context as first param to callback call
 function DruidEvent.unsubscribe(self, callback, context)
@@ -53,7 +53,7 @@ end
 
 
 --- Return true, if event have at lease one handler
--- @tparam DruidEvent self
+-- @tparam DruidEvent self @{DruidEvent}
 -- @treturn bool True if event have handlers
 function DruidEvent.is_exist(self)
 	return #self._callbacks > 0
@@ -61,14 +61,14 @@ end
 
 
 --- Clear the all event handlers
--- @tparam DruidEvent self
+-- @tparam DruidEvent self @{DruidEvent}
 function DruidEvent.clear(self)
 	self._callbacks = {}
 end
 
 
 --- Trigger the event and call all subscribed callbacks
--- @tparam DruidEvent self
+-- @tparam DruidEvent self @{DruidEvent}
 -- @tparam any ... All event params
 function DruidEvent.trigger(self, ...)
 	for index, callback_info in ipairs(self._callbacks) do
