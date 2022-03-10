@@ -103,7 +103,11 @@ def main():
 	for node in root.iter_elements("nodes"):
 		node_name = node.get_attribute("id").value
 		scheme_list.append("\t" + get_id(node_name) + " = \"" + node_name + "\"")
-		process_component(node_name, component_name)
+
+		is_template = node.get_attribute("template")
+		is_in_template = "/" in node_name
+		if not is_template and not is_in_template:
+			process_component(node_name, component_name)
 
 	if len(component_define) > 2:
 		component_define = "\n" + component_define
