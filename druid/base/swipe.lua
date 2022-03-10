@@ -13,7 +13,7 @@
 --- Restriction zone
 -- @tparam[opt] node click_zone
 
---- Trigger on swipe event(self, swipe_side, dist, delta_time
+--- Trigger on swipe event(self, swipe_side, dist, delta_time)
 -- @tfield DruidEvent on_swipe) @{DruidEvent}
 
 ---
@@ -139,6 +139,8 @@ function Swipe.on_input(self, action_id, action)
 	if action.released then
 		reset_swipe(self, action)
 	end
+
+	return true
 end
 
 
