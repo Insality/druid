@@ -2,7 +2,6 @@ local druid = require("druid.druid")
 
 local InnerPanel = require("example.examples.system.inner_templates.inner_panel")
 
-
 function init(self)
 	self.druid = druid.new(self)
 	local root = gui.get_node("inner_panel/root")
