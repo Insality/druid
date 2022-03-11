@@ -351,7 +351,7 @@ Have a nice day!
 	- It was broken, now the on_layout_change event is working as expected
 -  **#165** [StaticGrid] Add `static_grid:set_in_row(amount)` function
 -  **#44** [Slider] Click zone on all slider node, not only pin node
-	- Finally! Added the `slider:set_input_node(node)` function. Now slider can be interacted now only with slider pin node, but with any zone you will define.
+	- Finally! Added the `slider:set_input_node(node)` function. Now slider can be interacted not only with slider pin node, but with any zone you will define.
 	- It will work only from Defold 1.3.0. If you use earlier version, nothing is happened. It using new `gui.local_to_node` and `gui.set_screen_position` functions.
 -  **#114** Add default component templates
 	- Added templates for fast prototyping. Use GUI templates to place buttons, checkbox, input and sliders on your GUI scene. You still have to create component with `druid:new` functions inside gui_script.
