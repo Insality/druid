@@ -157,17 +157,15 @@ function BaseComponent.get_node(self, node_or_name)
 	end
 
 	local node
-	local node_type = type(node_or_name)
-	if nodes then
-		assert(node_type == const.STRING, "You should pass node name instead of node")
-		node = nodes[template_name .. node_or_name]
-	else
-		if node_type == const.STRING then
-			node = gui.get_node(template_name .. node_or_name)
+	if type(node_or_name) == const.STRING then
+		if nodes then
+			node = nodes[template_name .. node_or_name]
 		else
-			-- Assume it's already node from gui.get_node
-			node = node_or_name
+			node = gui.get_node(template_name .. node_or_name)
 		end
+	else
+		-- Assume it's already node from gui.get_node
+		node = node_or_name
 	end
 
 	if not node then
