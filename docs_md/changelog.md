@@ -315,3 +315,55 @@ Have a nice day!
 	- Required to solve issues, when go input acquire can be later, when gui input acquire (on init step)
 -  **#154** System: Change text adjust const to strings
 -  **#155** Fix: Add margin to total width calculation in `helper.centrate_nodes`
+
+
+### Druid 0.9.0
+_Custom components update_
+
+Hello!
+
+Have a nice day!
+
+
+**Changelog 0.9.0**
+
+---
+
+-  **#119** Add **Create Druid Component** editor script
+	- The headliner of current update. This editor scripts allows you to create Custom component lua script from you *.gui* scene file. It will create component file with the same name as gui scene and place it nearby. Inside this generated file you will find the instructions how to start usage this (require and create code).
+	- This code contains GUI scheme, basic component boilerplace and generated code for components, used in this gui scene (see #159)
+	- See [Create custom components](docs_md/02-creating_custom_components.md) for more info
+-  **#159** Add auto layouting custom components by node naming
+	- The **Create Druid Component** script will check the node names to create Druid components stubs inside generated code
+	- The generator will check the node name, if it's starts from special prefix, it will create component code for you
+	- Currently support the next components: `button`, `text`, `lang_text`, `grid`, `static_grid`, `dynamic_grid`, `scroll_view`, `blocker`, `slider`, `progress` and `timer`
+-  **#158** **[BREAKING]** Auto `get_node` inside inner components with template/nodes
+	- Before this update, if your component with template using another component with template, you had to pass full template name (`current_template .. "/" .. inner_component_template`). From this update you should pass only the `inner_component_template` name. It's will auto check the parent component template name to build full template path
+	- If you don't want migrate code for this, this option can be disabled via `druid.no_auto_template` in your _game.project_ file. By default it's enabled now
+-  **#171** Add `component:get_template()` function to **Druid** Base Component
+	- Now it's able to get full component template name. This function has "protected" scope, so you should use it only inside your component code.
+-  **#173** Fix gui nodes usage inside inner templates
+	- Now you can pass the node name instead of node itself to Druid components inside your Custom Components. Before this update Druid didn't check the nodes in parent component (usually for basic components such as button, text inside your components)
+	- So you can use now `self.druid:new_button(SCHEME.BUTTON)` instead of `self.druid:new_button(self:get_node(SCHEME.BUTTON))` inside your custom components
+-  **#174** Add assert to nil node on `self:get_node()`
+	- It's required for easier debuging components, when GUI node path is wrong and your got the nil. The error with node path will appear in console.
+-  **#169** [System] Fix on_layout_change event
+	- It was broken, now the on_layout_change event is working as expected
+-  **#165** [StaticGrid] Add `static_grid:set_in_row(amount)` function
+-  **#44** [Slider] Click zone on all slider node, not only pin node
+	- Finally! Added the `slider:set_input_node(node)` function. Now slider can be interacted now only with slider pin node, but with any zone you will define.
+	- It will work only from Defold 1.3.0. If you use earlier version, nothing is happened. It using new `gui.local_to_node` and `gui.set_screen_position` functions.
+-  **#114** Add default component templates
+	- Added templates for fast prototyping. Use GUI templates to place buttons, checkbox, input and sliders on your GUI scene. You still have to create component with `druid:new` functions inside gui_script.
+-  **#168** Add button to open code of current example
+	- Inside every example added button to open code of this example on GitHub
+-  **#140** Better documentation for custom components
+-  **#172** Update documentation with links to components
+	- The docs in (https://insality.github.io/druid/) now have cross links for every custom type
+-  **#175** Remove Druid Assets repository, move to Druid library
+	- Added folder `druid/custom`. It will have the complex custom components. Usually you should to use default GUI template or create your own with similar GUI scheme. Currently add `RichInput` and `PinKnob` components from druid-assets repository.
+	- Usually to use custom component you have to require lua file first and create it's via `druid:new(Component, template_name, [nodes]). See component docs to see constructor params.
+	- This components will be included in build only if used
+-  **#176** Keep last scene and scroll position in Druid example
+	- Probably, it's useful for faster debug, but anyway. The example now keep the last scene and scroll position.
+- Add new examples: Checkboxes, Swipe, Grid, Rich input, Pin knob
