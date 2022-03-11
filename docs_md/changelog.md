@@ -280,7 +280,7 @@ In this Druid update no any huge special features. Mostly the bug fixes and rewo
 Also added last row allignment in Static Grid component with "dynamic content poses" style enabled. You can look how it is work here: https://insality.github.io/druid/druid/?example=grid_static_grid_dynamic_pos
 
 
-You can say thanks to me via stars on GitHub 3! :wink:
+You can say thanks to me via stars on GitHub! :wink:
 Wanna something more? [Add an issues!](https://github.com/Insality/druid/issues)
 Have a nice day!
 
@@ -322,16 +322,34 @@ _Custom components update_
 
 Hello!
 
-Have a nice day!
+Here is the long awaited update! Finally I implemented some ideas how to make easier creating custom components. There is a bunch of improvements you can be interested in.
+
+I wanna make a point what Druid is not only set of defined components to place buttons, scroll, etc. But motsly it's a way how to handle all your GUI elements in general. Custom components is most powerful way to separate logic and make higher abstraction in your code.
+
+Usually - custom components is set of GUI template and lua code for this template. I've added editor script, what can make a lua component file from your GUI scene (all boilerplate and usage code, also some component what can be defined right in GUI scene).
+
+Autolayout from GUI script should be a powerful tool too! Also it's brings some code structure and style across all your files. Autolayouting works from node names. If its starts or equal to some string, it will add code to generated lua file. For example, if you have in your scene node with name "button_start", it will create the Druid button, stub function and annotations to this. Sounds good!
+
+For more information see [Create custom components](docs_md/02-creating_custom_components.md) documentations.
+
+Also this update have some breaking changes: you should no more pass full tempalte name in inner components and the second one is renaming `text:get_text_width` to `text:get_text_size`.
+
+The Defold 1.3.0 solves the old my issue with slider component. Now you can define input zone (not only the slider pin node) to interact with slider. It's because of inroduction `gui.screen_to_local` and `gui.set_screen_position` in default GUI api. If you using previuos Defold releases, this piece of logic will be ignored.
+
+The Druid Assets repository will be closed and I move some components right in Druid repository. You can now use custom components in your game if your need. Right now it's Rich Input (input field with cursor and placegolder) and Pin Knob (Rotating node for set value). And slowly working on adding new examples.
+
+You can say thanks to me via stars on GitHub! :wink:
+Wanna something more? [Add an issues!](https://github.com/Insality/druid/issues)
+Take care of yourself
 
 
 **Changelog 0.9.0**
 
 ---
 
--  **#119** Add **Create Druid Component** editor script
-	- The headliner of current update. This editor scripts allows you to create Custom component lua script from you *.gui* scene file. It will create component file with the same name as gui scene and place it nearby. Inside this generated file you will find the instructions how to start usage this (require and create code).
-	- This code contains GUI scheme, basic component boilerplace and generated code for components, used in this gui scene (see #159)
+-  **#119** Add **Create Druid Component** editor script *(python3 with deftree required)*
+	- The headliner of current update. This editor scripts allows you to create Custom component lua script from you *.gui* scene file. It will create component file with the same name as GUI scene and place it nearby. Inside this generated file you will find the instructions how to start usage this (require and create code).
+	- This code contains GUI scheme, basic component boilerplace and generated code for components, used in this GUI scene (see #159)
 	- See [Create custom components](docs_md/02-creating_custom_components.md) for more info
 -  **#159** Add auto layouting custom components by node naming
 	- The **Create Druid Component** script will check the node names to create Druid components stubs inside generated code
@@ -342,7 +360,7 @@ Have a nice day!
 	- If you don't want migrate code for this, this option can be disabled via `druid.no_auto_template` in your _game.project_ file. By default it's enabled now
 -  **#171** Add `component:get_template()` function to **Druid** Base Component
 	- Now it's able to get full component template name. This function has "protected" scope, so you should use it only inside your component code.
--  **#173** Fix gui nodes usage inside inner templates
+-  **#173** Fix GUI nodes usage inside inner templates
 	- Now you can pass the node name instead of node itself to Druid components inside your Custom Components. Before this update Druid didn't check the nodes in parent component (usually for basic components such as button, text inside your components)
 	- So you can use now `self.druid:new_button(SCHEME.BUTTON)` instead of `self.druid:new_button(self:get_node(SCHEME.BUTTON))` inside your custom components
 -  **#174** Add assert to nil node on `self:get_node()`
@@ -352,7 +370,7 @@ Have a nice day!
 -  **#165** [StaticGrid] Add `static_grid:set_in_row(amount)` function
 -  **#44** [Slider] Click zone on all slider node, not only pin node
 	- Finally! Added the `slider:set_input_node(node)` function. Now slider can be interacted not only with slider pin node, but with any zone you will define.
-	- It will work only from Defold 1.3.0. If you use earlier version, nothing is happened. It using new `gui.local_to_node` and `gui.set_screen_position` functions.
+	- It will work only from Defold 1.3.0. If you use earlier version, nothing is happened. It using new `gui.screen_to_local` and `gui.set_screen_position` functions.
 - **#178** **[BREAKING][Text]** Rename `text:get_text_width` to `text:get_text_size`. Now it return two numbers: width and height
 -  **#114** Add default component templates
 	- Added templates for fast prototyping. Use GUI templates to place buttons, checkbox, input and sliders on your GUI scene. You still have to create component with `druid:new` functions inside gui_script.
