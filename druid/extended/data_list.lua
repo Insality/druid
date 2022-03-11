@@ -44,7 +44,9 @@ function DataList.init(self, scroll, grid, create_function)
 	self.druid = self:get_druid()
 	self.scroll = scroll
 	self.grid = grid
-	self.grid.style.IS_DYNAMIC_NODE_POSES = false
+	if self.grid.style then
+		self.grid.style.IS_DYNAMIC_NODE_POSES = false
+	end
 	self.scroll:bind_grid(grid)
 
 	-- Current visual elements indexes

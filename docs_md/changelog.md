@@ -336,9 +336,10 @@ Also this update have some breaking changes: you should no more pass full tempal
 
 The Defold 1.3.0 solves the old my issue with slider component. Now you can define input zone (not only the slider pin node) to interact with slider. It's because of inroduction `gui.screen_to_local` and `gui.set_screen_position` in default GUI api. If you using previuos Defold releases, this piece of logic will be ignored.
 
-The Druid Assets repository will be closed and I move some components right in Druid repository. You can now use custom components in your game if your need. Right now it's Rich Input (input field with cursor and placegolder) and Pin Knob (Rotating node for set value). And slowly working on adding new examples.
+The Druid Assets repository will be closed and I move some components right in Druid repository. You can now use custom components in your game if your need. Right now it's Rich Input (input field with cursor and placegolder) and Pin Knob (Rotating node for set value). And slowly working on adding new examples and improvements of existing ones.
 
 You can say thanks to me via stars on GitHub! :wink:
+Also you can help with testing new functions and leave feedback.
 Wanna something more? [Add an issues!](https://github.com/Insality/druid/issues)
 Take care of yourself
 
@@ -386,3 +387,7 @@ Take care of yourself
 -  **#176** Keep last scene and scroll position in Druid example
 	- Probably, it's useful for faster debug, but anyway. The example now keep the last scene and scroll position.
 - Add new examples: Checkboxes, Swipe, Grid, Rich input, Pin knob
+- Now editor scripts are available in Druid as dependency
+- Move emmylua annotations inside Druid dependency folder. You can copy it from Defold Editor outline
+- Optimize different stuff(Scroll, Druid Event, Druid instance and Base component)
+- Force Data List component to `IS_DYNAMIC_NODE_POSES = false` style
