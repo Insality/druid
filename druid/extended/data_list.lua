@@ -45,6 +45,7 @@ function DataList.init(self, scroll, grid, create_function)
 	self.scroll = scroll
 	self.grid = grid
 	self.scroll:bind_grid(grid)
+	self.grid.style.IS_DYNAMIC_NODE_POSES = false
 
 	-- Current visual elements indexes
 	self.top_index = 1
