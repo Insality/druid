@@ -61,6 +61,8 @@ function DataList.init(self, scroll, grid, create_function)
 	self.scroll.on_scroll:subscribe(self._check_elements, self)
 
 	self.on_scroll_progress_change = Event()
+
+	self:set_data()
 end
 
 
@@ -109,6 +111,8 @@ function DataList.add(self, data, index, shift_policy)
 	self._data[index] = data
 	self:_update_data_info()
 	self:_check_elements()
+
+	self:log_message("Add element", { index = index })
 end
 
 
@@ -120,6 +124,8 @@ end
 function DataList.remove(self, index, shift_policy)
 	table.remove(self._data, index)
 	self:_refresh()
+
+	self:log_message("Remove element", { index = index })
 end
 
 
@@ -209,6 +215,8 @@ function DataList._add_at(self, index)
 		node = node,
 		component = instance
 	}
+
+	self:log_message("Add element at", { index = index })
 end
 
 
@@ -226,6 +234,8 @@ function DataList._remove_at(self, index)
 		self.druid:remove(self._data_visual[index].component)
 	end
 	self._data_visual[index] = nil
+
+	self:log_message("Remove element at", { index = index })
 end
 
 
@@ -269,6 +279,8 @@ function DataList._check_elements(self)
 	if self.top_index == self:get_first_index() then
 		progress = 0
 	end
+
+	self:log_message("Check elements", { top_index = self.top_index, last_index = self.last_index, progress = progress })
 
 	if self.scroll_progress ~= progress then
 		self.scroll_progress = progress

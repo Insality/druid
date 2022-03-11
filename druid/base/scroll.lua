@@ -168,7 +168,6 @@ function Scroll.init(self, view_node, content_node)
 	self._is_vertical_scroll = true
 	self._grid_on_change = nil
 	self._grid_on_change_callback = nil
-	self._outside_offset_vector = vmath.vector3(0)
 
 	self:_update_size()
 end
@@ -190,8 +189,6 @@ end
 
 
 function Scroll.update(self, dt)
-	self:_update_params()
-
 	if self.drag.is_drag then
 		self:_update_hand_scroll(dt)
 	else
@@ -402,8 +399,27 @@ end
 -- @tparam node node The node to check
 -- @treturn boolean True if node in visible scroll area
 function Scroll.is_node_in_view(self, node)
-	local node_border = helper.get_border(node, gui.get_position(node))
-	local view_border = helper.get_border(self.view_node, -(self.position - self._outside_offset_vector))
+	local node_offset_for_view = gui.get_position(node)
+	local parent = gui.get_parent(node)
+	local is_parent_of_view = false
+	while parent do
+		if parent ~= self.view_node then
+			local parent_pos = gui.get_position(parent)
+			node_offset_for_view.x = node_offset_for_view.x + parent_pos.x
+			node_offset_for_view.y = node_offset_for_view.y + parent_pos.y
+			parent = gui.get_parent(parent)
+		else
+			is_parent_of_view = true
+			parent = nil
+		end
+	end
+	if not is_parent_of_view then
+		error("The node to check is_node_in_view should be child if scroll view")
+		return false
+	end
+
+	local node_border = helper.get_border(node, node_offset_for_view)
+	local view_border = helper.get_border(self.view_node)
 
 	-- Check is vertical outside (Left or Right):
 	if node_border.z < view_border.x or node_border.x > view_border.z then
@@ -438,7 +454,10 @@ function Scroll.bind_grid(self, grid)
 
 	self._grid_on_change = grid.on_change_items
 	self._grid_on_change_callback = self._grid_on_change:subscribe(function()
-		self:set_size(grid:get_size(), grid:get_offset())
+		local size = grid:get_size()
+		local offset = grid:get_offset()
+		self:set_size(size, offset)
+		self:log_message("Change size from grid", { size = size, offset = offset })
 	end)
 	self:set_size(grid:get_size(), grid:get_offset())
 
@@ -547,7 +566,6 @@ function Scroll._set_scroll_position(self, position)
 	if self.position.x ~= position.x or self.position.y ~= position.y then
 		self.position.x = position.x
 		self.position.y = position.y
-		self:_update_params()
 		gui.set_position(self.content_node, position)
 
 		self.on_scroll:trigger(self:get_context(), self.position)
@@ -715,32 +733,6 @@ function Scroll._update_size(self)
 	self:_set_scroll_position(self.position)
 	self.target_position.x = self.position.x
 	self.target_position.y = self.position.y
-end
-
-
-function Scroll._update_params(self)
-	local t = self.target_position
-	local b = self.available_pos
-
-	self._outside_offset_vector.x = 0
-	self._outside_offset_vector.y = 0
-
-	-- Right border (minimum x)
-	if t.x < b.x then
-		self._outside_offset_vector.x = t.x - b.x
-	end
-	-- Left border (maximum x)
-	if t.x > b.z then
-		self._outside_offset_vector.x = t.x - b.z
-	end
-	-- Top border (minimum y)
-	if t.y < b.y then
-		self._outside_offset_vector.y = t.y - b.y
-	end
-	-- Bot border (maximum y)
-	if t.y > b.w then
-		self._outside_offset_vector.y = t.y - b.w
-	end
 end
 
 

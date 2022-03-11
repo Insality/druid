@@ -190,7 +190,16 @@ end
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn string The component name
 function BaseComponent.get_name(self)
-	return self._component.name
+	return self._component.name .. self:get_uid()
+end
+
+
+--- Return parent component name
+-- @tparam BaseComponent self @{BaseComponent}
+-- @treturn string|nil The parent component name if exist or bil
+function BaseComponent.get_parent_name(self)
+	local parent = self:get_parent_component()
+	return parent and parent:get_name()
 end
 
 
@@ -313,9 +322,30 @@ function BaseComponent.initialize(self, name, input_priority)
 		name = name,
 		input_priority = input_priority or const.PRIORITY_INPUT,
 		default_input_priority = input_priority or const.PRIORITY_INPUT,
+		is_debug = false,
 		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
 		_uid = BaseComponent.get_uid()
 	}
+end
+
+
+--- Print log information if debug mode is enabled (protected)
+-- @tparam BaseComponent self @{BaseComponent}
+-- @tparam string message
+-- @tparam table context
+function BaseComponent.log_message(self, message, context)
+	if not self._component.is_debug then
+		return
+	end
+	print("[" .. self:get_name() .. "]:", message, helper.table_to_string(context))
+end
+
+
+--- Set debug logs for component enabled or disabled
+-- @tparam BaseComponent self @{BaseComponent}
+-- @tparam bool is_debug
+function BaseComponent.set_debug(self, is_debug)
+	self._component.is_debug = is_debug
 end
 
 

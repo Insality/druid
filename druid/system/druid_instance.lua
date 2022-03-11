@@ -199,8 +199,9 @@ function DruidInstance.initialize(self, context, style)
 	self._context = context
 	self._style = style or settings.default_style
 	self._deleted = false
-	self._is_input_processing = false
+	self._is_late_remove_enabled = false
 	self._late_remove = {}
+	self._is_debug = false
 	self.url = msg.url()
 
 	self._input_blacklist = nil
@@ -238,6 +239,7 @@ function DruidInstance.new(self, component, ...)
 		instance:init(...)
 	end
 
+	self:log_message("Create component", { name = instance:get_name(), parent = instance:get_parent_name() })
 	return instance
 end
 
@@ -257,6 +259,8 @@ function DruidInstance.final(self)
 	self._deleted = true
 
 	input_release(self)
+
+	self:log_message("Druid final")
 end
 
 
@@ -265,7 +269,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam Component component Component instance
 function DruidInstance.remove(self, component)
-	if self._is_input_processing then
+	if self._is_late_remove_enabled then
 		table.insert(self._late_remove, component)
 		return
 	end
@@ -301,6 +305,8 @@ function DruidInstance.remove(self, component)
 			end
 		end
 	end
+
+	self:log_message("Remove", { name = component:get_name(), parent = component:get_parent_name() })
 end
 
 
@@ -319,10 +325,14 @@ function DruidInstance.update(self, dt)
 		input_init(self)
 	end
 
+	self._is_late_remove_enabled = true
 	local components = self.components_interest[base_component.ON_UPDATE]
 	for i = 1, #components do
 		components[i]:update(dt)
 	end
+	self._is_late_remove_enabled = false
+
+	self:_clear_late_remove()
 end
 
 
@@ -332,21 +342,15 @@ end
 -- @tparam table action Action from on_input
 -- @treturn bool The boolean value is input was consumed
 function DruidInstance.on_input(self, action_id, action)
-	self._is_input_processing = true
+	self._is_late_remove_enabled = true
 
 	local components = self.components_interest[base_component.ON_INPUT]
 	check_sort_input_stack(self, components)
 	local is_input_consumed = process_input(self, action_id, action, components)
 
-	self._is_input_processing = false
+	self._is_late_remove_enabled = false
 
-	if #self._late_remove > 0 then
-		for i = 1, #self._late_remove do
-			self:remove(self._late_remove[i])
-		end
-		self._late_remove = {}
-	end
-
+	self:_clear_late_remove()
 	return is_input_consumed
 end
 
@@ -397,6 +401,8 @@ function DruidInstance.on_focus_lost(self)
 	for i = 1, #components do
 		components[i]:on_focus_lost()
 	end
+
+	self:log_message("On focus lost")
 end
 
 
@@ -409,11 +415,13 @@ function DruidInstance.on_focus_gained(self)
 	for i = 1, #components do
 		components[i]:on_focus_gained()
 	end
+
+	self:log_message("On focus gained")
 end
 
 
 --- Druid on language change.
--- This one called by global gruid.on_language_change, but can be
+-- This one called by global druid.on_language_change, but can be
 -- call manualy to update all translations
 -- @tparam DruidInstance self
 -- @local
@@ -422,6 +430,8 @@ function DruidInstance.on_language_change(self)
 	for i = 1, #components do
 		components[i]:on_language_change()
 	end
+
+	self:log_message("On language change")
 end
 
 
@@ -450,7 +460,7 @@ end
 --- Set blacklist components for input processing.
 -- If blacklist is not empty and component contains in this list,
 -- component will be not processed on input step
--- @tparam DruidInstance self
+-- @tparam DruidInstance self @{DruidInstance}
 -- @tparam[opt=nil] table|Component blacklist_components The array of component to blacklist
 function DruidInstance.set_blacklist(self, blacklist_components)
 	if blacklist_components and blacklist_components.isInstanceOf then
@@ -468,6 +478,40 @@ function DruidInstance.set_blacklist(self, blacklist_components)
 	self._input_blacklist = blacklist_components
 end
 
+
+--- Set debug mode for current Druid instance. It's enable debug log messages
+-- @tparam DruidInstance self @{DruidInstance}
+-- @tparam bool is_debug
+-- @treturn self @{DruidInstance}
+function DruidInstance.set_debug(self, is_debug)
+	self._is_debug = is_debug
+	return self
+end
+
+
+--- Log message, if is_debug mode is enabled
+-- @tparam DruidInstance self @{DruidInstance}
+-- @tparam string message
+-- @tparam[opt] table context
+function DruidInstance.log_message(self, message, context)
+	if not self._is_debug then
+		return
+	end
+	print("[Druid]:", message, helper.table_to_string(context))
+end
+
+
+--- Remove all components on late remove step
+-- @tparam DruidInstance self @{DruidInstance}
+-- @local
+function DruidInstance._clear_late_remove(self)
+	if #self._late_remove > 0 then
+		for i = 1, #self._late_remove do
+			self:remove(self._late_remove[i])
+		end
+		self._late_remove = {}
+	end
+end
 
 --- Create button basic component
 -- @tparam DruidInstance self

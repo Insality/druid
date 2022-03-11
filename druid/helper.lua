@@ -222,6 +222,27 @@ function M.is_web()
 end
 
 
+--- Transform table to oneline string
+-- @tparam table t
+-- @treturn string
+function M.table_to_string(t)
+	if not t then
+		return const.EMPTY_STRING
+	end
+
+	local result = "{"
+
+	for key, value in pairs(t) do
+		if #result > 1 then
+			result = result .. ","
+		end
+		result = result .. key .. ": " .. value
+	end
+
+	return result .. "}"
+end
+
+
 --- Distance from node position to his borders
 -- @function helper.get_border
 -- @tparam node node The gui node to check
