@@ -140,6 +140,7 @@ function Scroll.init(self, view_node, content_node)
 	self.druid = self:get_druid()
 
 	self.view_node = self:get_node(view_node)
+	self.view_border = helper.get_border(self.view_node)
 	self.content_node = self:get_node(content_node)
 
 	self.view_size = vmath.mul_per_elem(gui.get_size(self.view_node), gui.get_scale(self.view_node))
@@ -419,15 +420,14 @@ function Scroll.is_node_in_view(self, node)
 	end
 
 	local node_border = helper.get_border(node, node_offset_for_view)
-	local view_border = helper.get_border(self.view_node)
 
 	-- Check is vertical outside (Left or Right):
-	if node_border.z < view_border.x or node_border.x > view_border.z then
+	if node_border.z < self.view_border.x or node_border.x > self.view_border.z then
 		return false
 	end
 
 	-- Check is horizontal outside (Up or Down):
-	if node_border.w > view_border.y or node_border.y < view_border.w then
+	if node_border.w > self.view_border.y or node_border.y < self.view_border.w then
 		return false
 	end
 
@@ -693,12 +693,10 @@ end
 
 
 function Scroll._update_size(self)
-	local view_border = helper.get_border(self.view_node)
-
 	local content_border = helper.get_border(self.content_node)
 	local content_size = vmath.mul_per_elem(gui.get_size(self.content_node), gui.get_scale(self.content_node))
 
-	self.available_pos = get_border_vector(view_border - content_border, self._offset)
+	self.available_pos = get_border_vector(self.view_border - content_border, self._offset)
 	self.available_size = get_size_vector(self.available_pos)
 
 	self.drag.can_x = self.available_size.x > 0 and self._is_horizontal_scroll
@@ -727,7 +725,7 @@ function Scroll._update_size(self)
 		self.drag.can_y = content_size.y > self.view_size.y
 	end
 
-	self.available_pos_extra = get_border_vector(view_border - content_border_extra, self._offset)
+	self.available_pos_extra = get_border_vector(self.view_border - content_border_extra, self._offset)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
 
 	self:_set_scroll_position(self.position)

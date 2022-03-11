@@ -61,9 +61,10 @@ local data_list = require("druid.extended.data_list")
 
 local DruidInstance = class("druid.druid_instance")
 
+local IS_NO_AUTO_INPUT = sys.get_config("druid.no_auto_input") == "1"
 
 local function input_init(self)
-	if self._no_auto_input then
+	if IS_NO_AUTO_INPUT then
 		return
 	end
 
@@ -75,7 +76,7 @@ end
 
 
 local function input_release(self)
-	if self._no_auto_input then
+	if IS_NO_AUTO_INPUT then
 		return
 	end
 
@@ -105,7 +106,7 @@ end
 -- Create the component itself
 local function create(self, instance_class)
 	local instance = instance_class()
-	instance:setup_component(self, self._context, self._style)
+	instance:setup_component(self, self._context, self._style, instance_class)
 
 	table.insert(self.components_all, instance)
 
@@ -206,7 +207,6 @@ function DruidInstance.initialize(self, context, style)
 
 	self._input_blacklist = nil
 	self._input_whitelist = nil
-	self._no_auto_input = (sys.get_config("druid.no_auto_input") == "1")
 
 	self.components_interest = {}
 	self.components_all = {}
@@ -239,7 +239,6 @@ function DruidInstance.new(self, component, ...)
 		instance:init(...)
 	end
 
-	self:log_message("Create component", { name = instance:get_name(), parent = instance:get_parent_name() })
 	return instance
 end
 

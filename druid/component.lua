@@ -12,6 +12,7 @@ local helper = require("druid.helper")
 
 local BaseComponent = class("druid.component")
 
+local INTERESTS = {} -- Cache interests by component class in runtime
 local IS_AUTO_TEMPLATE = not (sys.get_config("druid.no_auto_template") == "1")
 
 
@@ -270,13 +271,7 @@ end
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn BaseComponent|nil The druid component instance or nil
 function BaseComponent.get_parent_component(self)
-	local context = self:get_context()
-
-	if context.isInstanceOf and context:isInstanceOf(BaseComponent) then
-		return context
-	end
-
-	return nil
+	return self._meta.parent
 end
 
 
@@ -285,26 +280,27 @@ end
 -- @tparam table druid_instance The parent druid instance
 -- @tparam table context Druid context. Usually it is self of script
 -- @tparam table style Druid style module
+-- @tparam table instance_class The component instance class
 -- @treturn component BaseComponent itself
 -- @local
-function BaseComponent.setup_component(self, druid_instance, context, style)
+function BaseComponent.setup_component(self, druid_instance, context, style, instance_class)
 	self._meta = {
 		template = "",
-		context = nil,
+		context = context,
 		nodes = nil,
 		style = nil,
 		druid = druid_instance,
 		input_enabled = true,
-		children = {}
+		children = {},
+		parent = type(context) ~= "userdata" and context,
+		instance_class = instance_class
 	}
 
-	self:__set_context(context)
 	self:set_style(style)
 	self:set_template("")
 
-	local parent = self:get_parent_component()
-	if parent then
-		parent:__add_children(self)
+	if self._meta.parent then
+		self._meta.parent:__add_children(self)
 	end
 
 	return self
@@ -370,20 +366,16 @@ function BaseComponent.__tostring(self)
 end
 
 
---- Set current component context
--- @tparam BaseComponent self @{BaseComponent}
--- @tparam table context Druid context. Usually it is self of script
--- @local
-function BaseComponent.__set_context(self, context)
-	self._meta.context = context
-end
-
-
 --- Get current component interests
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn table List of component interests
 -- @local
 function BaseComponent.__get_interests(self)
+	local instance_class = self._meta.instance_class
+	if INTERESTS[instance_class] then
+		return INTERESTS[instance_class]
+	end
+
 	local interests = {}
 	for index = 1, #BaseComponent.ALL_INTERESTS do
 		local interest = BaseComponent.ALL_INTERESTS[index]
@@ -392,7 +384,8 @@ function BaseComponent.__get_interests(self)
 		end
 	end
 
-	return interests
+	INTERESTS[instance_class] = interests
+	return INTERESTS[instance_class]
 end
 
 
