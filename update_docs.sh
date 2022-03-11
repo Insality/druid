@@ -12,4 +12,4 @@ echo ""
 echo "Update EmmyLua annotations"
 original_path=$(pwd)
 bash $emmylua_generator_path/export.sh $original_path
-mv $emmylua_generator_path/annotations.lua $original_path/annotations.lua
+mv $emmylua_generator_path/annotations.lua $original_path/druid/annotations.lua

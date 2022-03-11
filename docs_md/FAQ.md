@@ -22,7 +22,7 @@
 
 
 ### Q: For what purpose Blocker component is exist?
-**A:** Component explanation [here](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#notes-2). 
+**A:** Component explanation [here](https://github.com/Insality/druid/blob/master/docs_md/01-components.md#notes-2).
 With Blocker you can block input in some zone. It is useful for make unclickable zone in buttons or kind of buttons panel on other big button (ex. close windows on window background click)
 
 
@@ -39,7 +39,7 @@ Some examples of custom components you can find [here](https://github.com/Insali
 
 **Druid** component *self:get_node()* trying to search in all of this places. Use *self:set_template()* and *self:set_component_nodes()* for correct setup component nodes before any call of *self:get_node()*.
 
-Remember, usually you should pass *__string name__ of the node*, not gui node itself. It's better and more druid-way. 
+Remember, usually you should pass *__string name__ of the node*, not gui node itself. It's better and more druid-way.
 
 
 ### Q: My button in scroll is clickable outside the stencil node
@@ -53,8 +53,8 @@ button:set_click_zone(scroll.view_node)
 
 
 ### Q: How to use EmmyLua annotations? _(from Druid 0.6.0)_
-**A:** Since the dependencies can't be processed by external editors, for use generated EmmyLua annotations you should copy the _annotations.lua_ to your project. For EmmyLua it will be enough. Remember you can _restart emmylua server_ for refresh the changes, if something goes wrong.
-After the annotations is processed, you should point the type of druid in requires:
+**A:** Since the dependencies can't be processed by external editors, for use generated EmmyLua annotations you should copy the _druid/annotations.lua_ to your project. For EmmyLua it will be enough. Remember you can _restart emmylua server_ for refresh the changes, if something goes wrong.
+After the annotations is processed, you should point the type of Druid in requires:
 ```lua
 ---@type druid
 local druid = require("druid.druid")
