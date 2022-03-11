@@ -105,7 +105,7 @@ end
 
 local function update_text_with_trim(self, trim_postfix)
 	local max_width = self.text_area.x
-	local text_width = self:get_text_width()
+	local text_width = self:get_text_size()
 
 	if text_width > max_width then
 		local text_length = utf8.len(self.last_value)
@@ -113,7 +113,7 @@ local function update_text_with_trim(self, trim_postfix)
 		while text_width > max_width do
 			text_length = text_length - 1
 			new_text = utf8.sub(self.last_value, 1, text_length)
-			text_width = self:get_text_width(new_text .. trim_postfix)
+			text_width = self:get_text_size(new_text .. trim_postfix)
 		end
 
 		gui.set_text(self.node, new_text .. trim_postfix)
@@ -122,7 +122,7 @@ end
 
 
 local function update_text_with_anchor_shift(self)
-	if self:get_text_width() >= self.text_area.x then
+	if self:get_text_size() >= self.text_area.x then
 		self:set_pivot(const.REVERSE_PIVOTS[self.start_pivot])
 	else
 		self:set_pivot(self.start_pivot)
@@ -236,21 +236,25 @@ end
 --- Calculate text width with font with respect to trailing space
 -- @tparam Text self @{Text}
 -- @tparam[opt] string text
-function Text.get_text_width(self, text)
+-- @treturn number Width
+-- @treturn number Height
+function Text.get_text_size(self, text)
 	text = text or self.last_value
 	local font = gui.get_font(self.node)
 	local scale = gui.get_scale(self.node)
-	local result = gui.get_text_metrics(font, text, 0, false, 0, 0).width
+	local linebreak = gui.get_line_break(self.node)
+	local metrics = gui.get_text_metrics(font, text, 0, linebreak, 0, 0)
+	local width = metrics.width
 	for i = #text, 1, -1 do
 		local c = string.sub(text, i, i)
 		if c ~= ' ' then
 			break
 		end
 
-		result = result + get_space_width(self, font)
+		width = width + get_space_width(self, font)
 	end
 
-	return result * scale.x
+	return width * scale.x, metrics.height * scale.y
 end
 
 

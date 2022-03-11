@@ -353,6 +353,7 @@ Have a nice day!
 -  **#44** [Slider] Click zone on all slider node, not only pin node
 	- Finally! Added the `slider:set_input_node(node)` function. Now slider can be interacted not only with slider pin node, but with any zone you will define.
 	- It will work only from Defold 1.3.0. If you use earlier version, nothing is happened. It using new `gui.local_to_node` and `gui.set_screen_position` functions.
+- **#178** **[BREAKING][Text]** Rename `text:get_text_width` to `text:get_text_size`. Now it return two numbers: width and height
 -  **#114** Add default component templates
 	- Added templates for fast prototyping. Use GUI templates to place buttons, checkbox, input and sliders on your GUI scene. You still have to create component with `druid:new` functions inside gui_script.
 -  **#168** Add button to open code of current example
