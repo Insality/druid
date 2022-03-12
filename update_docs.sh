@@ -6,7 +6,7 @@
 emmylua_generator_path=~/code/lua/emmylua-from-ldoc-annotations
 
 echo "Update Ldoc"
-ldoc .
+ldoc . --testing
 
 echo ""
 echo "Update EmmyLua annotations"
