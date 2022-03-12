@@ -133,7 +133,7 @@ druid.on_window_callback(event)
 
 - **[Swipe](docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
 
-- **[Drag](docs_md/01-components.md#drag)** - System Druid component, handle drag input on node 
+- **[Drag](docs_md/01-components.md#drag)** - System Druid component, handle drag input on node
 
 **Druid** also provides the following *extended* components:
 

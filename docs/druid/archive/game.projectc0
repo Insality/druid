@@ -1,12 +1,12 @@
 [project]
 title = druid
-version = 0.8.559
+version = 0.8.564
 write_log = 0
 compress_archive = 1
 publisher = Insality
 developer = Insality
-commit_sha = 18eb52b92b9cfd7cfaface2a7e6c4d094ff7de00
-build_date = 2022-03-11T18:55:39Z
+commit_sha = d0f3d6641a08b0d6b719b13017aa85907d1667e5
+build_date = 2022-03-12T10:01:30Z
 title_as_file_name = druid
 
 [display]
@@ -120,7 +120,7 @@ default_language = en
 localizations = en
 
 [android]
-version_code = 559
+version_code = 564
 minimum_sdk_version = 16
 target_sdk_version = 30
 package = com.insality.druid
