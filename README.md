@@ -133,7 +133,7 @@ druid.on_window_callback(event)
 
 - **[Swipe](docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
 
-- **[Drag](docs_md/01-components.md#drag)** - System Druid component, handle drag input on node
+- **[Drag](docs_md/01-components.md#drag)** - System Druid component, handle drag input on node 
 
 **Druid** also provides the following *extended* components:
 
@@ -258,11 +258,9 @@ It is recommended to fully integrate all **Druid** lifecycles functions.
 
 ## Examples
 
-See the [example folder](https://github.com/Insality/druid/tree/develop/example) for examples of how to use **Druid**
+See the [**example folder**](https://github.com/Insality/druid/tree/develop/example) for examples of how to use **Druid**
 
-See the [druid-assets repository](https://github.com/insality/druid-assets) for examples of how to create custom components and styles
-
-Try the [HTML5 version](https://insality.github.io/druid/druid/) of the example app
+Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Druid** example app
 
 
 ## Documentation
@@ -272,7 +270,6 @@ To better understand **Druid**, read the following documentation:
 - [Create custom components](docs_md/02-creating_custom_components.md)
 - [See FAQ article](docs_md/FAQ.md)
 - [Druid styles](docs_md/03-styles.md)
-- [Druid asset store](docs_md/04-druid_assets.md)
 
 You can fund the full **Druid** documentation here:
 https://insality.github.io/druid/

@@ -9,6 +9,7 @@ local SCHEME = {
 }
 
 
+-- Component constructor. Template name and nodes are optional. Pass it if you use it in your component
 function Component:init(template, nodes)
     self:set_template(template)
     self:set_nodes(nodes)
@@ -19,6 +20,7 @@ function Component:init(template, nodes)
 end
 
 
+-- [OPTIONAL] Call on component remove or on druid:final
 function Component:on_remove()
 end
 

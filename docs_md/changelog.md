@@ -66,7 +66,7 @@
 		- _Content node_ - dynamic node, moving by _Scroll_ component
 	- Scroll will be disabled only if content size equals to view size (by width or height separatly)
 	- You can adjust start scroll size via _.gui_ scene. Just setup correct node size
-	- Different anchoring is supported (for easier layouting)
+	- Different anchoring is supported (for easier layout)
 	- Function _scroll_to_ now accept position relative to _content node_. It's more easier for handling. _Example:_ if you have children node of _content_node_, you can pass this node position to scroll to this.
 	- **Resolve #52**: _Content node size_ now can be less than _view node size_. In this case, content will be scrolled only inside _view size_ (can be disabled via style field: _SMALL_CONTENT_SCROLL_)
 	- **Fix #50**: If style.SOFT_ZONE_SIZE equals to [0..1], scroll can be disappeared
@@ -324,11 +324,11 @@ Hello!
 
 Here is the long awaited update! Finally I implemented some ideas how to make easier creating custom components. There is a bunch of improvements you can be interested in.
 
-I wanna make a point what Druid is not only set of defined components to place buttons, scroll, etc. But motsly it's a way how to handle all your GUI elements in general. Custom components is most powerful way to separate logic and make higher abstraction in your code.
+I wanna make a point that Druid is not only set of defined components to place buttons, scroll, etc. But mostly it's a way how to handle all your GUI elements in general. Custom components is most powerful way to separate logic and make higher abstraction in your code.
 
-Usually - custom components is set of GUI template and lua code for this template. I've added editor script, what can make a lua component file from your GUI scene (all boilerplate and usage code, also some component what can be defined right in GUI scene).
+Usually - custom components is set of GUI template and lua code for this template. I've added editor script, that can make a lua component file from your GUI scene (all boilerplate and usage code, also some component that can be defined right in GUI scene).
 
-Autolayout from GUI script should be a powerful tool too! Also it's brings some code structure and style across all your files. Autolayouting works from node names. If its starts or equal to some string, it will add code to generated lua file. For example, if you have in your scene node with name "button_start", it will create the Druid button, stub function and annotations to this. Sounds good!
+Auto layout from GUI script should be a powerful tool too! Also it's brings some code structure and style across all your files. Auto layout works from node names. If its starts or equal to some string, it will add code to generated lua file. For example, if you have in your scene node with name "button_start", it will create the Druid button, stub function and annotations to this. Sounds good!
 
 For more information see [Create custom components](docs_md/02-creating_custom_components.md) documentations.
 
@@ -352,7 +352,7 @@ Take care of yourself
 	- The headliner of current update. This editor scripts allows you to create Custom component lua script from you *.gui* scene file. It will create component file with the same name as GUI scene and place it nearby. Inside this generated file you will find the instructions how to start usage this (require and create code).
 	- This code contains GUI scheme, basic component boilerplace and generated code for components, used in this GUI scene (see #159)
 	- See [Create custom components](docs_md/02-creating_custom_components.md) for more info
--  **#159** Add auto layouting custom components by node naming
+-  **#159** Add auto layout custom components by node naming
 	- The **Create Druid Component** script will check the node names to create Druid components stubs inside generated code
 	- The generator will check the node name, if it's starts from special prefix, it will create component code for you
 	- Currently support the next components: `button`, `text`, `lang_text`, `grid`, `static_grid`, `dynamic_grid`, `scroll_view`, `blocker`, `slider`, `progress` and `timer`

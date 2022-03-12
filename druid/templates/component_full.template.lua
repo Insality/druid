@@ -10,7 +10,7 @@ local SCHEME = {
 }
 
 
--- Component constructor
+-- Component constructor. Template name and nodes are optional. Pass it if you use it in your component
 function Component:init(template, nodes)
 	-- If your component is gui template, pass the template name and set it
 	self:set_template(template)
