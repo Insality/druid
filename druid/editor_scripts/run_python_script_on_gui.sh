@@ -12,4 +12,4 @@ if [ -z "$is_defree_installed" ]; then
     exit 0
 fi
 
-python3 $DIR/create_druid_component.py $@
+python3 $1 $2
