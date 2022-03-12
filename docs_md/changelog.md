@@ -382,7 +382,7 @@ Take care of yourself
 	- The docs in (https://insality.github.io/druid/) now have cross links for every custom type
 -  **#175** Remove Druid Assets repository, move to Druid library
 	- Added folder `druid/custom`. It will have the complex custom components. Usually you should to use default GUI template or create your own with similar GUI scheme. Currently add `RichInput` and `PinKnob` components from druid-assets repository.
-	- Usually to use custom component you have to require lua file first and create it's via `druid:new(Component, template_name, [nodes]). See component docs to see constructor params.
+	- Usually to use custom component you have to require lua file first and create it's via `druid:new(Component, template_name, [nodes])`. See component docs to see constructor params.
 	- This components will be included in build only if used
 -  **#176** Keep last scene and scroll position in Druid example
 	- Probably, it's useful for faster debug, but anyway. The example now keep the last scene and scroll position.
