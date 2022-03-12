@@ -260,8 +260,8 @@ function Input.set_text(self, input_text)
 		self.text:set_to(final_text)
 
 		-- measure it
-		self.text_width = self.text:get_text_width(value)
-		self.marked_text_width = self.text:get_text_width(marked_value)
+		self.text_width = self.text:get_text_size(value)
+		self.marked_text_width = self.text:get_text_size(marked_value)
 		self.total_width = self.text_width + self.marked_text_width
 
 		self.on_input_text:trigger(self:get_context(), final_text)

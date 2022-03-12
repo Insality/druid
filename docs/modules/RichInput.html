@@ -39,7 +39,7 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><strong>BackHandler</strong></li>
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
@@ -57,7 +57,7 @@
   <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
-  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><strong>RichInput</strong></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
@@ -71,31 +71,40 @@
 
 <div id="content">
 
-<h1>Module <code>BackHandler</code></h1>
-<p>Component to handle back key (android, backspace)</p>
-<p></p>
+<h1>Module <code>RichInput</code></h1>
+<p>Druid Rich Input custom component.</p>
+<p>
+ It's wrapper on Input component with cursor and placeholder text</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, callback[, params])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, template, nodes)</a></td>
 	<td class="summary">Component init function</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#on_input">on_input(self, action_id, action)</a></td>
-	<td class="summary">Input handler for component</td>
+	<td class="name" nowrap><a href="#set_placeholder">set_placeholder(self, placeholder_text)</a></td>
+	<td class="summary">Set placeholder text</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#on_back">on_back</a></td>
-	<td class="summary">On back handler callback(self, params)</td>
+	<td class="name" nowrap><a href="#cursor">cursor</a></td>
+	<td class="summary">On input field text change to empty string callback(self, input_text)</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#params">params</a></td>
-	<td class="summary">Params to back callback</td>
+	<td class="name" nowrap><a href="#druid">druid</a></td>
+	<td class="summary">The component druid instance</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#input">input</a></td>
+	<td class="summary">On input field text change callback(self, input_text)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#placeholder">placeholder</a></td>
+	<td class="summary">On input field text change to max length string callback(self, input_text)</td>
 	</tr>
 </table>
 
@@ -108,7 +117,7 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(self, callback[, params])</strong>
+    <strong>init(self, template, nodes)</strong>
     </dt>
     <dd>
     Component init function
@@ -117,17 +126,16 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BackHandler</span></span>
-         <a href="../modules/BackHandler.html#">BackHandler</a>
+            <span class="types"><span class="type">RichInput</span></span>
+         <a href="../modules/RichInput.html#">RichInput</a>
         </li>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">callback</span></span>
-         On back button
+        <li><span class="parameter">template</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The template string name
         </li>
-        <li><span class="parameter">params</span>
-            <span class="types"><span class="type">any</span></span>
-         Callback argument
-         (<em>optional</em>)
+        <li><span class="parameter">nodes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Nodes table from gui.clone_tree
         </li>
     </ul>
 
@@ -137,26 +145,22 @@
 
 </dd>
     <dt>
-    <a name = "on_input"></a>
-    <strong>on_input(self, action_id, action)</strong>
+    <a name = "set_placeholder"></a>
+    <strong>set_placeholder(self, placeholder_text)</strong>
     </dt>
     <dd>
-    Input handler for component
+    Set placeholder text
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BackHandler</span></span>
-         <a href="../modules/BackHandler.html#">BackHandler</a>
+            <span class="types"><span class="type">RichInput</span></span>
+         <a href="../modules/RichInput.html#">RichInput</a>
         </li>
-        <li><span class="parameter">action_id</span>
+        <li><span class="parameter">placeholder_text</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         on_input action id
-        </li>
-        <li><span class="parameter">action</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         on_input action
+         The placeholder text
         </li>
     </ul>
 
@@ -170,17 +174,17 @@
 
     <dl class="function">
     <dt>
-    <a name = "on_back"></a>
-    <strong>on_back</strong>
+    <a name = "cursor"></a>
+    <strong>cursor</strong>
     </dt>
     <dd>
-    On back handler callback(self, params)
+    On input field text change to empty string callback(self, input_text)
 
 
     <ul>
-        <li><span class="parameter">on_back</span>
-            <span class="types"><span class="type">DruidEvent</span></span>
-         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        <li><span class="parameter">cursor</span>
+            <span class="types"><span class="type">node</span></span>
+
         </li>
     </ul>
 
@@ -190,17 +194,57 @@
 
 </dd>
     <dt>
-    <a name = "params"></a>
-    <strong>params</strong>
+    <a name = "druid"></a>
+    <strong>druid</strong>
     </dt>
     <dd>
-    Params to back callback
+    The component druid instance
 
 
     <ul>
-        <li><span class="parameter">params</span>
-            <span class="types"><span class="type">any</span></span>
+        <li><span class="parameter">druid</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+         <a href="../modules/DruidInstance.html#">DruidInstance</a>
+        </li>
+    </ul>
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "input"></a>
+    <strong>input</strong>
+    </dt>
+    <dd>
+    On input field text change callback(self, input_text)
+
+
+    <ul>
+        <li><span class="parameter">input</span>
+            <span class="types"><span class="type">Input</span></span>
+         <a href="../modules/Input.html#">Input</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "placeholder"></a>
+    <strong>placeholder</strong>
+    </dt>
+    <dd>
+    On input field text change to max length string callback(self, input_text)
+
+
+    <ul>
+        <li><span class="parameter">placeholder</span>
+            <span class="types"><span class="type">druid.text</span></span>
+         <a href="../modules/Text.html#">Text</a>
         </li>
     </ul>
 

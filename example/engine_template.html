@@ -7,16 +7,16 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>druid 0.8.559</title>
+	<title>{{project.title}} {{project.version}}</title>
 	<style type='text/css'>
 	/* Disable user selection to avoid strange bug in Chrome on Windows:
 	* Selecting a text outside the canvas, then clicking+draging would
 	* drag the selected text but block mouse down/up events to the engine.
 	*/
 	body {
-	
+	{{^DEFOLD_SCALE_MODE_IS_NO_SCALE}}
 		position: fixed; /* Prevent overscroll */
-	
+	{{/DEFOLD_SCALE_MODE_IS_NO_SCALE}}
 		margin:0;
 		padding:0;
 	}
@@ -64,68 +64,22 @@
 		user-select: none;
 	}
 
-		.canvas-app-progress {
-		position: absolute;
-		background-color: #d1dbeb;
-		height: 6px;
-		margin-top: -6px;
-		width: 100%;
-	}
-
-	.canvas-app-progress-bar {
-		font-size: 12px;
-		height: 6px;
-		color: rgb(255, 255, 255);
-		background-color: #1a72eb;
-		text-align: center;
-		line-height: 20px;
-	}
-	.link, .button {
-		font-family: sans-serif;
-		font-size: 14px;
-		font-weight: normal;
-		font-style: normal;
-		font-stretch: normal;
-		line-height: normal;
-		letter-spacing: 0px;
-		padding-top: 12px;
-	}
-
-	.buttons-background {
-		background-color: #ffffff;
-		width: 100%;
-		height: 42px;
-	}
-
-	body {
-		background-color: #ffffff;
-	}
-
-	.canvas-app-container {
-		background: rgba(250,252,255,1);
-		background: -moz-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(250,252,255,1)), color-stop(50%, rgba(250,252,255,1)), color-stop(50%, rgba(245,249,255,1)), color-stop(100%, rgba(245,249,255,1)));
-		background: -webkit-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		background: -o-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		background: -ms-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		background: linear-gradient(135deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafcff', endColorstr='#f5f9ff', GradientType=1 );
-	}
-
-	.canvas-app-canvas {
-		background-repeat:no-repeat;
-		background-position: center center;
-		background-image: url("druid_logo.png");
-	}
+	{{{DEFOLD_CUSTOM_CSS_INLINE}}}
 	</style>
 </head>
 
 <body>
 	<div id="app-container" class="canvas-app-container">
 		<div id="canvas-container" class="canvas-app-canvas-container">
-			<canvas id="canvas" class="canvas-app-canvas" tabindex="1" width="600" height="900"></canvas>
+			<canvas id="canvas" class="canvas-app-canvas" tabindex="1" width="{{display.width}}" height="{{display.height}}"></canvas>
 		</div>
 		<div class="buttons-background">
+{{#html5.show_fullscreen_button}}
+			<div class="button" onclick="Module.toggleFullscreen();">Fullscreen</div>
+{{/html5.show_fullscreen_button}}
+{{#html5.show_made_with_defold}}
+			<div class="link">Made with <a href="https://defold.com/" target="_blank">Defold</a></div>
+{{/html5.show_made_with_defold}}
 		</div>
 	</div>
 	<!-- -->
@@ -134,10 +88,10 @@
 	<script id='engine-setup' type='text/javascript'>
 	var extra_params = {
 		archive_location_filter: function( path ) {
-			return ("archive" + path + "");
+			return ("{{DEFOLD_ARCHIVE_LOCATION_PREFIX}}" + path + "{{DEFOLD_ARCHIVE_LOCATION_SUFFIX}}");
 		},
-		engine_arguments: ["--verify-graphics-calls=false",],
-		custom_heap_size: 67108864,
+		engine_arguments: [{{#DEFOLD_ENGINE_ARGUMENTS}}"{{.}}",{{/DEFOLD_ENGINE_ARGUMENTS}}],
+		custom_heap_size: {{DEFOLD_HEAP_SIZE}},
 		full_screen_container: "#canvas-container",
 		disable_context_menu: true
 	}
@@ -153,7 +107,7 @@
 		// dmengine*.wasm is hardcoded in the built JS loader for WASM,
 		// we need to replace it here with the correct project name.
 		if (path == "dmengine.wasm" || path == "dmengine_release.wasm" || path == "dmengine_headless.wasm") {
-			path = "druid.wasm";
+			path = "{{exe-name}}.wasm";
 		}
 		return scriptDirectory + path;
 	};
@@ -162,6 +116,12 @@
 	var buttonHeight = 0;
 	var prevInnerWidth = -1;
 	var prevInnerHeight = -1;
+{{#html5.show_made_with_defold}}
+	buttonHeight = 42;
+{{/html5.show_made_with_defold}}
+{{#html5.show_fullscreen_button}}
+	buttonHeight = 42;
+{{/html5.show_fullscreen_button}}
 	function resize_game_canvas() {
 		// Hack for iOS when exit from Fullscreen mode
 		if (is_iOS) {
@@ -178,13 +138,37 @@
 		}
 		prevInnerWidth = innerWidth;
 		prevInnerHeight = innerHeight;
-		var width = 600;
-		var height = 900;
+		var width = {{display.width}};
+		var height = {{display.height}};
 		var targetRatio = width / height;
 		var actualRatio = innerWidth / innerHeight;
-	
-	
-	
+	{{#DEFOLD_SCALE_MODE_IS_DOWNSCALE_FIT}}
+		//Downscale fit
+		if (innerWidth < width || innerHeight < height) {
+			if (actualRatio > targetRatio) {
+				width = innerHeight * targetRatio;
+				height = innerHeight;
+				app_container.style.marginLeft = ((innerWidth - width) / 2) + "px";
+				app_container.style.marginTop = "0px";
+			}
+			else {
+				width = innerWidth;
+				height = innerWidth / targetRatio;
+				app_container.style.marginLeft = "0px";
+				app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
+			}
+		}
+		else {
+			app_container.style.marginLeft = ((innerWidth - width) / 2) + "px";
+			app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
+		}
+	{{/DEFOLD_SCALE_MODE_IS_DOWNSCALE_FIT}}
+	{{#DEFOLD_SCALE_MODE_IS_STRETCH}}
+		//Stretch
+		width = innerWidth;
+		height = innerHeight;
+	{{/DEFOLD_SCALE_MODE_IS_STRETCH}}
+	{{#DEFOLD_SCALE_MODE_IS_FIT}}
 		//Fit
 		if (actualRatio > targetRatio) {
 			width = innerHeight * targetRatio;
@@ -198,8 +182,16 @@
 			app_container.style.marginLeft = "0px";
 			app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
 		}
-	
-	
+	{{/DEFOLD_SCALE_MODE_IS_FIT}}
+	{{#DEFOLD_SCALE_MODE_IS_NO_SCALE}}
+		//No scale
+		var margin_left = ((innerWidth - width) / 2);
+		margin_left = margin_left > 0 ? margin_left : 0;
+		var margin_top = ((innerHeight - height) / 2);
+		margin_top = margin_top > 0 ? margin_top : 0;
+		app_container.style.marginLeft = margin_left + "px";
+		app_container.style.marginTop = margin_top + "px";
+	{{/DEFOLD_SCALE_MODE_IS_NO_SCALE}}
 		app_container.style.width = width + "px";
 		app_container.style.height = height + buttonHeight + "px";
 		game_canvas.width = width;
@@ -212,7 +204,7 @@
 	</script>
 
 	<script id='engine-start' type='text/javascript'>
-		EngineLoader.load("canvas", "druid");
+		EngineLoader.load("canvas", "{{exe-name}}");
 	</script>
 </body>
 </html>

@@ -11,13 +11,16 @@ local druid = {}
 function druid.new(context, style) end
 
 --- Callback on global language change event.
+--- Use to update all lang texts
 function druid.on_language_change() end
 
 --- Callback on global window event.
+--- Used to trigger on_focus_lost and on_focus_gain
 ---@param event string Event param from window listener
 function druid.on_window_callback(event) end
 
 --- Register external druid component.
+--- After register you can create the component with  druid_instance:new_{name}. For example `druid:new_button(...)`
 ---@param name string module name
 ---@param module table lua table with component
 function druid.register(name, module) end
@@ -27,10 +30,12 @@ function druid.register(name, module) end
 function druid.set_default_style(style) end
 
 --- Set sound function.
+--- Component will call this function to  play sound by sound_id
 ---@param callback function Sound play callback
 function druid.set_sound_function(callback) end
 
 --- Set text function  Druid locale component will call this function  to get translated text.
+--- After set_text_funtion  all existing locale component will be updated
 ---@param callback function Get localized text function
 function druid.set_text_function(callback) end
 
@@ -57,86 +62,116 @@ function druid__back_handler.on_input(self, action_id, action) end
 ---@field ON_INPUT field Component Interests
 local druid__base_component = {}
 
---- Return all children components, recursive
----@param self druid.base_component
+--- Return all children components, recursive (protected)
+---@protected
+---@param self druid.base_component @{BaseComponent}
 ---@return table Array of childrens if the Druid component instance
 function druid__base_component.get_childrens(self) end
 
---- Get current component context
----@param self druid.base_component
+--- Get current component context (protected)
+---@protected
+---@param self druid.base_component @{BaseComponent}
 ---@return table BaseComponent context
 function druid__base_component.get_context(self) end
 
---- Return druid with context of calling component.
----@param self druid.base_component
+--- Return druid with context of calling component (protected).
+--- Use it to create component inside of other components.
+---@protected
+---@param self druid.base_component @{BaseComponent}
 ---@return Druid Druid instance with component context
 function druid__base_component.get_druid(self) end
 
 --- Return component input priority
----@param self druid.base_component
+---@param self druid.base_component @{BaseComponent}
 ---@return number The component input priority
 function druid__base_component.get_input_priority(self) end
 
 --- Return component name
----@param self druid.base_component
+---@param self druid.base_component @{BaseComponent}
 ---@return string The component name
 function druid__base_component.get_name(self) end
 
 --- Get node for component by name.
----@param self druid.base_component
+--- If component has nodes, node_or_name should be string  It auto pick node by template name or from nodes by clone_tree  if they was setup via component:set_nodes, component:set_template.  If node is not found, the exception will fired
+---@param self druid.base_component @{BaseComponent}
 ---@param node_or_name string|node Node name or node itself
 ---@return node Gui node
 function druid__base_component.get_node(self, node_or_name) end
 
---- Return the parent for current component
----@param self druid.base_component
----@return druid.base_component|nil The druid component instance or nil
+--- Return the parent for current component (protected)
+---@protected
+---@param self druid.base_component @{BaseComponent}
+---@return BaseComponent|nil The druid component instance or nil
 function druid__base_component.get_parent_component(self) end
 
---- Return component uid.
----@param self druid.base_component
+--- Return parent component name
+---@param self druid.base_component @{BaseComponent}
+---@return string|nil The parent component name if exist or bil
+function druid__base_component.get_parent_name(self) end
+
+--- Get current component template name (protected)
+---@protected
+---@param self druid.base_component @{BaseComponent}
+---@return string Component full template name
+function druid__base_component.get_template(self) end
+
+--- Return component uid (protected).
+--- UID generated in component creation order
+---@protected
+---@param self druid.base_component @{BaseComponent}
 ---@return number The component uid
 function druid__base_component.get_uid(self) end
 
+--- Print log information if debug mode is enabled (protected)
+---@protected
+---@param self druid.base_component @{BaseComponent}
+---@param message string
+---@param context table
+function druid__base_component.log_message(self, message, context) end
+
 --- Reset component input priority to default value
----@param self druid.base_component
+---@param self druid.base_component @{BaseComponent}
 ---@return number The component input priority
 function druid__base_component.reset_input_priority(self) end
 
+--- Set debug logs for component enabled or disabled
+---@param self druid.base_component @{BaseComponent}
+---@param is_debug bool
+function druid__base_component.set_debug(self, is_debug) end
+
 --- Set component input state.
----@param self druid.base_component
+--- By default it enabled  You can disable any input of component by this function
+---@param self druid.base_component @{BaseComponent}
 ---@param state bool The component input state
 ---@return druid.base_component BaseComponent itself
 function druid__base_component.set_input_enabled(self, state) end
 
 --- Set component input priority
----@param self druid.base_component
+---@param self druid.base_component @{BaseComponent}
 ---@param value number The new input priority value
 ---@return number The component input priority
 function druid__base_component.set_input_priority(self, value) end
 
---- Set current component nodes
----@param self druid.base_component
+--- Set current component nodes (protected)
+---@protected
+---@param self druid.base_component @{BaseComponent}
 ---@param nodes table BaseComponent nodes table
+---@return druid.base_component @{BaseComponent}
 function druid__base_component.set_nodes(self, nodes) end
 
---- Set current component style table.
----@param self druid.base_component
+--- Set current component style table (protected).
+--- Invoke `on_style_change` on component, if exist. BaseComponent should handle  their style changing and store all style params
+---@protected
+---@param self druid.base_component @{BaseComponent}
 ---@param druid_style table Druid style module
 function druid__base_component.set_style(self, druid_style) end
 
---- Set current component template name
----@param self druid.base_component
+--- Set current component template name (protected)  It will check parent template name to build full template name
+---@protected
+---@param self druid.base_component @{BaseComponent}
 ---@param template string BaseComponent template name
+---@return druid.base_component @{BaseComponent}
 function druid__base_component.set_template(self, template) end
-
---- Setup component context and his style table
----@param self druid.base_component
----@param druid_instance table The parent druid instance
----@param context table Druid context. Usually it is self of script
----@param style table Druid style module
----@return component BaseComponent itself
-function druid__base_component.setup_component(self, druid_instance, context, style) end
 
 
 ---@class druid.blocker : druid.base_component
@@ -204,6 +239,7 @@ function druid__button.is_enabled(self) end
 function druid__button.set_check_function(self, check_function, failure_callback) end
 
 --- Strict button click area.
+--- Useful for  no click events outside stencil node
 ---@param self druid.button @{Button}
 ---@param zone node Gui node
 ---@return druid.button Current button instance
@@ -306,6 +342,7 @@ local druid__data_list = {}
 function druid__data_list.clear(self) end
 
 --- Return first index from data.
+--- It not always equals to 1
 ---@param self druid.data_list @{DataList}
 function druid__data_list.get_first_index(self) end
 
@@ -368,6 +405,7 @@ local druid__drag = {}
 function druid__drag.init(self, node, on_drag_callback) end
 
 --- Strict drag click area.
+--- Useful for  restrict events outside stencil node
 ---@param self druid.drag @{Drag}
 ---@param node node Gui node
 function druid__drag.set_click_zone(self, node) end
@@ -407,6 +445,7 @@ function druid__dynamic_grid._get_side_vector(self, side, is_forward) end
 function druid__dynamic_grid.add(self, node, index, shift_policy, is_instant) end
 
 --- Clear grid nodes array.
+--- GUI nodes will be not deleted!  If you want to delete GUI nodes, use dynamic_grid.nodes array before grid:clear
 ---@param self druid.dynamic_grid @{DynamicGrid}
 ---@return druid.dynamic_grid Current grid instance
 function druid__dynamic_grid.clear(self) end
@@ -452,6 +491,7 @@ function druid__dynamic_grid.get_size(self, border) end
 function druid__dynamic_grid.init(self, parent) end
 
 --- Remove the item from the grid.
+--- Note that gui node will be not deleted
 ---@param self druid.dynamic_grid @{DynamicGrid}
 ---@param index number The grid node index to remove
 ---@param shift_policy number How shift nodes, if required. See const.SHIFT
@@ -460,6 +500,7 @@ function druid__dynamic_grid.init(self, parent) end
 function druid__dynamic_grid.remove(self, index, shift_policy, is_instant) end
 
 --- Change set position function for grid nodes.
+--- It will call on  update poses on grid elements. Default: gui.set_position
 ---@param self druid.dynamic_grid @{DynamicGrid}
 ---@param callback function Function on node set position
 ---@return druid.dynamic_grid Current grid instance
@@ -501,6 +542,15 @@ function druid__event.trigger(self, ...) end
 function druid__event.unsubscribe(self, callback, context) end
 
 
+---@class druid.helper
+local druid__helper = {}
+
+--- Transform table to oneline string
+---@param t table
+---@return string
+function druid__helper.table_to_string(t) end
+
+
 ---@class druid.hover : druid.base_component
 ---@field on_hover druid.event On hover callback(self, state)
 ---@field on_mouse_hover druid.event On mouse hover callback(self, state)
@@ -518,11 +568,13 @@ function druid__hover.init(self, node, on_hover_callback) end
 function druid__hover.is_enabled(self) end
 
 --- Strict hover click area.
+--- Useful for  no click events outside stencil node
 ---@param self druid.hover @{Hover}
 ---@param zone node Gui node
 function druid__hover.set_click_zone(self, zone) end
 
 --- Set enable state of hover component.
+--- If hover is not enabled, it will not generate  any hover events
 ---@param self druid.hover @{Hover}
 ---@param state bool The hover enabled state
 function druid__hover.set_enabled(self, state) end
@@ -572,16 +624,19 @@ function druid__input.init(self, click_node, text_node, keyboard_type) end
 function druid__input.reset_changes(self) end
 
 --- Select input field.
+--- It will show the keyboard and trigger on_select events
 ---@param self druid.input @{Input}
 function druid__input.select(self) end
 
 --- Set allowed charaters for input field.
+--- See: https://defold.com/ref/stable/string/  ex: [%a%d] for alpha and numeric
 ---@param self druid.input @{Input}
 ---@param characters string Regulax exp. for validate user input
 ---@return druid.input Current input instance
 function druid__input.set_allowed_characters(self, characters) end
 
 --- Set maximum length for input field.
+--- Pass nil to make input field unliminted (by default)
 ---@param self druid.input @{Input}
 ---@param max_length number Maximum length for input text field
 ---@return druid.input Current input instance
@@ -593,6 +648,7 @@ function druid__input.set_max_length(self, max_length) end
 function druid__input.set_text(self, input_text) end
 
 --- Remove selection from input.
+--- It will hide the keyboard and trigger on_unselect events
 ---@param self druid.input @{Input}
 function druid__input.unselect(self) end
 
@@ -650,6 +706,34 @@ function druid__lang_text.set_to(self, text) end
 ---@param g string Optional param to string.format
 ---@return druid.lang_text Current instance
 function druid__lang_text.translate(self, locale_id, a, b, c, d, e, f, g) end
+
+
+---@class druid.pin_knob : druid.base_component
+---@field druid druid_instance The component druid instance
+---@field is_drag bool Is currently under user control
+---@field node node The pin node
+local druid__pin_knob = {}
+
+--- Component init function
+---@param self druid.pin_knob @{PinKnob}
+---@param callback function Callback(self, value) on value changed
+---@param template string The template string name
+---@param nodes table Nodes table from gui.clone_tree
+function druid__pin_knob.init(self, callback, template, nodes) end
+
+--- Set current and min/max angles for component
+---@param self druid.pin_knob @{PinKnob}
+---@param cur_value number The new value for pin knob
+---@param min number The minimum value for pin knob
+---@param max number The maximum value for pin knob
+---@return druid.pin_knob @{PinKnob}
+function druid__pin_knob.set_angle(self, cur_value, min, max) end
+
+--- Set current and min/max angles for component
+---@param self druid.pin_knob @{PinKnob}
+---@param value number The spin speed multiplier
+---@return druid.pin_knob @{PinKnob}
+function druid__pin_knob.set_friction(self, value) end
 
 
 ---@class druid.progress : druid.base_component
@@ -732,7 +816,7 @@ function druid__radio_group.set_state(self, index, is_instant) end
 
 ---@class druid.rich_input : druid.input
 ---@field cursor node On input field text change to empty string callback(self, input_text)
----@field druid druid_instance On input field select callback(self, button_node)
+---@field druid druid_instance The component druid instance
 ---@field input druid.input On input field text change callback(self, input_text)
 ---@field placeholder druid.text On input field text change to max length string callback(self, input_text)
 local druid__rich_input = {}
@@ -774,6 +858,7 @@ local druid__scroll = {}
 function druid__scroll.bind_grid(self, grid) end
 
 --- Return current scroll progress status.
+--- Values will be in [0..1] interval
 ---@param self druid.scroll @{Scroll}
 ---@return vector3 New vector with scroll progress values
 function druid__scroll.get_percent(self) end
@@ -795,6 +880,7 @@ function druid__scroll.init(self, view_node, content_node) end
 function druid__scroll.is_inert(self) end
 
 --- Check node if it visible now on scroll.
+--- Extra border is not affected. Return true for elements in extra scroll zone
 ---@param self druid.scroll @{Scroll}
 ---@param node node The node to check
 ---@return boolean True if node in visible scroll area
@@ -819,11 +905,13 @@ function druid__scroll.scroll_to_index(self, index, skip_cb) end
 function druid__scroll.scroll_to_percent(self, percent, is_instant) end
 
 --- Strict drag scroll area.
+--- Useful for  restrict events outside stencil node
 ---@param self druid.drag
 ---@param node node Gui node
 function druid__scroll.set_click_zone(self, node) end
 
 --- Set extra size for scroll stretching.
+--- Set 0 to disable stretching effect
 ---@param self druid.scroll @{Scroll}
 ---@param stretch_size number Size in pixels of additional scroll area
 ---@return druid.scroll Current scroll instance
@@ -836,18 +924,21 @@ function druid__scroll.set_extra_stretch_size(self, stretch_size) end
 function druid__scroll.set_horizontal_scroll(self, state) end
 
 --- Enable or disable scroll inert.
+--- If disabled, scroll through points (if exist)  If no points, just simple drag without inertion
 ---@param self druid.scroll @{Scroll}
 ---@param state bool Inert scroll state
 ---@return druid.scroll Current scroll instance
 function druid__scroll.set_inert(self, state) end
 
 --- Set points of interest.
+--- Scroll will always centered on closer points
 ---@param self druid.scroll @{Scroll}
 ---@param points table Array of vector3 points
 ---@return druid.scroll Current scroll instance
 function druid__scroll.set_points(self, points) end
 
 --- Set scroll content size.
+--- It will change content gui node size
 ---@param self druid.scroll @{Scroll}
 ---@param size vector3 The new size for content node
 ---@param offset vector3 Offset value to set, where content is starts
@@ -902,9 +993,18 @@ function druid__slider.init(self, node, end_pos, callback) end
 ---@param is_silent bool Don't trigger event if true
 function druid__slider.set(self, value, is_silent) end
 
+--- Set input zone for slider.
+--- User can touch any place of node, pin instantly will  move at this position and node drag will start.  This function require the Defold version 1.3.0+
+---@param self druid.slider @{Slider}
+---@param input_node Node
+---@return druid.slider @{Slider}
+function druid__slider.set_input_node(self, input_node) end
+
 --- Set slider steps.
+--- Pin node will  apply closest step position
 ---@param self druid.slider @{Slider}
 ---@param steps number[] Array of steps
+---@return druid.slider @{Slider}
 function druid__slider.set_steps(self, steps) end
 
 
@@ -933,6 +1033,7 @@ local druid__static_grid = {}
 function druid__static_grid.add(self, item, index, shift_policy, is_instant) end
 
 --- Clear grid nodes array.
+--- GUI nodes will be not deleted!  If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
 ---@param self druid.static_grid @{StaticGrid}
 ---@return druid.static_grid Current grid instance
 function druid__static_grid.clear(self) end
@@ -983,6 +1084,7 @@ function druid__static_grid.get_size(self) end
 function druid__static_grid.init(self, parent, element, in_row) end
 
 --- Remove the item from the grid.
+--- Note that gui node will be not deleted
 ---@param self druid.static_grid @{StaticGrid}
 ---@param index number The grid node index to remove
 ---@param shift_policy number How shift nodes, if required. See const.SHIFT
@@ -991,6 +1093,7 @@ function druid__static_grid.init(self, parent, element, in_row) end
 function druid__static_grid.remove(self, index, shift_policy, is_instant) end
 
 --- Set grid anchor.
+--- Default anchor is equal to anchor of grid parent node
 ---@param self druid.static_grid @{StaticGrid}
 ---@param anchor vector3 Anchor
 function druid__static_grid.set_anchor(self, anchor) end
@@ -1002,6 +1105,7 @@ function druid__static_grid.set_anchor(self, anchor) end
 function druid__static_grid.set_in_row(self, in_row) end
 
 --- Change set position function for grid nodes.
+--- It will call on  update poses on grid elements. Default: gui.set_position
 ---@param self druid.static_grid @{StaticGrid}
 ---@param callback function Function on node set position
 ---@return druid.static_grid Current grid instance
@@ -1017,7 +1121,7 @@ local druid__static_grid__style = {}
 ---@class druid.swipe : druid.base_component
 ---@field click_zone node Restriction zone
 ---@field node node Swipe node
----@field on_swipe druid.event Trigger on swipe event(self, swipe_side, dist, delta_time
+---@field on_swipe druid.event Trigger on swipe event(self, swipe_side, dist, delta_time)
 ---@field style druid.swipe.style Component style params.
 local druid__swipe = {}
 
@@ -1028,6 +1132,7 @@ local druid__swipe = {}
 function druid__swipe.init(self, node, on_swipe_callback) end
 
 --- Strict swipe click area.
+--- Useful for  restrict events outside stencil node
 ---@param self druid.swipe @{Swipe}
 ---@param zone node Gui node
 function druid__swipe.set_click_zone(self, zone) end
@@ -1065,7 +1170,9 @@ function druid__text.get_text_adjust(self, adjust_type) end
 --- Calculate text width with font with respect to trailing space
 ---@param self druid.text @{Text}
 ---@param text string
-function druid__text.get_text_width(self, text) end
+---@return number Width
+---@return number Height
+function druid__text.get_text_size(self, text) end
 
 --- Component init function
 ---@param self druid.text @{Text}
@@ -1098,6 +1205,7 @@ function druid__text.set_color(self, color) end
 function druid__text.set_minimal_scale(self, minimal_scale) end
 
 --- Set text pivot.
+--- Text will re-anchor inside text area
 ---@param self druid.text @{Text}
 ---@param pivot gui.pivot Gui pivot constant
 ---@return druid.text Current text instance
@@ -1172,22 +1280,16 @@ local druid_const = {}
 ---@class druid_instance
 local druid_instance = {}
 
---- Create data list basic component
----@param druid_scroll druid.scroll The Scroll instance for Data List component
----@param druid_grid Grid The Grid instance for Data List component
----@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
----@return druid.data_list data_list component
-function druid_instance.druid:new_data_list(druid_scroll, druid_grid, create_function) end
-
 --- Call on final function on gui_script.
+--- It will call on_remove  on all druid components
 ---@param self druid_instance
 function druid_instance.final(self) end
 
---- Druid class constructor
----@param self druid_instance
----@param context table Druid context. Usually it is self of script
----@param style table Druid style module
-function druid_instance.initialize(self, context, style) end
+--- Log message, if is_debug mode is enabled
+---@param self druid_instance @{DruidInstance}
+---@param message string
+---@param context table
+function druid_instance.log_message(self, message, context) end
 
 --- Create new druid component
 ---@param self druid_instance
@@ -1233,6 +1335,14 @@ function druid_instance.new_checkbox(self, node, callback, click_node, initial_s
 ---@param click_nodes node[] Array of trigger nodes, by default equals to nodes
 ---@return druid.checkbox_group checkbox_group component
 function druid_instance.new_checkbox_group(self, nodes, callback, click_nodes) end
+
+--- Create data list basic component
+---@param self druid_instance
+---@param druid_scroll druid.scroll The Scroll instance for Data List component
+---@param druid_grid Grid The Grid instance for Data List component
+---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
+---@return druid.data_list data_list component
+function druid_instance.new_data_list(self, druid_scroll, druid_grid, create_function) end
 
 --- Create drag basic component
 ---@param self druid_instance
@@ -1341,24 +1451,12 @@ function druid_instance.new_text(self, node, value, no_adjust) end
 ---@return druid.timer timer component
 function druid_instance.new_timer(self, node, seconds_from, seconds_to, callback) end
 
---- Druid on focus gained interest function.
----@param self druid_instance
-function druid_instance.on_focus_gained(self) end
-
---- Druid on focus lost interest function.
----@param self druid_instance
-function druid_instance.on_focus_lost(self) end
-
 --- Druid on_input function
 ---@param self druid_instance
 ---@param action_id hash Action_id from on_input
 ---@param action table Action from on_input
 ---@return bool The boolean value is input was consumed
 function druid_instance.on_input(self, action_id, action) end
-
---- Druid on language change.
----@param self druid_instance
-function druid_instance.on_language_change(self) end
 
 --- Druid on_message function
 ---@param self druid_instance
@@ -1368,16 +1466,26 @@ function druid_instance.on_language_change(self) end
 function druid_instance.on_message(self, message_id, message, sender) end
 
 --- Remove component from druid instance.
+--- Component `on_remove` function will be invoked, if exist.
 ---@param self druid_instance
 ---@param component Component Component instance
 function druid_instance.remove(self, component) end
 
 --- Set blacklist components for input processing.
----@param self druid_instance
+--- If blacklist is not empty and component contains in this list,  component will be not processed on input step
+---@param self druid_instance @{DruidInstance}
 ---@param blacklist_components table|Component The array of component to blacklist
 function druid_instance.set_blacklist(self, blacklist_components) end
 
+--- Set debug mode for current Druid instance.
+--- It's enable debug log messages
+---@param self druid_instance @{DruidInstance}
+---@param is_debug bool
+---@return self @{DruidInstance}
+function druid_instance.set_debug(self, is_debug) end
+
 --- Set whitelist components for input processing.
+--- If whitelist is not empty and component not contains in this list,  component will be not processed on input step
 ---@param self druid_instance
 ---@param whitelist_components table|Component The array of component to whitelist
 function druid_instance.set_whitelist(self, whitelist_components) end
@@ -1413,23 +1521,27 @@ function formats.second_string_min(s, tab) end
 local helper = {}
 
 --- Center two nodes.
+--- Nodes will be center around 0 x position  icon_node will be first (at left side)
 ---@param icon_node box Gui box node
 ---@param text_node text Gui text node
 ---@param margin number Offset between nodes
 function helper.centrate_icon_with_text(icon_node, text_node, margin) end
 
 --- Center several nodes nodes.
+--- Nodes will be center around 0 x position
 ---@param margin number Offset between nodes
 ---@param ... Node Any count of gui Node
 function helper.centrate_nodes(margin, ...) end
 
 --- Center two nodes.
+--- Nodes will be center around 0 x position  text_node will be first (at left side)
 ---@param text_node text Gui text node
 ---@param icon_node box Gui box node
 ---@param margin number Offset between nodes
 function helper.centrate_text_with_icon(text_node, icon_node, margin) end
 
 --- Show deprecated message.
+--- Once time per message
 ---@param message string The deprecated message
 function helper.deprecated(message) end
 
@@ -1450,6 +1562,7 @@ function helper.get_closest_stencil_node(node) end
 function helper.get_pivot_offset(pivot) end
 
 --- Check if node is enabled in gui hierarchy.
+--- Return false, if node or any his parent is disabled
 ---@param node node Gui node
 ---@return bool Is enabled in hierarchy
 function helper.is_enabled(node) end

@@ -41,29 +41,31 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Drag.html">Drag</a></li>
-  <li><a href="../modules/Hover.html">Hover</a></li>
-  <li><a href="../modules/Scroll.html">Scroll</a></li>
-  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
-  <li><a href="../modules/Swipe.html">Swipe</a></li>
-  <li><a href="../modules/Text.html">Text</a></li>
-  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><strong>Checkbox</strong></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -78,16 +80,16 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#get_state">get_state(self)</a></td>
+	<td class="summary">Return checkbox state</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#init">init(self, node, callback[, click_node=node[, initial_state=false]])</a></td>
 	<td class="summary">Component init function</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_state">set_state(self, state, is_silent, is_instant)</a></td>
 	<td class="summary">Set checkbox state</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_state">get_state(self)</a></td>
-	<td class="summary">Return checkbox state</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -100,20 +102,20 @@
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#on_change_state">on_change_state</a></td>
-	<td class="summary">On change state callback(self, state)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#node">node</a></td>
-	<td class="summary">Visual node</td>
+	<td class="name" nowrap><a href="#button">button</a></td>
+	<td class="summary">Button component from click_node</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#click_node">click_node</a></td>
 	<td class="summary">Button trigger node</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#button">button</a></td>
-	<td class="summary">Button component from click_node</td>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Visual node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_change_state">on_change_state</a></td>
+	<td class="summary">On change state callback(self, state)</td>
 	</tr>
 </table>
 
@@ -124,6 +126,33 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "get_state"></a>
+    <strong>get_state(self)</strong>
+    </dt>
+    <dd>
+    Return checkbox state
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Checkbox</span></span>
+         <a href="../modules/Checkbox.html#">Checkbox</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        Checkbox state
+    </ol>
+
+
+
+
+</dd>
     <dt>
     <a name = "init"></a>
     <strong>init(self, node, callback[, click_node=node[, initial_state=false]])</strong>
@@ -136,7 +165,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Checkbox</span></span>
-
+         <a href="../modules/Checkbox.html#">Checkbox</a>
         </li>
         <li><span class="parameter">node</span>
             <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a></span>
@@ -175,7 +204,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Checkbox</span></span>
-
+         <a href="../modules/Checkbox.html#">Checkbox</a>
         </li>
         <li><span class="parameter">state</span>
             <span class="types"><span class="type">bool</span></span>
@@ -191,33 +220,6 @@
         </li>
     </ul>
 
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_state"></a>
-    <strong>get_state(self)</strong>
-    </dt>
-    <dd>
-    Return checkbox state
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Checkbox</span></span>
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">bool</span></span>
-        Checkbox state
-    </ol>
 
 
 
@@ -255,37 +257,17 @@
 
     <dl class="function">
     <dt>
-    <a name = "on_change_state"></a>
-    <strong>on_change_state</strong>
+    <a name = "button"></a>
+    <strong>button</strong>
     </dt>
     <dd>
-    On change state callback(self, state)
+    Button component from click_node
 
 
     <ul>
-        <li><span class="parameter">on_change_state</span>
-            <span class="types"><span class="type">druid_event</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "node"></a>
-    <strong>node</strong>
-    </dt>
-    <dd>
-    Visual node
-
-
-    <ul>
-        <li><span class="parameter">node</span>
-            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a></span>
-
+        <li><span class="parameter">button</span>
+            <span class="types"><span class="type">Button</span></span>
+         <a href="../modules/Button.html#">Button</a>
         </li>
     </ul>
 
@@ -316,17 +298,37 @@
 
 </dd>
     <dt>
-    <a name = "button"></a>
-    <strong>button</strong>
+    <a name = "node"></a>
+    <strong>node</strong>
     </dt>
     <dd>
-    Button component from click_node
+    Visual node
 
 
     <ul>
-        <li><span class="parameter">button</span>
-            <span class="types"><span class="type">Button</span></span>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a></span>
 
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_change_state"></a>
+    <strong>on_change_state</strong>
+    </dt>
+    <dd>
+    On change state callback(self, state)
+
+
+    <ul>
+        <li><span class="parameter">on_change_state</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
     </ul>
 
@@ -342,7 +344,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-02-12 17:16:44 </i>
+<i style="float:right;">Last updated 2022-03-11 20:55:29 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

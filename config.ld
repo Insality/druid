@@ -5,7 +5,8 @@ file={"./druid",
 	exclude = {
 		"./druid/styles/",
 		"./druid/system/middleclass.lua",
-		"./druid/templates/"
+		"./druid/templates/",
+		"./druid/annotations.lua",
 	}
 }
 package='druid'

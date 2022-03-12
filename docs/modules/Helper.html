@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Library</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><strong>Helper</strong></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Helper</code></h1>
+<p>Druid helper module for gui layouts</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#helper.centrate_icon_with_text">helper.centrate_icon_with_text([icon_node[, text_node[, margin=0]]])</a></td>
+	<td class="summary">Center two nodes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.centrate_nodes">helper.centrate_nodes([margin=0[, ...]])</a></td>
+	<td class="summary">Center several nodes nodes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.centrate_text_with_icon">helper.centrate_text_with_icon([text_node][, icon_node], margin)</a></td>
+	<td class="summary">Center two nodes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.deprecated">helper.deprecated(message)</a></td>
+	<td class="summary">Show deprecated message.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.get_border">helper.get_border(node, offset)</a></td>
+	<td class="summary">Distance from node position to his borders</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.get_closest_stencil_node">helper.get_closest_stencil_node(node)</a></td>
+	<td class="summary">Return closest non inverted clipping parent node for node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.get_pivot_offset">helper.get_pivot_offset(pivot)</a></td>
+	<td class="summary">Get node offset for given gui pivot</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.is_enabled">helper.is_enabled(node)</a></td>
+	<td class="summary">Check if node is enabled in gui hierarchy.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.is_mobile">helper.is_mobile()</a></td>
+	<td class="summary">Check if device is mobile (Android or iOS)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.is_web">helper.is_web()</a></td>
+	<td class="summary">Check if device is HTML5</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#table_to_string">table_to_string(t)</a></td>
+	<td class="summary">Transform table to oneline string</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "helper.centrate_icon_with_text"></a>
+    <strong>helper.centrate_icon_with_text([icon_node[, text_node[, margin=0]]])</strong>
+    </dt>
+    <dd>
+    Center two nodes.
+ Nodes will be center around 0 x position
+ icon_node will be first (at left side)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">icon_node</span>
+            <span class="types"><span class="type">box</span></span>
+         Gui box node
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">text_node</span>
+            <span class="types"><span class="type">text</span></span>
+         Gui text node
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">margin</span>
+            <span class="types"><span class="type">number</span></span>
+         Offset between nodes
+         (<em>default</em> 0)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.centrate_nodes"></a>
+    <strong>helper.centrate_nodes([margin=0[, ...]])</strong>
+    </dt>
+    <dd>
+    Center several nodes nodes.
+ Nodes will be center around 0 x position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">margin</span>
+            <span class="types"><span class="type">number</span></span>
+         Offset between nodes
+         (<em>default</em> 0)
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">Node</span></span>
+         Any count of gui Node
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.centrate_text_with_icon"></a>
+    <strong>helper.centrate_text_with_icon([text_node][, icon_node], margin)</strong>
+    </dt>
+    <dd>
+    Center two nodes.
+ Nodes will be center around 0 x position
+ text_node will be first (at left side)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">text_node</span>
+            <span class="types"><span class="type">text</span></span>
+         Gui text node
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">icon_node</span>
+            <span class="types"><span class="type">box</span></span>
+         Gui box node
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">margin</span>
+            <span class="types"><span class="type">number</span></span>
+         Offset between nodes
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.deprecated"></a>
+    <strong>helper.deprecated(message)</strong>
+    </dt>
+    <dd>
+    Show deprecated message.  Once time per message
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The deprecated message
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.get_border"></a>
+    <strong>helper.get_border(node, offset)</strong>
+    </dt>
+    <dd>
+    Distance from node position to his borders
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         The gui node to check
+        </li>
+        <li><span class="parameter">offset</span>
+            <span class="types"><span class="type">vector3</span></span>
+         The offset to add to result
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        vector4 Vector with distance to node border: (left, top, right, down)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.get_closest_stencil_node"></a>
+    <strong>helper.get_closest_stencil_node(node)</strong>
+    </dt>
+    <dd>
+    Return closest non inverted clipping parent node for node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">node</span> or <span class="type">nil</span></span>
+        The clipping node
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.get_pivot_offset"></a>
+    <strong>helper.get_pivot_offset(pivot)</strong>
+    </dt>
+    <dd>
+    Get node offset for given gui pivot
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">pivot</span>
+            <span class="types"><span class="type">gui.pivot</span></span>
+         The node pivot
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        Vector offset with [-1..1] values
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.is_enabled"></a>
+    <strong>helper.is_enabled(node)</strong>
+    </dt>
+    <dd>
+    Check if node is enabled in gui hierarchy.
+ Return false, if node or any his parent is disabled
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        Is enabled in hierarchy
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.is_mobile"></a>
+    <strong>helper.is_mobile()</strong>
+    </dt>
+    <dd>
+    Check if device is mobile (Android or iOS)
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.is_web"></a>
+    <strong>helper.is_web()</strong>
+    </dt>
+    <dd>
+    Check if device is HTML5
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "table_to_string"></a>
+    <strong>table_to_string(t)</strong>
+    </dt>
+    <dd>
+    Transform table to oneline string
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">t</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-03-11 20:55:29 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

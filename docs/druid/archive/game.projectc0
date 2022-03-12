@@ -1,12 +1,13 @@
 [project]
 title = druid
-version = 0.8.519
+version = 0.8.559
 write_log = 0
 compress_archive = 1
 publisher = Insality
 developer = Insality
-commit_sha = 4e0fd264b169693d088a47f2bb53376a1808fb1e
-build_time = 2022-02-12T15:15:53Z
+commit_sha = 18eb52b92b9cfd7cfaface2a7e6c4d094ff7de00
+build_date = 2022-03-11T18:55:39Z
+title_as_file_name = druid
 
 [display]
 width = 600
@@ -16,8 +17,8 @@ samples = 0
 fullscreen = 0
 update_frequency = 0
 vsync = 1
-display_profiles = /builtins/render/default.display_profilesc
-dynamic_orientation = 0
+display_profiles = /example/custom.display_profilesc
+dynamic_orientation = 1
 display_device_info = 0
 
 [render]
@@ -43,6 +44,7 @@ contact_impulse_limit = 0
 ray_cast_limit_2d = 64
 ray_cast_limit_3d = 128
 trigger_overlap_capacity = 16
+velocity_threshold = 1
 
 [bootstrap]
 main_collection = /example/example.collectionc
@@ -85,9 +87,6 @@ use_accelerometer = 0
 max_count = 128
 subpixels = 1
 
-[spine]
-max_count = 128
-
 [model]
 max_count = 128
 
@@ -121,7 +120,7 @@ default_language = en
 localizations = en
 
 [android]
-version_code = 519
+version_code = 559
 minimum_sdk_version = 16
 target_sdk_version = 30
 package = com.insality.druid
@@ -156,6 +155,7 @@ splash_image = /media/druid_logo.png
 
 [particle_fx]
 max_count = 64
+max_emitter_count = 64
 max_particle_count = 1024
 
 [iap]
@@ -193,6 +193,7 @@ run_while_iconified = 0
 [druid]
 no_auto_input = 0
 stencil_check = 0
+no_auto_template = 0
 input_text = text
 input_touch = touch
 input_marked_text = marked_text

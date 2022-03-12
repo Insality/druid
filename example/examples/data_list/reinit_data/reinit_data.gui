@@ -180,7 +180,7 @@ nodes {
     z: 0.0
     w: 0.0
   }
-  clipping_mode: CLIPPING_MODE_NONE
+  clipping_mode: CLIPPING_MODE_STENCIL
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0

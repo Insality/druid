@@ -40,29 +40,31 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Drag.html">Drag</a></li>
-  <li><a href="../modules/Hover.html">Hover</a></li>
-  <li><a href="../modules/Scroll.html">Scroll</a></li>
-  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
-  <li><a href="../modules/Swipe.html">Swipe</a></li>
-  <li><a href="../modules/Text.html">Text</a></li>
-  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><strong>DataList</strong></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -78,24 +80,16 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, scroll, grid, create_function)</a></td>
-	<td class="summary">Data list constructor</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#on_remove">on_remove(self)</a></td>
-	<td class="summary">Druid System on_remove function</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_data">set_data(self, data)</a></td>
-	<td class="summary">Set new data set for DataList component</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#clear">clear(self)</a></td>
 	<td class="summary">Clear the DataList and refresh visuals</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_first_index">get_first_index(self)</a></td>
 	<td class="summary">Return first index from data.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_index">get_index(self, data)</a></td>
+	<td class="summary">Return index for data value</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#get_last_index">get_last_index(self)</a></td>
@@ -106,39 +100,47 @@
 	<td class="summary">Return amount of data</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_index">get_index(self, data)</a></td>
-	<td class="summary">Return index for data value</td>
+	<td class="name" nowrap><a href="#init">init(self, scroll, grid, create_function)</a></td>
+	<td class="summary">Data list constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_remove">on_remove(self)</a></td>
+	<td class="summary">Druid System on_remove function</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#scroll_to_index">scroll_to_index(self, index)</a></td>
 	<td class="summary">Instant scroll to element with passed index</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_data">set_data(self, data)</a></td>
+	<td class="summary">Set new data set for DataList component</td>
+	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#scroll">scroll</a></td>
-	<td class="summary">The Druid scroll component</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#grid">grid</a></td>
 	<td class="summary">The Druid Grid component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#top_index">top_index</a></td>
-	<td class="summary">The current visual top data index</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#last_index">last_index</a></td>
 	<td class="summary">The current visual last data index</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#on_scroll_progress_change">on_scroll_progress_change</a></td>
+	<td class="summary">Event triggered when scroll progress is changed; event(self, progress_value)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#scroll">scroll</a></td>
+	<td class="summary">The Druid scroll component</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#scroll_progress">scroll_progress</a></td>
 	<td class="summary">The current progress of scroll posititon</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#on_scroll_progress_change">on_scroll_progress_change</a></td>
-	<td class="summary">Event triggered when scroll progress is changed; event(self, progress_value)</td>
+	<td class="name" nowrap><a href="#top_index">top_index</a></td>
+	<td class="summary">The current visual top data index</td>
 	</tr>
 </table>
 
@@ -149,6 +151,115 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "clear"></a>
+    <strong>clear(self)</strong>
+    </dt>
+    <dd>
+    Clear the DataList and refresh visuals
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_first_index"></a>
+    <strong>get_first_index(self)</strong>
+    </dt>
+    <dd>
+    Return first index from data.  It not always equals to 1
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_index"></a>
+    <strong>get_index(self, data)</strong>
+    </dt>
+    <dd>
+    Return index for data value
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+        <li><span class="parameter">data</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_last_index"></a>
+    <strong>get_last_index(self)</strong>
+    </dt>
+    <dd>
+    Return last index from data
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_length"></a>
+    <strong>get_length(self)</strong>
+    </dt>
+    <dd>
+    Return amount of data
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "init"></a>
     <strong>init(self, scroll, grid, create_function)</strong>
@@ -161,15 +272,15 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">DataList</span></span>
-
+         <a href="../modules/DataList.html#">DataList</a>
         </li>
         <li><span class="parameter">scroll</span>
-            <span class="types"><span class="type">druid.scroll</span></span>
-         The Scroll instance for Data List component
+            <span class="types"><span class="type">Scroll</span></span>
+         The <a href="../modules/Scroll.html#">Scroll</a> instance for Data List component
         </li>
         <li><span class="parameter">grid</span>
-            <span class="types"><span class="type">druid.grid</span></span>
-         The Grid instance for Data List component
+            <span class="types"><span class="type">StaticGrid</span> or <span class="type">DynamicGrid</span></span>
+         The <a href="../modules/StaticGrid.html#">StaticGrid</a> or <a href="../modules/DynamicGrid.html#">DynamicGrid</a> instance for Data List component
         </li>
         <li><span class="parameter">create_function</span>
             <span class="types"><span class="type">function</span></span>
@@ -194,6 +305,31 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "scroll_to_index"></a>
+    <strong>scroll_to_index(self, index)</strong>
+    </dt>
+    <dd>
+    Instant scroll to element with passed index
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
 
         </li>
     </ul>
@@ -215,7 +351,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">DataList</span></span>
-
+         <a href="../modules/DataList.html#">DataList</a>
         </li>
         <li><span class="parameter">data</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
@@ -234,164 +370,10 @@
 
 
 </dd>
-    <dt>
-    <a name = "clear"></a>
-    <strong>clear(self)</strong>
-    </dt>
-    <dd>
-    Clear the DataList and refresh visuals
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DataList</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_first_index"></a>
-    <strong>get_first_index(self)</strong>
-    </dt>
-    <dd>
-    Return first index from data.  It not always equals to 1
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DataList</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_last_index"></a>
-    <strong>get_last_index(self)</strong>
-    </dt>
-    <dd>
-    Return last index from data
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DataList</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_length"></a>
-    <strong>get_length(self)</strong>
-    </dt>
-    <dd>
-    Return amount of data
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DataList</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_index"></a>
-    <strong>get_index(self, data)</strong>
-    </dt>
-    <dd>
-    Return index for data value
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DataList</span></span>
-
-        </li>
-        <li><span class="parameter">data</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "scroll_to_index"></a>
-    <strong>scroll_to_index(self, index)</strong>
-    </dt>
-    <dd>
-    Instant scroll to element with passed index
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DataList</span></span>
-
-        </li>
-        <li><span class="parameter">index</span>
-            <span class="types"><span class="type">number</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
 </dl>
     <h2 class="section-header "><a name="Fields"></a>Fields</h2>
 
     <dl class="function">
-    <dt>
-    <a name = "scroll"></a>
-    <strong>scroll</strong>
-    </dt>
-    <dd>
-    The Druid scroll component
-
-
-    <ul>
-        <li><span class="parameter">scroll</span>
-            <span class="types"><span class="type">druid.scroll</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
     <dt>
     <a name = "grid"></a>
     <strong>grid</strong>
@@ -402,28 +384,8 @@
 
     <ul>
         <li><span class="parameter">grid</span>
-            <span class="types"><span class="type">druid.static_grid</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "top_index"></a>
-    <strong>top_index</strong>
-    </dt>
-    <dd>
-    The current visual top data index
-
-
-    <ul>
-        <li><span class="parameter">top_index</span>
-            <span class="types"><span class="type">number</span></span>
-
+            <span class="types"><span class="type">StaticGrid</span> or <span class="type">DynamicGrid</span></span>
+         <a href="../modules/StaticGrid.html#">StaticGrid</a>, <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
         </li>
     </ul>
 
@@ -453,6 +415,46 @@
 
 </dd>
     <dt>
+    <a name = "on_scroll_progress_change"></a>
+    <strong>on_scroll_progress_change</strong>
+    </dt>
+    <dd>
+    Event triggered when scroll progress is changed; event(self, progress_value)
+
+
+    <ul>
+        <li><span class="parameter">on_scroll_progress_change</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "scroll"></a>
+    <strong>scroll</strong>
+    </dt>
+    <dd>
+    The Druid scroll component
+
+
+    <ul>
+        <li><span class="parameter">scroll</span>
+            <span class="types"><span class="type">Scroll</span></span>
+         <a href="../modules/Scroll.html#">Scroll</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "scroll_progress"></a>
     <strong>scroll_progress</strong>
     </dt>
@@ -473,16 +475,16 @@
 
 </dd>
     <dt>
-    <a name = "on_scroll_progress_change"></a>
-    <strong>on_scroll_progress_change</strong>
+    <a name = "top_index"></a>
+    <strong>top_index</strong>
     </dt>
     <dd>
-    Event triggered when scroll progress is changed; event(self, progress_value)
+    The current visual top data index
 
 
     <ul>
-        <li><span class="parameter">on_scroll_progress_change</span>
-            <span class="types"><span class="type">druid_event</span></span>
+        <li><span class="parameter">top_index</span>
+            <span class="types"><span class="type">number</span></span>
 
         </li>
     </ul>
@@ -499,7 +501,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-02-12 17:16:44 </i>
+<i style="float:right;">Last updated 2022-03-11 20:55:29 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

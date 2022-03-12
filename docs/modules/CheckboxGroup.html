@@ -40,29 +40,31 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Drag.html">Drag</a></li>
-  <li><a href="../modules/Hover.html">Hover</a></li>
-  <li><a href="../modules/Scroll.html">Scroll</a></li>
-  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
-  <li><a href="../modules/Swipe.html">Swipe</a></li>
-  <li><a href="../modules/Text.html">Text</a></li>
-  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><strong>CheckboxGroup</strong></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -77,6 +79,10 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#get_state">get_state(self)</a></td>
+	<td class="summary">Return checkbox group state</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#init">init(self, nodes, callback[, click_nodes=node])</a></td>
 	<td class="summary">Component init function</td>
 	</tr>
@@ -84,20 +90,16 @@
 	<td class="name" nowrap><a href="#set_state">set_state(self, indexes, is_instant)</a></td>
 	<td class="summary">Set checkbox group state</td>
 	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_state">get_state(self)</a></td>
-	<td class="summary">Return checkbox group state</td>
-	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#on_checkbox_click">on_checkbox_click</a></td>
-	<td class="summary">On any checkbox click callback(self, index)</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#checkboxes">checkboxes</a></td>
 	<td class="summary">Array of checkbox components</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_checkbox_click">on_checkbox_click</a></td>
+	<td class="summary">On any checkbox click callback(self, index)</td>
 	</tr>
 </table>
 
@@ -108,6 +110,33 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "get_state"></a>
+    <strong>get_state(self)</strong>
+    </dt>
+    <dd>
+    Return checkbox group state
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">CheckboxGroup</span></span>
+         <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool[]</span></span>
+        Array if checkboxes state
+    </ol>
+
+
+
+
+</dd>
     <dt>
     <a name = "init"></a>
     <strong>init(self, nodes, callback[, click_nodes=node])</strong>
@@ -120,7 +149,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">CheckboxGroup</span></span>
-
+         <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a>
         </li>
         <li><span class="parameter">nodes</span>
             <span class="types"><span class="type">node[]</span></span>
@@ -154,7 +183,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">CheckboxGroup</span></span>
-
+         <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a>
         </li>
         <li><span class="parameter">indexes</span>
             <span class="types"><span class="type">bool[]</span></span>
@@ -171,57 +200,10 @@
 
 
 </dd>
-    <dt>
-    <a name = "get_state"></a>
-    <strong>get_state(self)</strong>
-    </dt>
-    <dd>
-    Return checkbox group state
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">CheckboxGroup</span></span>
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">bool[]</span></span>
-        Array if checkboxes state
-    </ol>
-
-
-
-
-</dd>
 </dl>
     <h2 class="section-header "><a name="Fields"></a>Fields</h2>
 
     <dl class="function">
-    <dt>
-    <a name = "on_checkbox_click"></a>
-    <strong>on_checkbox_click</strong>
-    </dt>
-    <dd>
-    On any checkbox click callback(self, index)
-
-
-    <ul>
-        <li><span class="parameter">on_checkbox_click</span>
-            <span class="types"><span class="type">druid_event</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
     <dt>
     <a name = "checkboxes"></a>
     <strong>checkboxes</strong>
@@ -233,7 +215,27 @@
     <ul>
         <li><span class="parameter">checkboxes</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         <a href="../modules/Checkbox.html#">Checkbox</a>
+        </li>
+    </ul>
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_checkbox_click"></a>
+    <strong>on_checkbox_click</strong>
+    </dt>
+    <dd>
+    On any checkbox click callback(self, index)
+
+
+    <ul>
+        <li><span class="parameter">on_checkbox_click</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
     </ul>
 
@@ -249,7 +251,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-02-12 17:16:44 </i>
+<i style="float:right;">Last updated 2022-03-11 20:55:29 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
