@@ -1,0 +1,106 @@
+--- @license MIT, Insality 2021
+--- @source https://github.com/Insality/druid
+
+local M = {}
+
+
+local function ends_with(str, ending)
+	return ending == "" or str:sub(-#ending) == ending
+end
+
+
+function M.get_commands()
+	return {
+		{
+			label = "Print gui scheme",
+
+			locations = { "Outline" },
+
+			query = {
+				selection = {type = "outline", cardinality = "many"}
+			},
+
+			active = function(opts)
+				return true
+			end,
+
+			run = function(opts)
+				print("local SCHEME = {")
+
+				for i = 1, #opts.selection do
+					local file = opts.selection[i]
+					if editor.can_get(file, "id") then
+						local id = editor.get(file, "id")
+						print("\t" .. string.upper(id) .. " = \"" .. id .. "\",")
+					end
+				end
+
+				print("}")
+				print("")
+			end
+		},
+
+		{
+			label = "Assign layers",
+
+			locations = {"Edit"},
+
+			query = {
+				selection = {type = "resource", cardinality = "one"}
+			},
+
+			active = function(opts)
+				local path = editor.get(opts.selection, "path")
+				return ends_with(path, ".gui")
+			end,
+
+			run = function(opts)
+				local file = opts.selection
+				print("Run script for", editor.get(file, "path"))
+				return {
+					{
+						action = "shell",
+						command = {
+							"bash",
+							"./editor_scripts/setup_layers.sh",
+							"." .. editor.get(file, "path")
+						}
+					}
+				}
+			end
+		},
+
+		{
+			label = "Create Druid Component",
+
+			locations = {"Edit"},
+
+			query = {
+				selection = {type = "resource", cardinality = "one"}
+			},
+
+			active = function(opts)
+				local path = editor.get(opts.selection, "path")
+				return ends_with(path, ".gui")
+			end,
+
+			run = function(opts)
+				local file = opts.selection
+				print("Run script for", editor.get(file, "path"))
+				return {
+					{
+						action = "shell",
+						command = {
+							"bash",
+							"./editor_scripts/create_druid_component.sh",
+							"." .. editor.get(file, "path")
+						}
+					}
+				}
+			end
+		}
+	}
+end
+
+
+return M
