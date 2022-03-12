@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Radio group module
 -- @module RadioGroup
@@ -6,7 +6,7 @@
 -- @alias druid.radio_group
 
 --- On any checkbox click
--- @tfield druid_event on_radio_click
+-- @tfield DruidEvent on_radio_click @{DruidEvent}
 
 --- Array of checkbox components
 -- @tfield Checkbox[] checkboxes
@@ -29,7 +29,7 @@ end
 
 
 --- Component init function
--- @tparam RadioGroup self
+-- @tparam RadioGroup self @{RadioGroup}
 -- @tparam node[] nodes Array of gui node
 -- @tparam function callback Radio callback
 -- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
@@ -51,7 +51,7 @@ end
 
 
 --- Set radio group state
--- @tparam RadioGroup self
+-- @tparam RadioGroup self @{RadioGroup}
 -- @tparam number index Index in radio group
 -- @tparam boolean is_instant If is instant state change
 function RadioGroup.set_state(self, index, is_instant)
@@ -60,7 +60,7 @@ end
 
 
 --- Return radio group state
--- @tparam RadioGroup self
+-- @tparam RadioGroup self @{RadioGroup}
 -- @treturn number Index in radio group
 function RadioGroup.get_state(self)
 	local result = -1

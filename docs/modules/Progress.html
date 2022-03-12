@@ -41,29 +41,31 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Drag.html">Drag</a></li>
-  <li><a href="../modules/Hover.html">Hover</a></li>
-  <li><a href="../modules/Scroll.html">Scroll</a></li>
-  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
-  <li><a href="../modules/Swipe.html">Swipe</a></li>
-  <li><a href="../modules/Text.html">Text</a></li>
-  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><strong>Progress</strong></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -79,28 +81,28 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, key[, init_value=1])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#empty">empty(self)</a></td>
+	<td class="summary">Empty a progress bar</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#fill">fill(self)</a></td>
 	<td class="summary">Fill a progress bar and stop progress animation</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#empty">empty(self)</a></td>
-	<td class="summary">Empty a progress bar</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_to">set_to(self, to)</a></td>
-	<td class="summary">Instant fill progress bar to value</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#get">get(self)</a></td>
 	<td class="summary">Return current progress bar value</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#init">init(self, node, key[, init_value=1])</a></td>
+	<td class="summary">Component init function</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set_steps">set_steps(self, steps, callback)</a></td>
 	<td class="summary">Set points on progress bar to fire the callback</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_to">set_to(self, to)</a></td>
+	<td class="summary">Instant fill progress bar to value</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#to">to(self, to[, callback])</a></td>
@@ -117,16 +119,20 @@
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#on_change">on_change</a></td>
-	<td class="summary">On progress bar change callback(self, new_value)</td>
+	<td class="name" nowrap><a href="#key">key</a></td>
+	<td class="summary">The progress bar direction</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#max_size">max_size</a></td>
+	<td class="summary">Maximum size of progress bar</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#node">node</a></td>
 	<td class="summary">Progress bar fill node</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#key">key</a></td>
-	<td class="summary">The progress bar direction</td>
+	<td class="name" nowrap><a href="#on_change">on_change</a></td>
+	<td class="summary">On progress bar change callback(self, new_value)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#scale">scale</a></td>
@@ -135,10 +141,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#size">size</a></td>
 	<td class="summary">Current progress bar size</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#max_size">max_size</a></td>
-	<td class="summary">Maximum size of progress bar</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#slice">slice</a></td>
@@ -154,6 +156,69 @@
 
     <dl class="function">
     <dt>
+    <a name = "empty"></a>
+    <strong>empty(self)</strong>
+    </dt>
+    <dd>
+    Empty a progress bar
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Progress</span></span>
+         <a href="../modules/Progress.html#">Progress</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "fill"></a>
+    <strong>fill(self)</strong>
+    </dt>
+    <dd>
+    Fill a progress bar and stop progress animation
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Progress</span></span>
+         <a href="../modules/Progress.html#">Progress</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get"></a>
+    <strong>get(self)</strong>
+    </dt>
+    <dd>
+    Return current progress bar value
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Progress</span></span>
+         <a href="../modules/Progress.html#">Progress</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "init"></a>
     <strong>init(self, node, key[, init_value=1])</strong>
     </dt>
@@ -165,7 +230,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Progress</span></span>
-
+         <a href="../modules/Progress.html#">Progress</a>
         </li>
         <li><span class="parameter">node</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="../modules/Progress.html#node">node</a></span>
@@ -188,94 +253,6 @@
 
 </dd>
     <dt>
-    <a name = "fill"></a>
-    <strong>fill(self)</strong>
-    </dt>
-    <dd>
-    Fill a progress bar and stop progress animation
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Progress</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "empty"></a>
-    <strong>empty(self)</strong>
-    </dt>
-    <dd>
-    Empty a progress bar
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Progress</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_to"></a>
-    <strong>set_to(self, to)</strong>
-    </dt>
-    <dd>
-    Instant fill progress bar to value
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Progress</span></span>
-
-        </li>
-        <li><span class="parameter">to</span>
-            <span class="types"><span class="type">number</span></span>
-         Progress bar value, from 0 to 1
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get"></a>
-    <strong>get(self)</strong>
-    </dt>
-    <dd>
-    Return current progress bar value
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Progress</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
     <a name = "set_steps"></a>
     <strong>set_steps(self, steps, callback)</strong>
     </dt>
@@ -287,7 +264,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Progress</span></span>
-
+         <a href="../modules/Progress.html#">Progress</a>
         </li>
         <li><span class="parameter">steps</span>
             <span class="types"><span class="type">number[]</span></span>
@@ -309,6 +286,31 @@
 
 </dd>
     <dt>
+    <a name = "set_to"></a>
+    <strong>set_to(self, to)</strong>
+    </dt>
+    <dd>
+    Instant fill progress bar to value
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Progress</span></span>
+         <a href="../modules/Progress.html#">Progress</a>
+        </li>
+        <li><span class="parameter">to</span>
+            <span class="types"><span class="type">number</span></span>
+         Progress bar value, from 0 to 1
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "to"></a>
     <strong>to(self, to[, callback])</strong>
     </dt>
@@ -320,7 +322,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Progress</span></span>
-
+         <a href="../modules/Progress.html#">Progress</a>
         </li>
         <li><span class="parameter">to</span>
             <span class="types"><span class="type">number</span></span>
@@ -376,16 +378,36 @@
 
     <dl class="function">
     <dt>
-    <a name = "on_change"></a>
-    <strong>on_change</strong>
+    <a name = "key"></a>
+    <strong>key</strong>
     </dt>
     <dd>
-    On progress bar change callback(self, new_value)
+    The progress bar direction
 
 
     <ul>
-        <li><span class="parameter">on_change</span>
-            <span class="types"><span class="type">druid_event</span></span>
+        <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "max_size"></a>
+    <strong>max_size</strong>
+    </dt>
+    <dd>
+    Maximum size of progress bar
+
+
+    <ul>
+        <li><span class="parameter">max_size</span>
+            <span class="types"><span class="type">number</span></span>
 
         </li>
     </ul>
@@ -416,17 +438,17 @@
 
 </dd>
     <dt>
-    <a name = "key"></a>
-    <strong>key</strong>
+    <a name = "on_change"></a>
+    <strong>on_change</strong>
     </dt>
     <dd>
-    The progress bar direction
+    On progress bar change callback(self, new_value)
 
 
     <ul>
-        <li><span class="parameter">key</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-
+        <li><span class="parameter">on_change</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
     </ul>
 
@@ -476,26 +498,6 @@
 
 </dd>
     <dt>
-    <a name = "max_size"></a>
-    <strong>max_size</strong>
-    </dt>
-    <dd>
-    Maximum size of progress bar
-
-
-    <ul>
-        <li><span class="parameter">max_size</span>
-            <span class="types"><span class="type">number</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
     <a name = "slice"></a>
     <strong>slice</strong>
     </dt>
@@ -521,8 +523,8 @@
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
-<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-02-12 17:16:44 </i>
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

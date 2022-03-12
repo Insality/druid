@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle GUI timers.
 -- Timer updating by game delta time. If game is not focused -
@@ -8,13 +8,13 @@
 -- @alias druid.timer
 
 --- On timer tick. Fire every second callback(self, value)
--- @tfield druid_event on_tick
+-- @tfield DruidEvent on_tick @{DruidEvent}
 
 --- On timer change enabled state callback(self, is_enabled)
--- @tfield druid_event on_set_enabled
+-- @tfield DruidEvent on_set_enabled @{DruidEvent}
 
 --- On timer end callback
--- @tfield druid_event on_timer_end(self, Timer)
+-- @tfield DruidEvent on_timer_end(self, Timer) @{DruidEvent}
 
 --- Trigger node
 -- @tfield node node
@@ -39,7 +39,7 @@ local Timer = component.create("timer")
 
 
 --- Component init function
--- @tparam Timer self
+-- @tparam Timer self @{Timer}
 -- @tparam node node Gui text node
 -- @tparam number seconds_from Start timer value in seconds
 -- @tparam[opt=0] number seconds_to End timer value in seconds
@@ -94,7 +94,7 @@ end
 
 
 --- Set text to text field
--- @tparam Timer self
+-- @tparam Timer self @{Timer}
 -- @tparam number set_to Value in seconds
 function Timer.set_to(self, set_to)
 	self.last_value = set_to
@@ -103,7 +103,7 @@ end
 
 
 --- Called when update
--- @tparam Timer self
+-- @tparam Timer self @{Timer}
 -- @tparam bool is_on Timer enable state
 function Timer.set_state(self, is_on)
 	self.is_on = is_on
@@ -113,7 +113,7 @@ end
 
 
 --- Set time interval
--- @tparam Timer self
+-- @tparam Timer self @{Timer}
 -- @tparam number from Start time in seconds
 -- @tparam number to Target time in seconds
 function Timer.set_interval(self, from, to)

@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid checkbox component
 -- @module Checkbox
@@ -6,7 +6,7 @@
 -- @alias druid.checkbox
 
 --- On change state callback(self, state)
--- @tfield druid_event on_change_state
+-- @tfield DruidEvent on_change_state @{DruidEvent}
 
 --- Visual node
 -- @tfield node node
@@ -15,7 +15,7 @@
 -- @tfield[opt=node] node click_node
 
 --- Button component from click_node
--- @tfield Button button
+-- @tfield Button button @{Button}
 
 ---
 
@@ -45,7 +45,7 @@ end
 
 
 --- Component init function
--- @tparam Checkbox self
+-- @tparam Checkbox self @{Checkbox}
 -- @tparam node node Gui node
 -- @tparam function callback Checkbox callback
 -- @tparam[opt=node] node click_node Trigger node, by default equals to node
@@ -53,7 +53,7 @@ end
 function Checkbox.init(self, node, callback, click_node, initial_state)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
-	self.click_node = self:get_node(click_node)
+	self.click_node = self:get_node(click_node or node)
 
 	self.button = self.druid:new_button(self.click_node or self.node, on_click)
 	self:set_state(initial_state, true, true)
@@ -68,7 +68,7 @@ end
 
 
 --- Set checkbox state
--- @tparam Checkbox self
+-- @tparam Checkbox self @{Checkbox}
 -- @tparam bool state Checkbox state
 -- @tparam bool is_silent Don't trigger on_change_state if true
 -- @tparam bool is_instant If instant checkbox change
@@ -85,7 +85,7 @@ end
 
 
 --- Return checkbox state
--- @tparam Checkbox self
+-- @tparam Checkbox self @{Checkbox}
 -- @treturn bool Checkbox state
 function Checkbox.get_state(self)
 	return self.state

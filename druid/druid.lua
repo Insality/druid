@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid UI Library.
 -- Powerful Defold component based UI library. Use standart
@@ -116,17 +116,6 @@ function M.on_window_callback(event)
 		for i = 1, #instances do
 			msg.post(instances[i].url, base_component.ON_FOCUS_GAINED)
 		end
-	end
-end
-
-
---- Callback on global layout change event.
--- @function druid.on_layout_change
-function M.on_layout_change()
-	local instances = get_druid_instances()
-
-	for i = 1, #instances do
-		msg.post(instances[i].url, base_component.ON_LAYOUT_CHANGE)
 	end
 end
 

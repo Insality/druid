@@ -41,29 +41,31 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Drag.html">Drag</a></li>
-  <li><a href="../modules/Hover.html">Hover</a></li>
-  <li><a href="../modules/Scroll.html">Scroll</a></li>
-  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
-  <li><a href="../modules/Swipe.html">Swipe</a></li>
-  <li><a href="../modules/Text.html">Text</a></li>
-  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
   <li><strong>Input</strong></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -83,32 +85,36 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#set_text">set_text(self, input_text)</a></td>
-	<td class="summary">Set text for input field</td>
+	<td class="name" nowrap><a href="#get_text">get_text(self)</a></td>
+	<td class="summary">Return current input field text</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, click_node, text_node[, keyboard_type])</a></td>
+	<td class="summary">Component init function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#reset_changes">reset_changes(self)</a></td>
+	<td class="summary">Reset current input selection and return previous value</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#select">select(self)</a></td>
 	<td class="summary">Select input field.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#unselect">unselect(self)</a></td>
-	<td class="summary">Remove selection from input.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_text">get_text(self)</a></td>
-	<td class="summary">Return current input field text</td>
+	<td class="name" nowrap><a href="#set_allowed_characters">set_allowed_characters(self, characters)</a></td>
+	<td class="summary">Set allowed charaters for input field.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_max_length">set_max_length(self, max_length)</a></td>
 	<td class="summary">Set maximum length for input field.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_allowed_characters">set_allowed_characters(self, characters)</a></td>
-	<td class="summary">Set allowed charaters for input field.</td>
+	<td class="name" nowrap><a href="#set_text">set_text(self, input_text)</a></td>
+	<td class="summary">Set text for input field</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#reset_changes">reset_changes(self)</a></td>
-	<td class="summary">Reset current input selection and return previous value</td>
+	<td class="name" nowrap><a href="#unselect">unselect(self)</a></td>
+	<td class="summary">Remove selection from input.</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -121,16 +127,28 @@
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#on_input_select">on_input_select</a></td>
-	<td class="summary">On input field select callback(self, button_node)</td>
+	<td class="name" nowrap><a href="#allowerd_characters">allowerd_characters</a></td>
+	<td class="summary">Pattern matching for user input</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#on_input_unselect">on_input_unselect</a></td>
-	<td class="summary">On input field unselect callback(self, input_text)</td>
+	<td class="name" nowrap><a href="#button">button</a></td>
+	<td class="summary">Button component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#on_input_text">on_input_text</a></td>
-	<td class="summary">On input field text change callback(self, input_text)</td>
+	<td class="name" nowrap><a href="#is_empty">is_empty</a></td>
+	<td class="summary">Is current input is empty now</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_selected">is_selected</a></td>
+	<td class="summary">Is current input selected now</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#keyboard_type">keyboard_type</a></td>
+	<td class="summary">Gui keyboard type for input field</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#max_length">max_length</a></td>
+	<td class="summary">Max length for input text</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_input_empty">on_input_empty</a></td>
@@ -141,36 +159,24 @@
 	<td class="summary">On input field text change to max length string callback(self, input_text)</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#on_input_select">on_input_select</a></td>
+	<td class="summary">On input field select callback(self, button_node)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_input_text">on_input_text</a></td>
+	<td class="summary">On input field text change callback(self, input_text)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_input_unselect">on_input_unselect</a></td>
+	<td class="summary">On input field unselect callback(self, input_text)</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#on_input_wrong">on_input_wrong</a></td>
 	<td class="summary">On trying user input with not allowed character callback(self, params, button_instance)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#text">text</a></td>
 	<td class="summary">Text component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#button">button</a></td>
-	<td class="summary">Button component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#is_selected">is_selected</a></td>
-	<td class="summary">Is current input selected now</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#is_empty">is_empty</a></td>
-	<td class="summary">Is current input is empty now</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#max_length">max_length</a></td>
-	<td class="summary">Max length for input text</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#allowerd_characters">allowerd_characters</a></td>
-	<td class="summary">Pattern matching for user input</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#keyboard_type">keyboard_type</a></td>
-	<td class="summary">Gui keyboard type for input field</td>
 	</tr>
 </table>
 
@@ -182,22 +188,79 @@
 
     <dl class="function">
     <dt>
-    <a name = "set_text"></a>
-    <strong>set_text(self, input_text)</strong>
+    <a name = "get_text"></a>
+    <strong>get_text(self)</strong>
     </dt>
     <dd>
-    Set text for input field
+    Return current input field text
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Input</span></span>
-
+         <a href="../modules/Input.html#">Input</a>
         </li>
-        <li><span class="parameter">input_text</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         The string to apply for input field
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        The current input field text
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, click_node, text_node[, keyboard_type])</strong>
+    </dt>
+    <dd>
+    Component init function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Input</span></span>
+         <a href="../modules/Input.html#">Input</a>
+        </li>
+        <li><span class="parameter">click_node</span>
+            <span class="types"><span class="type">node</span></span>
+         Button node to enabled input component
+        </li>
+        <li><span class="parameter">text_node</span>
+            <span class="types"><span class="type">node</span> or <span class="type">Text</span></span>
+         Text node what will be changed on user input. You can pass text component instead of text node name <a href="../modules/Text.html#">Text</a>
+        </li>
+        <li><span class="parameter">keyboard_type</span>
+            <span class="types"><span class="type">number</span></span>
+         Gui keyboard type for input field
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "reset_changes"></a>
+    <strong>reset_changes(self)</strong>
+    </dt>
+    <dd>
+    Reset current input selection and return previous value
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Input</span></span>
+         <a href="../modules/Input.html#">Input</a>
         </li>
     </ul>
 
@@ -218,7 +281,97 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Input</span></span>
+         <a href="../modules/Input.html#">Input</a>
+        </li>
+    </ul>
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_allowed_characters"></a>
+    <strong>set_allowed_characters(self, characters)</strong>
+    </dt>
+    <dd>
+    Set allowed charaters for input field.
+ See: https://defold.com/ref/stable/string/
+ ex: [%a%d] for alpha and numeric
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Input</span></span>
+         <a href="../modules/Input.html#">Input</a>
+        </li>
+        <li><span class="parameter">characters</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Regulax exp. for validate user input
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.input</span></span>
+        Current input instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_max_length"></a>
+    <strong>set_max_length(self, max_length)</strong>
+    </dt>
+    <dd>
+    Set maximum length for input field.
+ Pass nil to make input field unliminted (by default)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Input</span></span>
+         <a href="../modules/Input.html#">Input</a>
+        </li>
+        <li><span class="parameter">max_length</span>
+            <span class="types"><span class="type">number</span></span>
+         Maximum length for input text field
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.input</span></span>
+        Current input instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_text"></a>
+    <strong>set_text(self, input_text)</strong>
+    </dt>
+    <dd>
+    Set text for input field
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Input</span></span>
+         <a href="../modules/Input.html#">Input</a>
+        </li>
+        <li><span class="parameter">input_text</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The string to apply for input field
         </li>
     </ul>
 
@@ -239,120 +392,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Input</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_text"></a>
-    <strong>get_text(self)</strong>
-    </dt>
-    <dd>
-    Return current input field text
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Input</span></span>
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-        The current input field text
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_max_length"></a>
-    <strong>set_max_length(self, max_length)</strong>
-    </dt>
-    <dd>
-    Set maximum length for input field.
- Pass nil to make input field unliminted (by default)
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Input</span></span>
-
-        </li>
-        <li><span class="parameter">max_length</span>
-            <span class="types"><span class="type">number</span></span>
-         Maximum length for input text field
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">druid.input</span></span>
-        Current input instance
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_allowed_characters"></a>
-    <strong>set_allowed_characters(self, characters)</strong>
-    </dt>
-    <dd>
-    Set allowed charaters for input field.
- See: https://defold.com/ref/stable/string/
- ex: [%a%d] for alpha and numeric
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Input</span></span>
-
-        </li>
-        <li><span class="parameter">characters</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Regulax exp. for validate user input
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">druid.input</span></span>
-        Current input instance
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "reset_changes"></a>
-    <strong>reset_changes(self)</strong>
-    </dt>
-    <dd>
-    Reset current input selection and return previous value
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Input</span></span>
-
+         <a href="../modules/Input.html#">Input</a>
         </li>
     </ul>
 
@@ -420,137 +460,18 @@
 
     <dl class="function">
     <dt>
-    <a name = "on_input_select"></a>
-    <strong>on_input_select</strong>
+    <a name = "allowerd_characters"></a>
+    <strong>allowerd_characters</strong>
     </dt>
     <dd>
-    On input field select callback(self, button_node)
+    Pattern matching for user input
 
 
     <ul>
-        <li><span class="parameter">on_input_select</span>
-            <span class="types"><span class="type">druid_event</span></span>
+        <li><span class="parameter">allowerd_characters</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
 
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "on_input_unselect"></a>
-    <strong>on_input_unselect</strong>
-    </dt>
-    <dd>
-    On input field unselect callback(self, input_text)
-
-
-    <ul>
-        <li><span class="parameter">on_input_unselect</span>
-            <span class="types"><span class="type">druid_event</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "on_input_text"></a>
-    <strong>on_input_text</strong>
-    </dt>
-    <dd>
-    On input field text change callback(self, input_text)
-
-
-    <ul>
-        <li><span class="parameter">on_input_text</span>
-            <span class="types"><span class="type">druid_event</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "on_input_empty"></a>
-    <strong>on_input_empty</strong>
-    </dt>
-    <dd>
-    On input field text change to empty string callback(self, input_text)
-
-
-    <ul>
-        <li><span class="parameter">on_input_empty</span>
-            <span class="types"><span class="type">druid_event</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "on_input_full"></a>
-    <strong>on_input_full</strong>
-    </dt>
-    <dd>
-    On input field text change to max length string callback(self, input_text)
-
-
-    <ul>
-        <li><span class="parameter">on_input_full</span>
-            <span class="types"><span class="type">druid_event</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "on_input_wrong"></a>
-    <strong>on_input_wrong</strong>
-    </dt>
-    <dd>
-    On trying user input with not allowed character callback(self, params, button_instance)
-
-
-    <ul>
-        <li><span class="parameter">on_input_wrong</span>
-            <span class="types"><span class="type">druid_event</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "text"></a>
-    <strong>text</strong>
-    </dt>
-    <dd>
-    Text component
-
-
-    <ul>
-        <li><span class="parameter">text</span>
-            <span class="types"><span class="type">druid.text</span></span>
-
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -569,7 +490,27 @@
 
     <ul>
         <li><span class="parameter">button</span>
-            <span class="types"><span class="type">druid.button</span></span>
+            <span class="types"><span class="type">Button</span></span>
+         <a href="../modules/Button.html#">Button</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_empty"></a>
+    <strong>is_empty</strong>
+    </dt>
+    <dd>
+    Is current input is empty now
+
+
+    <ul>
+        <li><span class="parameter">is_empty</span>
+            <span class="types"><span class="type">bool</span></span>
 
         </li>
     </ul>
@@ -600,16 +541,16 @@
 
 </dd>
     <dt>
-    <a name = "is_empty"></a>
-    <strong>is_empty</strong>
+    <a name = "keyboard_type"></a>
+    <strong>keyboard_type</strong>
     </dt>
     <dd>
-    Is current input is empty now
+    Gui keyboard type for input field
 
 
     <ul>
-        <li><span class="parameter">is_empty</span>
-            <span class="types"><span class="type">bool</span></span>
+        <li><span class="parameter">keyboard_type</span>
+            <span class="types"><span class="type">number</span></span>
 
         </li>
     </ul>
@@ -641,18 +582,17 @@
 
 </dd>
     <dt>
-    <a name = "allowerd_characters"></a>
-    <strong>allowerd_characters</strong>
+    <a name = "on_input_empty"></a>
+    <strong>on_input_empty</strong>
     </dt>
     <dd>
-    Pattern matching for user input
+    On input field text change to empty string callback(self, input_text)
 
 
     <ul>
-        <li><span class="parameter">allowerd_characters</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-
-         (<em>optional</em>)
+        <li><span class="parameter">on_input_empty</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
     </ul>
 
@@ -662,17 +602,117 @@
 
 </dd>
     <dt>
-    <a name = "keyboard_type"></a>
-    <strong>keyboard_type</strong>
+    <a name = "on_input_full"></a>
+    <strong>on_input_full</strong>
     </dt>
     <dd>
-    Gui keyboard type for input field
+    On input field text change to max length string callback(self, input_text)
 
 
     <ul>
-        <li><span class="parameter">keyboard_type</span>
-            <span class="types"><span class="type">number</span></span>
+        <li><span class="parameter">on_input_full</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_input_select"></a>
+    <strong>on_input_select</strong>
+    </dt>
+    <dd>
+    On input field select callback(self, button_node)
+
+
+    <ul>
+        <li><span class="parameter">on_input_select</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_input_text"></a>
+    <strong>on_input_text</strong>
+    </dt>
+    <dd>
+    On input field text change callback(self, input_text)
+
+
+    <ul>
+        <li><span class="parameter">on_input_text</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_input_unselect"></a>
+    <strong>on_input_unselect</strong>
+    </dt>
+    <dd>
+    On input field unselect callback(self, input_text)
+
+
+    <ul>
+        <li><span class="parameter">on_input_unselect</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_input_wrong"></a>
+    <strong>on_input_wrong</strong>
+    </dt>
+    <dd>
+    On trying user input with not allowed character callback(self, params, button_instance)
+
+
+    <ul>
+        <li><span class="parameter">on_input_wrong</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "text"></a>
+    <strong>text</strong>
+    </dt>
+    <dd>
+    Text component
+
+
+    <ul>
+        <li><span class="parameter">text</span>
+            <span class="types"><span class="type">Text</span></span>
+         <a href="../modules/Text.html#">Text</a>
         </li>
     </ul>
 
@@ -687,8 +727,8 @@
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
-<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-02-12 17:16:44 </i>
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Instance of Druid. Make one instance per gui_script with next code:
 --
@@ -61,9 +61,10 @@ local data_list = require("druid.extended.data_list")
 
 local DruidInstance = class("druid.druid_instance")
 
+local IS_NO_AUTO_INPUT = sys.get_config("druid.no_auto_input") == "1"
 
 local function input_init(self)
-	if self._no_auto_input then
+	if IS_NO_AUTO_INPUT then
 		return
 	end
 
@@ -75,7 +76,7 @@ end
 
 
 local function input_release(self)
-	if self._no_auto_input then
+	if IS_NO_AUTO_INPUT then
 		return
 	end
 
@@ -105,7 +106,7 @@ end
 -- Create the component itself
 local function create(self, instance_class)
 	local instance = instance_class()
-	instance:setup_component(self, self._context, self._style)
+	instance:setup_component(self, self._context, self._style, instance_class)
 
 	table.insert(self.components_all, instance)
 
@@ -138,7 +139,6 @@ local function check_sort_input_stack(self, components)
 		sort_input_stack(self)
 	end
 end
-
 
 
 --- Check whitelists and blacklists for input components
@@ -195,17 +195,18 @@ end
 -- @tparam DruidInstance self
 -- @tparam table context Druid context. Usually it is self of script
 -- @tparam table style Druid style module
+-- @local
 function DruidInstance.initialize(self, context, style)
 	self._context = context
 	self._style = style or settings.default_style
 	self._deleted = false
-	self._is_input_processing = false
+	self._is_late_remove_enabled = false
 	self._late_remove = {}
+	self._is_debug = false
 	self.url = msg.url()
 
 	self._input_blacklist = nil
 	self._input_whitelist = nil
-	self._no_auto_input = (sys.get_config("druid.no_auto_input") == "1")
 
 	self.components_interest = {}
 	self.components_all = {}
@@ -257,6 +258,8 @@ function DruidInstance.final(self)
 	self._deleted = true
 
 	input_release(self)
+
+	self:log_message("Druid final")
 end
 
 
@@ -265,7 +268,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam Component component Component instance
 function DruidInstance.remove(self, component)
-	if self._is_input_processing then
+	if self._is_late_remove_enabled then
 		table.insert(self._late_remove, component)
 		return
 	end
@@ -301,6 +304,8 @@ function DruidInstance.remove(self, component)
 			end
 		end
 	end
+
+	self:log_message("Remove", { name = component:get_name(), parent = component:get_parent_name() })
 end
 
 
@@ -319,10 +324,14 @@ function DruidInstance.update(self, dt)
 		input_init(self)
 	end
 
+	self._is_late_remove_enabled = true
 	local components = self.components_interest[base_component.ON_UPDATE]
 	for i = 1, #components do
 		components[i]:update(dt)
 	end
+	self._is_late_remove_enabled = false
+
+	self:_clear_late_remove()
 end
 
 
@@ -332,21 +341,15 @@ end
 -- @tparam table action Action from on_input
 -- @treturn bool The boolean value is input was consumed
 function DruidInstance.on_input(self, action_id, action)
-	self._is_input_processing = true
+	self._is_late_remove_enabled = true
 
 	local components = self.components_interest[base_component.ON_INPUT]
 	check_sort_input_stack(self, components)
 	local is_input_consumed = process_input(self, action_id, action, components)
 
-	self._is_input_processing = false
+	self._is_late_remove_enabled = false
 
-	if #self._late_remove > 0 then
-		for i = 1, #self._late_remove do
-			self:remove(self._late_remove[i])
-		end
-		self._late_remove = {}
-	end
-
+	self:_clear_late_remove()
 	return is_input_consumed
 end
 
@@ -391,46 +394,43 @@ end
 --- Druid on focus lost interest function.
 -- This one called by on_window_callback by global window listener
 -- @tparam DruidInstance self
+-- @local
 function DruidInstance.on_focus_lost(self)
 	local components = self.components_interest[base_component.ON_FOCUS_LOST]
 	for i = 1, #components do
 		components[i]:on_focus_lost()
 	end
+
+	self:log_message("On focus lost")
 end
 
 
 --- Druid on focus gained interest function.
 -- This one called by on_window_callback by global window listener
 -- @tparam DruidInstance self
+-- @local
 function DruidInstance.on_focus_gained(self)
 	local components = self.components_interest[base_component.ON_FOCUS_GAINED]
 	for i = 1, #components do
 		components[i]:on_focus_gained()
 	end
-end
 
-
---- Druid on layout change function.
--- Called on update gui layout
--- @tparam DruidInstance self
-function DruidInstance.on_layout_change(self)
-	local components = self.components_interest[base_component.ON_LAYOUT_CHANGE]
-	for i = 1, #components do
-		components[i]:on_layout_change()
-	end
+	self:log_message("On focus gained")
 end
 
 
 --- Druid on language change.
--- This one called by global gruid.on_language_change, but can be
+-- This one called by global druid.on_language_change, but can be
 -- call manualy to update all translations
 -- @tparam DruidInstance self
--- @function druid.on_language_change
+-- @local
 function DruidInstance.on_language_change(self)
 	local components = self.components_interest[base_component.ON_LANGUAGE_CHANGE]
 	for i = 1, #components do
 		components[i]:on_language_change()
 	end
+
+	self:log_message("On language change")
 end
 
 
@@ -439,7 +439,6 @@ end
 -- component will be not processed on input step
 -- @tparam DruidInstance self
 -- @tparam[opt=nil] table|Component whitelist_components The array of component to whitelist
--- @function druid.set_whitelist
 function DruidInstance.set_whitelist(self, whitelist_components)
 	if whitelist_components and whitelist_components.isInstanceOf then
 		whitelist_components = { whitelist_components }
@@ -460,9 +459,8 @@ end
 --- Set blacklist components for input processing.
 -- If blacklist is not empty and component contains in this list,
 -- component will be not processed on input step
--- @tparam DruidInstance self
+-- @tparam DruidInstance self @{DruidInstance}
 -- @tparam[opt=nil] table|Component blacklist_components The array of component to blacklist
--- @function druid.set_blacklist
 function DruidInstance.set_blacklist(self, blacklist_components)
 	if blacklist_components and blacklist_components.isInstanceOf then
 		blacklist_components = { blacklist_components }
@@ -479,6 +477,40 @@ function DruidInstance.set_blacklist(self, blacklist_components)
 	self._input_blacklist = blacklist_components
 end
 
+
+--- Set debug mode for current Druid instance. It's enable debug log messages
+-- @tparam DruidInstance self @{DruidInstance}
+-- @tparam bool is_debug
+-- @treturn self @{DruidInstance}
+function DruidInstance.set_debug(self, is_debug)
+	self._is_debug = is_debug
+	return self
+end
+
+
+--- Log message, if is_debug mode is enabled
+-- @tparam DruidInstance self @{DruidInstance}
+-- @tparam string message
+-- @tparam[opt] table context
+function DruidInstance.log_message(self, message, context)
+	if not self._is_debug then
+		return
+	end
+	print("[Druid]:", message, helper.table_to_string(context))
+end
+
+
+--- Remove all components on late remove step
+-- @tparam DruidInstance self @{DruidInstance}
+-- @local
+function DruidInstance._clear_late_remove(self)
+	if #self._late_remove > 0 then
+		for i = 1, #self._late_remove do
+			self:remove(self._late_remove[i])
+		end
+		self._late_remove = {}
+	end
+end
 
 --- Create button basic component
 -- @tparam DruidInstance self
@@ -658,9 +690,9 @@ end
 
 
 --- Create data list basic component
--- @function druid:new_data_list
--- @tparam druid.scroll druid_scroll The Scroll instance for Data List component
--- @tparam druid.grid druid_grid The Grid instance for Data List component
+-- @tparam DruidInstance self
+-- @tparam Scroll druid_scroll The Scroll instance for Data List component
+-- @tparam Grid druid_grid The Grid instance for Data List component
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 -- @treturn DataList data_list component
 function DruidInstance.new_data_list(self, druid_scroll, druid_grid, create_function)

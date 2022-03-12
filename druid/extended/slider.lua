@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid slider component
 -- @module Slider
@@ -6,7 +6,7 @@
 -- @alias druid.slider
 
 --- On change value callback(self, value)
--- @tfield druid_event on_change_value
+-- @tfield DruidEvent on_change_value @{DruidEvent}
 
 --- Slider pin node
 -- @tfield node node
@@ -55,7 +55,7 @@ end
 
 
 --- Component init function
--- @tparam Slider self
+-- @tparam Slider self @{Slider}
 -- @tparam node node Gui pin node
 -- @tparam vector3 end_pos The end position of slider
 -- @tparam[opt] function callback On slider change callback
@@ -90,6 +90,17 @@ function Slider.on_input(self, action_id, action)
 	if gui.pick_node(self.node, action.x, action.y) then
 		if action.pressed then
 			self.pos = gui.get_position(self.node)
+			self.is_drag = true
+		end
+	end
+
+	if not self.is_drag and self._input_node and gui.pick_node(self._input_node, action.x, action.y) then
+		if action.pressed and gui.screen_to_local then
+			self.pos = gui.screen_to_local(self.node, vmath.vector3(action.screen_x, action.screen_y, 0))
+			self.pos.x = helper.clamp(self.pos.x, self.start_pos.x, self.end_pos.x)
+			self.pos.y = helper.clamp(self.pos.y, self.start_pos.y, self.end_pos.y)
+
+			gui.set_position(self.node, self.pos)
 			self.is_drag = true
 		end
 	end
@@ -148,7 +159,7 @@ end
 
 
 --- Set value for slider
--- @tparam Slider self
+-- @tparam Slider self @{Slider}
 -- @tparam number value Value from 0 to 1
 -- @tparam[opt] bool is_silent Don't trigger event if true
 function Slider.set(self, value, is_silent)
@@ -163,11 +174,26 @@ end
 
 --- Set slider steps. Pin node will
 -- apply closest step position
--- @tparam Slider self
+-- @tparam Slider self @{Slider}
 -- @tparam number[] steps Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
+-- @treturn Slider @{Slider}
 function Slider.set_steps(self, steps)
 	self.steps = steps
+	return self
+end
+
+
+--- Set input zone for slider.
+-- User can touch any place of node, pin instantly will
+-- move at this position and node drag will start.
+-- This function require the Defold version 1.3.0+
+-- @tparam Slider self @{Slider}
+-- @tparam Node input_node
+-- @treturn Slider @{Slider}
+function Slider.set_input_node(self, input_node)
+	self._input_node = self:get_node(input_node)
+	return self
 end
 
 

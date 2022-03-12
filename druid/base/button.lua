@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle basic GUI button
 -- @module Button
@@ -6,22 +6,22 @@
 -- @alias druid.button
 
 --- On release button callback(self, params, button_instance)
--- @tfield druid_event on_click
+-- @tfield DruidEvent on_click @{DruidEvent}
 
 --- On repeated action button callback(self, params, button_instance, click_amount)
--- @tfield druid_event on_repeated_click
+-- @tfield DruidEvent on_repeated_click @{DruidEvent}
 
 ---On long tap button callback(self, params, button_instance, time)
--- @tfield druid_event on_long_click
+-- @tfield DruidEvent on_long_click @{DruidEvent}
 
 ---On double tap button callback(self, params, button_instance, click_amount)
--- @tfield druid_event on_double_click
+-- @tfield DruidEvent on_double_click @{DruidEvent}
 
 ---On button hold before long_click callback(self, params, button_instance, time)
--- @tfield druid_event on_hold_callback
+-- @tfield DruidEvent on_hold_callback @{DruidEvent}
 
 ---On click outside of button(self, params, button_instance)
--- @tfield druid_event on_click_outside
+-- @tfield DruidEvent on_click_outside @{DruidEvent}
 
 ---Trigger node
 -- @tfield node node
@@ -45,7 +45,7 @@
 -- @tfield any params
 
 ---Druid hover logic component
--- @tfield druid.hover hover
+-- @tfield Hover hover @{Hover}
 
 ---Restriction zone
 -- @tfield[opt] node click_zone
@@ -193,7 +193,7 @@ end
 
 
 --- Component init function
--- @tparam Button self
+-- @tparam Button self @{Button}
 -- @tparam node node Gui node
 -- @tparam function callback Button callback
 -- @tparam[opt] table params Button callback params
@@ -339,7 +339,7 @@ end
 
 
 --- Set enabled button component state
--- @tparam Button self
+-- @tparam Button self @{Button}
 -- @tparam bool state Enabled state
 -- @treturn Button Current button instance
 function Button.set_enabled(self, state)
@@ -352,7 +352,7 @@ end
 
 
 --- Return button enabled state
--- @tparam Button self
+-- @tparam Button self @{Button}
 -- @treturn bool True, if button is enabled
 function Button.is_enabled(self)
 	return not self.disabled
@@ -361,7 +361,7 @@ end
 
 --- Strict button click area. Useful for
 -- no click events outside stencil node
--- @tparam Button self
+-- @tparam Button self @{Button}
 -- @tparam node zone Gui node
 -- @treturn Button Current button instance
 function Button.set_click_zone(self, zone)
@@ -373,7 +373,7 @@ end
 
 
 --- Set key-code to trigger this button
--- @tparam Button self
+-- @tparam Button self @{Button}
 -- @tparam hash key The action_id of the key
 -- @treturn Button Current button instance
 function Button.set_key_trigger(self, key)
@@ -392,6 +392,7 @@ end
 
 
 --- Set function for additional check for button click availability
+-- @tparam Button self
 -- @tparam[opt] function check_function Should return true or false. If true - button can be pressed.
 -- @tparam[opt] function failure_callback Function what will be called on button click, if check function return false
 -- @treturn Button Current button instance

@@ -39,29 +39,31 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Drag.html">Drag</a></li>
-  <li><a href="../modules/Hover.html">Hover</a></li>
-  <li><a href="../modules/Scroll.html">Scroll</a></li>
-  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
-  <li><a href="../modules/Swipe.html">Swipe</a></li>
-  <li><a href="../modules/Text.html">Text</a></li>
-  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><strong>DruidEvent</strong></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><strong>DruidEvent</strong></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -69,35 +71,35 @@
 <div id="content">
 
 <h1>Module <code>DruidEvent</code></h1>
-<p>Lua event small library</p>
+<p>Druid lua event library</p>
 <p></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#clear">clear(self)</a></td>
+	<td class="summary">Clear the all event handlers</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#initialize">initialize(self, initial_callback)</a></td>
 	<td class="summary">Event constructur</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#subscribe">subscribe(self, callback, context)</a></td>
-	<td class="summary">Subscribe callback on event</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#unsubscribe">unsubscribe(self, callback, context)</a></td>
-	<td class="summary">Unsubscribe callback on event</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_exist">is_exist(self)</a></td>
 	<td class="summary">Return true, if event have at lease one handler</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#clear">clear(self)</a></td>
-	<td class="summary">Clear the all event handlers</td>
+	<td class="name" nowrap><a href="#subscribe">subscribe(self, callback, context)</a></td>
+	<td class="summary">Subscribe callback on event</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#trigger">trigger(self, ...)</a></td>
 	<td class="summary">Trigger the event and call all subscribed callbacks</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#unsubscribe">unsubscribe(self, callback, context)</a></td>
+	<td class="summary">Unsubscribe callback on event</td>
 	</tr>
 </table>
 
@@ -108,6 +110,27 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "clear"></a>
+    <strong>clear(self)</strong>
+    </dt>
+    <dd>
+    Clear the all event handlers
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "initialize"></a>
     <strong>initialize(self, initial_callback)</strong>
@@ -120,69 +143,11 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">DruidEvent</span></span>
-
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
         <li><span class="parameter">initial_callback</span>
             <span class="types"><span class="type">function</span></span>
          Subscribe the callback on new event, if callback exist
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "subscribe"></a>
-    <strong>subscribe(self, callback, context)</strong>
-    </dt>
-    <dd>
-    Subscribe callback on event
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DruidEvent</span></span>
-
-        </li>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
-         Callback itself
-        </li>
-        <li><span class="parameter">context</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         Additional context as first param to callback call
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "unsubscribe"></a>
-    <strong>unsubscribe(self, callback, context)</strong>
-    </dt>
-    <dd>
-    Unsubscribe callback on event
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DruidEvent</span></span>
-
-        </li>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
-         Callback itself
-        </li>
-        <li><span class="parameter">context</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         Additional context as first param to callback call
         </li>
     </ul>
 
@@ -203,7 +168,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">DruidEvent</span></span>
-
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
     </ul>
 
@@ -219,18 +184,26 @@
 
 </dd>
     <dt>
-    <a name = "clear"></a>
-    <strong>clear(self)</strong>
+    <a name = "subscribe"></a>
+    <strong>subscribe(self, callback, context)</strong>
     </dt>
     <dd>
-    Clear the all event handlers
+    Subscribe callback on event
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">DruidEvent</span></span>
-
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Callback itself
+        </li>
+        <li><span class="parameter">context</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Additional context as first param to callback call
         </li>
     </ul>
 
@@ -251,11 +224,40 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">DruidEvent</span></span>
-
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
         <li><span class="parameter">...</span>
             <span class="types"><span class="type">any</span></span>
          All event params
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "unsubscribe"></a>
+    <strong>unsubscribe(self, callback, context)</strong>
+    </dt>
+    <dd>
+    Unsubscribe callback on event
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Callback itself
+        </li>
+        <li><span class="parameter">context</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Additional context as first param to callback call
         </li>
     </ul>
 
@@ -270,8 +272,8 @@
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
-<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-02-12 17:16:44 </i>
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

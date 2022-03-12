@@ -40,29 +40,31 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Drag.html">Drag</a></li>
-  <li><a href="../modules/Hover.html">Hover</a></li>
-  <li><a href="../modules/Scroll.html">Scroll</a></li>
-  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
-  <li><a href="../modules/Swipe.html">Swipe</a></li>
-  <li><a href="../modules/Text.html">Text</a></li>
-  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><strong>LangText</strong></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -78,6 +80,10 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#format">format(self[, a[, b[, c[, d[, e[, f[, g]]]]]]])</a></td>
+	<td class="summary">Format string with new text params on localized text</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#init">init(self, node, locale_id, no_adjust)</a></td>
 	<td class="summary">Component init function</td>
 	</tr>
@@ -86,12 +92,8 @@
 	<td class="summary">Setup raw text to lang_text component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#translate">translate(self, locale_id, ...)</a></td>
+	<td class="name" nowrap><a href="#translate">translate(self, locale_id[, a[, b[, c[, d[, e[, f[, g]]]]]]])</a></td>
 	<td class="summary">Translate the text by locale_id</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#format">format(self, ...)</a></td>
-	<td class="summary">Format string with new text params on localized text</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
@@ -114,6 +116,68 @@
 
     <dl class="function">
     <dt>
+    <a name = "format"></a>
+    <strong>format(self[, a[, b[, c[, d[, e[, f[, g]]]]]]])</strong>
+    </dt>
+    <dd>
+    Format string with new text params on localized text
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">LangText</span></span>
+         <a href="../modules/LangText.html#">LangText</a>
+        </li>
+        <li><span class="parameter">a</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">b</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">c</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">d</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">e</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">f</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">g</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">LangText</span></span>
+        Current instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "init"></a>
     <strong>init(self, node, locale_id, no_adjust)</strong>
     </dt>
@@ -125,7 +189,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">LangText</span></span>
-
+         <a href="../modules/LangText.html#">LangText</a>
         </li>
         <li><span class="parameter">node</span>
             <span class="types"><span class="type">node</span></span>
@@ -158,7 +222,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">LangText</span></span>
-
+         <a href="../modules/LangText.html#">LangText</a>
         </li>
         <li><span class="parameter">text</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
@@ -179,7 +243,7 @@
 </dd>
     <dt>
     <a name = "translate"></a>
-    <strong>translate(self, locale_id, ...)</strong>
+    <strong>translate(self, locale_id[, a[, b[, c[, d[, e[, f[, g]]]]]]])</strong>
     </dt>
     <dd>
     Translate the text by locale_id
@@ -189,46 +253,46 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">LangText</span></span>
-
+         <a href="../modules/LangText.html#">LangText</a>
         </li>
         <li><span class="parameter">locale_id</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Locale id
         </li>
-        <li><span class="parameter">...</span>
+        <li><span class="parameter">a</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Locale arguments to pass in text function
+         Optional param to string.format
+         (<em>optional</em>)
         </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">LangText</span></span>
-        Current instance
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "format"></a>
-    <strong>format(self, ...)</strong>
-    </dt>
-    <dd>
-    Format string with new text params on localized text
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">LangText</span></span>
-
-        </li>
-        <li><span class="parameter">...</span>
+        <li><span class="parameter">b</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Locale arguments to pass in text function
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">c</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">d</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">e</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">f</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">g</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Optional param to string.format
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -257,8 +321,8 @@
 
     <ul>
         <li><span class="parameter">on_change</span>
-            <span class="types"><span class="type">druid_event</span></span>
-
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
     </ul>
 
@@ -278,7 +342,7 @@
     <ul>
         <li><span class="parameter">text</span>
             <span class="types"><span class="type">Text</span></span>
-
+         <a href="../modules/Text.html#">Text</a>
         </li>
     </ul>
 
@@ -293,8 +357,8 @@
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
-<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-02-12 17:16:44 </i>
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

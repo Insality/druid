@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Checkbox group module
 -- @module CheckboxGroup
@@ -6,10 +6,10 @@
 -- @alias druid.checkbox_group
 
 --- On any checkbox click callback(self, index)
--- @tfield druid_event on_checkbox_click
+-- @tfield DruidEvent on_checkbox_click @{DruidEvent}
 
 --- Array of checkbox components
--- @tfield table checkboxes
+-- @tfield table checkboxes @{Checkbox}
 
 ---
 
@@ -20,7 +20,7 @@ local CheckboxGroup = component.create("checkbox_group")
 
 
 --- Component init function
--- @tparam CheckboxGroup self
+-- @tparam CheckboxGroup self @{CheckboxGroup}
 -- @tparam node[] nodes Array of gui node
 -- @tparam function callback Checkbox callback
 -- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
@@ -42,7 +42,7 @@ end
 
 
 --- Set checkbox group state
--- @tparam CheckboxGroup self
+-- @tparam CheckboxGroup self @{CheckboxGroup}
 -- @tparam bool[] indexes Array of checkbox state
 -- @tparam boolean is_instant If instant state change
 function CheckboxGroup.set_state(self, indexes, is_instant)
@@ -55,7 +55,7 @@ end
 
 
 --- Return checkbox group state
--- @tparam CheckboxGroup self
+-- @tparam CheckboxGroup self @{CheckboxGroup}
 -- @treturn bool[] Array if checkboxes state
 function CheckboxGroup.get_state(self)
 	local result = {}

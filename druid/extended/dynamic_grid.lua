@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle placing components in row
 -- @module DynamicGrid
@@ -6,19 +6,19 @@
 -- @alias druid.dynamic_grid
 
 --- On item add callback(self, node, index)
--- @tfield druid_event on_add_item
+-- @tfield DruidEvent on_add_item @{DruidEvent}
 
 --- On item remove callback(self, index)
--- @tfield druid_event on_remove_item
+-- @tfield DruidEvent on_remove_item @{DruidEvent}
 
 --- On item add or remove callback(self, index)
--- @tfield druid_event on_change_items
+-- @tfield DruidEvent on_change_items @{DruidEvent}
 
 --- On grid clear callback(self)
--- @tfield druid_event on_clear
+-- @tfield DruidEvent on_clear @{DruidEvent}
 
 --- On update item positions callback(self)
--- @tfield druid_event on_update_positions
+-- @tfield DruidEvent on_update_positions @{DruidEvent}
 
 --- Parent gui node
 -- @tfield node parent
@@ -64,7 +64,7 @@ local AVAILABLE_PIVOTS = {
 
 
 --- Component init function
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam node parent The gui node parent, where items will be placed
 function DynamicGrid.init(self, parent)
 	self.parent = self:get_node(parent)
@@ -95,7 +95,7 @@ end
 
 
 --- Return pos for grid node index
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam number index The grid element index
 -- @tparam node node The node to be placed
 -- @tparam[opt] number origin_index Index of nearby node
@@ -136,11 +136,11 @@ end
 
 
 --- Add new node to the grid
--- @tparam DynamicGrid self
---	@tparam node node Gui node
+-- @tparam DynamicGrid self @{DynamicGrid}
+-- @tparam node node Gui node
 -- @tparam[opt] number index The node position. By default add as last node
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instance If true, update node positions instantly
+-- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 function DynamicGrid.add(self, node, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	local delta = shift_policy -- -1 or 1 or 0
@@ -179,11 +179,11 @@ end
 
 
 --- Remove the item from the grid. Note that gui node will be not deleted
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam number index The grid node index to remove
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instance If true, update node positions instantly
--- @treturn Node The deleted gui node from grid
+-- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+-- @treturn node The deleted gui node from grid
 function DynamicGrid.remove(self, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	local delta = shift_policy -- -1 or 1 or 0
@@ -216,7 +216,7 @@ end
 
 
 --- Return grid content size
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam vector3 border
 -- @treturn vector3 The grid content size
 function DynamicGrid.get_size(self, border)
@@ -229,7 +229,7 @@ end
 
 
 --- Return DynamicGrid offset, where DynamicGrid content starts.
--- @tparam DynamicGrid self The DynamicGrid instance
+-- @tparam DynamicGrid self @{DynamicGrid} The DynamicGrid instance
 -- @treturn vector3 The DynamicGrid offset
 function DynamicGrid.get_offset(self)
 	local size = self:get_size()
@@ -244,7 +244,7 @@ end
 
 
 --- Return grid content borders
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @treturn vector3 The grid content borders
 function DynamicGrid.get_borders(self)
 	return self.border
@@ -252,7 +252,7 @@ end
 
 
 --- Return grid index by node
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam node node The gui node in the grid
 -- @treturn number The node index
 function DynamicGrid.get_index_by_node(self, node)
@@ -267,7 +267,7 @@ end
 
 
 --- Return array of all node positions
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @treturn vector3[] All grid node positions
 function DynamicGrid.get_all_pos(self)
 	local result = {}
@@ -281,7 +281,7 @@ end
 
 --- Change set position function for grid nodes. It will call on
 -- update poses on grid elements. Default: gui.set_position
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam function callback Function on node set position
 -- @treturn druid.dynamic_grid Current grid instance
 function DynamicGrid.set_position_function(self, callback)
@@ -292,7 +292,7 @@ end
 
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use dynamic_grid.nodes array before grid:clear
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @treturn druid.dynamic_grid Current grid instance
 function DynamicGrid.clear(self)
 	self.nodes = {}
@@ -319,7 +319,7 @@ end
 
 
 --- Update grid inner state
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function DynamicGrid._update(self, is_instant)
@@ -330,7 +330,7 @@ end
 
 
 --- Update first and last indexes of grid nodes
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @local
 function DynamicGrid._update_indexes(self)
 	self.first_index = nil
@@ -346,7 +346,7 @@ end
 
 
 --- Update grid content borders, recalculate min and max values
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @local
 function DynamicGrid._update_borders(self)
 	if not self.first_index then
@@ -375,7 +375,7 @@ end
 
 
 --- Update grid nodes position
--- @tparam DynamicGrid self
+-- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function DynamicGrid._update_pos(self, is_instant)
@@ -408,7 +408,6 @@ function DynamicGrid._get_next_node_pos(self, origin_node_index, new_node, place
 		0
 	)
 end
-
 
 
 function DynamicGrid._get_node_size(self, node)

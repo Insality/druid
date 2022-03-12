@@ -37,7 +37,7 @@ local my_style = require("my.amazing.style")
 
 local function init(self)
 	self.druid = druid.new(self)
-	self.button = self.druid:new_button(self, "node")
+	self.button = self.druid:new_button("node", function() end)
 	-- Setup custom style for specific component
 	self.button:set_style(my_style)
 end
@@ -50,7 +50,7 @@ The most components have their styles. You can explore it on [Druid API](https:/
 
 To create you style, create lua module, what return <_component_name_, _component_style_> table
 
-Example: [default druid style](https://github.com/Insality/druid/blob/develop/druid/styles/default/style.lua)
+Example: [default druid style](styles/default/style.lua)
 
 Override all fields you want and set your style with one of next ways:
 

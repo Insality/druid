@@ -4,11 +4,13 @@ description='Documentation for Druid Library'
 file={"./druid",
 	exclude = {
 		"./druid/styles/",
-		"./druid/system/middleclass.lua"
+		"./druid/system/middleclass.lua",
+		"./druid/templates/",
+		"./druid/annotations.lua",
 	}
 }
 package='druid'
-sort=false
+sort=true
 dir='./docs'
 style='!fixed'
 topics={}

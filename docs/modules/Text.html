@@ -41,29 +41,31 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Drag.html">Drag</a></li>
-  <li><a href="../modules/Hover.html">Hover</a></li>
-  <li><a href="../modules/Scroll.html">Scroll</a></li>
-  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
-  <li><a href="../modules/Swipe.html">Swipe</a></li>
-  <li><strong>Text</strong></li>
-  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><strong>Text</strong></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -80,48 +82,48 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node[, value[, adjust_type=0]])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#get_text_adjust">get_text_adjust(self, adjust_type)</a></td>
+	<td class="summary">Return current text adjust type</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_text_width">get_text_width(self[, text])</a></td>
+	<td class="name" nowrap><a href="#get_text_size">get_text_size(self[, text])</a></td>
 	<td class="summary">Calculate text width with font with respect to trailing space</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_to">set_to(self, set_to)</a></td>
-	<td class="summary">Set text to text field</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_color">set_color(self, color)</a></td>
-	<td class="summary">Set color</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_alpha">set_alpha(self, alpha)</a></td>
-	<td class="summary">Set alpha</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_scale">set_scale(self, scale)</a></td>
-	<td class="summary">Set scale</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_pivot">set_pivot(self, pivot)</a></td>
-	<td class="summary">Set text pivot.</td>
+	<td class="name" nowrap><a href="#init">init(self, node[, value[, adjust_type=0]])</a></td>
+	<td class="summary">Component init function</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_multiline">is_multiline(self)</a></td>
 	<td class="summary">Return true, if text with line break</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_text_adjust">set_text_adjust(self[, adjust_type[, minimal_scale]])</a></td>
-	<td class="summary">Set text adjust, refresh the current text visuals, if needed</td>
+	<td class="name" nowrap><a href="#set_alpha">set_alpha(self, alpha)</a></td>
+	<td class="summary">Set alpha</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_color">set_color(self, color)</a></td>
+	<td class="summary">Set color</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_minimal_scale">set_minimal_scale(self, minimal_scale)</a></td>
 	<td class="summary">Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_text_adjust">get_text_adjust(self, adjust_type)</a></td>
-	<td class="summary">Return current text adjust type</td>
+	<td class="name" nowrap><a href="#set_pivot">set_pivot(self, pivot)</a></td>
+	<td class="summary">Set text pivot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_scale">set_scale(self, scale)</a></td>
+	<td class="summary">Set scale</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_text_adjust">set_text_adjust(self[, adjust_type[, minimal_scale]])</a></td>
+	<td class="summary">Set text adjust, refresh the current text visuals, if needed</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_to">set_to(self, set_to)</a></td>
+	<td class="summary">Set text to text field</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -134,16 +136,12 @@
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#on_set_text">on_set_text</a></td>
-	<td class="summary">On set text callback(self, text)</td>
+	<td class="name" nowrap><a href="#adjust_type">adjust_type</a></td>
+	<td class="summary">Current text size adjust settings</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#on_update_text_scale">on_update_text_scale</a></td>
-	<td class="summary">On adjust text size callback(self, new_scale)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#on_set_pivot">on_set_pivot</a></td>
-	<td class="summary">On change pivot callback(self, pivot)</td>
+	<td class="name" nowrap><a href="#color">color</a></td>
+	<td class="summary">Current text color</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#node">node</a></td>
@@ -154,16 +152,28 @@
 	<td class="summary">The node id of text node</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#on_set_pivot">on_set_pivot</a></td>
+	<td class="summary">On change pivot callback(self, pivot)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_set_text">on_set_text</a></td>
+	<td class="summary">On set text callback(self, text)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_update_text_scale">on_update_text_scale</a></td>
+	<td class="summary">On adjust text size callback(self, new_scale)</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#pos">pos</a></td>
 	<td class="summary">Current text position</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#start_scale">start_scale</a></td>
-	<td class="summary">Initial text node scale</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#scale">scale</a></td>
 	<td class="summary">Current text node scale</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#start_scale">start_scale</a></td>
+	<td class="summary">Initial text node scale</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#start_size">start_size</a></td>
@@ -172,14 +182,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#text_area">text_area</a></td>
 	<td class="summary">Current text node available are</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#adjust_type">adjust_type</a></td>
-	<td class="summary">Current text size adjust settings</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#color">color</a></td>
-	<td class="summary">Current text color</td>
 	</tr>
 </table>
 
@@ -190,6 +192,70 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "get_text_adjust"></a>
+    <strong>get_text_adjust(self, adjust_type)</strong>
+    </dt>
+    <dd>
+    Return current text adjust type
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+        </li>
+        <li><span class="parameter">adjust_type</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The current text adjust type
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_text_size"></a>
+    <strong>get_text_size(self[, text])</strong>
+    </dt>
+    <dd>
+    Calculate text width with font with respect to trailing space
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Text</span></span>
+         <a href="../modules/Text.html#">Text</a>
+        </li>
+        <li><span class="parameter">text</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Width</li>
+        <li>
+           <span class="types"><span class="type">number</span></span>
+        Height</li>
+    </ol>
+
+
+
+
+</dd>
     <dt>
     <a name = "init"></a>
     <strong>init(self, node[, value[, adjust_type=0]])</strong>
@@ -202,7 +268,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Text</span></span>
-
+         <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">node</span>
             <span class="types"><a class="type" href="../modules/Text.html#node">node</a></span>
@@ -226,48 +292,49 @@
 
 </dd>
     <dt>
-    <a name = "get_text_width"></a>
-    <strong>get_text_width(self[, text])</strong>
+    <a name = "is_multiline"></a>
+    <strong>is_multiline(self)</strong>
     </dt>
     <dd>
-    Calculate text width with font with respect to trailing space
+    Return true, if text with line break
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Text</span></span>
-
-        </li>
-        <li><span class="parameter">text</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-
-         (<em>optional</em>)
+         <a href="../modules/Text.html#">Text</a>
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        Is text node with line break
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "set_to"></a>
-    <strong>set_to(self, set_to)</strong>
+    <a name = "set_alpha"></a>
+    <strong>set_alpha(self, alpha)</strong>
     </dt>
     <dd>
-    Set text to text field
+    Set alpha
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Text</span></span>
-
+         <a href="../modules/Text.html#">Text</a>
         </li>
-        <li><span class="parameter">set_to</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Text for node
+        <li><span class="parameter">alpha</span>
+            <span class="types"><span class="type">number</span></span>
+         Alpha for node
         </li>
     </ul>
 
@@ -294,168 +361,11 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Text</span></span>
-
+         <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">color</span>
             <span class="types"><span class="type">vector4</span></span>
          Color for node
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Text</span></span>
-        Current text instance
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_alpha"></a>
-    <strong>set_alpha(self, alpha)</strong>
-    </dt>
-    <dd>
-    Set alpha
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Text</span></span>
-
-        </li>
-        <li><span class="parameter">alpha</span>
-            <span class="types"><span class="type">number</span></span>
-         Alpha for node
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Text</span></span>
-        Current text instance
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_scale"></a>
-    <strong>set_scale(self, scale)</strong>
-    </dt>
-    <dd>
-    Set scale
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Text</span></span>
-
-        </li>
-        <li><span class="parameter">scale</span>
-            <span class="types"><span class="type">vector3</span></span>
-         Scale for node
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Text</span></span>
-        Current text instance
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_pivot"></a>
-    <strong>set_pivot(self, pivot)</strong>
-    </dt>
-    <dd>
-    Set text pivot.  Text will re-anchor inside text area
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Text</span></span>
-
-        </li>
-        <li><span class="parameter">pivot</span>
-            <span class="types"><span class="type">gui.pivot</span></span>
-         Gui pivot constant
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Text</span></span>
-        Current text instance
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "is_multiline"></a>
-    <strong>is_multiline(self)</strong>
-    </dt>
-    <dd>
-    Return true, if text with line break
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Text</span></span>
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">bool</span></span>
-        Is text node with line break
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_text_adjust"></a>
-    <strong>set_text_adjust(self[, adjust_type[, minimal_scale]])</strong>
-    </dt>
-    <dd>
-    Set text adjust, refresh the current text visuals, if needed
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">Text</span></span>
-
-        </li>
-        <li><span class="parameter">adjust_type</span>
-            <span class="types"><span class="type">number</span></span>
-         See const.TEXT_ADJUST. If pass nil - use current adjust type
-         (<em>optional</em>)
-        </li>
-        <li><span class="parameter">minimal_scale</span>
-            <span class="types"><span class="type">number</span></span>
-         If pass nil - not use minimal scale
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -482,7 +392,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Text</span></span>
-
+         <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">minimal_scale</span>
             <span class="types"><span class="type">number</span></span>
@@ -502,28 +412,129 @@
 
 </dd>
     <dt>
-    <a name = "get_text_adjust"></a>
-    <strong>get_text_adjust(self, adjust_type)</strong>
+    <a name = "set_pivot"></a>
+    <strong>set_pivot(self, pivot)</strong>
     </dt>
     <dd>
-    Return current text adjust type
+    Set text pivot.  Text will re-anchor inside text area
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
-
+            <span class="types"><span class="type">Text</span></span>
+         <a href="../modules/Text.html#">Text</a>
         </li>
-        <li><span class="parameter">adjust_type</span>
-
+        <li><span class="parameter">pivot</span>
+            <span class="types"><span class="type">gui.pivot</span></span>
+         Gui pivot constant
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">number</span></span>
-        The current text adjust type
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_scale"></a>
+    <strong>set_scale(self, scale)</strong>
+    </dt>
+    <dd>
+    Set scale
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Text</span></span>
+         <a href="../modules/Text.html#">Text</a>
+        </li>
+        <li><span class="parameter">scale</span>
+            <span class="types"><span class="type">vector3</span></span>
+         Scale for node
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_text_adjust"></a>
+    <strong>set_text_adjust(self[, adjust_type[, minimal_scale]])</strong>
+    </dt>
+    <dd>
+    Set text adjust, refresh the current text visuals, if needed
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Text</span></span>
+         <a href="../modules/Text.html#">Text</a>
+        </li>
+        <li><span class="parameter">adjust_type</span>
+            <span class="types"><span class="type">number</span></span>
+         See const.TEXT_ADJUST. If pass nil - use current adjust type
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">minimal_scale</span>
+            <span class="types"><span class="type">number</span></span>
+         If pass nil - not use minimal scale
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_to"></a>
+    <strong>set_to(self, set_to)</strong>
+    </dt>
+    <dd>
+    Set text to text field
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Text</span></span>
+         <a href="../modules/Text.html#">Text</a>
+        </li>
+        <li><span class="parameter">set_to</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Text for node
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
     </ol>
 
 
@@ -568,16 +579,16 @@
 
     <dl class="function">
     <dt>
-    <a name = "on_set_text"></a>
-    <strong>on_set_text</strong>
+    <a name = "adjust_type"></a>
+    <strong>adjust_type</strong>
     </dt>
     <dd>
-    On set text callback(self, text)
+    Current text size adjust settings
 
 
     <ul>
-        <li><span class="parameter">on_set_text</span>
-            <span class="types"><span class="type">druid_event</span></span>
+        <li><span class="parameter">adjust_type</span>
+            <span class="types"><span class="type">number</span></span>
 
         </li>
     </ul>
@@ -588,36 +599,16 @@
 
 </dd>
     <dt>
-    <a name = "on_update_text_scale"></a>
-    <strong>on_update_text_scale</strong>
+    <a name = "color"></a>
+    <strong>color</strong>
     </dt>
     <dd>
-    On adjust text size callback(self, new_scale)
+    Current text color
 
 
     <ul>
-        <li><span class="parameter">on_update_text_scale</span>
-            <span class="types"><span class="type">druid_event</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "on_set_pivot"></a>
-    <strong>on_set_pivot</strong>
-    </dt>
-    <dd>
-    On change pivot callback(self, pivot)
-
-
-    <ul>
-        <li><span class="parameter">on_set_pivot</span>
-            <span class="types"><span class="type">druid_event</span></span>
+        <li><span class="parameter">color</span>
+            <span class="types"><span class="type">vector3</span></span>
 
         </li>
     </ul>
@@ -668,6 +659,66 @@
 
 </dd>
     <dt>
+    <a name = "on_set_pivot"></a>
+    <strong>on_set_pivot</strong>
+    </dt>
+    <dd>
+    On change pivot callback(self, pivot)
+
+
+    <ul>
+        <li><span class="parameter">on_set_pivot</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_set_text"></a>
+    <strong>on_set_text</strong>
+    </dt>
+    <dd>
+    On set text callback(self, text)
+
+
+    <ul>
+        <li><span class="parameter">on_set_text</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_update_text_scale"></a>
+    <strong>on_update_text_scale</strong>
+    </dt>
+    <dd>
+    On adjust text size callback(self, new_scale)
+
+
+    <ul>
+        <li><span class="parameter">on_update_text_scale</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "pos"></a>
     <strong>pos</strong>
     </dt>
@@ -688,15 +739,15 @@
 
 </dd>
     <dt>
-    <a name = "start_scale"></a>
-    <strong>start_scale</strong>
+    <a name = "scale"></a>
+    <strong>scale</strong>
     </dt>
     <dd>
-    Initial text node scale
+    Current text node scale
 
 
     <ul>
-        <li><span class="parameter">start_scale</span>
+        <li><span class="parameter">scale</span>
             <span class="types"><span class="type">vector3</span></span>
 
         </li>
@@ -708,15 +759,15 @@
 
 </dd>
     <dt>
-    <a name = "scale"></a>
-    <strong>scale</strong>
+    <a name = "start_scale"></a>
+    <strong>start_scale</strong>
     </dt>
     <dd>
-    Current text node scale
+    Initial text node scale
 
 
     <ul>
-        <li><span class="parameter">scale</span>
+        <li><span class="parameter">start_scale</span>
             <span class="types"><span class="type">vector3</span></span>
 
         </li>
@@ -767,54 +818,14 @@
 
 
 </dd>
-    <dt>
-    <a name = "adjust_type"></a>
-    <strong>adjust_type</strong>
-    </dt>
-    <dd>
-    Current text size adjust settings
-
-
-    <ul>
-        <li><span class="parameter">adjust_type</span>
-            <span class="types"><span class="type">number</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "color"></a>
-    <strong>color</strong>
-    </dt>
-    <dd>
-    Current text color
-
-
-    <ul>
-        <li><span class="parameter">color</span>
-            <span class="types"><span class="type">vector3</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
 </dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
-<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-02-12 17:16:44 </i>
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

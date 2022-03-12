@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Basic class for all Druid components.
 -- To create you component, use `component.create`
@@ -11,6 +11,9 @@ local helper = require("druid.helper")
 
 
 local BaseComponent = class("druid.component")
+
+local INTERESTS = {} -- Cache interests by component class in runtime
+local IS_AUTO_TEMPLATE = not (sys.get_config("druid.no_auto_template") == "1")
 
 
 --- Component Interests
@@ -55,10 +58,10 @@ function BaseComponent.static.get_uid()
 end
 
 
---- Set current component style table.
+--- Set current component style table (protected).
 -- Invoke `on_style_change` on component, if exist. BaseComponent should handle
 -- their style changing and store all style params
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam table druid_style Druid style module
 function BaseComponent.set_style(self, druid_style)
 	self._meta.style = druid_style or const.EMPTY_TABLE
@@ -70,24 +73,60 @@ function BaseComponent.set_style(self, druid_style)
 end
 
 
---- Set current component template name
--- @tparam BaseComponent self
+--- Set current component template name (protected)
+-- It will check parent template name to build full template name
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string template BaseComponent template name
+-- @treturn BaseComponent @{BaseComponent}
 function BaseComponent.set_template(self, template)
+	template = template or const.EMPTY_STRING
+
+	local parent = self:get_parent_component()
+	if parent and IS_AUTO_TEMPLATE then
+		local parent_template = parent:get_template()
+		if #parent_template > 0 then
+			if #template > 0 then
+				template = "/" .. template
+			end
+			template = parent_template .. template
+		end
+	end
+
 	self._meta.template = template
+	return self
 end
 
 
---- Set current component nodes
--- @tparam BaseComponent self
+--- Get current component template name (protected)
+-- @tparam BaseComponent self @{BaseComponent}
+-- @treturn string Component full template name
+function BaseComponent.get_template(self)
+	return self._meta.template
+end
+
+
+--- Set current component nodes (protected)
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam table nodes BaseComponent nodes table
+-- @treturn BaseComponent @{BaseComponent}
 function BaseComponent.set_nodes(self, nodes)
 	self._meta.nodes = nodes
+
+	-- When we use gui.clone_tree in inner template (template inside other template)
+	-- this nodes have no id. We have table: hash(correct_id) : hash("")
+	-- It's wrong and we use this hack to fix this
+	if nodes then
+		for id, node in pairs(nodes) do
+			gui.set_id(node, id)
+		end
+	end
+
+	return self
 end
 
 
---- Get current component context
--- @tparam BaseComponent self
+--- Get current component context (protected)
+-- @tparam BaseComponent self @{BaseComponent}
 -- @treturn table BaseComponent context
 function BaseComponent.get_context(self)
 	return self._meta.context
@@ -95,47 +134,52 @@ end
 
 
 --- Increase input priority in current input stack
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @local
 function BaseComponent.increase_input_priority(self)
 	helper.deprecated("The component:increase_input_priority is deprecated. Please use component:set_input_priority(druid_const.PRIORITY_INPUT_MAX) instead")
 end
 
 
-
 --- Get node for component by name.
 -- If component has nodes, node_or_name should be string
 -- It auto pick node by template name or from nodes by clone_tree
--- if they was setup via component:set_nodes, component:set_template
--- @tparam BaseComponent self
+-- if they was setup via component:set_nodes, component:set_template.
+-- If node is not found, the exception will fired
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string|node node_or_name Node name or node itself
 -- @treturn node Gui node
 function BaseComponent.get_node(self, node_or_name)
-	local template_name = self:__get_template() or const.EMPTY_STRING
+	local template_name = self:get_template()
 	local nodes = self:__get_nodes()
 
-	if template_name ~= const.EMPTY_STRING then
+	if #template_name > 0 then
 		template_name = template_name .. "/"
 	end
 
-	local node_type = type(node_or_name)
-	if nodes then
-		assert(node_type == const.STRING, "You should pass node name instead of node")
-		return nodes[template_name .. node_or_name]
-	else
-		if node_type == const.STRING then
-			return gui.get_node(template_name .. node_or_name)
+	local node
+	if type(node_or_name) == const.STRING then
+		if nodes then
+			node = nodes[template_name .. node_or_name]
 		else
-			-- Assume it's already node from gui.get_node
-			return node_or_name
+			node = gui.get_node(template_name .. node_or_name)
 		end
+	else
+		-- Assume it's already node from gui.get_node
+		node = node_or_name
 	end
+
+	if not node then
+		assert(node, "No component with name: " .. template_name .. node_or_name)
+	end
+
+	return node
 end
 
 
---- Return druid with context of calling component.
+--- Return druid with context of calling component (protected).
 -- Use it to create component inside of other components.
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @treturn Druid Druid instance with component context
 function BaseComponent.get_druid(self)
 	local context = { _context = self }
@@ -144,15 +188,24 @@ end
 
 
 --- Return component name
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @treturn string The component name
 function BaseComponent.get_name(self)
-	return self._component.name
+	return self._component.name .. self:get_uid()
+end
+
+
+--- Return parent component name
+-- @tparam BaseComponent self @{BaseComponent}
+-- @treturn string|nil The parent component name if exist or bil
+function BaseComponent.get_parent_name(self)
+	local parent = self:get_parent_component()
+	return parent and parent:get_name()
 end
 
 
 --- Return component input priority
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @treturn number The component input priority
 function BaseComponent.get_input_priority(self)
 	return self._component.input_priority
@@ -160,7 +213,7 @@ end
 
 
 --- Set component input priority
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam number value The new input priority value
 -- @treturn number The component input priority
 function BaseComponent.set_input_priority(self, value)
@@ -181,7 +234,7 @@ end
 
 
 --- Reset component input priority to default value
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @treturn number The component input priority
 function BaseComponent.reset_input_priority(self)
 	self:set_input_priority(self._component.default_input_priority)
@@ -189,8 +242,9 @@ function BaseComponent.reset_input_priority(self)
 end
 
 
---- Return component uid. UID generated in component creation order
--- @tparam BaseComponent self
+--- Return component uid (protected).
+--- UID generated in component creation order
+-- @tparam BaseComponent self @{BaseComponent}
 -- @treturn number The component uid
 function BaseComponent.get_uid(self)
 	return self._component._uid
@@ -199,9 +253,9 @@ end
 
 --- Set component input state. By default it enabled
 -- You can disable any input of component by this function
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam bool state The component input state
---	@treturn BaseComponent BaseComponent itself
+-- @treturn BaseComponent BaseComponent itself
 function BaseComponent.set_input_enabled(self, state)
 	self._meta.input_enabled = state
 
@@ -213,43 +267,40 @@ function BaseComponent.set_input_enabled(self, state)
 end
 
 
---- Return the parent for current component
--- @tparam BaseComponent self
--- @treturn druid.base_component|nil The druid component instance or nil
+--- Return the parent for current component (protected)
+-- @tparam BaseComponent self @{BaseComponent}
+-- @treturn BaseComponent|nil The druid component instance or nil
 function BaseComponent.get_parent_component(self)
-	local context = self:get_context()
-
-	if context.isInstanceOf and context:isInstanceOf(BaseComponent) then
-		return context
-	end
-
-	return nil
+	return self._meta.parent
 end
 
 
 --- Setup component context and his style table
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam table druid_instance The parent druid instance
 -- @tparam table context Druid context. Usually it is self of script
 -- @tparam table style Druid style module
+-- @tparam table instance_class The component instance class
 -- @treturn component BaseComponent itself
-function BaseComponent.setup_component(self, druid_instance, context, style)
+-- @local
+function BaseComponent.setup_component(self, druid_instance, context, style, instance_class)
 	self._meta = {
-		template = nil,
-		context = nil,
+		template = "",
+		context = context,
 		nodes = nil,
 		style = nil,
 		druid = druid_instance,
 		input_enabled = true,
-		children = {}
+		children = {},
+		parent = type(context) ~= "userdata" and context,
+		instance_class = instance_class
 	}
 
-	self:__set_context(context)
 	self:set_style(style)
+	self:set_template("")
 
-	local parent = self:get_parent_component()
-	if parent then
-		parent:__add_children(self)
+	if self._meta.parent then
+		self._meta.parent:__add_children(self)
 	end
 
 	return self
@@ -258,7 +309,7 @@ end
 
 --- Basic constructor of component. It will call automaticaly
 -- by `BaseComponent.static.create`
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string name BaseComponent name
 -- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
 -- @local
@@ -267,14 +318,35 @@ function BaseComponent.initialize(self, name, input_priority)
 		name = name,
 		input_priority = input_priority or const.PRIORITY_INPUT,
 		default_input_priority = input_priority or const.PRIORITY_INPUT,
+		is_debug = false,
 		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
 		_uid = BaseComponent.get_uid()
 	}
 end
 
 
+--- Print log information if debug mode is enabled (protected)
+-- @tparam BaseComponent self @{BaseComponent}
+-- @tparam string message
+-- @tparam table context
+function BaseComponent.log_message(self, message, context)
+	if not self._component.is_debug then
+		return
+	end
+	print("[" .. self:get_name() .. "]:", message, helper.table_to_string(context))
+end
+
+
+--- Set debug logs for component enabled or disabled
+-- @tparam BaseComponent self @{BaseComponent}
+-- @tparam bool is_debug
+function BaseComponent.set_debug(self, is_debug)
+	self._component.is_debug = is_debug
+end
+
+
 --- Return true, if input priority was changed
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @local
 function BaseComponent._is_input_priority_changed(self)
 	return self._component._is_input_priority_changed
@@ -282,7 +354,7 @@ end
 
 
 --- Reset is_input_priority_changed field
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @local
 function BaseComponent._reset_input_priority_changed(self)
 	self._component._is_input_priority_changed = false
@@ -294,20 +366,16 @@ function BaseComponent.__tostring(self)
 end
 
 
---- Set current component context
--- @tparam BaseComponent self
--- @tparam table context Druid context. Usually it is self of script
--- @local
-function BaseComponent.__set_context(self, context)
-	self._meta.context = context
-end
-
-
 --- Get current component interests
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @treturn table List of component interests
 -- @local
 function BaseComponent.__get_interests(self)
+	local instance_class = self._meta.instance_class
+	if INTERESTS[instance_class] then
+		return INTERESTS[instance_class]
+	end
+
 	local interests = {}
 	for index = 1, #BaseComponent.ALL_INTERESTS do
 		local interest = BaseComponent.ALL_INTERESTS[index]
@@ -316,30 +384,27 @@ function BaseComponent.__get_interests(self)
 		end
 	end
 
-	return interests
-end
-
-
---- Get current component template name
--- @tparam BaseComponent self
--- @treturn string BaseComponent template name
--- @local
-function BaseComponent.__get_template(self)
-	return self._meta.template
+	INTERESTS[instance_class] = interests
+	return INTERESTS[instance_class]
 end
 
 
 --- Get current component nodes
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @treturn table BaseComponent nodes table
 -- @local
 function BaseComponent.__get_nodes(self)
-	return self._meta.nodes
+	local nodes = self._meta.nodes
+	local parent = self:get_parent_component()
+	if parent then
+		nodes = nodes or parent:__get_nodes()
+	end
+	return nodes
 end
 
 
 --- Add child to component children list
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam component children The druid component instance
 -- @local
 function BaseComponent.__add_children(self, children)
@@ -348,7 +413,7 @@ end
 
 
 --- Remove child from component children list
--- @tparam BaseComponent self
+-- @tparam BaseComponent self @{BaseComponent}
 -- @tparam component children The druid component instance
 -- @local
 function BaseComponent.__remove_children(self, children)
@@ -360,8 +425,8 @@ function BaseComponent.__remove_children(self, children)
 end
 
 
---- Return all children components, recursive
--- @tparam BaseComponent self
+--- Return all children components, recursive (protected)
+-- @tparam BaseComponent self @{BaseComponent}
 -- @treturn table Array of childrens if the Druid component instance
 function BaseComponent.get_childrens(self)
 	local childrens = {}

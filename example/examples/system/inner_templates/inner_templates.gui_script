@@ -1,0 +1,38 @@
+local druid = require("druid.druid")
+
+local InnerPanel = require("example.examples.system.inner_templates.inner_panel")
+
+function init(self)
+	self.druid = druid.new(self)
+	local root = gui.get_node("inner_panel/root")
+
+	local nodes = gui.clone_tree(root)
+	self.inner_panel_2 = self.druid:new(InnerPanel, "inner_panel", nodes)
+	gui.set_position(self.inner_panel_2.root, vmath.vector3(125, 150, 0))
+
+	local nodes3 = gui.clone_tree(root)
+	self.inner_panel_3 = self.druid:new(InnerPanel, "inner_panel", nodes3)
+	gui.set_position(self.inner_panel_3.root, vmath.vector3(125, -150, 0))
+
+	self.inner_panel = self.druid:new(InnerPanel, "inner_panel")
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

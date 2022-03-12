@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle all GUI texts.
 -- Druid text can adjust itself for text node size
@@ -8,13 +8,13 @@
 -- @alias druid.text
 
 --- On set text callback(self, text)
--- @tfield druid_event on_set_text
+-- @tfield DruidEvent on_set_text @{DruidEvent}
 
 --- On adjust text size callback(self, new_scale)
--- @tfield druid_event on_update_text_scale
+-- @tfield DruidEvent on_update_text_scale @{DruidEvent}
 
 --- On change pivot callback(self, pivot)
--- @tfield druid_event on_set_pivot
+-- @tfield DruidEvent on_set_pivot @{DruidEvent}
 
 --- Text node
 -- @tfield node node
@@ -105,7 +105,7 @@ end
 
 local function update_text_with_trim(self, trim_postfix)
 	local max_width = self.text_area.x
-	local text_width = self:get_text_width()
+	local text_width = self:get_text_size()
 
 	if text_width > max_width then
 		local text_length = utf8.len(self.last_value)
@@ -113,7 +113,7 @@ local function update_text_with_trim(self, trim_postfix)
 		while text_width > max_width do
 			text_length = text_length - 1
 			new_text = utf8.sub(self.last_value, 1, text_length)
-			text_width = self:get_text_width(new_text .. trim_postfix)
+			text_width = self:get_text_size(new_text .. trim_postfix)
 		end
 
 		gui.set_text(self.node, new_text .. trim_postfix)
@@ -122,7 +122,7 @@ end
 
 
 local function update_text_with_anchor_shift(self)
-	if self:get_text_width() >= self.text_area.x then
+	if self:get_text_size() >= self.text_area.x then
 		self:set_pivot(const.REVERSE_PIVOTS[self.start_pivot])
 	else
 		self:set_pivot(self.start_pivot)
@@ -185,7 +185,7 @@ end
 
 
 --- Component init function
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @tparam node node Gui text node
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
 -- @tparam[opt=0] int adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
@@ -234,28 +234,32 @@ end
 
 
 --- Calculate text width with font with respect to trailing space
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @tparam[opt] string text
-function Text.get_text_width(self, text)
+-- @treturn number Width
+-- @treturn number Height
+function Text.get_text_size(self, text)
 	text = text or self.last_value
 	local font = gui.get_font(self.node)
 	local scale = gui.get_scale(self.node)
-	local result = gui.get_text_metrics(font, text, 0, false, 0, 0).width
+	local linebreak = gui.get_line_break(self.node)
+	local metrics = gui.get_text_metrics(font, text, 0, linebreak, 0, 0)
+	local width = metrics.width
 	for i = #text, 1, -1 do
 		local c = string.sub(text, i, i)
 		if c ~= ' ' then
 			break
 		end
 
-		result = result + get_space_width(self, font)
+		width = width + get_space_width(self, font)
 	end
 
-	return result * scale.x
+	return width * scale.x, metrics.height * scale.y
 end
 
 
 --- Set text to text field
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @tparam string set_to Text for node
 -- @treturn Text Current text instance
 function Text.set_to(self, set_to)
@@ -273,7 +277,7 @@ end
 
 
 --- Set color
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @tparam vector4 color Color for node
 -- @treturn Text Current text instance
 function Text.set_color(self, color)
@@ -285,7 +289,7 @@ end
 
 
 --- Set alpha
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @tparam number alpha Alpha for node
 -- @treturn Text Current text instance
 function Text.set_alpha(self, alpha)
@@ -297,7 +301,7 @@ end
 
 
 --- Set scale
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @tparam vector3 scale Scale for node
 -- @treturn Text Current text instance
 function Text.set_scale(self, scale)
@@ -309,7 +313,7 @@ end
 
 
 --- Set text pivot. Text will re-anchor inside text area
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @tparam gui.pivot pivot Gui pivot constant
 -- @treturn Text Current text instance
 function Text.set_pivot(self, pivot)
@@ -335,7 +339,7 @@ end
 
 
 --- Return true, if text with line break
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @treturn bool Is text node with line break
 function Text.is_multiline(self)
 	return gui.get_line_break(self.node)
@@ -343,7 +347,7 @@ end
 
 
 --- Set text adjust, refresh the current text visuals, if needed
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @tparam[opt] number adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
 -- @tparam[opt] number minimal_scale If pass nil - not use minimal scale
 -- @treturn Text Current text instance
@@ -357,7 +361,7 @@ end
 
 
 --- Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
--- @tparam Text self
+-- @tparam Text self @{Text}
 -- @tparam number minimal_scale If pass nil - not use minimal scale
 -- @treturn Text Current text instance
 function Text.set_minimal_scale(self, minimal_scale)

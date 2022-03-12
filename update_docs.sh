@@ -6,10 +6,10 @@
 emmylua_generator_path=~/code/lua/emmylua-from-ldoc-annotations
 
 echo "Update Ldoc"
-ldoc .
+ldoc . --testing
 
 echo ""
 echo "Update EmmyLua annotations"
 original_path=$(pwd)
 bash $emmylua_generator_path/export.sh $original_path
-mv $emmylua_generator_path/annotations.lua $original_path/annotations.lua
+mv $emmylua_generator_path/annotations.lua $original_path/druid/annotations.lua

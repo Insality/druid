@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to manage data for huge dataset in scroll.
 -- It requires Druid Scroll and Druid Grid (Static or Dynamic) components
@@ -8,10 +8,10 @@
 
 
 --- The Druid scroll component
--- @tfield druid.scroll scroll
+-- @tfield Scroll scroll @{Scroll}
 
 --- The Druid Grid component
--- @tfield druid.static_grid grid
+-- @tfield StaticGrid|DynamicGrid grid @{StaticGrid}, @{DynamicGrid}
 
 --- The current visual top data index
 -- @tfield number top_index
@@ -23,7 +23,7 @@
 -- @tfield number scroll_progress
 
 --- Event triggered when scroll progress is changed; event(self, progress_value)
--- @tfield druid_event on_scroll_progress_change
+-- @tfield DruidEvent on_scroll_progress_change @{DruidEvent}
 
 ---
 
@@ -36,14 +36,17 @@ local DataList = component.create("data_list")
 
 
 --- Data list constructor
--- @tparam DataList self
--- @tparam druid.scroll scroll The Scroll instance for Data List component
--- @tparam druid.grid grid The Grid instance for Data List component
+-- @tparam DataList self @{DataList}
+-- @tparam Scroll scroll The @{Scroll} instance for Data List component
+-- @tparam StaticGrid|DynamicGrid grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 function DataList.init(self, scroll, grid, create_function)
 	self.druid = self:get_druid()
 	self.scroll = scroll
 	self.grid = grid
+	if self.grid.style then
+		self.grid.style.IS_DYNAMIC_NODE_POSES = false
+	end
 	self.scroll:bind_grid(grid)
 
 	-- Current visual elements indexes
@@ -61,18 +64,20 @@ function DataList.init(self, scroll, grid, create_function)
 	self.scroll.on_scroll:subscribe(self._check_elements, self)
 
 	self.on_scroll_progress_change = Event()
+
+	self:set_data()
 end
 
 
 --- Druid System on_remove function
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 function DataList.on_remove(self)
 	self.scroll.on_scroll:unsubscribe(self._check_elements, self)
 end
 
 
 --- Set new data set for DataList component
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @tparam table data The new data array
 -- @treturn druid.data_list Current DataList instance
 function DataList.set_data(self, data)
@@ -85,7 +90,7 @@ end
 
 
 --- Add element to DataList. Currenly untested
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @tparam table data
 -- @tparam number index
 -- @tparam number shift_policy The constant from const.SHIFT.*
@@ -109,22 +114,26 @@ function DataList.add(self, data, index, shift_policy)
 	self._data[index] = data
 	self:_update_data_info()
 	self:_check_elements()
+
+	self:log_message("Add element", { index = index })
 end
 
 
 --- Remove element from DataList. Currenly untested
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @tparam number index
 -- @tparam number shift_policy The constant from const.SHIFT.*
 -- @local
 function DataList.remove(self, index, shift_policy)
 	table.remove(self._data, index)
 	self:_refresh()
+
+	self:log_message("Remove element", { index = index })
 end
 
 
 --- Remove element from DataList by data value. Currenly untested
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @tparam tabe data
 -- @tparam number shift_policy The constant from const.SHIFT.*
 -- @local
@@ -138,7 +147,7 @@ end
 
 
 --- Clear the DataList and refresh visuals
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 function DataList.clear(self)
 	self._data = {}
 	self:_refresh()
@@ -146,28 +155,28 @@ end
 
 
 --- Return first index from data. It not always equals to 1
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 function DataList.get_first_index(self)
 	return self._data_first_index
 end
 
 
 --- Return last index from data
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 function DataList.get_last_index(self)
 	return self._data_last_index
 end
 
 
 --- Return amount of data
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 function DataList.get_length(self)
 	return self._data_length
 end
 
 
 --- Return index for data value
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @tparam table data
 function DataList.get_index(self, data)
 	for index, value in pairs(self._data) do
@@ -181,7 +190,7 @@ end
 
 
 --- Instant scroll to element with passed index
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @tparam number index
 function DataList.scroll_to_index(self, index)
 	local target = helper.clamp(index, self:get_first_index(), self:get_last_index())
@@ -195,7 +204,7 @@ end
 
 
 --- Add element at passed index
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @tparam number index
 -- @local
 function DataList._add_at(self, index)
@@ -209,11 +218,13 @@ function DataList._add_at(self, index)
 		node = node,
 		component = instance
 	}
+
+	self:log_message("Add element at", { index = index })
 end
 
 
 --- Remove element from passed index
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @tparam number index
 -- @local
 function DataList._remove_at(self, index)
@@ -226,11 +237,13 @@ function DataList._remove_at(self, index)
 		self.druid:remove(self._data_visual[index].component)
 	end
 	self._data_visual[index] = nil
+
+	self:log_message("Remove element at", { index = index })
 end
 
 
 --- Fully refresh all DataList elements
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @local
 function DataList._refresh(self)
 	for index, _ in pairs(self._data_visual) do
@@ -241,7 +254,7 @@ end
 
 
 --- Check elements which should be created
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @local
 function DataList._check_elements(self)
 	for index, data in pairs(self._data_visual) do
@@ -270,6 +283,8 @@ function DataList._check_elements(self)
 		progress = 0
 	end
 
+	self:log_message("Check elements", { top_index = self.top_index, last_index = self.last_index, progress = progress })
+
 	if self.scroll_progress ~= progress then
 		self.scroll_progress = progress
 		self.on_scroll_progress_change:trigger(self:get_context(), progress)
@@ -279,7 +294,7 @@ end
 
 --- Check elements which should be created.
 -- Start from index with step until element is outside of scroll view
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @tparam number index
 -- @tparam number step
 -- @local
@@ -312,9 +327,8 @@ function DataList._check_elements_from(self, index, step)
 end
 
 
-
 --- Update actual data params
--- @tparam DataList self
+-- @tparam DataList self @{DataList}
 -- @local
 function DataList._update_data_info(self)
 	self._data_first_index = false

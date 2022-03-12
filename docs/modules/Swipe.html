@@ -41,29 +41,31 @@
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Drag.html">Drag</a></li>
-  <li><a href="../modules/Hover.html">Hover</a></li>
-  <li><a href="../modules/Scroll.html">Scroll</a></li>
-  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
-  <li><strong>Swipe</strong></li>
-  <li><a href="../modules/Text.html">Text</a></li>
-  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
-  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/Checkbox.html">Checkbox</a></li>
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><strong>Swipe</strong></li>
+  <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.helper.html">druid.helper</a></li>
-  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -98,16 +100,16 @@
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#node">node</a></td>
-	<td class="summary">Swipe node</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#click_zone">click_zone</a></td>
 	<td class="summary">Restriction zone</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Swipe node</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#on_swipe">on_swipe</a></td>
-	<td class="summary">Trigger on swipe event(self, swipe_side, dist, delta_time</td>
+	<td class="summary">Trigger on swipe event(self, swipe_side, dist, delta_time)</td>
 	</tr>
 </table>
 
@@ -130,7 +132,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Swipe</span></span>
-
+         <a href="../modules/Swipe.html#">Swipe</a>
         </li>
         <li><span class="parameter">node</span>
             <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a></span>
@@ -160,7 +162,7 @@
     <ul>
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">Swipe</span></span>
-
+         <a href="../modules/Swipe.html#">Swipe</a>
         </li>
         <li><span class="parameter">zone</span>
             <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a></span>
@@ -216,26 +218,6 @@
 
     <dl class="function">
     <dt>
-    <a name = "node"></a>
-    <strong>node</strong>
-    </dt>
-    <dd>
-    Swipe node
-
-
-    <ul>
-        <li><span class="parameter">node</span>
-            <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
     <a name = "click_zone"></a>
     <strong>click_zone</strong>
     </dt>
@@ -257,17 +239,37 @@
 
 </dd>
     <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Swipe node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "on_swipe"></a>
     <strong>on_swipe</strong>
     </dt>
     <dd>
-    Trigger on swipe event(self, swipe_side, dist, delta_time
+    Trigger on swipe event(self, swipe_side, dist, delta_time)
 
 
     <ul>
         <li><span class="parameter">on_swipe</span>
-            <span class="types"><span class="type">druid_event</span></span>
-        )
+            <span class="types"><span class="type">DruidEvent</span></span>
+        ) <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
     </ul>
 
@@ -282,8 +284,8 @@
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
-<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-02-12 17:16:44 </i>
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

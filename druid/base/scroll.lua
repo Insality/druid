@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maxim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle scroll content.
 -- Scroll consist from two nodes: scroll parent and scroll input
@@ -13,13 +13,13 @@
 
 
 --- On scroll move callback(self, position)
--- @tfield druid_event on_scroll
+-- @tfield DruidEvent on_scroll @{DruidEvent}
 
 --- On scroll_to function callback(self, target, is_instant)
--- @tfield druid_event on_scroll_to
+-- @tfield DruidEvent on_scroll_to @{DruidEvent}
 
 --- On scroll_to_index function callback(self, index, point)
--- @tfield druid_event on_point_scroll
+-- @tfield DruidEvent on_point_scroll @{DruidEvent}
 
 --- Scroll view node
 -- @tfield node view_node
@@ -46,7 +46,7 @@
 -- @tfield vector3 available_size
 
 --- Drag Druid component
--- @tfield Drag drag
+-- @tfield Drag drag @{Drag}
 
 --- Current index of points of interests
 -- @tfield[opt] number selected
@@ -133,13 +133,14 @@ end
 
 
 --- Scroll constructor
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam node view_node GUI view scroll node
 -- @tparam node content_node GUI content scroll node
 function Scroll.init(self, view_node, content_node)
 	self.druid = self:get_druid()
 
 	self.view_node = self:get_node(view_node)
+	self.view_border = helper.get_border(self.view_node)
 	self.content_node = self:get_node(content_node)
 
 	self.view_size = vmath.mul_per_elem(gui.get_size(self.view_node), gui.get_scale(self.view_node))
@@ -168,7 +169,6 @@ function Scroll.init(self, view_node, content_node)
 	self._is_vertical_scroll = true
 	self._grid_on_change = nil
 	self._grid_on_change_callback = nil
-	self._outside_offset_vector = vmath.vector3(0)
 
 	self:_update_size()
 end
@@ -190,8 +190,6 @@ end
 
 
 function Scroll.update(self, dt)
-	self:_update_params()
-
 	if self.drag.is_drag then
 		self:_update_hand_scroll(dt)
 	else
@@ -211,7 +209,7 @@ end
 
 
 --- Start scroll to target point.
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam vector3 point Target point
 -- @tparam[opt] bool is_instant Instant scroll flag
 -- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
@@ -245,7 +243,7 @@ end
 
 
 --- Scroll to item in scroll by point index.
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam number index Point index
 -- @tparam[opt] bool skip_cb If true, skip the point callback
 function Scroll.scroll_to_index(self, index, skip_cb)
@@ -268,7 +266,7 @@ end
 
 
 --- Start scroll to target scroll percent
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam vector3 percent target percent
 -- @tparam[opt] bool is_instant instant scroll flag
 -- @usage scroll:scroll_to_percent(vmath.vector3(0.5, 0, 0))
@@ -277,7 +275,7 @@ function Scroll.scroll_to_percent(self, percent, is_instant)
 
 	local pos = vmath.vector3(
 		-helper.lerp(border.x, border.z, 1 - percent.x),
-		helper.lerp(border.y, border.w, 1 - percent.y),
+		-helper.lerp(border.y, border.w, 1 - percent.y),
 		0
 	)
 
@@ -287,7 +285,7 @@ end
 
 --- Return current scroll progress status.
 -- Values will be in [0..1] interval
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @treturn vector3 New vector with scroll progress values
 function Scroll.get_percent(self)
 	local x_perc = 1 - inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
@@ -299,7 +297,7 @@ end
 
 --- Set scroll content size.
 -- It will change content gui node size
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam vector3 size The new size for content node
 -- @tparam vector3 offset Offset value to set, where content is starts
 -- @treturn druid.scroll Current scroll instance
@@ -317,7 +315,7 @@ end
 --- Enable or disable scroll inert.
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam bool state Inert scroll state
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_inert(self, state)
@@ -328,7 +326,7 @@ end
 
 
 --- Return if scroll have inertion.
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @treturn bool If scroll have inertion
 function Scroll.is_inert(self)
 	return self._is_inert
@@ -337,7 +335,7 @@ end
 
 --- Set extra size for scroll stretching.
 -- Set 0 to disable stretching effect
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam[opt=0] number stretch_size Size in pixels of additional scroll area
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_extra_stretch_size(self, stretch_size)
@@ -349,7 +347,7 @@ end
 
 
 --- Return vector of scroll size with width and height.
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @treturn vector3 Available scroll size
 function Scroll.get_scroll_size(self)
 	return self.available_size
@@ -358,7 +356,7 @@ end
 
 --- Set points of interest.
 -- Scroll will always centered on closer points
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam table points Array of vector3 points
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_points(self, points)
@@ -375,7 +373,7 @@ end
 
 
 --- Lock or unlock horizontal scroll
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam bool state True, if horizontal scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_horizontal_scroll(self, state)
@@ -386,7 +384,7 @@ end
 
 
 --- Lock or unlock vertical scroll
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam bool state True, if vertical scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_vertical_scroll(self, state)
@@ -398,20 +396,38 @@ end
 
 --- Check node if it visible now on scroll.
 -- Extra border is not affected. Return true for elements in extra scroll zone
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam node node The node to check
 -- @treturn boolean True if node in visible scroll area
 function Scroll.is_node_in_view(self, node)
-	local node_border = helper.get_border(node, gui.get_position(node))
-	local view_border = helper.get_border(self.view_node, -(self.position - self._outside_offset_vector))
+	local node_offset_for_view = gui.get_position(node)
+	local parent = gui.get_parent(node)
+	local is_parent_of_view = false
+	while parent do
+		if parent ~= self.view_node then
+			local parent_pos = gui.get_position(parent)
+			node_offset_for_view.x = node_offset_for_view.x + parent_pos.x
+			node_offset_for_view.y = node_offset_for_view.y + parent_pos.y
+			parent = gui.get_parent(parent)
+		else
+			is_parent_of_view = true
+			parent = nil
+		end
+	end
+	if not is_parent_of_view then
+		error("The node to check is_node_in_view should be child if scroll view")
+		return false
+	end
+
+	local node_border = helper.get_border(node, node_offset_for_view)
 
 	-- Check is vertical outside (Left or Right):
-	if node_border.z < view_border.x or node_border.x > view_border.z then
+	if node_border.z < self.view_border.x or node_border.x > self.view_border.z then
 		return false
 	end
 
 	-- Check is horizontal outside (Up or Down):
-	if node_border.w > view_border.y or node_border.y < view_border.w then
+	if node_border.w > self.view_border.y or node_border.y < self.view_border.w then
 		return false
 	end
 
@@ -421,7 +437,7 @@ end
 
 --- Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
--- @tparam Scroll self
+-- @tparam Scroll self @{Scroll}
 -- @tparam StaticGrid|DynamicGrid grid Druid grid component
 -- @treturn druid.scroll Current scroll instance
 function Scroll.bind_grid(self, grid)
@@ -438,7 +454,10 @@ function Scroll.bind_grid(self, grid)
 
 	self._grid_on_change = grid.on_change_items
 	self._grid_on_change_callback = self._grid_on_change:subscribe(function()
-		self:set_size(grid:get_size(), grid:get_offset())
+		local size = grid:get_size()
+		local offset = grid:get_offset()
+		self:set_size(size, offset)
+		self:log_message("Change size from grid", { size = size, offset = offset })
 	end)
 	self:set_size(grid:get_size(), grid:get_offset())
 
@@ -524,7 +543,7 @@ function Scroll._check_soft_zone(self)
 end
 
 
---- Cancel animation on other animation or input touch
+-- Cancel animation on other animation or input touch
 function Scroll._cancel_animate(self)
 	self.inertion.x = 0
 	self.inertion.y = 0
@@ -547,7 +566,6 @@ function Scroll._set_scroll_position(self, position)
 	if self.position.x ~= position.x or self.position.y ~= position.y then
 		self.position.x = position.x
 		self.position.y = position.y
-		self:_update_params()
 		gui.set_position(self.content_node, position)
 
 		self.on_scroll:trigger(self:get_context(), self.position)
@@ -675,12 +693,10 @@ end
 
 
 function Scroll._update_size(self)
-	local view_border = helper.get_border(self.view_node)
-
 	local content_border = helper.get_border(self.content_node)
 	local content_size = vmath.mul_per_elem(gui.get_size(self.content_node), gui.get_scale(self.content_node))
 
-	self.available_pos = get_border_vector(view_border - content_border, self._offset)
+	self.available_pos = get_border_vector(self.view_border - content_border, self._offset)
 	self.available_size = get_size_vector(self.available_pos)
 
 	self.drag.can_x = self.available_size.x > 0 and self._is_horizontal_scroll
@@ -709,38 +725,12 @@ function Scroll._update_size(self)
 		self.drag.can_y = content_size.y > self.view_size.y
 	end
 
-	self.available_pos_extra = get_border_vector(view_border - content_border_extra, self._offset)
+	self.available_pos_extra = get_border_vector(self.view_border - content_border_extra, self._offset)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
 
 	self:_set_scroll_position(self.position)
 	self.target_position.x = self.position.x
 	self.target_position.y = self.position.y
-end
-
-
-function Scroll._update_params(self)
-	local t = self.target_position
-	local b = self.available_pos
-
-	self._outside_offset_vector.x = 0
-	self._outside_offset_vector.y = 0
-
-	-- Right border (minimum x)
-	if t.x < b.x then
-		self._outside_offset_vector.x = t.x - b.x
-	end
-	-- Left border (maximum x)
-	if t.x > b.z then
-		self._outside_offset_vector.x = t.x - b.z
-	end
-	-- Top border (minimum y)
-	if t.y < b.y then
-		self._outside_offset_vector.y = t.y - b.y
-	end
-	-- Bot border (maximum y)
-	if t.y > b.w then
-		self._outside_offset_vector.y = t.y - b.w
-	end
 end
 
 
