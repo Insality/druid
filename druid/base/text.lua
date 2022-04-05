@@ -217,14 +217,6 @@ function Text.init(self, node, value, adjust_type)
 end
 
 
-function Text.on_internal_remove(self)
-	component.on_internal_remove(self)
-	self.on_set_text:clear()
-	self.on_set_pivot:clear()
-	self.on_update_text_scale:clear()
-end
-
-
 function Text.on_layout_change(self)
 	self:set_to(self.last_value)
 end

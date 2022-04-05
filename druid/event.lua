@@ -5,8 +5,6 @@
 -- @alias druid.event
 
 local class = require("druid.system.middleclass")
-local const = require("druid.const")
-local tablepool = require("druid.system.tablepool")
 
 local DruidEvent = class("druid.event")
 
@@ -31,13 +29,11 @@ function DruidEvent.subscribe(self, callback, context)
 	assert(type(self) == "table", "You should subscribe to event with : syntax")
 	assert(type(callback) == "function", "Callback should be function")
 
-	self._callbacks = self._callbacks or tablepool.fetch(const.POOL_ID)
-
-	local callback_table = tablepool.fetch(const.POOL_ID)
-	callback_table.callback = callback
-	callback_table.context = context
-
-	table.insert(self._callbacks, callback_table)
+	self._callbacks = self._callbacks or {}
+	table.insert(self._callbacks, {
+		callback = callback,
+		context = context
+	})
 
 	return callback
 end
@@ -54,7 +50,6 @@ function DruidEvent.unsubscribe(self, callback, context)
 
 	for index, callback_info in ipairs(self._callbacks) do
 		if callback_info.callback == callback and callback_info.context == context then
-			tablepool.release(const.POOL_ID, callback_info)
 			table.remove(self._callbacks, index)
 			return
 		end
@@ -76,14 +71,6 @@ end
 --- Clear the all event handlers
 -- @tparam DruidEvent self @{DruidEvent}
 function DruidEvent.clear(self)
-	if not self._callbacks then
-		return
-	end
-
-	for index = #self._callbacks, 1, -1 do
-		tablepool.release(const.POOL_ID, self._callbacks[index])
-	end
-	tablepool.release(const.POOL_ID, self._callbacks)
 	self._callbacks = nil
 end
 
@@ -96,7 +83,7 @@ function DruidEvent.trigger(self, ...)
 		return false
 	end
 
-	for _, callback_info in ipairs(self._callbacks) do
+	for index, callback_info in ipairs(self._callbacks) do
 		if callback_info.context then
 			callback_info.callback(callback_info.context, ...)
 		else

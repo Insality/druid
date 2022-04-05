@@ -189,16 +189,6 @@ function Drag.init(self, node, on_drag_callback)
 end
 
 
-function Drag.on_internal_remove(self)
-	component.on_internal_remove(self)
-	self.on_touch_start:clear()
-	self.on_touch_end:clear()
-	self.on_drag_start:clear()
-	self.on_drag:clear()
-	self.on_drag_end:clear()
-end
-
-
 function Drag.on_late_init(self)
 	if not self.click_zone and const.IS_STENCIL_CHECK then
 		local stencil_node = helper.get_closest_stencil_node(self.node)

@@ -8,7 +8,6 @@
 local const = require("druid.const")
 local class = require("druid.system.middleclass")
 local helper = require("druid.helper")
-local tablepool = require("druid.system.tablepool")
 
 
 local BaseComponent = class("druid.component")
@@ -346,11 +345,6 @@ end
 -- @tparam bool is_debug
 function BaseComponent.set_debug(self, is_debug)
 	self._component.is_debug = is_debug
-end
-
-
---- On remove method on druid:remove or druid:final (protected)
-function BaseComponent:on_internal_remove()
 end
 
 

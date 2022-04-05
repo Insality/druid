@@ -121,12 +121,6 @@ function Progress.init(self, node, key, init_value)
 end
 
 
-function Progress.on_internal_remove(self)
-	component.on_internal_remove(self)
-	self.on_change:clear()
-end
-
-
 -- @tparam Progress self @{Progress}
 function Progress.on_late_init(self)
 	self:set_to(self._init_value)

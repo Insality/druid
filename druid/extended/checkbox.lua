@@ -67,12 +67,6 @@ function Checkbox.on_layout_change(self)
 end
 
 
-function Checkbox.on_internal_remove(self)
-	component.on_internal_remove(self)
-	self.on_change_state:clear()
-end
-
-
 --- Set checkbox state
 -- @tparam Checkbox self @{Checkbox}
 -- @tparam bool state Checkbox state

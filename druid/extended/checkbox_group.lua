@@ -41,13 +41,6 @@ function CheckboxGroup.init(self, nodes, callback, click_nodes)
 end
 
 
-function CheckboxGroup.on_internal_remove(self)
-	component.on_internal_remove(self)
-	self.on_checkbox_click:clear()
-end
-
-
-
 --- Set checkbox group state
 -- @tparam CheckboxGroup self @{CheckboxGroup}
 -- @tparam bool[] indexes Array of checkbox state

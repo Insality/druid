@@ -30,12 +30,6 @@ function BackHandler.init(self, callback, params)
 end
 
 
-function BackHandler.on_internal_remove(self)
-	component.on_internal_remove(self)
-	self.on_back:clear()
-end
-
-
 --- Input handler for component
 -- @tparam BackHandler self @{BackHandler}
 -- @tparam string action_id on_input action id

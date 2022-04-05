@@ -41,12 +41,6 @@ function LangText.init(self, node, locale_id, no_adjust)
 end
 
 
-function LangText.on_internal_remove(self)
-	component.on_internal_remove(self)
-	self.on_change:clear()
-end
-
-
 function LangText.on_language_change(self)
 	if self.last_locale then
 		self:translate(self.last_locale, unpack(self.last_locale_args))

@@ -7,8 +7,6 @@
 
 local M = {}
 
-M.POOL_ID = "druid_table_pool"
-
 M.ACTION_TEXT = hash(sys.get_config("druid.input_text", "text"))
 M.ACTION_TOUCH = hash(sys.get_config("druid.input_touch", "touch"))
 M.ACTION_MARKED_TEXT = hash(sys.get_config("druid.input_marked_text", "marked_text"))

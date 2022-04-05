@@ -89,16 +89,6 @@ function DynamicGrid.init(self, parent)
 end
 
 
-function DynamicGrid.on_internal_remove(self)
-	component.on_internal_remove(self)
-	self.on_add_item:clear()
-	self.on_remove_item:clear()
-	self.on_change_items:clear()
-	self.on_clear:clear()
-	self.on_update_positions:clear()
-end
-
-
 function DynamicGrid.on_layout_change(self)
 	self:_update(true)
 end

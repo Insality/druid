@@ -50,12 +50,6 @@ function RadioGroup.init(self, nodes, callback, click_nodes)
 end
 
 
-function RadioGroup.on_internal_remove(self)
-	component.on_internal_remove(self)
-	self.on_radio_click:clear()
-end
-
-
 --- Set radio group state
 -- @tparam RadioGroup self @{RadioGroup}
 -- @tparam number index Index in radio group
