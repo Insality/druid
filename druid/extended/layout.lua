@@ -39,6 +39,12 @@ function Layout:init(node, mode, on_size_changed_callback)
 end
 
 
+function Layout.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_size_changed:clear()
+end
+
+
 function Layout:on_window_resized()
     local window_x, window_y = window.get_size()
     local stretch_x = window_x / self.window_size.x

@@ -115,6 +115,16 @@ function StaticGrid.init(self, parent, element, in_row)
 end
 
 
+function StaticGrid.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_add_item:clear()
+	self.on_remove_item:clear()
+	self.on_change_items:clear()
+	self.on_clear:clear()
+	self.on_update_positions:clear()
+end
+
+
 local _temp_pos = vmath.vector3(0)
 --- Return pos for grid node index
 -- @tparam StaticGrid self @{StaticGrid}

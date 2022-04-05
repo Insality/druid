@@ -154,6 +154,17 @@ function Input.init(self, click_node, text_node, keyboard_type)
 end
 
 
+function Input.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_input_select:clear()
+	self.on_input_unselect:clear()
+	self.on_input_text:clear()
+	self.on_input_empty:clear()
+	self.on_input_full:clear()
+	self.on_input_wrong:clear()
+end
+
+
 function Input.on_input(self, action_id, action)
 	if self.is_selected then
 		local input_text = nil

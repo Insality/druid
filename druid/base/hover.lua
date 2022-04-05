@@ -38,6 +38,13 @@ function Hover.init(self, node, on_hover_callback)
 end
 
 
+function Hover.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_hover:clear()
+	self.on_mouse_hover:clear()
+end
+
+
 function Hover.on_late_init(self)
 	if not self.click_zone and const.IS_STENCIL_CHECK then
 		local stencil_node = helper.get_closest_stencil_node(self.node)

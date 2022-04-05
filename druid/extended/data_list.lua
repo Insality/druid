@@ -76,6 +76,12 @@ function DataList.on_remove(self)
 end
 
 
+function DataList.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_scroll_progress_change:clear()
+end
+
+
 --- Set new data set for DataList component
 -- @tparam DataList self @{DataList}
 -- @tparam table data The new data array

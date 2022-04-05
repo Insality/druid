@@ -77,6 +77,12 @@ function Slider.init(self, node, end_pos, callback)
 end
 
 
+function Slider.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_change_value:clear()
+end
+
+
 function Slider.on_layout_change(self)
 	self:set(self.value)
 end

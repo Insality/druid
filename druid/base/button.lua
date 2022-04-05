@@ -239,6 +239,17 @@ function Button.on_late_init(self)
 end
 
 
+function Button.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_click:clear()
+	self.on_repeated_click:clear()
+	self.on_long_click:clear()
+	self.on_double_click:clear()
+	self.on_hold_callback:clear()
+	self.on_click_outside:clear()
+end
+
+
 function Button.on_input(self, action_id, action)
 	if not is_input_match(self, action_id) then
 		return false

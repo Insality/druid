@@ -99,6 +99,12 @@ function Swipe.init(self, node, on_swipe_callback)
 end
 
 
+function Swipe.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_swipe:clear()
+end
+
+
 function Swipe.on_late_init(self)
 	if not self.click_zone and const.IS_STENCIL_CHECK then
 		local stencil_node = helper.get_closest_stencil_node(self.node)

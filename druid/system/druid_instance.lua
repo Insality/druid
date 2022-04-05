@@ -289,6 +289,7 @@ function DruidInstance.remove(self, component)
 	local all_components = self.components_all
 	for i = #all_components, 1, -1 do
 		if all_components[i] == component then
+			component:on_internal_remove()
 			if component.on_remove then
 				component:on_remove()
 			end

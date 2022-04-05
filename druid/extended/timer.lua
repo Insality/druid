@@ -65,6 +65,14 @@ function Timer.init(self, node, seconds_from, seconds_to, callback)
 end
 
 
+function Timer.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_tick:clear()
+	self.on_set_enabled:clear()
+	self.on_timer_end:clear()
+end
+
+
 function Timer.update(self, dt)
 	if not self.is_on then
 		return

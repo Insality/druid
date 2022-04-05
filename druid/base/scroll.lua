@@ -174,6 +174,14 @@ function Scroll.init(self, view_node, content_node)
 end
 
 
+function Scroll.on_internal_remove(self)
+	component.on_internal_remove(self)
+	self.on_scroll:clear()
+	self.on_scroll_to:clear()
+	self.on_point_scroll:clear()
+end
+
+
 function Scroll.on_late_init(self)
 	if not self.click_zone and const.IS_STENCIL_CHECK then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
