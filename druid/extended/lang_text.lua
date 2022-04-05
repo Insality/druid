@@ -14,6 +14,7 @@
 
 ---
 
+local const = require("druid.const")
 local Event = require("druid.event")
 local settings = require("druid.system.settings")
 local component = require("druid.component")

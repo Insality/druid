@@ -25,6 +25,7 @@ BaseComponent.ON_FOCUS_LOST = const.ON_FOCUS_LOST
 BaseComponent.ON_FOCUS_GAINED = const.ON_FOCUS_GAINED
 BaseComponent.ON_LAYOUT_CHANGE = const.ON_LAYOUT_CHANGE
 BaseComponent.ON_MESSAGE_INPUT = const.ON_MESSAGE_INPUT
+BaseComponent.ON_WINDOW_RESIZED = const.ON_WINDOW_RESIZED
 BaseComponent.ON_LANGUAGE_CHANGE = const.ON_LANGUAGE_CHANGE
 
 
@@ -37,6 +38,7 @@ BaseComponent.ALL_INTERESTS = {
 	BaseComponent.ON_FOCUS_GAINED,
 	BaseComponent.ON_LAYOUT_CHANGE,
 	BaseComponent.ON_MESSAGE_INPUT,
+	BaseComponent.ON_WINDOW_RESIZED,
 	BaseComponent.ON_LANGUAGE_CHANGE,
 }
 
@@ -46,6 +48,7 @@ BaseComponent.SPECIFIC_UI_MESSAGES = {
 	[hash("layout_changed")] = BaseComponent.ON_LAYOUT_CHANGE, -- The message_id from Defold
 	[hash(BaseComponent.ON_FOCUS_LOST)] = BaseComponent.ON_FOCUS_LOST,
 	[hash(BaseComponent.ON_FOCUS_GAINED)] = BaseComponent.ON_FOCUS_GAINED,
+	[hash(BaseComponent.ON_WINDOW_RESIZED)] = BaseComponent.ON_WINDOW_RESIZED,
 	[hash(BaseComponent.ON_MESSAGE_INPUT)] = BaseComponent.ON_MESSAGE_INPUT,
 	[hash(BaseComponent.ON_LANGUAGE_CHANGE)] = BaseComponent.ON_LANGUAGE_CHANGE,
 }

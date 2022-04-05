@@ -103,11 +103,14 @@ function Progress.init(self, node, key, init_value)
 	self.prop = hash("scale."..key)
 	self.key = key
 
+	self._init_value = init_value or 1
 	self.node = self:get_node(node)
 	self.scale = gui.get_scale(self.node)
 	self.size = gui.get_size(self.node)
 	self.max_size = self.size[self.key]
 	self.slice = gui.get_slice9(self.node)
+	self.last_value = self._init_value
+
 	if key == const.SIDE.X then
 		self.slice_size = self.slice.x + self.slice.z
 	else
@@ -115,8 +118,12 @@ function Progress.init(self, node, key, init_value)
 	end
 
 	self.on_change = Event()
+end
 
-	self:set_to(init_value or 1)
+
+-- @tparam Progress self @{Progress}
+function Progress.on_late_init(self)
+	self:set_to(self._init_value)
 end
 
 
@@ -201,6 +208,17 @@ function Progress.to(self, to, callback)
 			callback(self:get_context(), to)
 		end
 	end
+end
+
+
+--- Set progress bar max node size
+-- @tparam Progress self @{Progress}
+-- @tparam vector3 max_size The new node maximum (full) size
+-- @treturn Progress @{Progress}
+function Progress:set_max_size(max_size)
+	self.max_size = max_size[self.key]
+	self:set_to(self.last_value)
+	return self
 end
 
 

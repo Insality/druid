@@ -240,10 +240,16 @@ end
 -- @treturn number Height
 function Text.get_text_size(self, text)
 	text = text or self.last_value
-	local font = gui.get_font(self.node)
+	local font_name = gui.get_font(self.node)
+	local font = gui.get_font_resource(font_name)
 	local scale = gui.get_scale(self.node)
 	local linebreak = gui.get_line_break(self.node)
-	local metrics = gui.get_text_metrics(font, text, 0, linebreak, 0, 0)
+	local metrics = resource.get_text_metrics(font, text, {
+		line_break = linebreak,
+		leading = 1,
+		tracking = 0,
+		width = self.start_size.x
+	})
 	local width = metrics.width
 	for i = #text, 1, -1 do
 		local c = string.sub(text, i, i)
