@@ -14,7 +14,6 @@ function _M.fetch(tag)
         pools[tag] = pool
         pool.c = 0
         pool[0] = 0
-
     else
         local len = pool[0]
         if len > 0 then

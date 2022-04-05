@@ -252,6 +252,7 @@ function DruidInstance.final(self)
 	local components = self.components_all
 
 	for i = #components, 1, -1 do
+		components[i]:on_internal_remove()
 		if components[i].on_remove then
 			components[i]:on_remove()
 		end

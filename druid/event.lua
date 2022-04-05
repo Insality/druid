@@ -32,7 +32,8 @@ function DruidEvent.subscribe(self, callback, context)
 	assert(type(callback) == "function", "Callback should be function")
 
 	self._callbacks = self._callbacks or tablepool.fetch(const.POOL_ID)
-	local callback_table = tablepool.fetch(const.POOL_ID, 0, 2)
+
+	local callback_table = tablepool.fetch(const.POOL_ID)
 	callback_table.callback = callback
 	callback_table.context = context
 
@@ -53,7 +54,7 @@ function DruidEvent.unsubscribe(self, callback, context)
 
 	for index, callback_info in ipairs(self._callbacks) do
 		if callback_info.callback == callback and callback_info.context == context then
-			tablepool.release(self._callbacks[index])
+			tablepool.release(const.POOL_ID, callback_info)
 			table.remove(self._callbacks, index)
 			return
 		end
@@ -75,12 +76,14 @@ end
 --- Clear the all event handlers
 -- @tparam DruidEvent self @{DruidEvent}
 function DruidEvent.clear(self)
-	if self._callbacks then
-		for index = #self._callbacks, 1, -1 do
-			tablepool.release(self._callbacks[index])
-		end
+	if not self._callbacks then
+		return
 	end
-	tablepool.release(self._callbacks)
+
+	for index = #self._callbacks, 1, -1 do
+		tablepool.release(const.POOL_ID, self._callbacks[index])
+	end
+	tablepool.release(const.POOL_ID, self._callbacks)
 	self._callbacks = nil
 end
 
