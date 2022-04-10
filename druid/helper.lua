@@ -97,6 +97,15 @@ function M.centrate_nodes(margin, ...)
 end
 
 
+function M.get_screen_aspect_koef()
+	local window_x, window_y = window.get_size()
+	local stretch_x = window_x / gui.get_width()
+	local stretch_y = window_y / gui.get_height()
+	return stretch_x / math.min(stretch_x, stretch_y),
+			stretch_y / math.min(stretch_x, stretch_y)
+end
+
+
 function M.step(current, target, step)
 	if current < target then
 		return math.min(current + step, target)

@@ -30,7 +30,6 @@ function Layout:init(node, mode, on_size_changed_callback)
     self._min_size = nil
     self._max_size = nil
 
-    self.window_size = vmath.vector3(gui.get_width(), gui.get_height(), 0)
     self.mode = mode or const.LAYOUT_MODE.FIT
 
     self.on_size_changed = Event(on_size_changed_callback)
@@ -40,12 +39,7 @@ end
 
 
 function Layout:on_window_resized()
-    local window_x, window_y = window.get_size()
-    local stretch_x = window_x / self.window_size.x
-    local stretch_y = window_y / self.window_size.y
-
-    local x_koef = stretch_x / math.min(stretch_x, stretch_y)
-    local y_koef = stretch_y / math.min(stretch_x, stretch_y)
+    local x_koef, y_koef = helper.get_screen_aspect_koef()
 
     local new_size = vmath.vector3(self.origin_size)
     if self.mode == const.LAYOUT_MODE.STRETCH_X or self.mode == const.LAYOUT_MODE.STRETCH then
@@ -65,8 +59,8 @@ function Layout:on_window_resized()
 
     gui.set_size(self.node, new_size)
 
-    self.position.x = self.origin_position.x * x_koef + self.origin_position.x * (1 - x_koef) * self.pivot.x * 2
-    self.position.y = self.origin_position.y * y_koef + self.origin_position.y * (1 - y_koef) * self.pivot.y * 2
+    self.position.x = self.origin_position.x + self.origin_position.x * (1 - x_koef) * self.pivot.x * 2
+    self.position.y = self.origin_position.y + self.origin_position.y * (1 - y_koef) * self.pivot.y * 2
     gui.set_position(self.node, self.position)
 
     self.on_size_changed:trigger(self:get_context(), new_size)

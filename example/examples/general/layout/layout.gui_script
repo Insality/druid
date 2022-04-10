@@ -9,6 +9,7 @@ function init(self)
 	self.druid:new_layout("node_layout_stretch", const_druid.LAYOUT_MODE.STRETCH)
 	self.druid:new_layout("node_layout_stretch_x", const_druid.LAYOUT_MODE.STRETCH_X)
 	self.druid:new_layout("node_layout_stretch_y", const_druid.LAYOUT_MODE.STRETCH_Y)
+	self.druid:new_layout("node_layout_stretch_y_anchor_w", const_druid.LAYOUT_MODE.STRETCH_Y)
 end
 
 

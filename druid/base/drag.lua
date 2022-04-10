@@ -186,6 +186,8 @@ function Drag.init(self, node, on_drag_callback)
 	self.on_drag_start = Event()
 	self.on_drag = Event(on_drag_callback)
 	self.on_drag_end = Event()
+
+	self:on_window_resized()
 end
 
 
@@ -196,6 +198,13 @@ function Drag.on_late_init(self)
 			self:set_click_zone(stencil_node)
 		end
 	end
+end
+
+
+function Drag.on_window_resized(self)
+	local x_koef, y_koef = helper.get_screen_aspect_koef()
+	self._x_koef = x_koef
+	self._y_koef = y_koef
 end
 
 
@@ -258,8 +267,8 @@ function Drag.on_input(self, action_id, action)
 
 	local touch_modified = find_touch(action_id, action, self.touch_id)
 	if touch_modified and self.is_drag then
-		self.dx = touch_modified.x - self.x
-		self.dy = touch_modified.y - self.y
+		self.dx = (touch_modified.x - self.x) * self._x_koef
+		self.dy = (touch_modified.y - self.y) * self._y_koef
 	end
 
 	if touch_modified then
