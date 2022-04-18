@@ -104,7 +104,6 @@ function StaticGrid.init(self, parent, element, in_row)
 
 	self.border = vmath.vector4(0) -- Current grid content size
 
-
 	self.on_add_item = Event()
 	self.on_remove_item = Event()
 	self.on_change_items = Event()
@@ -359,6 +358,11 @@ end
 function StaticGrid.set_in_row(self, in_row)
 	self.in_row = in_row
 	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
+	self._zero_offset = vmath.vector3(
+		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._grid_horizonal_offset,
+		self.node_size.y * self.node_pivot.y - self.node_size.y * self.pivot.y,
+		0)
+
 	self:_update(true)
 	self.on_change_items:trigger(self:get_context())
 
