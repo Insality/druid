@@ -8,6 +8,7 @@ local const = require("druid.const")
 
 local M = {}
 
+
 --- Text node or icon node can be nil
 local function get_text_width(text_node)
 	if text_node then

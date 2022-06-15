@@ -17,10 +17,10 @@
 --- Event on drag start callback(self)
 -- @tfield DruidEvent on_drag_start @{DruidEvent}
 
---- on drag progress callback(self, dx, dy)
+--- on drag progress callback(self, dx, dy, total_x, total_y)
 -- @tfield DruidEvent on_drag Event @{DruidEvent}
 
---- Event on drag end callback(self)
+--- Event on drag end callback(self, total_x, total_y)
 -- @tfield DruidEvent on_drag_end @{DruidEvent}
 
 --- Is component now touching
@@ -70,7 +70,7 @@ end
 
 local function end_touch(self)
 	if self.is_drag then
-		self.on_drag_end:trigger(self:get_context())
+		self.on_drag_end:trigger(self:get_context(), self.x - self.touch_start_pos.x, self.y - self.touch_start_pos.y)
 	end
 
 	self.is_drag = false
@@ -96,7 +96,7 @@ local function process_touch(self, touch)
 	if not self.is_drag and distance >= self.style.DRAG_DEADZONE then
 		self.is_drag = true
 		self.on_drag_start:trigger(self:get_context())
-		self:set_input_priority(const.PRIORITY_INPUT_MAX)
+		self:set_input_priority(const.PRIORITY_INPUT_MAX, true)
 	end
 end
 
@@ -267,8 +267,8 @@ function Drag.on_input(self, action_id, action)
 
 	local touch_modified = find_touch(action_id, action, self.touch_id)
 	if touch_modified and self.is_drag then
-		self.dx = (touch_modified.x - self.x) * self._x_koef
-		self.dy = (touch_modified.y - self.y) * self._y_koef
+		self.dx = touch_modified.x - self.x
+		self.dy = touch_modified.y - self.y
 	end
 
 	if touch_modified then
@@ -277,7 +277,7 @@ function Drag.on_input(self, action_id, action)
 	end
 
 	if self.is_drag then
-		self.on_drag:trigger(self:get_context(), self.dx, self.dy)
+		self.on_drag:trigger(self:get_context(), self.dx, self.dy, self.x - self.touch_start_pos.x, self.y - self.touch_start_pos.y)
 	end
 
 	return self.is_drag
