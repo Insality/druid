@@ -19,35 +19,60 @@ local Layout = component.create("layout")
 
 function Layout:init(node, mode, on_size_changed_callback)
     self.node = self:get_node(node)
-    self.origin_size = gui.get_size(self.node)
-    self.pivot = helper.get_pivot_offset(gui.get_pivot(self.node))
-    self.origin_position = gui.get_position(self.node)
-    self.position = vmath.vector3(self.origin_position)
-
-    gui.set_size_mode(self.node, gui.SIZE_MODE_MANUAL)
-    gui.set_adjust_mode(self.node, gui.ADJUST_FIT)
 
     self._min_size = nil
     self._max_size = nil
+    self._inited = false
 
+    self.gui_size = vmath.vector3(gui.get_width(), gui.get_height(), 0)
     self.mode = mode or const.LAYOUT_MODE.FIT
 
     self.on_size_changed = Event(on_size_changed_callback)
+end
 
+
+function Layout:on_late_init()
+    self._inited = true
+    self.origin_size = self.origin_size or gui.get_size(self.node)
+    self.fit_size = self.fit_size or vmath.vector3(self.origin_size)
+    self.pivot = helper.get_pivot_offset(gui.get_pivot(self.node))
+    self.origin_position = gui.get_position(self.node)
+    self.position = vmath.vector3(self.origin_position)
+    gui.set_size_mode(self.node, gui.SIZE_MODE_MANUAL)
+    gui.set_adjust_mode(self.node, gui.ADJUST_FIT)
     self:on_window_resized()
 end
 
 
 function Layout:on_window_resized()
-    local x_koef, y_koef = helper.get_screen_aspect_koef()
+    if not self._inited then
+        return
+    end
+
+    local window_x, window_y = window.get_size()
+    local stretch_x = window_x / self.gui_size.x
+    local stretch_y = window_y / self.gui_size.y
+
+    local x_koef = self.fit_size.x / self.origin_size.x * stretch_x / math.min(stretch_x, stretch_y)
+    local y_koef = self.fit_size.y / self.origin_size.y * stretch_y / math.min(stretch_x, stretch_y)
 
     local new_size = vmath.vector3(self.origin_size)
+
     if self.mode == const.LAYOUT_MODE.STRETCH_X or self.mode == const.LAYOUT_MODE.STRETCH then
         new_size.x = new_size.x * x_koef
     end
     if self.mode == const.LAYOUT_MODE.STRETCH_Y or self.mode == const.LAYOUT_MODE.STRETCH then
         new_size.y = new_size.y * y_koef
     end
+
+    -- Fit to the stretched container (node size or other defined)
+    if self.mode == const.LAYOUT_MODE.ZOOM_MIN then
+        new_size = new_size * math.min(x_koef, y_koef)
+    end
+    if self.mode == const.LAYOUT_MODE.ZOOM_MAX then
+        new_size = new_size * math.max(x_koef, y_koef)
+    end
+
     if self._min_size then
         new_size.x = math.max(new_size.x, self._min_size.x)
         new_size.y = math.max(new_size.y, self._min_size.y)
@@ -87,7 +112,23 @@ end
 
 function Layout:set_origin_size(new_origin_size)
     self.origin_size = new_origin_size or self.origin_size
+    self:on_window_resized()
     return self
+end
+
+
+function Layout:fit_into_size(target_size)
+    self.fit_size = target_size
+    self:on_window_resized()
+    return self
+end
+
+
+function Layout:fit_into_window()
+    return self:fit_into_size(vmath.vector3(
+        gui.get_width(),
+        gui.get_height(),
+        0))
 end
 
 
