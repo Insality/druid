@@ -173,7 +173,7 @@ function BaseComponent.get_node(self, node_or_name)
 	end
 
 	if not node then
-		assert(node, "No component with name: " .. template_name .. node_or_name)
+		assert(node, "No component with name: " .. (template_name or "") .. (node_or_name or ""))
 	end
 
 	return node
