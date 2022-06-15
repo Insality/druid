@@ -218,17 +218,22 @@ end
 --- Set component input priority
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam number value The new input priority value
+-- @tparam boolean is_temporary If true, the reset input priority will return to previous value
 -- @treturn number The component input priority
-function BaseComponent.set_input_priority(self, value)
+function BaseComponent.set_input_priority(self, value, is_temporary)
 	assert(value)
 
 	if self._component.input_priority ~= value then
 		self._component.input_priority = value
 		self._component._is_input_priority_changed = true
 
+		if not is_temporary then
+			self._component.default_input_priority = value
+		end
+
 		local children = self:get_childrens()
 		for i = 1, #children do
-			children[i]:set_input_priority(value)
+			children[i]:set_input_priority(value, is_temporary)
 		end
 	end
 
