@@ -404,7 +404,7 @@ local druid =  require("druid.druid")
 local hotkey =  require("druid.extended.hotkey")
 druid.register("hotkey", hotkey)
 ```
-Create drag component with druid: `hotkey = druid:new_hotkey(keys_array, callback, [callback_argument])`
+Create hotkey component with druid: `hotkey = druid:new_hotkey(keys_array, callback, [callback_argument])`
 
 ### Notes
 - Hotkey callback is similar with button callback: (self, callback_argument)
@@ -428,7 +428,7 @@ local druid =  require("druid.druid")
 local layout =  require("druid.extended.layout")
 druid.register("layout", layout)
 ```
-Create drag component with druid: `layout = druid:new_layout(node, layout_mode, on_size_change_callback)`
+Create layout component with druid: `layout = druid:new_layout(node, layout_mode, on_size_change_callback)`
 
 
 ### Notes
