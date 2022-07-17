@@ -1,9 +1,10 @@
 local druid = require("druid.druid")
 
 
-local function on_drag_callback(self, dx, dy)
+local function on_drag_callback(self, dx, dy, total_x, total_y)
 	self.position.x = self.position.x + dx
 	self.position.y = self.position.y + dy
+	print("Total drag:", total_x, total_y)
 	gui.set_position(self.box, self.position)
 end
 
@@ -15,6 +16,11 @@ local function on_drag_end(self)
 end
 
 
+local function on_drag_toggle(self)
+	self.drag:set_enabled(not self.drag:is_enabled())
+end
+
+
 function init(self)
 	self.druid = druid.new(self)
 
@@ -23,6 +29,8 @@ function init(self)
 	self.drag = self.druid:new_drag("drag_node", on_drag_callback)
 
 	self.drag.on_drag_end:subscribe(on_drag_end, self)
+
+	self.druid:new_button("button_drag/button", on_drag_toggle)
 end
 
 

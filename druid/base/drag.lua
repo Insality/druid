@@ -306,9 +306,8 @@ end
 -- @tparam Drag self @{Drag}
 -- @treturn bool
 function Drag.is_enabled(self)
-	return self._is_disabled
+	return not self._is_disabled
 end
-
 
 
 return Drag
