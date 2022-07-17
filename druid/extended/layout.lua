@@ -23,7 +23,6 @@ function Layout:init(node, mode, on_size_changed_callback)
     self._min_size = nil
     self._max_size = nil
     self._inited = false
-    self._is_stretch_position = nil
 
     self.gui_size = vmath.vector3(gui.get_width(), gui.get_height(), 0)
     self.mode = mode or const.LAYOUT_MODE.FIT
@@ -84,12 +83,8 @@ function Layout:on_window_resized()
     end
     gui.set_size(self.node, new_size)
 
-    self.position.x = self.origin_position.x
-    self.position.y = self.origin_position.y
-    if self._is_stretch_position then
-        self.position.x = self.position.x + self.origin_position.x * (1 - x_koef) * (self.pivot.x * 2)
-        self.position.y = self.position.y + self.origin_position.y * (1 - y_koef) * (self.pivot.y * 2)
-    end
+	self.position.x = self.origin_position.x + self.origin_position.x * (x_koef - 1)
+	self.position.y = self.origin_position.y + self.origin_position.y * (y_koef - 1)
     gui.set_position(self.node, self.position)
 
     self.on_size_changed:trigger(self:get_context(), new_size)
@@ -110,14 +105,6 @@ end
 
 function Layout:set_origin_position(new_origin_position)
     self.origin_position = new_origin_position or self.origin_position
-    return self
-end
-
-
---@tparam boolean state
-function Layout:set_stretch_position(state)
-    self._is_stretch_position = state
-    self:on_window_resized()
     return self
 end
 
