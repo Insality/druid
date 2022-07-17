@@ -49,13 +49,7 @@ function Layout:on_window_resized()
         return
     end
 
-    local window_x, window_y = window.get_size()
-    local stretch_x = window_x / self.gui_size.x
-    local stretch_y = window_y / self.gui_size.y
-
-    local x_koef = self.fit_size.x / self.origin_size.x * stretch_x / math.min(stretch_x, stretch_y)
-    local y_koef = self.fit_size.y / self.origin_size.y * stretch_y / math.min(stretch_x, stretch_y)
-
+	local x_koef, y_koef = helper.get_screen_aspect_koef()
     local new_size = vmath.vector3(self.origin_size)
 
     if self.mode == const.LAYOUT_MODE.STRETCH_X or self.mode == const.LAYOUT_MODE.STRETCH then

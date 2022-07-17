@@ -147,4 +147,9 @@ M["text"] = {
 }
 
 
+M["hotkey"] = {
+	MODIFICATORS = {}, -- Add key ids to mark it as modificator keys
+}
+
+
 return M

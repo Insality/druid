@@ -278,7 +278,11 @@ function Drag.on_input(self, action_id, action)
 	end
 
 	if self.is_drag then
-		self.on_drag:trigger(self:get_context(), self.dx, self.dy, self.x - self.touch_start_pos.x, self.y - self.touch_start_pos.y)
+		self.on_drag:trigger(self:get_context(),
+			self.dx * self._x_koef,
+			self.dy * self._y_koef,
+			(self.x - self.touch_start_pos.x) * self._x_koef,
+			(self.y - self.touch_start_pos.y) * self._y_koef)
 	end
 
 	return self.is_drag
