@@ -13,7 +13,7 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local Event = require("druid.event")
 
----@class layout : druid.base_component
+
 local Layout = component.create("layout")
 
 

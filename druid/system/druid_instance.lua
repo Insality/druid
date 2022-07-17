@@ -752,10 +752,10 @@ end
 
 --- Create hotkey component
 -- @tparam DruidInstance self
--- @tparam string|string[] string Keys for trigger action. Should contains one action key and any amount of modificator keys
+-- @tparam string|string[] keys_array Keys for trigger action. Should contains one action key and any amount of modificator keys
 -- @tparam function callback Button callback
 -- @tparam[opt] value params Button callback params
--- @treturn Layout layout component
+-- @treturn Hotkey hotkey component
 function DruidInstance.new_hotkey(self, keys_array, callback, params)
 	return helper.extended_component("hotkey")
 end

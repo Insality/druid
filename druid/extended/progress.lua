@@ -215,7 +215,7 @@ end
 -- @tparam Progress self @{Progress}
 -- @tparam vector3 max_size The new node maximum (full) size
 -- @treturn Progress @{Progress}
-function Progress:set_max_size(max_size)
+function Progress.set_max_size(self, max_size)
 	self.max_size = max_size[self.key]
 	self:set_to(self.last_value)
 	return self
