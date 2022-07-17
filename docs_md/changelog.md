@@ -391,3 +391,45 @@ Take care of yourself
 - Move emmylua annotations inside Druid dependency folder. You can copy it from Defold Editor outline
 - Optimize different stuff(Scroll, Druid Event, Druid instance and Base component)
 - Force Data List component to `IS_DYNAMIC_NODE_POSES = false` style
+
+
+### Druid 0.10.0
+
+Hello! Here is new Druid small update. It's brings to you two new components: Layout and Hotkey. Both components are "extended", so to use it, you should register it first (when you try to use it, in console will be prompt with code you should use)
+
+In general:
+```
+local layout =  require("druid.extended.layout")
+druid.register("layout", layout)
+```
+
+The drag component now knows about window scaling, so now it have more accuracy dx/dy values depends on the screen size. The scroll and other components should work better :)
+
+Also now you can change the input priority of components temporary. For example while you interact with them (input fields, drag on select etc).
+
+**Changelog 0.10.0**
+
+---
+
+- **#133** [Hotkey] Add new extended component: Hotkey
+	- It's allow you set hotkeys to call callbacks
+	- You should pass one action key and several modificator keys (left shift, ctrl etc)
+	- List of modificator keys setup via component style (you can change it)
+	- You can add several hotkeys on one callback via `hotkey:add_hotkey` with additional params
+- **#98** [Layout] Add new extended component: Layout
+	- It's allow you to extend standart Defold node adjust modes
+	- Layout mode can be next:
+		- `const.LAYOUT_MODE.STRETCH_X` - Stretch node only by X
+		- `const.LAYOUT_MODE.STRETCH_Y` - Stretch node only by Y
+		- `const.LAYOUT_MODE.ZOOM_MIN` - Zoom node by minimal stretch multiplier
+		- `const.LAYOUT_MODE.ZOOM_MAX` - Zoom node by maximum stretch multiplier
+		- `const.LAYOUT_MODE.FIT` - Usual Defold Fit mode
+		- `const.LAYOUT_MODE.STRETCH` - Usual Defold Stretch Mode
+	- The Layout changes the node size property. So it's look much better if you use 9slice nodes
+	- Works even the node parent is have Fit adjust mode
+- **#190** [Progress] Add `progress:set_max_size` function to change max size of progress bar
+- **#188** [Drag] Add two values passed to on_drag callback. Now it is `on_drag(self, dx, dy, total_x, total_y)` to check the overral drag distance
+- **#195** [Drag] Add `drag:is_enabled` and `drag:set_enabled` to enable/disable drag input component
+- **#186** [Grid] Fix: Method set_in_row works incorrectly with IS_DYNAMIC_NODE_POSES style option
+- **#185** [System] Add `on_window_resized` component interest. It will called on game window size changes
+- **#189** [System] Add optional flag to `component:set_input_priority` to mark it as temporary. It will reset to default input priority after the `component:reset_input_priority`
