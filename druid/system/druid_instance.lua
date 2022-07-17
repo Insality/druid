@@ -31,6 +31,7 @@
 -- @see DataList
 -- @see Hover
 -- @see Layout
+-- @see Hotkey
 
 local helper = require("druid.helper")
 local class = require("druid.system.middleclass")
@@ -58,7 +59,6 @@ local radio_group = require("druid.extended.radio_group")
 local slider = require("druid.extended.slider")
 local timer = require("druid.extended.timer")
 local data_list = require("druid.extended.data_list")
-local layout = require("druid.extended.layout")
 
 
 local DruidInstance = class("druid.druid_instance")
@@ -747,6 +747,17 @@ end
 -- @treturn Layout layout component
 function DruidInstance.new_layout(self, node, mode)
 	return helper.extended_component("layout")
+end
+
+
+--- Create hotkey component
+-- @tparam DruidInstance self
+-- @tparam string|string[] string Keys for trigger action. Should contains one action key and any amount of modificator keys
+-- @tparam function callback Button callback
+-- @tparam[opt] value params Button callback params
+-- @treturn Layout layout component
+function DruidInstance.new_hotkey(self, keys_array, callback, params)
+	return helper.extended_component("hotkey")
 end
 
 

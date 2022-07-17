@@ -101,7 +101,7 @@ end
 
 function Hotkey.on_input(self, action_id, action)
 	if not action_id then
-		return
+		return false
 	end
 
 	if self._modificators[action_id] ~= nil then
@@ -136,12 +136,16 @@ function Hotkey.on_input(self, action_id, action)
 				hotkey.is_processing = false
 				if hotkey.callback_argument then
 					self._callback(self:get_context(), hotkey.callback_argument)
+					return true
 				else
 					self._callback(self:get_context())
+					return true
 				end
 			end
 		end
 	end
+
+	return false
 end
 
 

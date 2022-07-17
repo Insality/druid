@@ -133,6 +133,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "Layout", "general_layout", "/general/layout/layout.gui_script"))
 	self.lobby_grid:add(get_button(self, "Swipe", "general_swipe", "/general/swipe/swipe.gui_script"))
 	self.lobby_grid:add(get_button(self, "Drag", "general_drag", "/general/drag/drag.gui_script"))
+	self.lobby_grid:add(get_button(self, "Hotkey", "general_hotkey", "/general/hotkey/hotkey.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Texts"))
 	self.lobby_grid:add(get_button(self, "Texts", "texts_general", "/texts/texts_general/texts_general.gui_script"))
