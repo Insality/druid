@@ -176,6 +176,7 @@ function Drag.init(self, node, on_drag_callback)
 	self.is_touch = false
 	self.is_drag = false
 	self.touch_start_pos = vmath.vector3(0)
+	self._is_disabled = false
 
 	self.can_x = true
 	self.can_y = true
@@ -220,7 +221,7 @@ function Drag.on_input(self, action_id, action)
 		return false
 	end
 
-	if not helper.is_enabled(self.node) then
+	if not helper.is_enabled(self.node) or self._is_disabled then
 		return false
 	end
 
@@ -291,6 +292,23 @@ end
 function Drag.set_click_zone(self, node)
 	self.click_zone = self:get_node(node)
 end
+
+
+--- Set Drag input enabled or disabled
+-- @tparam Drag self @{Drag}
+-- @tparam bool is enabled
+function Drag.set_enabled(self, is_enabled)
+	self._is_disabled = not is_enabled
+end
+
+
+--- Check if Drag component is enabled
+-- @tparam Drag self @{Drag}
+-- @treturn bool
+function Drag.is_enabled(self)
+	return self._is_disabled
+end
+
 
 
 return Drag
