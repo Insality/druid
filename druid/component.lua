@@ -25,6 +25,7 @@ BaseComponent.ON_FOCUS_LOST = const.ON_FOCUS_LOST
 BaseComponent.ON_FOCUS_GAINED = const.ON_FOCUS_GAINED
 BaseComponent.ON_LAYOUT_CHANGE = const.ON_LAYOUT_CHANGE
 BaseComponent.ON_MESSAGE_INPUT = const.ON_MESSAGE_INPUT
+BaseComponent.ON_WINDOW_RESIZED = const.ON_WINDOW_RESIZED
 BaseComponent.ON_LANGUAGE_CHANGE = const.ON_LANGUAGE_CHANGE
 
 
@@ -37,6 +38,7 @@ BaseComponent.ALL_INTERESTS = {
 	BaseComponent.ON_FOCUS_GAINED,
 	BaseComponent.ON_LAYOUT_CHANGE,
 	BaseComponent.ON_MESSAGE_INPUT,
+	BaseComponent.ON_WINDOW_RESIZED,
 	BaseComponent.ON_LANGUAGE_CHANGE,
 }
 
@@ -46,6 +48,7 @@ BaseComponent.SPECIFIC_UI_MESSAGES = {
 	[hash("layout_changed")] = BaseComponent.ON_LAYOUT_CHANGE, -- The message_id from Defold
 	[hash(BaseComponent.ON_FOCUS_LOST)] = BaseComponent.ON_FOCUS_LOST,
 	[hash(BaseComponent.ON_FOCUS_GAINED)] = BaseComponent.ON_FOCUS_GAINED,
+	[hash(BaseComponent.ON_WINDOW_RESIZED)] = BaseComponent.ON_WINDOW_RESIZED,
 	[hash(BaseComponent.ON_MESSAGE_INPUT)] = BaseComponent.ON_MESSAGE_INPUT,
 	[hash(BaseComponent.ON_LANGUAGE_CHANGE)] = BaseComponent.ON_LANGUAGE_CHANGE,
 }
@@ -170,7 +173,7 @@ function BaseComponent.get_node(self, node_or_name)
 	end
 
 	if not node then
-		assert(node, "No component with name: " .. template_name .. node_or_name)
+		assert(node, "No component with name: " .. (template_name or "") .. (node_or_name or ""))
 	end
 
 	return node
@@ -215,17 +218,22 @@ end
 --- Set component input priority
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam number value The new input priority value
+-- @tparam boolean is_temporary If true, the reset input priority will return to previous value
 -- @treturn number The component input priority
-function BaseComponent.set_input_priority(self, value)
+function BaseComponent.set_input_priority(self, value, is_temporary)
 	assert(value)
 
 	if self._component.input_priority ~= value then
 		self._component.input_priority = value
 		self._component._is_input_priority_changed = true
 
+		if not is_temporary then
+			self._component.default_input_priority = value
+		end
+
 		local children = self:get_childrens()
 		for i = 1, #children do
-			children[i]:set_input_priority(value)
+			children[i]:set_input_priority(value, is_temporary)
 		end
 	end
 

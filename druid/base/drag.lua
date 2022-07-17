@@ -17,10 +17,10 @@
 --- Event on drag start callback(self)
 -- @tfield DruidEvent on_drag_start @{DruidEvent}
 
---- on drag progress callback(self, dx, dy)
+--- on drag progress callback(self, dx, dy, total_x, total_y)
 -- @tfield DruidEvent on_drag Event @{DruidEvent}
 
---- Event on drag end callback(self)
+--- Event on drag end callback(self, total_x, total_y)
 -- @tfield DruidEvent on_drag_end @{DruidEvent}
 
 --- Is component now touching
@@ -70,7 +70,7 @@ end
 
 local function end_touch(self)
 	if self.is_drag then
-		self.on_drag_end:trigger(self:get_context())
+		self.on_drag_end:trigger(self:get_context(), self.x - self.touch_start_pos.x, self.y - self.touch_start_pos.y)
 	end
 
 	self.is_drag = false
@@ -96,7 +96,7 @@ local function process_touch(self, touch)
 	if not self.is_drag and distance >= self.style.DRAG_DEADZONE then
 		self.is_drag = true
 		self.on_drag_start:trigger(self:get_context())
-		self:set_input_priority(const.PRIORITY_INPUT_MAX)
+		self:set_input_priority(const.PRIORITY_INPUT_MAX, true)
 	end
 end
 
@@ -176,6 +176,7 @@ function Drag.init(self, node, on_drag_callback)
 	self.is_touch = false
 	self.is_drag = false
 	self.touch_start_pos = vmath.vector3(0)
+	self._is_disabled = false
 
 	self.can_x = true
 	self.can_y = true
@@ -186,6 +187,8 @@ function Drag.init(self, node, on_drag_callback)
 	self.on_drag_start = Event()
 	self.on_drag = Event(on_drag_callback)
 	self.on_drag_end = Event()
+
+	self:on_window_resized()
 end
 
 
@@ -196,6 +199,13 @@ function Drag.on_late_init(self)
 			self:set_click_zone(stencil_node)
 		end
 	end
+end
+
+
+function Drag.on_window_resized(self)
+	local x_koef, y_koef = helper.get_screen_aspect_koef()
+	self._x_koef = x_koef
+	self._y_koef = y_koef
 end
 
 
@@ -211,7 +221,7 @@ function Drag.on_input(self, action_id, action)
 		return false
 	end
 
-	if not helper.is_enabled(self.node) then
+	if not helper.is_enabled(self.node) or self._is_disabled then
 		return false
 	end
 
@@ -268,7 +278,7 @@ function Drag.on_input(self, action_id, action)
 	end
 
 	if self.is_drag then
-		self.on_drag:trigger(self:get_context(), self.dx, self.dy)
+		self.on_drag:trigger(self:get_context(), self.dx, self.dy, self.x - self.touch_start_pos.x, self.y - self.touch_start_pos.y)
 	end
 
 	return self.is_drag
@@ -282,6 +292,23 @@ end
 function Drag.set_click_zone(self, node)
 	self.click_zone = self:get_node(node)
 end
+
+
+--- Set Drag input enabled or disabled
+-- @tparam Drag self @{Drag}
+-- @tparam bool is enabled
+function Drag.set_enabled(self, is_enabled)
+	self._is_disabled = not is_enabled
+end
+
+
+--- Check if Drag component is enabled
+-- @tparam Drag self @{Drag}
+-- @treturn bool
+function Drag.is_enabled(self)
+	return self._is_disabled
+end
+
 
 
 return Drag

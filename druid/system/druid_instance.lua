@@ -30,6 +30,7 @@
 -- @see Drag
 -- @see DataList
 -- @see Hover
+-- @see Layout
 
 local helper = require("druid.helper")
 local class = require("druid.system.middleclass")
@@ -57,6 +58,7 @@ local radio_group = require("druid.extended.radio_group")
 local slider = require("druid.extended.slider")
 local timer = require("druid.extended.timer")
 local data_list = require("druid.extended.data_list")
+local layout = require("druid.extended.layout")
 
 
 local DruidInstance = class("druid.druid_instance")
@@ -735,6 +737,16 @@ end
 function DruidInstance.new_progress(self, node, key, init_value)
 	-- return helper.extended_component("progress")
 	return DruidInstance.new(self, progress, node, key, init_value)
+end
+
+
+--- Create layout component
+-- @tparam DruidInstance self
+-- @tparam string|node node Layout node
+-- @tparam string mode The layout mode
+-- @treturn Layout layout component
+function DruidInstance.new_layout(self, node, mode)
+	return helper.extended_component("layout")
 end
 
 

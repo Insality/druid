@@ -8,6 +8,7 @@ local const = require("druid.const")
 
 local M = {}
 
+
 --- Text node or icon node can be nil
 local function get_text_width(text_node)
 	if text_node then
@@ -94,6 +95,15 @@ function M.centrate_nodes(margin, ...)
 
 		pos_x = pos_x + node_widths[i]/2 + margin -- add second part of offset
 	end
+end
+
+
+function M.get_screen_aspect_koef()
+	local window_x, window_y = window.get_size()
+	local stretch_x = window_x / gui.get_width()
+	local stretch_y = window_y / gui.get_height()
+	return stretch_x / math.min(stretch_x, stretch_y),
+			stretch_y / math.min(stretch_x, stretch_y)
 end
 
 

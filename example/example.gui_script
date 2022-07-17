@@ -130,6 +130,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "Data List", "general_data_list", "/general/data_list/data_list.gui_script"))
 	self.lobby_grid:add(get_button(self, "Checkboxes", "general_checkboxes", "/general/checkboxes/checkboxes.gui_script"))
 	self.lobby_grid:add(get_button(self, "Input text", "general_input", "/general/input/input.gui_script"))
+	self.lobby_grid:add(get_button(self, "Layout", "general_layout", "/general/layout/layout.gui_script"))
 	self.lobby_grid:add(get_button(self, "Swipe", "general_swipe", "/general/swipe/swipe.gui_script"))
 	self.lobby_grid:add(get_button(self, "Drag", "general_drag", "/general/drag/drag.gui_script"))
 

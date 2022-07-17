@@ -33,8 +33,11 @@
 --- The last index of node in grid
 -- @tfield number last_index
 
---- Item anchor
+--- Item anchor [0..1]
 -- @tfield vector3 anchor
+
+--- Item pivot [-0.5..0.5]
+-- @tfield vector3 pivot
 
 --- Item size
 -- @tfield vector3 node_size
