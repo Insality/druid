@@ -5,3 +5,4 @@ date,sha,version,build_size,build_time,platform,mode,is_cache_using,commits_coun
 2022-02-28T19:19:46Z,3b329f9c25c9672e4030edb039b0225fa46f7ce1,0.8.521,4356,11,armv7-android,debug,true,521
 2022-02-28T19:22:51Z,3b329f9c25c9672e4030edb039b0225fa46f7ce1,0.8.521,4356,11,armv7-android,debug,true,521
 2022-03-12T10:01:30Z,d0f3d6641a08b0d6b719b13017aa85907d1667e5,0.8.564,2200,44,js-web,release,true,564
+2022-08-29T18:27:58Z,b2643ebd268b15884363efd17724e689279946f1,0.9.589,2316,45,js-web,release,true,589

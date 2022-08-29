@@ -331,6 +331,8 @@ function druid__checkbox_group.set_state(self, indexes, is_instant) end
 ---@class druid.data_list : druid.base_component
 ---@field grid druid.static_grid|druid.dynamic_grid The Druid Grid component
 ---@field last_index number The current visual last data index
+---@field on_element_add druid.event On DataList visual element created Event callback(self, index, node, instance)
+---@field on_element_remove druid.event On DataList visual element created Event callback(self, index)
 ---@field on_scroll_progress_change druid.event Event triggered when scroll progress is changed; event(self, progress_value)
 ---@field scroll druid.scroll The Druid scroll component
 ---@field scroll_progress number The current progress of scroll posititon
@@ -340,6 +342,21 @@ local druid__data_list = {}
 --- Clear the DataList and refresh visuals
 ---@param self druid.data_list @{DataList}
 function druid__data_list.clear(self) end
+
+--- Return all currenly created components in DataList
+---@param self druid.data_list @{DataList}
+---@return druid.base_component[] List of created nodes
+function druid__data_list.get_created_components(self) end
+
+--- Return all currenly created nodes in DataList
+---@param self druid.data_list @{DataList}
+---@return Node[] List of created nodes
+function druid__data_list.get_created_nodes(self) end
+
+--- Return current data from DataList component
+---@param self druid.data_list @{DataList}
+---@return table The current data array
+function druid__data_list.get_data(self) end
 
 --- Return first index from data.
 --- It not always equals to 1
