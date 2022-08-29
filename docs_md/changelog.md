@@ -427,9 +427,16 @@ Also now you can change the input priority of components temporary. For example 
 		- `const.LAYOUT_MODE.STRETCH` - Usual Defold Stretch Mode
 	- The Layout changes the node size property. So it's look much better if you use 9slice nodes
 	- Works even the node parent is have Fit adjust mode
+- **#200** [Scroll] Glitch if content size equals to scroll view size in runtime
+- **#201** [DataList] Update DataList:
+	- Add two events: `on_element_add` and `on_element_remove`
+	- Add `data_list:get_data()` to access all current data in DataList
+	- Add `data_list:get_created_nodes()` to access currently visual nodes in DataList
+	- Add `data_list:get_created_components()` to access currenly visual component in DataList (if created)
 - **#190** [Progress] Add `progress:set_max_size` function to change max size of progress bar
 - **#188** [Drag] Add two values passed to on_drag callback. Now it is `on_drag(self, dx, dy, total_x, total_y)` to check the overral drag distance
 - **#195** [Drag] Add `drag:is_enabled` and `drag:set_enabled` to enable/disable drag input component
 - **#186** [Grid] Fix: Method set_in_row works incorrectly with IS_DYNAMIC_NODE_POSES style option
 - **#185** [System] Add `on_window_resized` component interest. It will called on game window size changes
 - **#189** [System] Add optional flag to `component:set_input_priority` to mark it as temporary. It will reset to default input priority after the `component:reset_input_priority`
+- **#204** [System] Fix: wrong code example link, if open example from direct URL
