@@ -25,6 +25,12 @@
 --- Event triggered when scroll progress is changed; event(self, progress_value)
 -- @tfield DruidEvent on_scroll_progress_change @{DruidEvent}
 
+---On DataList visual element created Event callback(self, index, node, instance)
+-- @tfield DruidEvent on_element_add @{DruidEvent}
+
+---On DataList visual element created Event callback(self, index)
+-- @tfield DruidEvent on_element_remove @{DruidEvent}
+
 ---
 
 local const = require("druid.const")
@@ -64,6 +70,8 @@ function DataList.init(self, scroll, grid, create_function)
 	self.scroll.on_scroll:subscribe(self._check_elements, self)
 
 	self.on_scroll_progress_change = Event()
+	self.on_element_add = Event()
+	self.on_element_remove = Event()
 
 	self:set_data()
 end
@@ -86,6 +94,14 @@ function DataList.set_data(self, data)
 	self:_refresh()
 
 	return self
+end
+
+
+--- Return current data from DataList component
+-- @tparam DataList self @{DataList}
+-- @treturn table The current data array
+function DataList.get_data(self)
+	return self._data
 end
 
 
@@ -189,6 +205,34 @@ function DataList.get_index(self, data)
 end
 
 
+--- Return all currenly created nodes in DataList
+-- @tparam DataList self @{DataList}
+-- @treturn Node[] List of created nodes
+function DataList.get_created_nodes(self)
+	local nodes = {}
+
+	for index, data in pairs(self._data_visual) do
+		nodes[index] = data.node
+	end
+
+	return nodes
+end
+
+
+--- Return all currenly created components in DataList
+-- @tparam DataList self @{DataList}
+-- @treturn druid.base_component[] List of created nodes
+function DataList.get_created_components(self)
+	local components = {}
+
+	for index, data in pairs(self._data_visual) do
+		components[index] = data.component
+	end
+
+	return components
+end
+
+
 --- Instant scroll to element with passed index
 -- @tparam DataList self @{DataList}
 -- @tparam number index
@@ -220,6 +264,7 @@ function DataList._add_at(self, index)
 	}
 
 	self:log_message("Add element at", { index = index })
+	self.on_element_add:trigger(self:get_context(), index, node, instance)
 end
 
 
@@ -233,12 +278,14 @@ function DataList._remove_at(self, index)
 	local node = self._data_visual[index].node
 	gui.delete_node(node)
 
-	if self._data_visual[index].component then
-		self.druid:remove(self._data_visual[index].component)
+	local instance = self._data_visual[index].component
+	if instance then
+		self.druid:remove(instance)
 	end
 	self._data_visual[index] = nil
 
 	self:log_message("Remove element at", { index = index })
+	self.on_element_remove:trigger(self:get_context(), index)
 end
 
 
