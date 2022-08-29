@@ -156,6 +156,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "Add/remove elements", "data_list_add_remove_nodes"))
 	self.lobby_grid:add(get_button(self, "Navigate over elements", "data_list_navigate", "/data_list/navigate/navigate.gui_script"))
 	self.lobby_grid:add(get_button(self, "Reinit data", "data_list_reinit_data", "/data_list/reinit_data/reinit_data.gui_script"))
+	self.lobby_grid:add(get_button(self, "With component", "data_list_with_component", "/data_list/with_component/with_component.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Custom components"))
 	self.lobby_grid:add(get_button(self, "Rich Input", "custom_rich_input", "/custom/rich_input/rich_input.gui_script"))

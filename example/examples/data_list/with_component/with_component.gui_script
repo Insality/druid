@@ -1,0 +1,89 @@
+local druid = require("druid.druid")
+
+local ButtonComponent = require("example.examples.data_list.with_component.button_component.button_component")
+
+
+local function on_element_add(self, index, node, instance)
+	print("Add element from DataList at index", index, node)
+end
+
+
+local function on_element_remove(self, index)
+	print("Remove element from DataList at index", index)
+end
+
+
+local function on_button_click(self, button)
+	-- Since we change data of other records, we need to change raw data and change state of
+	-- created components
+	local data = self.data_list:get_data()
+	for _, entry in pairs(data) do
+		entry.is_checked = false
+	end
+
+	-- This is way to access all current created DataList components
+	local components = self.data_list:get_created_components()
+	for _, component in pairs(components) do
+		component:set_checked(component == button)
+	end
+end
+
+
+local function create_element(self, data)
+	local nodes = gui.clone_tree(self.prefab)
+	-- Create custom component to pass it to DataList
+	local button = self.druid:new(ButtonComponent, "button_component", nodes)
+	-- Prefab is disabled, so need to enable it for new component
+	gui.set_enabled(button.root, true)
+	button:set_data(data)
+	button:set_click_zone(self.scroll.view_node)
+	button.on_click:subscribe(on_button_click, self)
+
+	return button.root, button
+end
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+	self.prefab = gui.get_node("button_component/root")
+	gui.set_enabled(self.prefab, false)
+
+	self.scroll = self.druid:new_scroll("data_list_view", "data_list_content")
+	self.scroll:set_horizontal_scroll(false)
+	self.grid = self.druid:new_static_grid("data_list_content", self.prefab, 1)
+	self.data_list = self.druid:new_data_list(self.scroll, self.grid, create_element)
+
+	self.data = {}
+	for i = 1, 100 do
+		table.insert(self.data, {
+			is_checked = false,
+			value = i
+		})
+	end
+
+	self.data_list:set_data(self.data)
+	-- Custom callbacks for more management in DataList
+	self.data_list.on_element_add:subscribe(on_element_add)
+	self.data_list.on_element_remove:subscribe(on_element_remove)
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end
