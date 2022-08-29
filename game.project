@@ -47,6 +47,7 @@ splash_image = /media/druid_logo.png
 scale_mode = fit
 show_fullscreen_button = 0
 show_made_with_defold = 0
+cssfile = /example/light_theme.css
 
 [native_extension]
 app_manifest = /example/game.appmanifest
