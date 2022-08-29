@@ -560,13 +560,13 @@ end
 
 function Scroll._set_scroll_position(self, position)
 	local available_extra = self.available_pos_extra
-	position.x = helper.clamp(position.x, available_extra.x, available_extra.z)
-	position.y = helper.clamp(position.y, available_extra.w, available_extra.y)
+	local position_x = helper.clamp(position.x, available_extra.x, available_extra.z)
+	local position_y = helper.clamp(position.y, available_extra.w, available_extra.y)
 
-	if self.position.x ~= position.x or self.position.y ~= position.y then
-		self.position.x = position.x
-		self.position.y = position.y
-		gui.set_position(self.content_node, position)
+	if self.position.x ~= position_x or self.position.y ~= position_y then
+		self.position.x = position_x
+		self.position.y = position_y
+		gui.set_position(self.content_node, self.position)
 
 		self.on_scroll:trigger(self:get_context(), self.position)
 	end
@@ -708,17 +708,13 @@ function Scroll._update_size(self)
 	local content_border_extra = helper.get_border(self.content_node)
 	local stretch_size = self.style.EXTRA_STRETCH_SIZE
 
-	if self.drag.can_x then
-		local sign = content_size.x > self.view_size.x and 1 or -1
-		content_border_extra.x = content_border_extra.x - stretch_size * sign
-		content_border_extra.z = content_border_extra.z + stretch_size * sign
-	end
+	local sign_x = content_size.x > self.view_size.x and 1 or -1
+	content_border_extra.x = content_border_extra.x - stretch_size * sign_x
+	content_border_extra.z = content_border_extra.z + stretch_size * sign_x
 
-	if self.drag.can_y then
-		local sign = content_size.y > self.view_size.y and 1 or -1
-		content_border_extra.y = content_border_extra.y + stretch_size * sign
-		content_border_extra.w = content_border_extra.w - stretch_size * sign
-	end
+	local sign_y = content_size.y > self.view_size.y and 1 or -1
+	content_border_extra.y = content_border_extra.y + stretch_size * sign_y
+	content_border_extra.w = content_border_extra.w - stretch_size * sign_y
 
 	if not self.style.SMALL_CONTENT_SCROLL then
 		self.drag.can_x = content_size.x > self.view_size.x

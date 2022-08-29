@@ -32,6 +32,7 @@ end
 local function show_scene(self, scene_name, text_header)
 	print("Show scene:", scene_name)
 
+	self.current_script_url = self.scene_urls[scene_name]
 	monarch.show(scene_name)
 	gui.set_enabled(gui.get_node("C_Anchor"), false)
 	gui.set_enabled(self.button_menu.node, true)
@@ -88,9 +89,9 @@ local function get_button(self, text, scene_name, script_url)
 	gui.set_enabled(root, true)
 
 	self.scene_names[scene_name] = text
+	self.scene_urls[scene_name] = script_url
 
 	self.druid:new_button(root, function()
-		self.current_script_url = script_url
 		show_scene(self, scene_name, text)
 	end):set_click_zone(self.lobby_scroll.view_node)
 
@@ -115,6 +116,7 @@ end
 local function init_lobby(self)
 	gui.set_enabled(gui.get_node("prefabs"), false)
 	self.scene_names = {}
+	self.scene_urls = {}
 
 	self.lobby_scroll = self.druid:new_scroll("lobby_view", "lobby_content")
 	self.lobby_grid = self.druid:new_dynamic_grid("lobby_content")
@@ -158,6 +160,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "Add/remove elements", "data_list_add_remove_nodes"))
 	self.lobby_grid:add(get_button(self, "Navigate over elements", "data_list_navigate", "/data_list/navigate/navigate.gui_script"))
 	self.lobby_grid:add(get_button(self, "Reinit data", "data_list_reinit_data", "/data_list/reinit_data/reinit_data.gui_script"))
+	self.lobby_grid:add(get_button(self, "With component", "data_list_with_component", "/data_list/with_component/with_component.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Custom components"))
 	self.lobby_grid:add(get_button(self, "Rich Input", "custom_rich_input", "/custom/rich_input/rich_input.gui_script"))

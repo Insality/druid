@@ -86,6 +86,18 @@
 	<td class="summary">Clear the DataList and refresh visuals</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#get_created_components">get_created_components(self)</a></td>
+	<td class="summary">Return all currenly created components in DataList</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_created_nodes">get_created_nodes(self)</a></td>
+	<td class="summary">Return all currenly created nodes in DataList</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_data">get_data(self)</a></td>
+	<td class="summary">Return current data from DataList component</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#get_first_index">get_first_index(self)</a></td>
 	<td class="summary">Return first index from data.</td>
 	</tr>
@@ -129,6 +141,14 @@
 	<td class="summary">The current visual last data index</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#on_element_add">on_element_add</a></td>
+	<td class="summary">On DataList visual element created Event callback(self, index, node, instance)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_element_remove">on_element_remove</a></td>
+	<td class="summary">On DataList visual element created Event callback(self, index)</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#on_scroll_progress_change">on_scroll_progress_change</a></td>
 	<td class="summary">Event triggered when scroll progress is changed; event(self, progress_value)</td>
 	</tr>
@@ -169,6 +189,87 @@
         </li>
     </ul>
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_created_components"></a>
+    <strong>get_created_components(self)</strong>
+    </dt>
+    <dd>
+    Return all currenly created components in DataList
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.base_component[]</span></span>
+        List of created nodes
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_created_nodes"></a>
+    <strong>get_created_nodes(self)</strong>
+    </dt>
+    <dd>
+    Return all currenly created nodes in DataList
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Node[]</span></span>
+        List of created nodes
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_data"></a>
+    <strong>get_data(self)</strong>
+    </dt>
+    <dd>
+    Return current data from DataList component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        The current data array
+    </ol>
 
 
 
@@ -408,6 +509,46 @@
         <li><span class="parameter">last_index</span>
             <span class="types"><span class="type">number</span></span>
 
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_element_add"></a>
+    <strong>on_element_add</strong>
+    </dt>
+    <dd>
+    On DataList visual element created Event callback(self, index, node, instance)
+
+
+    <ul>
+        <li><span class="parameter">on_element_add</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_element_remove"></a>
+    <strong>on_element_remove</strong>
+    </dt>
+    <dd>
+    On DataList visual element created Event callback(self, index)
+
+
+    <ul>
+        <li><span class="parameter">on_element_remove</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
     </ul>
 
