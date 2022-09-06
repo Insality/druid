@@ -57,7 +57,7 @@ local lang_text = require("druid.extended.lang_text")
 local progress = require("druid.extended.progress")
 local radio_group = require("druid.extended.radio_group")
 local slider = require("druid.extended.slider")
-local timer = require("druid.extended.timer")
+local timer_component = require("druid.extended.timer")
 local data_list = require("druid.extended.data_list")
 
 
@@ -215,6 +215,10 @@ function DruidInstance.initialize(self, context, style)
 	for i = 1, #base_component.ALL_INTERESTS do
 		self.components_interest[base_component.ALL_INTERESTS[i]] = {}
 	end
+
+	timer.delay(0, false, function()
+		self:late_init()
+	end)
 end
 
 
@@ -311,10 +315,9 @@ function DruidInstance.remove(self, component)
 end
 
 
---- Druid update function
+--- Druid late update function call after init and before udpate step
 -- @tparam DruidInstance self
--- @tparam number dt Delta time
-function DruidInstance.update(self, dt)
+function DruidInstance.late_init(self)
 	local late_init_components = self.components_interest[base_component.ON_LATE_INIT]
 	while late_init_components[1] do
 		late_init_components[1]:on_late_init()
@@ -325,7 +328,13 @@ function DruidInstance.update(self, dt)
 		-- Input init on late init step, to be sure it goes after user go acquire input
 		input_init(self)
 	end
+end
 
+
+--- Druid update function
+-- @tparam DruidInstance self
+-- @tparam number dt Delta time
+function DruidInstance.update(self, dt)
 	self._is_late_remove_enabled = true
 	local components = self.components_interest[base_component.ON_UPDATE]
 	for i = 1, #components do
@@ -724,7 +733,7 @@ end
 -- @treturn Timer timer component
 function DruidInstance.new_timer(self, node, seconds_from, seconds_to, callback)
 	-- return helper.extended_component("timer")
-	return DruidInstance.new(self, timer, node, seconds_from, seconds_to, callback)
+	return DruidInstance.new(self, timer_component, node, seconds_from, seconds_to, callback)
 end
 
 
