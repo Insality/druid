@@ -21,7 +21,7 @@ M.ACTION_SCROLL_UP = hash(sys.get_config("druid.input_scroll_up", "scroll_up"))
 M.ACTION_SCROLL_DOWN = hash(sys.get_config("druid.input_scroll_down", "scroll_down"))
 
 
-M.IS_STENCIL_CHECK = sys.get_config("druid.stencil_check") == "1"
+M.IS_STENCIL_CHECK = not (sys.get_config("druid.no_stencil_check") == "1")
 
 
 M.RELEASED = "released"
@@ -92,7 +92,6 @@ M.LAYOUT_MODE = {
 	FIT = gui.ADJUST_FIT,
 	STRETCH = gui.ADJUST_STRETCH,
 }
-
 
 M.VECTOR_ZERO = vmath.vector3(0)
 M.VECTOR_ONE = vmath.vector3(1)

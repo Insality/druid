@@ -78,11 +78,11 @@ no_auto_template = 1
 
 ### Stencil check [optional]
 
-When creating input components inside stencil nodes, you probably will use `component:set_click_zone()` to restrict clicks outside this stencil zone.
-Druid can do it automatically on _late_init_ component step. To enable this feature add next field in your _game.project_ file
+When creating input components inside stencil nodes, **Druid** automatically setup `component:set_click_zone()` on _late_init_ component step to restrict input clicks outside this stencil zone.
+To disable this feature add next field in your _game.project_ file
 ```
 [druid]
-stencil_check = 1
+no_stencil_check = 1
 ```
 
 
