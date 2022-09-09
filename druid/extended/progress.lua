@@ -75,6 +75,9 @@ local function set_bar_to(self, set_to, is_silent)
 
 	if not is_silent then
 		check_steps(self, prev_value, set_to)
+		if prev_value ~= self.last_value then
+			self.on_change:trigger(self:get_context(), self.last_value)
+		end
 	end
 end
 
@@ -170,6 +173,7 @@ end
 -- @tparam Progress self @{Progress}
 -- @tparam number to Progress bar value, from 0 to 1
 function Progress.set_to(self, to)
+	to = helper.clamp(to, 0, 1)
 	set_bar_to(self, to)
 end
 
