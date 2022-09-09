@@ -9,7 +9,7 @@ end
 
 local function on_button_add_25(self)
 	self.progress_x:to(self.progress_x:get() + 0.25)
-	self.progress_y:set_to(self.progress_x:get() + 0.25)
+	self.progress_y:set_to(self.progress_y:get() + 0.25)
 end
 
 
