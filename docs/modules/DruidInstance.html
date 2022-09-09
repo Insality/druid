@@ -50,9 +50,11 @@
   <li><strong>DruidInstance</strong></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
   <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
   <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
   <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
@@ -100,6 +102,8 @@
          <li><a href="../modules/Drag.html#">Drag</a></li>
          <li><a href="../modules/DataList.html#">DataList</a></li>
          <li><a href="../modules/Hover.html#">Hover</a></li>
+         <li><a href="../modules/Layout.html#">Layout</a></li>
+         <li><a href="../modules/Hotkey.html#">Hotkey</a></li>
     </ul>
 
 
@@ -108,6 +112,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#final">final(self)</a></td>
 	<td class="summary">Call on final function on gui_script.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#late_init">late_init(self)</a></td>
+	<td class="summary">Druid late update function call after init and before udpate step</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#log_message">log_message(self, message[, context])</a></td>
@@ -155,6 +163,10 @@
  Deprecated</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#new_hotkey">new_hotkey(self, keys_array, callback[, params])</a></td>
+	<td class="summary">Create hotkey component</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#new_hover">new_hover(self, node, on_hover_callback)</a></td>
 	<td class="summary">Create hover basic component</td>
 	</tr>
@@ -165,6 +177,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#new_lang_text">new_lang_text(self, node, locale_id, no_adjust)</a></td>
 	<td class="summary">Create lang_text component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_layout">new_layout(self, node, mode)</a></td>
+	<td class="summary">Create layout component</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#new_progress">new_progress(self, node, key[, init_value=1])</a></td>
@@ -242,6 +258,27 @@
     <dd>
     Call on final function on gui_script.  It will call on_remove
  on all druid components
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "late_init"></a>
+    <strong>late_init(self)</strong>
+    </dt>
+    <dd>
+    Druid late update function call after init and before udpate step
 
 
     <h3>Parameters:</h3>
@@ -660,6 +697,46 @@
 
 </dd>
     <dt>
+    <a name = "new_hotkey"></a>
+    <strong>new_hotkey(self, keys_array, callback[, params])</strong>
+    </dt>
+    <dd>
+    Create hotkey component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">keys_array</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string[]</a></span>
+         Keys for trigger action. Should contains one action key and any amount of modificator keys
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Button callback
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">value</span></span>
+         Button callback params
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Hotkey</span></span>
+        hotkey component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "new_hover"></a>
     <strong>new_hover(self, node, on_hover_callback)</strong>
     </dt>
@@ -767,6 +844,41 @@
 
            <span class="types"><span class="type">LangText</span></span>
         lang_text component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_layout"></a>
+    <strong>new_layout(self, node, mode)</strong>
+    </dt>
+    <dd>
+    Create layout component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         Layout node
+        </li>
+        <li><span class="parameter">mode</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The layout mode
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Layout</span></span>
+        layout component
     </ol>
 
 

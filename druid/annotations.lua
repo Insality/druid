@@ -149,8 +149,9 @@ function druid__base_component.set_input_enabled(self, state) end
 --- Set component input priority
 ---@param self druid.base_component @{BaseComponent}
 ---@param value number The new input priority value
+---@param is_temporary boolean If true, the reset input priority will return to previous value
 ---@return number The component input priority
-function druid__base_component.set_input_priority(self, value) end
+function druid__base_component.set_input_priority(self, value, is_temporary) end
 
 --- Set current component nodes (protected)
 ---@protected
@@ -404,8 +405,8 @@ function druid__data_list.set_data(self, data) end
 ---@field can_y bool Is drag component process horizontal.
 ---@field is_drag bool Is component now dragging
 ---@field is_touch bool Is component now touching
----@field on_drag druid.event on drag progress callback(self, dx, dy)
----@field on_drag_end druid.event Event on drag end callback(self)
+---@field on_drag druid.event on drag progress callback(self, dx, dy, total_x, total_y)
+---@field on_drag_end druid.event Event on drag end callback(self, total_x, total_y)
 ---@field on_drag_start druid.event Event on drag start callback(self)
 ---@field on_touch_end druid.event Event on touch end callback(self)
 ---@field on_touch_start druid.event Event on touch start callback(self)
@@ -421,11 +422,21 @@ local druid__drag = {}
 ---@param on_drag_callback function Callback for on_drag_event(self, dx, dy)
 function druid__drag.init(self, node, on_drag_callback) end
 
+--- Check if Drag component is enabled
+---@param self druid.drag @{Drag}
+---@return bool
+function druid__drag.is_enabled(self) end
+
 --- Strict drag click area.
 --- Useful for  restrict events outside stencil node
 ---@param self druid.drag @{Drag}
 ---@param node node Gui node
 function druid__drag.set_click_zone(self, node) end
+
+--- Set Drag input enabled or disabled
+---@param self druid.drag @{Drag}
+---@param is_enabled bool
+function druid__drag.set_enabled(self, is_enabled) end
 
 
 ---@class druid.drag.style
@@ -566,6 +577,33 @@ local druid__helper = {}
 ---@param t table
 ---@return string
 function druid__helper.table_to_string(t) end
+
+
+---@class druid.hotkey : druid.base_component
+---@field button druid.button Button component from click_node
+---@field click_node node Button trigger node
+---@field node node Visual node
+---@field on_change_state druid.event On change state callback(self, state)
+---@field style druid.hotkey.style Component style params.
+local druid__hotkey = {}
+
+--- Add hotkey for component callback
+---@param self druid.hotkey @{Hotkey}
+---@param keys string[]|hash[]|string|hash that have to be pressed before key pressed to activate
+---@param callback_argument value The argument to pass into the callback function
+function druid__hotkey.add_hotkey(self, keys, callback_argument) end
+
+--- Component init function
+---@param self druid.hotkey @{Hotkey}
+---@param keys string[]|string The keys to be pressed for trigger callback. Should contains one key and any modificator keys
+---@param callback function The callback function
+---@param callback_argument value The argument to pass into the callback function
+function druid__hotkey.init(self, keys, callback, callback_argument) end
+
+
+---@class druid.hotkey.style
+---@field MODIFICATORS field  The list of action_id as hotkey modificators
+local druid__hotkey__style = {}
 
 
 ---@class druid.hover : druid.base_component
@@ -725,6 +763,64 @@ function druid__lang_text.set_to(self, text) end
 function druid__lang_text.translate(self, locale_id, a, b, c, d, e, f, g) end
 
 
+---@class druid.layout : druid.base_component
+---@field mode string Current layout mode
+---@field node node Layout node
+---@field on_size_changed druid.event On window resize callback(self, new_size)
+local druid__layout = {}
+
+--- Set node for layout node to fit inside it.
+--- Pass nil to reset
+---@param self druid.layout @{Layout}
+---@param node Node
+---@return druid.layout @{Layout}
+function druid__layout.fit_into_node(self, node) end
+
+--- Set size for layout node to fit inside it
+---@param self druid.layout @{Layout}
+---@param target_size vector3
+---@return druid.layout @{Layout}
+function druid__layout.fit_into_size(self, target_size) end
+
+--- Set current size for layout node to fit inside it
+---@param self druid.layout @{Layout}
+---@return druid.layout @{Layout}
+function druid__layout.fit_into_window(self) end
+
+--- Component init function
+---@param self druid.layout @{Layout}
+---@param node node Gui node
+---@param mode string The layout mode (from const.LAYOUT_MODE)
+---@param on_size_changed_callback function The callback on window resize
+function druid__layout.init(self, node, mode, on_size_changed_callback) end
+
+--- Set maximum size of layout node
+---@param self druid.layout @{Layout}
+---@param max_size vector3
+---@return druid.layout @{Layout}
+function druid__layout.set_max_size(self, max_size) end
+
+--- Set minimal size of layout node
+---@param self druid.layout @{Layout}
+---@param min_size vector3
+---@return druid.layout @{Layout}
+function druid__layout.set_min_size(self, min_size) end
+
+--- Set new origin position of layout node.
+--- You should apply this on node movement
+---@param self druid.layout @{Layout}
+---@param new_origin_position vector3
+---@return druid.layout @{Layout}
+function druid__layout.set_origin_position(self, new_origin_position) end
+
+--- Set new origin size of layout node.
+--- You should apply this on node manual size change
+---@param self druid.layout @{Layout}
+---@param new_origin_size vector3
+---@return druid.layout @{Layout}
+function druid__layout.set_origin_size(self, new_origin_size) end
+
+
 ---@class druid.pin_knob : druid.base_component
 ---@field druid druid_instance The component druid instance
 ---@field is_drag bool Is currently under user control
@@ -782,6 +878,12 @@ function druid__progress.get(self) end
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
 ---@param init_value number Initial value of progress bar
 function druid__progress.init(self, node, key, init_value) end
+
+--- Set progress bar max node size
+---@param self druid.progress @{Progress}
+---@param max_size vector3 The new node maximum (full) size
+---@return druid.progress @{Progress}
+function druid__progress.set_max_size(self, max_size) end
 
 --- Set points on progress bar to fire the callback
 ---@param self druid.progress @{Progress}
@@ -1026,7 +1128,7 @@ function druid__slider.set_steps(self, steps) end
 
 
 ---@class druid.static_grid : druid.base_component
----@field anchor vector3 Item anchor
+---@field anchor vector3 Item anchor [0..1]
 ---@field border vector4 The size of item content
 ---@field first_index number The first index of node in grid
 ---@field last_index number The last index of node in grid
@@ -1038,6 +1140,7 @@ function druid__slider.set_steps(self, steps) end
 ---@field on_remove_item druid.event On item remove callback(self, index)
 ---@field on_update_positions druid.event On update item positions callback(self)
 ---@field parent node Parent gui node
+---@field pivot vector3 Item pivot [-0.5..0.5]
 ---@field style druid.static_grid.style Component style params.
 local druid__static_grid = {}
 
@@ -1302,6 +1405,10 @@ local druid_instance = {}
 ---@param self druid_instance
 function druid_instance.final(self) end
 
+--- Druid late update function call after init and before udpate step
+---@param self druid_instance
+function druid_instance.late_init(self) end
+
 --- Log message, if is_debug mode is enabled
 ---@param self druid_instance @{DruidInstance}
 ---@param message string
@@ -1382,6 +1489,14 @@ function druid_instance.new_dynamic_grid(self, parent) end
 ---@return druid.static_grid grid component
 function druid_instance.new_grid(self, parent, element, in_row) end
 
+--- Create hotkey component
+---@param self druid_instance
+---@param keys_array string|string[] Keys for trigger action. Should contains one action key and any amount of modificator keys
+---@param callback function Button callback
+---@param params value Button callback params
+---@return druid.hotkey hotkey component
+function druid_instance.new_hotkey(self, keys_array, callback, params) end
+
 --- Create hover basic component
 ---@param self druid_instance
 ---@param node node Gui node
@@ -1404,6 +1519,13 @@ function druid_instance.new_input(self, click_node, text_node, keyboard_type) en
 ---@param no_adjust bool If true, will not correct text size
 ---@return druid.lang_text lang_text component
 function druid_instance.new_lang_text(self, node, locale_id, no_adjust) end
+
+--- Create layout component
+---@param self druid_instance
+---@param node string|node Layout node
+---@param mode string The layout mode
+---@return druid.layout layout component
+function druid_instance.new_layout(self, node, mode) end
 
 --- Create progress component
 ---@param self druid_instance

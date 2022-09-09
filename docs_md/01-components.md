@@ -147,7 +147,7 @@ Basic Druid progress bar component
 ### Setup
 Create progress bar component with druid: `progress = druid:new_progress(node_name, key, init_value)`
 
-Node name should have maximum node size, so in GUI scene, node_name should be fully filled. 
+Node name should have maximum node size, so in GUI scene, node_name should be fully filled.
 Key is value from druid const: const.SIDE.X (or just "x") or const.SIDE.Y (or just "y")
 
 ### Notes
@@ -165,7 +165,7 @@ Basic Druid slider component
 ### Setup
 Create slider component  with druid: `slider = druid:new_slider(node_name, end_pos, callback)`
 
-Pin node (node_name in params) should be placed in zero position (initial). It will be available to mode Pin node between start pos and end pos. 
+Pin node (node_name in params) should be placed in zero position (initial). It will be available to mode Pin node between start pos and end pos.
 
 ### Notes
 - You can setup points of interests on slider via `slider:set_steps`. If steps are exist, slider values will be only from this steps (notched slider)
@@ -277,7 +277,7 @@ Create  component with druid: `grid = druid:new_static_grid(parent_node, prefab_
 ### Overview
 Component for manage node positions with different node sizes.
 Unlike Static Grid, Dynamic Grid can place nodes only in one row or in one column.
-Dynamic Grid can't have gaps between elements 
+Dynamic Grid can't have gaps between elements
 - you will get error, if try spawn element far away from others.
 Dynamic Grid should have __West__, __East__, __South__ or __North__ pivot (vertical or horizontal element placement)
 
@@ -301,7 +301,7 @@ Check the _parent_node_ have correct pivot point. You will get the error otherwi
 [Data List API here](https://insality.github.io/druid/modules/DataList.html)
 
 ### Overview
-Component to manage data for huge dataset in scroll. DataList create elements only in scroll view. 
+Component to manage data for huge dataset in scroll. DataList create elements only in scroll view.
 It requires Druid Scroll and Druid Grid (Static or Dynamic) components
 
 
@@ -368,10 +368,12 @@ System Druid component, handle drag actions on node
 Create drag component with druid: `hover = druid:new_drag(node, drag_callback)`
 
 ### Notes
-- Drag callback have next params: (self, swipe_side, distance, time)
+- Drag callback have next params: (self, dx, dy, total_x, total_y)
 	- **self**: Druid self context
 	- **dx**: *number* - delta x position
 	- **dy**: *number* - delta y position
+	- **total_x**: *number* - total delta x position
+	- **total_y**: *number* - total delta y position
 - In styles, you can point the drag start deadzone. Default value is 10 pixels
 - Drag correctly process multitouch. You can switch touch_id, while dragging on node with correct _dx_ and _dy_ values (made for correct scrolling)
 - You can restrict horizontal or vertical dragging by setting `drag.can_x` or `drag.can_y` to _false_ value
@@ -387,3 +389,56 @@ Create drag component with druid: `hover = druid:new_drag(node, drag_callback)`
 	- _on_drag_ (self, dx, dy) - Event on drag process
 	- _on_drag_end_ (self) - Event on drag end
 - Drag node zone can be restricted via `drag:set_click_zone(node)`
+
+
+## Hotkey
+[Hotkey API here](https://insality.github.io/druid/modules/Hotkey.html)
+
+### Overview
+Druid component to handle keyboard hotkeys with key modificators
+
+### Setup
+This is extended component. Before use it, you should register it:
+```
+local druid =  require("druid.druid")
+local hotkey =  require("druid.extended.hotkey")
+druid.register("hotkey", hotkey)
+```
+Create hotkey component with druid: `hotkey = druid:new_hotkey(keys_array, callback, [callback_argument])`
+
+### Notes
+- Hotkey callback is similar with button callback: (self, callback_argument)
+	- **self**: Druid self context
+	- **callback_argument**: *value* - Any value passed at component constructor
+- In styles, you can point the array of modificator keys. This keys should be pressed with main key to trigger the callback
+- The keys_arrays should contains one action key and any amount of modificator keys
+- You can add additional hotkeys to hotkey component with `hotkey:add_hotkey(keys_array, callback_argument)`
+
+
+## Layout
+[Layout API here](https://insality.github.io/druid/modules/Layout.html)
+
+### Overview
+Component to handle node size depends on layout mode. Unlike from Defold Adjust modes, you able to select node stretch by one size or zoom by minimum or maximum side
+
+### Setup
+This is extended component. Before use it, you should register it:
+```
+local druid =  require("druid.druid")
+local layout =  require("druid.extended.layout")
+druid.register("layout", layout)
+```
+Create layout component with druid: `layout = druid:new_layout(node, layout_mode, on_size_change_callback)`
+
+
+### Notes
+- Layout mode can be next:
+	- `const.LAYOUT_MODE.STRETCH_X` - Stretch node only by X
+	- `const.LAYOUT_MODE.STRETCH_Y` - Stretch node only by Y
+	- `const.LAYOUT_MODE.ZOOM_MIN` - Zoom node by minimal stretch multiplier
+	- `const.LAYOUT_MODE.ZOOM_MAX` - Zoom node by maximum stretch multiplier
+	- `const.LAYOUT_MODE.FIT` - Usual Defold Fit mode
+	- `const.LAYOUT_MODE.STRETCH` - Usual Defold Stretch Mode
+- The Layout component will change the node size property. So it's able to increase size of 9patch nodes without scaling issue
+- The Layout works even inside parent node with Fit adjust mode
+

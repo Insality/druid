@@ -739,7 +739,6 @@ function Scroll._process_scroll_wheel(self, action_id, action)
 		return false
 	end
 
-
 	local koef = (action_id == const.ACTION_SCROLL_UP) and 1 or -1
 	if self.style.WHEEL_SCROLL_INVERTED then
 		koef = -koef

@@ -62,6 +62,10 @@ images {
   image: "/example/assets/images/buttons/button_blue.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/example/assets/images/logo.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0

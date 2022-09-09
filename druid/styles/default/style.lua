@@ -147,4 +147,9 @@ M["text"] = {
 }
 
 
+M["hotkey"] = {
+	MODIFICATORS = { "key_lshift", "key_rshift", "key_lctrl", "key_rctrl", "key_lalt", "key_ralt", "key_lsuper", "key_rsuper" }, -- Add key ids to mark it as modificator keys
+}
+
+
 return M

@@ -18,6 +18,18 @@ key_trigger {
   input: KEY_ESC
   action: "key_esc"
 }
+key_trigger {
+  input: KEY_LSUPER
+  action: "key_lsuper"
+}
+key_trigger {
+  input: KEY_LCTRL
+  action: "key_lctrl"
+}
+key_trigger {
+  input: KEY_G
+  action: "key_g"
+}
 mouse_trigger {
   input: MOUSE_WHEEL_UP
   action: "scroll_up"

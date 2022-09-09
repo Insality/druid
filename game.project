@@ -12,7 +12,7 @@ dynamic_orientation = 1
 
 [project]
 title = druid
-version = 0.9.0
+version = 0.10.0
 publisher = Insality
 developer = Insality
 dependencies#0 = https://github.com/insalitygames/deftest/archive/master.zip
@@ -27,7 +27,7 @@ use_accelerometer = 0
 
 [druid]
 no_auto_input = 0
-stencil_check = 0
+no_stencil_check = 0
 no_auto_template = 0
 input_text = text
 input_touch = touch
@@ -47,6 +47,7 @@ splash_image = /media/druid_logo.png
 scale_mode = fit
 show_fullscreen_button = 0
 show_made_with_defold = 0
+cssfile = /example/light_theme.css
 
 [native_extension]
 app_manifest = /example/game.appmanifest

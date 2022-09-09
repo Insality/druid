@@ -1,12 +1,12 @@
 [project]
 title = druid
-version = 0.9.592
+version = 0.10.603
 write_log = 0
 compress_archive = 1
 publisher = Insality
 developer = Insality
-commit_sha = 13003e472169cbd261e703eca7b133adf64a24f7
-build_date = 2022-08-29T18:46:47Z
+commit_sha = 072507cc9e715541bdee7636d2e5eeeb3c22a57d
+build_date = 2022-09-09T18:00:07Z
 title_as_file_name = druid
 
 [display]
@@ -120,7 +120,7 @@ default_language = en
 localizations = en
 
 [android]
-version_code = 592
+version_code = 603
 minimum_sdk_version = 16
 target_sdk_version = 30
 package = com.insality.druid
@@ -144,7 +144,7 @@ localizations = en
 custom_heap_size = 0
 heap_size = 64
 htmlfile = /builtins/manifests/web/engine_template.html
-cssfile = /builtins/manifests/web/light_theme.css
+cssfile = /example/light_theme.css
 archive_location_prefix = archive
 show_fullscreen_button = 0
 show_made_with_defold = 0
@@ -192,7 +192,7 @@ run_while_iconified = 0
 
 [druid]
 no_auto_input = 0
-stencil_check = 0
+no_stencil_check = 0
 no_auto_template = 0
 input_text = text
 input_touch = touch

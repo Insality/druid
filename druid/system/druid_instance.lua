@@ -30,6 +30,8 @@
 -- @see Drag
 -- @see DataList
 -- @see Hover
+-- @see Layout
+-- @see Hotkey
 
 local helper = require("druid.helper")
 local class = require("druid.system.middleclass")
@@ -55,7 +57,7 @@ local lang_text = require("druid.extended.lang_text")
 local progress = require("druid.extended.progress")
 local radio_group = require("druid.extended.radio_group")
 local slider = require("druid.extended.slider")
-local timer = require("druid.extended.timer")
+local timer_component = require("druid.extended.timer")
 local data_list = require("druid.extended.data_list")
 
 
@@ -213,6 +215,10 @@ function DruidInstance.initialize(self, context, style)
 	for i = 1, #base_component.ALL_INTERESTS do
 		self.components_interest[base_component.ALL_INTERESTS[i]] = {}
 	end
+
+	timer.delay(0, false, function()
+		self:late_init()
+	end)
 end
 
 
@@ -309,10 +315,9 @@ function DruidInstance.remove(self, component)
 end
 
 
---- Druid update function
+--- Druid late update function call after init and before udpate step
 -- @tparam DruidInstance self
--- @tparam number dt Delta time
-function DruidInstance.update(self, dt)
+function DruidInstance.late_init(self)
 	local late_init_components = self.components_interest[base_component.ON_LATE_INIT]
 	while late_init_components[1] do
 		late_init_components[1]:on_late_init()
@@ -323,7 +328,13 @@ function DruidInstance.update(self, dt)
 		-- Input init on late init step, to be sure it goes after user go acquire input
 		input_init(self)
 	end
+end
 
+
+--- Druid update function
+-- @tparam DruidInstance self
+-- @tparam number dt Delta time
+function DruidInstance.update(self, dt)
 	self._is_late_remove_enabled = true
 	local components = self.components_interest[base_component.ON_UPDATE]
 	for i = 1, #components do
@@ -722,7 +733,7 @@ end
 -- @treturn Timer timer component
 function DruidInstance.new_timer(self, node, seconds_from, seconds_to, callback)
 	-- return helper.extended_component("timer")
-	return DruidInstance.new(self, timer, node, seconds_from, seconds_to, callback)
+	return DruidInstance.new(self, timer_component, node, seconds_from, seconds_to, callback)
 end
 
 
@@ -735,6 +746,27 @@ end
 function DruidInstance.new_progress(self, node, key, init_value)
 	-- return helper.extended_component("progress")
 	return DruidInstance.new(self, progress, node, key, init_value)
+end
+
+
+--- Create layout component
+-- @tparam DruidInstance self
+-- @tparam string|node node Layout node
+-- @tparam string mode The layout mode
+-- @treturn Layout layout component
+function DruidInstance.new_layout(self, node, mode)
+	return helper.extended_component("layout")
+end
+
+
+--- Create hotkey component
+-- @tparam DruidInstance self
+-- @tparam string|string[] keys_array Keys for trigger action. Should contains one action key and any amount of modificator keys
+-- @tparam function callback Button callback
+-- @tparam[opt] value params Button callback params
+-- @treturn Hotkey hotkey component
+function DruidInstance.new_hotkey(self, keys_array, callback, params)
+	return helper.extended_component("hotkey")
 end
 
 

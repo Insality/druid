@@ -85,6 +85,9 @@ function Component:on_language_change() end
 -- [OPTIONAL] Call if game layout has changed and need to restore values in component
 function Component:on_layout_change() end
 
+-- [OPTIONAL] Call if game window size is changed
+function Component:on_window_resized() end
+
 -- [OPTIONAL] Call, if input was capturing before this component
 -- Example: scroll is start scrolling, so you need unhover button
 function Component:on_input_interrupt() end

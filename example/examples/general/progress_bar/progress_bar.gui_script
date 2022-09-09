@@ -1,0 +1,66 @@
+local druid = require("druid.druid")
+
+
+local function on_button_set_0(self)
+	self.progress_x:to(0)
+	self.progress_y:set_to(0)
+end
+
+
+local function on_button_add_25(self)
+	self.progress_x:to(self.progress_x:get() + 0.25)
+	self.progress_y:set_to(self.progress_y:get() + 0.25)
+end
+
+
+local function on_button_set_100(self)
+	self.progress_x:to(1)
+	self.progress_y:set_to(1)
+end
+
+
+local function on_progress_step(self, value)
+	gui.set_text(gui.get_node("text_x_hint"), "Last step triggered: " .. value)
+end
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+	self.progress_x = self.druid:new_progress("progress_fill_x", "x", 0.4)
+	self.progress_x:set_steps({0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1}, on_progress_step)
+	self.progress_x.on_change:subscribe(function(_, value)
+		value = math.floor(value * 100)
+		gui.set_text(gui.get_node("text_progress_amount_x"), value .. "%")
+	end)
+
+	self.progress_y = self.druid:new_progress("progress_fill_y", "y", 0.6)
+	self.progress_y.on_change:subscribe(function(_, value)
+		value = math.floor(value * 100)
+		gui.set_text(gui.get_node("text_progress_amount_y"), value .. "%")
+	end)
+
+	self.druid:new_button("button_set_0/button", on_button_set_0)
+	self.druid:new_button("button_add_25/button", on_button_add_25)
+	self.druid:new_button("button_set_100/button", on_button_set_100)
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

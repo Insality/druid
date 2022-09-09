@@ -52,9 +52,11 @@
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
   <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
   <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
   <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
@@ -148,7 +150,7 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#anchor">anchor</a></td>
-	<td class="summary">Item anchor</td>
+	<td class="summary">Item anchor [0..1]</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#border">border</a></td>
@@ -193,6 +195,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#parent">parent</a></td>
 	<td class="summary">Parent gui node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pivot">pivot</a></td>
+	<td class="summary">Item pivot [-0.5..0.5]</td>
 	</tr>
 </table>
 
@@ -677,7 +683,7 @@
     <strong>anchor</strong>
     </dt>
     <dd>
-    Item anchor
+    Item anchor [0..1]
 
 
     <ul>
@@ -903,6 +909,26 @@
     <ul>
         <li><span class="parameter">parent</span>
             <span class="types"><span class="type">node</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pivot"></a>
+    <strong>pivot</strong>
+    </dt>
+    <dd>
+    Item pivot [-0.5..0.5]
+
+
+    <ul>
+        <li><span class="parameter">pivot</span>
+            <span class="types"><span class="type">vector3</span></span>
 
         </li>
     </ul>

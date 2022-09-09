@@ -52,9 +52,11 @@
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
   <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
   <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
   <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
@@ -87,8 +89,16 @@
 	<td class="summary">Drag component constructor</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#is_enabled">is_enabled(self)</a></td>
+	<td class="summary">Check if Drag component is enabled</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, node)</a></td>
 	<td class="summary">Strict drag click area.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_enabled">set_enabled(self, is_enabled)</a></td>
+	<td class="summary">Set Drag input enabled or disabled</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -118,11 +128,11 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_drag">on_drag</a></td>
-	<td class="summary">on drag progress callback(self, dx, dy)</td>
+	<td class="summary">on drag progress callback(self, dx, dy, total_x, total_y)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_drag_end">on_drag_end</a></td>
-	<td class="summary">Event on drag end callback(self)</td>
+	<td class="summary">Event on drag end callback(self, total_x, total_y)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_drag_start">on_drag_start</a></td>
@@ -187,6 +197,33 @@
 
 </dd>
     <dt>
+    <a name = "is_enabled"></a>
+    <strong>is_enabled(self)</strong>
+    </dt>
+    <dd>
+    Check if Drag component is enabled
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Drag</span></span>
+         <a href="../modules/Drag.html#">Drag</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "set_click_zone"></a>
     <strong>set_click_zone(self, node)</strong>
     </dt>
@@ -204,6 +241,31 @@
         <li><span class="parameter">node</span>
             <span class="types"><span class="type">node</span></span>
          Gui node
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_enabled"></a>
+    <strong>set_enabled(self, is_enabled)</strong>
+    </dt>
+    <dd>
+    Set Drag input enabled or disabled
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Drag</span></span>
+         <a href="../modules/Drag.html#">Drag</a>
+        </li>
+        <li><span class="parameter">is_enabled</span>
+            <span class="types"><span class="type">bool</span></span>
+
         </li>
     </ul>
 
@@ -329,7 +391,7 @@
     <strong>on_drag</strong>
     </dt>
     <dd>
-    on drag progress callback(self, dx, dy)
+    on drag progress callback(self, dx, dy, total_x, total_y)
 
 
     <ul>
@@ -349,7 +411,7 @@
     <strong>on_drag_end</strong>
     </dt>
     <dd>
-    Event on drag end callback(self)
+    Event on drag end callback(self, total_x, total_y)
 
 
     <ul>

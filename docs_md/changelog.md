@@ -382,7 +382,7 @@ Take care of yourself
 	- The docs in (https://insality.github.io/druid/) now have cross links for every custom type
 -  **#175** Remove Druid Assets repository, move to Druid library
 	- Added folder `druid/custom`. It will have the complex custom components. Usually you should to use default GUI template or create your own with similar GUI scheme. Currently add `RichInput` and `PinKnob` components from druid-assets repository.
-	- Usually to use custom component you have to require lua file first and create it's via `druid:new(Component, template_name, [nodes]). See component docs to see constructor params.
+	- Usually to use custom component you have to require lua file first and create it's via `druid:new(Component, template_name, [nodes])`. See component docs to see constructor params.
 	- This components will be included in build only if used
 -  **#176** Keep last scene and scroll position in Druid example
 	- Probably, it's useful for faster debug, but anyway. The example now keep the last scene and scroll position.
@@ -391,3 +391,58 @@ Take care of yourself
 - Move emmylua annotations inside Druid dependency folder. You can copy it from Defold Editor outline
 - Optimize different stuff(Scroll, Druid Event, Druid instance and Base component)
 - Force Data List component to `IS_DYNAMIC_NODE_POSES = false` style
+
+
+### Druid 0.10.0
+
+Hello! Here is new Druid update. It's brings to you two new components: Layout and Hotkey. Both components are "extended", so to use it, you should register it first (when you try to use it, in console will be prompt with code you should use)
+
+In general:
+```
+local layout =  require("druid.extended.layout")
+druid.register("layout", layout)
+```
+
+The Drag component now knows about window scaling, so now it have more accuracy dx/dy values depends on the screen size. The scroll and other components should work better :)
+
+Now you can change the input priority of components temporary. For example while you interact with them (input fields, drag on select etc).
+
+Also the update brings several bug fixes and now **Druid** have stencil_check mode enabled by default. It should be more easy to use input components with stencil nodes without manual `set_click_zone` functions.
+
+And yeah, the new **Druid** logo is here!
+
+**Changelog 0.10.0**
+
+---
+
+- **#133** [Hotkey] Add new extended component: Hotkey
+	- It's allow you set hotkeys to call callbacks
+	- You should pass one action key and several modificator keys (left shift, right ctrl etc)
+	- List of modificator keys ids setup via component style (you can change it)
+	- You can add several hotkeys on one callback via `hotkey:add_hotkey` with additional params
+- **#98** [Layout] Add new extended component: Layout
+	- It's allow you to extend standart Defold node adjust modes
+	- Layout mode can be next:
+		- `const.LAYOUT_MODE.STRETCH_X` - Stretch node only by X
+		- `const.LAYOUT_MODE.STRETCH_Y` - Stretch node only by Y
+		- `const.LAYOUT_MODE.ZOOM_MIN` - Zoom node by minimal stretch multiplier
+		- `const.LAYOUT_MODE.ZOOM_MAX` - Zoom node by maximum stretch multiplier
+		- `const.LAYOUT_MODE.FIT` - Usual Defold Fit mode
+		- `const.LAYOUT_MODE.STRETCH` - Usual Defold Stretch Mode
+	- The Layout changes the node size property. So it's look much better if you use 9slice nodes
+	- Works even the node parent is have Fit adjust mode
+- **#200** [Scroll] Glitch if content size equals to scroll view size in runtime
+- **#201** [DataList] Update DataList:
+	- Add two events: `on_element_add` and `on_element_remove`
+	- Add `data_list:get_data()` to access all current data in DataList
+	- Add `data_list:get_created_nodes()` to access currently visual nodes in DataList
+	- Add `data_list:get_created_components()` to access currenly visual component in DataList (if created)
+- **#190** [Progress] Add `progress:set_max_size` function to change max size of progress bar
+- **#188** [Drag] Add two values passed to on_drag callback. Now it is `on_drag(self, dx, dy, total_x, total_y)` to check the overral drag distance
+- **#195** [Drag] Add `drag:is_enabled` and `drag:set_enabled` to enable/disable drag input component
+- **#186** [Grid] Fix: Method `set_in_row` works incorrectly with IS_DYNAMIC_NODE_POSES style option
+- **#185** [System] Add `on_window_resized` component interest. It will called on game window size changes
+- **#189** [System] Add optional flag to `component:set_input_priority` to mark it as temporary. It will reset to default input priority after the `component:reset_input_priority`
+- **#204** [System] Fix: wrong code example link, if open example from direct URL
+- **#202** [System] Enabled stencil check to true by default. To disable this, use `druid.no_stencil_check` in game.project settings
+- [Examples] Add layout, layout fit, progres bar, data list + component examples

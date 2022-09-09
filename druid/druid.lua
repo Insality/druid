@@ -117,6 +117,12 @@ function M.on_window_callback(event)
 			msg.post(instances[i].url, base_component.ON_FOCUS_GAINED)
 		end
 	end
+
+	if event == window.WINDOW_EVENT_RESIZED then
+		for i = 1, #instances do
+			msg.post(instances[i].url, base_component.ON_WINDOW_RESIZED)
+		end
+	end
 end
 
 

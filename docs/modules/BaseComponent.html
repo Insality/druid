@@ -51,9 +51,11 @@
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
   <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
   <li><a href="../modules/Hover.html">Hover</a></li>
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
   <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
@@ -136,7 +138,7 @@
 	<td class="summary">Set component input state.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_input_priority">set_input_priority(self, value)</a></td>
+	<td class="name" nowrap><a href="#set_input_priority">set_input_priority(self, value, is_temporary)</a></td>
 	<td class="summary">Set component input priority</td>
 	</tr>
 	<tr>
@@ -563,7 +565,7 @@
 </dd>
     <dt>
     <a name = "set_input_priority"></a>
-    <strong>set_input_priority(self, value)</strong>
+    <strong>set_input_priority(self, value, is_temporary)</strong>
     </dt>
     <dd>
     Set component input priority
@@ -578,6 +580,10 @@
         <li><span class="parameter">value</span>
             <span class="types"><span class="type">number</span></span>
          The new input priority value
+        </li>
+        <li><span class="parameter">is_temporary</span>
+            <span class="types"><span class="type">boolean</span></span>
+         If true, the reset input priority will return to previous value
         </li>
     </ul>
 
