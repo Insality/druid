@@ -413,7 +413,7 @@ Also now you can change the input priority of components temporary. For example 
 
 - **#133** [Hotkey] Add new extended component: Hotkey
 	- It's allow you set hotkeys to call callbacks
-	- You should pass one action key and several modificator keys (left shift, ctrl etc)
+	- You should pass one action key and several modificator keys (left shift, right ctrl etc)
 	- List of modificator keys setup via component style (you can change it)
 	- You can add several hotkeys on one callback via `hotkey:add_hotkey` with additional params
 - **#98** [Layout] Add new extended component: Layout
@@ -440,3 +440,4 @@ Also now you can change the input priority of components temporary. For example 
 - **#185** [System] Add `on_window_resized` component interest. It will called on game window size changes
 - **#189** [System] Add optional flag to `component:set_input_priority` to mark it as temporary. It will reset to default input priority after the `component:reset_input_priority`
 - **#204** [System] Fix: wrong code example link, if open example from direct URL
+- **#202** [System] Enabled stencil check to true by default. To disable this, use druid.no_stencil_check in game.project settings

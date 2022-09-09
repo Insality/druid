@@ -70,7 +70,7 @@ nodes {
 }
 nodes {
   position {
-    x: -100.0
+    x: 0.0
     y: 250.0
     z: 0.0
     w: 1.0
@@ -190,7 +190,7 @@ nodes {
 }
 nodes {
   position {
-    x: -100.0
+    x: 0.0
     y: 100.0
     z: 0.0
     w: 1.0
@@ -310,7 +310,7 @@ nodes {
 }
 nodes {
   position {
-    x: -100.0
+    x: 0.0
     y: -50.0
     z: 0.0
     w: 1.0
@@ -430,7 +430,7 @@ nodes {
 }
 nodes {
   position {
-    x: -100.0
+    x: 0.0
     y: -200.0
     z: 0.0
     w: 1.0
@@ -637,7 +637,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Layout Stretch by Y Anchor W"
+  text: "Layout Stretch by X Anchor W"
   font: "game"
   id: "text_layout_stretch3"
   xanchor: XANCHOR_NONE
