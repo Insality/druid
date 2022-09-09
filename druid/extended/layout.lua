@@ -29,7 +29,7 @@ local Layout = component.create("layout")
 --- Component init function
 -- @tparam Layout self @{Layout}
 -- @tparam node node Gui node
--- @tparam string node The layout mode (from const.LAYOUT_MODE)
+-- @tparam string mode The layout mode (from const.LAYOUT_MODE)
 -- @tparam[opt] function on_size_changed_callback The callback on window resize
 function Layout.init(self, node, mode, on_size_changed_callback)
 	self.node = self:get_node(node)
@@ -122,7 +122,7 @@ end
 
 --- Set maximum size of layout node
 -- @tparam Layout self @{Layout}
--- @tparam vector3 min_size
+-- @tparam vector3 max_size
 -- @treturn Layout @{Layout}
 function Layout.set_max_size(self, max_size)
 	self._max_size = max_size

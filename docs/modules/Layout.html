@@ -30,6 +30,11 @@
   <li><a href="../index.html">Index</a></li>
 </ul>
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
 
 
 <h2>Modules</h2>
@@ -73,11 +78,377 @@
 <p></p>
 
 
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#fit_into_node">fit_into_node(self[, node])</a></td>
+	<td class="summary">Set node for layout node to fit inside it.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#fit_into_size">fit_into_size(self, target_size)</a></td>
+	<td class="summary">Set size for layout node to fit inside it</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#fit_into_window">fit_into_window(self)</a></td>
+	<td class="summary">Set current size for layout node to fit inside it</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, node, mode[, on_size_changed_callback])</a></td>
+	<td class="summary">Component init function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_max_size">set_max_size(self, max_size)</a></td>
+	<td class="summary">Set maximum size of layout node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_min_size">set_min_size(self, min_size)</a></td>
+	<td class="summary">Set minimal size of layout node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_origin_position">set_origin_position(self, new_origin_position)</a></td>
+	<td class="summary">Set new origin position of layout node.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_origin_size">set_origin_size(self, new_origin_size)</a></td>
+	<td class="summary">Set new origin size of layout node.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#mode">mode</a></td>
+	<td class="summary">Current layout mode</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Layout node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_size_changed">on_size_changed</a></td>
+	<td class="summary">On window resize callback(self, new_size)</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
 
 
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "fit_into_node"></a>
+    <strong>fit_into_node(self[, node])</strong>
+    </dt>
+    <dd>
+    Set node for layout node to fit inside it.  Pass nil to reset
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Layout</span></span>
+         <a href="../modules/Layout.html#">Layout</a>
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">Node</span></span>
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Layout</span></span>
+        <a href="../modules/Layout.html#">Layout</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "fit_into_size"></a>
+    <strong>fit_into_size(self, target_size)</strong>
+    </dt>
+    <dd>
+    Set size for layout node to fit inside it
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Layout</span></span>
+         <a href="../modules/Layout.html#">Layout</a>
+        </li>
+        <li><span class="parameter">target_size</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Layout</span></span>
+        <a href="../modules/Layout.html#">Layout</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "fit_into_window"></a>
+    <strong>fit_into_window(self)</strong>
+    </dt>
+    <dd>
+    Set current size for layout node to fit inside it
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Layout</span></span>
+         <a href="../modules/Layout.html#">Layout</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Layout</span></span>
+        <a href="../modules/Layout.html#">Layout</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, node, mode[, on_size_changed_callback])</strong>
+    </dt>
+    <dd>
+    Component init function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Layout</span></span>
+         <a href="../modules/Layout.html#">Layout</a>
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Layout.html#node">node</a></span>
+         Gui node
+        </li>
+        <li><span class="parameter">mode</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The layout mode (from const.LAYOUT_MODE)
+        </li>
+        <li><span class="parameter">on_size_changed_callback</span>
+            <span class="types"><span class="type">function</span></span>
+         The callback on window resize
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_max_size"></a>
+    <strong>set_max_size(self, max_size)</strong>
+    </dt>
+    <dd>
+    Set maximum size of layout node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Layout</span></span>
+         <a href="../modules/Layout.html#">Layout</a>
+        </li>
+        <li><span class="parameter">max_size</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Layout</span></span>
+        <a href="../modules/Layout.html#">Layout</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_min_size"></a>
+    <strong>set_min_size(self, min_size)</strong>
+    </dt>
+    <dd>
+    Set minimal size of layout node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Layout</span></span>
+         <a href="../modules/Layout.html#">Layout</a>
+        </li>
+        <li><span class="parameter">min_size</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Layout</span></span>
+        <a href="../modules/Layout.html#">Layout</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_origin_position"></a>
+    <strong>set_origin_position(self, new_origin_position)</strong>
+    </dt>
+    <dd>
+    Set new origin position of layout node.  You should apply this on node movement
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Layout</span></span>
+         <a href="../modules/Layout.html#">Layout</a>
+        </li>
+        <li><span class="parameter">new_origin_position</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Layout</span></span>
+        <a href="../modules/Layout.html#">Layout</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_origin_size"></a>
+    <strong>set_origin_size(self, new_origin_size)</strong>
+    </dt>
+    <dd>
+    Set new origin size of layout node.  You should apply this on node manual size change
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Layout</span></span>
+         <a href="../modules/Layout.html#">Layout</a>
+        </li>
+        <li><span class="parameter">new_origin_size</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Layout</span></span>
+        <a href="../modules/Layout.html#">Layout</a>
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "mode"></a>
+    <strong>mode</strong>
+    </dt>
+    <dd>
+    Current layout mode
+
+
+    <ul>
+        <li><span class="parameter">mode</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Layout node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Layout.html#node">node</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_size_changed"></a>
+    <strong>on_size_changed</strong>
+    </dt>
+    <dd>
+    On window resize callback(self, new_size)
+
+
+    <ul>
+        <li><span class="parameter">on_size_changed</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->

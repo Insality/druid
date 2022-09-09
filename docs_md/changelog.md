@@ -395,7 +395,7 @@ Take care of yourself
 
 ### Druid 0.10.0
 
-Hello! Here is new Druid small update. It's brings to you two new components: Layout and Hotkey. Both components are "extended", so to use it, you should register it first (when you try to use it, in console will be prompt with code you should use)
+Hello! Here is new Druid update. It's brings to you two new components: Layout and Hotkey. Both components are "extended", so to use it, you should register it first (when you try to use it, in console will be prompt with code you should use)
 
 In general:
 ```
@@ -403,9 +403,13 @@ local layout =  require("druid.extended.layout")
 druid.register("layout", layout)
 ```
 
-The drag component now knows about window scaling, so now it have more accuracy dx/dy values depends on the screen size. The scroll and other components should work better :)
+The Drag component now knows about window scaling, so now it have more accuracy dx/dy values depends on the screen size. The scroll and other components should work better :)
 
-Also now you can change the input priority of components temporary. For example while you interact with them (input fields, drag on select etc).
+Now you can change the input priority of components temporary. For example while you interact with them (input fields, drag on select etc).
+
+Also the update brings several bug fixes and now **Druid** have stencil_check mode enabled by default. It should be more easy to use input components with stencil nodes without manual `set_click_zone` functions.
+
+And yeah, the new **Druid** logo is here!
 
 **Changelog 0.10.0**
 
@@ -414,7 +418,7 @@ Also now you can change the input priority of components temporary. For example 
 - **#133** [Hotkey] Add new extended component: Hotkey
 	- It's allow you set hotkeys to call callbacks
 	- You should pass one action key and several modificator keys (left shift, right ctrl etc)
-	- List of modificator keys setup via component style (you can change it)
+	- List of modificator keys ids setup via component style (you can change it)
 	- You can add several hotkeys on one callback via `hotkey:add_hotkey` with additional params
 - **#98** [Layout] Add new extended component: Layout
 	- It's allow you to extend standart Defold node adjust modes
@@ -436,8 +440,9 @@ Also now you can change the input priority of components temporary. For example 
 - **#190** [Progress] Add `progress:set_max_size` function to change max size of progress bar
 - **#188** [Drag] Add two values passed to on_drag callback. Now it is `on_drag(self, dx, dy, total_x, total_y)` to check the overral drag distance
 - **#195** [Drag] Add `drag:is_enabled` and `drag:set_enabled` to enable/disable drag input component
-- **#186** [Grid] Fix: Method set_in_row works incorrectly with IS_DYNAMIC_NODE_POSES style option
+- **#186** [Grid] Fix: Method `set_in_row` works incorrectly with IS_DYNAMIC_NODE_POSES style option
 - **#185** [System] Add `on_window_resized` component interest. It will called on game window size changes
 - **#189** [System] Add optional flag to `component:set_input_priority` to mark it as temporary. It will reset to default input priority after the `component:reset_input_priority`
 - **#204** [System] Fix: wrong code example link, if open example from direct URL
-- **#202** [System] Enabled stencil check to true by default. To disable this, use druid.no_stencil_check in game.project settings
+- **#202** [System] Enabled stencil check to true by default. To disable this, use `druid.no_stencil_check` in game.project settings
+- [Examples] Add layout, layout fit, progres bar, data list + component examples

@@ -763,6 +763,64 @@ function druid__lang_text.set_to(self, text) end
 function druid__lang_text.translate(self, locale_id, a, b, c, d, e, f, g) end
 
 
+---@class druid.layout : druid.base_component
+---@field mode string Current layout mode
+---@field node node Layout node
+---@field on_size_changed druid.event On window resize callback(self, new_size)
+local druid__layout = {}
+
+--- Set node for layout node to fit inside it.
+--- Pass nil to reset
+---@param self druid.layout @{Layout}
+---@param node Node
+---@return druid.layout @{Layout}
+function druid__layout.fit_into_node(self, node) end
+
+--- Set size for layout node to fit inside it
+---@param self druid.layout @{Layout}
+---@param target_size vector3
+---@return druid.layout @{Layout}
+function druid__layout.fit_into_size(self, target_size) end
+
+--- Set current size for layout node to fit inside it
+---@param self druid.layout @{Layout}
+---@return druid.layout @{Layout}
+function druid__layout.fit_into_window(self) end
+
+--- Component init function
+---@param self druid.layout @{Layout}
+---@param node node Gui node
+---@param mode string The layout mode (from const.LAYOUT_MODE)
+---@param on_size_changed_callback function The callback on window resize
+function druid__layout.init(self, node, mode, on_size_changed_callback) end
+
+--- Set maximum size of layout node
+---@param self druid.layout @{Layout}
+---@param max_size vector3
+---@return druid.layout @{Layout}
+function druid__layout.set_max_size(self, max_size) end
+
+--- Set minimal size of layout node
+---@param self druid.layout @{Layout}
+---@param min_size vector3
+---@return druid.layout @{Layout}
+function druid__layout.set_min_size(self, min_size) end
+
+--- Set new origin position of layout node.
+--- You should apply this on node movement
+---@param self druid.layout @{Layout}
+---@param new_origin_position vector3
+---@return druid.layout @{Layout}
+function druid__layout.set_origin_position(self, new_origin_position) end
+
+--- Set new origin size of layout node.
+--- You should apply this on node manual size change
+---@param self druid.layout @{Layout}
+---@param new_origin_size vector3
+---@return druid.layout @{Layout}
+function druid__layout.set_origin_size(self, new_origin_size) end
+
+
 ---@class druid.pin_knob : druid.base_component
 ---@field druid druid_instance The component druid instance
 ---@field is_drag bool Is currently under user control
@@ -1346,6 +1404,10 @@ local druid_instance = {}
 --- It will call on_remove  on all druid components
 ---@param self druid_instance
 function druid_instance.final(self) end
+
+--- Druid late update function call after init and before udpate step
+---@param self druid_instance
+function druid_instance.late_init(self) end
 
 --- Log message, if is_debug mode is enabled
 ---@param self druid_instance @{DruidInstance}
