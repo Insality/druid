@@ -106,7 +106,6 @@ return function()
 			druid:on_input(mock_input.click_pressed(10, 10))
 			druid:on_input(mock_input.click_released(20, 10))
 
-			print(on_click_mock.calls, on_double_click_mock.calls)
 			assert(on_click_mock.calls == 3)
 			assert(on_double_click_mock.calls == 1)
 		end)
@@ -124,6 +123,93 @@ return function()
 			druid:on_input(mock_input.click_released(20, 10))
 
 			assert(on_click_mock.calls == 2)
+		end)
+
+		it("Should do hold click if exists", function()
+			local button = mock_gui.add_box("button", 0, 0, 100, 50)
+			local button_params = {}
+			local on_click, on_click_mock = test_helper.get_function()
+			local on_long_click, on_long_click_mock = test_helper.get_function()
+			local on_hold_callback, on_hold_callback_mock = test_helper.get_function()
+			local instance = druid:new_button(button, on_click, button_params)
+			instance.on_long_click:subscribe(on_long_click) -- long click required for hold callback
+			instance.on_hold_callback:subscribe(on_hold_callback)
+
+			druid:on_input(mock_input.click_pressed(10, 10))
+			mock_time.elapse(0.5) -- time between hold treshold and autorelease hold time
+			druid:on_input(mock_input.click_repeated(10, 10))
+
+			assert(on_click_mock.calls == 0)
+			assert(on_hold_callback_mock.calls == 1)
+			assert(on_hold_callback_mock.params[1] == context)
+			assert(on_hold_callback_mock.params[2] == button_params)
+			assert(on_hold_callback_mock.params[3] == instance)
+
+			druid:on_input(mock_input.click_released(10, 10))
+
+			assert(on_click_mock.calls == 0)
+			assert(on_long_click_mock.calls == 1)
+		end)
+
+		it("Should do click outside if exists", function()
+			local button = mock_gui.add_box("button", 0, 0, 100, 50)
+			local button_params = {}
+			local on_click = test_helper.get_function()
+			local on_click_outside, on_click_outside_mock = test_helper.get_function()
+			local instance = druid:new_button(button, on_click, button_params)
+			instance.on_click_outside:subscribe(on_click_outside)
+
+			druid:on_input(mock_input.click_pressed(-10, 10))
+			druid:on_input(mock_input.click_released(-10, 10))
+
+			assert(on_click_outside_mock.calls == 1)
+
+			mock_time.elapse(1)
+			druid:on_input(mock_input.click_pressed(10, 10))
+			druid:on_input(mock_input.click_released(-10, 10))
+
+			assert(on_click_outside_mock.calls == 2)
+		end)
+
+		it("Should not click if mouse was outside while clicking", function()
+			local button = mock_gui.add_box("button", 0, 0, 100, 50)
+			local button_params = {}
+			local on_click, on_click_mock = test_helper.get_function()
+			druid:new_button(button, on_click, button_params)
+
+			druid:on_input(mock_input.click_pressed(10, 10))
+			druid:on_input(mock_input.input_empty(-10, 10))
+			druid:on_input(mock_input.click_released(20, 10))
+
+			assert(on_click_mock.calls == 0)
+		end)
+
+		it("Should work with check function", function()
+			local button = mock_gui.add_box("button", 0, 0, 100, 50)
+			local button_params = {}
+			local on_click, on_click_mock = test_helper.get_function()
+			local instance = druid:new_button(button, on_click, button_params)
+			local check_function, check_function_mock = test_helper.get_function(function() return false end)
+			local failure_function, failure_function_mock = test_helper.get_function()
+			instance:set_check_function(check_function, failure_function)
+
+			druid:on_input(mock_input.click_pressed(10, 10))
+			druid:on_input(mock_input.click_released(20, 10))
+
+			assert(on_click_mock.calls == 0)
+			assert(check_function_mock.calls == 1)
+			assert(failure_function_mock.calls == 1)
+
+			local check_true_function, check_function_true_mock = test_helper.get_function(function() return true end)
+			instance:set_check_function(check_true_function, failure_function)
+
+			mock_time.elapse(1)
+			druid:on_input(mock_input.click_pressed(10, 10))
+			druid:on_input(mock_input.click_released(20, 10))
+
+			assert(on_click_mock.calls == 1)
+			assert(check_function_true_mock.calls == 1)
+			assert(failure_function_mock.calls == 1)
 		end)
 	end)
 end

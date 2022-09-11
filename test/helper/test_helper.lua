@@ -8,11 +8,12 @@ function M.get_context()
 end
 
 
-function M.get_function()
+-- Callback for return value from function
+function M.get_function(callback)
 	local listener = {}
-	listener.callback = function() end
+	listener.callback = function() if callback then return callback() end end
 	mock.mock(listener)
-	return function(...) listener.callback(...) end, listener.callback
+	return function(...) return listener.callback(...) end, listener.callback
 end
 
 return M
