@@ -19,6 +19,20 @@ function M.click_released(x, y)
 end
 
 
+function M.key_pressed(key_id)
+	return hash(key_id), {
+		pressed = true
+	}
+end
+
+
+function M.key_released(key_id)
+	return hash(key_id), {
+		released = true
+	}
+end
+
+
 function M.click_repeated(x, y)
 	return hash("touch"), {
 		repeated = true,

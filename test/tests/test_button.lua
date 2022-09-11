@@ -211,5 +211,33 @@ return function()
 			assert(check_function_true_mock.calls == 1)
 			assert(failure_function_mock.calls == 1)
 		end)
+
+		it("Should have key trigger", function()
+			local button = mock_gui.add_box("button", 0, 0, 100, 50)
+			local button_params = {}
+			local on_click, on_click_mock = test_helper.get_function()
+			local instance = druid:new_button(button, on_click, button_params)
+			instance:set_key_trigger("key_a")
+			druid:on_input(mock_input.key_pressed("key_a"))
+			druid:on_input(mock_input.key_released("key_a"))
+			assert(on_click_mock.calls == 1)
+			assert(instance:get_key_trigger() == hash("key_a"))
+		end)
+
+		it("Should work with click zone", function()
+			local button = mock_gui.add_box("button", 0, 0, 100, 50)
+			local zone = mock_gui.add_box("zone", 25, 25, 25, 25)
+			local button_params = {}
+			local on_click, on_click_mock = test_helper.get_function()
+			local instance = druid:new_button(button, on_click, button_params)
+			instance:set_click_zone(zone)
+			druid:on_input(mock_input.click_pressed(10, 10))
+			druid:on_input(mock_input.click_released(10, 10))
+			assert(on_click_mock.calls == 0)
+
+			druid:on_input(mock_input.click_pressed(25, 25))
+			druid:on_input(mock_input.click_released(25, 25))
+			assert(on_click_mock.calls == 1)
+		end)
 	end)
 end
