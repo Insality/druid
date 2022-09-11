@@ -145,7 +145,7 @@ local function on_button_release(self)
 			self.can_action = false
 
 			local time = socket.gettime()
-			local is_long_click = (time - self.last_pressed_time) > self.style.LONGTAP_TIME
+			local is_long_click = (time - self.last_pressed_time) >= self.style.LONGTAP_TIME
 			is_long_click = is_long_click and self.on_long_click:is_exist()
 
 			local is_double_click = (time - self.last_released_time) < self.style.DOUBLETAP_TIME
