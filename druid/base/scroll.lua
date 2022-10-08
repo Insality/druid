@@ -560,12 +560,12 @@ end
 
 function Scroll._set_scroll_position(self, position)
 	local available_extra = self.available_pos_extra
-	local position_x = helper.clamp(position.x, available_extra.x, available_extra.z)
-	local position_y = helper.clamp(position.y, available_extra.w, available_extra.y)
+	position.x = helper.clamp(position.x, available_extra.x, available_extra.z)
+	position.y = helper.clamp(position.y, available_extra.w, available_extra.y)
 
-	if self.position.x ~= position_x or self.position.y ~= position_y then
-		self.position.x = position_x
-		self.position.y = position_y
+	if self.position.x ~= position.x or self.position.y ~= position.y then
+		self.position.x = position.x
+		self.position.y = position.y
 		gui.set_position(self.content_node, self.position)
 
 		self.on_scroll:trigger(self:get_context(), self.position)
