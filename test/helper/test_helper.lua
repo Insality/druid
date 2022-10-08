@@ -11,7 +11,7 @@ end
 -- Callback for return value from function
 function M.get_function(callback)
 	local listener = {}
-	listener.callback = function() if callback then return callback() end end
+	listener.callback = function(...) if callback then return callback(...) end end
 	mock.mock(listener)
 	return function(...) return listener.callback(...) end, listener.callback
 end

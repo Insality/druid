@@ -50,4 +50,13 @@ function M.input_empty(x, y)
 end
 
 
+function M.input_empty_action_nil(x, y)
+	return nil, {
+		x = x,
+		y = y,
+	}
+end
+
+
+
 return M
