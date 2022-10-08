@@ -7,7 +7,7 @@ local druid_system = require("druid.druid")
 return function()
 	local druid = nil
 	local context = test_helper.get_context()
-	describe("Eva lang", function()
+	describe("Hover component", function()
 		before(function()
 			mock_gui.mock()
 			mock_time.mock()
@@ -22,7 +22,7 @@ return function()
 			druid = nil
 		end)
 
-		it("Hover should fire callback on touch hover and unhover", function()
+		it("Should fire callback on touch hover and unhover", function()
 			local button = mock_gui.add_box("button", 0, 0, 100, 50)
 			local is_hovered = false
 			local on_hover, on_hover_mock = test_helper.get_function(function(_, state)
@@ -40,7 +40,7 @@ return function()
 			assert(instance:is_mouse_hovered() == false)
 		end)
 
-		it("Hover should fire callback on mouse hover and unhover", function()
+		it("Should fire callback on mouse hover and unhover", function()
 			local button = mock_gui.add_box("button", 0, 0, 100, 50)
 			local is_hovered = false
 			local on_hover, on_hover_mock = test_helper.get_function(function(_, state)
@@ -76,7 +76,7 @@ return function()
 			assert(instance:is_hovered() == false)
 		end)
 
-		it("Hover should have set_enabled function", function()
+		it("Should have set_enabled function", function()
 			local button = mock_gui.add_box("button", 0, 0, 100, 50)
 			local on_hover, on_hover_mock = test_helper.get_function()
 			local instance = druid:new_hover(button, on_hover)

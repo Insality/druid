@@ -155,9 +155,11 @@ end
 -- or create your own style
 -- @table style
 -- @tfield[opt=10] number DRAG_DEADZONE Distance in pixels to start dragging
+-- @tfield[opt=false] boolean IS_USE_SCREEN_KOEF If screen aspect ration affects on drag values
 function Drag.on_style_change(self, style)
 	self.style = {}
 	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
+	self.style.IS_USE_SCREEN_KOEF = style.IS_USE_SCREEN_KOEF or false
 end
 
 
@@ -278,11 +280,16 @@ function Drag.on_input(self, action_id, action)
 	end
 
 	if self.is_drag then
+		local x_koef, y_koef = self._x_koef, self._y_koef
+		if not self.style.IS_USE_SCREEN_KOEF then
+			x_koef, y_koef = 1, 1
+		end
+
 		self.on_drag:trigger(self:get_context(),
-			self.dx * self._x_koef,
-			self.dy * self._y_koef,
-			(self.x - self.touch_start_pos.x) * self._x_koef,
-			(self.y - self.touch_start_pos.y) * self._y_koef)
+			self.dx * x_koef,
+			self.dy * y_koef,
+			(self.x - self.touch_start_pos.x) * x_koef,
+			(self.y - self.touch_start_pos.y) * y_koef)
 	end
 
 	return self.is_drag

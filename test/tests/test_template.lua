@@ -7,7 +7,7 @@ local druid_system = require("druid.druid")
 return function()
 	local druid = nil
 	local context = test_helper.get_context()
-	describe("Eva lang", function()
+	describe("Template component", function()
 		before(function()
 			mock_gui.mock()
 			mock_time.mock()

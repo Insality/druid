@@ -8,7 +8,7 @@ local druid_system = require("druid.druid")
 return function()
 	local druid = nil
 	local context = test_helper.get_context()
-	describe("Druid Button", function()
+	describe("Button Component", function()
 		before(function()
 			mock_gui.mock()
 			mock_time.mock()
