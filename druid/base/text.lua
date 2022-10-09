@@ -47,6 +47,7 @@
 
 local Event = require("druid.event")
 local const = require("druid.const")
+local helper = require("druid.helper")
 local utf8 = require("druid.system.utf8")
 local component = require("druid.component")
 
@@ -77,7 +78,7 @@ local function update_text_area_size(self)
 	local max_width = self.text_area.x
 	local max_height = self.text_area.y
 
-	local metrics = gui.get_text_metrics_from_node(self.node)
+	local metrics = helper.get_text_metrics_from_node(self.node)
 
 	local scale_modifier = max_width / metrics.width
 	scale_modifier = math.min(scale_modifier, self.start_scale.x)
@@ -133,8 +134,8 @@ end
 -- calculate space width with font
 local function get_space_width(self, font)
 	if not self._space_width[font] then
-		local no_space = gui.get_text_metrics(font, "1", 0, false, 0, 0).width
-		local with_space = gui.get_text_metrics(font, " 1", 0, false, 0, 0).width
+		local no_space = resource.get_text_metrics(font, "1").width
+		local with_space = resource.get_text_metrics(font, " 1").width
 		self._space_width[font] = with_space - no_space
 	end
 

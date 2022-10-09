@@ -12,7 +12,7 @@ local M = {}
 --- Text node or icon node can be nil
 local function get_text_width(text_node)
 	if text_node then
-		local text_metrics = gui.get_text_metrics_from_node(text_node)
+		local text_metrics = M.get_text_metrics_from_node(text_node)
 		local text_scale = gui.get_scale(text_node).x
 		return text_metrics.width * text_scale
 	end
@@ -164,6 +164,22 @@ function M.contains(t, value)
 	end
 	return false
 end
+
+
+--- Get text metric from gui node. Replacement of previous gui.get_text_metrics_from_node function
+-- @tparam Node text_node
+-- @treturn table {width, height, max_ascent, max_descent}
+function M.get_text_metrics_from_node(text_node)
+	local font_name = gui.get_font(text_node)
+	local font = gui.get_font_resource(font_name)
+	return resource.get_text_metrics(font, gui.get_text(text_node), {
+		width = gui.get_size(text_node).x,
+		leading = gui.get_leading(text_node),
+		tracking = gui.get_tracking(text_node),
+		line_break = gui.get_line_break(text_node),
+	})
+end
+
 
 
 --- Check if node is enabled in gui hierarchy.
