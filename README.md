@@ -1,4 +1,7 @@
+
 [![](media/druid_logo.png)](https://insality.github.io/druid/)
+
+[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/insality/druid)](https://github.com/Insality/druid/releases)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/insality/druid/Run%20tests)](https://github.com/Insality/druid/actions)
@@ -115,51 +118,36 @@ druid.on_window_callback(event)
 
 ## Components
 
-**Druid** provides the following *basic* components:
+Here is full **Druid** components list:
 
-- **[Button](docs_md/01-components.md#button)** - Basic Druid button input component. Handles all types of interactions (tap, long-tap, hold-tap, double-tap, simple key triggers, etc)
+| Name | Description | API page | Example Link | Is Basic component[^1] | Preview |
+|------|-------------|----------|------------|-------------|---------|
+| **[Button](docs_md/01-components.md#button)** | Basic input component. Handles all types of interactions: click, long click, hold click, double click, etc | [Button API](https://insality.github.io/druid/modules/Button.html) | [Button Example](https://insality.github.io/druid/druid/?example=general_buttons) | ✅ | ![](media/preview/button.gif)
+| **[Text](docs_md/01-components.md#text)** | Wrap on GUI text node, handle different text size adjusting, providing additional text API | [Text API](https://insality.github.io/druid/modules/Button.html) | [Text Example](https://insality.github.io/druid/druid/?example=texts_general) | ✅ | ![](media/preview/text.gif)
+| **[Scroll](docs_md/01-components.md#scroll)** | Scroll component | [Scroll API](https://insality.github.io/druid/modules/Scroll.html) | [Scroll Example](https://insality.github.io/druid/druid/?example=general_scroll) | ✅ | ![](media/preview/scroll.gif)
+| **[Blocker](docs_md/01-components.md#blocker)** | Block user input in node zone area | [Blocker API](https://insality.github.io/druid/modules/Blocker.html) | ❌ | ✅ | ![](media/preview/blocker.gif)
+| **[Back Handler](docs_md/01-components.md#back-handler)** | Handle back button (Android back button, backspace key) | [Back Handler API](https://insality.github.io/druid/modules/BackHandler.html) | ❌ | ✅ | ![](media/preview/back_handler.gif)
+| **[Static Grid](docs_md/01-components.md#static-grid)** | Component to manage node positions with equal sizes | [Static Grid API](https://insality.github.io/druid/modules/StaticGrid.html) | [Static Gid Example](https://insality.github.io/druid/druid/?example=general_grid) | ✅ | ![](media/preview/static_grid.gif)
+| **[Hover](docs_md/01-components.md#hover)** | Handle hover node state on node | [Hover API](https://insality.github.io/druid/modules/Hover.html) | ❌ | ✅ | ![](media/preview/hover.gif)
+| **[Swipe](docs_md/01-components.md#swipe)** | Handle swipe gestures on node | [Swipe API](https://insality.github.io/druid/modules/Swipe.html) | [Swipe Example](https://insality.github.io/druid/druid/?example=general_swipe) | ✅ | ![](media/preview/swipe.gif)
+| **[Drag](docs_md/01-components.md#drag)** | Handle drag input on node | [Drag API](https://insality.github.io/druid/modules/Drag.html) | [Drag Example](https://insality.github.io/druid/druid/?example=general_drag) | ✅ | ![](media/preview/drag.gif)
+| **[Checkbox](docs_md/01-components.md#checkbox)** | Checkbox component | [Checkbox API](https://insality.github.io/druid/modules/Checkbox.html) | [Checkbox Example](https://insality.github.io/druid/druid/?example=general_checkboxes) | ❌ | ![](media/preview/checkbox.gif)
+| **[Checkbox group](docs_md/01-components.md#checkbox-group)** | Several checkboxes in one group | [Checkbox group API](https://insality.github.io/druid/modules/CheckboxGroup.html) | [Checkbox group Example](https://insality.github.io/druid/druid/?example=general_checkboxes) | ❌ | ![](media/preview/checkbox_group.gif)
+| **[Radio group](docs_md/01-components.md#radio-group)** | Several checkboxes in one group with a single choice | [Radio group API](https://insality.github.io/druid/modules/RadioGroup.html) | [Radio Group Example](https://insality.github.io/druid/druid/?example=general_checkboxes) | ❌ | ![](media/preview/radio_group.gif)
+| **[Dynamic Grid](docs_md/01-components.md#dynamic-grid)** | Component to manage node positions with different sizes. Only in one row or column | [Dynamic Grid API](https://insality.github.io/druid/modules/DynamicGrid.html) | [Dynamic Grid Example](https://insality.github.io/druid/druid/?example=general_grid) | ❌ | ![](media/preview/dynamic_grid.gif)
+| **[Data List](docs_md/01-components.md#data-list)** | Component to manage data for huge datasets in scroll | [Data List API](https://insality.github.io/druid/modules/DataList.html) | [Data List Example](https://insality.github.io/druid/druid/?example=general_data_list) | ❌ | ![](media/preview/data_list.gif)
+| **[Input](docs_md/01-components.md#input)** | User text input component | [Input API](https://insality.github.io/druid/modules/Input.html) | [Input Example](https://insality.github.io/druid/druid/?example=general_input) | ❌ | ![](media/preview/input.gif)
+| **[Lang text](docs_md/01-components.md#lang-text)** | Wrap on Text component to handle localization | [Lang Text API](https://insality.github.io/druid/modules/LangText.html) | ❌ | ❌ | ![](media/preview/lang_text.gif)
+| **[Progress](docs_md/01-components.md#progress)** | Progress bar component | [Progress API](https://insality.github.io/druid/modules/Progress.html) | [Progress Example](https://insality.github.io/druid/druid/?example=general_progress_bar) | ❌ | ![](media/preview/progress.gif)
+| **[Slider](docs_md/01-components.md#slider)** | Slider component | [Slider API](https://insality.github.io/druid/modules/Slider.html) | [Slider Example](https://insality.github.io/druid/druid/?example=general_sliders) | ❌ | ![](media/preview/slider.gif)
+| **[Timer](docs_md/01-components.md#timer)** | Handle timers on GUI text node | [Timer API](https://insality.github.io/druid/modules/Timer.html) | ❌ | ❌ | ![](media/preview/timer.gif)
+| **[Hotkey](docs_md/01-components.md#hotkey)** | Handle keyboard hotkeys with key modificators | [Hotkey API](https://insality.github.io/druid/modules/Hotkey.html) | [Hotkey Example](https://insality.github.io/druid/druid/?example=general_hokey) | ❌ | ![](media/preview/hotkey.gif)
+| **[Layout](docs_md/01-components.md#layout)** | Handle node size depends on layout mode and screen aspect ratio | [Layout API](https://insality.github.io/druid/modules/Layout.html) | [Layout Example](https://insality.github.io/druid/druid/?example=general_layout) | ❌ | ![](media/preview/layout.gif)
 
-- **[Text](docs_md/01-components.md#text)** - Basic Druid text component. Wrap on gui text node, handle text size adjusting.
+For a complete overview, see: **_[components.md](docs_md/01-components.md)_**.
 
-- **[Scroll](docs_md/01-components.md#scroll)** - Basic Druid scroll component
+[^1]: Non basic components before use should be registered first to be included in build
 
-- **[Blocker](docs_md/01-components.md#blocker)** - Block input in node zone component
-
-- **[Back Handler](docs_md/01-components.md#back-handler)** - Handle back button (Android back button, backspace key)
-
-- **[Static Grid](docs_md/01-components.md#static-grid)** - Component to manage node positions with equal sizes
-
-- **[Hover](docs_md/01-components.md#hover)** - System Druid component, handle hover node state
-
-- **[Swipe](docs_md/01-components.md#swipe)** - System Druid component, handle swipe gestures on node
-
-- **[Drag](docs_md/01-components.md#drag)** - System Druid component, handle drag input on node
-
-**Druid** also provides the following *extended* components:
-
-***Note**: In the future, to use extended components, you should register them first. This is required to make **Druid** modular - to exclude unused components from builds*
-
-- **[Checkbox](docs_md/01-components.md#checkbox)** - Checkbox component
-
-- **[Checkbox group](docs_md/01-components.md#checkbox-group)** - Several checkboxes in one group
-
-- **[Dynamic Grid](docs_md/01-components.md#dynamic-grid)** - Component to manage node positions with different sizes. Only in one row or column
-
-- **[Data List](docs_md/01-components.md#data-list)** - Component to manage data for huge dataset in scroll
-
-- **[Input](docs_md/01-components.md#input)** - User text input component
-
-- **[Lang text](docs_md/01-components.md#lang-text)** - Wrap on Text component to handle localization
-
-- **[Progress](docs_md/01-components.md#progress)** - Progress bar component
-
-- **[Radio group](docs_md/01-components.md#radio-group)** - Several checkboxes in one group with a single choice
-
-- **[Slider](docs_md/01-components.md#slider)** - Slider component
-
-- **[Timer](docs_md/01-components.md#timer)** - Handle timer work on gui text node
-
-For a complete overview, see: _[components.md](docs_md/01-components.md)_.
 
 
 ## Basic usage
@@ -285,3 +273,10 @@ https://insality.github.io/druid/
 ## Issues and suggestions
 
 If you have any issues, questions or suggestions please [create an issue](https://github.com/Insality/druid/issues) or contact me: [insality@gmail.com](mailto:insality@gmail.com)
+
+
+## ❤️ Support project ❤️
+
+Please support me if you like this project! It will help me keep engaged to update **Druid** and make it even better!
+
+[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
