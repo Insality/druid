@@ -85,12 +85,14 @@ return function()
 			assert(instance:is_hovered() == true)
 
 			instance:set_enabled(false)
+			assert(instance:is_enabled() == false)
 			assert(instance:is_hovered() == false)
 			druid:on_input(mock_input.input_empty(12, 12))
 			assert(instance:is_hovered() == false)
 
 			instance:set_enabled(true)
 			druid:on_input(mock_input.input_empty(12, 12))
+			assert(instance:is_enabled() == true)
 			assert(instance:is_hovered() == true)
 
 			druid:on_input(mock_input.input_empty(-10, 10))
