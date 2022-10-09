@@ -3,6 +3,17 @@ local druid = require("druid.druid")
 local monarch = require("monarch.monarch")
 local default_style = require("druid.styles.default.style")
 
+local checkbox = require("druid.extended.checkbox")
+local checkbox_group = require("druid.extended.checkbox_group")
+local dynamic_grid = require("druid.extended.dynamic_grid")
+local input = require("druid.extended.input")
+local lang_text = require("druid.extended.lang_text")
+local progress = require("druid.extended.progress")
+local radio_group = require("druid.extended.radio_group")
+local slider = require("druid.extended.slider")
+local timer_component = require("druid.extended.timer")
+local data_list = require("druid.extended.data_list")
+
 local cache_path = sys.get_save_file("druid", "cache")
 
 
@@ -219,12 +230,28 @@ local function check_loading(self)
 end
 
 
+local function register_druid_extended_components(self)
+	druid.register("checkbox", checkbox)
+	druid.register("checkbox_group", checkbox_group)
+	druid.register("dynamic_grid", dynamic_grid)
+	druid.register("input", input)
+	druid.register("lang_text", lang_text)
+	druid.register("progress", progress)
+	druid.register("radio_group", radio_group)
+	druid.register("slider", slider)
+	druid.register("timer", timer_component)
+	druid.register("data_list", data_list)
+end
+
+
+
 function init(self)
 	-- Main lobby have more render priority (top panel)
 	gui.set_render_order(10)
 
 	window.set_listener(on_window_callback)
 	druid.set_default_style(default_style)
+	register_druid_extended_components(self)
 	self.druid = druid.new(self)
 	self.cache = sys.load(cache_path) or {}
 
