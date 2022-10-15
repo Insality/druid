@@ -239,5 +239,28 @@ return function()
 			druid:on_input(mock_input.click_released(25, 25))
 			assert(on_click_mock.calls == 1)
 		end)
+
+		it("Should work with set_enabled", function()
+			local button = mock_gui.add_box("button", 0, 0, 100, 50)
+			local button_params = {}
+			local on_click, on_click_mock = test_helper.get_function()
+			local instance = druid:new_button(button, on_click, button_params)
+
+			instance:set_enabled(false)
+			local is_clicked_pressed = druid:on_input(mock_input.click_pressed(10, 10))
+			local is_clicked_released = druid:on_input(mock_input.click_released(10, 10))
+			assert(is_clicked_pressed == false)
+			assert(is_clicked_released == false)
+			assert(on_click_mock.calls == 0)
+			assert(instance:is_enabled() == false)
+
+			instance:set_enabled(true)
+			local is_clicked_pressed2 = druid:on_input(mock_input.click_pressed(10, 10))
+			assert(is_clicked_pressed2 == true)
+			local is_clicked_released2 = druid:on_input(mock_input.click_released(10, 10))
+			assert(is_clicked_released2 == true)
+			assert(on_click_mock.calls == 1)
+			assert(instance:is_enabled() == true)
+		end)
 	end)
 end

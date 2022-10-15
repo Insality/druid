@@ -107,6 +107,13 @@ function M.get_screen_aspect_koef()
 end
 
 
+function M.get_gui_scale()
+	local window_x, window_y = window.get_size()
+	return math.min(window_x / gui.get_width(),
+		window_y / gui.get_height())
+end
+
+
 function M.step(current, target, step)
 	if current < target then
 		return math.min(current + step, target)
@@ -181,7 +188,6 @@ function M.get_text_metrics_from_node(text_node)
 end
 
 
-
 --- Check if node is enabled in gui hierarchy.
 -- Return false, if node or any his parent is disabled
 -- @function helper.is_enabled
@@ -196,6 +202,23 @@ function M.is_enabled(node)
 	end
 
 	return is_enabled
+end
+
+
+--- Check if node is enabled in gui hierarchy.
+-- Return false, if node or any his parent is disabled
+-- @function helper.is_enabled
+-- @tparam node node Gui node
+-- @treturn bool Is enabled in hierarchy
+function M.get_scene_scale(node)
+	local scale = gui.get_scale(node)
+	local parent = gui.get_parent(node)
+	while parent do
+		scale = vmath.mul_per_elem(scale, gui.get_scale(parent))
+		parent = gui.get_parent(parent)
+	end
+
+	return scale
 end
 
 
