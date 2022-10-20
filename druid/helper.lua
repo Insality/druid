@@ -205,13 +205,13 @@ function M.is_enabled(node)
 end
 
 
---- Check if node is enabled in gui hierarchy.
--- Return false, if node or any his parent is disabled
--- @function helper.is_enabled
+--- Get cumulative parent's node scale
+-- @function helper.get_scene_scale
 -- @tparam node node Gui node
+-- @tparam bool include_node_scale
 -- @treturn bool Is enabled in hierarchy
-function M.get_scene_scale(node)
-	local scale = gui.get_scale(node)
+function M.get_scene_scale(node, include_node_scale)
+	local scale = include_node_scale and gui.get_scale(node) or vmath.vector3(1)
 	local parent = gui.get_parent(node)
 	while parent do
 		scale = vmath.mul_per_elem(scale, gui.get_scale(parent))
