@@ -569,7 +569,7 @@ end
 -- @tparam node node Gui text node
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
 -- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
--- @treturn Tet text component
+-- @treturn Text text component
 function DruidInstance.new_text(self, node, value, no_adjust)
 	return DruidInstance.new(self, text, node, value, no_adjust)
 end
