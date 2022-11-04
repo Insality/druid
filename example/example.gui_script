@@ -168,6 +168,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_title(self, "Custom components"))
 	self.lobby_grid:add(get_button(self, "Rich Input", "custom_rich_input", "/custom/rich_input/rich_input.gui_script"))
 	self.lobby_grid:add(get_button(self, "Pin Knob", "custom_pin_knob", "/custom/pin_knob/pin_knob.gui_script"))
+	self.lobby_grid:add(get_button(self, "Rich Text", "custom_rich_text", "/custom/rich_text/rich_text.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "System"))
 	self.lobby_grid:add(get_button_disabled(self, "Styles"))
