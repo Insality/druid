@@ -115,7 +115,7 @@ function M.parse(text, default_settings)
 	local open_tags = {}
 	while true do
 		-- merge list of word settings from defaults and all open tags
-		local word_settings = { tags = {}}
+		local word_settings = { tags = {} }
 		merge_tags(word_settings, default_settings)
 		for _,open_tag in ipairs(open_tags) do
 			merge_tags(word_settings, open_tag)

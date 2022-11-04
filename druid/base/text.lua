@@ -83,10 +83,12 @@ local function update_text_area_size(self)
 	scale_modifier = math.min(scale_modifier, self.start_scale.x)
 
 	if self:is_multiline() then
-		local max_text_area_square = max_width * max_height
-		local cur_text_area_square = metrics.height * metrics.width * self.start_scale.x
-		scale_modifier = self.start_scale.x * math.sqrt(max_text_area_square / cur_text_area_square)
-		scale_modifier = math.min(scale_modifier, self.start_scale.x)
+		local scale_modifier_by_height = math.sqrt(max_height / metrics.height)
+		scale_modifier = math.min(self.start_scale.y, scale_modifier_by_height)
+
+		if metrics.width * scale_modifier > max_width then
+			scale_modifier = math.min(max_width / metrics.width, self.start_scale.x)
+		end
 	end
 
 	if self._minimal_scale then

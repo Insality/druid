@@ -1,0 +1,34 @@
+local druid = require("druid.druid")
+
+local RichText = require("druid.custom.rich_text.rich_text")
+
+
+function init(self)
+	self.druid = druid.new(self)
+
+	self.rich_text = self.druid:new(RichText, "rich_text")
+	-- self.rich_text:set_text("Lorem long text with differrent placeholder or just text without any sense here to check multiline without long words")
+	-- self.rich_text:set_text("Lorem long text with differrent placeholder or just text without any sense here to check multiline without long wordswordwordwrodwrodwrodswrodword he")
+	self.rich_text:set_text("Some text with image <img=logo,32/> in the middle")
+	self.rich_text:set_text("Some text with image <img=slider_move,32/> in the middle")
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

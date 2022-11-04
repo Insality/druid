@@ -157,6 +157,7 @@ local function position_words(words, line_width, line_height, position, settings
 		else
 			gui.set_position(word.node, position)
 		end
+		word.position = vmath.vector3(position)
 		position.x = position.x + word.metrics.total_width + spacing
 		words[i] = nil
 	end
@@ -188,32 +189,34 @@ local function create_box_node(word)
 	local node = gui.new_box_node(V3_ZERO, V3_ZERO)
 	local word_image = word.image
 	local image_width = word_image.width
-	local image_height = word_image.height
 	gui.set_id(node, new_id("box"))
+	gui.set_size_mode(node, gui.SIZE_MODE_AUTO)
+	gui.set_texture(node, word.image.texture or word.default_texture)
+	gui.play_flipbook(node, hash(word.image.anim or word.default_anim))
+
 	if image_width then
+		local image_size = gui.get_size(node)
 		gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
 		size_vector.x = image_width
-		size_vector.y = image_height
+		-- Use height or autoscale to keep aspect ratio
+		size_vector.y = word_image.height or ((image_size.y / image_size.x) * image_width)
 		size_vector.z = 0
 		gui.set_size(node, size_vector)
-	else
-		gui.set_size_mode(node, gui.SIZE_MODE_AUTO)
 	end
-	gui.set_texture(node, word.image.texture)
-	local word_size = word.size
+
+	local word_size = word.size * word.adjust_scale
 	size_vector.x = word_size
 	size_vector.y = word_size
 	size_vector.z = word_size
-	gui.set_scale(node, size_vector)
-
-	gui.play_flipbook(node, hash(word.image.anim))
+	word.scale = vmath.vector3(size_vector)
+	gui.set_scale(node, word.scale)
 
 	-- get metrics of node based on image size
 	local size = gui.get_size(node)
 	local metrics = {}
-	metrics.total_width = size.x * word.size
-	metrics.width = size.x * word.size
-	metrics.height = size.y * word.size
+	metrics.total_width = size.x * word.size * word.adjust_scale
+	metrics.width = size.x * word.size * word.adjust_scale
+	metrics.height = size.y * word.size * word.adjust_scale
 	return node, metrics
 end
 
@@ -222,7 +225,8 @@ local function create_spine_node(word)
 	local node = gui.new_spine_node(V3_ZERO, word.spine.scene)
 	gui.set_id(node, new_id("spine"))
 	gui.set_size_mode(node, gui.SIZE_MODE_AUTO)
-	gui.set_scale(node, vmath.vector3(word.size))
+	word.scale = vmath.vector3(word.size)
+	gui.set_scale(node, word.scale)
 	gui.play_spine_anim(node, word.spine.anim, gui.PLAYBACK_LOOP_FORWARD)
 
 	local size = gui.get_size(node)
@@ -243,11 +247,11 @@ local function get_text_metrics(word, font, text)
 		metrics = gui.get_text_metrics(font, "|")
 		metrics.width = 0
 		metrics.total_width = 0
-		metrics.height = metrics.height * word.size
+		metrics.height = metrics.height * word.size * word.text_scale.y * word.adjust_scale
 	else
 		metrics = gui.get_text_metrics(font, text)
-		metrics.width = metrics.width * word.size
-		metrics.height = metrics.height * word.size
+		metrics.width = metrics.width * word.size * word.text_scale.x * word.adjust_scale
+		metrics.height = metrics.height * word.size * word.text_scale.y * word.adjust_scale
 		metrics.total_width = metrics.width
 	end
 	return metrics
@@ -261,7 +265,8 @@ local function create_text_node(word, font, metrics)
 	gui.set_color(node, word.color)
 	if word.shadow then gui.set_shadow(node, word.shadow) end
 	if word.outline then gui.set_outline(node, word.outline) end
-	gui.set_scale(node, V3_ONE * word.size)
+	word.scale = word.text_scale * word.size * word.adjust_scale
+	gui.set_scale(node, word.scale)
 
 	metrics = metrics or get_text_metrics(word, font)
 	gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
@@ -312,6 +317,7 @@ local function measure_node(word, font, previous_word)
 	return metrics, combined_metrics, node
 end
 
+
 local function split_word(word, font, max_width)
 	local one = deepcopy(word)
 	local two = deepcopy(word)
@@ -320,7 +326,7 @@ local function split_word(word, font, max_width)
 	local char_count = utf8.len(text)
 	local split_index = math.floor(char_count * (max_width / metrics.total_width))
 	local rest = ""
-	while split_index > 1 do
+	while split_index >= 1 do
 		one.text = utf8.sub(text, 1, split_index)
 		one.linebreak = true
 		metrics = get_text_metrics(one, font)
@@ -362,6 +368,9 @@ function M.create(text, font, settings)
 	settings.paragraph_spacing = settings.paragraph_spacing or 0.5
 	settings.image_pixel_grid_snap = settings.image_pixel_grid_snap or false
 	settings.combine_words = settings.combine_words or false
+	settings.text_scale = settings.text_scale or V3_ONE
+	settings.default_texture = settings.default_texture or nil
+	settings.default_anim = settings.default_anim or nil
 	if settings.align == M.ALIGN_JUSTIFY and not settings.width then
 		error("Width must be specified if text should be justified")
 	end
@@ -386,7 +395,14 @@ function M.create(text, font, settings)
 		shadow = settings.shadow,
 		outline = settings.outline,
 		font = font,
-		size = settings.size
+		size = settings.size,
+		-- Autofill properties
+		text_scale = settings.text_scale,
+		adjust_scale = settings.adjust_scale, -- scale for content adjust to fit into root size
+		position = nil,
+		scale = nil,
+		default_texture = nil, -- for image only
+		default_anim = nil, -- for image only
 	}
 	local words = parser.parse(text, word_settings)
 	local text_metrics = {
@@ -406,6 +422,8 @@ function M.create(text, font, settings)
 	repeat
 		local word = words[i]
 		if word.image then
+			word.default_texture = settings.default_texture
+			word.default_anim = settings.default_anim
 			text_metrics.img_count = text_metrics.img_count + 1
 		elseif word.spine then
 			text_metrics.spine_count = text_metrics.spine_count + 1
@@ -680,7 +698,8 @@ function M.characters(word)
 
 		local sub_metrics = get_text_metrics(word, font, utf8.sub(word.text, 1, i))
 		position.x = position_x + sub_metrics.width - char.metrics.width
-		gui.set_position(char.node, position)
+		char.position = vmath.vector3(position)
+		gui.set_position(char.node, char.position)
 	end
 
 	return chars

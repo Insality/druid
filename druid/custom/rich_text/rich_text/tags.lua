@@ -97,9 +97,13 @@ M.register("img", function(params, settings)
 	width, params = split(params, ",")
 	height = split(params, ",")
 	local texture, anim = split(texture_and_anim, ":")
+	if not anim then
+		anim = texture
+		texture = nil
+	end
 
 	width = width and tonumber(width)
-	height = height and tonumber(height) or width
+	height = height and tonumber(height)
 
 	settings.image = {
 		texture = texture,
