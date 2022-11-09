@@ -121,11 +121,7 @@ function Progress.init(self, node, key, init_value)
 	end
 
 	self.on_change = Event()
-end
 
-
--- @tparam Progress self @{Progress}
-function Progress.on_late_init(self)
 	self:set_to(self.last_value)
 end
 
