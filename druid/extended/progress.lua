@@ -126,7 +126,7 @@ end
 
 -- @tparam Progress self @{Progress}
 function Progress.on_late_init(self)
-	self:set_to(self._init_value)
+	self:set_to(self.last_value)
 end
 
 
