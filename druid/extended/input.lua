@@ -87,6 +87,7 @@ end
 -- @tfield[opt=false] bool IS_LONGTAP_ERASE Is long tap will erase current input data
 -- @tfield[opt=*] string MASK_DEFAULT_CHAR Default character mask for password input
 -- @tfield[opt=false] bool IS_UNSELECT_ON_RESELECT If true, call unselect on select selected input
+-- @tfield[opt=false] bool IS_CONSUME_INPUT_WHILE_SELECTED If true, will consume input while input is selected. If false - it's allow to interact with other input component while selected
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
@@ -97,6 +98,7 @@ function Input.on_style_change(self, style)
 	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
 	self.style.MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*"
 	self.style.IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false
+	self.style.IS_CONSUME_INPUT_WHILE_SELECTED = style.IS_CONSUME_INPUT_WHILE_SELECTED or false
 
 	self.style.on_select = style.on_select or function(_, button_node) end
 	self.style.on_unselect = style.on_unselect or function(_, button_node) end
@@ -214,7 +216,8 @@ function Input.on_input(self, action_id, action)
 		end
 	end
 
-	return self.is_selected
+	local is_consume_input = self.style.IS_CONSUME_INPUT_WHILE_SELECTED and self.is_selected
+	return is_consume_input
 end
 
 
