@@ -12,7 +12,7 @@ local M = {}
 --- Text node or icon node can be nil
 local function get_text_width(text_node)
 	if text_node then
-		local text_metrics = gui.get_text_metrics_from_node(text_node)
+		local text_metrics = M.get_text_metrics_from_node(text_node)
 		local text_scale = gui.get_scale(text_node).x
 		return text_metrics.width * text_scale
 	end
@@ -277,6 +277,23 @@ function M.get_border(node, offset)
 	end
 
 	return border
+end
+
+
+function M.get_text_metrics_from_node(node)
+	local font_resource = gui.get_font_resource(gui.get_font(node))
+	local options = {
+		tracking = gui.get_tracking(node),
+		line_break = gui.get_line_break(node),
+	}
+
+	-- Gather other options only if it used in node
+	if options.line_break then
+		options.width = gui.get_size(node).x
+		options.leading = gui.get_leading(node)
+	end
+
+	return resource.get_text_metrics(font_resource, gui.get_text(node), options)
 end
 
 
