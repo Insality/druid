@@ -5,10 +5,10 @@
 -- @within BaseComponent
 -- @alias druid.hover
 
---- On hover callback(self, state)
+--- On hover callback(self, state, hover_instance)
 -- @tfield DruidEvent on_hover @{DruidEvent}
 
---- On mouse hover callback(self, state)
+--- On mouse hover callback(self, state, hover_instance)
 -- @tfield DruidEvent on_mouse_hover @{DruidEvent}
 
 ---
@@ -81,6 +81,8 @@ function Hover.on_input(self, action_id, action)
 	else
 		hover_function(self, true)
 	end
+
+	return false
 end
 
 
@@ -95,7 +97,7 @@ end
 function Hover.set_hover(self, state)
 	if self._is_hovered ~= state then
 		self._is_hovered = state
-		self.on_hover:trigger(self:get_context(), state)
+		self.on_hover:trigger(self:get_context(), state, self)
 	end
 end
 
@@ -105,7 +107,7 @@ end
 function Hover.set_mouse_hover(self, state)
 	if self._is_mouse_hovered ~= state then
 		self._is_mouse_hovered = state
-		self.on_mouse_hover:trigger(self:get_context(), state)
+		self.on_mouse_hover:trigger(self:get_context(), state, self)
 	end
 end
 
