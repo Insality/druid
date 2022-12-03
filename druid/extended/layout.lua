@@ -36,8 +36,9 @@ function Layout.init(self, node, mode, on_size_changed_callback)
 
 	self._min_size = nil
 	self._max_size = nil
+	self._current_size = vmath.vector3(0)
 	self._inited = false
-
+	self._max_gui_upscale = nil
 	self._fit_node = nil
 
 	self.mode = mode or const.LAYOUT_MODE.FIT
@@ -66,6 +67,13 @@ function Layout.on_window_resized(self)
 
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 
+	local revert_scale = 1
+	if self._max_gui_upscale then
+		revert_scale = self._max_gui_upscale / helper.get_gui_scale()
+		revert_scale = math.min(revert_scale, 1)
+	end
+	gui.set_scale(self.node, vmath.vector3(revert_scale))
+
 	if self._fit_node then
 		self.fit_size = gui.get_size(self._fit_node)
 		self.fit_size.x = self.fit_size.x / x_koef
@@ -77,11 +85,17 @@ function Layout.on_window_resized(self)
 
 	local new_size = vmath.vector3(self.origin_size)
 
-	if self.mode == const.LAYOUT_MODE.STRETCH_X or self.mode == const.LAYOUT_MODE.STRETCH then
-		new_size.x = new_size.x * x_koef
+	if self.mode == const.LAYOUT_MODE.STRETCH then
+		new_size.x = new_size.x * x_koef / revert_scale
+		new_size.y = new_size.y * y_koef / revert_scale
 	end
-	if self.mode == const.LAYOUT_MODE.STRETCH_Y or self.mode == const.LAYOUT_MODE.STRETCH then
-		new_size.y = new_size.y * y_koef
+
+	if self.mode == const.LAYOUT_MODE.STRETCH_X then
+		new_size.x = new_size.x * x_koef / revert_scale
+	end
+
+	if self.mode == const.LAYOUT_MODE.STRETCH_Y then
+		new_size.y = new_size.y * y_koef / revert_scale
 	end
 
 	-- Fit to the stretched container (node size or other defined)
@@ -100,6 +114,7 @@ function Layout.on_window_resized(self)
 		new_size.x = math.min(new_size.x, self._max_size.x)
 		new_size.y = math.min(new_size.y, self._max_size.y)
 	end
+	self._current_size = new_size
 	gui.set_size(self.node, new_size)
 
 	self.position.x = self.origin_position.x + self.origin_position.x * (x_koef - 1)
@@ -149,6 +164,16 @@ function Layout.set_origin_size(self, new_origin_size)
 	self.origin_size = new_origin_size or self.origin_size
 	self:on_window_resized()
 	return self
+end
+
+
+--- Set max gui upscale for FIT adjust mode (or side). It happens on bigger render gui screen
+-- @tparam Layout self @{Layout}
+-- @tparam number max_gui_upscale
+-- @treturn Layout @{Layout}
+function Layout.set_max_gui_upscale(self, max_gui_upscale)
+	self._max_gui_upscale = max_gui_upscale
+	self:on_window_resized()
 end
 
 
