@@ -10,7 +10,7 @@
 --- On set text callback(self, text)
 -- @tfield DruidEvent on_set_text @{DruidEvent}
 
---- On adjust text size callback(self, new_scale)
+--- On adjust text size callback(self, new_scale, text_metrics)
 -- @tfield DruidEvent on_update_text_scale @{DruidEvent}
 
 --- On change pivot callback(self, pivot)
@@ -100,7 +100,7 @@ local function update_text_area_size(self)
 
 	update_text_size(self)
 
-	self.on_update_text_scale:trigger(self:get_context(), new_scale)
+	self.on_update_text_scale:trigger(self:get_context(), new_scale, metrics)
 end
 
 
