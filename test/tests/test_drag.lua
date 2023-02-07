@@ -11,7 +11,7 @@ return function()
 	local function create_drag_instance(on_drag)
 		local button = mock_gui.add_box("button", 0, 0, 20, 20)
 		local instance = druid:new_drag(button, on_drag)
-		instance.style.IS_USE_SCREEN_KOEF = false
+		instance.style.NO_USE_SCREEN_KOEF = true
 		instance.style.DRAG_DEADZONE = 4
 		return instance
 	end
@@ -36,7 +36,7 @@ return function()
 			local instance = create_drag_instance(on_drag)
 
 			druid:on_input(mock_input.click_pressed(10, 10))
-			assert(instance.is_touch  == true)
+			assert(instance.is_touch == true)
 
 			druid:on_input(mock_input.input_empty(12, 10))
 			assert(on_drag_mock.calls == 0)

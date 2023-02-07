@@ -248,6 +248,10 @@ function Button.on_input(self, action_id, action)
 		return false
 	end
 
+	if not self:is_enabled() then
+		return false
+	end
+
 	local is_pick = true
 	local is_key_trigger = (action_id == self.key_trigger)
 	if not is_key_trigger then
@@ -280,7 +284,7 @@ function Button.on_input(self, action_id, action)
 
 	-- While hold button, repeat rate pick from input.repeat_interval
 	if action.repeated then
-		if not self.disabled and self.on_repeated_click:is_exist() and self.can_action then
+		if self.on_repeated_click:is_exist() and self.can_action then
 			on_button_repeated_click(self)
 			return true
 		end
@@ -290,7 +294,7 @@ function Button.on_input(self, action_id, action)
 		return on_button_release(self)
 	end
 
-	if not self.disabled and self.can_action and self.on_long_click:is_exist() then
+	if self.can_action and self.on_long_click:is_exist() then
 		local press_time = socket.gettime() - self.last_pressed_time
 
 		if self.style.AUTOHOLD_TRIGGER <= press_time then
