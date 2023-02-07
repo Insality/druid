@@ -1,10 +1,10 @@
-name: "default"
+name: "late_init_check"
 scale_along_z: 0
 embedded_instances {
-  id: "test"
+  id: "go"
   data: "components {\n"
-  "  id: \"test\"\n"
-  "  component: \"/test/test.gui\"\n"
+  "  id: \"late_init_check\"\n"
+  "  component: \"/example/examples/system/late_init_check/late_init_check.gui\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"

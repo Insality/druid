@@ -45,8 +45,12 @@ globals = {
   "debug",
   "timer",
   "window",
-  "buffer", 
+  "buffer",
   "resource",
   "defos",
   "html5",
+  "describe",
+  "before",
+  "after",
+  "it",
 }

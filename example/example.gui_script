@@ -3,6 +3,17 @@ local druid = require("druid.druid")
 local monarch = require("monarch.monarch")
 local default_style = require("druid.styles.default.style")
 
+local checkbox = require("druid.extended.checkbox")
+local checkbox_group = require("druid.extended.checkbox_group")
+local dynamic_grid = require("druid.extended.dynamic_grid")
+local input = require("druid.extended.input")
+local lang_text = require("druid.extended.lang_text")
+local progress = require("druid.extended.progress")
+local radio_group = require("druid.extended.radio_group")
+local slider = require("druid.extended.slider")
+local timer_component = require("druid.extended.timer")
+local data_list = require("druid.extended.data_list")
+
 local cache_path = sys.get_save_file("druid", "cache")
 
 
@@ -121,6 +132,7 @@ local function init_lobby(self)
 	self.lobby_scroll = self.druid:new_scroll("lobby_view", "lobby_content")
 	self.lobby_grid = self.druid:new_dynamic_grid("lobby_content")
 	self.lobby_scroll:bind_grid(self.lobby_grid)
+	self.lobby_scroll.style.WHEEL_SCROLL_SPEED = 20
 
 	self.lobby_grid:add(get_title(self, "General examples"))
 	self.lobby_grid:add(get_button(self, "Overview", "general_overview", "/general/overview/overview.gui_script"))
@@ -133,6 +145,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "Checkboxes", "general_checkboxes", "/general/checkboxes/checkboxes.gui_script"))
 	self.lobby_grid:add(get_button(self, "Input text", "general_input", "/general/input/input.gui_script"))
 	self.lobby_grid:add(get_button(self, "Layout", "general_layout", "/general/layout/layout.gui_script"))
+	self.lobby_grid:add(get_button(self, "Hover", "general_hover", "/general/hover/hover.gui_script"))
 	self.lobby_grid:add(get_button(self, "Swipe", "general_swipe", "/general/swipe/swipe.gui_script"))
 	self.lobby_grid:add(get_button(self, "Drag", "general_drag", "/general/drag/drag.gui_script"))
 	self.lobby_grid:add(get_button(self, "Hotkey", "general_hotkey", "/general/hotkey/hotkey.gui_script"))
@@ -140,7 +153,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_title(self, "Texts"))
 	self.lobby_grid:add(get_button(self, "Texts", "texts_general", "/texts/texts_general/texts_general.gui_script"))
 	self.lobby_grid:add(get_button(self, "Adjust types", "texts_adjust", "/texts/texts_adjust/texts_adjust.gui_script"))
-	self.lobby_grid:add(get_button_disabled(self, "Lang Text", "texts_lang_text"))
+	self.lobby_grid:add(get_button(self, "Lang Text", "texts_lang_text", "/texts/texts_adjust/texts_lang_text.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Scrolls"))
 	self.lobby_grid:add(get_button_disabled(self, "Nested scrolls", "scroll_scene"))
@@ -178,6 +191,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "Message input", "system_message_input", "/system/message_input/message_input.gui_script"))
 	self.lobby_grid:add(get_button_disabled(self, "Input priority"))
 	self.lobby_grid:add(get_button(self, "Inner templates", "system_inner_templates", "/system/inner_templates/inner_templates.gui_script"))
+	self.lobby_grid:add(get_button(self, "Late init check", "system_late_init_check", "/system/late_init_check/late_init_check.gui_script"))
 end
 
 
@@ -220,12 +234,28 @@ local function check_loading(self)
 end
 
 
+local function register_druid_extended_components(self)
+	druid.register("checkbox", checkbox)
+	druid.register("checkbox_group", checkbox_group)
+	druid.register("dynamic_grid", dynamic_grid)
+	druid.register("input", input)
+	druid.register("lang_text", lang_text)
+	druid.register("progress", progress)
+	druid.register("radio_group", radio_group)
+	druid.register("slider", slider)
+	druid.register("timer", timer_component)
+	druid.register("data_list", data_list)
+end
+
+
+
 function init(self)
 	-- Main lobby have more render priority (top panel)
 	gui.set_render_order(10)
 
 	window.set_listener(on_window_callback)
 	druid.set_default_style(default_style)
+	register_druid_extended_components(self)
 	self.druid = druid.new(self)
 	self.cache = sys.load(cache_path) or {}
 

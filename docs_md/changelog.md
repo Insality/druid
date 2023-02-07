@@ -445,4 +445,4 @@ And yeah, the new **Druid** logo is here!
 - **#189** [System] Add optional flag to `component:set_input_priority` to mark it as temporary. It will reset to default input priority after the `component:reset_input_priority`
 - **#204** [System] Fix: wrong code example link, if open example from direct URL
 - **#202** [System] Enabled stencil check to true by default. To disable this, use `druid.no_stencil_check` in game.project settings
-- [Examples] Add layout, layout fit, progres bar, data list + component examples
+- [Examples] Add layout, layout fit, progress bar, data list + component examples

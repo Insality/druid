@@ -49,16 +49,17 @@ local static_grid = require("druid.base.static_grid")
 local swipe = require("druid.base.swipe")
 local text = require("druid.base.text")
 
-local checkbox = require("druid.extended.checkbox")
-local checkbox_group = require("druid.extended.checkbox_group")
-local dynamic_grid = require("druid.extended.dynamic_grid")
-local input = require("druid.extended.input")
-local lang_text = require("druid.extended.lang_text")
-local progress = require("druid.extended.progress")
-local radio_group = require("druid.extended.radio_group")
-local slider = require("druid.extended.slider")
-local timer_component = require("druid.extended.timer")
-local data_list = require("druid.extended.data_list")
+-- To use this components, you should register them first
+-- local checkbox = require("druid.extended.checkbox")
+-- local checkbox_group = require("druid.extended.checkbox_group")
+-- local dynamic_grid = require("druid.extended.dynamic_grid")
+-- local input = require("druid.extended.input")
+-- local lang_text = require("druid.extended.lang_text")
+-- local progress = require("druid.extended.progress")
+-- local radio_group = require("druid.extended.radio_group")
+-- local slider = require("druid.extended.slider")
+-- local timer_component = require("druid.extended.timer")
+-- local data_list = require("druid.extended.data_list")
 
 
 local DruidInstance = class("druid.druid_instance")
@@ -193,6 +194,18 @@ local function process_input(self, action_id, action, components)
 end
 
 
+local function schedule_late_init(self)
+	if self._late_init_timer_id then
+		return
+	end
+
+	self._late_init_timer_id = timer.delay(0, false, function()
+		self._late_init_timer_id = nil
+		self:late_init()
+	end)
+end
+
+
 --- Druid class constructor
 -- @tparam DruidInstance self
 -- @tparam table context Druid context. Usually it is self of script
@@ -215,10 +228,6 @@ function DruidInstance.initialize(self, context, style)
 	for i = 1, #base_component.ALL_INTERESTS do
 		self.components_interest[base_component.ALL_INTERESTS[i]] = {}
 	end
-
-	timer.delay(0, false, function()
-		self:late_init()
-	end)
 end
 
 
@@ -243,6 +252,9 @@ function DruidInstance.new(self, component, ...)
 
 	if instance.init then
 		instance:init(...)
+	end
+	if instance.on_late_init or (not self.input_inited and instance.on_input) then
+		schedule_late_init(self)
 	end
 
 	return instance
@@ -315,7 +327,7 @@ function DruidInstance.remove(self, component)
 end
 
 
---- Druid late update function call after init and before udpate step
+--- Druid late update function call after init and before update step
 -- @tparam DruidInstance self
 function DruidInstance.late_init(self)
 	local late_init_components = self.components_interest[base_component.ON_LATE_INIT]
@@ -569,7 +581,7 @@ end
 -- @tparam node node Gui text node
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
 -- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
--- @treturn Tet text component
+-- @treturn Text text component
 function DruidInstance.new_text(self, node, value, no_adjust)
 	return DruidInstance.new(self, text, node, value, no_adjust)
 end
@@ -634,8 +646,7 @@ end
 -- @tparam node parent The gui node parent, where items will be placed
 -- @treturn DynamicGrid grid component
 function DruidInstance.new_dynamic_grid(self, parent)
-	-- return helper.extended_component("dynamic_grid")
-	return DruidInstance.new(self, dynamic_grid, parent)
+	return helper.extended_component("dynamic_grid")
 end
 
 
@@ -646,8 +657,7 @@ end
 -- @tparam bool no_adjust If true, will not correct text size
 -- @treturn LangText lang_text component
 function DruidInstance.new_lang_text(self, node, locale_id, no_adjust)
-		-- return helper.extended_component("lang_text")
-	return DruidInstance.new(self, lang_text, node, locale_id, no_adjust)
+		return helper.extended_component("lang_text")
 end
 
 
@@ -658,8 +668,7 @@ end
 -- @tparam[opt] function callback On slider change callback
 -- @treturn Slider slider component
 function DruidInstance.new_slider(self, node, end_pos, callback)
-	-- return helper.extended_component("slider")
-	return DruidInstance.new(self, slider, node, end_pos, callback)
+	return helper.extended_component("slider")
 end
 
 
@@ -671,8 +680,7 @@ end
 -- @tparam[opt=false] boolean initial_state The initial state of checkbox, default - false
 -- @treturn Checkbox checkbox component
 function DruidInstance.new_checkbox(self, node, callback, click_node, initial_state)
-	-- return helper.extended_component("checkbox")
-	return DruidInstance.new(self, checkbox, node, callback, click_node, initial_state)
+	return helper.extended_component("checkbox")
 end
 
 
@@ -683,8 +691,7 @@ end
 -- @tparam[opt] number keyboard_type Gui keyboard type for input field
 -- @treturn Input input component
 function DruidInstance.new_input(self, click_node, text_node, keyboard_type)
-	-- return helper.extended_component("input")
-	return DruidInstance.new(self, input, click_node, text_node, keyboard_type)
+	return helper.extended_component("input")
 end
 
 
@@ -695,8 +702,7 @@ end
 -- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
 -- @treturn CheckboxGroup checkbox_group component
 function DruidInstance.new_checkbox_group(self, nodes, callback, click_nodes)
-	-- return helper.extended_component("checkbox_group")
-	return DruidInstance.new(self, checkbox_group, nodes, callback, click_nodes)
+	return helper.extended_component("checkbox_group")
 end
 
 
@@ -707,8 +713,7 @@ end
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 -- @treturn DataList data_list component
 function DruidInstance.new_data_list(self, druid_scroll, druid_grid, create_function)
-	-- return helper.extended_component("data_list")
-	return DruidInstance.new(self, data_list, druid_scroll, druid_grid, create_function)
+	return helper.extended_component("data_list")
 end
 
 
@@ -719,8 +724,7 @@ end
 -- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
 -- @treturn RadioGroup radio_group component
 function DruidInstance.new_radio_group(self, nodes, callback, click_nodes)
-	-- return helper.extended_component("radio_group")
-	return DruidInstance.new(self, radio_group, nodes, callback, click_nodes)
+	return helper.extended_component("radio_group")
 end
 
 
@@ -732,8 +736,7 @@ end
 -- @tparam[opt] function callback Function on timer end
 -- @treturn Timer timer component
 function DruidInstance.new_timer(self, node, seconds_from, seconds_to, callback)
-	-- return helper.extended_component("timer")
-	return DruidInstance.new(self, timer_component, node, seconds_from, seconds_to, callback)
+	return helper.extended_component("timer")
 end
 
 
@@ -744,8 +747,7 @@ end
 -- @tparam[opt=1] number init_value Initial value of progress bar
 -- @treturn Progress progress component
 function DruidInstance.new_progress(self, node, key, init_value)
-	-- return helper.extended_component("progress")
-	return DruidInstance.new(self, progress, node, key, init_value)
+	return helper.extended_component("progress")
 end
 
 
