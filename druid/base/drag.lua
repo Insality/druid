@@ -156,7 +156,7 @@ end
 -- or create your own style
 -- @table style
 -- @tfield[opt=10] number DRAG_DEADZONE Distance in pixels to start dragging
--- @tfield[opt=false] boolean NO_USE_SCREEN_KOEF If screen aspect ration affects on drag values
+-- @tfield[opt=false] boolean NO_USE_SCREEN_KOEF If screen aspect ratio affects on drag values
 function Drag.on_style_change(self, style)
 	self.style = {}
 	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
