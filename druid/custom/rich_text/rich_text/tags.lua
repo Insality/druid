@@ -27,6 +27,20 @@ function M.register(tag, fn)
 end
 
 
+-- Split string at first occurrence of token
+-- If the token doesn't exist the whole string is returned
+-- @param s The string to split
+-- @param token The token to split string on
+-- @return before The string before the token or the whole string if token doesn't exist
+-- @return after The string after the token or nul
+local function split(s, token)
+	if not s then return nil, nil end
+	local before, after = s:match("(.-)" .. token .. "(.*)")
+	before = before or s
+	return before, after
+end
+
+
 M.register("color", function(params, settings)
 	settings.color = color.parse(params)
 end)
@@ -48,17 +62,7 @@ end)
 
 
 M.register("size", function(params, settings)
-	settings.size = tonumber(params)
-end)
-
-
-M.register("b", function(params, settings)
-	settings.bold = true
-end)
-
-
-M.register("i", function(params, settings)
-	settings.italic = true
+	settings.relative_scale = tonumber(params)
 end)
 
 
@@ -68,27 +72,13 @@ end)
 
 
 M.register("br", function(params, settings)
-	settings.linebreak = true
+	settings.br = true
 end)
 
 
 M.register("nobr", function(params, settings)
 	settings.nobr = true
 end)
-
-
--- Split string at first occurrence of token
--- If the token doesn't exist the whole string is returned
--- @param s The string to split
--- @param token The token to split string on
--- @return before The string before the token or the whole string if token doesn't exist
--- @return after The string after the token or nul
-local function split(s, token)
-	if not s then return nil, nil end
-	local before, after = s:match("(.-)" .. token .. "(.*)")
-	before = before or s
-	return before, after
-end
 
 
 M.register("img", function(params, settings)
@@ -105,26 +95,17 @@ M.register("img", function(params, settings)
 	width = width and tonumber(width)
 	height = height and tonumber(height)
 
+	---@class rich_text.word.image
+	---@field texture string
+	---@field anim string
+	---@field width number
+	---@field height number
 	settings.image = {
 		texture = texture,
 		anim = anim,
 		width = width,
 		height = height
 	}
-end)
-
-
-M.register("spine", function(params, settings)
-	local scene, anim = params:match("(.-):(.*)")
-	settings.spine = {
-		scene = scene,
-		anim = anim
-	}
-end)
-
-
-M.register("p", function(params, settings)
-	settings.paragraph = tonumber(params) or true
 end)
 
 

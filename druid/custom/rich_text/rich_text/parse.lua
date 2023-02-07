@@ -22,10 +22,11 @@ local function add_word(text, settings, words)
 	-- handle HTML entities
 	text = text:gsub("&lt;", "<"):gsub("&gt;", ">"):gsub("&nbsp;", " ")
 
-	local data = { text = text }
+	local data = { text = text, source_text = text }
 	for k,v in pairs(settings) do
 		data[k] = v
 	end
+
 	words[#words + 1] = data
 end
 
@@ -35,6 +36,7 @@ local function split_line(line, settings, words)
 	assert(line)
 	assert(settings)
 	assert(words)
+
 	local ws_start, trimmed_text, ws_end = line:match("^(%s*)(.-)(%s*)$")
 	if trimmed_text == "" then
 		add_word(ws_start .. ws_end, settings, words)
@@ -45,8 +47,10 @@ local function split_line(line, settings, words)
 		end
 		local first = words[wi + 1]
 		first.text = ws_start .. first.text
+		first.source_text = first.text
 		local last = words[#words]
 		last.text = utf8.sub(last.text, 1, utf8.len(last.text) - 1) .. ws_end
+		last.source_text = last.text
 	end
 end
 
@@ -91,12 +95,12 @@ end
 
 -- Merge one tag into another
 local function merge_tags(dst, src)
-	for k,v in pairs(src) do
+	for k, v in pairs(src) do
 		if k ~= "tags" then
 			dst[k] = v
 		end
 	end
-	for tag,params in pairs(src.tags or {}) do
+	for tag, params in pairs(src.tags or {}) do
 		dst.tags[tag] = (params == "") and true or params
 	end
 end
@@ -113,11 +117,12 @@ function M.parse(text, default_settings)
 	text = text:gsub("&zwsp;", "<zwsp>\226\128\139</zwsp>")
 	local all_words = {}
 	local open_tags = {}
+
 	while true do
 		-- merge list of word settings from defaults and all open tags
 		local word_settings = { tags = {} }
 		merge_tags(word_settings, default_settings)
-		for _,open_tag in ipairs(open_tags) do
+		for _, open_tag in ipairs(open_tags) do
 			merge_tags(word_settings, open_tag)
 		end
 
@@ -149,54 +154,33 @@ function M.parse(text, default_settings)
 			merge_tags(empty_tag_settings, word_settings)
 			add_word("", empty_tag_settings, all_words)
 		elseif not is_endtag then
-			if name == "repeat" then
-				local text_to_repeat = after_tag:match("(.-)</repeat>")
-				local repetitions = tonumber(params)
-				if repetitions > 1 then
-					after_tag = text_to_repeat:rep(repetitions - 1) .. after_tag
-				end
-			else
-				-- open tag - parse and add it
-				local tag_settings = parse_tag(name, params)
-				open_tags[#open_tags + 1] = tag_settings
-			end
+			-- open tag - parse and add it
+			local tag_settings = parse_tag(name, params)
+			open_tags[#open_tags + 1] = tag_settings
 		else
-			if name ~= "repeat" then
-				-- end tag - remove it from the list of open tags
-				local found = false
-				for i=#open_tags,1,-1 do
-					if open_tags[i].tag == name then
-						table.remove(open_tags, i)
-						found = true
-						break
-					end
-				end
-				if not found then print(("Found end tag '%s' without matching start tag"):format(name)) end
-			end
-		end
-
-		if name == "p" then
-			local last_word = all_words[#all_words]
-			if last_word then
-				if not is_endtag then
-					last_word.linebreak = true
-				end
-				if is_endtag or is_empty then
-					last_word.paragraph_end = true
+			-- end tag - remove it from the list of open tags
+			local found = false
+			for i=#open_tags,1,-1 do
+				if open_tags[i].tag == name then
+					table.remove(open_tags, i)
+					found = true
+					break
 				end
 			end
+			if not found then print(("Found end tag '%s' without matching start tag"):format(name)) end
 		end
 
 		-- parse text after the tag on the next iteration
 		text = after_tag
 	end
+
 	return all_words
 end
 
 
 --- Get the length of a text, excluding any tags (except image and spine tags)
 function M.length(text)
-	return utf8.len(text:gsub("<img.-/>", " "):gsub("<spine.-/>", " "):gsub("<.->", ""))
+	return utf8.len(text:gsub("<img.-/>", " "):gsub("<.->", ""))
 end
 
 

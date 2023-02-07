@@ -36,30 +36,7 @@ function M.add(name, color)
 end
 
 
-M.COLORS = {
-	aqua = M.parse_hex("#00ffffff"),
-	black = M.parse_hex("#000000ff"),
-	blue = M.parse_hex("#0000ffff"),
-	brown = M.parse_hex("#a52a2aff"),
-	cyan = M.parse_hex("#00ffffff"),
-	darkblue = M.parse_hex("#0000a0ff"),
-	fuchsia = M.parse_hex("#ff00ffff"),
-	green = M.parse_hex("#008000ff"),
-	grey = M.parse_hex("#808080ff"),
-	lightblue = M.parse_hex("#add8e6ff"),
-	lime = M.parse_hex("#00ff00ff"),
-	magenta = M.parse_hex("#ff00ffff"),
-	maroon = M.parse_hex("#800000ff"),
-	navy = M.parse_hex("#000080ff"),
-	olive = M.parse_hex("#808000ff"),
-	orange = M.parse_hex("#ffa500ff"),
-	purple = M.parse_hex("#800080ff"),
-	red	 = M.parse_hex("#ff0000ff"),
-	silver = M.parse_hex("#c0c0c0ff"),
-	teal = M.parse_hex("#008080ff"),
-	white = M.parse_hex("#ffffffff"),
-	yellow = M.parse_hex("#ffff00ff"),
-}
+M.COLORS = {}
 
 
 function M.parse(c)

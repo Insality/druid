@@ -2,40 +2,64 @@
 -- Author: Britzl
 -- Modified by: Insality
 
+local helper = require("druid.helper")
 local parser = require("druid.custom.rich_text.rich_text.parse")
 local utf8 = require("druid.system.utf8")
 
 local M = {}
 
-M.ALIGN_CENTER = hash("ALIGN_CENTER")
-M.ALIGN_LEFT = hash("ALIGN_LEFT")
-M.ALIGN_RIGHT = hash("ALIGN_RIGHT")
-M.ALIGN_JUSTIFY = hash("ALIGN_JUSTIFY")
+M.ADJUST_STEPS = 10
+M.ADJUST_SCALE_DELTA = 0.02
 
-M.VALIGN_TOP = hash("VALIGN_TOP")
-M.VALIGN_MIDDLE = hash("VALIGN_MIDDLE")
-M.VALIGN_BOTTOM = hash("VALIGN_BOTTOM")
-
-
-local V4_ZERO = vmath.vector4(0)
-local V4_ONE = vmath.vector4(1)
 local V3_ZERO = vmath.vector3(0)
-local V3_ONE = vmath.vector3(1)
 
-local id_counter = 0
 
-local function new_id(prefix)
-	id_counter = id_counter + 1
-	return hash((prefix or "") .. tostring(id_counter))
-end
+---@class rich_text.metrics
+---@field width number
+---@field height number
+---@field offset_x number|nil
+---@field offset_y number|nil
+---@field node_size vector3|nil @For images only
 
-local function round(v)
-	if type(v) == "number" then
-		return math.floor(v + 0.5)
-	else
-		return vmath.vector3(math.floor(v.x + 0.5), math.floor(v.y + 0.5), math.floor(v.z + 0.5))
-	end
-end
+---@class rich_text.lines_metrics
+---@field text_width number
+---@field text_height number
+---@field lines table<number, rich_text.metrics>
+
+---@class rich_text.word
+---@field node Node
+---@field relative_scale number
+---@field color vector4
+---@field position vector3
+---@field offset vector3
+---@field scale vector3
+---@field size vector3
+---@field metrics rich_text.metrics
+---@field pivot Pivot
+---@field text string
+---@field shadow vector4
+---@field outline vector4
+---@field font string
+---@field image rich_text.word.image
+---@field default_animation string
+---@field anchor number
+---@field br boolean
+---@field nobr boolean
+
+---@class rich_text.settings
+---@field parent Node
+---@field size number
+---@field fonts table<string, string>
+---@field color vector4
+---@field shadow vector4
+---@field outline vector4
+---@field position vector3
+---@field line_spacing number
+---@field image_pixel_grid_snap boolean
+---@field combine_words boolean
+---@field default_animation string
+---@field node_prefab Node
+---@field text_prefab Node
 
 
 local function deepcopy(orig)
@@ -53,38 +77,9 @@ local function deepcopy(orig)
 end
 
 
-local function get_font(word, fonts)
-	local font_settings = fonts[word.font]
-	local font = nil
-	if font_settings then
-		if word.bold and word.italic then
-			font = font_settings.bold_italic
-		end
-		if not font and word.bold then
-			font = font_settings.bold
-		end
-		if not font and word.italic then
-			font = font_settings.italic
-		end
-		if not font then
-			font = font_settings.regular
-		end
-	end
-	if not font then
-		font = word.font
-	end
-	return font
-end
-
-
-local function get_layer(word, layers)
-	local node = word.node
-	if word.image then
-		return layers.images[gui.get_texture(node)]
-	elseif word.spine then
-		return layers.spinescenes[gui.get_spine_scene(node)]
-	end
-	return layers.fonts[gui.get_font(node)]
+-- Trim spaces on string start
+local function ltrim(text)
+	return text:match('^%s*(.*)')
 end
 
 
@@ -120,50 +115,6 @@ local function compare_words(one, two)
 end
 
 
--- position all words according to the line alignment and line width
--- the list of words will be empty after this function is called
-local function position_words(words, line_width, line_height, position, settings)
-	if settings.align == M.ALIGN_RIGHT then
-		position.x = position.x - line_width
-	elseif settings.align == M.ALIGN_CENTER then
-		position.x = position.x - line_width / 2
-	end
-
-	local spacing = 0
-	if settings.align == M.ALIGN_JUSTIFY then
-		local words_width = 0
-		local word_count = 0
-		for i=1,#words do
-			local word = words[i]
-			if word.metrics.total_width > 0 then
-				words_width = words_width + word.metrics.total_width
-				word_count = word_count + 1
-			end
-		end
-		if word_count > 1 then
-			spacing = (settings.width - words_width) / (word_count - 1)
-		end
-	end
-	for i=1,#words do
-		local word = words[i]
-		-- align spine animations to bottom of line since
-		-- spine animations ignore pivot (always PIVOT_S)
-		if word.spine then
-			position.y = position.y - line_height
-			gui.set_position(word.node, position)
-			position.y = position.y + line_height
-		elseif word.image and settings.image_pixel_grid_snap then
-			gui.set_position(word.node, round(position))
-		else
-			gui.set_position(word.node, position)
-		end
-		word.position = vmath.vector3(position)
-		position.x = position.x + word.metrics.total_width + spacing
-		words[i] = nil
-	end
-end
-
-
 --- Get the length of a text ignoring any tags except image tags
 -- which are treated as having a length of 1
 -- @param text String with text or a list of words (from richtext.create)
@@ -174,9 +125,9 @@ function M.length(text)
 		return parser.length(text)
 	else
 		local count = 0
-		for i=1,#text do
+		for i = 1, #text do
 			local word = text[i]
-			local is_text_node = not word.image and not word.spine
+			local is_text_node = not word.image
 			count = count + (is_text_node and utf8.len(word.text) or 1)
 		end
 		return count
@@ -184,388 +135,459 @@ function M.length(text)
 end
 
 
-local size_vector = vmath.vector3()
-local function create_box_node(word)
-	local node = gui.new_box_node(V3_ZERO, V3_ZERO)
-	local word_image = word.image
-	local image_width = word_image.width
-	gui.set_id(node, new_id("box"))
-	gui.set_size_mode(node, gui.SIZE_MODE_AUTO)
-	gui.set_texture(node, word.image.texture or word.default_texture)
-	gui.play_flipbook(node, hash(word.image.anim or word.default_anim))
+---@param word rich_text.word
+---@param previous_word rich_text.word|nil
+---@param settings rich_text.settings
+---@return rich_text.metrics
+local function get_text_metrics(word, previous_word, settings)
+	local text = word.text
+	local font_resource = gui.get_font_resource(word.font)
 
-	if image_width then
-		local image_size = gui.get_size(node)
-		gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
-		size_vector.x = image_width
-		-- Use height or autoscale to keep aspect ratio
-		size_vector.y = word_image.height or ((image_size.y / image_size.x) * image_width)
-		size_vector.z = 0
-		gui.set_size(node, size_vector)
-	end
-
-	local word_size = word.size * word.adjust_scale
-	size_vector.x = word_size
-	size_vector.y = word_size
-	size_vector.z = word_size
-	word.scale = vmath.vector3(size_vector)
-	gui.set_scale(node, word.scale)
-
-	-- get metrics of node based on image size
-	local size = gui.get_size(node)
-	local metrics = {}
-	metrics.total_width = size.x * word.size * word.adjust_scale
-	metrics.width = size.x * word.size * word.adjust_scale
-	metrics.height = size.y * word.size * word.adjust_scale
-	return node, metrics
-end
-
-
-local function create_spine_node(word)
-	local node = gui.new_spine_node(V3_ZERO, word.spine.scene)
-	gui.set_id(node, new_id("spine"))
-	gui.set_size_mode(node, gui.SIZE_MODE_AUTO)
-	word.scale = vmath.vector3(word.size)
-	gui.set_scale(node, word.scale)
-	gui.play_spine_anim(node, word.spine.anim, gui.PLAYBACK_LOOP_FORWARD)
-
-	local size = gui.get_size(node)
-	local metrics = {}
-	metrics.total_width = size.x
-	metrics.width = size.x
-	metrics.height = size.y
-	return node, metrics
-end
-
-
-local function get_text_metrics(word, font, text)
-	text = text or word.text
-	font = font or word.font
-
+	---@type rich_text.metrics
 	local metrics
+	local word_scale_x = word.relative_scale * settings.text_scale.x * settings.adjust_scale
+	local word_scale_y = word.relative_scale * settings.text_scale.y * settings.adjust_scale
+
 	if utf8.len(text) == 0 then
-		metrics = gui.get_text_metrics(font, "|")
+		metrics = resource.get_text_metrics(font_resource, "|")
 		metrics.width = 0
-		metrics.total_width = 0
-		metrics.height = metrics.height * word.size * word.text_scale.y * word.adjust_scale
+		metrics.height = metrics.height * word_scale_y
 	else
-		metrics = gui.get_text_metrics(font, text)
-		metrics.width = metrics.width * word.size * word.text_scale.x * word.adjust_scale
-		metrics.height = metrics.height * word.size * word.text_scale.y * word.adjust_scale
-		metrics.total_width = metrics.width
+		metrics = resource.get_text_metrics(font_resource, text)
+		metrics.width = metrics.width * word_scale_x
+		metrics.height = metrics.height * word_scale_y
+
+		if previous_word and not previous_word.image then
+			local previous_word_metrics = resource.get_text_metrics(font_resource, previous_word.text)
+			local union_metrics = resource.get_text_metrics(font_resource, previous_word.text .. text)
+
+			local without_previous_width = metrics.width
+			metrics.width = (union_metrics.width - previous_word_metrics.width) * word_scale_x
+			-- Since the several characters can be ajusted to fit the space between the previous word and this word
+			-- For example: chars: [.,?!]
+			metrics.offset_x = metrics.width - without_previous_width
+		end
 	end
+
+	metrics.offset_x = metrics.offset_x or 0
+	metrics.offset_y = metrics.offset_y or 0
+
 	return metrics
 end
 
 
-local function create_text_node(word, font, metrics)
-	local node = gui.new_text_node(V3_ZERO, word.text)
-	gui.set_id(node, new_id("textnode"))
-	gui.set_font(node, font)
-	gui.set_color(node, word.color)
-	if word.shadow then gui.set_shadow(node, word.shadow) end
-	if word.outline then gui.set_outline(node, word.outline) end
-	word.scale = word.text_scale * word.size * word.adjust_scale
-	gui.set_scale(node, word.scale)
+---@param word rich_text.word
+---@param settings rich_text.settings
+---@return rich_text.metrics
+local function get_image_metrics(word, settings)
+	local node_prefab = settings.node_prefab
+	gui.play_flipbook(node_prefab, word.image.anim)
+	local node_size = gui.get_size(node_prefab)
+	local aspect = node_size.x / node_size.y
+	node_size.x = word.image.width or node_size.x
+	node_size.y = word.image.height or (node_size.x / aspect)
 
-	metrics = metrics or get_text_metrics(word, font)
-	gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
-	gui.set_size(node, vmath.vector3(metrics.width, metrics.height, 0))
-	return node, metrics
+	return {
+		width = node_size.x * word.relative_scale * settings.node_scale.x * settings.adjust_scale,
+		height = node_size.y * word.relative_scale * settings.node_scale.y * settings.adjust_scale,
+		node_size = node_size,
+	}
 end
 
 
-local function combine_node(previous_word, word, metrics)
-	local text = previous_word.text .. word.text
-	previous_word.text = text
-	previous_word.metrics = metrics
-	gui.set_size(previous_word.node, vmath.vector3(metrics.width, metrics.height, 0))
-	gui.set_text(previous_word.node, text)
-end
-
-
-local function create_node(word, parent, font, node, metrics)
-	if word.image then
-		if not node then
-			node, metrics = create_box_node(word)
-		end
-	elseif word.spine then
-		if not node then
-			node, metrics = create_spine_node(word)
-		end
-	else
-		node, metrics = create_text_node(word, font, metrics)
-	end
-	gui.set_parent(node, parent)
-	gui.set_inherit_alpha(node, true)
-	return node, metrics
-end
-
-
-local function measure_node(word, font, previous_word)
-	local node, metrics, combined_metrics
-	if word.image then
-		node, metrics = create_box_node(word)
-	elseif word.spine then
-		node, metrics = create_spine_node(word)
-	else
-		metrics = get_text_metrics(word, font)
-		if previous_word then
-			combined_metrics = get_text_metrics(word, font, previous_word.text .. word.text)
-		end
-	end
-	return metrics, combined_metrics, node
-end
-
-
-local function split_word(word, font, max_width)
-	local one = deepcopy(word)
-	local two = deepcopy(word)
-	local text = word.text
-	local metrics = get_text_metrics(one, font)
-	local char_count = utf8.len(text)
-	local split_index = math.floor(char_count * (max_width / metrics.total_width))
-	local rest = ""
-	while split_index >= 1 do
-		one.text = utf8.sub(text, 1, split_index)
-		one.linebreak = true
-		metrics = get_text_metrics(one, font)
-		if metrics.width <= max_width then
-			rest = utf8.sub(text, split_index + 1)
-			break
-		end
-		split_index = split_index - 1
-	end
-	two.text = rest
-	return one, two
+---@param word rich_text.word
+---@param settings rich_text.settings
+---@param previous_word rich_text.word|nil
+---@return rich_text.metrics
+local function measure_node(word, settings, previous_word)
+	local metrics = word.image and get_image_metrics(word, settings) or get_text_metrics(word, previous_word, settings)
+	return metrics
 end
 
 
 --- Create rich text gui nodes from text
 -- @param text The text to create rich text nodes from
--- @param font The default font
 -- @param settings Optional settings table (refer to documentation for details)
 -- @return words
 -- @return metrics
-function M.create(text, font, settings)
+function M.create(text, settings)
 	assert(text, "You must provide a text")
-	assert(font, "You must provide a font")
+
+	---@class rich_text.settings
 	settings = settings or {}
-	settings.align = settings.align or M.ALIGN_LEFT
-	settings.valign = settings.valign or M.VALIGN_TOP
-	settings.size = settings.size or 1
-	settings.fonts = settings.fonts or {}
-	settings.fonts[font] = settings.fonts[font] or { regular = hash(font) }
-	settings.layers = settings.layers or {}
-	settings.layers.fonts = settings.layers.fonts or {}
-	settings.layers.images = settings.layers.images or {}
-	settings.layers.spinescenes = settings.layers.spinescenes or {}
-	settings.color = settings.color or V4_ONE
-	settings.shadow = settings.shadow or V4_ZERO
-	settings.outline = settings.outline or V4_ZERO
+	settings.adjust_scale = 1
 	settings.position = settings.position or V3_ZERO
 	settings.line_spacing = settings.line_spacing or 1
-	settings.paragraph_spacing = settings.paragraph_spacing or 0.5
 	settings.image_pixel_grid_snap = settings.image_pixel_grid_snap or false
 	settings.combine_words = settings.combine_words or false
-	settings.text_scale = settings.text_scale or V3_ONE
-	settings.default_texture = settings.default_texture or nil
-	settings.default_anim = settings.default_anim or nil
-	if settings.align == M.ALIGN_JUSTIFY and not settings.width then
-		error("Width must be specified if text should be justified")
-	end
-
-	local line_increment_before = 0
-	local line_increment_after = 1
-	local pivot = gui.PIVOT_NW
-	if settings.valign == M.VALIGN_MIDDLE then
-		line_increment_before = 0.5
-		line_increment_after = 0.5
-		pivot = gui.PIVOT_W
-	elseif settings.valign == M.VALIGN_BOTTOM then
-		line_increment_before = 1
-		line_increment_after = 0
-		pivot = gui.PIVOT_SW
-	end
+	settings.default_animation = settings.default_animation or nil
+	settings.node_prefab = settings.node_prefab
+	settings.text_prefab = settings.text_prefab
+	settings.text_leading = gui.get_leading(settings.text_prefab)
+	settings.text_scale = gui.get_scale(settings.text_prefab)
+	settings.node_scale = gui.get_scale(settings.node_prefab)
+	settings.is_multiline = gui.get_line_break(settings.text_prefab)
+	settings.parent = settings.parent
 
 	-- default settings for a word
 	-- will be assigned to each word unless tags override the values
-	local word_settings = {
-		color = settings.color,
+	local font = gui.get_font(settings.text_prefab)
+	local word_params = {
+		node = nil, -- Autofill on node creation
+		relative_scale = 1,
+		color = nil,
+		position = nil, -- Autofill later
+		scale = nil, -- Autofill later
+		size = nil, -- Autofill later
+		pivot = nil, -- Autofill later
+		offset = nil, -- Autofill later
+		metrics = {},
+		-- text params
+		source_text = nil,
+		text = nil, -- Autofill later in parse.lua
+		text_color = gui.get_color(settings.text_prefab),
 		shadow = settings.shadow,
 		outline = settings.outline,
 		font = font,
-		size = settings.size,
-		-- Autofill properties
-		text_scale = settings.text_scale,
-		adjust_scale = settings.adjust_scale, -- scale for content adjust to fit into root size
-		position = nil,
-		scale = nil,
-		default_texture = nil, -- for image only
-		default_anim = nil, -- for image only
+		-- Image params
+		---@type rich_text.word.image
+		image = nil,
+		image_color = gui.get_color(settings.node_prefab),
+		default_animation = nil,
+		-- Tags
+		anchor = nil,
+		br = nil,
+		nobr = nil,
 	}
-	local words = parser.parse(text, word_settings)
-	local text_metrics = {
-		width = 0,
-		height = 0,
-		char_count = 0,
-		img_count = 0,
-		spine_count = 0,
-	}
-	local line_words = {}
-	local line_width = 0
-	local line_height = 0
-	local paragraph_spacing = 0
-	local position = vmath.vector3(settings.position)
-	local word_count = #words
+
+	local parsed_words = parser.parse(text, word_params)
+	local lines = M._split_on_lines(parsed_words, settings)
+	local lines_metrics = M._position_lines(lines, settings)
+	M._update_nodes(lines, settings)
+
+	local words = {}
+	for index = 1, #lines do
+		for jindex = 1, #lines[index] do
+			table.insert(words, lines[index][jindex])
+		end
+	end
+
+	return words, settings, lines_metrics
+end
+
+
+---@param words rich_text.word
+---@param metrics rich_text.metrics
+---@param settings rich_text.settings
+function M._fill_properties(word, metrics, settings)
+	word.metrics = metrics
+	word.position = vmath.vector3(0)
+
+	if word.image then
+		word.scale = gui.get_scale(settings.node_prefab) * word.relative_scale * settings.adjust_scale
+		word.pivot = gui.get_pivot(settings.node_prefab)
+		word.size = metrics.node_size
+		word.offset = vmath.vector3(0, 0, 0)
+		if word.image.width then
+			word.size.y = word.image.height or (word.size.y * word.image.width / word.size.x)
+			word.size.x = word.image.width
+		end
+	else
+		word.scale = gui.get_scale(settings.text_prefab) * word.relative_scale * settings.adjust_scale
+		word.pivot = gui.get_pivot(settings.text_prefab)
+		word.size = vmath.vector3(metrics.width, metrics.height, 0)
+		word.offset = vmath.vector3(metrics.offset_x, metrics.offset_y, 0)
+	end
+end
+
+
+---@param words rich_text.word[]
+---@param settings rich_text.settings
+---@return rich_text.word[][]
+function M._split_on_lines(words, settings)
 	local i = 1
+	local lines = {}
+	local current_line = {}
+	local word_count = #words
+	local current_line_width = 0
+	local current_line_height = 0
+
 	repeat
 		local word = words[i]
 		if word.image then
-			word.default_texture = settings.default_texture
-			word.default_anim = settings.default_anim
-			text_metrics.img_count = text_metrics.img_count + 1
-		elseif word.spine then
-			text_metrics.spine_count = text_metrics.spine_count + 1
-		else
-			text_metrics.char_count = text_metrics.char_count + parser.length(word.text)
+			word.default_animation = settings.default_animation
 		end
 
-		-- get font to use based on word tags
-		local font_for_word = get_font(word, settings.fonts)
+		-- Reset texts to start measure again
+		word.text = word.source_text
 
 		-- get the previous word, so we can combine
-		local previous_word
+		local previous_word = current_line[#current_line]
 		if settings.combine_words then
-			previous_word = line_words[#line_words]
 			if not compare_words(previous_word, word) then
 				previous_word = nil
 			end
 		end
 
-		-- get metrics first, without creating the node (if possible)
-		local word_metrics, combined_metrics, node = measure_node(word, font_for_word, previous_word)
-		local should_create_node = true
+		local word_metrics = measure_node(word, settings)
+
+		local next_words_width = word_metrics.width
+		-- Collect width of nobr words from current to next words with nobr
+		if word.nobr then
+			for index = i + 1, word_count do
+				if words[index].nobr then
+					local next_word_measure = measure_node(words[index], settings, words[index-1])
+					next_words_width = next_words_width + next_word_measure.width
+				else
+					break
+				end
+			end
+		end
+		local overflow = (current_line_width + next_words_width) > settings.width
+		local is_new_line = (overflow or word.br) and settings.is_multiline
+
+		-- We recalculate metrics with previous_word if it follow for word on current line
+		if not is_new_line and previous_word then
+			word_metrics = measure_node(word, settings, previous_word)
+		end
+
+		-- Trim first word of the line
+		if is_new_line or not previous_word then
+			word.text = ltrim(word.text)
+			word_metrics = measure_node(word, settings, nil)
+		end
+		M._fill_properties(word, word_metrics, settings)
 
 		-- check if the line overflows due to this word
-		local overflow = false
-		if settings.width then
-			if combined_metrics then
-				overflow = (line_width - previous_word.metrics.total_width + combined_metrics.width) > settings.width
-			else
-				overflow = (line_width + word_metrics.width)  > settings.width
-			end
-
-			-- if we overflow and the word is longer than a full line we
-			-- split the word and add the first part to the current line
-			if overflow and word.text and word_metrics.width > settings.width then
-				local remaining_width = settings.width - line_width
-				local one, two = split_word(word, font_for_word, remaining_width)
-				word_metrics, combined_metrics, node = measure_node(one, font_for_word, previous_word)
-				words[i] = one
-				word = one
-				table.insert(words, i + 1, two)
-				word_count = word_count + 1
-				overflow = false
-			end
-		end
-
-		if overflow and not word.nobr then
-			-- overflow, position the words that fit on the line
-			text_metrics.height = text_metrics.height + (line_height * line_increment_before * settings.line_spacing)
-			position.x = settings.position.x
-			position.y = settings.position.y - text_metrics.height
-			position_words(line_words, line_width, line_height, position, settings)
-
-			-- add the word that didn't fit to the next line instead
-			line_words[#line_words + 1] = word
-
-			-- update text metrics
-			text_metrics.width = math.max(text_metrics.width, line_width)
-			text_metrics.height = text_metrics.height + (line_height * line_increment_after * settings.line_spacing) + paragraph_spacing
-			line_width = word_metrics.total_width
-			line_height = word_metrics.height
-			paragraph_spacing = 0
-		else
+		if not is_new_line then
 			-- the word fits on the line, add it and update text metrics
-			if combined_metrics then
-				line_width = line_width - previous_word.metrics.total_width + combined_metrics.total_width
-				line_height = math.max(line_height, combined_metrics.height)
-				combine_node(previous_word, word, combined_metrics)
-				should_create_node = false
-			else
-				line_width = line_width + word_metrics.total_width
-				line_height = math.max(line_height, word_metrics.height)
-				line_words[#line_words + 1] = word
-			end
-			text_metrics.width = math.max(text_metrics.width, line_width)
-		end
-
-		if should_create_node then
-			word.node, word.metrics = create_node(word, settings.parent, font_for_word, node, word_metrics)
-			gui.set_pivot(word.node, pivot)
-
-			-- assign layer
-			local layer = get_layer(word, settings.layers)
-			if layer then
-				gui.set_layer(word.node, layer)
-			end
+			current_line_width = current_line_width + word.metrics.width
+			current_line_height = math.max(current_line_height, word.metrics.height)
+			current_line[#current_line + 1] = word
 		else
-			-- queue this word for deletion
-			word.delete = true
-		end
+			-- overflow, position the words that fit on the line
+			lines[#lines + 1] = current_line
 
-		if word.paragraph_end then
-			local paragraph = word.paragraph
-			if paragraph then
-				paragraph_spacing = math.max(
-					paragraph_spacing,
-					line_height * (paragraph == true and settings.paragraph_spacing or paragraph)
-				)
-			end
-		end
-
-		-- handle line break
-		if word.linebreak then
-			-- position all words on the line up until the linebreak
-			text_metrics.height = text_metrics.height + (line_height * line_increment_before * settings.line_spacing)
-			position.x = settings.position.x
-			position.y = settings.position.y - text_metrics.height
-			position_words(line_words, line_width, line_height, position, settings)
-
-			-- update text metrics
-			text_metrics.height = text_metrics.height + (line_height * line_increment_after * settings.line_spacing) + paragraph_spacing
-			line_height = word_metrics.height
-			line_width = 0
-			paragraph_spacing = 0
+			word.text = ltrim(word.text)
+			current_line = { word }
+			current_line_height = word.metrics.height
+			current_line_width = word.metrics.width
 		end
 
 		i = i + 1
 	until i > word_count
 
-	-- position remaining words
-	if #line_words > 0 then
-		text_metrics.height = text_metrics.height + (line_height * line_increment_before * settings.line_spacing)
-		position.x = settings.position.x
-		position.y = settings.position.y - text_metrics.height
-		position_words(line_words, line_width, line_height, position, settings)
-		text_metrics.height = text_metrics.height + (line_height * line_increment_after * settings.line_spacing)
+	if #current_line > 0 then
+		lines[#lines + 1] = current_line
 	end
 
-	-- compact words table
-	local j = 1
-	for i = 1, word_count do
-		local word = words[i]
-		if not word.delete then
-			words[j] = word
-			j = j + 1
+	return lines
+end
+
+
+---@param lines rich_text.word[][]
+---@param settings rich_text.settings
+---@return rich_text.lines_metrics
+function M._position_lines(lines, settings)
+	local lines_metrics = M._get_lines_metrics(lines, settings)
+	-- current x-y is left top point of text spawn
+
+	local parent_size = gui.get_size(settings.parent)
+	local pivot = helper.get_pivot_offset(gui.get_pivot(settings.parent))
+	local offset_y = (parent_size.y - lines_metrics.text_height) * (pivot.y - 0.5) - (parent_size.y * (pivot.y - 0.5))
+
+	local current_y = offset_y
+	for line_index = 1, #lines do
+		local line = lines[line_index]
+		local line_metrics = lines_metrics.lines[line_index]
+		local current_x = (parent_size.x - line_metrics.width) * (pivot.x + 0.5) - (parent_size.x * (pivot.x + 0.5))
+		local max_height = 0
+		for word_index = 1, #line do
+			local word = line[word_index]
+			local pivot_offset = helper.get_pivot_offset(word.pivot)
+			local word_width = word.metrics.width
+			word.position.x = current_x + word_width * (pivot_offset.x + 0.5) + word.offset.x
+			word.position.y = current_y + word.metrics.height * (pivot_offset.y - 0.5) + word.offset.y
+
+			-- Align item on text line depends on anchor
+			word.position.y = word.position.y - (word.metrics.height - line_metrics.height) * (pivot_offset.y - 0.5)
+
+			current_x = current_x + word_width
+
+			-- TODO: check if we need to calculate images
+			if not word.image then
+				max_height = math.max(max_height, word.metrics.height)
+			end
+
+			if settings.image_pixel_grid_snap and word.image then
+				word.position.x = helper.round(word.position.x)
+				word.position.y = helper.round(word.position.y)
+			end
+		end
+
+		current_y = current_y - line_metrics.height
+	end
+
+	return lines_metrics
+end
+
+
+---@param lines rich_text.word[][]
+---@param settings rich_text.settings
+---@return rich_text.lines_metrics
+function M._get_lines_metrics(lines, settings)
+	local metrics = {}
+	local text_width = 0
+	local text_height = 0
+	for line_index = 1, #lines do
+		local line = lines[line_index]
+		local width = 0
+		local height = 0
+		for word_index = 1, #line do
+			local word = line[word_index]
+			local word_width = word.metrics.width
+			width = width + word_width
+			-- TODO: Here too
+			if not word.image then
+				height = math.max(height, word.metrics.height)
+			end
+		end
+
+		if line_index > 1 then
+			height = height * settings.text_leading
+		end
+
+		text_width = math.max(text_width, width)
+		text_height = text_height + height
+
+		metrics[#metrics + 1] = {
+			width = width,
+			height = height,
+		}
+	end
+
+	---@type rich_text.lines_metrics
+	local lines_metrics = {
+		text_width = text_width,
+		text_height = text_height,
+		lines = metrics,
+	}
+
+	return lines_metrics
+end
+
+
+---@param lines rich_text.word[][]
+---@param settings rich_text.settings
+function M._update_nodes(lines, settings)
+	for line_index = 1, #lines do
+		local line = lines[line_index]
+		for word_index = 1, #line do
+			local word = line[word_index]
+			local node
+			if word.image then
+				node = word.node or gui.clone(settings.node_prefab)
+				gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
+				gui.play_flipbook(node, hash(word.image.anim or word.default_animation))
+				gui.set_color(node, word.color or word.image_color)
+			else
+				node = word.node or gui.clone(settings.text_prefab)
+				gui.set_outline(node, word.outline)
+				gui.set_shadow(node, word.shadow)
+				gui.set_text(node, word.text)
+				gui.set_color(node, word.color or word.text_color)
+			end
+			word.node = node
+			gui.set_enabled(node, true)
+			gui.set_parent(node, settings.parent)
+			gui.set_size(node, word.size)
+			gui.set_scale(node, word.scale)
+			gui.set_position(node, word.position)
 		end
 	end
-	for i = j, word_count do
-		words[i] = nil
+end
+
+
+---@param words rich_text.word[]
+---@param settings rich_text.settings
+---@param scale number
+---@return rich_text.lines_metrics
+function M.set_text_scale(words, settings, scale)
+	settings.adjust_scale = scale
+
+	local lines = M._split_on_lines(words, settings)
+	local line_metrics = M._position_lines(lines, settings)
+	M._update_nodes(lines, settings)
+
+	return line_metrics
+end
+
+
+---@param words rich_text.word[]
+---@param settings rich_text.settings
+---@param lines_metrics rich_text.lines_metrics
+function M.adjust_to_area(words, settings, lines_metrics)
+	local last_line_metrics = lines_metrics
+
+	local area_size = gui.get_size(settings.parent)
+	if not settings.is_multiline then
+		if lines_metrics.text_width > area_size.x then
+			last_line_metrics = M.set_text_scale(words, settings, area_size.x / lines_metrics.text_width)
+		end
+	else
+		-- Multiline adjusting is very tricky stuff...
+		-- It's do a lot of calculations, beware!
+		if lines_metrics.text_width > area_size.x or lines_metrics.text_height > area_size.y then
+			local scale_koef = math.sqrt(area_size.y / lines_metrics.text_height)
+			if lines_metrics.text_width * scale_koef > area_size.x then
+				scale_koef = math.sqrt(area_size.x / lines_metrics.text_width)
+			end
+			local adjust_scale = math.min(scale_koef, 1)
+
+			local lines = M.apply_scale_without_update(words, settings, adjust_scale)
+			local is_fit = M.is_fit_info_area(lines, settings)
+			local step = is_fit and M.ADJUST_SCALE_DELTA or -M.ADJUST_SCALE_DELTA
+
+			for i = 1, M.ADJUST_STEPS do
+				-- Grow down to check if we fit
+				if step < 0 and is_fit then
+					last_line_metrics = M.set_text_scale(words, settings, adjust_scale)
+					break
+				end
+				-- Grow up to check if we still fit
+				if step > 0 and not is_fit then
+					last_line_metrics = M.set_text_scale(words, settings, adjust_scale - step)
+					break
+				end
+
+				adjust_scale = adjust_scale + step
+				local lines = M.apply_scale_without_update(words, settings, adjust_scale)
+				is_fit = M.is_fit_info_area(lines, settings)
+
+				if i == M.ADJUST_STEPS then
+					last_line_metrics = M.set_text_scale(words, settings, adjust_scale)
+				end
+			end
+		end
 	end
 
-	return words, text_metrics
+	return last_line_metrics
+end
+
+
+---@return boolean @If we fit into area size
+function M.apply_scale_without_update(words, settings, scale)
+	settings.adjust_scale = scale
+	return M._split_on_lines(words, settings)
+end
+
+
+---@param lines rich_text.word[][]
+---@param settings rich_text.settings
+function M.is_fit_info_area(lines, settings)
+	local lines_metrics = M._get_lines_metrics(lines, settings)
+	local area_size = gui.get_size(settings.parent)
+	return lines_metrics.text_width <= area_size.x and lines_metrics.text_height <= area_size.y
 end
 
 
@@ -575,7 +597,7 @@ end
 -- @param action The action table from on_input
 -- @return true if a word was clicked, otherwise false
 function M.on_click(words, action)
-	for i=1,#words do
+	for i = 1, #words do
 		local word = words[i]
 		if word.anchor and gui.pick_node(word.node, action.x, action.y) then
 			if word.tags and word.tags.a then
@@ -590,6 +612,7 @@ function M.on_click(words, action)
 			end
 		end
 	end
+
 	return false
 end
 
@@ -600,7 +623,7 @@ end
 -- @return Words matching the tag
 function M.tagged(words, tag)
 	local tagged = {}
-	for i=1,#words do
+	for i = 1, #words do
 		local word = words[i]
 		if not tag and not word.tags then
 			tagged[#tagged + 1] = word
@@ -609,54 +632,6 @@ function M.tagged(words, tag)
 		end
 	end
 	return tagged
-end
-
-
---- Truncate a set of words such that only a specific number of characters
--- and images are visible
--- @param words List of words to truncate
--- @param length Maximum number of characters to show
--- @param options Optional table with truncate options. Available options are: words
--- @return Last visible word
-function M.truncate(words, length, options)
-	assert(words)
-	assert(length)
-	local last_visible_word = nil
-	if options and options.words then
-		for i=1, #words do
-			local word = words[i]
-			local visible = i <= length
-			if visible then
-				last_visible_word = word
-			end
-			gui.set_enabled(word.node, visible)
-		end
-	else
-		local count = 0
-		for i=1, #words do
-			local word = words[i]
-			local is_text_node = not word.image and not word.spine
-			local word_length = is_text_node and utf8.len(word.text) or 1
-			local visible = count < length
-			if visible then
-				last_visible_word = word
-			end
-			gui.set_enabled(word.node, visible)
-			if count < length and is_text_node then
-				local text = word.text
-				-- partial word?
-				if count + word_length > length then
-					-- remove overflowing characters from word
-					local overflow = (count + word_length) - length
-					text = utf8.sub(word.text, 1, word_length - overflow)
-				end
-				gui.set_text(word.node, text)
-				word.metrics = get_text_metrics(word, word.font, text)
-			end
-			count = count + word_length
-		end
-	end
-	return last_visible_word
 end
 
 
@@ -705,12 +680,12 @@ function M.characters(word)
 	return chars
 end
 
+
 ---Removes the gui nodes created by rich text
 function M.remove(words)
 	assert(words)
 
-	local num = #words
-	for i=1,num do
+	for i = 1, #words do
 		gui.delete_node(words[i].node)
 	end
 end

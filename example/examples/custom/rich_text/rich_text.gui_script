@@ -6,11 +6,16 @@ local RichText = require("druid.custom.rich_text.rich_text")
 function init(self)
 	self.druid = druid.new(self)
 
-	self.rich_text = self.druid:new(RichText, "rich_text")
+	self.rich_text = self.druid:new(RichText, "rich_text_1")
+	self.rich_text:set_text("Lorem long text with differrent placeholder <img=checkmark,32/>here to check")
 	-- self.rich_text:set_text("Lorem long text with differrent placeholder or just text without any sense here to check multiline without long words")
-	-- self.rich_text:set_text("Lorem long text with differrent placeholder or just text without any sense here to check multiline without long wordswordwordwrodwrodwrodswrodword he")
-	self.rich_text:set_text("Some text with image <img=logo,32/> in the middle")
-	self.rich_text:set_text("Some text with image <img=slider_move,32/> in the middle")
+	--self.rich_text:set_text("Some text with image <img=logo,32/> in the middle")
+	--self.rich_text:set_text("Some text with image <img=slider_move,32/> in the middle")
+	self.rich_text_2 = self.druid:new(RichText, "rich_text_2")
+	self.rich_text_2:set_text("<color=#C2CACC>Energy</color> is full to restore")
+
+	self.rich_text_3 = self.druid:new(RichText, "rich_text_3")
+	self.rich_text_3:set_text("Energy is full to restore")
 end
 
 
