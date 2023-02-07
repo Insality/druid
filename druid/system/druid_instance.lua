@@ -194,6 +194,18 @@ local function process_input(self, action_id, action, components)
 end
 
 
+local function schedule_late_init(self)
+	if self._late_init_timer_id then
+		return
+	end
+
+	self._late_init_timer_id = timer.delay(0, false, function()
+		self._late_init_timer_id = nil
+		self:late_init()
+	end)
+end
+
+
 --- Druid class constructor
 -- @tparam DruidInstance self
 -- @tparam table context Druid context. Usually it is self of script
@@ -216,10 +228,6 @@ function DruidInstance.initialize(self, context, style)
 	for i = 1, #base_component.ALL_INTERESTS do
 		self.components_interest[base_component.ALL_INTERESTS[i]] = {}
 	end
-
-	timer.delay(0, false, function()
-		self:late_init()
-	end)
 end
 
 
@@ -244,6 +252,9 @@ function DruidInstance.new(self, component, ...)
 
 	if instance.init then
 		instance:init(...)
+	end
+	if instance.on_late_init or (not self.input_inited and instance.on_input) then
+		schedule_late_init(self)
 	end
 
 	return instance
@@ -316,7 +327,7 @@ function DruidInstance.remove(self, component)
 end
 
 
---- Druid late update function call after init and before udpate step
+--- Druid late update function call after init and before update step
 -- @tparam DruidInstance self
 function DruidInstance.late_init(self)
 	local late_init_components = self.components_interest[base_component.ON_LATE_INIT]
@@ -570,7 +581,7 @@ end
 -- @tparam node node Gui text node
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
 -- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
--- @treturn Tet text component
+-- @treturn Text text component
 function DruidInstance.new_text(self, node, value, no_adjust)
 	return DruidInstance.new(self, text, node, value, no_adjust)
 end

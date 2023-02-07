@@ -61,7 +61,7 @@ local Button = component.create("button")
 
 
 local function is_input_match(self, action_id)
-	if action_id == const.ACTION_TOUCH then
+	if action_id == const.ACTION_TOUCH or action_id == const.ACTION_MULTITOUCH then
 		return true
 	end
 

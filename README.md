@@ -25,13 +25,13 @@ Or point to the ZIP file of a [specific release](https://github.com/Insality/dru
 **Druid** requires the following input bindings:
 
 - Mouse trigger - `Button 1` -> `touch` _For basic input components_
-- Mouse trigger - `Wheel up` -> `scroll_up` _For scroll component_
-- Mouse trigger - `Wheel down` -> `scroll_down` _For scroll component_
+- Mouse trigger - `Wheel up` -> `mouse_wheel_up` _For scroll component_
+- Mouse trigger - `Wheel down` -> `mouse_wheel_down` _For scroll component_
 - Key trigger - `Backspace` -> `key_backspace`  _For back_handler component, input component_
 - Key trigger - `Back` -> `key_back`  _For back_handler component, Android back button, input component_
 - Key trigger - `Enter` -> `key_enter` _For input component, optional_
 - Key trigger - `Esc` -> `key_esc` _For input component, optional_
-- Touch triggers - `Touch multi` -> `multitouch` _For scroll component_
+- Touch triggers - `Touch multi` -> `touch_multi` _For scroll component_
 
 ![](media/input_binding_2.png)
 ![](media/input_binding_1.png)
@@ -50,9 +50,9 @@ input_key_esc = key_esc
 input_key_back = key_back
 input_key_enter = key_enter
 input_key_backspace = key_backspace
-input_multitouch = multitouch
-input_scroll_up = scroll_up
-input_scroll_down = scroll_down
+input_multitouch = touch_multi
+input_scroll_up = mouse_wheel_up
+input_scroll_down = mouse_wheel_down
 ```
 
 
@@ -123,7 +123,7 @@ Here is full **Druid** components list:
 | Name | Description | API page | Example Link | Is Basic component[^1] | Preview |
 |------|-------------|----------|------------|-------------|---------|
 | **[Button](docs_md/01-components.md#button)** | Basic input component. Handles all types of interactions: click, long click, hold click, double click, etc | [Button API](https://insality.github.io/druid/modules/Button.html) | [Button Example](https://insality.github.io/druid/druid/?example=general_buttons) | ✅ | <img src="media/preview/button.gif" width="200" height="100"> |
-| **[Text](docs_md/01-components.md#text)** | Wrap on GUI text node, handle different text size adjusting, providing additional text API | [Text API](https://insality.github.io/druid/modules/Button.html) | [Text Example](https://insality.github.io/druid/druid/?example=texts_general) | ✅ | <img src="media/preview/text.gif" width="200" height="100"> |
+| **[Text](docs_md/01-components.md#text)** | Wrap on GUI text node, handle different text size adjusting, providing additional text API | [Text API](https://insality.github.io/druid/modules/Text.html) | [Text Example](https://insality.github.io/druid/druid/?example=texts_general) | ✅ | <img src="media/preview/text.gif" width="200" height="100"> |
 | **[Scroll](docs_md/01-components.md#scroll)** | Scroll component | [Scroll API](https://insality.github.io/druid/modules/Scroll.html) | [Scroll Example](https://insality.github.io/druid/druid/?example=general_scroll) | ✅ | <img src="media/preview/scroll.gif" width="200" height="100"> |
 | **[Blocker](docs_md/01-components.md#blocker)** | Block user input in node zone area | [Blocker API](https://insality.github.io/druid/modules/Blocker.html) | ❌ | ✅ | |
 | **[Back Handler](docs_md/01-components.md#back-handler)** | Handle back button (Android back button, backspace key) | [Back Handler API](https://insality.github.io/druid/modules/BackHandler.html) | ❌ | ✅ | |

@@ -36,9 +36,9 @@ input_key_esc = key_esc
 input_key_back = key_back
 input_key_enter = key_enter
 input_key_backspace = key_backspace
-input_multitouch = multitouch
-input_scroll_up = scroll_up
-input_scroll_down = scroll_down
+input_multitouch = touch_multi
+input_scroll_up = mouse_wheel_up
+input_scroll_down = mouse_wheel_down
 
 [html5]
 engine_arguments = --verify-graphics-calls=false

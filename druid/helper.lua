@@ -208,10 +208,10 @@ end
 --- Get cumulative parent's node scale
 -- @function helper.get_scene_scale
 -- @tparam node node Gui node
--- @tparam bool include_node_scale
--- @treturn bool Is enabled in hierarchy
-function M.get_scene_scale(node, include_node_scale)
-	local scale = include_node_scale and gui.get_scale(node) or vmath.vector3(1)
+-- @tparam bool include_passed_node_scale True if add current node scale to result
+-- @treturn vector3 The scene node scale
+function M.get_scene_scale(node, include_passed_node_scale)
+	local scale = include_passed_node_scale and gui.get_scale(node) or vmath.vector3(1)
 	local parent = gui.get_parent(node)
 	while parent do
 		scale = vmath.mul_per_elem(scale, gui.get_scale(parent))
@@ -316,6 +316,26 @@ function M.get_border(node, offset)
 	end
 
 	return border
+end
+
+
+--- Get text metric from gui node. Replacement of previous gui.get_text_metrics_from_node function
+-- @tparam Node text_node
+-- @treturn table {width, height, max_ascent, max_descent}
+function M.get_text_metrics_from_node(text_node)
+	local font_resource = gui.get_font_resource(gui.get_font(text_node))
+	local options = {
+		tracking = gui.get_tracking(text_node),
+		line_break = gui.get_line_break(text_node),
+	}
+
+	-- Gather other options only if it used in node
+	if options.line_break then
+		options.width = gui.get_size(text_node).x
+		options.leading = gui.get_leading(text_node)
+	end
+
+	return resource.get_text_metrics(font_resource, gui.get_text(text_node), options)
 end
 
 
