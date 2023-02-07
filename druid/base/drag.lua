@@ -63,6 +63,7 @@ local function start_touch(self, touch)
 
 	self.x = touch.x
 	self.y = touch.y
+	self._scene_scale = helper.get_scene_scale(self.node)
 
 	self.on_touch_start:trigger(self:get_context())
 end
@@ -155,9 +156,11 @@ end
 -- or create your own style
 -- @table style
 -- @tfield[opt=10] number DRAG_DEADZONE Distance in pixels to start dragging
+-- @tfield[opt=false] boolean NO_USE_SCREEN_KOEF If screen aspect ratio affects on drag values
 function Drag.on_style_change(self, style)
 	self.style = {}
 	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
+	self.style.NO_USE_SCREEN_KOEF = style.NO_USE_SCREEN_KOEF or false
 end
 
 
@@ -180,6 +183,8 @@ function Drag.init(self, node, on_drag_callback)
 
 	self.can_x = true
 	self.can_y = true
+
+	self._scene_scale = helper.get_scene_scale(self.node)
 
 	self.click_zone = nil
 	self.on_touch_start = Event()
@@ -206,6 +211,7 @@ function Drag.on_window_resized(self)
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self._x_koef = x_koef
 	self._y_koef = y_koef
+	self._scene_scale = helper.get_scene_scale(self.node)
 end
 
 
@@ -229,7 +235,6 @@ function Drag.on_input(self, action_id, action)
 	if self.click_zone then
 		is_pick = is_pick and gui.pick_node(self.click_zone, action.x, action.y)
 	end
-
 	if not is_pick and not self.is_drag then
 		end_touch(self)
 		return false
@@ -278,11 +283,16 @@ function Drag.on_input(self, action_id, action)
 	end
 
 	if self.is_drag then
+		local x_koef, y_koef = self._x_koef, self._y_koef
+		if self.style.NO_USE_SCREEN_KOEF then
+			x_koef, y_koef = 1, 1
+		end
+
 		self.on_drag:trigger(self:get_context(),
-			self.dx * self._x_koef,
-			self.dy * self._y_koef,
-			(self.x - self.touch_start_pos.x) * self._x_koef,
-			(self.y - self.touch_start_pos.y) * self._y_koef)
+			self.dx * x_koef / self._scene_scale.x,
+			self.dy * y_koef / self._scene_scale.y,
+			(self.x - self.touch_start_pos.x) * x_koef / self._scene_scale.x,
+			(self.y - self.touch_start_pos.y) * y_koef / self._scene_scale.y)
 	end
 
 	return self.is_drag

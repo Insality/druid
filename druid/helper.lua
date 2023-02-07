@@ -173,6 +173,21 @@ function M.contains(t, value)
 end
 
 
+--- Get text metric from gui node. Replacement of previous gui.get_text_metrics_from_node function
+-- @tparam Node text_node
+-- @treturn table {width, height, max_ascent, max_descent}
+function M.get_text_metrics_from_node(text_node)
+	local font_name = gui.get_font(text_node)
+	local font = gui.get_font_resource(font_name)
+	return resource.get_text_metrics(font, gui.get_text(text_node), {
+		width = gui.get_size(text_node).x,
+		leading = gui.get_leading(text_node),
+		tracking = gui.get_tracking(text_node),
+		line_break = gui.get_line_break(text_node),
+	})
+end
+
+
 --- Check if node is enabled in gui hierarchy.
 -- Return false, if node or any his parent is disabled
 -- @function helper.is_enabled
@@ -190,8 +205,8 @@ function M.is_enabled(node)
 end
 
 
---- Return current node scene scale
--- @function helper.is_enabled
+--- Get cumulative parent's node scale
+-- @function helper.get_scene_scale
 -- @tparam node node Gui node
 -- @tparam bool include_passed_node_scale True if add current node scale to result
 -- @treturn vector3 The scene node scale

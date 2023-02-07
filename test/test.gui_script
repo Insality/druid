@@ -1,7 +1,10 @@
-local deftest = require "deftest.deftest"
+local deftest = require("deftest.deftest")
 
 local tests = {
 	-- Test list
+	require("test.tests.test_button"),
+	require("test.tests.test_hover"),
+	require("test.tests.test_drag"),
 }
 
 

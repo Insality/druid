@@ -56,6 +56,7 @@ M["button"] = {
 
 M["drag"] = {
 	DRAG_DEADZONE = 10, -- Size in pixels of drag deadzone
+	NO_USE_SCREEN_KOEF = false,
 }
 
 

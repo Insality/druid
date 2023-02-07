@@ -101,6 +101,15 @@ function Hover.set_hover(self, state)
 	end
 end
 
+
+--- Return current hover state. True if touch action was on the node at current time
+-- @tparam Hover self @{Hover}
+-- @treturn bool The current hovered state
+function Hover.is_hovered(self)
+	return self._is_hovered
+end
+
+
 --- Set mouse hover state
 -- @tparam Hover self @{Hover}
 -- @tparam bool state The mouse hover state
@@ -109,6 +118,14 @@ function Hover.set_mouse_hover(self, state)
 		self._is_mouse_hovered = state
 		self.on_mouse_hover:trigger(self:get_context(), state, self)
 	end
+end
+
+
+--- Return current hover state. True if nil action_id (usually desktop mouse) was on the node at current time
+-- @tparam Hover self @{Hover}
+-- @treturn bool The current hovered state
+function Hover.is_mouse_hovered(self)
+	return self._is_mouse_hovered
 end
 
 

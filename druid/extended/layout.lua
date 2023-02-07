@@ -41,6 +41,8 @@ function Layout.init(self, node, mode, on_size_changed_callback)
 	self._max_gui_upscale = nil
 	self._fit_node = nil
 
+	self._anchors = {}
+
 	self.mode = mode or const.LAYOUT_MODE.FIT
 
 	self.on_size_changed = Event(on_size_changed_callback)
