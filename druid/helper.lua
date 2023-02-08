@@ -173,6 +173,21 @@ function M.contains(t, value)
 end
 
 
+function M.deepcopy(orig_table)
+	local orig_type = type(orig_table)
+	local copy
+	if orig_type == 'table' then
+		copy = {}
+		for orig_key, orig_value in next, orig_table, nil do
+			copy[M.deepcopy(orig_key)] = M.deepcopy(orig_value)
+		end
+	else -- number, string, boolean, etc
+		copy = orig_table
+	end
+	return copy
+end
+
+
 --- Get text metric from gui node. Replacement of previous gui.get_text_metrics_from_node function
 -- @tparam Node text_node
 -- @treturn table {width, height, max_ascent, max_descent}

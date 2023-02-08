@@ -1,21 +1,66 @@
 local druid = require("druid.druid")
+local helper = require("druid.helper")
 
 local RichText = require("druid.custom.rich_text.rich_text")
+
+
+local function highlight_nodes(words)
+	for index = 1, #words do
+		local node = words[index].node
+		local cloned = gui.clone(gui.get_node("highlight"))
+		gui.set_color(cloned, vmath.vector4(math.random(), math.random(), math.random(), 0.4))
+		gui.set_screen_position(cloned, gui.get_screen_position(node))
+		gui.set_size(cloned, gui.get_size(node))
+		gui.set_scale(cloned, gui.get_scale(node))
+		gui.set_pivot(cloned, gui.get_pivot(node))
+		gui.animate(cloned, "color.w", 0, gui.EASING_INOUTSINE, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+		if words[index].text then
+			local text_metrics = helper.get_text_metrics_from_node(node)
+			gui.set_size(cloned, vmath.vector3(text_metrics.width, text_metrics.height, 0))
+		end
+	end
+end
 
 
 function init(self)
 	self.druid = druid.new(self)
 
+	self.druid:new_scroll("scroll_view", "scroll_content")
+
 	self.rich_text = self.druid:new(RichText, "rich_text_1")
-	self.rich_text:set_text("Lorem long text with differrent placeholder <img=checkmark,32/>here to check")
+	self.rich_text:set_text("Here is basic Rich Text without any text settings")
 	-- self.rich_text:set_text("Lorem long text with differrent placeholder or just text without any sense here to check multiline without long words")
 	--self.rich_text:set_text("Some text with image <img=logo,32/> in the middle")
 	--self.rich_text:set_text("Some text with image <img=slider_move,32/> in the middle")
+
 	self.rich_text_2 = self.druid:new(RichText, "rich_text_2")
-	self.rich_text_2:set_text("<color=#C2CACC>Energy</color> is full to restore")
+	self.rich_text_2:set_text("Here is example to compare Rich Text posing with usual GUI Text Node.")
+	local rich_text_2_root = self.rich_text_2.root
+	gui.animate(rich_text_2_root, "color.w", 0, gui.EASING_LINEAR, 4, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	gui.animate(gui.get_node("text_case_2"), "color.w", 1, gui.EASING_LINEAR, 4, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	--highlight_nodes(words2)
 
 	self.rich_text_3 = self.druid:new(RichText, "rich_text_3")
-	self.rich_text_3:set_text("Energy is full to restore")
+	local words3 = self.rich_text_3:set_text("This example highlight every text node in Rich Text")
+	highlight_nodes(words3)
+
+	self.druid:new(RichText, "rich_text_4_1"):set_text("Text with image <img=logo,48/>at center")
+	self.druid:new(RichText, "rich_text_4_2"):set_text("Text with image <img=logo,48/>scaled in GUI")
+	self.druid:new(RichText, "rich_text_4_3"):set_text("Text with image <img=logo,48,48/>with fixed height")
+
+	self.druid:new(RichText, "rich_text_5_NW"):set_text("Example text for pivots <img=logo,24/>")
+	self.druid:new(RichText, "rich_text_5_N"):set_text("Example text for pivots <img=logo,24/>")
+	self.druid:new(RichText, "rich_text_5_NE"):set_text("Example text for pivots <img=logo,24/>")
+	self.druid:new(RichText, "rich_text_5_W"):set_text("Example text for pivots <img=logo,24/>")
+	self.druid:new(RichText, "rich_text_5_C"):set_text("Example text for pivots <img=logo,24/>")
+	self.druid:new(RichText, "rich_text_5_E"):set_text("Example text for pivots <img=logo,24/>")
+	self.druid:new(RichText, "rich_text_5_SW"):set_text("Example text for pivots <img=logo,24/>")
+	self.druid:new(RichText, "rich_text_5_S"):set_text("Example text for pivots <img=logo,24/>")
+	self.druid:new(RichText, "rich_text_5_SE"):set_text("Example text for pivots <img=logo,24/>")
+
+	--self.rich_text_3 = self.druid:new(RichText, "rich_text_3")
+	--local words3 = self.rich_text_3:set_text("Energy is full. To restore")
+	--highlight_nodes(words3)
 end
 
 

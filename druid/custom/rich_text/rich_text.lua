@@ -73,6 +73,7 @@ function RichText:_get_settings()
 		size = gui.get_scale(self.text_prefab).x,
 		image_scale = gui.get_scale(self.icon_prefab),
 		default_animation = gui.get_flipbook(self.icon_prefab),
+		--combine_words = true,
 	}
 end
 

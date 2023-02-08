@@ -62,21 +62,6 @@ local V3_ZERO = vmath.vector3(0)
 ---@field text_prefab Node
 
 
-local function deepcopy(orig)
-	local orig_type = type(orig)
-	local copy
-	if orig_type == 'table' then
-		copy = {}
-		for orig_key, orig_value in next, orig, nil do
-			copy[deepcopy(orig_key)] = deepcopy(orig_value)
-		end
-	else -- number, string, boolean, etc
-		copy = orig
-	end
-	return copy
-end
-
-
 -- Trim spaces on string start
 local function ltrim(text)
 	return text:match('^%s*(.*)')
@@ -161,11 +146,15 @@ local function get_text_metrics(word, previous_word, settings)
 			local previous_word_metrics = resource.get_text_metrics(font_resource, previous_word.text)
 			local union_metrics = resource.get_text_metrics(font_resource, previous_word.text .. text)
 
+			print("prev word metrics", previous_word_metrics.width, previous_word.text)
+			print("union", union_metrics.width, previous_word.text .. text)
+			print("current width", metrics.width, text)
 			local without_previous_width = metrics.width
 			metrics.width = (union_metrics.width - previous_word_metrics.width) * word_scale_x
 			-- Since the several characters can be ajusted to fit the space between the previous word and this word
 			-- For example: chars: [.,?!]
 			metrics.offset_x = metrics.width - without_previous_width
+			print("with prev word offset", metrics.offset_x, previous_word.text, text)
 		end
 	end
 
@@ -650,7 +639,7 @@ function M.characters(word)
 
 	-- exit early if word is a single character or empty
 	if word_length <= 1 then
-		local char = deepcopy(word)
+		local char = helper.deepcopy(word)
 		char.node, char.metrics = create_node(char, parent, font)
 		gui.set_pivot(char.node, pivot)
 		gui.set_position(char.node, gui.get_position(word.node))
@@ -664,7 +653,7 @@ function M.characters(word)
 	local position_x = position.x
 
 	for i = 1, word_length do
-		local char = deepcopy(word)
+		local char = helper.deepcopy(word)
 		chars[#chars + 1] = char
 		char.text = utf8.sub(word.text, i, i)
 		char.node, char.metrics = create_node(char, parent, font)
