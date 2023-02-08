@@ -64,16 +64,25 @@ end
 
 function RichText:_get_settings()
 	return {
-		width = self.root_size.x,
+		adjust_scale = 1,
 		parent = self.root,
+		width = self.root_size.x,
+		height = self.root_size.y,
 		text_prefab = self.text_prefab,
 		node_prefab = self.icon_prefab,
+
+		size = gui.get_scale(self.text_prefab).x,
 		shadow = gui.get_shadow(self.text_prefab),
 		outline = gui.get_outline(self.text_prefab),
-		size = gui.get_scale(self.text_prefab).x,
+		text_scale = gui.get_scale(self.text_prefab),
+		text_leading = gui.get_leading(self.text_prefab),
+		is_multiline = gui.get_line_break(self.text_prefab),
+
+		combine_words = false,
+		image_pixel_grid_snap = false,
+		node_scale = gui.get_scale(self.icon_prefab),
 		image_scale = gui.get_scale(self.icon_prefab),
 		default_animation = gui.get_flipbook(self.icon_prefab),
-		--combine_words = true,
 	}
 end
 

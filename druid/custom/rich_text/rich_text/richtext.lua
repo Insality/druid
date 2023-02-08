@@ -54,7 +54,6 @@ local V3_ZERO = vmath.vector3(0)
 ---@field shadow vector4
 ---@field outline vector4
 ---@field position vector3
----@field line_spacing number
 ---@field image_pixel_grid_snap boolean
 ---@field combine_words boolean
 ---@field default_animation string
@@ -146,15 +145,11 @@ local function get_text_metrics(word, previous_word, settings)
 			local previous_word_metrics = resource.get_text_metrics(font_resource, previous_word.text)
 			local union_metrics = resource.get_text_metrics(font_resource, previous_word.text .. text)
 
-			print("prev word metrics", previous_word_metrics.width, previous_word.text)
-			print("union", union_metrics.width, previous_word.text .. text)
-			print("current width", metrics.width, text)
 			local without_previous_width = metrics.width
 			metrics.width = (union_metrics.width - previous_word_metrics.width) * word_scale_x
 			-- Since the several characters can be ajusted to fit the space between the previous word and this word
 			-- For example: chars: [.,?!]
 			metrics.offset_x = metrics.width - without_previous_width
-			print("with prev word offset", metrics.offset_x, previous_word.text, text)
 		end
 	end
 
@@ -201,22 +196,6 @@ end
 -- @return metrics
 function M.create(text, settings)
 	assert(text, "You must provide a text")
-
-	---@class rich_text.settings
-	settings = settings or {}
-	settings.adjust_scale = 1
-	settings.position = settings.position or V3_ZERO
-	settings.line_spacing = settings.line_spacing or 1
-	settings.image_pixel_grid_snap = settings.image_pixel_grid_snap or false
-	settings.combine_words = settings.combine_words or false
-	settings.default_animation = settings.default_animation or nil
-	settings.node_prefab = settings.node_prefab
-	settings.text_prefab = settings.text_prefab
-	settings.text_leading = gui.get_leading(settings.text_prefab)
-	settings.text_scale = gui.get_scale(settings.text_prefab)
-	settings.node_scale = gui.get_scale(settings.node_prefab)
-	settings.is_multiline = gui.get_line_break(settings.text_prefab)
-	settings.parent = settings.parent
 
 	-- default settings for a word
 	-- will be assigned to each word unless tags override the values
@@ -518,18 +497,17 @@ end
 function M.adjust_to_area(words, settings, lines_metrics)
 	local last_line_metrics = lines_metrics
 
-	local area_size = gui.get_size(settings.parent)
 	if not settings.is_multiline then
-		if lines_metrics.text_width > area_size.x then
-			last_line_metrics = M.set_text_scale(words, settings, area_size.x / lines_metrics.text_width)
+		if lines_metrics.text_width > settings.width then
+			last_line_metrics = M.set_text_scale(words, settings, settings.width / lines_metrics.text_width)
 		end
 	else
 		-- Multiline adjusting is very tricky stuff...
 		-- It's do a lot of calculations, beware!
-		if lines_metrics.text_width > area_size.x or lines_metrics.text_height > area_size.y then
-			local scale_koef = math.sqrt(area_size.y / lines_metrics.text_height)
-			if lines_metrics.text_width * scale_koef > area_size.x then
-				scale_koef = math.sqrt(area_size.x / lines_metrics.text_width)
+		if lines_metrics.text_width > settings.width or lines_metrics.text_height > settings.height then
+			local scale_koef = math.sqrt(settings.height / lines_metrics.text_height)
+			if lines_metrics.text_width * scale_koef > settings.width then
+				scale_koef = math.sqrt(settings.width / lines_metrics.text_width)
 			end
 			local adjust_scale = math.min(scale_koef, 1)
 

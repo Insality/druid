@@ -2599,7 +2599,7 @@ nodes {
   id: "rich_text_5_NW/icon_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_N
   adjust_mode: ADJUST_MODE_FIT
   parent: "rich_text_5_NW/root"
   layer: ""
@@ -2615,6 +2615,7 @@ nodes {
   clipping_inverted: false
   alpha: 1.0
   overridden_fields: 3
+  overridden_fields: 14
   template_node_child: true
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
@@ -2893,7 +2894,7 @@ nodes {
   id: "rich_text_5_N/icon_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_N
   adjust_mode: ADJUST_MODE_FIT
   parent: "rich_text_5_N/root"
   layer: ""
@@ -2909,6 +2910,7 @@ nodes {
   clipping_inverted: false
   alpha: 1.0
   overridden_fields: 3
+  overridden_fields: 14
   template_node_child: true
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
@@ -3187,7 +3189,7 @@ nodes {
   id: "rich_text_5_NE/icon_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_N
   adjust_mode: ADJUST_MODE_FIT
   parent: "rich_text_5_NE/root"
   layer: ""
@@ -3203,6 +3205,7 @@ nodes {
   clipping_inverted: false
   alpha: 1.0
   overridden_fields: 3
+  overridden_fields: 14
   template_node_child: true
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
@@ -4362,7 +4365,7 @@ nodes {
   id: "rich_text_5_SW/icon_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_FIT
   parent: "rich_text_5_SW/root"
   layer: ""
@@ -4378,6 +4381,7 @@ nodes {
   clipping_inverted: false
   alpha: 1.0
   overridden_fields: 3
+  overridden_fields: 14
   template_node_child: true
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
@@ -4656,7 +4660,7 @@ nodes {
   id: "rich_text_5_S/icon_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_FIT
   parent: "rich_text_5_S/root"
   layer: ""
@@ -4672,6 +4676,7 @@ nodes {
   clipping_inverted: false
   alpha: 1.0
   overridden_fields: 3
+  overridden_fields: 14
   template_node_child: true
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
@@ -4950,7 +4955,7 @@ nodes {
   id: "rich_text_5_SE/icon_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_FIT
   parent: "rich_text_5_SE/root"
   layer: ""
@@ -4966,6 +4971,7 @@ nodes {
   clipping_inverted: false
   alpha: 1.0
   overridden_fields: 3
+  overridden_fields: 14
   template_node_child: true
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
