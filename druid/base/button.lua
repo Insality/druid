@@ -23,6 +23,9 @@
 ---On click outside of button(self, params, button_instance)
 -- @tfield DruidEvent on_click_outside @{DruidEvent}
 
+---On pressed button callback(self, params, button_instance)
+-- @tfield DruidEvent on_pressed @{DruidEvent}
+
 ---Trigger node
 -- @tfield node node
 
@@ -141,7 +144,7 @@ local function on_button_release(self)
 		end
 		return true
 	else
-		if self.can_action then
+		if self.can_action and not self._is_html5_mode then
 			self.can_action = false
 
 			local time = socket.gettime()
@@ -221,6 +224,7 @@ function Button.init(self, node, callback, params, anim_node)
 
 	-- Event stubs
 	self.on_click = Event(callback)
+	self.on_pressed = Event()
 	self.on_repeated_click = Event()
 	self.on_long_click = Event()
 	self.on_double_click = Event()
@@ -267,6 +271,9 @@ function Button.on_input(self, action_id, action)
 		if action.released then
 			self.on_click_outside:trigger(self:get_context(), self.params, self)
 		end
+		if self._is_html5_mode then
+			html5.set_interaction_listener(nil)
+		end
 		return false
 	end
 
@@ -279,6 +286,14 @@ function Button.on_input(self, action_id, action)
 		self.can_action = true
 		self.is_repeated_started = false
 		self.last_pressed_time = socket.gettime()
+		self.on_pressed:trigger(self:get_context(), self.params, self)
+
+		if self._is_html5_mode then
+			html5.set_interaction_listener(function()
+				on_button_click(self)
+				html5.set_interaction_listener(nil)
+			end)
+		end
 		return true
 	end
 
@@ -403,6 +418,18 @@ end
 function Button.set_check_function(self, check_function, failure_callback)
 	self._check_function = check_function
 	self._failure_callback = failure_callback
+end
+
+
+--- Set buttom click mode to call itself inside html5 callback in user interaction event
+-- It required to do protected stuff like copy/paste text, show html keyboard, etc
+-- The HTML5 button don't call any events except on_click
+-- @tparam Button self
+-- @tparam[opt] boolean is_html_mode If true - button will be called inside html5 callback
+-- @treturn Button Current button instance
+function Button.set_html5_user_interaction(self, is_html_mode)
+	self._is_html5_mode = is_html_mode and html5
+	return self
 end
 
 
