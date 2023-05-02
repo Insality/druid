@@ -11,9 +11,6 @@ local M = {}
 M.ADJUST_STEPS = 10
 M.ADJUST_SCALE_DELTA = 0.02
 
-local V3_ZERO = vmath.vector3(0)
-
-
 ---@class rich_text.metrics
 ---@field width number
 ---@field height number

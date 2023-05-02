@@ -29,12 +29,9 @@ function init(self)
 
 	self.rich_text = self.druid:new(RichText, "rich_text_1")
 	self.rich_text:set_text("Here is basic Rich Text without any text settings")
-	-- self.rich_text:set_text("Lorem long text with differrent placeholder or just text without any sense here to check multiline without long words")
-	--self.rich_text:set_text("Some text with image <img=logo,32/> in the middle")
-	--self.rich_text:set_text("Some text with image <img=slider_move,32/> in the middle")
 
 	self.rich_text_2 = self.druid:new(RichText, "rich_text_2")
-	self.rich_text_2:set_text("Here is example to compare Rich Text posing with usual GUI Text Node.")
+	self.rich_text_2:set_text("Here is example to compare <color=FF0000>Rich Text</color> posing with usual GUI Text Node.")
 	local rich_text_2_root = self.rich_text_2.root
 	gui.animate(rich_text_2_root, "color.w", 0, gui.EASING_LINEAR, 4, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	gui.animate(gui.get_node("text_case_2"), "color.w", 1, gui.EASING_LINEAR, 4, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
@@ -62,6 +59,17 @@ function init(self)
 	--self.rich_text_3 = self.druid:new(RichText, "rich_text_3")
 	--local words3 = self.rich_text_3:set_text("Energy is full. To restore")
 	--highlight_nodes(words3)
+	self.rich_text_6 = self.druid:new(RichText, "rich_text_6")
+	self.rich_text_6:set_text("Example text with <customlink><color=FFFF00>clickable tagged</color></customlink> words")
+	local tagged = self.rich_text_6:tagged("customlink")
+	pprint(tagged)
+	for index = 1, #tagged do
+		---@type rich_text.word
+		local word = tagged[index]
+		self.druid:new_button(word.node, function()
+			print("on click tagged")
+		end)
+	end
 end
 
 
