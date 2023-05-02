@@ -22,6 +22,24 @@ local function save_cache(self)
 end
 
 
+-- Change current browser URL to share the examples
+---@param self userdata
+---@param scene_name string
+local function set_scene_url(self, scene_name)
+	if not html5 then
+		return
+	end
+
+	local command
+	if scene_name then
+		command = string.format('window.history.replaceState(null, null, "?example=%s")', scene_name)
+	else
+		command = 'window.history.replaceState(null, null, "index.html")'
+	end
+	html5.run(command)
+end
+
+
 local function back_to_lobby(self)
 	if gui.set_enabled(self.button_menu.node) then
 		return
@@ -37,6 +55,7 @@ local function back_to_lobby(self)
 
 	self.cache.last_scene = nil
 	save_cache(self)
+	set_scene_url(self, nil)
 end
 
 
@@ -54,6 +73,7 @@ local function show_scene(self, scene_name, text_header)
 
 	self.cache.last_scene = scene_name
 	save_cache(self)
+	set_scene_url(self, scene_name)
 end
 
 
