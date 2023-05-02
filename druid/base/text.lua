@@ -48,8 +48,9 @@
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
-local utf8 = require("druid.system.utf8")
+local utf8_lua = require("druid.system.utf8")
 local component = require("druid.component")
+local utf8 = utf8 or utf8_lua
 
 local Text = component.create("text")
 

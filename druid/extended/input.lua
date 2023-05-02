@@ -51,7 +51,8 @@
 local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
-local utf8 = require("druid.system.utf8")
+local utf8_lua = require("druid.system.utf8")
+local utf8 = utf8 or utf8_lua
 
 local Input = component.create("input")
 

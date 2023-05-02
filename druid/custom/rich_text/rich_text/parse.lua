@@ -2,8 +2,9 @@
 -- Author: Britzl
 -- Modified by: Insality
 
-local utf8 = require("druid.system.utf8")
 local tags = require("druid.custom.rich_text.rich_text.tags")
+local utf8_lua = require("druid.system.utf8")
+local utf8 = utf8 or utf8_lua
 
 local M = {}
 

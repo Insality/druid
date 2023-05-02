@@ -4,7 +4,8 @@
 
 local helper = require("druid.helper")
 local parser = require("druid.custom.rich_text.rich_text.parse")
-local utf8 = require("druid.system.utf8")
+local utf8_lua = require("druid.system.utf8")
+local utf8 = utf8 or utf8_lua
 
 local M = {}
 
