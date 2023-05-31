@@ -104,11 +104,6 @@ M.register("img", function(params, settings)
 	width = width and tonumber(width)
 	height = height and tonumber(height)
 
-	---@class rich_text.word.image
-	---@field texture string
-	---@field anim string
-	---@field width number
-	---@field height number
 	settings.image = {
 		texture = texture,
 		anim = anim,

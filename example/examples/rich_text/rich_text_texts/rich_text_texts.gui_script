@@ -14,7 +14,16 @@ function init(self)
 	self.rich_text_2:set_text("Here is color example for <color=0.4,0.6,0.25,1>Rich Text</color>. You can adjust the <color=0000ff>color</color>, <shadow=#FF0000>shadow</shadow> or <outline=00000055>outline</outline>")
 
 	self.rich_text_3 = self.druid:new(RichText, "case3/rich_text")
-	self.rich_text_3:set_text("Here <font=another_font>font change</font> example. Can be used<font=another_font>for bold and italic fonts or other one</font>")
+	self.rich_text_3:set_text("Here <font=game_thin>font change</font> example. Can be used<font=game_thin>for bold and <font=game_thin_italic>italic fonts</font> or other one</font>")
+
+	self.rich_text_4 = self.druid:new(RichText, "case4/rich_text")
+	self.rich_text_4:set_text("Hello! Here are new line<br/><nobr>and this long text will be without any new line until nobr is end</nobr> he<br/>re text with br too")
+
+	self.rich_text_5 = self.druid:new(RichText, "case5/rich_text")
+	self.rich_text_5:set_text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue <color=0.4,0.6,0.25,1>ligula ac quam viverra</color> nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Lorem ipsum dolor sit amet, <shadow=#FF0000>consectetur adipiscing elit</shadow>. Donec a diam lectus.")
+
+	self.rich_text_6 = self.druid:new(RichText, "case6/rich_text")
+	self.rich_text_6:set_text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.")
 end
 
 

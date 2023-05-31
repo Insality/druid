@@ -9,55 +9,8 @@ local utf8 = utf8 or utf8_lua
 
 local M = {}
 
-M.ADJUST_STEPS = 10
+M.ADJUST_STEPS = 20
 M.ADJUST_SCALE_DELTA = 0.02
-
----@class rich_text.metrics
----@field width number
----@field height number
----@field offset_x number|nil
----@field offset_y number|nil
----@field node_size vector3|nil @For images only
-
----@class rich_text.lines_metrics
----@field text_width number
----@field text_height number
----@field lines table<number, rich_text.metrics>
-
----@class rich_text.word
----@field node Node
----@field relative_scale number
----@field color vector4
----@field position vector3
----@field offset vector3
----@field scale vector3
----@field size vector3
----@field metrics rich_text.metrics
----@field pivot Pivot
----@field text string
----@field shadow vector4
----@field outline vector4
----@field font string
----@field image rich_text.word.image
----@field default_animation string
----@field anchor number
----@field br boolean
----@field nobr boolean
-
----@class rich_text.settings
----@field parent Node
----@field size number
----@field fonts table<string, string>
----@field color vector4
----@field shadow vector4
----@field outline vector4
----@field position vector3
----@field image_pixel_grid_snap boolean
----@field combine_words boolean
----@field default_animation string
----@field node_prefab Node
----@field text_prefab Node
-
 
 -- Trim spaces on string start
 local function ltrim(text)
@@ -125,7 +78,7 @@ local function get_text_metrics(word, previous_word, settings)
 	local text = word.text
 	local font_resource = gui.get_font_resource(word.font)
 
-	---@type rich_text.metrics
+	---@type druid.rich_text.metrics
 	local metrics
 	local word_scale_x = word.relative_scale * settings.text_scale.x * settings.adjust_scale
 	local word_scale_y = word.relative_scale * settings.text_scale.y * settings.adjust_scale
@@ -158,9 +111,9 @@ local function get_text_metrics(word, previous_word, settings)
 end
 
 
----@param word rich_text.word
----@param settings rich_text.settings
----@return rich_text.metrics
+---@param word druid.rich_text.word
+---@param settings druid.rich_text.settings
+---@return druid.rich_text.metrics
 local function get_image_metrics(word, settings)
 	local node_prefab = settings.node_prefab
 	gui.play_flipbook(node_prefab, word.image.anim)
@@ -177,10 +130,10 @@ local function get_image_metrics(word, settings)
 end
 
 
----@param word rich_text.word
----@param settings rich_text.settings
----@param previous_word rich_text.word|nil
----@return rich_text.metrics
+---@param word druid.rich_text.word
+---@param settings druid.rich_text.settings
+---@param previous_word druid.rich_text.word|nil
+---@return druid.rich_text.metrics
 local function measure_node(word, settings, previous_word)
 	local metrics = word.image and get_image_metrics(word, settings) or get_text_metrics(word, previous_word, settings)
 	return metrics
@@ -242,9 +195,9 @@ function M.create(text, settings)
 end
 
 
----@param words rich_text.word
----@param metrics rich_text.metrics
----@param settings rich_text.settings
+---@param word druid.rich_text.word
+---@param metrics druid.rich_text.metrics
+---@param settings druid.rich_text.settings
 function M._fill_properties(word, metrics, settings)
 	word.metrics = metrics
 	word.position = vmath.vector3(0)
@@ -267,9 +220,9 @@ function M._fill_properties(word, metrics, settings)
 end
 
 
----@param words rich_text.word[]
----@param settings rich_text.settings
----@return rich_text.word[][]
+---@param words druid.rich_text.word[]
+---@param settings druid.rich_text.settings
+---@return druid.rich_text.word[][]
 function M._split_on_lines(words, settings)
 	local i = 1
 	local lines = {}
@@ -310,7 +263,7 @@ function M._split_on_lines(words, settings)
 			end
 		end
 		local overflow = (current_line_width + next_words_width) > settings.width
-		local is_new_line = (overflow or word.br) and settings.is_multiline
+		local is_new_line = (overflow or word.br) and settings.is_multiline and not word.nobr
 
 		-- We recalculate metrics with previous_word if it follow for word on current line
 		if not is_new_line and previous_word then

@@ -1,4 +1,4 @@
-font: "/builtins/fonts/vera_mo_bd.ttf"
+font: "/example/assets/fonts/Exo2-LightItalic.ttf"
 material: "/builtins/fonts/font-df.material"
 size: 40
 antialias: 1
