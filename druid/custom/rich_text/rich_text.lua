@@ -1,5 +1,5 @@
 local component = require("druid.component")
-local rich_text = require("druid.custom.rich_text.rich_text.richtext")
+local rich_text = require("druid.custom.rich_text.module.rt")
 
 ---@class druid.rich_text
 local RichText = component.create("rich_text")
@@ -28,6 +28,7 @@ function RichText:init(template, nodes)
 end
 
 
+---@param text string
 ---@return rich_text.word[], rich_text.lines_metrics
 function RichText:set_text(text)
 	self:clean()
@@ -64,6 +65,7 @@ end
 
 function RichText:_get_settings()
 	return {
+		-- General settings
 		adjust_scale = 1,
 		parent = self.root,
 		width = self.root_size.x,
@@ -71,6 +73,7 @@ function RichText:_get_settings()
 		text_prefab = self.text_prefab,
 		node_prefab = self.icon_prefab,
 
+		-- Text Settings
 		size = gui.get_scale(self.text_prefab).x,
 		shadow = gui.get_shadow(self.text_prefab),
 		outline = gui.get_outline(self.text_prefab),
@@ -78,6 +81,7 @@ function RichText:_get_settings()
 		text_leading = gui.get_leading(self.text_prefab),
 		is_multiline = gui.get_line_break(self.text_prefab),
 
+		-- Image settings
 		combine_words = false,
 		image_pixel_grid_snap = false,
 		node_scale = gui.get_scale(self.icon_prefab),
@@ -88,12 +92,10 @@ end
 
 
 function RichText:clean()
-	if not self._words then
-		return
+	if self._words then
+		rich_text.remove(self._words)
+		self._words = nil
 	end
-
-	rich_text.remove(self._words)
-	self._words = nil
 end
 
 

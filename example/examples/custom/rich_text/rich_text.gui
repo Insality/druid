@@ -212,9 +212,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.8
-    y: 1.0
-    z: 1.0
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
     w: 1.0
   }
   type: TYPE_TEXT
@@ -226,15 +226,15 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
   outline {
-    x: 0.0
-    y: 0.2
+    x: 0.2
+    y: 0.0
     z: 0.2
     w: 1.0
   }
   shadow {
-    x: 0.101960786
-    y: 0.3019608
-    z: 0.3019608
+    x: 0.2
+    y: 0.2
+    z: 0.2
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
@@ -243,8 +243,8 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 0.5
-  shadow_alpha: 0.1
+  outline_alpha: 0.75
+  shadow_alpha: 0.25
   template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0
@@ -564,9 +564,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.8
-    y: 1.0
-    z: 1.0
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
     w: 1.0
   }
   type: TYPE_TEXT
@@ -578,15 +578,15 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
   outline {
-    x: 0.0
-    y: 0.2
+    x: 0.2
+    y: 0.0
     z: 0.2
     w: 1.0
   }
   shadow {
-    x: 0.101960786
-    y: 0.3019608
-    z: 0.3019608
+    x: 0.2
+    y: 0.2
+    z: 0.2
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
@@ -595,8 +595,8 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 0.5
-  shadow_alpha: 0.1
+  outline_alpha: 0.75
+  shadow_alpha: 0.25
   template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0
@@ -989,9 +989,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.8
-    y: 1.0
-    z: 1.0
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
     w: 1.0
   }
   type: TYPE_TEXT
@@ -1003,15 +1003,15 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
   outline {
-    x: 0.0
-    y: 0.2
+    x: 0.2
+    y: 0.0
     z: 0.2
     w: 1.0
   }
   shadow {
-    x: 0.101960786
-    y: 0.3019608
-    z: 0.3019608
+    x: 0.2
+    y: 0.2
+    z: 0.2
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
@@ -1020,8 +1020,8 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 0.5
-  shadow_alpha: 0.1
+  outline_alpha: 0.75
+  shadow_alpha: 0.25
   template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0
@@ -1347,9 +1347,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.8
-    y: 1.0
-    z: 1.0
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
     w: 1.0
   }
   type: TYPE_TEXT
@@ -1361,15 +1361,15 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
   outline {
-    x: 0.0
-    y: 0.2
+    x: 0.2
+    y: 0.0
     z: 0.2
     w: 1.0
   }
   shadow {
-    x: 0.101960786
-    y: 0.3019608
-    z: 0.3019608
+    x: 0.2
+    y: 0.2
+    z: 0.2
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
@@ -1378,8 +1378,8 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 0.5
-  shadow_alpha: 0.1
+  outline_alpha: 0.75
+  shadow_alpha: 0.25
   template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0
@@ -2287,9 +2287,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.8
-    y: 1.0
-    z: 1.0
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
     w: 1.0
   }
   type: TYPE_TEXT
@@ -2301,15 +2301,15 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
   outline {
-    x: 0.0
-    y: 0.2
+    x: 0.2
+    y: 0.0
     z: 0.2
     w: 1.0
   }
   shadow {
-    x: 0.101960786
-    y: 0.3019608
-    z: 0.3019608
+    x: 0.2
+    y: 0.2
+    z: 0.2
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
@@ -2318,8 +2318,8 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 0.5
-  shadow_alpha: 0.1
+  outline_alpha: 0.75
+  shadow_alpha: 0.25
   template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0
@@ -5062,9 +5062,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.8
-    y: 1.0
-    z: 1.0
+    x: 0.9490196
+    y: 0.9490196
+    z: 0.9490196
     w: 1.0
   }
   type: TYPE_TEXT
@@ -5076,15 +5076,15 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
   outline {
-    x: 0.0
-    y: 0.2
+    x: 0.2
+    y: 0.0
     z: 0.2
     w: 1.0
   }
   shadow {
-    x: 0.101960786
-    y: 0.3019608
-    z: 0.3019608
+    x: 0.2
+    y: 0.2
+    z: 0.2
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
@@ -5093,8 +5093,8 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 0.5
-  shadow_alpha: 0.1
+  outline_alpha: 0.75
+  shadow_alpha: 0.25
   template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0

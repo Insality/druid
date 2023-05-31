@@ -3,7 +3,7 @@
 -- Modified by: Insality
 
 local helper = require("druid.helper")
-local parser = require("druid.custom.rich_text.rich_text.parse")
+local parser = require("druid.custom.rich_text.module.rt_parse")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
@@ -462,6 +462,7 @@ function M._update_nodes(lines, settings)
 				gui.set_shadow(node, word.shadow)
 				gui.set_text(node, word.text)
 				gui.set_color(node, word.color or word.text_color)
+				gui.set_font(node, word.font or settings.font)
 			end
 			word.node = node
 			gui.set_enabled(node, true)

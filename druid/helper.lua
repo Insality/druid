@@ -354,6 +354,53 @@ function M.get_text_metrics_from_node(text_node)
 end
 
 
+function M.insert_with_shift(array, item, index, shift_policy)
+	shift_policy = shift_policy or const.SHIFT.RIGHT
+
+	local len = #array
+	index = index or len + 1
+
+	if array[index] and shift_policy ~= const.SHIFT.NO_SHIFT then
+		local check_index = index
+		local next_element = array[check_index]
+		while next_element or (check_index >= 1 and check_index <= len) do
+			check_index = check_index + shift_policy
+			local check_element = array[check_index]
+			array[check_index] = next_element
+			next_element = check_element
+		end
+	end
+
+	array[index] = item
+
+	return item
+end
+
+
+function M.remove_with_shift(array, index, shift_policy)
+	shift_policy = shift_policy or const.SHIFT.RIGHT
+
+	local len = #array
+	index = index or len
+
+	local item = array[index]
+	array[index] = nil
+
+	if shift_policy ~= const.SHIFT.NO_SHIFT then
+		local check_index = index + shift_policy
+		local next_element = array[check_index]
+		while next_element or (check_index >= 0 and check_index <= len + 1) do
+			array[check_index - shift_policy] = next_element
+			array[check_index] = nil
+			check_index = check_index + shift_policy
+			next_element = array[check_index]
+		end
+	end
+
+	return item
+end
+
+
 --- Show deprecated message. Once time per message
 -- @function helper.deprecated
 -- @tparam string message The deprecated message

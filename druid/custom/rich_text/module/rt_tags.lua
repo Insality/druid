@@ -2,7 +2,7 @@
 -- Author: Britzl
 -- Modified by: Insality
 
-local color = require("druid.custom.rich_text.rich_text.color")
+local color = require("druid.custom.rich_text.module.rt_color")
 
 local M = {}
 
@@ -41,6 +41,9 @@ local function split(s, token)
 end
 
 
+-- Format: <color=[#]{HEX_VALUE}>{Text}</color>
+-- Format: <color={COLOR_NAME}>{Text}</color>
+-- Example: <color=FF0000>Rich Text</color>
 M.register("color", function(params, settings)
 	settings.color = color.parse(params)
 end)
@@ -71,16 +74,22 @@ M.register("a", function(params, settings)
 end)
 
 
+-- Example: </br>
 M.register("br", function(params, settings)
 	settings.br = true
 end)
 
 
+-- Example: <nobr></nobr>
 M.register("nobr", function(params, settings)
 	settings.nobr = true
 end)
 
 
+-- Format: <img={animation_id},[width],[height]/>
+-- Example: <img=logo/>
+-- Example: <img=logo,48/>
+-- Example: <img=logo,48,48/>
 M.register("img", function(params, settings)
 	local texture_and_anim, params = split(params, ",")
 	local width, height

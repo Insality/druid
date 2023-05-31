@@ -1,7 +1,11 @@
-script: "/example/example.gui_script"
+script: "/example/examples/rich_text/rich_text_texts/rich_text_texts.gui_script"
 fonts {
   name: "game"
   font: "/example/assets/fonts/game.font"
+}
+fonts {
+  name: "another_font"
+  font: "/example/assets/fonts/another_font.font"
 }
 textures {
   name: "kenney"
@@ -16,7 +20,64 @@ background_color {
 nodes {
   position {
     x: 300.0
-    y: 450.0
+    y: 415.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 600.0
+    y: 830.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "kenney/empty"
+  id: "root"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
+  size_mode: SIZE_MODE_MANUAL
+  custom_type: 0
+  enabled: true
+  visible: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: 485.0
     z: 0.0
     w: 1.0
   }
@@ -47,70 +108,13 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "kenney/empty"
-  id: "root"
+  id: "content"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_STRETCH
-  layer: ""
-  inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
-  visible: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/empty"
-  id: "C_Anchor"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_N
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "root"
-  layer: "image"
+  layer: ""
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -123,15 +127,15 @@ nodes {
   clipping_inverted: false
   alpha: 1.0
   template_node_child: false
-  size_mode: SIZE_MODE_AUTO
+  size_mode: SIZE_MODE_MANUAL
   custom_type: 0
   enabled: true
-  visible: true
+  visible: false
 }
 nodes {
   position {
     x: 0.0
-    y: 380.0
+    y: -100.0
     z: 0.0
     w: 1.0
   }
@@ -159,32 +163,16 @@ nodes {
     z: 1.0
     w: 1.0
   }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/empty"
-  id: "lobby"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_STRETCH
-  parent: "C_Anchor"
+  type: TYPE_TEMPLATE
+  id: "case1"
+  parent: "content"
   layer: ""
   inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
   alpha: 1.0
+  template: "/example/examples/rich_text/rich_text_texts/prefab_example_rich_text.gui"
   template_node_child: false
-  size_mode: SIZE_MODE_AUTO
   custom_type: 0
   enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -207,7 +195,7 @@ nodes {
   }
   size {
     x: 600.0
-    y: 830.0
+    y: 200.0
     z: 0.0
     w: 1.0
   }
@@ -220,70 +208,12 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "kenney/empty"
-  id: "lobby_view"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_N
-  adjust_mode: ADJUST_MODE_STRETCH
-  parent: "lobby"
-  layer: ""
-  inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_STENCIL
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
-  visible: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 600.0
-    y: 830.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/empty"
-  id: "lobby_content"
+  id: "case1/root"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
   adjust_mode: ADJUST_MODE_FIT
-  parent: "lobby_view"
+  parent: "case1"
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -296,7 +226,131 @@ nodes {
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
-  template_node_child: false
+  template_node_child: true
+  size_mode: SIZE_MODE_MANUAL
+  custom_type: 0
+  enabled: true
+  visible: false
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 750.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 0.9411765
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Here is simple example with text"
+  font: "game"
+  id: "case1/hint"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_N
+  outline {
+    x: 0.101960786
+    y: 0.101960786
+    z: 0.101960786
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: true
+  parent: "case1/root"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 0.7
+  shadow_alpha: 0.0
+  template_node_child: true
+  text_leading: 1.0
+  text_tracking: 0.0
+  custom_type: 0
+  enabled: true
+  visible: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -60.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 600.0
+    y: 130.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 0.9411765
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: ""
+  id: "case1/area"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_N
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "case1/root"
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
   enabled: true
@@ -305,7 +359,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -59.0
+    y: -65.0
     z: 0.0
     w: 1.0
   }
@@ -333,32 +387,16 @@ nodes {
     z: 1.0
     w: 1.0
   }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/empty"
-  id: "prefabs"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  parent: "lobby"
+  type: TYPE_TEMPLATE
+  id: "case1/rich_text"
+  parent: "case1/area"
   layer: ""
   inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
   alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_AUTO
+  template: "/druid/custom/rich_text/rich_text.gui"
+  template_node_child: true
   custom_type: 0
   enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -376,136 +414,12 @@ nodes {
   scale {
     x: 1.0
     y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 600.0
-    y: 80.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/empty"
-  id: "prefab_header"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  parent: "prefabs"
-  layer: ""
-  inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
-  visible: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: -13.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 0.9
-    y: 0.9
     z: 1.0
     w: 1.0
   }
   size {
     x: 500.0
-    y: 60.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Title of component"
-  font: "game"
-  id: "prefab_text"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  shadow {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "prefab_header"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 0.75
-  shadow_alpha: 0.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-  custom_type: 0
-  enabled: true
-  visible: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: -74.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 460.0
-    y: 60.0
+    y: 130.0
     z: 0.0
     w: 1.0
   }
@@ -517,13 +431,13 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/empty"
-  id: "prefab_button"
+  texture: ""
+  id: "case1/rich_text/root"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "prefabs"
+  parent: "case1/rich_text"
   layer: ""
   inherit_alpha: true
   slice9 {
@@ -536,11 +450,11 @@ nodes {
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
-  template_node_child: false
+  template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
   enabled: true
-  visible: true
+  visible: false
 }
 nodes {
   position {
@@ -562,80 +476,22 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 55.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/button_green"
-  id: "icon_button"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  parent: "prefab_button"
-  layer: ""
-  inherit_alpha: true
-  slice9 {
-    x: 20.0
-    y: 20.0
-    z: 20.0
-    w: 20.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
-  visible: true
-}
-nodes {
-  position {
-    x: 0.0
-    y: 4.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 0.75
-    y: 0.75
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 450.0
+    x: 300.0
     y: 60.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.2
+    y: 0.2
+    z: 0.2
     w: 1.0
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Button name"
+  text: "Rich text"
   font: "game"
-  id: "text_button_lobby"
+  id: "case1/rich_text/text_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -646,20 +502,20 @@ nodes {
     w: 1.0
   }
   shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "icon_button"
+  line_break: true
+  parent: "case1/rich_text/root"
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 0.75
+  outline_alpha: 0.0
   shadow_alpha: 0.0
-  template_node_child: false
+  template_node_child: true
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
@@ -669,7 +525,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: 450.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
@@ -699,14 +555,14 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/empty"
-  id: "N_Anchor"
+  texture: "items/checkmark"
+  id: "case1/rich_text/icon_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_STRETCH
-  parent: "root"
-  layer: "image"
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "case1/rich_text/root"
+  layer: ""
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -718,11 +574,53 @@ nodes {
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
-  template_node_child: false
+  template_node_child: true
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
   enabled: true
   visible: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -300.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "case2"
+  parent: "content"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  template: "/example/examples/rich_text/rich_text_texts/prefab_example_rich_text.gui"
+  template_node_child: false
+  custom_type: 0
+  enabled: true
 }
 nodes {
   position {
@@ -745,7 +643,7 @@ nodes {
   }
   size {
     x: 600.0
-    y: 70.0
+    y: 200.0
     z: 0.0
     w: 1.0
   }
@@ -757,26 +655,151 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/progress_back"
-  id: "panel_top"
+  texture: "kenney/empty"
+  id: "case2/root"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
-  adjust_mode: ADJUST_MODE_STRETCH
-  parent: "N_Anchor"
-  layer: "image_top"
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "case2"
+  layer: ""
   inherit_alpha: true
   slice9 {
-    x: 20.0
-    y: 20.0
-    z: 20.0
-    w: 20.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
-  template_node_child: false
+  template_node_child: true
+  size_mode: SIZE_MODE_MANUAL
+  custom_type: 0
+  enabled: true
+  visible: false
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 750.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 0.9411765
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "Text color setup"
+  font: "game"
+  id: "case2/hint"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_N
+  outline {
+    x: 0.101960786
+    y: 0.101960786
+    z: 0.101960786
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: true
+  parent: "case2/root"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 0.7
+  shadow_alpha: 0.0
+  overridden_fields: 8
+  template_node_child: true
+  text_leading: 1.0
+  text_tracking: 0.0
+  custom_type: 0
+  enabled: true
+  visible: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -60.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 600.0
+    y: 130.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 0.9411765
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: ""
+  id: "case2/area"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_N
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "case2/root"
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
   enabled: true
@@ -784,8 +807,8 @@ nodes {
 }
 nodes {
   position {
-    x: -240.0
-    y: -35.0
+    x: 0.0
+    y: -65.0
     z: 0.0
     w: 1.0
   }
@@ -814,13 +837,13 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "button_menu"
-  parent: "panel_top"
-  layer: "image_top"
+  id: "case2/rich_text"
+  parent: "case2/area"
+  layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/button.gui"
-  template_node_child: false
+  template: "/druid/custom/rich_text/rich_text.gui"
+  template_node_child: true
   custom_type: 0
   enabled: true
 }
@@ -844,8 +867,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 80.0
-    y: 50.0
+    x: 500.0
+    y: 130.0
     z: 0.0
     w: 1.0
   }
@@ -857,37 +880,35 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/button_blue"
-  id: "button_menu/button"
+  texture: ""
+  id: "case2/rich_text/root"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "button_menu"
-  layer: "image_top"
+  parent: "case2/rich_text"
+  layer: ""
   inherit_alpha: true
   slice9 {
-    x: 15.0
-    y: 15.0
-    z: 15.0
-    w: 15.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
-  overridden_fields: 4
-  overridden_fields: 20
   template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
   enabled: true
-  visible: true
+  visible: false
 }
 nodes {
   position {
     x: 0.0
-    y: 3.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
@@ -898,56 +919,51 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.5
-    y: 0.5
+    x: 1.0
+    y: 1.0
     z: 1.0
     w: 1.0
   }
   size {
-    x: 130.0
-    y: 50.0
+    x: 300.0
+    y: 60.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.2
+    y: 0.2
+    z: 0.2
     w: 1.0
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "MENU"
+  text: "Rich text"
   font: "game"
-  id: "button_menu/text"
+  id: "case2/rich_text/text_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {
-    x: 0.101960786
-    y: 0.2
-    z: 0.6
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "button_menu/button"
-  layer: "text_top"
+  line_break: true
+  parent: "case2/rich_text/root"
+  layer: ""
   inherit_alpha: true
   alpha: 1.0
   outline_alpha: 0.0
-  shadow_alpha: 0.78
-  overridden_fields: 1
-  overridden_fields: 3
-  overridden_fields: 4
-  overridden_fields: 8
-  overridden_fields: 20
+  shadow_alpha: 0.0
   template_node_child: true
   text_leading: 1.0
   text_tracking: 0.0
@@ -957,8 +973,66 @@ nodes {
 }
 nodes {
   position {
-    x: 240.0
-    y: -35.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "items/checkmark"
+  id: "case2/rich_text/icon_prefab"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "case2/rich_text/root"
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: true
+  size_mode: SIZE_MODE_AUTO
+  custom_type: 0
+  enabled: true
+  visible: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -500.0
     z: 0.0
     w: 1.0
   }
@@ -987,12 +1061,12 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "button_api"
-  parent: "panel_top"
-  layer: "image_top"
+  id: "case3"
+  parent: "content"
+  layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/button.gui"
+  template: "/example/examples/rich_text/rich_text_texts/prefab_example_rich_text.gui"
   template_node_child: false
   custom_type: 0
   enabled: true
@@ -1017,8 +1091,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 80.0
-    y: 50.0
+    x: 600.0
+    y: 200.0
     z: 0.0
     w: 1.0
   }
@@ -1030,37 +1104,35 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/button_blue"
-  id: "button_api/button"
+  texture: "kenney/empty"
+  id: "case3/root"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_N
   adjust_mode: ADJUST_MODE_FIT
-  parent: "button_api"
-  layer: "image_top"
+  parent: "case3"
+  layer: ""
   inherit_alpha: true
   slice9 {
-    x: 15.0
-    y: 15.0
-    z: 15.0
-    w: 15.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
-  overridden_fields: 4
-  overridden_fields: 20
   template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
   enabled: true
-  visible: true
+  visible: false
 }
 nodes {
   position {
     x: 0.0
-    y: 3.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
@@ -1071,56 +1143,52 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.5
-    y: 0.5
+    x: 0.8
+    y: 0.8
     z: 1.0
     w: 1.0
   }
   size {
-    x: 130.0
-    y: 50.0
+    x: 750.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
   color {
     x: 1.0
     y: 1.0
-    z: 1.0
+    z: 0.9411765
     w: 1.0
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "API"
+  text: "Text font setup"
   font: "game"
-  id: "button_api/text"
+  id: "case3/hint"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_N
   outline {
+    x: 0.101960786
+    y: 0.101960786
+    z: 0.101960786
+    w: 1.0
+  }
+  shadow {
     x: 1.0
     y: 1.0
     z: 1.0
     w: 1.0
   }
-  shadow {
-    x: 0.101960786
-    y: 0.2
-    z: 0.6
-    w: 1.0
-  }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "button_api/button"
-  layer: "text_top"
+  line_break: true
+  parent: "case3/root"
+  layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 0.0
-  shadow_alpha: 0.78
-  overridden_fields: 1
-  overridden_fields: 3
-  overridden_fields: 4
+  outline_alpha: 0.7
+  shadow_alpha: 0.0
   overridden_fields: 8
-  overridden_fields: 20
   template_node_child: true
   text_leading: 1.0
   text_tracking: 0.0
@@ -1130,8 +1198,66 @@ nodes {
 }
 nodes {
   position {
-    x: 240.0
-    y: -35.0
+    x: 0.0
+    y: -60.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 600.0
+    y: 130.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 0.9411765
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: ""
+  id: "case3/area"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_N
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "case3/root"
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: true
+  size_mode: SIZE_MODE_MANUAL
+  custom_type: 0
+  enabled: true
+  visible: true
+}
+nodes {
+  position {
+    x: 0.0
+    y: -65.0
     z: 0.0
     w: 1.0
   }
@@ -1160,13 +1286,13 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "button_code"
-  parent: "panel_top"
-  layer: "image_top"
+  id: "case3/rich_text"
+  parent: "case3/area"
+  layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/button.gui"
-  template_node_child: false
+  template: "/druid/custom/rich_text/rich_text.gui"
+  template_node_child: true
   custom_type: 0
   enabled: true
 }
@@ -1190,8 +1316,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 80.0
-    y: 50.0
+    x: 500.0
+    y: 130.0
     z: 0.0
     w: 1.0
   }
@@ -1203,37 +1329,35 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenney/button_blue"
-  id: "button_code/button"
+  texture: ""
+  id: "case3/rich_text/root"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "button_code"
-  layer: "image_top"
+  parent: "case3/rich_text"
+  layer: ""
   inherit_alpha: true
   slice9 {
-    x: 15.0
-    y: 15.0
-    z: 15.0
-    w: 15.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
-  overridden_fields: 4
-  overridden_fields: 20
   template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
   enabled: true
-  visible: true
+  visible: false
 }
 nodes {
   position {
     x: 0.0
-    y: 3.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
@@ -1244,56 +1368,52 @@ nodes {
     w: 1.0
   }
   scale {
-    x: 0.5
-    y: 0.5
+    x: 1.0
+    y: 1.0
     z: 1.0
     w: 1.0
   }
   size {
-    x: 130.0
-    y: 50.0
+    x: 300.0
+    y: 60.0
     z: 0.0
     w: 1.0
   }
   color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.2
+    y: 0.2
+    z: 0.2
     w: 1.0
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "CODE"
+  text: "Rich text"
   font: "game"
-  id: "button_code/text"
+  id: "case3/rich_text/text_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_SW
   outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   shadow {
-    x: 0.101960786
-    y: 0.2
-    z: 0.6
+    x: 0.0
+    y: 0.0
+    z: 0.0
     w: 1.0
   }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "button_code/button"
-  layer: "text_top"
+  line_break: true
+  parent: "case3/rich_text/root"
+  layer: ""
   inherit_alpha: true
   alpha: 1.0
   outline_alpha: 0.0
-  shadow_alpha: 0.78
-  overridden_fields: 1
-  overridden_fields: 3
-  overridden_fields: 4
-  overridden_fields: 8
-  overridden_fields: 20
+  shadow_alpha: 0.0
+  overridden_fields: 14
   template_node_child: true
   text_leading: 1.0
   text_tracking: 0.0
@@ -1304,7 +1424,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -30.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
@@ -1321,8 +1441,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 360.0
-    y: 45.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -1332,37 +1452,29 @@ nodes {
     z: 1.0
     w: 1.0
   }
-  type: TYPE_TEXT
+  type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  text: "Title"
-  font: "game"
-  id: "text_header"
+  texture: "items/checkmark"
+  id: "case3/rich_text/icon_prefab"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
-  outline {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  shadow {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
   adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "panel_top"
-  layer: "text_top"
+  parent: "case3/rich_text/root"
+  layer: ""
   inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
   alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
+  template_node_child: true
+  size_mode: SIZE_MODE_AUTO
   custom_type: 0
   enabled: true
   visible: true
@@ -1373,12 +1485,6 @@ layers {
 layers {
   name: "text"
 }
-layers {
-  name: "image_top"
-}
-layers {
-  name: "text_top"
-}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
-max_nodes: 1024
+max_nodes: 512

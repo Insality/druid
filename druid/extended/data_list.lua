@@ -115,19 +115,7 @@ function DataList.add(self, data, index, shift_policy)
 	index = index or self._data_last_index + 1
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
-	if self._data[index] then
-		if shift_policy == const.SHIFT.RIGHT then
-			for i = self._data_last_index, index, -1 do
-				self._data[i + 1] = self._data[i]
-			end
-		end
-		if shift_policy == const.SHIFT.LEFT then
-			for i = self._data_first_index, index do
-				self._data[i - 1] = self._data[i]
-			end
-		end
-	end
-	self._data[index] = data
+	helper.insert_with_shift(self._data, data, index, shift_policy)
 	self:_update_data_info()
 	self:_check_elements()
 
@@ -141,8 +129,10 @@ end
 -- @tparam number shift_policy The constant from const.SHIFT.*
 -- @local
 function DataList.remove(self, index, shift_policy)
-	table.remove(self._data, index)
-	self:_refresh()
+	--self:_refresh()
+
+	helper.remove_with_shift(self._data, index, shift_policy)
+	self:_update_data_info()
 
 	self:log_message("Remove element", { index = index })
 end
@@ -156,7 +146,8 @@ end
 function DataList.remove_by_data(self, data, shift_policy)
 	local index = helper.contains(self._data, data)
 	if index then
-		table.remove(self._data, index)
+		helper.remove_with_shift(self._data, index, shift_policy)
+		self:_update_data_info()
 		self:_refresh()
 	end
 end
@@ -166,6 +157,7 @@ end
 -- @tparam DataList self @{DataList}
 function DataList.clear(self)
 	self._data = {}
+	self:_update_data_info()
 	self:_refresh()
 end
 
@@ -289,7 +281,7 @@ function DataList._remove_at(self, index)
 end
 
 
---- Fully refresh all DataList elements
+--- Refresh all elements in DataList
 -- @tparam DataList self @{DataList}
 -- @local
 function DataList._refresh(self)
@@ -389,8 +381,8 @@ function DataList._update_data_info(self)
 	end
 
 	if self._data_length == 0 then
-		self._data_first_index = 1
-		self._data_last_index = 1
+		self._data_first_index = 0
+		self._data_last_index = 0
 	end
 end
 

@@ -188,23 +188,9 @@ end
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
 -- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 function StaticGrid.add(self, item, index, shift_policy, is_instant)
-	shift_policy = shift_policy or const.SHIFT.RIGHT
 	index = index or ((self.last_index or 0) + 1)
 
-	if self.nodes[index] then
-		if shift_policy == const.SHIFT.RIGHT then
-			for i = self.last_index, index, -1 do
-				self.nodes[i + 1] = self.nodes[i]
-			end
-		end
-		if shift_policy == const.SHIFT.LEFT then
-			for i = self.first_index, index do
-				self.nodes[i - 1] = self.nodes[i]
-			end
-		end
-	end
-
-	self.nodes[index] = item
+	helper.insert_with_shift(self.nodes, item, index, shift_policy)
 	gui.set_parent(item, self.parent)
 
 	-- Add new item instantly in new pos. Break update function for correct positioning
@@ -227,22 +213,10 @@ end
 -- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 -- @treturn Node The deleted gui node from grid
 function StaticGrid.remove(self, index, shift_policy, is_instant)
-	shift_policy = shift_policy or const.SHIFT.RIGHT
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
 	local remove_node = self.nodes[index]
-	self.nodes[index] = nil
-
-	if shift_policy == const.SHIFT.RIGHT then
-		for i = index, self.last_index do
-			self.nodes[i] = self.nodes[i + 1]
-		end
-	end
-	if shift_policy == const.SHIFT.LEFT then
-		for i = index, self.first_index, -1 do
-			self.nodes[i] = self.nodes[i - 1]
-		end
-	end
+	helper.remove_with_shift(self.nodes, index, shift_policy)
 
 	self:_update(is_instant)
 
