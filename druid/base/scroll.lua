@@ -457,7 +457,6 @@ function Scroll.bind_grid(self, grid)
 		local size = grid:get_size()
 		local offset = grid:get_offset()
 		self:set_size(size, offset)
-		self:log_message("Change size from grid", { size = size, offset = offset })
 	end)
 	self:set_size(grid:get_size(), grid:get_offset())
 

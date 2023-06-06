@@ -13,7 +13,6 @@ local const = require("druid.const")
 local class = require("druid.system.middleclass")
 local helper = require("druid.helper")
 
-
 local BaseComponent = class("druid.component")
 
 local INTERESTS = {} -- Cache interests by component class in runtime

@@ -5,6 +5,24 @@
 -- # Component List #
 --
 -- See all component list in "See Also" section.
+--
+-- # Notes #
+--
+-- Take a look on the next API pages:
+--
+-- - @{Helper} - Useful pack of functions to work with GUI nodes like centrate nodes
+--
+-- - @{DruidEvent} - The core event system in Druid. See how to subscribe on any event
+--
+-- - @{BaseComponent} - the parent of all Druid components, you can see all default component methods there
+--
+-- Other things:
+--
+-- - To use Druid, first you should create a Druid instance to spawn components and add Druids main engine functions: update, final, on_message and on_input.
+--
+-- - All Druid components take node name string as arguments, don't do gui.get_node() before.
+--
+-- - All Druid and component methods are called with : like self.druid:new_button().
 -- @usage
 -- local druid = require("druid.druid")
 --
@@ -75,32 +93,27 @@ local text = require("druid.base.text")
 -- local data_list = require("druid.extended.data_list")
 -- local swipe = require("druid.extended.swipe")
 
-
 local DruidInstance = class("druid.druid_instance")
 
-local IS_NO_AUTO_INPUT = sys.get_config("druid.no_auto_input") == "1"
+local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
 
 local function input_init(self)
-	if IS_NO_AUTO_INPUT then
+	if IS_NO_AUTO_INPUT or self.input_inited then
 		return
 	end
 
-	if not self.input_inited then
-		self.input_inited = true
-		druid_input.focus()
-	end
+	self.input_inited = true
+	druid_input.focus()
 end
 
 
 local function input_release(self)
-	if IS_NO_AUTO_INPUT then
+	if IS_NO_AUTO_INPUT or not self.input_inited then
 		return
 	end
 
-	if self.input_inited then
-		self.input_inited = false
-		druid_input.remove()
-	end
+	self.input_inited = false
+	druid_input.remove()
 end
 
 
@@ -290,8 +303,6 @@ function DruidInstance.final(self)
 	self._deleted = true
 
 	input_release(self)
-
-	self:log_message("Druid final")
 end
 
 
@@ -336,8 +347,6 @@ function DruidInstance.remove(self, component)
 			end
 		end
 	end
-
-	self:log_message("Remove", { name = component:get_name(), parent = component:get_parent_name() })
 end
 
 
@@ -437,8 +446,6 @@ function DruidInstance.on_focus_lost(self)
 	for i = 1, #components do
 		components[i]:on_focus_lost()
 	end
-
-	self:log_message("On focus lost")
 end
 
 
@@ -451,8 +458,6 @@ function DruidInstance.on_focus_gained(self)
 	for i = 1, #components do
 		components[i]:on_focus_gained()
 	end
-
-	self:log_message("On focus gained")
 end
 
 
@@ -466,8 +471,6 @@ function DruidInstance.on_language_change(self)
 	for i = 1, #components do
 		components[i]:on_language_change()
 	end
-
-	self:log_message("On language change")
 end
 
 
@@ -671,7 +674,7 @@ end
 -- @tparam bool no_adjust If true, will not correct text size
 -- @treturn LangText lang_text component
 function DruidInstance.new_lang_text(self, node, locale_id, no_adjust)
-		return helper.extended_component("lang_text")
+	return helper.extended_component("lang_text")
 end
 
 

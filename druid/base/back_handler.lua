@@ -1,6 +1,6 @@
 -- Copyright (c) 2023 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component with event on back or backspace button.
+--- Component with event on back and backspace button.
 -- # Overview #
 --
 -- Back Handler is recommended to put in every game window to close it
