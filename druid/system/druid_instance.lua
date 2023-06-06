@@ -1,14 +1,28 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Instance of Druid. Make one instance per gui_script with next code:
+--- Druid Instance which you use for component creation.
 --
---    local druid = require("druid.druid")
---    function init(self)
---        self.druid = druid.new(self)
---        local button = self.druid:new_button(...)
---    end
+-- # Component List #
 --
--- Learn Druid instance function here
+-- See all component list in "See Also" section.
+-- @usage
+-- local druid = require("druid.druid")
+--
+-- local function close_window(self)
+--     print("WOW, you closed the game!")
+-- end
+--
+-- function init(self)
+--     self.druid = druid.new(self)
+--
+--     -- Call all druid instance function with ":" syntax:
+--     local text = self.druid:new_text("text_header", "Hello Druid!")
+--     local button = self.druid:new_button("button_close", close_window)
+--
+--     -- You not need to save component reference if not need it
+--     self.druid:new_back_handler(close_window)
+-- end
+--
 -- @module DruidInstance
 -- @alias druid_instance
 -- @see Button
@@ -46,7 +60,6 @@ local drag = require("druid.base.drag")
 local hover = require("druid.base.hover")
 local scroll = require("druid.base.scroll")
 local static_grid = require("druid.base.static_grid")
-local swipe = require("druid.base.swipe")
 local text = require("druid.base.text")
 
 -- To use this components, you should register them first
@@ -60,6 +73,7 @@ local text = require("druid.base.text")
 -- local slider = require("druid.extended.slider")
 -- local timer_component = require("druid.extended.timer")
 -- local data_list = require("druid.extended.data_list")
+-- local swipe = require("druid.extended.swipe")
 
 
 local DruidInstance = class("druid.druid_instance")
@@ -621,16 +635,6 @@ function DruidInstance.new_scroll(self, view_node, content_node)
 end
 
 
---- Create swipe basic component
--- @tparam DruidInstance self
--- @tparam node node Gui node
--- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
--- @treturn Swipe swipe component
-function DruidInstance.new_swipe(self, node, on_swipe_callback)
-	return DruidInstance.new(self, swipe, node, on_swipe_callback)
-end
-
-
 --- Create drag basic component
 -- @tparam DruidInstance self
 -- @tparam node node GUI node to detect dragging
@@ -638,6 +642,16 @@ end
 -- @treturn Drag drag component
 function DruidInstance.new_drag(self, node, on_drag_callback)
 	return DruidInstance.new(self, drag, node, on_drag_callback)
+end
+
+
+--- Create swipe basic component
+-- @tparam DruidInstance self
+-- @tparam node node Gui node
+-- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
+-- @treturn Swipe swipe component
+function DruidInstance.new_swipe(self, node, on_swipe_callback)
+	return helper.extended_component("swipe")
 end
 
 

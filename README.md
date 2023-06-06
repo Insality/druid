@@ -181,6 +181,10 @@ function final(self)
     self.druid:final()
 end
 
+function update(self, dt)
+	self.druid:update(dt)
+end
+
 function on_message(self, message_id, message, sender)
     self.druid:on_message(message_id, message, sender)
 end
