@@ -7,6 +7,7 @@ file={"./druid",
 		"./druid/system/middleclass.lua",
 		"./druid/templates/",
 		"./druid/annotations.lua",
+		"./druid/custom/rich_text/module",
 	}
 }
 package='druid'

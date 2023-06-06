@@ -41,21 +41,9 @@ function druid.set_text_function(callback) end
 
 
 ---@class druid.back_handler : druid.base_component
----@field on_back druid.event On back handler callback(self, params)
----@field params any Params to back callback
+---@field on_back druid.event @{DruidEvent} function(self, [params]) .
+---@field params any Params to pass in the callback
 local druid__back_handler = {}
-
---- Component init function
----@param self druid.back_handler @{BackHandler}
----@param callback callback On back button
----@param params any Callback argument
-function druid__back_handler.init(self, callback, params) end
-
---- Input handler for component
----@param self druid.back_handler @{BackHandler}
----@param action_id string on_input action id
----@param action table on_input action
-function druid__back_handler.on_input(self, action_id, action) end
 
 
 ---@class druid.base_component
@@ -179,12 +167,7 @@ function druid__base_component.set_template(self, template) end
 ---@field node node Trigger node
 local druid__blocker = {}
 
---- Component init function
----@param self druid.blocker @{Blocker}
----@param node node Gui node
-function druid__blocker.init(self, node) end
-
---- Return blocked enabled state
+--- Return blocker enabled state
 ---@param self druid.blocker @{Blocker}
 ---@return bool True, if blocker is enabled
 function druid__blocker.is_enabled(self) end
@@ -206,6 +189,7 @@ function druid__blocker.set_enabled(self, state) end
 ---@field on_double_click druid.event On double tap button callback(self, params, button_instance, click_amount)
 ---@field on_hold_callback druid.event On button hold before long_click callback(self, params, button_instance, time)
 ---@field on_long_click druid.event On long tap button callback(self, params, button_instance, time)
+---@field on_pressed druid.event On pressed button callback(self, params, button_instance)
 ---@field on_repeated_click druid.event On repeated action button callback(self, params, button_instance, click_amount)
 ---@field params any Params to click callbacks
 ---@field pos vector3 Initial pos of anim_node
@@ -251,6 +235,13 @@ function druid__button.set_click_zone(self, zone) end
 ---@param state bool Enabled state
 ---@return druid.button Current button instance
 function druid__button.set_enabled(self, state) end
+
+--- Set buttom click mode to call itself inside html5 callback in user interaction event  It required to do protected stuff like copy/paste text, show html keyboard, etc  The HTML5 button don't call any events except on_click
+---@protected
+---@param self druid.button
+---@param is_html_mode boolean If true - button will be called inside html5 callback
+---@return druid.button Current button instance
+function druid__button.set_html5_user_interaction(self, is_html_mode) end
 
 --- Set key-code to trigger this button
 ---@param self druid.button @{Button}
@@ -441,6 +432,7 @@ function druid__drag.set_enabled(self, is_enabled) end
 
 ---@class druid.drag.style
 ---@field DRAG_DEADZONE field  Distance in pixels to start dragging
+---@field NO_USE_SCREEN_KOEF field  If screen aspect ratio affects on drag values
 local druid__drag__style = {}
 
 
@@ -573,6 +565,18 @@ function druid__event.unsubscribe(self, callback, context) end
 ---@class druid.helper
 local druid__helper = {}
 
+--- Get text metric from gui node.
+--- Replacement of previous gui.get_text_metrics_from_node function
+---@param text_node Node
+---@return table {width, height, max_ascent, max_descent}
+function druid__helper.get_text_metrics_from_node(text_node) end
+
+--- Get text metric from gui node.
+--- Replacement of previous gui.get_text_metrics_from_node function
+---@param text_node Node
+---@return table {width, height, max_ascent, max_descent}
+function druid__helper.get_text_metrics_from_node(text_node) end
+
 --- Transform table to oneline string
 ---@param t table
 ---@return string
@@ -607,8 +611,8 @@ local druid__hotkey__style = {}
 
 
 ---@class druid.hover : druid.base_component
----@field on_hover druid.event On hover callback(self, state)
----@field on_mouse_hover druid.event On mouse hover callback(self, state)
+---@field on_hover druid.event On hover callback(self, state, hover_instance)
+---@field on_mouse_hover druid.event On mouse hover callback(self, state, hover_instance)
 local druid__hover = {}
 
 --- Component init function
@@ -621,6 +625,18 @@ function druid__hover.init(self, node, on_hover_callback) end
 ---@param self druid.hover @{Hover}
 ---@return bool The hover enabled state
 function druid__hover.is_enabled(self) end
+
+--- Return current hover state.
+--- True if touch action was on the node at current time
+---@param self druid.hover @{Hover}
+---@return bool The current hovered state
+function druid__hover.is_hovered(self) end
+
+--- Return current hover state.
+--- True if nil action_id (usually desktop mouse) was on the node at current time
+---@param self druid.hover @{Hover}
+---@return bool The current hovered state
+function druid__hover.is_mouse_hovered(self) end
 
 --- Strict hover click area.
 --- Useful for  no click events outside stencil node
@@ -712,6 +728,7 @@ function druid__input.unselect(self) end
 ---@field IS_LONGTAP_ERASE field  Is long tap will erase current input data
 ---@field IS_UNSELECT_ON_RESELECT field  If true, call unselect on select selected input
 ---@field MASK_DEFAULT_CHAR field  Default character mask for password input
+---@field NO_CONSUME_INPUT_WHILE_SELECTED field  If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured)
 ---@field button_style field  Custom button style for input node
 ---@field on_input_wrong field  (self, button_node) Callback on wrong user input
 ---@field on_select field  (self, button_node) Callback on input field selecting
@@ -793,6 +810,13 @@ function druid__layout.fit_into_window(self) end
 ---@param mode string The layout mode (from const.LAYOUT_MODE)
 ---@param on_size_changed_callback function The callback on window resize
 function druid__layout.init(self, node, mode, on_size_changed_callback) end
+
+--- Set max gui upscale for FIT adjust mode (or side).
+--- It happens on bigger render gui screen
+---@param self druid.layout @{Layout}
+---@param max_gui_upscale number
+---@return druid.layout @{Layout}
+function druid__layout.set_max_gui_upscale(self, max_gui_upscale) end
 
 --- Set maximum size of layout node
 ---@param self druid.layout @{Layout}
@@ -950,6 +974,11 @@ function druid__rich_input.init(self, template, nodes) end
 ---@param self druid.rich_input @{RichInput}
 ---@param placeholder_text string The placeholder text
 function druid__rich_input.set_placeholder(self, placeholder_text) end
+
+
+---@class druid.rich_text : druid.base_component
+---@field component field The component druid instance
+local druid__rich_text = {}
 
 
 ---@class druid.scroll : druid.base_component
@@ -1272,7 +1301,7 @@ local druid__swipe__style = {}
 ---@field node_id hash The node id of text node
 ---@field on_set_pivot druid.event On change pivot callback(self, pivot)
 ---@field on_set_text druid.event On set text callback(self, text)
----@field on_update_text_scale druid.event On adjust text size callback(self, new_scale)
+---@field on_update_text_scale druid.event On adjust text size callback(self, new_scale, text_metrics)
 ---@field pos vector3 Current text position
 ---@field scale vector3 Current text node scale
 ---@field start_scale vector3 Initial text node scale
@@ -1405,7 +1434,7 @@ local druid_instance = {}
 ---@param self druid_instance
 function druid_instance.final(self) end
 
---- Druid late update function call after init and before udpate step
+--- Druid late update function call after init and before update step
 ---@param self druid_instance
 function druid_instance.late_init(self) end
 
@@ -1578,7 +1607,7 @@ function druid_instance.new_swipe(self, node, on_swipe_callback) end
 ---@param node node Gui text node
 ---@param value string Initial text. Default value is node text from GUI scene.
 ---@param no_adjust bool If true, text will be not auto-adjust size
----@return Tet text component
+---@return druid.text text component
 function druid_instance.new_text(self, node, value, no_adjust) end
 
 --- Create timer component
@@ -1699,6 +1728,12 @@ function helper.get_closest_stencil_node(node) end
 ---@param pivot gui.pivot The node pivot
 ---@return vector3 Vector offset with [-1..1] values
 function helper.get_pivot_offset(pivot) end
+
+--- Get cumulative parent's node scale
+---@param node node Gui node
+---@param include_passed_node_scale bool True if add current node scale to result
+---@return vector3 The scene node scale
+function helper.get_scene_scale(node, include_passed_node_scale) end
 
 --- Check if node is enabled in gui hierarchy.
 --- Return false, if node or any his parent is disabled

@@ -1,7 +1,18 @@
+-- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+
+--- Druid Rich Text custom component.
+-- It's wrapper on Input component with cursor and placeholder text
+-- @module RichText
+-- @within BaseComponent
+-- @alias druid.rich_text
+
+--- The component druid instance
+-- @tfield DruidInstance druid @{DruidInstance}
+
+
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
 
----@class druid.rich_text
 local RichText = component.create("rich_text")
 
 local SCHEME = {
@@ -14,9 +25,9 @@ local SCHEME = {
 function RichText:init(template, nodes)
 	self:set_template(template)
 	self:set_nodes(nodes)
+
 	self.root = self:get_node(SCHEME.ROOT)
 	self.druid = self:get_druid()
-	self.root_size = gui.get_size(self.root)
 
 	self.text_prefab = self:get_node(SCHEME.TEXT_PREFAB)
 	self.icon_prefab = self:get_node(SCHEME.ICON_PREFAB)
@@ -24,12 +35,10 @@ function RichText:init(template, nodes)
 	gui.set_enabled(self.text_prefab, false)
 	gui.set_enabled(self.icon_prefab, false)
 
-	self._settings = self:_get_settings()
+	self._settings = self:_create_settings()
 end
 
 
----@param text string
----@return rich_text.word[], rich_text.lines_metrics
 function RichText:set_text(text)
 	self:clean()
 
@@ -57,24 +66,25 @@ function RichText:tagged(tag)
 end
 
 
----@return druid.rich_text_word[]
 function RichText:get_words()
 	return self._words
 end
 
 
-function RichText:_get_settings()
+function RichText:_create_settings()
+	local root_size = gui.get_size(self.root)
 	return {
 		-- General settings
+		-- Adjust scale using to fit the text to the root node area
 		adjust_scale = 1,
 		parent = self.root,
-		width = self.root_size.x,
-		height = self.root_size.y,
+		width = root_size.x,
+		height = root_size.y,
+		combine_words = false,
 		text_prefab = self.text_prefab,
 		node_prefab = self.icon_prefab,
 
 		-- Text Settings
-		size = gui.get_scale(self.text_prefab).x,
 		shadow = gui.get_shadow(self.text_prefab),
 		outline = gui.get_outline(self.text_prefab),
 		text_scale = gui.get_scale(self.text_prefab),
@@ -82,7 +92,6 @@ function RichText:_get_settings()
 		is_multiline = gui.get_line_break(self.text_prefab),
 
 		-- Image settings
-		combine_words = false,
 		image_pixel_grid_snap = false,
 		node_scale = gui.get_scale(self.icon_prefab),
 		image_scale = gui.get_scale(self.icon_prefab),

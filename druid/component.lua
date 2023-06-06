@@ -1,7 +1,11 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Basic class for all Druid components.
--- To create you component, use `component.create`
+-- To create you custom component, use `component.create`
+-- @usage
+-- -- Create your component:
+-- local component = require("druid.component")
+-- local AwesomeComponent = component.create("awesome_component")
 -- @module BaseComponent
 -- @alias druid.base_component
 
