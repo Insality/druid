@@ -16,7 +16,7 @@
 --
 -- @{BaseComponent} - The parent class of all Druid components. You can find all default component methods there.
 --
--- Other important information:
+-- # Tech Info #
 --
 -- • To use Druid, you need to create a Druid instance first. This instance is used to spawn components.
 --
@@ -253,7 +253,7 @@ function DruidInstance.initialize(self, context, style)
 end
 
 
---- Create new component
+--- Create new component.
 -- @tparam DruidInstance self
 -- @tparam Component component Component module
 -- @tparam args ... Other component params to pass it to component:init function
@@ -271,8 +271,7 @@ function DruidInstance.new(self, component, ...)
 end
 
 
---- Call on final function on gui_script. It will call on_remove
--- on all druid components
+--- Call this in gui_script final function.
 -- @tparam DruidInstance self
 function DruidInstance.final(self)
 	local components = self.components_all
@@ -289,7 +288,8 @@ function DruidInstance.final(self)
 end
 
 
---- Remove component from druid instance.
+--- Remove component from Druid instance.
+--
 -- Component `on_remove` function will be invoked, if exist.
 -- @tparam DruidInstance self
 -- @tparam Component component Component instance
@@ -333,7 +333,7 @@ function DruidInstance.remove(self, component)
 end
 
 
----  Druid late update function called after initialization and before the regular update step
+--- Druid late update function called after initialization and before the regular update step
 -- This function is used to check the GUI state and perform actions after all components and nodes have been created.
 -- An example use case is performing an auto stencil check in the GUI hierarchy for input components.
 -- @tparam DruidInstance self
@@ -353,6 +353,7 @@ end
 
 
 --- Call this in gui_script update function.
+--
 -- Used for: scroll, progress, timer components
 -- @tparam DruidInstance self
 -- @tparam number dt Delta time
@@ -370,6 +371,7 @@ end
 
 
 --- Call this in gui_script on_input function.
+--
 -- Used for almost all components
 -- @tparam DruidInstance self
 -- @tparam hash action_id Action_id from on_input
@@ -390,6 +392,7 @@ end
 
 
 --- Call this in gui_script on_message function.
+--
 -- Used for special actions. See SPECIFIC_UI_MESSAGES table
 -- @tparam DruidInstance self
 -- @tparam hash message_id Message_id from on_message
