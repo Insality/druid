@@ -20,9 +20,7 @@ M.ACTION_BACKSPACE = hash(sys.get_config("druid.input_key_backspace", "key_backs
 M.ACTION_SCROLL_UP = hash(sys.get_config("druid.input_scroll_up", "mouse_wheel_up"))
 M.ACTION_SCROLL_DOWN = hash(sys.get_config("druid.input_scroll_down", "mouse_wheel_down"))
 
-
 M.IS_STENCIL_CHECK = not (sys.get_config("druid.no_stencil_check") == "1")
-
 
 M.RELEASED = "released"
 M.PRESSED = "pressed"
@@ -83,7 +81,6 @@ M.REVERSE_PIVOTS = {
 	[gui.PIVOT_NW] = gui.PIVOT_SE,
 }
 
-
 M.LAYOUT_MODE = {
 	STRETCH_X = "stretch_x",
 	STRETCH_Y = "stretch_y",
@@ -98,7 +95,6 @@ M.VECTOR_ONE = vmath.vector3(1)
 M.SYS_INFO = sys.get_sys_info()
 M.CURRENT_SYSTEM_NAME = M.SYS_INFO.system_name
 
-
 M.OS = {
 	ANDROID = "Android",
 	IOS = "iPhone OS",
@@ -108,13 +104,11 @@ M.OS = {
 	BROWSER = "HTML5",
 }
 
-
 M.SHIFT = {
 	NO_SHIFT = 0,
 	LEFT = -1,
 	RIGHT = 1,
 }
-
 
 M.TEXT_ADJUST = {
 	DOWNSCALE = "downscale",
@@ -125,12 +119,10 @@ M.TEXT_ADJUST = {
 	SCALE_THEN_SCROLL = "scale_then_scroll",
 }
 
-
 M.SIDE = {
 	X = "x",
 	Y = "y"
 }
-
 
 M.SWIPE = {
 	UP = "up",
@@ -139,16 +131,11 @@ M.SWIPE = {
 	RIGHT = "right",
 }
 
-
 M.ERRORS = {
 	GRID_DYNAMIC_ANCHOR = "The pivot of dynamic grid node should be West, East, South or North"
 }
 
-
 M.EMPTY_FUNCTION = function() end
 M.EMPTY_STRING = ""
-M.SPACE_STRING = " "
-M.EMPTY_TABLE = {}
-
 
 return M

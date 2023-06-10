@@ -1,7 +1,6 @@
 -- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid Rich Text custom component.
--- It's wrapper on Input component with cursor and placeholder text
 -- @module RichText
 -- @within BaseComponent
 -- @alias druid.rich_text

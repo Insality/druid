@@ -13,8 +13,6 @@
 --
 -- • Each Druid instance maintains the self context from the constructor and passes it to each Druid callback.
 --
--- • There is a system in place to track all Druid instances, so it is required to call druid:final()
---
 -- See next: @{DruidInstance}
 --
 -- @usage

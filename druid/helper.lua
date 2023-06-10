@@ -30,9 +30,14 @@ local function get_icon_width(icon_node)
 end
 
 
+local function is_text_node(node)
+	return gui.get_text(node) ~= nil
+end
+
+
 --- Text node or icon node can be nil
 local function get_width(node)
-	return gui.get_text(node) and get_text_width(node) or get_icon_width(node)
+	return is_text_node(node) and get_text_width(node) or get_icon_width(node)
 end
 
 
@@ -62,11 +67,13 @@ function M.centrate_icon_with_text(icon_node, text_node, margin)
 end
 
 
---- Center several nodes nodes.
--- Nodes will be center around 0 x position
+--- Centerate nodes by x position with margin.
+--
+-- This functions calculate total width of nodes and set position for each node.
+-- The centrate will be around 0 x position.
 -- @function helper.centrate_nodes
 -- @tparam[opt=0] number margin Offset between nodes
--- @tparam[opt] Node ... Any count of gui Node
+-- @param ... Gui nodes
 function M.centrate_nodes(margin, ...)
 	margin = margin or 0
 
