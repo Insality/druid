@@ -143,7 +143,7 @@ function Scroll.init(self, view_node, content_node)
 	self.view_border = helper.get_border(self.view_node)
 	self.content_node = self:get_node(content_node)
 
-	self.view_size = vmath.mul_per_elem(gui.get_size(self.view_node), gui.get_scale(self.view_node))
+	self.view_size = helper.get_scaled_size(self.view_node)
 
 	self.position = gui.get_position(self.content_node)
 	self.target_position = vmath.vector3(self.position)
@@ -457,7 +457,6 @@ function Scroll.bind_grid(self, grid)
 		local size = grid:get_size()
 		local offset = grid:get_offset()
 		self:set_size(size, offset)
-		self:log_message("Change size from grid", { size = size, offset = offset })
 	end)
 	self:set_size(grid:get_size(), grid:get_offset())
 
@@ -694,7 +693,7 @@ end
 
 function Scroll._update_size(self)
 	local content_border = helper.get_border(self.content_node)
-	local content_size = vmath.mul_per_elem(gui.get_size(self.content_node), gui.get_scale(self.content_node))
+	local content_size = helper.get_scaled_size(self.content_node)
 
 	self.available_pos = get_border_vector(self.view_border - content_border, self._offset)
 	self.available_size = get_size_vector(self.available_pos)

@@ -1,3 +1,5 @@
+-- Manual Annotations --
+
 ---@class druid.rich_text.metrics
 ---@field width number
 ---@field height number
@@ -49,3 +51,9 @@
 ---@field default_animation string
 ---@field node_prefab Node
 ---@field text_prefab Node
+
+---@class GUITextMetrics
+---@field width number
+---@field height number
+---@field max_ascent number
+---@field max_descent number

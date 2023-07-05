@@ -205,6 +205,8 @@ local function init_lobby(self)
 
 	self.lobby_grid:add(get_title(self, "Rich Texts"))
 	self.lobby_grid:add(get_button(self, "Rich Text Texts", "rich_text_texts", "/custom/rich_text_texts/rich_text_texts.gui_script"))
+	self.lobby_grid:add(get_button_disabled(self, "Rich Text Images"))--, "rich_text_images", "/custom/rich_text_texts/rich_text_texts.gui_script"))
+	self.lobby_grid:add(get_button_disabled(self, "Rich Text Tags"))--, "rich_text_images", "/custom/rich_text_texts/rich_text_texts.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "System"))
 	self.lobby_grid:add(get_button_disabled(self, "Styles"))

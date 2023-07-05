@@ -2,6 +2,10 @@
 -- Author: Britzl
 -- Modified by: Insality
 
+--- RT
+-- @module rich_text.rt
+-- @local
+
 local helper = require("druid.helper")
 local parser = require("druid.custom.rich_text.module.rt_parse")
 local utf8_lua = require("druid.system.utf8")
@@ -203,6 +207,7 @@ function M._fill_properties(word, metrics, settings)
 	word.position = vmath.vector3(0)
 
 	if word.image then
+		-- Image properties
 		word.scale = gui.get_scale(settings.node_prefab) * word.relative_scale * settings.adjust_scale
 		word.pivot = gui.get_pivot(settings.node_prefab)
 		word.size = metrics.node_size
@@ -212,6 +217,7 @@ function M._fill_properties(word, metrics, settings)
 			word.size.x = word.image.width
 		end
 	else
+		-- Text properties
 		word.scale = gui.get_scale(settings.text_prefab) * word.relative_scale * settings.adjust_scale
 		word.pivot = gui.get_pivot(settings.text_prefab)
 		word.size = vmath.vector3(metrics.width, metrics.height, 0)
@@ -507,32 +513,6 @@ function M.is_fit_info_area(lines, settings)
 	local lines_metrics = M._get_lines_metrics(lines, settings)
 	local area_size = gui.get_size(settings.parent)
 	return lines_metrics.text_width <= area_size.x and lines_metrics.text_height <= area_size.y
-end
-
-
---- Detected click/touch events on words with an anchor tag
--- These words act as "hyperlinks" and will generate a message when clicked
--- @param words Words to search for anchor tags
--- @param action The action table from on_input
--- @return true if a word was clicked, otherwise false
-function M.on_click(words, action)
-	for i = 1, #words do
-		local word = words[i]
-		if word.anchor and gui.pick_node(word.node, action.x, action.y) then
-			if word.tags and word.tags.a then
-				local message = {
-					node_id = gui.get_id(word.node),
-					text = word.text,
-					x = action.x, y = action.y,
-					screen_x = action.screen_x, screen_y = action.screen_y
-				}
-				msg.post("#", word.tags.a, message)
-				return true
-			end
-		end
-	end
-
-	return false
 end
 
 

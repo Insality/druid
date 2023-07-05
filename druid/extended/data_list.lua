@@ -118,8 +118,6 @@ function DataList.add(self, data, index, shift_policy)
 	helper.insert_with_shift(self._data, data, index, shift_policy)
 	self:_update_data_info()
 	self:_check_elements()
-
-	self:log_message("Add element", { index = index })
 end
 
 
@@ -133,8 +131,6 @@ function DataList.remove(self, index, shift_policy)
 
 	helper.remove_with_shift(self._data, index, shift_policy)
 	self:_update_data_info()
-
-	self:log_message("Remove element", { index = index })
 end
 
 
@@ -255,7 +251,6 @@ function DataList._add_at(self, index)
 		component = instance
 	}
 
-	self:log_message("Add element at", { index = index })
 	self.on_element_add:trigger(self:get_context(), index, node, instance)
 end
 
@@ -276,7 +271,6 @@ function DataList._remove_at(self, index)
 	end
 	self._data_visual[index] = nil
 
-	self:log_message("Remove element at", { index = index })
 	self.on_element_remove:trigger(self:get_context(), index)
 end
 
@@ -321,8 +315,6 @@ function DataList._check_elements(self)
 	if self.top_index == self:get_first_index() then
 		progress = 0
 	end
-
-	self:log_message("Check elements", { top_index = self.top_index, last_index = self.last_index, progress = progress })
 
 	if self.scroll_progress ~= progress then
 		self.scroll_progress = progress

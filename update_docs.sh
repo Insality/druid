@@ -13,3 +13,5 @@ echo "Update EmmyLua annotations"
 original_path=$(pwd)
 bash $emmylua_generator_path/export.sh $original_path
 mv $emmylua_generator_path/annotations.lua $original_path/druid/annotations.lua
+cat ./utils/annotations_manual.lua >> $original_path/druid/annotations.lua
+cp $original_path/utils/ldoc_fixed.css $original_path/docs/ldoc_fixed.css
