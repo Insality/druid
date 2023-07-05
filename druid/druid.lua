@@ -69,7 +69,7 @@ end
 
 --- Register a new external Druid component.
 --
--- You can register your own components by creating them with the druid:new_{name} function.
+-- You can register your own components to make new alias: the druid:new_{name} function.
 -- For example, if you want to register a component called "my_component", you can create it using druid:new_my_component(...).
 -- This can be useful if you have your own "basic" components that you don't want to re-create each time.
 -- @function druid.register
