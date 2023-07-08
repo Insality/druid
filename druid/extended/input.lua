@@ -115,7 +115,7 @@ end
 
 --- Component init function
 -- @tparam Input self @{Input}
--- @tparam node click_node Button node to enabled input component
+-- @tparam node click_node Node to enabled input component
 -- @tparam node|Text text_node Text node what will be changed on user input. You can pass text component instead of text node name @{Text}
 -- @tparam[opt] number keyboard_type Gui keyboard type for input field
 function Input.init(self, click_node, text_node, keyboard_type)

@@ -20,7 +20,7 @@ function druid.on_language_change() end
 function druid.on_window_callback(event) end
 
 --- Register a new external Druid component.
---- You can register your own components by creating them with the druid:new_{name} function.  For example, if you want to register a component called "my_component", you can create it using druid:new_my_component(...).  This can be useful if you have your own "basic" components that you don't want to re-create each time.
+--- You can register your own components to make new alias: the druid:new_{name} function.  For example, if you want to register a component called "my_component", you can create it using druid:new_my_component(...).  This can be useful if you have your own "basic" components that you don't want to re-create each time.
 ---@param name string module name
 ---@param module table lua table with component
 function druid.register(name, module) end
@@ -125,7 +125,7 @@ function druid__base_component.component:set_input_enabled(self, state) end
 function druid__base_component.component:set_input_priority(self, value, is_temporary) end
 
 --- Set current component nodes
---- Used if your component nodes was cloned with `gui.clone_tree`
+--- Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
 ---@param self druid.base_component @{BaseComponent}
 ---@param nodes table BaseComponent nodes table
 ---@return druid.base_component @{BaseComponent}
@@ -162,31 +162,28 @@ function druid__blocker.set_enabled(self, state) end
 
 
 ---@class druid.button : druid.base_component
----@field anim_node node Animation node
----@field click_zone node Restriction zone
----@field hash node_id The hash of trigger node
----@field hover druid.hover Druid hover logic component
----@field node node Trigger node
----@field on_click druid.event On release button callback(self, params, button_instance)
----@field on_click_outside druid.event On click outside of button(self, params, button_instance)
----@field on_double_click druid.event On double tap button callback(self, params, button_instance, click_amount)
----@field on_hold_callback druid.event On button hold before long_click callback(self, params, button_instance, time)
----@field on_long_click druid.event On long tap button callback(self, params, button_instance, time)
----@field on_pressed druid.event On pressed button callback(self, params, button_instance)
----@field on_repeated_click druid.event On repeated action button callback(self, params, button_instance, click_amount)
----@field params any Params to click callbacks
----@field pos vector3 Initial pos of anim_node
----@field start_pos vector3 Initial pos of anim_node
----@field start_scale vector3 Initial scale of anim_node
+---@field anim_node node Button animation node.
+---@field click_zone node Additional button click area, defined by another GUI Node
+---@field hash node_id The GUI node id from button node
+---@field hover druid.hover @{Hover}: Button Hover component
+---@field node node Button clickable node
+---@field on_click druid.event @{DruidEvent}: Event on successful release action over button.
+---@field on_click_outside druid.event @{DruidEvent}: Event calls if click event was outside of button.
+---@field on_double_click druid.event @{DruidEvent}: Event on double tap action over button.
+---@field on_hold_callback druid.event @{DruidEvent}: Event calls every frame before on_long_click event.
+---@field on_long_click druid.event @{DruidEvent}: Event on long tap action over button.
+---@field on_pressed druid.event @{DruidEvent}: Event triggered if button was pressed by user.
+---@field on_repeated_click druid.event @{DruidEvent}: Event on repeated action over button.
+---@field params any Custom args for any Button event.
 ---@field style druid.button.style Component style params.
 local druid__button = {}
 
---- Get key-code to trigger this button
+--- Get current key name to trigger this button.
 ---@param self druid.button
----@return hash The action_id of the key
+---@return hash The action_id of the input key
 function druid__button.get_key_trigger(self) end
 
---- Component init function
+--- Button component constructor
 ---@param self druid.button @{Button}
 ---@param node node Gui node
 ---@param callback function Button callback
@@ -194,9 +191,9 @@ function druid__button.get_key_trigger(self) end
 ---@param anim_node node Button anim node (node, if not provided)
 function druid__button.init(self, node, callback, params, anim_node) end
 
---- Return button enabled state
+--- Get button enabled state.
 ---@param self druid.button @{Button}
----@return bool True, if button is enabled
+---@return bool True, if button is enabled now, False overwise
 function druid__button.is_enabled(self) end
 
 --- Set function for additional check for button click availability
@@ -206,29 +203,30 @@ function druid__button.is_enabled(self) end
 ---@return druid.button Current button instance
 function druid__button.set_check_function(self, check_function, failure_callback) end
 
---- Strict button click area.
---- Useful for  no click events outside stencil node
+--- Set additional button click area.
+--- Useful to restrict click outside out stencil node or scrollable content.  This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
 ---@param self druid.button @{Button}
 ---@param zone node Gui node
 ---@return druid.button Current button instance
 function druid__button.set_click_zone(self, zone) end
 
---- Set enabled button component state
+--- Set button enabled state.
+--- The style.on_set_enabled will be triggered.  Disabled button is not clickable.
 ---@param self druid.button @{Button}
 ---@param state bool Enabled state
 ---@return druid.button Current button instance
 function druid__button.set_enabled(self, state) end
 
---- Set buttom click mode to call itself inside html5 callback in user interaction event  It required to do protected stuff like copy/paste text, show html keyboard, etc  The HTML5 button don't call any events except on_click
+--- Set buttom click mode to call itself inside html5 callback in user interaction event  It required to do protected stuff like copy/paste text, show html keyboard, etc  The HTML5 button doesn't call any events except on_click event
 ---@protected
 ---@param self druid.button
 ---@param is_html_mode boolean If true - button will be called inside html5 callback
 ---@return druid.button Current button instance
 function druid__button.set_html5_user_interaction(self, is_html_mode) end
 
---- Set key-code to trigger this button
+--- Set key name to trigger this button by keyboard.
 ---@param self druid.button @{Button}
----@param key hash The action_id of the key
+---@param key hash The action_id of the input key
 ---@return druid.button Current button instance
 function druid__button.set_key_trigger(self, key) end
 
@@ -647,7 +645,7 @@ function druid__input.get_text(self) end
 
 --- Component init function
 ---@param self druid.input @{Input}
----@param click_node node Button node to enabled input component
+---@param click_node node Node to enabled input component
 ---@param text_node node|druid.text Text node what will be changed on user input. You can pass text component instead of text node name @{Text}
 ---@param keyboard_type number Gui keyboard type for input field
 function druid__input.init(self, click_node, text_node, keyboard_type) end
@@ -941,6 +939,31 @@ function druid__rich_input.set_placeholder(self, placeholder_text) end
 ---@class druid.rich_text : druid.base_component
 ---@field component field The component druid instance
 local druid__rich_text = {}
+
+--- Clear all created words.
+function druid__rich_text.clean() end
+
+--- Get all current words.
+---@return table Words
+function druid__rich_text.get_words() end
+
+--- Rich Text component constructor
+---@param self druid.rich_text @{RichText}
+---@param template string The Rich Text template name
+---@param nodes table The node table, if prefab was copied by gui.clone_tree()
+function druid__rich_text.init(self, template, nodes) end
+
+--- Set text for Rich Text
+---@param self druid.rich_text @{RichText}
+---@param text string The text to set
+---@return table words
+---@return table line_metrics
+function druid__rich_text.set_text(self, text) end
+
+--- Get all words, which has a passed tag
+---@param tag string
+---@return table Words
+function druid__rich_text.tagged(tag) end
 
 
 ---@class druid.scroll : druid.base_component
@@ -1578,7 +1601,7 @@ function druid_instance.on_input(self, action_id, action) end
 ---@param sender hash Sender from on_message
 function druid_instance.on_message(self, message_id, message, sender) end
 
---- Remove component from Druid instance.
+--- Remove created component from Druid instance.
 --- Component `on_remove` function will be invoked, if exist.
 ---@param self druid_instance
 ---@param component Component Component instance

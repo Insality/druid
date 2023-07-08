@@ -9,3 +9,4 @@ date,sha,version,build_size,build_time,platform,mode,is_cache_using,commits_coun
 2022-08-29T18:46:47Z,13003e472169cbd261e703eca7b133adf64a24f7,0.9.592,2316,40,js-web,release,true,592
 2022-09-09T17:55:42Z,072507cc9e715541bdee7636d2e5eeeb3c22a57d,0.10.603,2340,43,js-web,release,true,603
 2022-09-09T18:00:07Z,072507cc9e715541bdee7636d2e5eeeb3c22a57d,0.10.603,2340,5,js-web,release,true,603
+2023-07-05T20:19:22Z,d0062c2a78e618871ebb4c8ee66b1509b763f069,0.10.671,3292,12,x86_64-linux,headless,true,671

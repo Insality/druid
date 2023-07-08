@@ -288,7 +288,7 @@ function DruidInstance.final(self)
 end
 
 
---- Remove component from Druid instance.
+--- Remove created component from Druid instance.
 --
 -- Component `on_remove` function will be invoked, if exist.
 -- @tparam DruidInstance self

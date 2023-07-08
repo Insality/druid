@@ -1,4 +1,9 @@
+# Advanced Druid setup
+
+
 ## Input bindings
+
+As default input bindings **Druid** uses the `/builtins/input/all.input_binding`.
 
 **Druid** requires the following input bindings:
 
@@ -13,6 +18,7 @@
 
 ![](media/input_binding_2.png)
 ![](media/input_binding_1.png)
+
 
 ## Change key bindings [optional]
 If you have to use your own key bindings (and key name), you can change it in your *game.project* file.
@@ -59,6 +65,8 @@ no_auto_template = 1
 ## Stencil check [optional]
 
 When creating input components inside stencil nodes, **Druid** automatically setup `component:set_click_zone()` on _late_init_ component step to restrict input clicks outside this stencil zone.
+For example: button inside scroll stencil nodes.
+
 To disable this feature add next field in your _game.project_ file
 ```
 [druid]
@@ -66,7 +74,7 @@ no_stencil_check = 1
 ```
 
 
-## Code [optional]
+## Code bindings [optional]
 
 Adjust **Druid** settings, if needed:
 ```lua
@@ -74,21 +82,30 @@ local druid = require("druid.druid")
 
 -- Used for button component and custom components
 -- Callback should play sound by name: function(sound_id) ... end
-druid.set_sound_function(callback)
+druid.set_sound_function(function(sound_id)
+    -- sound_system.play(sound_id)
+end)
 
 -- Used for lang_text component
 -- Callback should return localized string by locale id: function(locale_id) ... end
-druid.set_text_function(callback)
+druid.set_text_function(function(locale_id)
+	-- return lang.get(locale_id)
+end)
 
 -- Used for change default Druid style
 druid.set_default_style(your_style)
 
 -- Call this function on language changing in the game,
 -- to retranslate all lang_text components:
-druid.on_language_change()
+local function on_language_change()
+    druid.on_language_change()
+end
 
 -- Call this function inside window.set_listener
 -- to catch game focus lost/gained callbacks:
 -- window.set_listener(function(self, event, data) druid.on_window_callback(event, data) end))
-druid.on_window_callback(event)
+local function on_window_callback(self, event, data)
+    druid.on_window_callback(event)
+end
+window.set_listener(on_window_callback)
 ```

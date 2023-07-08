@@ -1,6 +1,18 @@
 -- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid Rich Text custom component.
+-- # Overview #
+--
+--
+--
+-- # Notes #
+--
+-- @usage
+-- local RichText = require("druid.custom.rich_text.rich_text")
+-- ...
+-- self.rich_text = self.druid:new(RichText, "rich_text")
+-- self.rich_text:set_text("Hello, Druid Rich Text!")
+--
 -- @module RichText
 -- @within BaseComponent
 -- @alias druid.rich_text
@@ -21,7 +33,11 @@ local SCHEME = {
 }
 
 
-function RichText:init(template, nodes)
+--- Rich Text component constructor
+-- @tparam RichText self @{RichText}
+-- @tparam string template The Rich Text template name
+-- @tparam table nodes The node table, if prefab was copied by gui.clone_tree()
+function RichText.init(self, template, nodes)
 	self:set_template(template)
 	self:set_nodes(nodes)
 
@@ -38,7 +54,12 @@ function RichText:init(template, nodes)
 end
 
 
-function RichText:set_text(text)
+--- Set text for Rich Text
+-- @tparam RichText self @{RichText}
+-- @tparam string text The text to set
+-- @treturn table words
+-- @treturn table line_metrics
+function RichText.set_text(self, text)
 	self:clean()
 
 	local words, settings, line_metrics = rich_text.create(text, self._settings)
@@ -56,6 +77,9 @@ function RichText:on_remove()
 end
 
 
+--- Get all words, which has a passed tag
+-- @tparam string tag
+-- @treturn table Words
 function RichText:tagged(tag)
 	if not self._words then
 		return
@@ -65,6 +89,8 @@ function RichText:tagged(tag)
 end
 
 
+--- Get all current words.
+-- @treturn table Words
 function RichText:get_words()
 	return self._words
 end
@@ -99,6 +125,7 @@ function RichText:_create_settings()
 end
 
 
+--- Clear all created words.
 function RichText:clean()
 	if self._words then
 		rich_text.remove(self._words)
