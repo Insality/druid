@@ -6,13 +6,11 @@
 -- Back Handler is recommended to put in every game window to close it
 -- or in main screen to call settings window.
 --
--- # Tech Info #
---
--- Back Handler react on release action ACTION_BACK or ACTION_BACKSPACE
---
 -- # Notes #
 --
 -- • Back Handler inheritance @{BaseComponent}, you can use all of its methods in addition to those described here.
+--
+-- • Back Handler react on release action ACTION_BACK or ACTION_BACKSPACE
 -- @usage
 -- local callback = function(self, params) ... end
 --
@@ -22,7 +20,7 @@
 -- @within BaseComponent
 -- @alias druid.back_handler
 
---- @{DruidEvent} function(self, [params]) .
+--- @{DruidEvent} Event on back handler action.
 --
 -- Trigger on input action ACTION_BACK or ACTION_BACKSPACE
 -- @usage
@@ -30,7 +28,7 @@
 -- back_handler.on_back:subscribe(callback)
 -- @tfield DruidEvent on_back @{DruidEvent}
 
---- Params to pass in the callback
+--- Custom args to pass in the callback
 -- @usage
 -- -- Replace params on runtime:
 -- back_handler.params = { ... }
@@ -45,13 +43,13 @@ local component = require("druid.component")
 local BackHandler = component.create("back_handler")
 
 
---- Component initialize function
+--- @{BackHandler} constructor
 -- @tparam BackHandler self @{BackHandler}
 -- @tparam callback callback On back button
--- @tparam[opt] any params Callback argument
+-- @tparam[opt] any custom_args Button events custom arguments
 -- @local
-function BackHandler.init(self, callback, params)
-	self.params = params
+function BackHandler.init(self, callback, custom_args)
+	self.params = custom_args
 	self.on_back = Event(callback)
 end
 

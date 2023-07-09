@@ -1,7 +1,27 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to handle placing components by row and columns.
--- Grid can anchor your elements, get content size and other
+--- Component to handle component's position by row and columns.
+-- # Overview #
+--
+-- # Notes #
+--
+-- • Static grid have constant node size, so it possible to calculate node positions before placement. Nodes can be placed with gaps.
+--
+-- • Static grid can shift elements on add/remove functions.
+--
+-- • On _add node_ grid will set node parent to _parent_node_
+--
+-- • You can get array of position of every element for setup points of interest in scroll component
+--
+-- • You can get size of all elements for setup size in scroll component
+--
+-- • You can bind the grid to the scroll component for auto resize scroll content size
+--
+-- • Pivot of parent_node matter for node placement
+--
+-- • Prefab node used to get node size and anchor
+--
+-- • You can point *position_function* for animations with _static_grid:set_position_function(node, pos)_ callback. Default - *gui.set_position()*
 -- @module StaticGrid
 -- @within BaseComponent
 -- @alias druid.static_grid
@@ -81,9 +101,9 @@ function StaticGrid.on_style_change(self, style)
 end
 
 
---- Component init function
+--- @{StaticGrid} constructor
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam node parent The gui node parent, where items will be placed
+-- @tparam string|Node parent The GUI Node container, where grid's items will be placed
 -- @tparam node element Element prefab. Need to get it size
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
 function StaticGrid.init(self, parent, element, in_row)

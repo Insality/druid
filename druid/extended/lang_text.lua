@@ -1,7 +1,15 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to handle all GUI texts
--- Good working with localization system
+--- Component to wrap over GUI Text nodes with localization helpers
+--
+-- # Overview #
+--
+-- • The `druid.set_text_function` should be inited to get the localization by localization_id
+--
+-- • The LangText supports up to 7 string format params, due the some issues with `...` args.
+--
+-- # Notes #
+--
 -- @module LangText
 -- @within BaseComponent
 -- @alias druid.lang_text
@@ -21,14 +29,14 @@ local component = require("druid.component")
 local LangText = component.create("lang_text")
 
 
---- Component init function
+--- @{LangText} constructor
 -- @tparam LangText self @{LangText}
--- @tparam node node The text node
+-- @tparam string|node node Node name or GUI Text Node itself
 -- @tparam string locale_id Default locale id or text from node as default
--- @tparam bool no_adjust If true, will not correct text size
-function LangText.init(self, node, locale_id, no_adjust)
+-- @tparam[opt=downscale] string adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+function LangText.init(self, node, locale_id, adjust_type)
 	self.druid = self:get_druid()
-	self.text = self.druid:new_text(node, locale_id, no_adjust)
+	self.text = self.druid:new_text(node, locale_id, adjust_type)
 	self.node = self.text.node
 	self.last_locale_args = {}
 

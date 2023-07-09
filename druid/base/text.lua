@@ -1,8 +1,29 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to handle all GUI texts.
--- Druid Text adjust itself for text node size
--- Text will never will be outside of his text size (even multiline)
+--- Component to wrap over GUI Text nodes.
+-- # Overview #
+--
+-- Druid Text provide different adjust modes. Text will be scaled down to fit into Text Node area size.
+--
+-- # Notes #
+--
+-- • Text pivot can be changed with `text:set_pivot`. The anchoring will be inside text node area size.
+--
+-- • There is several text adjust types. Default DOWNSCALE. You can change the default adjust type in the Text style. See all adjust types in example here.
+--
+-- - const.TEXT_ADJUST.DOWNSCALE  - Change text's scale to fit into the text node size
+--
+-- - const.TEXT_ADJUST.TRIM - Trim the text with postfix (default - "...", override in styles) to fit in the text node size
+--
+-- - const.TEXT_ADJUST.NO_ADJUST - No any adjust, like default Defold Text Node
+--
+-- - const.TEXT_ADJUST.DOWNSCALE_LIMITED - Change text's scale list downscale, but there is limit for text's scale.
+-- Set minimal scale with `text:set_minimal_scale()` function.
+--
+-- - const.TEXT_ADJUST.SCROLL - Change text's pivot to imitate scrolling in the text box. Use with stencil node for better effect.
+--
+-- - const.TEXT_ADJUST.SCALE_THEN_SCROLL - Combine two modes: first limited downscale, then scroll
+--
 -- @module Text
 -- @within BaseComponent
 -- @alias druid.text
@@ -188,11 +209,11 @@ function Text.on_style_change(self, style)
 end
 
 
---- Component init function
+--- @{Text} constructor
 -- @tparam Text self @{Text}
--- @tparam node node Gui text node
+-- @tparam string|node node Node name or GUI Text Node itself
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
--- @tparam[opt=0] int adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+-- @tparam[opt=downscale] string adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 function Text.init(self, node, value, adjust_type)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)

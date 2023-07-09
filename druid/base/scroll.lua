@@ -1,12 +1,30 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle scroll content.
+-- # Overview #
+--
 -- Scroll consist from two nodes: scroll parent and scroll input
 -- Scroll input the user input zone, it's static
 -- Scroll parent the scroll moving part, it will change position.
 -- Setup initial scroll size by changing scroll parent size. If scroll parent
--- size will be less than scroll_input size, no scroll is available. For scroll
--- parent size should be more than input size
+-- size will be less than scroll_input size, no scroll is available.
+--
+-- # Notes #
+--
+-- • Scroll by default style have inertion and extra size for strecthing effect.
+-- It can be adjust via scroll <a href="https://insality.github.io/druid/modules/Scroll.html#Style">style settings</a>
+--
+-- • You can setup "points of interest". Scroll always will be centered on closes point of interest.
+-- It is able to create slider without inertion and points of interest on each scroll element.
+--
+-- • You can adjust scroll content size by `scroll:set_size(node_size)`.
+-- It will setup new size to _content node_
+--
+-- • You can enabled or disable inertion mode via `scroll:set_inert(state)`
+--
+-- • You can adjust extra stretch size via `scroll:set_extra_stretch_size`
+--
+-- • Multitouch is required for scroll. Scroll is correctly handling touch_id swap while dragging scroll
 -- @module Scroll
 -- @within BaseComponent
 -- @alias druid.scroll
@@ -132,10 +150,10 @@ function Scroll.on_style_change(self, style)
 end
 
 
---- Scroll constructor
+--- @{Scroll} constructor
 -- @tparam Scroll self @{Scroll}
--- @tparam node view_node GUI view scroll node
--- @tparam node content_node GUI content scroll node
+-- @tparam string|node view_node GUI view scroll node
+-- @tparam string|node content_node GUI content scroll node
 function Scroll.init(self, view_node, content_node)
 	self.druid = self:get_druid()
 

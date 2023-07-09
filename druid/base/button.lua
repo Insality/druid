@@ -3,7 +3,7 @@
 --- Druid Component to handle the user click interactions: click, long click, double click, etc.
 -- # Overview #
 --
--- The most generic and useful component you can use. Set any GUI node clickable and providing different callbacks.
+-- The most generic component you can use. Set any GUI node clickable and provide different callbacks.
 --
 -- # Notes #
 --
@@ -107,11 +107,11 @@
 -- end)
 -- @tfield DruidEvent on_pressed @{DruidEvent}
 
---- Button clickable node
--- @tfield node node
+--- Button trigger node
+-- @tfield Node node
 
 ---The GUI node id from button node
--- @tfield node_id hash
+-- @tfield hash node_id
 
 --- Button animation node.
 -- In default case equals to clickable node.
@@ -274,8 +274,8 @@ end
 -- @tparam Button self @{Button}
 -- @tparam string|Node node Node name or GUI Node itself
 -- @tparam function callback On click button callback
--- @tparam[opt] table custom_args Button events custom arguments
--- @tparam[opt] string|Node anim_node Node to animate instead of trigger node
+-- @tparam[opt] any custom_args Button events custom arguments
+-- @tparam[opt] string|Node anim_node Node to animate instead of trigger node.
 function Button.init(self, node, callback, custom_args, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)

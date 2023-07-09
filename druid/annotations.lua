@@ -42,8 +42,8 @@ function druid.set_text_function(callback) end
 
 
 ---@class druid.back_handler : druid.base_component
----@field on_back druid.event @{DruidEvent} function(self, [params]) .
----@field params any Params to pass in the callback
+---@field on_back druid.event @{DruidEvent} Event on back handler action.
+---@field params any Custom args to pass in the callback
 local druid__back_handler = {}
 
 
@@ -147,15 +147,21 @@ function druid__base_component.component:set_template(self, template) end
 
 
 ---@class druid.blocker : druid.base_component
----@field node node Trigger node
+---@field node node Blocker node
 local druid__blocker = {}
+
+--- @{Blocker} constructor
+---@param self druid.blocker @{Blocker}
+---@param node node Gui node
+function druid__blocker.init(self, node) end
 
 --- Return blocker enabled state
 ---@param self druid.blocker @{Blocker}
 ---@return bool True, if blocker is enabled
 function druid__blocker.is_enabled(self) end
 
---- Set enabled blocker component state
+--- Set enabled blocker component state.
+--- Don't change node enabled state.
 ---@param self druid.blocker @{Blocker}
 ---@param state bool Enabled state
 function druid__blocker.set_enabled(self, state) end
@@ -164,9 +170,9 @@ function druid__blocker.set_enabled(self, state) end
 ---@class druid.button : druid.base_component
 ---@field anim_node node Button animation node.
 ---@field click_zone node Additional button click area, defined by another GUI Node
----@field hash node_id The GUI node id from button node
 ---@field hover druid.hover @{Hover}: Button Hover component
----@field node node Button clickable node
+---@field node Node Button trigger node
+---@field node_id hash The GUI node id from button node
 ---@field on_click druid.event @{DruidEvent}: Event on successful release action over button.
 ---@field on_click_outside druid.event @{DruidEvent}: Event calls if click event was outside of button.
 ---@field on_double_click druid.event @{DruidEvent}: Event on double tap action over button.
@@ -183,15 +189,16 @@ local druid__button = {}
 ---@return hash The action_id of the input key
 function druid__button.get_key_trigger(self) end
 
---- Button component constructor
+--- @{Button} constructor
 ---@param self druid.button @{Button}
----@param node node Gui node
----@param callback function Button callback
----@param params table Button callback params
----@param anim_node node Button anim node (node, if not provided)
-function druid__button.init(self, node, callback, params, anim_node) end
+---@param node string|Node Node name or GUI Node itself
+---@param callback function On click button callback
+---@param custom_args any Button events custom arguments
+---@param anim_node string|Node Node to animate instead of trigger node.
+function druid__button.init(self, node, callback, custom_args, anim_node) end
 
 --- Get button enabled state.
+--- By default all Buttons is enabled on creating.
 ---@param self druid.button @{Button}
 ---@return bool True, if button is enabled now, False overwise
 function druid__button.is_enabled(self) end
@@ -199,7 +206,7 @@ function druid__button.is_enabled(self) end
 --- Set function for additional check for button click availability
 ---@param self druid.button
 ---@param check_function function Should return true or false. If true - button can be pressed.
----@param failure_callback function Function what will be called on button click, if check function return false
+---@param failure_callback function Function will be called on button click, if check function return false
 ---@return druid.button Current button instance
 function druid__button.set_check_function(self, check_function, failure_callback) end
 
@@ -217,18 +224,18 @@ function druid__button.set_click_zone(self, zone) end
 ---@return druid.button Current button instance
 function druid__button.set_enabled(self, state) end
 
---- Set buttom click mode to call itself inside html5 callback in user interaction event  It required to do protected stuff like copy/paste text, show html keyboard, etc  The HTML5 button doesn't call any events except on_click event
----@protected
----@param self druid.button
----@param is_html_mode boolean If true - button will be called inside html5 callback
----@return druid.button Current button instance
-function druid__button.set_html5_user_interaction(self, is_html_mode) end
-
 --- Set key name to trigger this button by keyboard.
 ---@param self druid.button @{Button}
 ---@param key hash The action_id of the input key
 ---@return druid.button Current button instance
 function druid__button.set_key_trigger(self, key) end
+
+--- Set Button mode to work inside user HTML5 interaction event.
+--- It's required to make protected things like copy & paste text, show mobile keyboard, etc  The HTML5 button's doesn't call any events except on_click event.  If the game is not HTML, HTML html mode will be not enabled
+---@param self druid.button
+---@param is_web_mode boolean If true - button will be called inside html5 callback
+---@return druid.button Current button instance
+function druid__button.set_web_user_interaction(self, is_web_mode) end
 
 
 ---@class druid.button.style
@@ -713,12 +720,12 @@ local druid__lang_text = {}
 ---@return druid.lang_text Current instance
 function druid__lang_text.format(self, a, b, c, d, e, f, g) end
 
---- Component init function
+--- @{LangText} constructor
 ---@param self druid.lang_text @{LangText}
----@param node node The text node
+---@param node string|node Node name or GUI Text Node itself
 ---@param locale_id string Default locale id or text from node as default
----@param no_adjust bool If true, will not correct text size
-function druid__lang_text.init(self, node, locale_id, no_adjust) end
+---@param adjust_type string Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+function druid__lang_text.init(self, node, locale_id, adjust_type) end
 
 --- Setup raw text to lang_text component
 ---@param self druid.lang_text @{LangText}
@@ -834,7 +841,7 @@ function druid__pin_knob.set_friction(self, value) end
 
 
 ---@class druid.progress : druid.base_component
----@field key string The progress bar direction
+---@field key string The progress bar direction.
 ---@field max_size number Maximum size of progress bar
 ---@field node node Progress bar fill node
 ---@field on_change druid.event On progress bar change callback(self, new_value)
@@ -856,9 +863,9 @@ function druid__progress.fill(self) end
 ---@param self druid.progress @{Progress}
 function druid__progress.get(self) end
 
---- Component init function
+--- @{Progress} constructor
 ---@param self druid.progress @{Progress}
----@param node string|node Progress bar fill node or node name
+---@param node string|node Node name or GUI Node itself.
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
 ---@param init_value number Initial value of progress bar
 function druid__progress.init(self, node, key, init_value) end
@@ -1210,9 +1217,9 @@ function druid__static_grid.get_pos(self, index) end
 ---@return vector3 The grid content size
 function druid__static_grid.get_size(self) end
 
---- Component init function
+--- @{StaticGrid} constructor
 ---@param self druid.static_grid @{StaticGrid}
----@param parent node The gui node parent, where items will be placed
+---@param parent string|Node The GUI Node container, where grid's items will be placed
 ---@param element node Element prefab. Need to get it size
 ---@param in_row number How many nodes in row can be placed
 function druid__static_grid.init(self, parent, element, in_row) end
@@ -1308,11 +1315,11 @@ function druid__text.get_text_adjust(self, adjust_type) end
 ---@return number Height
 function druid__text.get_text_size(self, text) end
 
---- Component init function
+--- @{Text} constructor
 ---@param self druid.text @{Text}
----@param node node Gui text node
+---@param node string|node Node name or GUI Text Node itself
 ---@param value string Initial text. Default value is node text from GUI scene.
----@param adjust_type int Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+---@param adjust_type string Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 function druid__text.init(self, node, value, adjust_type) end
 
 --- Return true, if text with line break

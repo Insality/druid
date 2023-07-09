@@ -1,7 +1,18 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Basic progress bar component.
--- For correct progress bar init it should be in max size from gui
+--- Druid component to handle the progress bars.
+-- # Overview #
+--
+-- # Notes #
+--
+-- • Progress Node should be fully filled in your GUI scene node. It will be the progress maximum size
+--
+-- • Progress correct working with Slice9 nodes, it trying to set size by _set_size_ first, if it is not possible, it set up sizing via _set_scale_
+--
+-- • Progress bar can fill only by vertical or horizontal size. If you want make diagonal progress bar, just rotate node in GUI scene
+--
+-- • If you have glitchy or dark texture bug with progress bar, try to disable mipmaps in your texture profiles
+--
 -- @module Progress
 -- @within BaseComponent
 -- @alias druid.progress
@@ -12,7 +23,9 @@
 --- Progress bar fill node
 -- @tfield node node
 
---- The progress bar direction
+--- The progress bar direction.
+--
+-- The values are: "x" or "y". (const.SIDE.X or const.SIDE.Y)
 -- @tfield string key
 
 --- Current progress bar scale
@@ -95,16 +108,16 @@ function Progress.on_style_change(self, style)
 end
 
 
---- Component init function
+--- @{Progress} constructor
 -- @tparam Progress self @{Progress}
--- @tparam string|node node Progress bar fill node or node name
+-- @tparam string|node node Node name or GUI Node itself.
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
 -- @tparam[opt=1] number init_value Initial value of progress bar
 function Progress.init(self, node, key, init_value)
 	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
-	self.prop = hash("scale."..key)
 	self.key = key
+	self.prop = hash("scale." .. self.key)
 
 	self._init_value = init_value or 1
 	self.node = self:get_node(node)
@@ -114,7 +127,7 @@ function Progress.init(self, node, key, init_value)
 	self.slice = gui.get_slice9(self.node)
 	self.last_value = self._init_value
 
-	if key == const.SIDE.X then
+	if self.key == const.SIDE.X then
 		self.slice_size = self.slice.x + self.slice.z
 	else
 		self.slice_size = self.slice.y + self.slice.w
