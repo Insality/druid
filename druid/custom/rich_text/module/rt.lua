@@ -486,7 +486,7 @@ function M.adjust_to_area(words, settings, lines_metrics)
 				end
 
 				adjust_scale = adjust_scale + step
-				local lines = M.apply_scale_without_update(words, settings, adjust_scale)
+				lines = M.apply_scale_without_update(words, settings, adjust_scale)
 				is_fit = M.is_fit_info_area(lines, settings)
 
 				if i == M.ADJUST_STEPS then

@@ -1,7 +1,7 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle all GUI texts.
--- Druid text can adjust itself for text node size
+-- Druid Text adjust itself for text node size
 -- Text will never will be outside of his text size (even multiline)
 -- @module Text
 -- @within BaseComponent

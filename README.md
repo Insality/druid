@@ -7,7 +7,7 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/insality/druid/ci-workflow.yml?branch=master)](https://github.com/Insality/druid/actions)
 [![codecov](https://codecov.io/gh/Insality/druid/branch/master/graph/badge.svg)](https://codecov.io/gh/Insality/druid)
 
-**Druid** - most powerful Defold component UI framework. Use basic and extended **Druid** components or make your own game-specific components with ease to make stunning and customizable GUI in your games.
+**Druid** - powerful Defold component UI framework. Use huge list of embedeed **Druid** components or make your own game-specific components with ease to make stunning and customizable GUI in your games.
 
 
 ## Setup

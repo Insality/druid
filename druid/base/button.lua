@@ -245,7 +245,7 @@ end
 
 
 --- Component style params.
--- You can override this component styles params in druid styles table
+-- You can override this component styles params in Druid styles table
 -- or create your own style
 -- @table style
 -- @tfield[opt=0.4] number LONGTAP_TIME Minimum time to trigger on_hold_callback
@@ -270,13 +270,13 @@ function Button.on_style_change(self, style)
 end
 
 
---- Button component constructor
+--- @{Button} constructor
 -- @tparam Button self @{Button}
--- @tparam node node Gui node
--- @tparam function callback Button callback
--- @tparam[opt] table params Button callback params
--- @tparam[opt] node anim_node Button anim node (node, if not provided)
-function Button.init(self, node, callback, params, anim_node)
+-- @tparam string|Node node Node name or GUI Node itself
+-- @tparam function callback On click button callback
+-- @tparam[opt] table custom_args Button events custom arguments
+-- @tparam[opt] string|Node anim_node Node to animate instead of trigger node
+function Button.init(self, node, callback, custom_args, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
 	self.node_id = gui.get_id(self.node)
@@ -284,7 +284,7 @@ function Button.init(self, node, callback, params, anim_node)
 	self.anim_node = anim_node and self:get_node(anim_node) or self.node
 	self.start_scale = gui.get_scale(self.anim_node)
 	self.start_pos = gui.get_position(self.anim_node)
-	self.params = params
+	self.params = custom_args
 	self.hover = self.druid:new_hover(node, on_button_hover)
 	self.hover.on_mouse_hover:subscribe(on_button_mouse_hover)
 	self.click_zone = nil
@@ -297,7 +297,7 @@ function Button.init(self, node, callback, params, anim_node)
 	self._check_function = nil
 	self._failure_callback = nil
 
-	-- Event stubs
+	-- Events
 	self.on_click = Event(callback)
 	self.on_pressed = Event()
 	self.on_repeated_click = Event()
@@ -451,6 +451,8 @@ end
 
 
 --- Get button enabled state.
+--
+-- By default all Buttons is enabled on creating.
 -- @tparam Button self @{Button}
 -- @treturn bool True, if button is enabled now, False overwise
 -- @usage
@@ -503,7 +505,7 @@ end
 --- Set function for additional check for button click availability
 -- @tparam Button self
 -- @tparam[opt] function check_function Should return true or false. If true - button can be pressed.
--- @tparam[opt] function failure_callback Function what will be called on button click, if check function return false
+-- @tparam[opt] function failure_callback Function will be called on button click, if check function return false
 -- @treturn Button Current button instance
 function Button.set_check_function(self, check_function, failure_callback)
 	self._check_function = check_function
@@ -511,16 +513,19 @@ function Button.set_check_function(self, check_function, failure_callback)
 end
 
 
---- Set buttom click mode to call itself inside html5 callback in user interaction event
--- It required to do protected stuff like copy/paste text, show html keyboard, etc
--- The HTML5 button doesn't call any events except on_click event
+--- Set Button mode to work inside user HTML5 interaction event.
+--
+-- It's required to make protected things like copy & paste text, show mobile keyboard, etc
+-- The HTML5 button's doesn't call any events except on_click event.
+--
+-- If the game is not HTML, HTML html mode will be not enabled
 -- @tparam Button self
--- @tparam[opt] boolean is_html_mode If true - button will be called inside html5 callback
+-- @tparam[opt] boolean is_web_mode If true - button will be called inside html5 callback
 -- @treturn Button Current button instance
 -- @usage
--- button:set_html5_user_interaction(true)
-function Button.set_html5_user_interaction(self, is_html_mode)
-	self._is_html5_mode = is_html_mode and html5
+-- button:set_web_user_interaction(true)
+function Button.set_web_user_interaction(self, is_web_mode)
+	self._is_html5_mode = is_web_mode and html5
 	return self
 end
 

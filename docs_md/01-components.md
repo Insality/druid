@@ -133,7 +133,7 @@ Usually, Place _view_node_ and as children add _content_node_:
 	- *on_scroll_to* (self, position, is_instant) On scroll_to function callback
 	- *on_point_scroll* (self, item_index, position) On scroll_to_index function callback
 - You can adjust scroll content size by `scroll:set_size(node_size)`. It will setup new size to _content node_
-- You can enabled or disable inertion mode via `scroll:set_intert(state)`
+- You can enabled or disable inertion mode via `scroll:set_inert(state)`
 - You can adjust extra stretch size via `scroll:set_extra_stretch_size`
 - Multitouch is required for scroll. Scroll is correctly handling touch_id swap while dragging scroll
 
