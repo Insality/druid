@@ -1,27 +1,34 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle component's position by row and columns.
--- # Overview #
+-- ## Overview ##
 --
--- # Notes #
+-- The Static Grid component allows for positioning components in rows and columns.
+-- It provides a static grid layout with constant node sizes, allowing for pre-calculated
+-- node positions and the option to include gaps between nodes.
 --
--- • Static grid have constant node size, so it possible to calculate node positions before placement. Nodes can be placed with gaps.
+-- ## Notes ##
 --
--- • Static grid can shift elements on add/remove functions.
+-- • In a static grid, the node size remains constant, enabling the calculation of node
+-- positions before placement. Nodes can be placed with gaps between them.
 --
--- • On _add node_ grid will set node parent to _parent_node_
+-- • The static grid can automatically shift elements when nodes are added or removed.
 --
--- • You can get array of position of every element for setup points of interest in scroll component
+-- • When a node is added, the grid will set the node's parent to the specified parent_node.
 --
--- • You can get size of all elements for setup size in scroll component
+-- • You can obtain an array of positions for each element, which can be used to set
+-- points of interest in a scroll component.
 --
--- • You can bind the grid to the scroll component for auto resize scroll content size
+-- • The size of all elements can be retrieved for setting up the size in a scroll component.
 --
--- • Pivot of parent_node matter for node placement
+-- • The grid can be bound to a scroll component for automatic resizing of the scroll content size.
 --
--- • Prefab node used to get node size and anchor
+-- • The pivot of the parent_node affects the node placement within the grid.
 --
--- • You can point *position_function* for animations with _static_grid:set_position_function(node, pos)_ callback. Default - *gui.set_position()*
+-- • A prefab node is used to determine the node size and anchor.
+--
+-- • You can specify a position_function for animations using the
+-- _static_grid:set_position_function(node, pos) callback. The default position function is gui.set_position().
 -- @module StaticGrid
 -- @within BaseComponent
 -- @alias druid.static_grid

@@ -1,30 +1,35 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to handle scroll content.
--- # Overview #
+-- ## Overview ##
 --
--- Scroll consist from two nodes: scroll parent and scroll input
--- Scroll input the user input zone, it's static
--- Scroll parent the scroll moving part, it will change position.
--- Setup initial scroll size by changing scroll parent size. If scroll parent
--- size will be less than scroll_input size, no scroll is available.
+-- The Scroll component is designed to handle scrollable content and consists of two nodes: the scroll parent and the scroll input.
 --
--- # Notes #
+-- The scroll input represents the user input zone and remains static.
 --
--- • Scroll by default style have inertion and extra size for strecthing effect.
--- It can be adjust via scroll <a href="https://insality.github.io/druid/modules/Scroll.html#Style">style settings</a>
+-- The scroll parent is the movable part of the scroll and changes its position.
 --
--- • You can setup "points of interest". Scroll always will be centered on closes point of interest.
--- It is able to create slider without inertion and points of interest on each scroll element.
+-- The initial scroll size can be set by adjusting the size of the scroll parent.
+-- If the size of the scroll parent is smaller than the scroll input size, scrolling is not available.
 --
--- • You can adjust scroll content size by `scroll:set_size(node_size)`.
--- It will setup new size to _content node_
+-- ## Notes ##
 --
--- • You can enabled or disable inertion mode via `scroll:set_inert(state)`
+-- • By default, the scroll style includes inertia and extra size for a stretching effect.
+-- These settings can be adjusted using the scroll style settings.
+-- For more details, refer to the scroll style settings.
 --
--- • You can adjust extra stretch size via `scroll:set_extra_stretch_size`
+-- • "Points of interest" can be set up for the scroll.
+-- The scroll will always be centered on the closest point of interest.
+-- This feature allows creating a slider without inertia and with points of interest on each scroll element.
 --
--- • Multitouch is required for scroll. Scroll is correctly handling touch_id swap while dragging scroll
+-- • The scroll content size can be adjusted using the scroll:set_size(node_size) method.
+-- This method sets a new size for the _content node.
+--
+-- • Inertial scrolling mode can be enabled or disabled using the scroll:set_inert(state) method.
+--
+-- • The extra stretch size can be adjusted using the scroll:set_extra_stretch_size method.
+--
+-- • Multitouch is required for scrolling. The scroll component correctly handles
+-- touch ID swaps while dragging the scroll.
 -- @module Scroll
 -- @within BaseComponent
 -- @alias druid.scroll

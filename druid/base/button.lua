@@ -1,20 +1,24 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid Component to handle the user click interactions: click, long click, double click, etc.
--- # Overview #
+--- Druid Component for Handling User Click Interactions: Click, Long Click, Double Click, and More.
+
+-- ## Overview ##
 --
--- The most generic component you can use. Set any GUI node clickable and provide different callbacks.
+-- This component provides a versatile solution for handling user click interactions.
+-- It allows you to make any GUI node clickable and define various callbacks for different types of clicks.
 --
--- # Notes #
+-- ## Notes ##
 --
--- • The click callback will not trigger if between pressed and released state cursor was outside of node zone
+-- • The click callback will not trigger if the cursor moves outside the node's
+-- area between the pressed and released states.
 --
--- • If button have double click event subscriber and it is triggered, usual callback will be not triggered
+-- • If a button has a double click event subscriber and the double click event is triggered,
+-- the regular click callback will not be triggered.
 --
--- • Button can have key trigger to use then by key: `button:set_key_trigger`
+-- • Buttons can be triggered using a keyboard key by calling the button:set_key_trigger method.
 --
--- • Animation node can be used for example to animate small icon on big panel. Node name of trigger zone will be `big panel` and animation node will be `small icon`
---
+-- • To animate a small icon on a big button panel, you can use an animation node.
+-- The trigger node name should be set as "big panel," and the animation node should be set as "small icon."
 -- @usage
 -- local function on_button_click(self, args, button)
 --     print("Button has clicked with params: " .. args)

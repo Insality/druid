@@ -1,29 +1,34 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to wrap over GUI Text nodes.
--- # Overview #
+--- Component for Wrapping GUI Text Nodes: Druid Text
 --
--- Druid Text provide different adjust modes. Text will be scaled down to fit into Text Node area size.
+-- ## Overview ##
 --
--- # Notes #
+-- Druid Text is a component that provides various adjustment modes for text nodes. It allows text to be scaled down to fit within the size of the text node.
 --
--- • Text pivot can be changed with `text:set_pivot`. The anchoring will be inside text node area size.
+-- ## Notes ##
 --
--- • There is several text adjust types. Default DOWNSCALE. You can change the default adjust type in the Text style. See all adjust types in example here.
+-- • The text pivot can be changed using the text:set_pivot method.
+-- The anchoring will be inside the text node's area size.
 --
--- - const.TEXT_ADJUST.DOWNSCALE  - Change text's scale to fit into the text node size
+-- • There are several text adjustment types available. The default is DOWNSCALE.
+-- You can change the default adjustment type in the Text style. Refer to the example below to see all available adjustment types:
 --
--- - const.TEXT_ADJUST.TRIM - Trim the text with postfix (default - "...", override in styles) to fit in the text node size
+-- - const.TEXT_ADJUST.DOWNSCALE: Changes the text's scale to fit within the text node's size.
 --
--- - const.TEXT_ADJUST.NO_ADJUST - No any adjust, like default Defold Text Node
+-- - const.TEXT_ADJUST.TRIM: Trims the text with a postfix (default: "...", can be overridden in styles)
+-- to fit within the text node's size.
 --
--- - const.TEXT_ADJUST.DOWNSCALE_LIMITED - Change text's scale list downscale, but there is limit for text's scale.
--- Set minimal scale with `text:set_minimal_scale()` function.
+-- - const.TEXT_ADJUST.NO_ADJUST: No adjustment is applied, similar
+-- to the default Defold Text Node behavior.
 --
--- - const.TEXT_ADJUST.SCROLL - Change text's pivot to imitate scrolling in the text box. Use with stencil node for better effect.
+-- - const.TEXT_ADJUST.DOWNSCALE_LIMITED: Changes the text's scale
+-- with a limited downscale. You can set the minimum scale using the text:set_minimal_scale() function.
 --
--- - const.TEXT_ADJUST.SCALE_THEN_SCROLL - Combine two modes: first limited downscale, then scroll
+-- - const.TEXT_ADJUST.SCROLL: Changes the text's pivot to imitate scrolling within the text box.
+-- For better effect, use with a stencil node.
 --
+-- - const.TEXT_ADJUST.SCALE_THEN_SCROLL: Combines two modes: limited downscale first, then scroll.
 -- @module Text
 -- @within BaseComponent
 -- @alias druid.text

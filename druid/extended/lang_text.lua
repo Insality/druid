@@ -2,13 +2,15 @@
 
 --- Component to wrap over GUI Text nodes with localization helpers
 --
--- # Overview #
+-- ## Overview ##
 --
--- • The `druid.set_text_function` should be inited to get the localization by localization_id
+-- • The initialization of druid.set_text_function is required to enable localization
+-- using the localization ID.
 --
--- • The LangText supports up to 7 string format params, due the some issues with `...` args.
+-- • The LangText component supports up to 7 string format parameters.
+-- This limitation exists due to certain issues with using ... arguments.
 --
--- # Notes #
+-- ## Notes ##
 --
 -- @module LangText
 -- @within BaseComponent

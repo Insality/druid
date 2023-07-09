@@ -3,8 +3,6 @@
 --- Druid Rich Text custom component.
 -- # Overview #
 --
---
---
 -- # Notes #
 --
 -- @usage
