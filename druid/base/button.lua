@@ -1,13 +1,13 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid Component for Handling User Click Interactions: Click, Long Click, Double Click, and More.
-
--- ## Overview ##
+--
+-- # Overview #
 --
 -- This component provides a versatile solution for handling user click interactions.
 -- It allows you to make any GUI node clickable and define various callbacks for different types of clicks.
 --
--- ## Notes ##
+-- # Notes #
 --
 -- • The click callback will not trigger if the cursor moves outside the node's
 -- area between the pressed and released states.
@@ -522,7 +522,7 @@ end
 -- It's required to make protected things like copy & paste text, show mobile keyboard, etc
 -- The HTML5 button's doesn't call any events except on_click event.
 --
--- If the game is not HTML, HTML html mode will be not enabled
+-- If the game is not HTML, html mode will be not enabled
 -- @tparam Button self
 -- @tparam[opt] boolean is_web_mode If true - button will be called inside html5 callback
 -- @treturn Button Current button instance

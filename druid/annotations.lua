@@ -231,7 +231,7 @@ function druid__button.set_enabled(self, state) end
 function druid__button.set_key_trigger(self, key) end
 
 --- Set Button mode to work inside user HTML5 interaction event.
---- It's required to make protected things like copy & paste text, show mobile keyboard, etc  The HTML5 button's doesn't call any events except on_click event.  If the game is not HTML, HTML html mode will be not enabled
+--- It's required to make protected things like copy & paste text, show mobile keyboard, etc  The HTML5 button's doesn't call any events except on_click event.  If the game is not HTML, html mode will be not enabled
 ---@param self druid.button
 ---@param is_web_mode boolean If true - button will be called inside html5 callback
 ---@return druid.button Current button instance
@@ -1008,10 +1008,10 @@ function druid__scroll.get_percent(self) end
 ---@return vector3 Available scroll size
 function druid__scroll.get_scroll_size(self) end
 
---- Scroll constructor
+--- @{Scroll} constructor
 ---@param self druid.scroll @{Scroll}
----@param view_node node GUI view scroll node
----@param content_node node GUI content scroll node
+---@param view_node string|node GUI view scroll node
+---@param content_node string|node GUI content scroll node
 function druid__scroll.init(self, view_node, content_node) end
 
 --- Return if scroll have inertion.

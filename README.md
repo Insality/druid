@@ -7,14 +7,14 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/insality/druid/ci-workflow.yml?branch=master)](https://github.com/Insality/druid/actions)
 [![codecov](https://codecov.io/gh/Insality/druid/branch/master/graph/badge.svg)](https://codecov.io/gh/Insality/druid)
 
-**Druid** - powerful Defold component UI framework. Use huge list of embedeed **Druid** components or make your own game-specific components with ease to make stunning and customizable GUI in your games.
+**Druid** - powerful **Defold** component UI framework that empowers developers to create stunning and customizable GUIs by leveraging a wide range of embedded components or effortlessly designing their own game-specific components.
 
 
 ## Setup
 
 ### Dependency
 
-You can use the **Druid** extension in your own project by adding this project as a [Defold library dependency](https://www.defold.com/manuals/libraries/). Open your `game.project` file and in the dependencies field under project add:
+To integrate the **Druid** extension into your own project, add this project as a [dependency](https://www.defold.com/manuals/libraries/) in your **Defold** game. Open your `game.project` file and add the following line to the dependencies field under the project section:
 
 **Druid v0.10.3**
 > [https://github.com/Insality/druid/archive/refs/tags/0.10.3.zip](https://github.com/Insality/druid/archive/refs/tags/0.10.3.zip)
@@ -22,27 +22,27 @@ You can use the **Druid** extension in your own project by adding this project a
 Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 ### Input Bindings
-**Druid** uses `/builtins/input/all.input_binding` input bindings. For custom input bindings see the Input Binding section in **_[Advanced Setup](docs_md/advanced-setup.md)_**.
+**Druid** utilizes the `/builtins/input/all.input_binding` input bindings. For custom input bindings, refer to the Input Binding section in the  **_[Advanced Setup](docs_md/advanced-setup.md)_**.
 
 ### Advanced Setup
-In case you want to adjust **Druid** to your needs, you can use **_[Advanced Setup](docs_md/advanced-setup.md)_** section.
+If you need to customize **Druid** according to your specific requirements, you can refer to the **_[Advanced Setup](docs_md/advanced-setup.md)_** section.
 
 
 ## Usage
 
 ### Basic usage
 
-To use **Druid**, first you should create a **Druid** instance to spawn components and add Druids main functions: *update*, *final*, *on_message* and *on_input*.
+To utilize **Druid**, begin by creating a **Druid** instance to instantiate components and include the main functions of **Druid**: *update*, *final*, *on_message*, and *on_input*.
 
-All **Druid** components take node name string as argument. In in some cases you don't have the node name you can pass the `gui.get_node()` instead.
+When using **Druid** components, provide a node name string as an argument. If you don't have the node name available in some cases, you can pass `gui.get_node()` instead.
 
-All **Druid** and component methods are called with `:` like `self.druid:new_button()`.
+All **Druid** and component methods are invoked using the `:` operator, such as `self.druid:new_button()`.
 
 ```lua
 local druid = require("druid.druid")
 
 -- All component callbacks pass "self" as first argument
--- This self is a context data passed in `druid.new(context)`
+-- This "self" is a context data passed in `druid.new(context)`
 local function on_button_callback(self)
     print("The button clicked!")
 end
@@ -52,22 +52,22 @@ function init(self)
     self.button = self.druid:new_button("button_node_name", on_button_callback)
 end
 
--- Final is a required function for a correct Druid workflow
+-- "final" is a required function for the correct Druid workflow
 function final(self)
     self.druid:final()
 end
 
--- The update used in progress bar, scroll and timer basic components
+-- "update" is used in progress bar, scroll, and timer basic components
 function update(self, dt)
     self.druid:update(dt)
 end
 
--- The on_message used for specific Druid events, like language change or layout change
+-- "on_message" is used for specific Druid events, like language change or layout change
 function on_message(self, message_id, message, sender)
     self.druid:on_message(message_id, message, sender)
 end
 
--- The on_input used in almost all Druid components
+-- "on_input" is used in almost all Druid components
 function on_input(self, action_id, action)
     return self.druid:on_input(action_id, action)
 end
@@ -79,19 +79,21 @@ For all **Druid** instance functions, [see here](https://insality.github.io/drui
 
 ### API Documentation
 
-**Druid** has a lot of components and functions. To make it easier to use, **Druid** has a full API documentation with examples and annotations.
+**Druid** offers a wide range of components and functions. To facilitate usage, **Druid** provides comprehensive API documentation with examples and annotations.
 
-Start read the API documentation [here](hhttps://insality.github.io/druid/modules/Druid.html).
+Start reading the API documentation [here](hhttps://insality.github.io/druid/modules/Druid.html).
+
 
 ### EmmyLua Annotations [optional]
 
-[EmmyLua](https://emmylua.github.io/annotation.html) - annotations for Lua. It's a great tool for Lua code autocompletion in editors like [VSCode](https://github.com/EmmyLua/VSCode-EmmyLua), [IntelliJ IDEA](https://github.com/EmmyLua/IntelliJ-EmmyLua).
+[EmmyLua](https://emmylua.github.io/annotation.html) is a Lua annotation library. It is a useful tool for enabling Lua code autocompletion in editors such as [VSCode](https://github.com/EmmyLua/VSCode-EmmyLua) and [IntelliJ IDEA](https://github.com/EmmyLua/IntelliJ-EmmyLua).
 
-Since the dependencies can't be processed by external editors, for use generated EmmyLua annotations you should copy the _druid/annotations.lua_ to your project.
+Since dependencies cannot be processed by external editors, to use the generated EmmyLua annotations, you should copy the _druid/annotations.lua_ file to your project.
 
-For EmmyLua it will be enough. Remember you can _restart emmylua server_ for refresh the changes, if something goes wrong.
+For EmmyLua, this will be sufficient. Remember that you can restart the EmmyLua server to refresh the changes if something goes wrong.
 
-After the annotations is processed, you should point the type of Druid in requires:
+After the annotations are processed, you should specify the type of "Druid" in the "require" statement:
+
 ```lua
 ---@type druid
 local druid = require("druid.druid")
@@ -101,16 +103,12 @@ local druid = require("druid.druid")
 
 <img src="media/emmy_lua_preview.png" width="700">
 
-### Advanced Usage
-
-If you looking for more advanced usage, see the [Advanced Usage](docs_md/advanced-usage.md) section.
-
 
 ### Create custom components
 
-If you want to create your own components, see the [Create Custom Components](docs_md/create-custom-components.md) section.
+If you want to create your own components, refer to the [Create Custom Components](docs_md/create-custom-components.md) section in the documentation.
 
-The custom components is the most powerful feature of **Druid**. You can create your own components with ease and use it in your game.
+Custom components are one of the most powerful features of **Druid**. They allow you to create your own components effortlessly and utilize them in your game.
 
 
 ## Druid Components
@@ -170,26 +168,25 @@ You can subscribe several callbacks to a single event.
 
 ## Details
 
-- **Druid** input goes as stack. Last created button will be checked first. Create your input GUI component from back to front.
-- Don't forget about `return` in `on_input`: `return self.druid:on_input()`. It is required if you have more than 1 acquire inputs (several Druid, other input system, etc)
-- Druid automatically call _acquire_input_focus_ if you have input components. So you don't required to call it manually.
-- If you want to delete a **Druid** component node, don't forget to remove it via `druid:remove(component)`
+- **Druid** processes input in a stack-based manner. The most recently created button will be checked first. Create your input GUI components from back to front.
+- Remember to include `return` in the `on_input` function: `return self.druid:on_input()`. This is necessary if you have multiple input sources (multiple Druid instances, other input systems, etc.).
+- Druid automatically calls `acquire_input_focus` if you have input components. Therefore, manual calling of `acquire_input_focus` is not required.
+- When deleting a **Druid** component node, make sure to remove it using `druid:remove(component)`.
 
-[See full FAQ here](docs_md/FAQ.md)
+[See the full FAQ here](docs_md/FAQ.md)
 
 
 ## Examples
 
 ### HTML5 Live Examples
 
-Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Druid** example app
+Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Druid** example app.
 
-Each example page has a link to the example code directly, so it will help you to faster understand how to use **Druid**
+Each example page provides a direct link to the corresponding example code, making it easier for you to understand how to use **Druid**.
 
+### Code Examples
 
-### Code examples
-
-See the [**example folder**](https://github.com/Insality/druid/tree/develop/example) for examples of how to use **Druid**
+Refer to the [**example folder**](https://github.com/Insality/druid/tree/develop/example) for code examples demonstrating how to use **Druid**.
 
 
 ## Documentation

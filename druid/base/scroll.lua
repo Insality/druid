@@ -1,6 +1,7 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
--- ## Overview ##
+--- Component to handle scroll content.
+-- # Overview #
 --
 -- The Scroll component is designed to handle scrollable content and consists of two nodes: the scroll parent and the scroll input.
 --
@@ -11,7 +12,7 @@
 -- The initial scroll size can be set by adjusting the size of the scroll parent.
 -- If the size of the scroll parent is smaller than the scroll input size, scrolling is not available.
 --
--- ## Notes ##
+-- # Notes #
 --
 -- • By default, the scroll style includes inertia and extra size for a stretching effect.
 -- These settings can be adjusted using the scroll style settings.
