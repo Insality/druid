@@ -161,7 +161,7 @@ function druid__blocker.init(self, node) end
 function druid__blocker.is_enabled(self) end
 
 --- Set enabled blocker component state.
---- Don't change node enabled state.
+--- Don't change node enabled state itself.
 ---@param self druid.blocker @{Blocker}
 ---@param state bool Enabled state
 function druid__blocker.set_enabled(self, state) end

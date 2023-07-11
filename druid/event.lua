@@ -1,9 +1,10 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid Event module.
+--- Druid Event Module
 --
--- Event is a simple class to handle callbacks. It's used in many Druid components.
--- You can subscribe to event with `:subscribe` method and unsubscribe with `:unsubscribe`.
+-- The Event module provides a simple class for handling callbacks. It is used in many Druid components.
+--
+-- You can subscribe to an event using the `:subscribe` method and unsubscribe using the `:unsubscribe` method.
 -- @module DruidEvent
 -- @alias druid.event
 

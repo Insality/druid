@@ -10,6 +10,8 @@
 -- • Blocker inheritance @{BaseComponent}, you can use all of its methods in addition to those described here.
 --
 -- • Blocker initial enabled state is `gui.is_enabled(node, true)`
+--
+-- • The Blocker node should be enabled to capture the input
 -- @usage
 -- local node = gui.get_node("blocker_node")
 -- local blocker = self.druid:new_blocker(node)
@@ -33,7 +35,7 @@ local Blocker = component.create("blocker")
 -- @tparam node node Gui node
 function Blocker.init(self, node)
 	self.node = self:get_node(node)
-	self._is_enabled = gui.is_enabled(node, true)
+	self._is_enabled = gui.is_enabled(self.node, true)
 end
 
 
@@ -53,6 +55,10 @@ function Blocker.on_input(self, action_id, action)
 		return false
 	end
 
+	if not gui.is_enabled(self.node, true) then
+		return false
+	end
+
 	if gui.pick_node(self.node, action.x, action.y) then
 		return true
 	end
@@ -63,7 +69,7 @@ end
 
 --- Set enabled blocker component state.
 --
--- Don't change node enabled state.
+-- Don't change node enabled state itself.
 -- @tparam Blocker self @{Blocker}
 -- @tparam bool state Enabled state
 function Blocker.set_enabled(self, state)

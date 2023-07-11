@@ -7,7 +7,7 @@
 -- Druid components or make your own game-specific components to make
 -- amazing GUI in your games.
 --
--- To start using Druid, please refer to the Basic Usage section below.
+-- To start using Druid, please refer to the Usage section below.
 --
 -- <b># Notes #</b>
 --

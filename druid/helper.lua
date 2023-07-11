@@ -1,6 +1,9 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Helper module with various usefull GUI functions.
+-- @usage
+-- local helper = require("druid.helper")
+-- helper.centrate_nodes(0, node_1, node_2)
 -- @module Helper
 -- @alias druid.helper
 

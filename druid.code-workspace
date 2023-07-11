@@ -22,6 +22,7 @@
 			"input": true,
 			"media": true,
 			"build": true,
+			"docs": true,
 			".github": true,
 			".deployer_cache": true,
 			"dist": true

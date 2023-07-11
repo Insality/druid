@@ -3,9 +3,27 @@
 --- Druid Rich Text custom component.
 -- <b># Overview #</b>
 --
--- Heavily inspired by https://github.com/britzl/defold-richtext.
+-- Heavily inspired by <a href="https://github.com/britzl/defold-richtext" target="_blank">https://github.com/britzl/defold-richtext</a>.
 --
 -- Uses the same syntax for tags, but currently have less tags support.
+--
+-- All Rich Text params are adjusted in GUI scene
+--
+-- The Rich Text template should have next scheme:
+--
+-- root
+--
+-- 	- text_prefab
+--
+-- 	- icon_prefab
+--
+-- <b># Rich Text Setup #</b>
+-- • Root node size - maximum width and height of the text
+-- • Root anchor - Aligment of the Rich Text inside root node size area
+-- • Text prefab - all text params for the text node
+-- • Text prefab anchor - Anchor for each text node (you should adjust this only if animate text)
+-- • Icon prefab - all node params for the icon node
+-- • Icon prefab anchor - Anchor for each icon node (you should adjust this only if animate icon)
 --
 -- <b># Notes #</b>
 --
