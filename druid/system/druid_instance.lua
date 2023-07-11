@@ -6,7 +6,7 @@
 --
 -- For a list of all available components, please refer to the "See Also" section.
 --
--- # Notes #
+-- <b># Notes #</b>
 --
 -- Please review the following API pages:
 --

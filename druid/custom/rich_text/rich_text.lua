@@ -1,9 +1,15 @@
 -- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid Rich Text custom component.
--- # Overview #
+-- <b># Overview #</b>
 --
--- # Notes #
+-- Heavily inspired by https://github.com/britzl/defold-richtext.
+--
+-- Uses the same syntax for tags, but currently have less tags support.
+--
+-- <b># Notes #</b>
+--
+-- • Nested tags are supported
 --
 -- @usage
 -- local RichText = require("druid.custom.rich_text.rich_text")
@@ -57,6 +63,49 @@ end
 -- @tparam string text The text to set
 -- @treturn table words
 -- @treturn table line_metrics
+-- @usage
+-- • color: Change text color
+--
+-- <color=red>Foobar</color>
+-- <color=1.0,0,0,1.0>Foobar</color>
+-- <color=#ff0000>Foobar</color>
+-- <color=#ff0000ff>Foobar</color>
+--
+-- • shadow: Change text shadow
+--
+-- <shadow=red>Foobar</shadow>
+-- <shadow=1.0,0,0,1.0>Foobar</shadow>
+-- <shadow=#ff0000>Foobar</shadow>
+-- <shadow=#ff0000ff>Foobar</shadow>
+--
+-- • outline: Change text shadow
+--
+-- <outline=red>Foobar</outline>
+-- <outline=1.0,0,0,1.0>Foobar</outline>
+-- <outline=#ff0000>Foobar</outline>
+-- <outline=#ff0000ff>Foobar</outline>
+--
+-- • font: Change font
+--
+-- <font=MyCoolFont>Foobar</font>
+--
+-- • size: Change text size, relative to default size
+--
+-- <size=2>Twice as large</size>
+--
+-- • br: Insert a line break
+--
+-- <br/>
+--
+-- • nobr: Prevent the text from breaking
+--
+-- Words <nobr>inside tag</nobr> won't break
+--
+-- • img: Display image
+--
+-- <img=texture:image/>
+-- <img=texture:image,size/>
+-- <img=texture:image,width,height/>
 function RichText.set_text(self, text)
 	self:clean()
 

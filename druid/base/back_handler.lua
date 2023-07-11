@@ -1,12 +1,12 @@
 -- Copyright (c) 2023 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component with event on back and backspace button.
--- # Overview #
+-- <b># Overview #</b>
 --
 -- Back Handler is recommended to put in every game window to close it
 -- or in main screen to call settings window.
 --
--- # Notes #
+-- <b># Notes #</b>
 --
 -- • Back Handler inheritance @{BaseComponent}, you can use all of its methods in addition to those described here.
 --

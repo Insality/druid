@@ -2,12 +2,12 @@
 
 --- Druid Component for Handling User Click Interactions: Click, Long Click, Double Click, and More.
 --
--- # Overview #
+-- <b># Overview #</b>
 --
 -- This component provides a versatile solution for handling user click interactions.
 -- It allows you to make any GUI node clickable and define various callbacks for different types of clicks.
 --
--- # Notes #
+-- <b># Notes #</b>
 --
 -- • The click callback will not trigger if the cursor moves outside the node's
 -- area between the pressed and released states.

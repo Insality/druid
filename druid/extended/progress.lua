@@ -1,9 +1,9 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid component to handle the progress bars.
--- # Overview #
+-- <b># Overview #</b>
 --
--- # Notes #
+-- <b># Notes #</b>
 --
 -- • Progress Node should be fully filled in your GUI scene node. It will be the progress maximum size
 --

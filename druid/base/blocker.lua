@@ -1,9 +1,9 @@
 -- Copyright (c) 2023 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to consume input in special zone defined by GUI node.
--- # Overview #
+-- <b># Overview #</b>
 --
--- # Notes #
+-- <b># Notes #</b>
 --
 -- Blocker consume input if `gui.pick_node` works on it.
 --

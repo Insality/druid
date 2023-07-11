@@ -81,7 +81,7 @@ For all **Druid** instance functions, [see here](https://insality.github.io/drui
 
 **Druid** offers a wide range of components and functions. To facilitate usage, **Druid** provides comprehensive API documentation with examples and annotations.
 
-Start reading the API documentation [here](hhttps://insality.github.io/druid/modules/Druid.html).
+Start reading the API documentation [here](https://insality.github.io/druid/modules/Druid.html).
 
 
 ### EmmyLua Annotations [optional]
