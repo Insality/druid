@@ -2,6 +2,8 @@
 
 --- Druid input text component.
 -- Carry on user text input
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_input" target="_blank"><b>Example Link</b></a>
 -- @author Part of code from Britzl gooey input component
 -- @module Input
 -- @within BaseComponent

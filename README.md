@@ -9,6 +9,7 @@
 
 **Druid** - powerful **Defold** component UI framework that empowers developers to create stunning and customizable GUIs by leveraging a wide range of embedded components or effortlessly designing their own game-specific components.
 
+Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Druid** example app.
 
 ## Setup
 
@@ -88,9 +89,9 @@ Start reading the API documentation [here](https://insality.github.io/druid/modu
 
 [EmmyLua](https://emmylua.github.io/annotation.html) is a Lua annotation library. It is a useful tool for enabling Lua code autocompletion in editors such as [VSCode](https://github.com/EmmyLua/VSCode-EmmyLua) and [IntelliJ IDEA](https://github.com/EmmyLua/IntelliJ-EmmyLua).
 
-Since dependencies cannot be processed by external editors, to use the generated EmmyLua annotations, you should copy the _druid/annotations.lua_ file to your project.
+Since dependencies cannot be processed by external editors, to use the EmmyLua annotations, you should copy the _druid/annotations.lua_ file to your project.
 
-For EmmyLua, this will be sufficient. Remember that you can restart the EmmyLua server to refresh the changes if something goes wrong.
+Remember that you can restart the EmmyLua server to refresh the changes if something goes wrong.
 
 After the annotations are processed, you should specify the type of "Druid" in the "require" statement:
 
@@ -146,9 +147,9 @@ Here is full **Druid** components list.
 | **[Input](https://insality.github.io/druid/modules/Input.html)** | Logic over GUI Node and GUI Text (or Text component). Provides basic user text input. | [Input Example](https://insality.github.io/druid/druid/?example=general_input) | <img src="media/preview/input.gif" width="200" height="100"> |
 | **[Lang text](https://insality.github.io/druid/modules/LangText.html)** | Logic over Text component to handle localization. Can be translated in real-time with `druid.on_language_change` | ❌ | <img src="media/preview/lang_text.gif" width="200" height="100"> |
 | **[Progress](https://insality.github.io/druid/modules/Progress.html)** | Logic over GUI Node. Handle node size and scale to handle progress node size. | [Progress Example](https://insality.github.io/druid/druid/?example=general_progress_bar) | <img src="media/preview/progress.gif" width="200" height="100"> |
-| **[Slider](https://insality.github.io/druid/modules/Slider.html)** | Logic over GUI Node. Handle draggable node with position restrictions. | [Slider Example]() | <img src="media/preview/slider.gif" width="200" height="100"> |
+| **[Slider](https://insality.github.io/druid/modules/Slider.html)** | Logic over GUI Node. Handle draggable node with position restrictions. | [Slider Example](https://insality.github.io/druid/druid/?example=general_sliders) | <img src="media/preview/slider.gif" width="200" height="100"> |
 | **[Timer](https://insality.github.io/druid/modules/Timer.html)** | Logic over GUI Text. Handle basic timer functions. | ❌ | <img src="media/preview/timer.gif" width="200" height="100"> |
-| **[Hotkey](https://insality.github.io/druid/modules/Hotkey.html)** | Allow to set callbacks for keyboard hotkeys with key modificators. | [Hotkey Example](https://insality.github.io/druid/druid/?example=general_hokey) | <img src="media/preview/hotkey.gif" width="200" height="100"> |
+| **[Hotkey](https://insality.github.io/druid/modules/Hotkey.html)** | Allow to set callbacks for keyboard hotkeys with key modificators. | [Hotkey Example](https://insality.github.io/druid/druid/?example=general_hotkey) | <img src="media/preview/hotkey.gif" width="200" height="100"> |
 | **[Layout](https://insality.github.io/druid/modules/Layout.html)** | Logic over GUI Node. Handle node size depends on layout mode and screen aspect ratio. Contains helpers to build more complex UI layout. | [Layout Example](https://insality.github.io/druid/druid/?example=general_layout) | <img src="media/preview/layout.gif" width="200" height="100"> |
 
 For a complete overview, see: **_[components.md](docs_md/01-components.md)_**.
@@ -192,16 +193,17 @@ Refer to the [**example folder**](https://github.com/Insality/druid/tree/develop
 ## Documentation
 
 To better understand **Druid**, read the following documentation:
+- [How To GUI in Defold](https://forum.defold.com/t/how-to-gui-in-defold/73256)
 - [Druid components](docs_md/01-components.md)
 - [Create custom components](docs_md/02-creating_custom_components.md)
 - [See FAQ article](docs_md/FAQ.md)
 - [Druid styles](docs_md/03-styles.md)
 
-You can fund the full **Druid** documentation here:
-https://insality.github.io/druid/
+You can find the full **Druid** documentation here:
+https://insality.github.io/druid/modules/Druid.html
 
 
-## License
+## Licenses
 
 - Developed and supported by [Insality](https://github.com/Insality)
 - Original idea by [AGulev](https://github.com/AGulev)

@@ -13,6 +13,8 @@
 --
 -- • If you have glitchy or dark texture bug with progress bar, try to disable mipmaps in your texture profiles
 --
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_progress_bar" target="_blank"><b>Example Link</b></a>
 -- @module Progress
 -- @within BaseComponent
 -- @alias druid.progress

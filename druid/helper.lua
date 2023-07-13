@@ -10,6 +10,7 @@
 local const = require("druid.const")
 
 local M = {}
+M._some = { pepepe = true }
 
 
 local function get_text_width(text_node)
@@ -393,7 +394,14 @@ end
 --- Get text metric from GUI node.
 -- @function helper.get_text_metrics_from_node
 -- @tparam Node text_node
--- @treturn GUITextMetrics Fields: width, height, max_ascent, max_descent
+-- @treturn pepepe
+-- @usage
+-- type GUITextMetrics = {
+--   width: number,
+--   height: number,
+--   max_ascent: number,
+--   max_descent: number
+-- }
 function M.get_text_metrics_from_node(text_node)
 	local font_resource = gui.get_font_resource(gui.get_font(text_node))
 	local options = {

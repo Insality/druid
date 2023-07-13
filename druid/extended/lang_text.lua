@@ -12,6 +12,7 @@
 --
 -- <b># Notes #</b>
 --
+-- <a href="https://insality.github.io/druid/druid/index.html?example=texts_lang_text" target="_blank"><b>Example Link</b></a>
 -- @module LangText
 -- @within BaseComponent
 -- @alias druid.lang_text

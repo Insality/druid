@@ -1,40 +1,89 @@
 -- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid Rich Text custom component.
+--- Druid Rich Text Custom Component.
 -- <b># Overview #</b>
 --
--- Heavily inspired by <a href="https://github.com/britzl/defold-richtext" target="_blank">https://github.com/britzl/defold-richtext</a>.
+-- This custom component is inspired by <a href="https://github.com/britzl/defold-richtext" target="_blank">defold-richtext</a> by britzl.
+-- It uses a similar syntax for tags but currently supports fewer tags.
 --
--- Uses the same syntax for tags, but currently have less tags support.
+-- All parameters for the Rich Text component are adjusted in the GUI scene.
 --
--- All Rich Text params are adjusted in GUI scene
+-- This component uses GUI component template. (/druid/custom/rich_text/rich_text.gui).
 --
--- The Rich Text template should have next scheme:
+-- You able to customize it or make your own with the next node scructure:
 --
 -- root
 --
--- 	- text_prefab
+--   - text_prefab
 --
--- 	- icon_prefab
+--   - icon_prefab
 --
 -- <b># Rich Text Setup #</b>
--- • Root node size - maximum width and height of the text
--- • Root anchor - Aligment of the Rich Text inside root node size area
--- • Text prefab - all text params for the text node
--- • Text prefab anchor - Anchor for each text node (you should adjust this only if animate text)
--- • Icon prefab - all node params for the icon node
--- • Icon prefab anchor - Anchor for each icon node (you should adjust this only if animate icon)
+--
+-- • Root node size: Set the maximum width and height of the text.
+--
+-- • Root anchor: Define the alignment of the Rich Text inside the root node size area.
+--
+-- • Text prefab: Configure all default text parameters for the text node.
+--
+-- • Text prefab anchor: Set the anchor for each text node (adjust this only if animating text).
+--
+-- • Icon prefab: Configure all default node parameters for the icon node.
+--
+-- • Icon prefab anchor: Set the anchor for each icon node (adjust this only if animating the icon).
 --
 -- <b># Notes #</b>
 --
 -- • Nested tags are supported
 --
+-- <a href="https://insality.github.io/druid/druid/index.html?example=custom_rich_text" target="_blank"><b>Example Link</b></a>
 -- @usage
 -- local RichText = require("druid.custom.rich_text.rich_text")
 -- ...
 -- self.rich_text = self.druid:new(RichText, "rich_text")
 -- self.rich_text:set_text("Hello, Druid Rich Text!")
+-- @usage
+-- type druid.rich_text.word = {
+--   node: Node,
+--   relative_scale: number,
+--   color: vector4,
+--   position: vector3,
+--   offset: vector3,
+--   scale: vector3,
+--   size: vector3,
+--   metrics: druid.rich_text.metrics,
+--   pivot: Pivot,
+--   text: string,
+--   shadow: vector4,
+--   outline: vector4,
+--   font: string,
+--   image: druid.rich_text.image,
+--   default_animation: string,
+--   anchor: number,
+--   br: boolean,
+--   nobr: boolean,
+-- }
 --
+-- type druid.rich_text.word.image = {
+--   texture: string,
+--   anim: string,
+--   width: number,
+--   height: number,
+-- }
+--
+-- type druid.rich_text.lines_metrics = {
+--   text_width: number,
+--   text_height: number,
+--   lines: table<number, druid.rich_text.metrics>,
+-- }
+--
+-- type druid.rich_text.metrics = {
+--   width: number,
+--   height: number,
+--   offset_x: number|nil,
+--   offset_y: number|nil,
+--   node_size: vector3|nil @For images only,
+-- }
 -- @module RichText
 -- @within BaseComponent
 -- @alias druid.rich_text
@@ -79,8 +128,8 @@ end
 --- Set text for Rich Text
 -- @tparam RichText self @{RichText}
 -- @tparam string text The text to set
--- @treturn table words
--- @treturn table line_metrics
+-- @treturn druid.rich_text.word[] words
+-- @treturn druid.rich_text.lines_metrics line_metrics
 -- @usage
 -- • color: Change text color
 --

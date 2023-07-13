@@ -1,6 +1,8 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid slider component
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_sliders" target="_blank"><b>Example Link</b></a>
 -- @module Slider
 -- @within BaseComponent
 -- @alias druid.slider

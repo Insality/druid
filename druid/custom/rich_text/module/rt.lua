@@ -449,9 +449,9 @@ function M.set_text_scale(words, settings, scale)
 end
 
 
----@param words rich_text.word[]
----@param settings rich_text.settings
----@param lines_metrics rich_text.lines_metrics
+---@param words druid.rich_text.word[]
+---@param settings druid.rich_text.settings
+---@param lines_metrics druid.rich_text.lines_metrics
 function M.adjust_to_area(words, settings, lines_metrics)
 	local last_line_metrics = lines_metrics
 

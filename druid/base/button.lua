@@ -19,6 +19,8 @@
 --
 -- • To animate a small icon on a big button panel, you can use an animation node.
 -- The trigger node name should be set as "big panel," and the animation node should be set as "small icon."
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_buttons" target="_blank"><b>Example Link</b></a>
 -- @usage
 -- local function on_button_click(self, args, button)
 --     print("Button has clicked with params: " .. args)

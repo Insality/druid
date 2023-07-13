@@ -31,6 +31,8 @@
 --
 -- • Multitouch is required for scrolling. The scroll component correctly handles
 -- touch ID swaps while dragging the scroll.
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_scroll" target="_blank"><b>Example Link</b></a>
 -- @module Scroll
 -- @within BaseComponent
 -- @alias druid.scroll

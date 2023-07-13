@@ -29,6 +29,8 @@
 -- For better effect, use with a stencil node.
 --
 -- - const.TEXT_ADJUST.SCALE_THEN_SCROLL: Combines two modes: limited downscale first, then scroll.
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=texts_general" target="_blank"><b>Example Link</b></a>
 -- @module Text
 -- @within BaseComponent
 -- @alias druid.text

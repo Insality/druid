@@ -29,6 +29,8 @@
 --
 -- • You can specify a position_function for animations using the
 -- _static_grid:set_position_function(node, pos) callback. The default position function is gui.set_position().
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_grid" target="_blank"><b>Example Link</b></a>
 -- @module StaticGrid
 -- @within BaseComponent
 -- @alias druid.static_grid
