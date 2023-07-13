@@ -1,19 +1,17 @@
 -- Copyright (c) 2023 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to block input in special zone defined by GUI node.
--- # Overview #
+--- Component to consume input in special zone defined by GUI node.
+-- <b># Overview #</b>
 --
--- Blocker component необходим, чтобы блокировать пользовательский ввод в определенной зоне.
--- Зона задается размером ноды, на которой находится компонент. Blocker блокирует ввод только для тех
--- элементов, которые находятся перед ним in input stack (созданы до него).
---
--- # Tech Info #
+-- <b># Notes #</b>
 --
 -- Blocker consume input if `gui.pick_node` works on it.
 --
--- # Notes #
---
 -- • Blocker inheritance @{BaseComponent}, you can use all of its methods in addition to those described here.
+--
+-- • Blocker initial enabled state is `gui.is_enabled(node, true)`
+--
+-- • The Blocker node should be enabled to capture the input
 -- @usage
 -- local node = gui.get_node("blocker_node")
 -- local blocker = self.druid:new_blocker(node)
@@ -21,7 +19,7 @@
 -- @within BaseComponent
 -- @alias druid.blocker
 
----Trigger node
+---Blocker node
 -- @tfield node node
 
 ---
@@ -32,12 +30,12 @@ local component = require("druid.component")
 local Blocker = component.create("blocker")
 
 
---- Component initialize function
+--- @{Blocker} constructor
 -- @tparam Blocker self @{Blocker}
 -- @tparam node node Gui node
--- @local
 function Blocker.init(self, node)
 	self.node = self:get_node(node)
+	self._is_enabled = gui.is_enabled(self.node, true)
 end
 
 
@@ -57,6 +55,10 @@ function Blocker.on_input(self, action_id, action)
 		return false
 	end
 
+	if not gui.is_enabled(self.node, true) then
+		return false
+	end
+
 	if gui.pick_node(self.node, action.x, action.y) then
 		return true
 	end
@@ -65,11 +67,13 @@ function Blocker.on_input(self, action_id, action)
 end
 
 
---- Set enabled blocker component state
+--- Set enabled blocker component state.
+--
+-- Don't change node enabled state itself.
 -- @tparam Blocker self @{Blocker}
 -- @tparam bool state Enabled state
 function Blocker.set_enabled(self, state)
-	gui.set_enabled(self.node, state)
+	self._is_enabled = state
 end
 
 
@@ -77,7 +81,7 @@ end
 -- @tparam Blocker self @{Blocker}
 -- @treturn bool True, if blocker is enabled
 function Blocker.is_enabled(self)
-	return gui.is_enabled(self.node)
+	return self._is_enabled
 end
 
 

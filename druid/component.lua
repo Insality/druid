@@ -64,7 +64,7 @@ BaseComponent.SPECIFIC_UI_MESSAGES = {
 
 
 local uid = 0
-function BaseComponent.static.get_uid()
+function BaseComponent.create_uid()
 	uid = uid + 1
 	return uid
 end
@@ -128,7 +128,7 @@ end
 
 --- Set current component nodes
 --
--- Used if your component nodes was cloned with `gui.clone_tree`
+-- Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
 -- @function component:set_nodes
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam table nodes BaseComponent nodes table
@@ -226,7 +226,7 @@ end
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn string The component name
 function BaseComponent.get_name(self)
-	return self._component.name .. self:get_uid()
+	return self._component.name .. BaseComponent.create_uid()
 end
 
 
@@ -362,7 +362,7 @@ end
 
 
 --- Basic constructor of component. It will call automaticaly
--- by `BaseComponent.static.create`
+-- by `BaseComponent.create`
 -- @function component:initialize
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string name BaseComponent name
@@ -375,7 +375,7 @@ function BaseComponent.initialize(self, name, input_priority)
 		default_input_priority = input_priority or const.PRIORITY_INPUT,
 		is_debug = false,
 		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
-		_uid = BaseComponent.get_uid()
+		_uid = BaseComponent.create_uid()
 	}
 end
 
@@ -512,11 +512,11 @@ end
 
 
 --- Create new component. It will inheritance from basic Druid component.
--- @function BaseComponent.static.create
+-- @function BaseComponent.create
 -- @tparam string name BaseComponent name
 -- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
 -- @local
-function BaseComponent.static.create(name, input_priority)
+function BaseComponent.create(name, input_priority)
 	-- Yea, inheritance here
 	local new_class = class(name, BaseComponent)
 

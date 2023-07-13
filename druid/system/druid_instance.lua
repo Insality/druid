@@ -6,7 +6,7 @@
 --
 -- For a list of all available components, please refer to the "See Also" section.
 --
--- # Notes #
+-- <b># Notes #</b>
 --
 -- Please review the following API pages:
 --
@@ -43,27 +43,29 @@
 --
 -- @module DruidInstance
 -- @alias druid_instance
--- @see Button
--- @see Blocker
 -- @see BackHandler
--- @see Input
--- @see Text
--- @see LangText
--- @see Timer
--- @see Progress
--- @see StaticGrid
--- @see DynamicGrid
--- @see Scroll
--- @see Slider
+-- @see Blocker
+-- @see Button
 -- @see Checkbox
 -- @see CheckboxGroup
--- @see RadioGroup
--- @see Swipe
--- @see Drag
 -- @see DataList
--- @see Hover
--- @see Layout
+-- @see Drag
+-- @see DynamicGrid
 -- @see Hotkey
+-- @see Hover
+-- @see Input
+-- @see LangText
+-- @see Layout
+-- @see Progress
+-- @see RadioGroup
+-- @see RichInput
+-- @see RichText
+-- @see Scroll
+-- @see Slider
+-- @see StaticGrid
+-- @see Swipe
+-- @see Text
+-- @see Timer
 
 local helper = require("druid.helper")
 local class = require("druid.system.middleclass")
@@ -288,7 +290,7 @@ function DruidInstance.final(self)
 end
 
 
---- Remove component from Druid instance.
+--- Remove created component from Druid instance.
 --
 -- Component `on_remove` function will be invoked, if exist.
 -- @tparam DruidInstance self

@@ -1,6 +1,8 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Layout management on node
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_layout" target="_blank"><b>Example Link</b></a>
 -- @module Layout
 -- @within BaseComponent
 -- @alias druid.layout

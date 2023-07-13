@@ -449,9 +449,9 @@ function M.set_text_scale(words, settings, scale)
 end
 
 
----@param words rich_text.word[]
----@param settings rich_text.settings
----@param lines_metrics rich_text.lines_metrics
+---@param words druid.rich_text.word[]
+---@param settings druid.rich_text.settings
+---@param lines_metrics druid.rich_text.lines_metrics
 function M.adjust_to_area(words, settings, lines_metrics)
 	local last_line_metrics = lines_metrics
 
@@ -486,7 +486,7 @@ function M.adjust_to_area(words, settings, lines_metrics)
 				end
 
 				adjust_scale = adjust_scale + step
-				local lines = M.apply_scale_without_update(words, settings, adjust_scale)
+				lines = M.apply_scale_without_update(words, settings, adjust_scale)
 				is_fit = M.is_fit_info_area(lines, settings)
 
 				if i == M.ADJUST_STEPS then
@@ -531,52 +531,6 @@ function M.tagged(words, tag)
 		end
 	end
 	return tagged
-end
-
-
---- Split a word into it's characters
--- @param word The word to split
--- @return The individual characters
-function M.characters(word)
-	assert(word)
-
-	local parent = gui.get_parent(word.node)
-	local font = gui.get_font(word.node)
-	local layer = gui.get_layer(word.node)
-	local pivot = gui.get_pivot(word.node)
-
-	local word_length = utf8.len(word.text)
-
-	-- exit early if word is a single character or empty
-	if word_length <= 1 then
-		local char = helper.deepcopy(word)
-		char.node, char.metrics = create_node(char, parent, font)
-		gui.set_pivot(char.node, pivot)
-		gui.set_position(char.node, gui.get_position(word.node))
-		gui.set_layer(char.node, layer)
-		return { char }
-	end
-
-	-- split word into characters
-	local chars = {}
-	local position = gui.get_position(word.node)
-	local position_x = position.x
-
-	for i = 1, word_length do
-		local char = helper.deepcopy(word)
-		chars[#chars + 1] = char
-		char.text = utf8.sub(word.text, i, i)
-		char.node, char.metrics = create_node(char, parent, font)
-		gui.set_layer(char.node, layer)
-		gui.set_pivot(char.node, pivot)
-
-		local sub_metrics = get_text_metrics(word, font, utf8.sub(word.text, 1, i))
-		position.x = position_x + sub_metrics.width - char.metrics.width
-		char.position = vmath.vector3(position)
-		gui.set_position(char.node, char.position)
-	end
-
-	return chars
 end
 
 

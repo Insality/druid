@@ -85,7 +85,7 @@ local function init_top_panel(self)
 	gui.set_enabled(self.button_menu.node, false)
 
 	self.button_api = self.druid:new_button("button_api/button", function()
-		sys.open_url("https://insality.github.io/druid/")
+		sys.open_url("https://insality.github.io/druid/modules/Druid.html")
 	end)
 
 	self.button_code = self.druid:new_button("button_code/button", function()
@@ -311,5 +311,5 @@ end
 
 
 function on_input(self, action_id, action)
-	self.druid:on_input(action_id, action)
+	return self.druid:on_input(action_id, action)
 end

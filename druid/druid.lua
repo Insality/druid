@@ -1,15 +1,15 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid UI Component Framework.
--- # Overview #
+-- <b># Overview #</b>
 --
 -- Druid - powerful Defold component UI library. Use basic and extended
 -- Druid components or make your own game-specific components to make
 -- amazing GUI in your games.
 --
--- To start using Druid, please refer to the Basic Usage section below.
+-- To start using Druid, please refer to the Usage section below.
 --
--- # Tech Info #
+-- <b># Notes #</b>
 --
 -- • Each Druid instance maintains the self context from the constructor and passes it to each Druid callback.
 --

@@ -2,6 +2,8 @@
 
 --- Component to manage data for huge dataset in scroll.
 -- It requires Druid Scroll and Druid Grid (Static or Dynamic) components
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_data_list" target="_blank"><b>Example Link</b></a>
 -- @module DataList
 -- @within BaseComponent
 -- @alias druid.data_list

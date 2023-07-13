@@ -3,6 +3,8 @@
 --- Component to handle swipe gestures on node.
 -- Swipe will be triggered, if swipe was started and
 -- ended on one node
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_swipe" target="_blank"><b>Example Link</b></a>
 -- @module Swipe
 -- @within BaseComponent
 -- @alias druid.swipe

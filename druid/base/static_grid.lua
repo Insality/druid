@@ -1,7 +1,36 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to handle placing components by row and columns.
--- Grid can anchor your elements, get content size and other
+--- Component to handle component's position by row and columns.
+-- ## Overview ##
+--
+-- The Static Grid component allows for positioning components in rows and columns.
+-- It provides a static grid layout with constant node sizes, allowing for pre-calculated
+-- node positions and the option to include gaps between nodes.
+--
+-- ## Notes ##
+--
+-- • In a static grid, the node size remains constant, enabling the calculation of node
+-- positions before placement. Nodes can be placed with gaps between them.
+--
+-- • The static grid can automatically shift elements when nodes are added or removed.
+--
+-- • When a node is added, the grid will set the node's parent to the specified parent_node.
+--
+-- • You can obtain an array of positions for each element, which can be used to set
+-- points of interest in a scroll component.
+--
+-- • The size of all elements can be retrieved for setting up the size in a scroll component.
+--
+-- • The grid can be bound to a scroll component for automatic resizing of the scroll content size.
+--
+-- • The pivot of the parent_node affects the node placement within the grid.
+--
+-- • A prefab node is used to determine the node size and anchor.
+--
+-- • You can specify a position_function for animations using the
+-- _static_grid:set_position_function(node, pos) callback. The default position function is gui.set_position().
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_grid" target="_blank"><b>Example Link</b></a>
 -- @module StaticGrid
 -- @within BaseComponent
 -- @alias druid.static_grid
@@ -81,9 +110,9 @@ function StaticGrid.on_style_change(self, style)
 end
 
 
---- Component init function
+--- @{StaticGrid} constructor
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam node parent The gui node parent, where items will be placed
+-- @tparam string|Node parent The GUI Node container, where grid's items will be placed
 -- @tparam node element Element prefab. Need to get it size
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
 function StaticGrid.init(self, parent, element, in_row)
