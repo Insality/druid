@@ -102,18 +102,10 @@ var FileLoader = {
 
 var EngineLoader = {
     wasm_size: 2000000,
-    wasm_from: 0,
-    wasm_to: 40,
-
     wasmjs_size: 250000,
-    wasmjs_from: 40,
-    wasmjs_to: 50,
-
     asmjs_size: 4000000,
-    asmjs_from: 0,
-    asmjs_to: 50,
 
-    stream_wasm: true,
+    stream_wasm: false,
 
     loadAndInstantiateWasmAsync: function(src, fromProgress, toProgress, callback) {
         FileLoader.load(src, "arraybuffer", EngineLoader.wasm_size,
@@ -133,9 +125,32 @@ var EngineLoader = {
             });
     },
 
-    streamAndInstantiateWasmAsync: function(src, fromProgress, toProgress, callback) {
+    setupWasmStreamAsync: async function(src, fromProgress, toProgress) {
+        // https://stackoverflow.com/a/69179454
+        var fetchFn = fetch;
+        if (typeof TransformStream === "function" && ReadableStream.prototype.pipeThrough) {
+            async function fetchWithProgress(path) {
+                const response = await fetch(path);
+                // May be incorrect if compressed
+                const contentLength = response.headers.get("Content-Length");
+                const total = parseInt(contentLength, 10);
+
+                let bytesLoaded = 0;
+                const ts = new TransformStream({
+                    transform (chunk, controller) {
+                        bytesLoaded += chunk.byteLength;
+                        Progress.calculateProgress(fromProgress, toProgress, bytesLoaded, total);
+                        controller.enqueue(chunk)
+                    }
+                });
+
+                return new Response(response.body.pipeThrough(ts), response);
+            }
+            fetchFn = fetchWithProgress;
+        }
+
         Module.instantiateWasm = function(imports, successCallback) {
-            WebAssembly.instantiateStreaming(fetch(src), imports).then(function(output) {
+            WebAssembly.instantiateStreaming(fetchFn(src), imports).then(function(output) {
                 Progress.calculateProgress(fromProgress, toProgress, 1, 1);
                 successCallback(output.instance);
             }).catch(function(e) {
@@ -144,43 +159,45 @@ var EngineLoader = {
             });
             return {}; // Compiling asynchronously, no exports.
         }
-        callback();
     },
 
     // instantiate the .wasm file either by streaming it or first loading and then instantiate it
     // https://github.com/emscripten-core/emscripten/blob/master/tests/manual_wasm_instantiate.html#L170
-    loadWasmAsync: function(src, fromProgress, toProgress, callback) {
+    loadWasmAsync: function(exeName) {
         if (EngineLoader.stream_wasm && (typeof WebAssembly.instantiateStreaming === "function")) {
-            EngineLoader.streamAndInstantiateWasmAsync(src, fromProgress, toProgress, callback);
+            EngineLoader.setupWasmStreamAsync(exeName + ".wasm", 10, 50);
+            EngineLoader.loadAndRunScriptAsync(exeName + '_wasm.js', EngineLoader.wasmjs_size, 0, 10);
         }
         else {
-            EngineLoader.loadAndInstantiateWasmAsync(src, fromProgress, toProgress, callback);
+            EngineLoader.loadAndInstantiateWasmAsync(exeName + ".wasm", 0, 40, function() {
+                EngineLoader.loadAndRunScriptAsync(exeName + '_wasm.js', EngineLoader.wasmjs_size, 40, 50);
+            });
         }
     },
 
+    loadAsmJsAsync: function(exeName) {
+        EngineLoader.loadAndRunScriptAsync(exeName + '_asmjs.js', EngineLoader.asmjs_size, 0, 50);
+    },
+
     // load and start engine script (asm.js or wasm.js)
-    loadScriptAsync: function(src, estimatedSize, fromProgress, toProgress) {
+    loadAndRunScriptAsync: function(src, estimatedSize, fromProgress, toProgress) {
         FileLoader.load(src, "text", estimatedSize,
             function(loaded, total) { Progress.calculateProgress(fromProgress, toProgress, loaded, total); },
             function(error) { throw error; },
             function(response) {
                 var tag = document.createElement("script");
                 tag.text = response;
-                document.head.appendChild(tag);
+                document.body.appendChild(tag);
             });
     },
 
     // load engine (asm.js or wasm.js + wasm)
-    // engine load progress goes from 1-50% for ams.js
-    // engine load progress goes from 0-40% for .wasm and 40-50% for wasm.js
     load: function(appCanvasId, exeName) {
         Progress.addProgress(Module.setupCanvas(appCanvasId));
         if (Module['isWASMSupported']) {
-            EngineLoader.loadWasmAsync(exeName + ".wasm", EngineLoader.wasm_from, EngineLoader.wasm_to, function(wasm) {
-                EngineLoader.loadScriptAsync(exeName + '_wasm.js', EngineLoader.wasmjs_size, EngineLoader.wasmjs_from, EngineLoader.wasmjs_to);
-            });
+            EngineLoader.loadWasmAsync(exeName);
         } else {
-            EngineLoader.loadScriptAsync(exeName + '_asmjs.js', EngineLoader.asmjs_size, EngineLoader.asmjs_from, EngineLoader.asmjs_to);
+            EngineLoader.loadAsmJsAsync(exeName);
         }
     }
 }
@@ -699,9 +716,14 @@ var Module = {
     },
 
     preSync: function(done) {
+        if (Module.persistentStorage != true) {
+            Module._syncInitial = true;
+            done();
+            return;
+        }
         // Initial persistent sync before main is called
         FS.syncfs(true, function(err) {
-            if(err) {
+            if (err) {
                 Module._syncTries += 1;
                 console.error("FS syncfs error: " + err);
                 if (Module._syncMaxTries > Module._syncTries) {
@@ -734,6 +756,9 @@ var Module = {
     // It will flag that another one is needed if there is already one sync running.
     persistentSync: function() {
 
+        if (Module.persistentStorage != true) {
+            return;
+        }
         // Need to wait for the initial sync to finish since it
         // will call close on all its file streams which will trigger
         // new persistentSync for each.
@@ -747,27 +772,40 @@ var Module = {
     },
 
     preInit: [function() {
-        /* Mount filesystem on preinit */
+        // Mount filesystem on preinit
         var dir = DMSYS.GetUserPersistentDataRoot();
-        FS.mkdir(dir);
+        try {
+            FS.mkdir(dir);
+        }
+        catch (error) {
+            Module.persistentStorage = false;
+            Module._preloadAndCallMain();
+            return;
+        }
 
         // If IndexedDB is supported we mount the persistent data root as IDBFS,
         // then try to do a IDB->MEM sync before we start the engine to get
         // previously saved data before boot.
-        window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-        if (Module.persistentStorage && window.indexedDB) {
+        try {
             FS.mount(IDBFS, {}, dir);
-
             // Patch FS.close so it will try to sync MEM->IDB
-            var _close = FS.close; FS.close = function(stream) { var r = _close(stream); Module.persistentSync(); return r; }
-
-            // Sync IDB->MEM before calling main()
-            Module.preSync(function() {
-                Module._preloadAndCallMain();
-            });
-        } else {
-            Module._preloadAndCallMain();
+            var _close = FS.close;
+            FS.close = function(stream) {
+                var r = _close(stream);
+                Module.persistentSync();
+                return r;
+            }
         }
+        catch (error) {
+            Module.persistentStorage = false;
+            Module._preloadAndCallMain();
+            return;
+        }
+
+        // Sync IDB->MEM before calling main()
+        Module.preSync(function() {
+            Module._preloadAndCallMain();
+        });
     }],
 
     preRun: [function() {

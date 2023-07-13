@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -46,6 +46,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><strong>DruidEvent</strong></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -59,13 +60,13 @@
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -73,8 +74,10 @@
 <div id="content">
 
 <h1>Module <code>DruidEvent</code></h1>
-<p>Druid lua event library</p>
-<p></p>
+<p>Druid Event Module
+<p> The Event module provides a simple class for handling callbacks.</p>
+<p> It is used in many Druid components.
+<p> You can subscribe to an event using the `:subscribe` method and unsubscribe using the `:unsubscribe` method.</p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -84,15 +87,15 @@
 	<td class="summary">Clear the all event handlers</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#initialize">initialize(self, initial_callback)</a></td>
-	<td class="summary">Event constructur</td>
+	<td class="name" nowrap><a href="#initialize">initialize(self[, initial_callback])</a></td>
+	<td class="summary">DruidEvent constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_exist">is_exist(self)</a></td>
 	<td class="summary">Return true, if event have at lease one handler</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#subscribe">subscribe(self, callback, context)</a></td>
+	<td class="name" nowrap><a href="#subscribe">subscribe(self, callback[, context])</a></td>
 	<td class="summary">Subscribe callback on event</td>
 	</tr>
 	<tr>
@@ -100,7 +103,7 @@
 	<td class="summary">Trigger the event and call all subscribed callbacks</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#unsubscribe">unsubscribe(self, callback, context)</a></td>
+	<td class="name" nowrap><a href="#unsubscribe">unsubscribe(self, callback[, context])</a></td>
 	<td class="summary">Unsubscribe callback on event</td>
 	</tr>
 </table>
@@ -131,14 +134,18 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">button.on_long_click:clear()</pre>
+    </ul>
 
 </dd>
     <dt>
     <a name = "initialize"></a>
-    <strong>initialize(self, initial_callback)</strong>
+    <strong>initialize(self[, initial_callback])</strong>
     </dt>
     <dd>
-    Event constructur
+    DruidEvent constructor
 
 
     <h3>Parameters:</h3>
@@ -150,12 +157,19 @@
         <li><span class="parameter">initial_callback</span>
             <span class="types"><span class="type">function</span></span>
          Subscribe the callback on new event, if callback exist
+         (<em>optional</em>)
         </li>
     </ul>
 
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> Event = <span class="global">require</span>(<span class="string">"druid.event"</span>)
+...
+<span class="keyword">local</span> event = Event(initial_callback)</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -183,11 +197,15 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> is_long_click_handler_exists = button.on_long_click:is_exist()</pre>
+    </ul>
 
 </dd>
     <dt>
     <a name = "subscribe"></a>
-    <strong>subscribe(self, callback, context)</strong>
+    <strong>subscribe(self, callback[, context])</strong>
     </dt>
     <dd>
     Subscribe callback on event
@@ -204,14 +222,24 @@
          Callback itself
         </li>
         <li><span class="parameter">context</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         Additional context as first param to callback call
+            <span class="types"><span class="type">Any</span></span>
+         Additional context as first param to callback call, usually it's self
+         (<em>optional</em>)
         </li>
     </ul>
 
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> <span class="keyword">function</span> on_long_callback(self)
+    <span class="global">print</span>(<span class="string">"Long click!"</span>)
+<span class="keyword">end</span>
+...
+<span class="keyword">local</span> button = self.druid:new_button(<span class="string">"button"</span>, callback)
+button.on_long_click:subscribe(on_long_callback, self)</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -229,7 +257,7 @@
          <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
         <li><span class="parameter">...</span>
-            <span class="types"><span class="type">any</span></span>
+            <span class="types"><span class="type">Any</span></span>
          All event params
         </li>
     </ul>
@@ -237,11 +265,18 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> Event = <span class="global">require</span>(<span class="string">"druid.event"</span>)
+...
+<span class="keyword">local</span> event = Event()
+event:trigger(<span class="string">"Param1"</span>, <span class="string">"Param2"</span>)</pre>
+    </ul>
 
 </dd>
     <dt>
     <a name = "unsubscribe"></a>
-    <strong>unsubscribe(self, callback, context)</strong>
+    <strong>unsubscribe(self, callback[, context])</strong>
     </dt>
     <dd>
     Unsubscribe callback on event
@@ -258,14 +293,23 @@
          Callback itself
         </li>
         <li><span class="parameter">context</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+            <span class="types"><span class="type">Any</span></span>
          Additional context as first param to callback call
+         (<em>optional</em>)
         </li>
     </ul>
 
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> <span class="keyword">function</span> on_long_callback(self)
+    <span class="global">print</span>(<span class="string">"Long click!"</span>)
+<span class="keyword">end</span>
+...
+button.on_long_click:unsubscribe(on_long_callback, self)</pre>
+    </ul>
 
 </dd>
 </dl>

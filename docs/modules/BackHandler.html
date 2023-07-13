@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -32,7 +32,6 @@
 
 <h2>Contents</h2>
 <ul>
-<li><a href="#Functions">Functions</a></li>
 <li><a href="#Fields">Fields</a></li>
 </ul>
 
@@ -47,6 +46,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -60,13 +60,13 @@
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -74,30 +74,33 @@
 <div id="content">
 
 <h1>Module <code>BackHandler</code></h1>
-<p>Component to handle back key (android, backspace)</p>
-<p></p>
+<p>Component with event on back and backspace button.</p>
+<p>
+ <b># Overview #</b>
+<p> Back Handler is recommended to put in every game window to close it
+ or in main screen to call settings window.
+<p> <b># Notes #</b>
+<p> • Back Handler inheritance <a href="../modules/BaseComponent.html#">BaseComponent</a>, you can use all of its methods in addition to those described here.
+<p> • Back Handler react on release action ACTION_BACK or ACTION_BACKSPACE</p>
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">local callback = function(self, params) ... end
+
+local params = {}
+local back_handler = self.druid:new_back_handler(callback, [params])
+</pre>
+    </ul>
 
 
-<h2><a href="#Functions">Functions</a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#init">init(self, callback[, params])</a></td>
-	<td class="summary">Component init function</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#on_input">on_input(self, action_id, action)</a></td>
-	<td class="summary">Input handler for component</td>
-	</tr>
-</table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#on_back">on_back</a></td>
-	<td class="summary">On back handler callback(self, params)</td>
+	<td class="summary"><a href="../modules/DruidEvent.html#">DruidEvent</a> Event on back handler action.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#params">params</a></td>
-	<td class="summary">Params to back callback</td>
+	<td class="summary">Custom args to pass in the callback</td>
 	</tr>
 </table>
 
@@ -105,69 +108,6 @@
 <br/>
 
 
-    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "init"></a>
-    <strong>init(self, callback[, params])</strong>
-    </dt>
-    <dd>
-    Component init function
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BackHandler</span></span>
-         <a href="../modules/BackHandler.html#">BackHandler</a>
-        </li>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">callback</span></span>
-         On back button
-        </li>
-        <li><span class="parameter">params</span>
-            <span class="types"><span class="type">any</span></span>
-         Callback argument
-         (<em>optional</em>)
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "on_input"></a>
-    <strong>on_input(self, action_id, action)</strong>
-    </dt>
-    <dd>
-    Input handler for component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BackHandler</span></span>
-         <a href="../modules/BackHandler.html#">BackHandler</a>
-        </li>
-        <li><span class="parameter">action_id</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         on_input action id
-        </li>
-        <li><span class="parameter">action</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         on_input action
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-</dl>
     <h2 class="section-header "><a name="Fields"></a>Fields</h2>
 
     <dl class="function">
@@ -176,7 +116,8 @@
     <strong>on_back</strong>
     </dt>
     <dd>
-    On back handler callback(self, params)
+    <a href="../modules/DruidEvent.html#">DruidEvent</a> Event on back handler action.
+<p> Trigger on input action ACTION_BACK or ACTION_BACKSPACE
 
 
     <ul>
@@ -189,6 +130,11 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Subscribe additional callbacks:
+</span>back_handler.on_back:subscribe(callback)</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -196,19 +142,25 @@
     <strong>params</strong>
     </dt>
     <dd>
-    Params to back callback
+    Custom args to pass in the callback
 
 
     <ul>
         <li><span class="parameter">params</span>
             <span class="types"><span class="type">any</span></span>
 
+         (<em>optional</em>)
         </li>
     </ul>
 
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Replace params on runtime:
+</span>back_handler.params = { ... }</pre>
+    </ul>
 
 </dd>
 </dl>

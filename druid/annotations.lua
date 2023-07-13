@@ -963,8 +963,8 @@ function druid__rich_text.init(self, template, nodes) end
 --- Set text for Rich Text
 ---@param self druid.rich_text @{RichText}
 ---@param text string The text to set
----@return table words
----@return table line_metrics
+---@return druid.rich_text.word[] words
+---@return druid.rich_text.lines_metrics line_metrics
 function druid__rich_text.set_text(self, text) end
 
 --- Get all words, which has a passed tag
@@ -1729,7 +1729,7 @@ function helper.get_screen_aspect_koef() end
 
 --- Get text metric from GUI node.
 ---@param text_node Node
----@return GUITextMetrics Fields: width, height, max_ascent, max_descent
+---@return pepepe
 function helper.get_text_metrics_from_node(text_node) end
 
 --- Add value to array with shift policy

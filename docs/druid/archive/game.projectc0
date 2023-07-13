@@ -1,12 +1,12 @@
 [project]
 title = druid
-version = 0.10.603
+version = 0.10.682
 write_log = 0
 compress_archive = 1
 publisher = Insality
 developer = Insality
-commit_sha = 072507cc9e715541bdee7636d2e5eeeb3c22a57d
-build_date = 2022-09-09T18:00:07Z
+commit_sha = 1cbe57376397a8352bbafcc67de0b6f95ae37b35
+build_date = 2023-07-13T18:37:07Z
 title_as_file_name = druid
 
 [display]
@@ -16,6 +16,7 @@ high_dpi = 0
 samples = 0
 fullscreen = 0
 update_frequency = 0
+swap_interval = 1
 vsync = 1
 display_profiles = /example/custom.display_profilesc
 dynamic_orientation = 1
@@ -29,6 +30,8 @@ clear_color_alpha = 0
 
 [physics]
 type = 2D
+max_collision_object_count = 128
+use_fixed_timestep = 0
 gravity_y = -10
 debug = 0
 debug_alpha = 0.9
@@ -45,6 +48,7 @@ ray_cast_limit_2d = 64
 ray_cast_limit_3d = 128
 trigger_overlap_capacity = 16
 velocity_threshold = 1
+max_fixed_timesteps = 2
 
 [bootstrap]
 main_collection = /example/example.collectionc
@@ -89,6 +93,7 @@ subpixels = 1
 
 [model]
 max_count = 128
+split_meshes = 0
 
 [mesh]
 max_count = 128
@@ -115,43 +120,51 @@ max_count = 128
 launch_screen = /builtins/manifests/ios/LaunchScreen.storyboardc
 pre_renderered_icons = 0
 bundle_identifier = example.unnamed
+bundle_name = 
 infoplist = /builtins/manifests/ios/Info.plist
 default_language = en
 localizations = en
 
 [android]
-version_code = 603
-minimum_sdk_version = 16
-target_sdk_version = 30
+version_code = 682
+minimum_sdk_version = 19
+target_sdk_version = 33
 package = com.insality.druid
+gcm_sender_id = 
 manifest = /builtins/manifests/android/AndroidManifest.xml
 iap_provider = GooglePlay
 input_method = HiddenInputField
 immersive_mode = 0
 display_cutout = 1
 debuggable = 0
+proguard = 
 
 [osx]
+app_icon = 
 infoplist = /builtins/manifests/osx/Info.plist
 bundle_identifier = example.unnamed
+bundle_name = 
 bundle_version = 1
 default_language = en
 localizations = en
 
 [windows]
+app_icon = 
 
 [html5]
 custom_heap_size = 0
 heap_size = 64
 htmlfile = /builtins/manifests/web/engine_template.html
 cssfile = /example/light_theme.css
+splash_image = /media/druid_logo.png
 archive_location_prefix = archive
+archive_location_suffix = 
+engine_arguments = --verify-graphics-calls=false
+wasm_streaming = 0
 show_fullscreen_button = 0
 show_made_with_defold = 0
 show_console_banner = 1
 scale_mode = fit
-engine_arguments = --verify-graphics-calls=false
-splash_image = /media/druid_logo.png
 
 [particle_fx]
 max_count = 64
@@ -163,6 +176,7 @@ auto_finish_transactions = 1
 
 [network]
 http_timeout = 0
+ssl_certificates = 
 http_thread_count = 4
 http_cache_enabled = 1
 
@@ -178,6 +192,7 @@ subpixels = 1
 
 [profiler]
 track_cpu = 0
+sleep_between_server_updates = 0
 
 [liveupdate]
 settings = /liveupdate.settings
@@ -189,6 +204,7 @@ max_tile_count = 2048
 
 [engine]
 run_while_iconified = 0
+fixed_update_frequency = 60
 
 [druid]
 no_auto_input = 0
@@ -201,9 +217,9 @@ input_key_esc = key_esc
 input_key_back = key_back
 input_key_enter = key_enter
 input_key_backspace = key_backspace
-input_multitouch = multitouch
-input_scroll_up = scroll_up
-input_scroll_down = scroll_down
+input_multitouch = touch_multi
+input_scroll_up = mouse_wheel_up
+input_scroll_down = mouse_wheel_down
 
 [native_extension]
 app_manifest = /example/game.appmanifest
