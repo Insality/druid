@@ -23,7 +23,7 @@ To integrate the **Druid** extension into your own project, add this project as 
 Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 ### Input Bindings
-**Druid** utilizes the `/builtins/input/all.input_binding` input bindings. For custom input bindings, refer to the Input Binding section in the  **_[Advanced Setup](docs_md/advanced-setup.md)_**.
+**Druid** utilizes the `/builtins/input/all.input_binding` input bindings. For custom input bindings, refer to the Input Binding section in the  **_[Advanced Setup](docs_md/advanced-setup.md#input-bindings)_**.
 
 ### Advanced Setup
 If you need to customize **Druid** according to your specific requirements, you can refer to the **_[Advanced Setup](docs_md/advanced-setup.md)_** section.
@@ -107,7 +107,7 @@ local druid = require("druid.druid")
 
 ### Create custom components
 
-If you want to create your own components, refer to the [Create Custom Components](docs_md/create-custom-components.md) section in the documentation.
+If you want to create your own components, refer to the [Create Custom Components](docs_md/02-creating_custom_components.md) section in the documentation.
 
 Custom components are one of the most powerful features of **Druid**. They allow you to create your own components effortlessly and utilize them in your game.
 
@@ -174,20 +174,14 @@ You can subscribe several callbacks to a single event.
 - Druid automatically calls `acquire_input_focus` if you have input components. Therefore, manual calling of `acquire_input_focus` is not required.
 - When deleting a **Druid** component node, make sure to remove it using `druid:remove(component)`.
 
-[See the full FAQ here](docs_md/FAQ.md)
-
 
 ## Examples
-
-### HTML5 Live Examples
 
 Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Druid** example app.
 
 Each example page provides a direct link to the corresponding example code, making it easier for you to understand how to use **Druid**.
 
-### Code Examples
-
-Refer to the [**example folder**](https://github.com/Insality/druid/tree/develop/example) for code examples demonstrating how to use **Druid**.
+Or refer directly to the [**example folder**](https://github.com/Insality/druid/tree/develop/example) for code examples demonstrating how to use **Druid**.
 
 
 ## Documentation
@@ -199,8 +193,7 @@ To better understand **Druid**, read the following documentation:
 - [See FAQ article](docs_md/FAQ.md)
 - [Druid styles](docs_md/03-styles.md)
 
-You can find the full **Druid** documentation here:
-https://insality.github.io/druid/modules/Druid.html
+You can find the full **Druid** [documentation here](https://insality.github.io/druid/modules/Druid.html).
 
 
 ## Licenses
