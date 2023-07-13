@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -48,6 +48,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -61,13 +62,13 @@
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><strong>Scroll</strong></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -77,12 +78,26 @@
 <h1>Module <code>Scroll</code></h1>
 <p>Component to handle scroll content.</p>
 <p>
- Scroll consist from two nodes: scroll parent and scroll input
- Scroll input the user input zone, it's static
- Scroll parent the scroll moving part, it will change position.
- Setup initial scroll size by changing scroll parent size. If scroll parent
- size will be less than scroll_input size, no scroll is available. For scroll
- parent size should be more than input size</p>
+ <b># Overview #</b>
+<p> The Scroll component is designed to handle scrollable content and consists of two nodes: the scroll parent and the scroll input.
+<p> The scroll input represents the user input zone and remains static.
+<p> The scroll parent is the movable part of the scroll and changes its position.
+<p> The initial scroll size can be set by adjusting the size of the scroll parent.
+ If the size of the scroll parent is smaller than the scroll input size, scrolling is not available.
+<p> <b># Notes #</b>
+<p> • By default, the scroll style includes inertia and extra size for a stretching effect.
+ These settings can be adjusted using the scroll style settings.
+ For more details, refer to the scroll style settings.
+<p> • "Points of interest" can be set up for the scroll.
+ The scroll will always be centered on the closest point of interest.
+ This feature allows creating a slider without inertia and with points of interest on each scroll element.
+<p> • The scroll content size can be adjusted using the scroll:set_size(node_size) method.
+ This method sets a new size for the _content node.
+<p> • Inertial scrolling mode can be enabled or disabled using the scroll:set_inert(state) method.
+<p> • The extra stretch size can be adjusted using the scroll:set_extra_stretch_size method.
+<p> • Multitouch is required for scrolling. The scroll component correctly handles
+ touch ID swaps while dragging the scroll.
+<p> <a href="https://insality.github.io/druid/druid/index.html?example=general_scroll" target="_blank"><b>Example Link</b></a></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -102,7 +117,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, view_node, content_node)</a></td>
-	<td class="summary">Scroll constructor</td>
+	<td class="summary"><a href="../modules/Scroll.html#">Scroll</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_inert">is_inert(self)</a></td>
@@ -319,7 +334,7 @@
     <strong>init(self, view_node, content_node)</strong>
     </dt>
     <dd>
-    Scroll constructor
+    <a href="../modules/Scroll.html#">Scroll</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -329,11 +344,11 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">view_node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
          GUI view scroll node
         </li>
         <li><span class="parameter">content_node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
          GUI content scroll node
         </li>
     </ul>

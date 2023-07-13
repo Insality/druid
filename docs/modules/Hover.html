@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -47,6 +47,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -60,13 +61,13 @@
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -89,6 +90,14 @@
 	<td class="summary">Return current hover enabled state</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#is_hovered">is_hovered(self)</a></td>
+	<td class="summary">Return current hover state.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_mouse_hovered">is_mouse_hovered(self)</a></td>
+	<td class="summary">Return current hover state.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, zone)</a></td>
 	<td class="summary">Strict hover click area.</td>
 	</tr>
@@ -109,11 +118,11 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#on_hover">on_hover</a></td>
-	<td class="summary">On hover callback(self, state)</td>
+	<td class="summary">On hover callback(self, state, hover_instance)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_mouse_hover">on_mouse_hover</a></td>
-	<td class="summary">On mouse hover callback(self, state)</td>
+	<td class="summary">On mouse hover callback(self, state, hover_instance)</td>
 	</tr>
 </table>
 
@@ -174,6 +183,60 @@
 
            <span class="types"><span class="type">bool</span></span>
         The hover enabled state
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_hovered"></a>
+    <strong>is_hovered(self)</strong>
+    </dt>
+    <dd>
+    Return current hover state.  True if touch action was on the node at current time
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        The current hovered state
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_mouse_hovered"></a>
+    <strong>is_mouse_hovered(self)</strong>
+    </dt>
+    <dd>
+    Return current hover state.  True if nil action_id (usually desktop mouse) was on the node at current time
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        The current hovered state
     </ol>
 
 
@@ -292,7 +355,7 @@
     <strong>on_hover</strong>
     </dt>
     <dd>
-    On hover callback(self, state)
+    On hover callback(self, state, hover_instance)
 
 
     <ul>
@@ -312,7 +375,7 @@
     <strong>on_mouse_hover</strong>
     </dt>
     <dd>
-    On mouse hover callback(self, state)
+    On mouse hover callback(self, state, hover_instance)
 
 
     <ul>

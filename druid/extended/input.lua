@@ -2,6 +2,8 @@
 
 --- Druid input text component.
 -- Carry on user text input
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_input" target="_blank"><b>Example Link</b></a>
 -- @author Part of code from Britzl gooey input component
 -- @module Input
 -- @within BaseComponent
@@ -51,7 +53,8 @@
 local Event = require("druid.event")
 local const = require("druid.const")
 local component = require("druid.component")
-local utf8 = require("druid.system.utf8")
+local utf8_lua = require("druid.system.utf8")
+local utf8 = utf8 or utf8_lua
 
 local Input = component.create("input")
 
@@ -114,7 +117,7 @@ end
 
 --- Component init function
 -- @tparam Input self @{Input}
--- @tparam node click_node Button node to enabled input component
+-- @tparam node click_node Node to enabled input component
 -- @tparam node|Text text_node Text node what will be changed on user input. You can pass text component instead of text node name @{Text}
 -- @tparam[opt] number keyboard_type Gui keyboard type for input field
 function Input.init(self, click_node, text_node, keyboard_type)
@@ -146,6 +149,10 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	self.button:set_style(self.button_style)
 	self.button.on_click_outside:subscribe(self.unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
+
+	if html5 then
+		self.button:set_html5_user_interaction(true)
+	end
 
 	self.on_input_select = Event()
 	self.on_input_unselect = Event()

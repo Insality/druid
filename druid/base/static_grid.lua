@@ -1,7 +1,36 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to handle placing components by row and columns.
--- Grid can anchor your elements, get content size and other
+--- Component to handle component's position by row and columns.
+-- ## Overview ##
+--
+-- The Static Grid component allows for positioning components in rows and columns.
+-- It provides a static grid layout with constant node sizes, allowing for pre-calculated
+-- node positions and the option to include gaps between nodes.
+--
+-- ## Notes ##
+--
+-- • In a static grid, the node size remains constant, enabling the calculation of node
+-- positions before placement. Nodes can be placed with gaps between them.
+--
+-- • The static grid can automatically shift elements when nodes are added or removed.
+--
+-- • When a node is added, the grid will set the node's parent to the specified parent_node.
+--
+-- • You can obtain an array of positions for each element, which can be used to set
+-- points of interest in a scroll component.
+--
+-- • The size of all elements can be retrieved for setting up the size in a scroll component.
+--
+-- • The grid can be bound to a scroll component for automatic resizing of the scroll content size.
+--
+-- • The pivot of the parent_node affects the node placement within the grid.
+--
+-- • A prefab node is used to determine the node size and anchor.
+--
+-- • You can specify a position_function for animations using the
+-- _static_grid:set_position_function(node, pos) callback. The default position function is gui.set_position().
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_grid" target="_blank"><b>Example Link</b></a>
 -- @module StaticGrid
 -- @within BaseComponent
 -- @alias druid.static_grid
@@ -81,9 +110,9 @@ function StaticGrid.on_style_change(self, style)
 end
 
 
---- Component init function
+--- @{StaticGrid} constructor
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam node parent The gui node parent, where items will be placed
+-- @tparam string|Node parent The GUI Node container, where grid's items will be placed
 -- @tparam node element Element prefab. Need to get it size
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
 function StaticGrid.init(self, parent, element, in_row)
@@ -188,23 +217,9 @@ end
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
 -- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 function StaticGrid.add(self, item, index, shift_policy, is_instant)
-	shift_policy = shift_policy or const.SHIFT.RIGHT
 	index = index or ((self.last_index or 0) + 1)
 
-	if self.nodes[index] then
-		if shift_policy == const.SHIFT.RIGHT then
-			for i = self.last_index, index, -1 do
-				self.nodes[i + 1] = self.nodes[i]
-			end
-		end
-		if shift_policy == const.SHIFT.LEFT then
-			for i = self.first_index, index do
-				self.nodes[i - 1] = self.nodes[i]
-			end
-		end
-	end
-
-	self.nodes[index] = item
+	helper.insert_with_shift(self.nodes, item, index, shift_policy)
 	gui.set_parent(item, self.parent)
 
 	-- Add new item instantly in new pos. Break update function for correct positioning
@@ -227,22 +242,10 @@ end
 -- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 -- @treturn Node The deleted gui node from grid
 function StaticGrid.remove(self, index, shift_policy, is_instant)
-	shift_policy = shift_policy or const.SHIFT.RIGHT
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
 	local remove_node = self.nodes[index]
-	self.nodes[index] = nil
-
-	if shift_policy == const.SHIFT.RIGHT then
-		for i = index, self.last_index do
-			self.nodes[i] = self.nodes[i + 1]
-		end
-	end
-	if shift_policy == const.SHIFT.LEFT then
-		for i = index, self.first_index, -1 do
-			self.nodes[i] = self.nodes[i - 1]
-		end
-	end
+	helper.remove_with_shift(self.nodes, index, shift_policy)
 
 	self:_update(is_instant)
 

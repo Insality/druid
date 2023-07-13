@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -38,12 +38,12 @@
   <li><a href="modules/Hover.html">Hover</a></li>
   <li><a href="modules/Scroll.html">Scroll</a></li>
   <li><a href="modules/StaticGrid.html">StaticGrid</a></li>
-  <li><a href="modules/Swipe.html">Swipe</a></li>
   <li><a href="modules/Text.html">Text</a></li>
   <li><a href="modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="modules/PinKnob.html">PinKnob</a></li>
   <li><a href="modules/RichInput.html">RichInput</a></li>
-  <li><a href="modules/druid.html">druid</a></li>
+  <li><a href="modules/RichText.html">RichText</a></li>
+  <li><a href="modules/Druid.html">Druid</a></li>
   <li><a href="modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="modules/Checkbox.html">Checkbox</a></li>
   <li><a href="modules/CheckboxGroup.html">CheckboxGroup</a></li>
@@ -56,6 +56,7 @@
   <li><a href="modules/Progress.html">Progress</a></li>
   <li><a href="modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="modules/Slider.html">Slider</a></li>
+  <li><a href="modules/Swipe.html">Swipe</a></li>
   <li><a href="modules/Timer.html">Timer</a></li>
   <li><a href="modules/Helper.html">Helper</a></li>
   <li><a href="modules/DruidInstance.html">DruidInstance</a></li>
@@ -66,21 +67,21 @@
 <div id="content">
 
 
-  <h2>Documentation for Druid Library</h2>
+  <h2>Documentation for Druid Framework</h2>
 
 <h2>Modules</h2>
 <table class="module_list">
 	<tr>
 		<td class="name"  nowrap><a href="modules/BackHandler.html">BackHandler</a></td>
-		<td class="summary">Component to handle back key (android, backspace)</td>
+		<td class="summary">Component with event on back and backspace button.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/Blocker.html">Blocker</a></td>
-		<td class="summary">Component to block input on specify zone by node</td>
+		<td class="summary">Component to consume input in special zone defined by GUI node.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/Button.html">Button</a></td>
-		<td class="summary">Component to handle basic GUI button</td>
+		<td class="summary">Druid Component for Handling User Click Interactions: Click, Long Click, Double Click, and More.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/Drag.html">Drag</a></td>
@@ -96,15 +97,13 @@
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/StaticGrid.html">StaticGrid</a></td>
-		<td class="summary">Component to handle placing components by row and columns.</td>
-	</tr>
-	<tr>
-		<td class="name"  nowrap><a href="modules/Swipe.html">Swipe</a></td>
-		<td class="summary">Component to handle swipe gestures on node.</td>
+		<td class="summary">Component to handle component's position by row and columns.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/Text.html">Text</a></td>
-		<td class="summary">Component to handle all GUI texts.</td>
+		<td class="summary">Component for Wrapping GUI Text Nodes: Druid Text
+<p> ## Overview ##
+<p> Druid Text is a component that provides various adjustment modes for text nodes.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/BaseComponent.html">BaseComponent</a></td>
@@ -119,12 +118,17 @@
 		<td class="summary">Druid Rich Input custom component.</td>
 	</tr>
 	<tr>
-		<td class="name"  nowrap><a href="modules/druid.html">druid</a></td>
-		<td class="summary">Druid UI Library.</td>
+		<td class="name"  nowrap><a href="modules/RichText.html">RichText</a></td>
+		<td class="summary">Druid Rich Text Custom Component.</td>
+	</tr>
+	<tr>
+		<td class="name"  nowrap><a href="modules/Druid.html">Druid</a></td>
+		<td class="summary">Druid UI Component Framework.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/DruidEvent.html">DruidEvent</a></td>
-		<td class="summary">Druid lua event library</td>
+		<td class="summary">Druid Event Module
+<p> The Event module provides a simple class for handling callbacks.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/Checkbox.html">Checkbox</a></td>
@@ -152,8 +156,10 @@
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/LangText.html">LangText</a></td>
-		<td class="summary">Component to handle all GUI texts
- Good working with localization system</td>
+		<td class="summary">Component to wrap over GUI Text nodes with localization helpers
+<p> <b># Overview #</b>
+<p> • The initialization of druid.set_text_function is required to enable localization
+ using the localization ID.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/Layout.html">Layout</a></td>
@@ -161,7 +167,7 @@
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/Progress.html">Progress</a></td>
-		<td class="summary">Basic progress bar component.</td>
+		<td class="summary">Druid component to handle the progress bars.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/RadioGroup.html">RadioGroup</a></td>
@@ -172,16 +178,20 @@
 		<td class="summary">Druid slider component</td>
 	</tr>
 	<tr>
+		<td class="name"  nowrap><a href="modules/Swipe.html">Swipe</a></td>
+		<td class="summary">Component to handle swipe gestures on node.</td>
+	</tr>
+	<tr>
 		<td class="name"  nowrap><a href="modules/Timer.html">Timer</a></td>
 		<td class="summary">Component to handle GUI timers.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/Helper.html">Helper</a></td>
-		<td class="summary">Druid helper module for gui layouts</td>
+		<td class="summary">Helper module with various usefull GUI functions.</td>
 	</tr>
 	<tr>
 		<td class="name"  nowrap><a href="modules/DruidInstance.html">DruidInstance</a></td>
-		<td class="summary">Instance of Druid.</td>
+		<td class="summary">Druid Instance which you use for component creation.</td>
 	</tr>
 </table>
 

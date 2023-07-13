@@ -1,12 +1,13 @@
 project='Druid'
-title='Defold Druid UI Library'
-description='Documentation for Druid Library'
+title='Defold Druid UI Framework'
+description='Documentation for Druid Framework'
 file={"./druid",
 	exclude = {
 		"./druid/styles/",
 		"./druid/system/middleclass.lua",
 		"./druid/templates/",
 		"./druid/annotations.lua",
+		"./druid/custom/rich_text/module",
 	}
 }
 package='druid'

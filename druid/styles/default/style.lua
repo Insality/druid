@@ -150,7 +150,41 @@ M["text"] = {
 
 
 M["hotkey"] = {
-	MODIFICATORS = { "key_lshift", "key_rshift", "key_lctrl", "key_rctrl", "key_lalt", "key_ralt", "key_lsuper", "key_rsuper" }, -- Add key ids to mark it as modificator keys
+	-- Add key ids to mark it as modificator keys
+	MODIFICATORS = {
+		"key_lshift",
+		"key_rshift",
+		"key_lctrl",
+		"key_rctrl",
+		"key_lalt",
+		"key_ralt",
+		"key_lsuper",
+		"key_rsuper"
+	}
+}
+
+
+M["rich_text"] = {
+	COLORS = {
+		white = "#FFFFFF",
+		black = "#000000",
+		red = "#FF0000",
+		green = "#00FF00",
+		blue = "#0000FF",
+		yellow = "#FFFF00",
+		magenta = "#FF00FF",
+		cyan = "#00FFFF",
+		gray = "#808080",
+		dark_gray = "#404040",
+		light_gray = "#C0C0C0",
+		orange = "#FFA500",
+		pink = "#FFC0CB",
+		purple = "#800080",
+		brown = "#A52A2A",
+		olive = "#808000",
+		teal = "#008080",
+		navy = "#000080",
+	}
 }
 
 

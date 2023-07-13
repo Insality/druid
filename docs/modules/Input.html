@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -48,6 +48,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -61,13 +62,13 @@
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -77,7 +78,8 @@
 <h1>Module <code>Input</code></h1>
 <p>Druid input text component.</p>
 <p>
- Carry on user text input</p>
+ Carry on user text input
+<p> <a href="https://insality.github.io/druid/druid/index.html?example=general_input" target="_blank"><b>Example Link</b></a></p>
     <h3>Info:</h3>
     <ul>
         <li><strong>Author</strong>: Part of code from Britzl gooey input component</li>
@@ -232,7 +234,7 @@
         </li>
         <li><span class="parameter">click_node</span>
             <span class="types"><span class="type">node</span></span>
-         Button node to enabled input component
+         Node to enabled input component
         </li>
         <li><span class="parameter">text_node</span>
             <span class="types"><span class="type">node</span> or <span class="type">Text</span></span>
@@ -432,6 +434,11 @@
         <li><span class="parameter">IS_UNSELECT_ON_RESELECT</span>
             <span class="types"><span class="type">bool</span></span>
          If true, call unselect on select selected input
+         (<em>default</em> false)
+        </li>
+        <li><span class="parameter">NO_CONSUME_INPUT_WHILE_SELECTED</span>
+            <span class="types"><span class="type">bool</span></span>
+         If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured)
          (<em>default</em> false)
         </li>
         <li><span class="parameter">on_select</span>

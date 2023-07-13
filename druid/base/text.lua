@@ -1,8 +1,36 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to handle all GUI texts.
--- Druid text can adjust itself for text node size
--- Text will never will be outside of his text size (even multiline)
+--- Component for Wrapping GUI Text Nodes: Druid Text
+--
+-- ## Overview ##
+--
+-- Druid Text is a component that provides various adjustment modes for text nodes. It allows text to be scaled down to fit within the size of the text node.
+--
+-- ## Notes ##
+--
+-- • The text pivot can be changed using the text:set_pivot method.
+-- The anchoring will be inside the text node's area size.
+--
+-- • There are several text adjustment types available. The default is DOWNSCALE.
+-- You can change the default adjustment type in the Text style. Refer to the example below to see all available adjustment types:
+--
+-- - const.TEXT_ADJUST.DOWNSCALE: Changes the text's scale to fit within the text node's size.
+--
+-- - const.TEXT_ADJUST.TRIM: Trims the text with a postfix (default: "...", can be overridden in styles)
+-- to fit within the text node's size.
+--
+-- - const.TEXT_ADJUST.NO_ADJUST: No adjustment is applied, similar
+-- to the default Defold Text Node behavior.
+--
+-- - const.TEXT_ADJUST.DOWNSCALE_LIMITED: Changes the text's scale
+-- with a limited downscale. You can set the minimum scale using the text:set_minimal_scale() function.
+--
+-- - const.TEXT_ADJUST.SCROLL: Changes the text's pivot to imitate scrolling within the text box.
+-- For better effect, use with a stencil node.
+--
+-- - const.TEXT_ADJUST.SCALE_THEN_SCROLL: Combines two modes: limited downscale first, then scroll.
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=texts_general" target="_blank"><b>Example Link</b></a>
 -- @module Text
 -- @within BaseComponent
 -- @alias druid.text
@@ -48,8 +76,9 @@
 local Event = require("druid.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
-local utf8 = require("druid.system.utf8")
+local utf8_lua = require("druid.system.utf8")
 local component = require("druid.component")
+local utf8 = utf8 or utf8_lua
 
 local Text = component.create("text")
 
@@ -84,10 +113,12 @@ local function update_text_area_size(self)
 	scale_modifier = math.min(scale_modifier, self.start_scale.x)
 
 	if self:is_multiline() then
-		local max_text_area_square = max_width * max_height
-		local cur_text_area_square = metrics.height * metrics.width * self.start_scale.x
-		scale_modifier = self.start_scale.x * math.sqrt(max_text_area_square / cur_text_area_square)
-		scale_modifier = math.min(scale_modifier, self.start_scale.x)
+		local scale_modifier_by_height = math.sqrt(max_height / metrics.height)
+		scale_modifier = math.min(self.start_scale.y, scale_modifier_by_height)
+
+		if metrics.width * scale_modifier > max_width then
+			scale_modifier = math.min(max_width / metrics.width, self.start_scale.x)
+		end
 	end
 
 	if self._minimal_scale then
@@ -185,11 +216,11 @@ function Text.on_style_change(self, style)
 end
 
 
---- Component init function
+--- @{Text} constructor
 -- @tparam Text self @{Text}
--- @tparam node node Gui text node
+-- @tparam string|node node Node name or GUI Text Node itself
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
--- @tparam[opt=0] int adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+-- @tparam[opt=downscale] string adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 function Text.init(self, node, value, adjust_type)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)

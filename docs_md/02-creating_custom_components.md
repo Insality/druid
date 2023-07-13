@@ -6,7 +6,7 @@ Druid allows you to create your custom components which contains your custom log
 
 I wanna make a point that Druid is not only set of defined components to place buttons, scroll, etc. But mostly it's a way how to handle all your GUI elements in general. Custom components is most powerful way to separate logic and make higher abstraction in your code.
 
-Every component is the children of Basic Druid component. Read the [basic component API here].(https://insality.github.io/druid/modules/component.html), Methods of basic components you can call via `self:{method_name}`
+Every component is the children of Basic Druid component. Read the [basic component API here](https://insality.github.io/druid/modules/BaseComponent.html), Methods of basic components you can call via `self:{method_name}`
 
 
 ## Custom components
@@ -172,16 +172,16 @@ The generator script also check current GUI scene for Druid components to make s
 Start your node names with one of next keyword to say parser make component stubs for your. For example for nodes `button` and `button_exit` will be generated two Druid Button components with callback stubs.
 
 Available keywords:
-- `button` - add [Druid Button](docs_md/01-components.md#button) and generate callback stub
-- `text` - add [Druid Text](docs_md/01-components.md#text)
-- `lang_text` - add Druid [Druid Lang Text](docs_md/01-components.md#lang-text)
-- `grid` or `static_grid` - add Druid [Druid Static Grid](docs_md/01-components.md#static-grid). You should to setup Grid prefab for this component after file generation
-- `dynamic_grid` - add Druid [Druid Dynamic Grid](docs_md/01-components.md#dynamic-grid)
-- `scroll_view` - add [Druid Scroll](docs_md/01-components.md#scroll). It will add `scroll_content` node with the same postfix too. Check that is will correct node
-- `blocker` - add [Druid Blocker](docs_md/01-components.md#blocker)
-- `slider` - add [Druid Slider](docs_md/01-components.md#slider). You should to adjust end position of Slider after file generation
-- `progress` - add [Druid Progress](docs_md/01-components.md#progress)
-- `timer` - add [Druid Timer](docs_md/01-components.md#timer)
+- `button` - add [Druid Button](01-components.md#button) and generate callback stub
+- `text` - add [Druid Text](01-components.md#text)
+- `lang_text` - add Druid [Druid Lang Text](01-components.md#lang-text)
+- `grid` or `static_grid` - add Druid [Druid Static Grid](01-components.md#static-grid). You should to setup Grid prefab for this component after file generation
+- `dynamic_grid` - add Druid [Druid Dynamic Grid](01-components.md#dynamic-grid)
+- `scroll_view` - add [Druid Scroll](01-components.md#scroll). It will add `scroll_content` node with the same postfix too. Check that is will correct node
+- `blocker` - add [Druid Blocker](01-components.md#blocker)
+- `slider` - add [Druid Slider](01-components.md#slider). You should to adjust end position of Slider after file generation
+- `progress` - add [Druid Progress](01-components.md#progress)
+- `timer` - add [Druid Timer](01-components.md#timer)
 
 
 

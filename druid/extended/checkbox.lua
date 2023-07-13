@@ -1,6 +1,8 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid checkbox component
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_checkboxes" target="_blank"><b>Example Link</b></a>
 -- @module Checkbox
 -- @within BaseComponent
 -- @alias druid.checkbox

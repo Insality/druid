@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -48,6 +48,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -61,13 +62,13 @@
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><strong>Text</strong></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -75,10 +76,26 @@
 <div id="content">
 
 <h1>Module <code>Text</code></h1>
-<p>Component to handle all GUI texts.</p>
-<p>
- Druid text can adjust itself for text node size
- Text will never will be outside of his text size (even multiline)</p>
+<p>Component for Wrapping GUI Text Nodes: Druid Text
+<p> ## Overview ##
+<p> Druid Text is a component that provides various adjustment modes for text nodes.</p>
+<p> It allows text to be scaled down to fit within the size of the text node.
+<p> ## Notes ##
+<p> • The text pivot can be changed using the text:set_pivot method.
+ The anchoring will be inside the text node's area size.
+<p> • There are several text adjustment types available. The default is DOWNSCALE.
+ You can change the default adjustment type in the Text style. Refer to the example below to see all available adjustment types:
+<p> - const.TEXT_ADJUST.DOWNSCALE: Changes the text's scale to fit within the text node's size.
+<p> - const.TEXT_ADJUST.TRIM: Trims the text with a postfix (default: "...", can be overridden in styles)
+ to fit within the text node's size.
+<p> - const.TEXT_ADJUST.NO_ADJUST: No adjustment is applied, similar
+ to the default Defold Text Node behavior.
+<p> - const.TEXT_ADJUST.DOWNSCALE_LIMITED: Changes the text's scale
+ with a limited downscale. You can set the minimum scale using the text:set_minimal_scale() function.
+<p> - const.TEXT_ADJUST.SCROLL: Changes the text's pivot to imitate scrolling within the text box.
+ For better effect, use with a stencil node.
+<p> - const.TEXT_ADJUST.SCALE_THEN_SCROLL: Combines two modes: limited downscale first, then scroll.
+<p> <a href="https://insality.github.io/druid/druid/index.html?example=texts_general" target="_blank"><b>Example Link</b></a></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -92,8 +109,8 @@
 	<td class="summary">Calculate text width with font with respect to trailing space</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node[, value[, adjust_type=0]])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#init">init(self, node[, value[, adjust_type=downscale]])</a></td>
+	<td class="summary"><a href="../modules/Text.html#">Text</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_multiline">is_multiline(self)</a></td>
@@ -163,7 +180,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_update_text_scale">on_update_text_scale</a></td>
-	<td class="summary">On adjust text size callback(self, new_scale)</td>
+	<td class="summary">On adjust text size callback(self, new_scale, text_metrics)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#pos">pos</a></td>
@@ -260,10 +277,10 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node[, value[, adjust_type=0]])</strong>
+    <strong>init(self, node[, value[, adjust_type=downscale]])</strong>
     </dt>
     <dd>
-    Component init function
+    <a href="../modules/Text.html#">Text</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -273,8 +290,8 @@
          <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><a class="type" href="../modules/Text.html#node">node</a></span>
-         Gui text node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="../modules/Text.html#node">node</a></span>
+         Node name or GUI Text Node itself
         </li>
         <li><span class="parameter">value</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
@@ -282,9 +299,9 @@
          (<em>optional</em>)
         </li>
         <li><span class="parameter">adjust_type</span>
-            <span class="types"><span class="type">int</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
-         (<em>default</em> 0)
+         (<em>default</em> downscale)
         </li>
     </ul>
 
@@ -705,7 +722,7 @@
     <strong>on_update_text_scale</strong>
     </dt>
     <dd>
-    On adjust text size callback(self, new_scale)
+    On adjust text size callback(self, new_scale, text_metrics)
 
 
     <ul>

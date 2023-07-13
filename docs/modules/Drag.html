@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -48,6 +48,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><strong>Drag</strong></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -61,13 +62,13 @@
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -79,7 +80,8 @@
 <p>
  Drag have correct handling for multitouch and swap
  touched while dragging. Drag will be processed even
- the cursor is outside of node, if drag is already started</p>
+ the cursor is outside of node, if drag is already started
+<p> <a href="https://insality.github.io/druid/druid/index.html?example=general_drag" target="_blank"><b>Example Link</b></a></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -294,6 +296,11 @@
             <span class="types"><span class="type">number</span></span>
          Distance in pixels to start dragging
          (<em>default</em> 10)
+        </li>
+        <li><span class="parameter">NO_USE_SCREEN_KOEF</span>
+            <span class="types"><span class="type">boolean</span></span>
+         If screen aspect ratio affects on drag values
+         (<em>default</em> false)
         </li>
     </ul>
 

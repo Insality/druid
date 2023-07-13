@@ -2,6 +2,8 @@
 
 --- Component to manage data for huge dataset in scroll.
 -- It requires Druid Scroll and Druid Grid (Static or Dynamic) components
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_data_list" target="_blank"><b>Example Link</b></a>
 -- @module DataList
 -- @within BaseComponent
 -- @alias druid.data_list
@@ -115,23 +117,9 @@ function DataList.add(self, data, index, shift_policy)
 	index = index or self._data_last_index + 1
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
-	if self._data[index] then
-		if shift_policy == const.SHIFT.RIGHT then
-			for i = self._data_last_index, index, -1 do
-				self._data[i + 1] = self._data[i]
-			end
-		end
-		if shift_policy == const.SHIFT.LEFT then
-			for i = self._data_first_index, index do
-				self._data[i - 1] = self._data[i]
-			end
-		end
-	end
-	self._data[index] = data
+	helper.insert_with_shift(self._data, data, index, shift_policy)
 	self:_update_data_info()
 	self:_check_elements()
-
-	self:log_message("Add element", { index = index })
 end
 
 
@@ -141,10 +129,10 @@ end
 -- @tparam number shift_policy The constant from const.SHIFT.*
 -- @local
 function DataList.remove(self, index, shift_policy)
-	table.remove(self._data, index)
-	self:_refresh()
+	--self:_refresh()
 
-	self:log_message("Remove element", { index = index })
+	helper.remove_with_shift(self._data, index, shift_policy)
+	self:_update_data_info()
 end
 
 
@@ -156,7 +144,8 @@ end
 function DataList.remove_by_data(self, data, shift_policy)
 	local index = helper.contains(self._data, data)
 	if index then
-		table.remove(self._data, index)
+		helper.remove_with_shift(self._data, index, shift_policy)
+		self:_update_data_info()
 		self:_refresh()
 	end
 end
@@ -166,6 +155,7 @@ end
 -- @tparam DataList self @{DataList}
 function DataList.clear(self)
 	self._data = {}
+	self:_update_data_info()
 	self:_refresh()
 end
 
@@ -263,7 +253,6 @@ function DataList._add_at(self, index)
 		component = instance
 	}
 
-	self:log_message("Add element at", { index = index })
 	self.on_element_add:trigger(self:get_context(), index, node, instance)
 end
 
@@ -284,12 +273,11 @@ function DataList._remove_at(self, index)
 	end
 	self._data_visual[index] = nil
 
-	self:log_message("Remove element at", { index = index })
 	self.on_element_remove:trigger(self:get_context(), index)
 end
 
 
---- Fully refresh all DataList elements
+--- Refresh all elements in DataList
 -- @tparam DataList self @{DataList}
 -- @local
 function DataList._refresh(self)
@@ -329,8 +317,6 @@ function DataList._check_elements(self)
 	if self.top_index == self:get_first_index() then
 		progress = 0
 	end
-
-	self:log_message("Check elements", { top_index = self.top_index, last_index = self.last_index, progress = progress })
 
 	if self.scroll_progress ~= progress then
 		self.scroll_progress = progress
@@ -389,8 +375,8 @@ function DataList._update_data_info(self)
 	end
 
 	if self._data_length == 0 then
-		self._data_first_index = 1
-		self._data_last_index = 1
+		self._data_first_index = 0
+		self._data_last_index = 0
 	end
 end
 

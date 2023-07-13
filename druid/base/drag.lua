@@ -4,6 +4,8 @@
 -- Drag have correct handling for multitouch and swap
 -- touched while dragging. Drag will be processed even
 -- the cursor is outside of node, if drag is already started
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_drag" target="_blank"><b>Example Link</b></a>
 -- @module Drag
 -- @within BaseComponent
 -- @alias druid.drag

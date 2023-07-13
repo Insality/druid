@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -48,6 +48,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -61,13 +62,13 @@
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><strong>StaticGrid</strong></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -75,9 +76,26 @@
 <div id="content">
 
 <h1>Module <code>StaticGrid</code></h1>
-<p>Component to handle placing components by row and columns.</p>
+<p>Component to handle component's position by row and columns.</p>
 <p>
- Grid can anchor your elements, get content size and other</p>
+ ## Overview ##
+<p> The Static Grid component allows for positioning components in rows and columns.
+ It provides a static grid layout with constant node sizes, allowing for pre-calculated
+ node positions and the option to include gaps between nodes.
+<p> ## Notes ##
+<p> • In a static grid, the node size remains constant, enabling the calculation of node
+ positions before placement. Nodes can be placed with gaps between them.
+<p> • The static grid can automatically shift elements when nodes are added or removed.
+<p> • When a node is added, the grid will set the node's parent to the specified parent_node.
+<p> • You can obtain an array of positions for each element, which can be used to set
+ points of interest in a scroll component.
+<p> • The size of all elements can be retrieved for setting up the size in a scroll component.
+<p> • The grid can be bound to a scroll component for automatic resizing of the scroll content size.
+<p> • The pivot of the parent_node affects the node placement within the grid.
+<p> • A prefab node is used to determine the node size and anchor.
+<p> • You can specify a position_function for animations using the
+ _static_grid:set_position_function(node, pos) callback. The default position function is gui.set_position().
+<p> <a href="https://insality.github.io/druid/druid/index.html?example=general_grid" target="_blank"><b>Example Link</b></a></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -120,7 +138,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, parent, element[, in_row=1])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="summary"><a href="../modules/StaticGrid.html#">StaticGrid</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#remove">remove(self, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</a></td>
@@ -483,7 +501,7 @@
     <strong>init(self, parent, element[, in_row=1])</strong>
     </dt>
     <dd>
-    Component init function
+    <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -493,8 +511,8 @@
          <a href="../modules/StaticGrid.html#">StaticGrid</a>
         </li>
         <li><span class="parameter">parent</span>
-            <span class="types"><span class="type">node</span></span>
-         The gui node parent, where items will be placed
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">Node</span></span>
+         The GUI Node container, where grid's items will be placed
         </li>
         <li><span class="parameter">element</span>
             <span class="types"><span class="type">node</span></span>
