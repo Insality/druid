@@ -17,16 +17,18 @@ Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Dr
 
 To integrate the **Druid** extension into your own project, add this project as a [dependency](https://www.defold.com/manuals/libraries/) in your **Defold** game. Open your `game.project` file and add the following line to the dependencies field under the project section:
 
-**Druid v0.10.3**
-> [https://github.com/Insality/druid/archive/refs/tags/0.10.3.zip](https://github.com/Insality/druid/archive/refs/tags/0.10.3.zip)
+**Druid v0.11.0**
+
+> [https://github.com/Insality/druid/archive/refs/tags/0.11.0.zip](https://github.com/Insality/druid/archive/refs/tags/0.11.0.zip)
 
 Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
+Size: **68.73 KB**
+
+> The size metrics exlcude the extended components, which are including only on demand.
+
 ### Input Bindings
 **Druid** utilizes the `/builtins/input/all.input_binding` input bindings. For custom input bindings, refer to the Input Binding section in the  **_[Advanced Setup](docs_md/advanced-setup.md#input-bindings)_**.
-
-### Advanced Setup
-If you need to customize **Druid** according to your specific requirements, you can refer to the **_[Advanced Setup](docs_md/advanced-setup.md)_** section.
 
 
 ## Usage
@@ -136,6 +138,11 @@ Here is full **Druid** components list.
 ### Extended components
 
 > Extended components before usage should be registered in **Druid** with `druid.register()` function.
+> On usage of unregistered **Druid** component the next log will be shown in the console.
+```
+local data_list = require("druid.extended.data_list")
+druid.register("data_list", data_list)
+```
 
 | Name | Description | Example | <div style="width:200px">Preview</div> |
 |------|-------------|---------|---------|
@@ -206,6 +213,10 @@ You can find the full **Druid** [documentation here](https://insality.github.io/
 ## Issues and suggestions
 
 If you have any issues, questions or suggestions please [create an issue](https://github.com/Insality/druid/issues) or contact me: [insality@gmail.com](mailto:insality@gmail.com)
+
+
+## History
+For a complete history of the development of **Druid**, please check the [changelog](docs_md/changelog.md).
 
 
 ## ❤️ Support project ❤️

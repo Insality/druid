@@ -16,8 +16,8 @@ By default, **Druid** utilizes the `/builtins/input/all.input_binding` for input
 - Key trigger: `Esc` -> `key_esc` (for Input component, optional)
 - Touch triggers: `Touch multi` -> `touch_multi` (for Scroll component)
 
-![](media/input_binding_2.png)
-![](media/input_binding_1.png)
+![](../media/input_binding_2.png)
+![](../media/input_binding_1.png)
 
 
 ## Changing Key Bindings (optional)
