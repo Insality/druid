@@ -234,8 +234,8 @@ end
 
 --- Druid class constructor
 -- @tparam DruidInstance self
--- @tparam table context Druid context. Usually it is self of script
--- @tparam table style Druid style module
+-- @tparam table context Druid context. Usually it is self of gui script
+-- @tparam table style Druid style table
 -- @local
 function DruidInstance.initialize(self, context, style)
 	self._context = context

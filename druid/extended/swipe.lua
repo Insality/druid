@@ -120,11 +120,7 @@ function Swipe.on_input(self, action_id, action)
 		return false
 	end
 
-	local is_pick = gui.pick_node(self.node, action.x, action.y)
-	if self.click_zone then
-		is_pick = is_pick and gui.pick_node(self.click_zone, action.x, action.y)
-	end
-
+	local is_pick = helper.pick_node(self.node, action.x, action.y, self.click_zone)
 	if not is_pick then
 		reset_swipe(self, action)
 		return false

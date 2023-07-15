@@ -123,7 +123,7 @@ end
 function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
 
-	if type(text_node) == const.TABLE then
+	if type(text_node) == "table" then
 		self.text = text_node
 	else
 		self.text = self.druid:new_text(text_node)

@@ -60,7 +60,7 @@ end
 -- @tparam table action on_input action
 -- @local
 function BackHandler.on_input(self, action_id, action)
-	if not action[const.RELEASED] then
+	if not action.released then
 		return false
 	end
 

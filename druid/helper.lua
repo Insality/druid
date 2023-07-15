@@ -271,6 +271,23 @@ function M.add_array(target, source)
 end
 
 
+--- Make a check with gui.pick_node, but with additional node_click_area check.
+-- @function helper.pick_node
+-- @tparam Node node
+-- @tparam number x
+-- @tparam number y
+-- @tparam[opt] Node node_click_area
+-- @local
+function M.pick_node(node, x, y, node_click_area)
+	local is_pick = gui.pick_node(node, x, y)
+
+	if node_click_area then
+		is_pick = is_pick and gui.pick_node(node_click_area, x, y)
+	end
+
+	return is_pick
+end
+
 --- Get node size adjusted by scale
 -- @function helper.get_scaled_size
 -- @tparam node node GUI node
@@ -356,7 +373,7 @@ end
 -- @treturn string
 function M.table_to_string(t)
 	if not t then
-		return const.EMPTY_STRING
+		return ""
 	end
 
 	local result = "{"

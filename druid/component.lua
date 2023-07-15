@@ -99,7 +99,7 @@ end
 -- @tparam string template BaseComponent template name
 -- @treturn BaseComponent @{BaseComponent}
 function BaseComponent.set_template(self, template)
-	template = template or const.EMPTY_STRING
+	template = template or ""
 
 	local parent = self:get_parent_component()
 	if parent and IS_AUTO_TEMPLATE then
@@ -183,7 +183,7 @@ end
 -- @tparam string|node node_or_name Node name or node itself
 -- @treturn node Gui node
 function BaseComponent.get_node(self, node_or_name)
-	if type(node_or_name) ~= const.STRING then
+	if type(node_or_name) ~= "string" then
 		-- Assume it's already node from gui.get_node
 		return node_or_name
 	end

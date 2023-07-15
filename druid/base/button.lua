@@ -340,10 +340,7 @@ function Button.on_input(self, action_id, action)
 	local is_pick = true
 	local is_key_trigger = (action_id == self.key_trigger)
 	if not is_key_trigger then
-		is_pick = gui.pick_node(self.node, action.x, action.y)
-		if self.click_zone then
-			is_pick = is_pick and gui.pick_node(self.click_zone, action.x, action.y)
-		end
+		is_pick = helper.pick_node(self.node, action.x, action.y, self.click_zone)
 	end
 
 	if not is_pick then

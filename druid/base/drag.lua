@@ -185,7 +185,7 @@ function Drag.init(self, node, on_drag_callback)
 	self.is_touch = false
 	self.is_drag = false
 	self.touch_start_pos = vmath.vector3(0)
-	self._is_disabled = false
+	self._is_enabled = true
 
 	self.can_x = true
 	self.can_y = true
@@ -233,14 +233,11 @@ function Drag.on_input(self, action_id, action)
 		return false
 	end
 
-	if not gui.is_enabled(self.node, true) or self._is_disabled then
+	if not self._is_enabled or not gui.is_enabled(self.node, true) then
 		return false
 	end
 
-	local is_pick = gui.pick_node(self.node, action.x, action.y)
-	if self.click_zone then
-		is_pick = is_pick and gui.pick_node(self.click_zone, action.x, action.y)
-	end
+	local is_pick = helper.pick_node(self.node, action.x, action.y, self.click_zone)
 	if not is_pick and not self.is_drag then
 		end_touch(self)
 		return false
@@ -318,7 +315,7 @@ end
 -- @tparam Drag self @{Drag}
 -- @tparam bool is_enabled
 function Drag.set_enabled(self, is_enabled)
-	self._is_disabled = not is_enabled
+	self._is_enabled = is_enabled
 end
 
 
@@ -326,7 +323,7 @@ end
 -- @tparam Drag self @{Drag}
 -- @treturn bool
 function Drag.is_enabled(self)
-	return not self._is_disabled
+	return self._is_enabled
 end
 
 
