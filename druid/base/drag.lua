@@ -73,7 +73,11 @@ end
 
 local function end_touch(self)
 	if self.is_drag then
-		self.on_drag_end:trigger(self:get_context(), self.x - self.touch_start_pos.x, self.y - self.touch_start_pos.y)
+		self.on_drag_end:trigger(
+			self:get_context(),
+			self.x - self.touch_start_pos.x,
+			self.y - self.touch_start_pos.y
+		)
 	end
 
 	self.is_drag = false
@@ -229,7 +233,7 @@ function Drag.on_input(self, action_id, action)
 		return false
 	end
 
-	if not helper.is_enabled(self.node) or self._is_disabled then
+	if not gui.is_enabled(self.node, true) or self._is_disabled then
 		return false
 	end
 

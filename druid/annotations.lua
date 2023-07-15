@@ -189,7 +189,7 @@ local druid__button = {}
 ---@return hash The action_id of the input key
 function druid__button.get_key_trigger(self) end
 
---- @{Button} constructor
+--- The @{Button} constructor
 ---@param self druid.button @{Button}
 ---@param node string|Node Node name or GUI Node itself
 ---@param callback function On click button callback

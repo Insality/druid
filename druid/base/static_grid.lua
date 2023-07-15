@@ -1,16 +1,17 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle component's position by row and columns.
--- ## Overview ##
+-- <b># Overview #</b>
 --
 -- The Static Grid component allows for positioning components in rows and columns.
 -- It provides a static grid layout with constant node sizes, allowing for pre-calculated
 -- node positions and the option to include gaps between nodes.
 --
--- ## Notes ##
+-- <b># Notes #</b>
 --
 -- • In a static grid, the node size remains constant, enabling the calculation of node
--- positions before placement. Nodes can be placed with gaps between them.
+-- positions before placement. If you want add gaps between nodes, increase the root prefab size,
+-- including the padding and margin.
 --
 -- • The static grid can automatically shift elements when nodes are added or removed.
 --
@@ -110,7 +111,7 @@ function StaticGrid.on_style_change(self, style)
 end
 
 
---- @{StaticGrid} constructor
+--- The @{StaticGrid} constructor
 -- @tparam StaticGrid self @{StaticGrid}
 -- @tparam string|Node parent The GUI Node container, where grid's items will be placed
 -- @tparam node element Element prefab. Need to get it size

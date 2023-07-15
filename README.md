@@ -71,6 +71,7 @@ function on_message(self, message_id, message, sender)
 end
 
 -- "on_input" is used in almost all Druid components
+-- The return value from `druid:on_input` is required!
 function on_input(self, action_id, action)
     return self.druid:on_input(action_id, action)
 end
@@ -190,6 +191,7 @@ Each example page provides a direct link to the corresponding example code, maki
 
 Or refer directly to the [**example folder**](https://github.com/Insality/druid/tree/develop/example) for code examples demonstrating how to use **Druid**.
 
+If you want to see examples of GUIs created with Druid, please refer to the [game_examples.md](docs_md/game_examples.md) file.
 
 ## Documentation
 

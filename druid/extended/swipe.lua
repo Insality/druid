@@ -116,7 +116,7 @@ function Swipe.on_input(self, action_id, action)
 		return false
 	end
 
-	if not helper.is_enabled(self.node) then
+	if not gui.is_enabled(self.node, true) then
 		return false
 	end
 

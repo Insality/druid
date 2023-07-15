@@ -35,7 +35,7 @@
 -- @alias druid.button
 
 
---- @{DruidEvent}: Event on successful release action over button.
+--- The @{DruidEvent}: Event on successful release action over button.
 -- @usage
 -- -- Custom args passed in Button constructor
 -- button.on_click:subscribe(function(self, custom_args, button_instance)
@@ -44,7 +44,7 @@
 -- @tfield DruidEvent on_click @{DruidEvent}
 
 
---- @{DruidEvent}: Event on repeated action over button.
+--- The @{DruidEvent}: Event on repeated action over button.
 --
 -- This callback will be triggered if user hold the button. The repeat rate pick from `input.repeat_interval` in game.project
 -- @usage
@@ -55,7 +55,7 @@
 -- @tfield DruidEvent on_repeated_click @{DruidEvent}
 
 
---- @{DruidEvent}: Event on long tap action over button.
+--- The @{DruidEvent}: Event on long tap action over button.
 --
 -- This callback will be triggered if user pressed the button and hold the some amount of time.
 -- The amount of time picked from button style param: LONGTAP_TIME
@@ -67,7 +67,7 @@
 -- @tfield DruidEvent on_long_click @{DruidEvent}
 
 
---- @{DruidEvent}: Event on double tap action over button.
+--- The @{DruidEvent}: Event on double tap action over button.
 --
 -- If secondary click was too fast after previous one, the double
 -- click will be called instead usual click (if on_double_click subscriber exists)
@@ -79,7 +79,7 @@
 -- @tfield DruidEvent on_double_click @{DruidEvent}
 
 
---- @{DruidEvent}: Event calls every frame before on_long_click event.
+--- The @{DruidEvent}: Event calls every frame before on_long_click event.
 --
 -- If long_click subscriber exists, the on_hold_callback will be called before long_click trigger.
 --
@@ -92,7 +92,7 @@
 -- @tfield DruidEvent on_hold_callback @{DruidEvent}
 
 
---- @{DruidEvent}: Event calls if click event was outside of button.
+--- The @{DruidEvent}: Event calls if click event was outside of button.
 --
 -- This event will be triggered for each button what was not clicked on user click action
 --
@@ -105,7 +105,7 @@
 -- @tfield DruidEvent on_click_outside @{DruidEvent}
 
 
---- @{DruidEvent}: Event triggered if button was pressed by user.
+--- The @{DruidEvent}: Event triggered if button was pressed by user.
 -- @usage
 -- -- Custom args passed in Button constructor
 -- button.on_pressed:subscribe(function(self, custom_args, button_instance)
@@ -128,7 +128,7 @@
 ---Custom args for any Button event. Setup in Button constructor
 -- @tfield any params
 
---- @{Hover}: Button Hover component
+--- The @{Hover}: Button Hover component
 -- @tfield Hover hover @{Hover}
 
 --- Additional button click area, defined by another GUI Node
@@ -276,7 +276,7 @@ function Button.on_style_change(self, style)
 end
 
 
---- @{Button} constructor
+--- The @{Button} constructor
 -- @tparam Button self @{Button}
 -- @tparam string|Node node Node name or GUI Node itself
 -- @tparam function callback On click button callback
@@ -329,7 +329,7 @@ function Button.on_input(self, action_id, action)
 		return false
 	end
 
-	if not helper.is_enabled(self.node) then
+	if not gui.is_enabled(self.node, true) then
 		return false
 	end
 
@@ -414,7 +414,7 @@ end
 
 
 function Button.on_message_input(self, node_id, message)
-	if node_id ~= self.node_id or self.disabled or not helper.is_enabled(self.node) then
+	if node_id ~= self.node_id or self.disabled or not gui.is_enabled(self.node) then
 		return false
 	end
 

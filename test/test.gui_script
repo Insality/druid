@@ -5,6 +5,9 @@ local tests = {
 	require("test.tests.test_button"),
 	require("test.tests.test_hover"),
 	require("test.tests.test_drag"),
+	require("test.tests.test_back_handler"),
+	require("test.tests.test_blocker"),
+	--require("test.tests.test_static_grid"),
 }
 
 

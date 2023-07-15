@@ -459,6 +459,14 @@ This version is the most basic one. Honestly, just wanna to publish current vers
 
 Another addition is the ability to enable the "HTML mode" for the Button component. In this mode, the button's action occurs in the context of `user action`, allowing operations like "copy and paste text" "show the keyboard" and more. However, in this mode, the button only responds to regular clicks due to the technical implementation of it (so no double clicks or long taps).
 
+The huge work was done on documentation. Now it's more clear and have more examples. All documentation now moved to the API section. The separate `componentd.md` file will be deleted soon as all documentation will be moved to the API section.
+
+The API section now filled with overview and usage examples. I've started with the basic modules, in future I will add more examples for all modules.
+
+Also, I've added the Unit Tests. It's not cover all **Druid** code, but it's a good start! 🎉
+
+I have the feedback form for you, please fill it if you have a free minute. It will help me to improve **Druid** in future. %LINK HERE%
+
 
 **Changelog 0.11.0**
 
@@ -473,9 +481,10 @@ Another addition is the ability to enable the "HTML mode" for the Button compone
 	- Now if you will open the example from direct URL, it will be updated to the current URL. So now it's much easier to share the example link with each other.
 - **#183**: Documentation about GUI in World Space
 	- Also not only the GUI in World Space, but overall How to GUI in Defold article.
-- **#199**: Having to click twice to unselect one input field and select another
-- **#115**: Add debug mode for druid/druid_instance/components
-- **#129**: Remove sound function, move inside styles
-- **#226**: Data List remove function issue
+- **#234**: [BREAKING][Blocker] Now `blocker:set_enabled` and `blocker:is_enabled` affects only inner state of component. To consume input, the blocker component should be enabled and the node itself should be enabled.
+- **#235**: [Drag] Fix Drag coordinates on streched screen
+- **#236**: [Hover] Fix nil return in `hover:on_input`
+- **#237**: [Layout] Add `layout:set_max_gui_upscale` function
+- **#238**: [System] Add Helper documentation
 
-
+If you like **Druid**, please, consider to support me!

@@ -10,7 +10,6 @@
 local const = require("druid.const")
 
 local M = {}
-M._some = { pepepe = true }
 
 
 local function get_text_width(text_node)
@@ -261,17 +260,6 @@ function M.get_scaled_size(node)
 end
 
 
---- Check if node is enabled in GUI hierarchy.
---
--- Return false, if node or any his parent is disabled
--- @function helper.is_enabled
--- @tparam node node GUI node
--- @treturn bool Is enabled in hierarchy
-function M.is_enabled(node)
-	return gui.is_enabled(node, true)
-end
-
-
 --- Get cumulative parent's node scale
 -- @function helper.get_scene_scale
 -- @tparam node node Gui node
@@ -394,7 +382,7 @@ end
 --- Get text metric from GUI node.
 -- @function helper.get_text_metrics_from_node
 -- @tparam Node text_node
--- @treturn pepepe
+-- @treturn GUITextMetrics
 -- @usage
 -- type GUITextMetrics = {
 --   width: number,
@@ -498,12 +486,14 @@ function M.deprecated(message)
 end
 
 
---- Show message to require extended component
+--- Show message to require component
 -- @local
-function M.extended_component(component_name)
-	print(string.format("[Druid]: The component %s is extended component. You have to register it via druid.register to use it", component_name))
+function M.require_component_message(component_name, component_type)
+	component_type = component_type or "extended"
+
+	print(string.format("[Druid]: The component %s is %s component. You have to register it via druid.register to use it", component_name, component_type))
 	print("[Druid]: Use next code:")
-	print(string.format('local %s = require("druid.extended.%s")', component_name, component_name))
+	print(string.format('local %s = require("druid.%s.%s")', component_name, component_type, component_name))
 	print(string.format('druid.register("%s", %s)', component_name, component_name))
 end
 

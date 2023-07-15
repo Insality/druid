@@ -20,7 +20,7 @@
 -- @within BaseComponent
 -- @alias druid.back_handler
 
---- @{DruidEvent} Event on back handler action.
+--- The @{DruidEvent} Event on back handler action.
 --
 -- Trigger on input action ACTION_BACK or ACTION_BACKSPACE
 -- @usage
@@ -43,7 +43,7 @@ local component = require("druid.component")
 local BackHandler = component.create("back_handler")
 
 
---- @{BackHandler} constructor
+--- The @{BackHandler} constructor
 -- @tparam BackHandler self @{BackHandler}
 -- @tparam callback callback On back button
 -- @tparam[opt] any custom_args Button events custom arguments

@@ -31,11 +31,17 @@
 ---
 
 local Event = require("druid.event")
-local formats = require("druid.helper.formats")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 local Timer = component.create("timer")
+
+
+local function second_string_min(sec)
+	local mins = math.floor(sec / 60)
+	local seconds = math.floor(sec - mins * 60)
+	return string.format("%.2d:%.2d", mins, seconds)
+end
 
 
 --- Component init function
@@ -98,7 +104,7 @@ end
 -- @tparam number set_to Value in seconds
 function Timer.set_to(self, set_to)
 	self.last_value = set_to
-	gui.set_text(self.node, formats.second_string_min(set_to))
+	gui.set_text(self.node, second_string_min(set_to))
 end
 
 

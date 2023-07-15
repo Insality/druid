@@ -58,7 +58,7 @@ function Hover.on_input(self, action_id, action)
 		return false
 	end
 
-	if not helper.is_enabled(self.node) or not self._is_enabled then
+	if not gui.is_enabled(self.node, true) or not self._is_enabled then
 		self:set_hover(false)
 		self:set_mouse_hover(false)
 		return false
