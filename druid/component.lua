@@ -126,8 +126,7 @@ function BaseComponent.get_template(self)
 end
 
 
---- Set current component nodes
---
+--- Set current component nodes.
 -- Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
 -- @function component:set_nodes
 -- @tparam BaseComponent self @{BaseComponent}
@@ -501,10 +500,7 @@ function BaseComponent.get_childrens(self)
 		local children = self._meta.children[i]
 
 		table.insert(childrens, children)
-		local recursive_childrens = children:get_childrens()
-		for j = 1, #recursive_childrens do
-			table.insert(childrens, recursive_childrens[j])
-		end
+		helper.add_array(childrens, children:get_childrens())
 	end
 
 	return childrens

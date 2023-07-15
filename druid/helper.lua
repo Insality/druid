@@ -251,6 +251,26 @@ function M.deepcopy(orig_table)
 end
 
 
+--- Add all elements from source array to the target array
+-- @function helper.add_array
+-- @tparam table target Array to put elements from source
+-- @tparam[opt] table source The source array to get elements from
+-- @treturn array The target array
+function M.add_array(target, source)
+	assert(target)
+
+	if not source then
+		return target
+	end
+
+	for index = 1, #source do
+		table.insert(target, source[index])
+	end
+
+	return target
+end
+
+
 --- Get node size adjusted by scale
 -- @function helper.get_scaled_size
 -- @tparam node node GUI node

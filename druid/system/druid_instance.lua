@@ -115,7 +115,7 @@ local function set_input_state(self, is_input_inited)
 end
 
 
--- a and b - two Druid components
+-- The a and b - two Druid components
 -- @local
 local function sort_input_comparator(a, b)
 	local a_priority = a:get_input_priority()
@@ -478,20 +478,19 @@ end
 -- component will be not processed on input step
 -- @tparam DruidInstance self
 -- @tparam[opt=nil] table|Component whitelist_components The array of component to whitelist
+-- @treturn self @{DruidInstance}
 function DruidInstance.set_whitelist(self, whitelist_components)
 	if whitelist_components and whitelist_components.isInstanceOf then
 		whitelist_components = { whitelist_components }
 	end
 
 	for i = 1, #whitelist_components do
-		local component = whitelist_components[i]
-		local childrens = component:get_childrens()
-		for j = 1, #childrens do
-			table.insert(whitelist_components, childrens[j])
-		end
+		helper.add_array(whitelist_components, whitelist_components[i]:get_childrens())
 	end
 
 	self._input_whitelist = whitelist_components
+
+	return self
 end
 
 
@@ -501,20 +500,19 @@ end
 -- component will be not processed on input step
 -- @tparam DruidInstance self @{DruidInstance}
 -- @tparam[opt=nil] table|Component blacklist_components The array of component to blacklist
+-- @treturn self @{DruidInstance}
 function DruidInstance.set_blacklist(self, blacklist_components)
 	if blacklist_components and blacklist_components.isInstanceOf then
 		blacklist_components = { blacklist_components }
 	end
 
 	for i = 1, #blacklist_components do
-		local component = blacklist_components[i]
-		local childrens = component:get_childrens()
-		for j = 1, #childrens do
-			table.insert(blacklist_components, childrens[j])
-		end
+		helper.add_array(blacklist_components, blacklist_components[i]:get_childrens())
 	end
 
 	self._input_blacklist = blacklist_components
+
+	return self
 end
 
 
@@ -800,9 +798,9 @@ end
 -- As a template please check rich_text.gui layout.
 -- @tparam DruidInstance self
 -- @tparam[opt] string template Template name if used
--- @tparam[opt] table<hash, node> nodes Nodes table from gui.clone_tree
--- @treturn Hotkey @{RichText} component
-function DruidInstance.new_hotkey(self, template, nodes)
+-- @tparam[opt] table nodes Nodes table from gui.clone_tree
+-- @treturn RichText @{RichText} component
+function DruidInstance.new_rich_text(self, template, nodes)
 	return helper.require_component_message("rich_text", "custom")
 end
 

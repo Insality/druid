@@ -32,7 +32,7 @@ local component = require("druid.component")
 local LangText = component.create("lang_text")
 
 
---- @{LangText} constructor
+--- The @{LangText} constructor
 -- @tparam LangText self @{LangText}
 -- @tparam string|node node Node name or GUI Text Node itself
 -- @tparam string locale_id Default locale id or text from node as default

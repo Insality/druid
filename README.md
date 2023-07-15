@@ -138,7 +138,7 @@ Here is full **Druid** components list.
 
 ### Extended components
 
-> Extended components before usage should be registered in **Druid** with `druid.register()` function.
+> Extended components before usage should be registered in **Druid** with [`druid.register()`](https://insality.github.io/druid/modules/Druid.html#druid.register) function.
 > On usage of unregistered **Druid** component the next log will be shown in the console.
 ```
 local data_list = require("druid.extended.data_list")

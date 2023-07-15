@@ -190,9 +190,7 @@ function M.create(text, settings)
 
 	local words = {}
 	for index = 1, #lines do
-		for jindex = 1, #lines[index] do
-			table.insert(words, lines[index][jindex])
-		end
+		helper.add_array(words, lines[index])
 	end
 
 	return words, settings, lines_metrics
