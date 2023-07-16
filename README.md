@@ -23,7 +23,7 @@ To integrate the **Druid** extension into your own project, add this project as 
 
 Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
-Size: **68.73 KB**
+Size: **67.16 KB**
 
 > The size metrics exlcude the extended components, which are including only on demand.
 
@@ -87,25 +87,7 @@ For all **Druid** instance functions, [see here](https://insality.github.io/drui
 
 Start reading the API documentation [here](https://insality.github.io/druid/modules/Druid.html).
 
-
-### EmmyLua Annotations [optional]
-
-[EmmyLua](https://emmylua.github.io/annotation.html) is a Lua annotation library. It is a useful tool for enabling Lua code autocompletion in editors such as [VSCode](https://github.com/EmmyLua/VSCode-EmmyLua) and [IntelliJ IDEA](https://github.com/EmmyLua/IntelliJ-EmmyLua).
-
-Since dependencies cannot be processed by external editors, to use the EmmyLua annotations, you should copy the _druid/annotations.lua_ file to your project.
-
-Remember that you can restart the EmmyLua server to refresh the changes if something goes wrong.
-
-After the annotations are processed, you should specify the type of "Druid" in the "require" statement:
-
-```lua
----@type druid
-local druid = require("druid.druid")
-
--- Now the autocomplete is working
-```
-
-<img src="media/emmy_lua_preview.png" width="700">
+**Druid** provide the *EmmyLua* annotations to add autocomplete inside your IDE. Check [EmmyLua Setup here](docs_md/advanced-setup.md#emmylua-annotations).
 
 
 ### Create custom components

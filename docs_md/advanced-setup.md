@@ -20,7 +20,7 @@ By default, **Druid** utilizes the `/builtins/input/all.input_binding` for input
 ![](../media/input_binding_1.png)
 
 
-## Changing Key Bindings (optional)
+## Changing Key Bindings
 
 If you need to use your own key bindings or key names, you can modify them in your *game.project* file.
 
@@ -40,7 +40,7 @@ input_scroll_down = mouse_wheel_down
 ```
 
 
-## Input Capturing (optional)
+## Input Capturing
 
 By default, **Druid** automatically captures input focus if any input component is created. Therefore, you do not need to call `msg.post(".", "acquire_input_focus")`.
 
@@ -51,7 +51,7 @@ no_auto_input = 1
 ```
 
 
-## Template Name Check (optional)
+## Template Name Check
 
 By default, **Druid** automatically checks the parent component's template name to construct the full template name for the component. It's used in user custom components.
 
@@ -63,7 +63,7 @@ no_auto_template = 1
 ```
 
 
-## Stencil Check (optional)
+## Stencil Check
 
 When creating input components inside stencil nodes, **Druid** automatically sets up `component:set_click_zone()` during the _late_init_ component step to restrict input clicks outside of the stencil zone. This is particularly useful for buttons inside scroll stencil nodes.
 
@@ -74,7 +74,7 @@ no_stencil_check = 1
 ```
 
 
-## Code Bindings (optional)
+## Code Bindings
 
 Adjust **Druid** settings as needed:
 ```lua
@@ -109,3 +109,23 @@ local function on_window_callback(self, event, data)
 end
 window.set_listener(on_window_callback)
 ```
+
+
+## EmmyLua Annotations
+
+[EmmyLua](https://emmylua.github.io/annotation.html) is a Lua annotation library. It is a useful tool for enabling Lua code autocompletion in editors such as [VSCode](https://github.com/EmmyLua/VSCode-EmmyLua) and [IntelliJ IDEA](https://github.com/EmmyLua/IntelliJ-EmmyLua).
+
+Since dependencies cannot be processed by external editors, to use the EmmyLua annotations, you should copy the _druid/annotations.lua_ file to your project.
+
+Remember that you can restart the EmmyLua server to refresh the changes if something goes wrong.
+
+After the annotations are processed, you should specify the type of "Druid" in the "require" statement:
+
+```lua
+---@type druid
+local druid = require("druid.druid")
+
+-- Now the autocomplete is working
+```
+
+<img src="../media/emmy_lua_preview.png" width="700">
