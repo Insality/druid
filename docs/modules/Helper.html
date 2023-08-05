@@ -87,6 +87,10 @@ helper.centrate_nodes(0, node_1, node_2)
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#helper.add_array">helper.add_array(target[, source])</a></td>
+	<td class="summary">Add all elements from source array to the target array</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#helper.centrate_nodes">helper.centrate_nodes([margin=0], ...)</a></td>
 	<td class="summary">Centerate nodes by x position with margin.</td>
 	</tr>
@@ -143,10 +147,6 @@ helper.centrate_nodes(0, node_1, node_2)
 	<td class="summary">Add value to array with shift policy</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#helper.is_enabled">helper.is_enabled(node)</a></td>
-	<td class="summary">Check if node is enabled in GUI hierarchy.</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#helper.is_mobile">helper.is_mobile()</a></td>
 	<td class="summary">Check if device is native mobile (Android or iOS)</td>
 	</tr>
@@ -187,6 +187,38 @@ helper.centrate_nodes(0, node_1, node_2)
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "helper.add_array"></a>
+    <strong>helper.add_array(target[, source])</strong>
+    </dt>
+    <dd>
+    Add all elements from source array to the target array
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Array to put elements from source
+        </li>
+        <li><span class="parameter">source</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         The source array to get elements from
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">array</span></span>
+        The target array
+    </ol>
+
+
+
+
+</dd>
     <dt>
     <a name = "helper.centrate_nodes"></a>
     <strong>helper.centrate_nodes([margin=0], ...)</strong>
@@ -555,7 +587,7 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">pepepe</span></span>
+           <span class="types"><span class="type">GUITextMetrics</span></span>
 
     </ol>
 
@@ -606,34 +638,6 @@ helper.centrate_nodes(0, node_1, node_2)
 
            <span class="types"><span class="type">item</span></span>
         Inserted item
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "helper.is_enabled"></a>
-    <strong>helper.is_enabled(node)</strong>
-    </dt>
-    <dd>
-    Check if node is enabled in GUI hierarchy.
-<p> Return false, if node or any his parent is disabled
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         GUI node
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">bool</span></span>
-        Is enabled in hierarchy
     </ol>
 
 

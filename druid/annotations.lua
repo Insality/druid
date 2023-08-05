@@ -42,7 +42,7 @@ function druid.set_text_function(callback) end
 
 
 ---@class druid.back_handler : druid.base_component
----@field on_back druid.event @{DruidEvent} Event on back handler action.
+---@field on_back druid.event The @{DruidEvent} Event on back handler action.
 ---@field params any Custom args to pass in the callback
 local druid__back_handler = {}
 
@@ -124,7 +124,7 @@ function druid__base_component.component:set_input_enabled(self, state) end
 ---@return number The component input priority
 function druid__base_component.component:set_input_priority(self, value, is_temporary) end
 
---- Set current component nodes
+--- Set current component nodes.
 --- Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
 ---@param self druid.base_component @{BaseComponent}
 ---@param nodes table BaseComponent nodes table
@@ -170,16 +170,16 @@ function druid__blocker.set_enabled(self, state) end
 ---@class druid.button : druid.base_component
 ---@field anim_node node Button animation node.
 ---@field click_zone node Additional button click area, defined by another GUI Node
----@field hover druid.hover @{Hover}: Button Hover component
+---@field hover druid.hover The @{Hover}: Button Hover component
 ---@field node Node Button trigger node
 ---@field node_id hash The GUI node id from button node
----@field on_click druid.event @{DruidEvent}: Event on successful release action over button.
----@field on_click_outside druid.event @{DruidEvent}: Event calls if click event was outside of button.
----@field on_double_click druid.event @{DruidEvent}: Event on double tap action over button.
----@field on_hold_callback druid.event @{DruidEvent}: Event calls every frame before on_long_click event.
----@field on_long_click druid.event @{DruidEvent}: Event on long tap action over button.
----@field on_pressed druid.event @{DruidEvent}: Event triggered if button was pressed by user.
----@field on_repeated_click druid.event @{DruidEvent}: Event on repeated action over button.
+---@field on_click druid.event The @{DruidEvent}: Event on successful release action over button.
+---@field on_click_outside druid.event The @{DruidEvent}: Event calls if click event was outside of button.
+---@field on_double_click druid.event The @{DruidEvent}: Event on double tap action over button.
+---@field on_hold_callback druid.event The @{DruidEvent}: Event calls every frame before on_long_click event.
+---@field on_long_click druid.event The @{DruidEvent}: Event on long tap action over button.
+---@field on_pressed druid.event The @{DruidEvent}: Event triggered if button was pressed by user.
+---@field on_repeated_click druid.event The @{DruidEvent}: Event on repeated action over button.
 ---@field params any Custom args for any Button event.
 ---@field style druid.button.style Component style params.
 local druid__button = {}
@@ -720,7 +720,7 @@ local druid__lang_text = {}
 ---@return druid.lang_text Current instance
 function druid__lang_text.format(self, a, b, c, d, e, f, g) end
 
---- @{LangText} constructor
+--- The @{LangText} constructor
 ---@param self druid.lang_text @{LangText}
 ---@param node string|node Node name or GUI Text Node itself
 ---@param locale_id string Default locale id or text from node as default
@@ -945,13 +945,18 @@ function druid__rich_input.set_placeholder(self, placeholder_text) end
 
 ---@class druid.rich_text : druid.base_component
 ---@field component field The component druid instance
+---@field style druid.rich_text.style Component style params.
 local druid__rich_text = {}
 
 --- Clear all created words.
-function druid__rich_text.clean() end
+function druid__rich_text.clear() end
+
+--- Get current line metrics
+---@return druid.rich_text.lines_metrics
+function druid__rich_text.get_line_metric() end
 
 --- Get all current words.
----@return table Words
+---@return table druid.rich_text.word[]
 function druid__rich_text.get_words() end
 
 --- Rich Text component constructor
@@ -967,10 +972,17 @@ function druid__rich_text.init(self, template, nodes) end
 ---@return druid.rich_text.lines_metrics line_metrics
 function druid__rich_text.set_text(self, text) end
 
---- Get all words, which has a passed tag
+--- Get all words, which has a passed tag.
 ---@param tag string
----@return table Words
+---@return druid.rich_text.word[] words
 function druid__rich_text.tagged(tag) end
+
+
+---@class druid.rich_text.style
+---@field ADJUST_SCALE_DELTA field  Scale step on each height adjust step
+---@field ADJUST_STEPS field  Amount steps of attemps text adjust by height
+---@field COLORS field  Rich Text color aliases
+local druid__rich_text__style = {}
 
 
 ---@class druid.scroll : druid.base_component
@@ -1217,7 +1229,7 @@ function druid__static_grid.get_pos(self, index) end
 ---@return vector3 The grid content size
 function druid__static_grid.get_size(self) end
 
---- @{StaticGrid} constructor
+--- The @{StaticGrid} constructor
 ---@param self druid.static_grid @{StaticGrid}
 ---@param parent string|Node The GUI Node container, where grid's items will be placed
 ---@param element node Element prefab. Need to get it size
@@ -1545,6 +1557,14 @@ function druid_instance.new_progress(self, node, key, init_value) end
 ---@return druid.radio_group @{RadioGroup} component
 function druid_instance.new_radio_group(self, nodes, callback, click_nodes) end
 
+--- Create @{RichText} component.
+--- As a template please check rich_text.gui layout.
+---@param self druid_instance
+---@param template string Template name if used
+---@param nodes table Nodes table from gui.clone_tree
+---@return druid.rich_text @{RichText} component
+function druid_instance.new_rich_text(self, template, nodes) end
+
 --- Create @{Scroll} component
 ---@param self druid_instance
 ---@param view_node node GUI view scroll node
@@ -1618,12 +1638,14 @@ function druid_instance.remove(self, component) end
 --- If blacklist is not empty and component contains in this list,  component will be not processed on input step
 ---@param self druid_instance @{DruidInstance}
 ---@param blacklist_components table|Component The array of component to blacklist
+---@return self @{DruidInstance}
 function druid_instance.set_blacklist(self, blacklist_components) end
 
 --- Set whitelist components for input processing.
 --- If whitelist is not empty and component not contains in this list,  component will be not processed on input step
 ---@param self druid_instance
 ---@param whitelist_components table|Component The array of component to whitelist
+---@return self @{DruidInstance}
 function druid_instance.set_whitelist(self, whitelist_components) end
 
 --- Call this in gui_script update function.
@@ -1633,29 +1655,14 @@ function druid_instance.set_whitelist(self, whitelist_components) end
 function druid_instance.update(self, dt) end
 
 
----@class formats
-local formats = {}
-
---- Return number with zero number prefix
----@param num number Number for conversion
----@param count number Count of numerals
----@return  string with need count of zero (1,3) -> 001
-function formats.add_prefix_zeros(num, count) end
-
---- Convert seconds to string minutes:seconds
----@param sec number Seconds
----@return  string minutes:seconds
-function formats.second_string_min(sec) end
-
---- Interpolate string with named Parameters in Table
----@param s string Target string
----@param tab table Table with parameters
----@return  string with replaced parameters
-function formats.second_string_min(s, tab) end
-
-
 ---@class helper
 local helper = {}
+
+--- Add all elements from source array to the target array
+---@param target table Array to put elements from source
+---@param source table The source array to get elements from
+---@return array The target array
+function helper.add_array(target, source) end
 
 --- Centerate nodes by x position with margin.
 --- This functions calculate total width of nodes and set position for each node.  The centrate will be around 0 x position.
@@ -1729,7 +1736,7 @@ function helper.get_screen_aspect_koef() end
 
 --- Get text metric from GUI node.
 ---@param text_node Node
----@return pepepe
+---@return GUITextMetrics
 function helper.get_text_metrics_from_node(text_node) end
 
 --- Add value to array with shift policy
@@ -1740,12 +1747,6 @@ function helper.get_text_metrics_from_node(text_node) end
 ---@param shift_policy const.SHIFT Shift policy
 ---@return item Inserted item
 function helper.insert_with_shift(array, item, index, shift_policy) end
-
---- Check if node is enabled in GUI hierarchy.
---- Return false, if node or any his parent is disabled
----@param node node GUI node
----@return bool Is enabled in hierarchy
-function helper.is_enabled(node) end
 
 --- Check if device is native mobile (Android or iOS)
 ---@return bool Is mobile
@@ -1795,6 +1796,11 @@ function helper.table_to_string(t) end
 
 
 -- Manual Annotations --
+
+---@class druid.rich_text.style
+---@field COLORS table
+---@field ADJUST_STEPS number
+---@field ADJUST_SCALE_DELTA number
 
 ---@class druid.rich_text.metrics
 ---@field width number

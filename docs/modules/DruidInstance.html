@@ -206,6 +206,10 @@ end
 	<td class="summary">Create <a href="../modules/RadioGroup.html#">RadioGroup</a> component</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#new_rich_text">new_rich_text(self[, template[, nodes]])</a></td>
+	<td class="summary">Create <a href="../modules/RichText.html#">RichText</a> component.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#new_scroll">new_scroll(self, view_node, content_node)</a></td>
 	<td class="summary">Create <a href="../modules/Scroll.html#">Scroll</a> component</td>
 	</tr>
@@ -884,6 +888,44 @@ end
 
 </dd>
     <dt>
+    <a name = "new_rich_text"></a>
+    <strong>new_rich_text(self[, template[, nodes]])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/RichText.html#">RichText</a> component.
+ As a template please check rich_text.gui layout.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">template</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Template name if used
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">nodes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Nodes table from gui.clone_tree
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">RichText</span></span>
+        <a href="../modules/RichText.html#">RichText</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "new_scroll"></a>
     <strong>new_scroll(self, view_node, content_node)</strong>
     </dt>
@@ -1238,6 +1280,12 @@ end
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">self</span></span>
+        <a href="../modules/DruidInstance.html#">DruidInstance</a>
+    </ol>
 
 
 
@@ -1266,6 +1314,12 @@ end
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">self</span></span>
+        <a href="../modules/DruidInstance.html#">DruidInstance</a>
+    </ol>
 
 
 

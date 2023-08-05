@@ -78,13 +78,14 @@
 <h1>Module <code>StaticGrid</code></h1>
 <p>Component to handle component's position by row and columns.</p>
 <p>
- ## Overview ##
+ <b># Overview #</b>
 <p> The Static Grid component allows for positioning components in rows and columns.
  It provides a static grid layout with constant node sizes, allowing for pre-calculated
  node positions and the option to include gaps between nodes.
-<p> ## Notes ##
+<p> <b># Notes #</b>
 <p> • In a static grid, the node size remains constant, enabling the calculation of node
- positions before placement. Nodes can be placed with gaps between them.
+ positions before placement. If you want add gaps between nodes, increase the root prefab size,
+ including the padding and margin.
 <p> • The static grid can automatically shift elements when nodes are added or removed.
 <p> • When a node is added, the grid will set the node's parent to the specified parent_node.
 <p> • You can obtain an array of positions for each element, which can be used to set
@@ -138,7 +139,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, parent, element[, in_row=1])</a></td>
-	<td class="summary"><a href="../modules/StaticGrid.html#">StaticGrid</a> constructor</td>
+	<td class="summary">The <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#remove">remove(self, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</a></td>
@@ -501,7 +502,7 @@
     <strong>init(self, parent, element[, in_row=1])</strong>
     </dt>
     <dd>
-    <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor
+    The <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor
 
 
     <h3>Parameters:</h3>
