@@ -8,9 +8,9 @@ local utf8 = utf8 or utf8_lua
 
 local M = {}
 
-local function parse_tag(tag, params)
+local function parse_tag(tag, params, style)
 	local settings = { tags = { [tag] = params }, tag = tag }
-	if not tags.apply(tag, params, settings) then
+	if not tags.apply(tag, params, settings, style) then
 		settings[tag] = params
 	end
 
@@ -110,8 +110,9 @@ end
 --- Parse the text into individual words
 -- @param text The text to parse
 -- @param default_settings Default settings for each word
+-- @param color_aliases Color aliases table
 -- @return List of all words
-function M.parse(text, default_settings)
+function M.parse(text, default_settings, style)
 	assert(text)
 	assert(default_settings)
 
@@ -151,12 +152,12 @@ function M.parse(text, default_settings)
 		if is_empty then
 			-- empty tag, ie tag without content
 			-- example <br/> and <img=texture:image/>
-			local empty_tag_settings = parse_tag(name, params)
+			local empty_tag_settings = parse_tag(name, params, style)
 			merge_tags(empty_tag_settings, word_settings)
 			add_word("", empty_tag_settings, all_words)
 		elseif not is_endtag then
 			-- open tag - parse and add it
-			local tag_settings = parse_tag(name, params)
+			local tag_settings = parse_tag(name, params, style)
 			open_tags[#open_tags + 1] = tag_settings
 		else
 			-- end tag - remove it from the list of open tags

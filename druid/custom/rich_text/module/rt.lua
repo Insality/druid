@@ -13,9 +13,6 @@ local utf8 = utf8 or utf8_lua
 
 local M = {}
 
-M.ADJUST_STEPS = 20
-M.ADJUST_SCALE_DELTA = 0.02
-
 -- Trim spaces on string start
 local function ltrim(text)
 	return text:match('^%s*(.*)')
@@ -144,12 +141,13 @@ local function measure_node(word, settings, previous_word)
 end
 
 
---- Create rich text gui nodes from text
--- @param text The text to create rich text nodes from
--- @param settings Optional settings table (refer to documentation for details)
--- @return words
--- @return metrics
-function M.create(text, settings)
+-- Create rich text gui nodes from text
+--- @param text string The text to create rich text nodes from
+--- @param settings table Optional settings table (refer to documentation for details)
+--- @param style druid.rich_text.style
+--- @return words
+--- @return metrics
+function M.create(text, settings, style)
 	assert(text, "You must provide a text")
 
 	-- default settings for a word
@@ -178,12 +176,11 @@ function M.create(text, settings)
 		image_color = gui.get_color(settings.node_prefab),
 		default_animation = nil,
 		-- Tags
-		anchor = nil,
 		br = nil,
 		nobr = nil,
 	}
 
-	local parsed_words = parser.parse(text, word_params)
+	local parsed_words = parser.parse(text, word_params, style)
 	local lines = M._split_on_lines(parsed_words, settings)
 	local lines_metrics = M._position_lines(lines, settings)
 	M._update_nodes(lines, settings)
@@ -450,7 +447,8 @@ end
 ---@param words druid.rich_text.word[]
 ---@param settings druid.rich_text.settings
 ---@param lines_metrics druid.rich_text.lines_metrics
-function M.adjust_to_area(words, settings, lines_metrics)
+---@param style druid.rich_text.style
+function M.adjust_to_area(words, settings, lines_metrics, style)
 	local last_line_metrics = lines_metrics
 
 	if not settings.is_multiline then
@@ -459,7 +457,7 @@ function M.adjust_to_area(words, settings, lines_metrics)
 		end
 	else
 		-- Multiline adjusting is very tricky stuff...
-		-- It's do a lot of calculations, beware!
+		-- It's doing a lot of calculations, beware!
 		if lines_metrics.text_width > settings.width or lines_metrics.text_height > settings.height then
 			local scale_koef = math.sqrt(settings.height / lines_metrics.text_height)
 			if lines_metrics.text_width * scale_koef > settings.width then
@@ -469,9 +467,9 @@ function M.adjust_to_area(words, settings, lines_metrics)
 
 			local lines = M.apply_scale_without_update(words, settings, adjust_scale)
 			local is_fit = M.is_fit_info_area(lines, settings)
-			local step = is_fit and M.ADJUST_SCALE_DELTA or -M.ADJUST_SCALE_DELTA
+			local step = is_fit and style.ADJUST_SCALE_DELTA or -style.ADJUST_SCALE_DELTA
 
-			for i = 1, M.ADJUST_STEPS do
+			for i = 1, style.ADJUST_STEPS do
 				-- Grow down to check if we fit
 				if step < 0 and is_fit then
 					last_line_metrics = M.set_text_scale(words, settings, adjust_scale)
@@ -487,7 +485,7 @@ function M.adjust_to_area(words, settings, lines_metrics)
 				lines = M.apply_scale_without_update(words, settings, adjust_scale)
 				is_fit = M.is_fit_info_area(lines, settings)
 
-				if i == M.ADJUST_STEPS then
+				if i == style.ADJUST_STEPS then
 					last_line_metrics = M.set_text_scale(words, settings, adjust_scale)
 				end
 			end

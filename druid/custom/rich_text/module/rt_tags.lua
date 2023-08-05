@@ -5,17 +5,16 @@
 local color = require("druid.custom.rich_text.module.rt_color")
 
 local M = {}
-
 local tags = {}
 
 
-function M.apply(tag, params, settings)
+function M.apply(tag, params, settings, style)
 	local fn = tags[tag]
 	if not fn then
 		return false
 	end
 
-	fn(params, settings)
+	fn(params, settings, style)
 	return true
 end
 
@@ -44,17 +43,20 @@ end
 -- Format: <color=[#]{HEX_VALUE}>{Text}</color>
 -- Format: <color={COLOR_NAME}>{Text}</color>
 -- Example: <color=FF0000>Rich Text</color>
-M.register("color", function(params, settings)
+M.register("color", function(params, settings, style)
+	params = style.COLORS[params] or params
 	settings.color = color.parse(params)
 end)
 
 
-M.register("shadow", function(params, settings)
+M.register("shadow", function(params, settings, style)
+	params = style.COLORS[params] or params
 	settings.shadow = color.parse(params)
 end)
 
 
-M.register("outline", function(params, settings)
+M.register("outline", function(params, settings, style)
+	params = style.COLORS[params] or params
 	settings.outline = color.parse(params)
 end)
 
@@ -66,11 +68,6 @@ end)
 
 M.register("size", function(params, settings)
 	settings.relative_scale = tonumber(params)
-end)
-
-
-M.register("a", function(params, settings)
-	settings.anchor = true
 end)
 
 

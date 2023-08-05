@@ -1,5 +1,10 @@
 -- Manual Annotations --
 
+---@class druid.rich_text.style
+---@field COLORS table
+---@field ADJUST_STEPS number
+---@field ADJUST_SCALE_DELTA number
+
 ---@class druid.rich_text.metrics
 ---@field width number
 ---@field height number
