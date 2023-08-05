@@ -1,0 +1,894 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Framework</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><strong>Button</strong></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Button</code></h1>
+<p>Druid Component for Handling User Click Interactions: Click, Long Click, Double Click, and More.</p>
+<p>
+<p> <b># Overview #</b>
+<p> This component provides a versatile solution for handling user click interactions.
+ It allows you to make any GUI node clickable and define various callbacks for different types of clicks.
+<p> <b># Notes #</b>
+<p> • The click callback will not trigger if the cursor moves outside the node's
+ area between the pressed and released states.
+<p> • If a button has a double click event subscriber and the double click event is triggered,
+ the regular click callback will not be triggered.
+<p> • Buttons can be triggered using a keyboard key by calling the button:set_key_trigger method.
+<p> • To animate a small icon on a big button panel, you can use an animation node.
+ The trigger node name should be set as "big panel," and the animation node should be set as "small icon."
+<p> <a href="https://insality.github.io/druid/druid/index.html?example=general_buttons" target="_blank"><b>Example Link</b></a></p>
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">local function on_button_click(self, args, button)
+    print(&quot;Button has clicked with params: &quot; .. args)
+    print(&quot;Also the button component is passed in callback params&quot;)
+end
+
+local custom_args = &quot;Any variable to pass inside callback&quot;
+local button = self.druid:new_button(&quot;button_name&quot;, on_button_click, custom_args)
+</pre>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#get_key_trigger">get_key_trigger(self)</a></td>
+	<td class="summary">Get current key name to trigger this button.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, node, callback[, custom_args[, anim_node]])</a></td>
+	<td class="summary">The <a href="../modules/Button.html#">Button</a> constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_enabled">is_enabled(self)</a></td>
+	<td class="summary">Get button enabled state.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_check_function">set_check_function(self[, check_function[, failure_callback]])</a></td>
+	<td class="summary">Set function for additional check for button click availability</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, zone)</a></td>
+	<td class="summary">Set additional button click area.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_enabled">set_enabled(self, state)</a></td>
+	<td class="summary">Set button enabled state.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_key_trigger">set_key_trigger(self, key)</a></td>
+	<td class="summary">Set key name to trigger this button by keyboard.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_web_user_interaction">set_web_user_interaction(self[, is_web_mode])</a></td>
+	<td class="summary">Set Button mode to work inside user HTML5 interaction event.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#style">style</a></td>
+	<td class="summary">Component style params.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#anim_node">anim_node</a></td>
+	<td class="summary">Button animation node.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#click_zone">click_zone</a></td>
+	<td class="summary">Additional button click area, defined by another GUI Node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#hover">hover</a></td>
+	<td class="summary">The <a href="../modules/Hover.html#">Hover</a>: Button Hover component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Button trigger node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#node_id">node_id</a></td>
+	<td class="summary">The GUI node id from button node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_click">on_click</a></td>
+	<td class="summary">The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event on successful release action over button.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_click_outside">on_click_outside</a></td>
+	<td class="summary">The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event calls if click event was outside of button.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_double_click">on_double_click</a></td>
+	<td class="summary">The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event on double tap action over button.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_hold_callback">on_hold_callback</a></td>
+	<td class="summary">The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event calls every frame before on_long_click event.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_long_click">on_long_click</a></td>
+	<td class="summary">The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event on long tap action over button.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_pressed">on_pressed</a></td>
+	<td class="summary">The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event triggered if button was pressed by user.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_repeated_click">on_repeated_click</a></td>
+	<td class="summary">The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event on repeated action over button.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#params">params</a></td>
+	<td class="summary">Custom args for any Button event.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "get_key_trigger"></a>
+    <strong>get_key_trigger(self)</strong>
+    </dt>
+    <dd>
+    Get current key name to trigger this button.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">hash</span></span>
+        The action_id of the input key
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> key_hash = button:get_key_trigger()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, node, callback[, custom_args[, anim_node]])</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/Button.html#">Button</a> constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+         <a href="../modules/Button.html#">Button</a>
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">Node</span></span>
+         Node name or GUI Node itself
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         On click button callback
+        </li>
+        <li><span class="parameter">custom_args</span>
+            <span class="types"><span class="type">any</span></span>
+         Button events custom arguments
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">anim_node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">Node</span></span>
+         Node to animate instead of trigger node.
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_enabled"></a>
+    <strong>is_enabled(self)</strong>
+    </dt>
+    <dd>
+    Get button enabled state.
+<p> By default all Buttons is enabled on creating.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+         <a href="../modules/Button.html#">Button</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        True, if button is enabled now, False overwise
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> is_enabled = button:is_enabled()</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "set_check_function"></a>
+    <strong>set_check_function(self[, check_function[, failure_callback]])</strong>
+    </dt>
+    <dd>
+    Set function for additional check for button click availability
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+
+        </li>
+        <li><span class="parameter">check_function</span>
+            <span class="types"><span class="type">function</span></span>
+         Should return true or false. If true - button can be pressed.
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">failure_callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Function will be called on button click, if check function return false
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        Current button instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_click_zone"></a>
+    <strong>set_click_zone(self, zone)</strong>
+    </dt>
+    <dd>
+    Set additional button click area.
+ Useful to restrict click outside out stencil node or scrollable content.
+<p> This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+         <a href="../modules/Button.html#">Button</a>
+        </li>
+        <li><span class="parameter">zone</span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
+         Gui node
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        Current button instance
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">button:set_click_zone(<span class="string">"stencil_node"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "set_enabled"></a>
+    <strong>set_enabled(self, state)</strong>
+    </dt>
+    <dd>
+    Set button enabled state.
+ The style.on_set_enabled will be triggered.
+ Disabled button is not clickable.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+         <a href="../modules/Button.html#">Button</a>
+        </li>
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">bool</span></span>
+         Enabled state
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        Current button instance
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">button:set_enabled(<span class="keyword">false</span>)
+button:set_enabled(<span class="keyword">true</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "set_key_trigger"></a>
+    <strong>set_key_trigger(self, key)</strong>
+    </dt>
+    <dd>
+    Set key name to trigger this button by keyboard.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+         <a href="../modules/Button.html#">Button</a>
+        </li>
+        <li><span class="parameter">key</span>
+            <span class="types"><span class="type">hash</span></span>
+         The action_id of the input key
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        Current button instance
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">button:set_key_trigger(<span class="string">"key_space"</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "set_web_user_interaction"></a>
+    <strong>set_web_user_interaction(self[, is_web_mode])</strong>
+    </dt>
+    <dd>
+    Set Button mode to work inside user HTML5 interaction event.
+<p> It's required to make protected things like copy & paste text, show mobile keyboard, etc
+ The HTML5 button's doesn't call any events except on_click event.
+<p> If the game is not HTML, html mode will be not enabled
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Button</span></span>
+
+        </li>
+        <li><span class="parameter">is_web_mode</span>
+            <span class="types"><span class="type">boolean</span></span>
+         If true - button will be called inside html5 callback
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        Current button instance
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">button:set_web_user_interaction(<span class="keyword">true</span>)</pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "style"></a>
+    <strong>style</strong>
+    </dt>
+    <dd>
+    Component style params.
+ You can override this component styles params in Druid styles table
+ or create your own style
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">LONGTAP_TIME</span>
+            <span class="types"><span class="type">number</span></span>
+         Minimum time to trigger on_hold_callback
+         (<em>default</em> 0.4)
+        </li>
+        <li><span class="parameter">AUTOHOLD_TRIGGER</span>
+            <span class="types"><span class="type">number</span></span>
+         Maximum hold time to trigger button release while holding
+         (<em>default</em> 0.8)
+        </li>
+        <li><span class="parameter">DOUBLETAP_TIME</span>
+            <span class="types"><span class="type">number</span></span>
+         Time between double taps
+         (<em>default</em> 0.4)
+        </li>
+        <li><span class="parameter">on_click</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node)
+        </li>
+        <li><span class="parameter">on_click_disabled</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node)
+        </li>
+        <li><span class="parameter">on_hover</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node, hover_state)
+        </li>
+        <li><span class="parameter">on_mouse_hover</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node, hover_state)
+        </li>
+        <li><span class="parameter">on_set_enabled</span>
+            <span class="types"><span class="type">function</span></span>
+         (self, node, enabled_state)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "anim_node"></a>
+    <strong>anim_node</strong>
+    </dt>
+    <dd>
+    Button animation node.
+ In default case equals to clickable node.
+<p> Usecase: You have the big clickable panel, but want to animate only one small icon on it.
+
+
+    <ul>
+        <li><span class="parameter">anim_node</span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
+
+         (<em>default</em> node)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "click_zone"></a>
+    <strong>click_zone</strong>
+    </dt>
+    <dd>
+    Additional button click area, defined by another GUI Node
+
+
+    <ul>
+        <li><span class="parameter">click_zone</span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
+
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "hover"></a>
+    <strong>hover</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/Hover.html#">Hover</a>: Button Hover component
+
+
+    <ul>
+        <li><span class="parameter">hover</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Button trigger node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">Node</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "node_id"></a>
+    <strong>node_id</strong>
+    </dt>
+    <dd>
+    The GUI node id from button node
+
+
+    <ul>
+        <li><span class="parameter">node_id</span>
+            <span class="types"><span class="type">hash</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_click"></a>
+    <strong>on_click</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event on successful release action over button.
+
+
+    <ul>
+        <li><span class="parameter">on_click</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Custom args passed in Button constructor
+</span>button.on_click:subscribe(<span class="keyword">function</span>(self, custom_args, button_instance)
+    <span class="global">print</span>(<span class="string">"On button click!"</span>)
+<span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "on_click_outside"></a>
+    <strong>on_click_outside</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event calls if click event was outside of button.
+<p> This event will be triggered for each button what was not clicked on user click action
+<p> Usecase: Hide the popup when click outside
+
+
+    <ul>
+        <li><span class="parameter">on_click_outside</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Custom args passed in Button constructor
+</span>button.on_click_outside:subscribe(<span class="keyword">function</span>(self, custom_args, button_instance)
+    <span class="global">print</span>(<span class="string">"On click Button outside!"</span>)
+<span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "on_double_click"></a>
+    <strong>on_double_click</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event on double tap action over button.
+<p> If secondary click was too fast after previous one, the double
+ click will be called instead usual click (if on_double_click subscriber exists)
+
+
+    <ul>
+        <li><span class="parameter">on_double_click</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Custom args passed in Button constructor
+</span>button.on_double_click:subscribe(<span class="keyword">function</span>(self, custom_args, button_instance, click_amount)
+    <span class="global">print</span>(<span class="string">"On double Button click!"</span>)
+<span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "on_hold_callback"></a>
+    <strong>on_hold_callback</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event calls every frame before on_long_click event.
+<p> If long_click subscriber exists, the on_hold_callback will be called before long_click trigger.
+<p> Usecase: Animate button progress of long tap
+
+
+    <ul>
+        <li><span class="parameter">on_hold_callback</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Custom args passed in Button constructor
+</span>button.on_double_click:subscribe(<span class="keyword">function</span>(self, custom_args, button_instance, time)
+    <span class="global">print</span>(<span class="string">"On hold Button callback!"</span>)
+<span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "on_long_click"></a>
+    <strong>on_long_click</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event on long tap action over button.
+<p> This callback will be triggered if user pressed the button and hold the some amount of time.
+ The amount of time picked from button style param: LONGTAP_TIME
+
+
+    <ul>
+        <li><span class="parameter">on_long_click</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Custom args passed in Button constructor
+</span>button.on_long_click:subscribe(<span class="keyword">function</span>(self, custom_args, button_instance, hold_time)
+    <span class="global">print</span>(<span class="string">"On long Button click!"</span>)
+<span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "on_pressed"></a>
+    <strong>on_pressed</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event triggered if button was pressed by user.
+
+
+    <ul>
+        <li><span class="parameter">on_pressed</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Custom args passed in Button constructor
+</span>button.on_pressed:subscribe(<span class="keyword">function</span>(self, custom_args, button_instance)
+    <span class="global">print</span>(<span class="string">"On Button pressed!"</span>)
+<span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "on_repeated_click"></a>
+    <strong>on_repeated_click</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/DruidEvent.html#">DruidEvent</a>: Event on repeated action over button.
+<p> This callback will be triggered if user hold the button. The repeat rate pick from `input.repeat_interval` in game.project
+
+
+    <ul>
+        <li><span class="parameter">on_repeated_click</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="comment">-- Custom args passed in Button constructor
+</span>button.on_repeated_click:subscribe(<span class="keyword">function</span>(self, custom_args, button_instance, click_count)
+    <span class="global">print</span>(<span class="string">"On repeated Button click!"</span>)
+<span class="keyword">end</span>)</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "params"></a>
+    <strong>params</strong>
+    </dt>
+    <dd>
+    Custom args for any Button event.  Setup in Button constructor
+
+
+    <ul>
+        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">any</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

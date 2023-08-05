@@ -1,0 +1,1365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Framework</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><strong>DruidInstance</strong></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>DruidInstance</code></h1>
+<p>Druid Instance which you use for component creation.</p>
+<p>
+<p> # Component List #
+<p> For a list of all available components, please refer to the "See Also" section.
+<p> <b># Notes #</b>
+<p> Please review the following API pages:
+<p> <a href="../modules/Helper.html#">Helper</a> - A useful set of functions for working with GUI nodes, such as centering nodes, get GUI scale ratio, etc
+<p> <a href="../modules/DruidEvent.html#">DruidEvent</a> - The core event system in Druid. Learn how to subscribe to any event in every Druid component.
+<p> <a href="../modules/BaseComponent.html#">BaseComponent</a> - The parent class of all Druid components. You can find all default component methods there.
+<p> # Tech Info #
+<p> • To use Druid, you need to create a Druid instance first. This instance is used to spawn components.
+<p> • When using Druid components, provide the node name as a string argument directly. Avoid calling gui.get_node() before passing it to the component. Because Druid can get nodes from template and cloned gui nodes.
+<p> • All Druid and component methods are called using the colon operator (e.g., self.druid:new_button()).</p>
+    <h3>See also:</h3>
+    <ul>
+         <li><a href="../modules/BackHandler.html#">BackHandler</a></li>
+         <li><a href="../modules/Blocker.html#">Blocker</a></li>
+         <li><a href="../modules/Button.html#">Button</a></li>
+         <li><a href="../modules/Checkbox.html#">Checkbox</a></li>
+         <li><a href="../modules/CheckboxGroup.html#">CheckboxGroup</a></li>
+         <li><a href="../modules/DataList.html#">DataList</a></li>
+         <li><a href="../modules/Drag.html#">Drag</a></li>
+         <li><a href="../modules/DynamicGrid.html#">DynamicGrid</a></li>
+         <li><a href="../modules/Hotkey.html#">Hotkey</a></li>
+         <li><a href="../modules/Hover.html#">Hover</a></li>
+         <li><a href="../modules/Input.html#">Input</a></li>
+         <li><a href="../modules/LangText.html#">LangText</a></li>
+         <li><a href="../modules/Layout.html#">Layout</a></li>
+         <li><a href="../modules/Progress.html#">Progress</a></li>
+         <li><a href="../modules/RadioGroup.html#">RadioGroup</a></li>
+         <li><a href="../modules/RichInput.html#">RichInput</a></li>
+         <li><a href="../modules/RichText.html#">RichText</a></li>
+         <li><a href="../modules/Scroll.html#">Scroll</a></li>
+         <li><a href="../modules/Slider.html#">Slider</a></li>
+         <li><a href="../modules/StaticGrid.html#">StaticGrid</a></li>
+         <li><a href="../modules/Swipe.html#">Swipe</a></li>
+         <li><a href="../modules/Text.html#">Text</a></li>
+         <li><a href="../modules/Timer.html#">Timer</a></li>
+    </ul>
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">local druid = require(&quot;druid.druid&quot;)
+
+local function close_window(self)
+    print(&quot;Yeah! You closed the game!&quot;)
+end
+
+function init(self)
+    self.druid = druid.new(self)
+
+    -- Call all druid instance function with &quot;:&quot; syntax:
+    local text = self.druid:new_text(&quot;text_header&quot;, &quot;Hello Druid!&quot;)
+    local button = self.druid:new_button(&quot;button_close&quot;, close_window)
+
+    -- You not need to save component reference if not need it
+    self.druid:new_back_handler(close_window)
+end
+</pre>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#final">final(self)</a></td>
+	<td class="summary">Call this in gui_script final function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new">new(self, component, ...)</a></td>
+	<td class="summary">Create new component.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_back_handler">new_back_handler(self, callback[, params])</a></td>
+	<td class="summary">Create <a href="../modules/BackHandler.html#">BackHandler</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_blocker">new_blocker(self, node)</a></td>
+	<td class="summary">Create <a href="../modules/Blocker.html#">Blocker</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_button">new_button(self, node, callback[, params[, anim_node]])</a></td>
+	<td class="summary">Create <a href="../modules/Button.html#">Button</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_checkbox">new_checkbox(self, node, callback[, click_node=node[, initial_state=false]])</a></td>
+	<td class="summary">Create <a href="../modules/Checkbox.html#">Checkbox</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_checkbox_group">new_checkbox_group(self, nodes, callback[, click_nodes=node])</a></td>
+	<td class="summary">Create <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_data_list">new_data_list(self, druid_scroll, druid_grid, create_function)</a></td>
+	<td class="summary">Create <a href="../modules/DataList.html#">DataList</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_drag">new_drag(self, node, on_drag_callback)</a></td>
+	<td class="summary">Create <a href="../modules/Drag.html#">Drag</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_dynamic_grid">new_dynamic_grid(self, parent)</a></td>
+	<td class="summary">Create <a href="../modules/DynamicGrid.html#">DynamicGrid</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_hotkey">new_hotkey(self, keys_array, callback[, params])</a></td>
+	<td class="summary">Create <a href="../modules/Hotkey.html#">Hotkey</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_hover">new_hover(self, node, on_hover_callback)</a></td>
+	<td class="summary">Create <a href="../modules/Hover.html#">Hover</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_input">new_input(self, click_node, text_node[, keyboard_type])</a></td>
+	<td class="summary">Create <a href="../modules/Input.html#">Input</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_lang_text">new_lang_text(self, node, locale_id, no_adjust)</a></td>
+	<td class="summary">Create <a href="../modules/LangText.html#">LangText</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_layout">new_layout(self, node, mode)</a></td>
+	<td class="summary">Create <a href="../modules/Layout.html#">Layout</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_progress">new_progress(self, node, key[, init_value=1])</a></td>
+	<td class="summary">Create <a href="../modules/Progress.html#">Progress</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_radio_group">new_radio_group(self, nodes, callback[, click_nodes=node])</a></td>
+	<td class="summary">Create <a href="../modules/RadioGroup.html#">RadioGroup</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_rich_text">new_rich_text(self[, template[, nodes]])</a></td>
+	<td class="summary">Create <a href="../modules/RichText.html#">RichText</a> component.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_scroll">new_scroll(self, view_node, content_node)</a></td>
+	<td class="summary">Create <a href="../modules/Scroll.html#">Scroll</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_slider">new_slider(self, node, end_pos[, callback])</a></td>
+	<td class="summary">Create <a href="../modules/Slider.html#">Slider</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_static_grid">new_static_grid(self, parent, element[, in_row=1])</a></td>
+	<td class="summary">Create <a href="../modules/StaticGrid.html#">StaticGrid</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_swipe">new_swipe(self, node, on_swipe_callback)</a></td>
+	<td class="summary">Create <a href="../modules/Swipe.html#">Swipe</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_text">new_text(self, node[, value[, no_adjust]])</a></td>
+	<td class="summary">Create <a href="../modules/Text.html#">Text</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#new_timer">new_timer(self, node, seconds_from[, seconds_to=0[, callback]])</a></td>
+	<td class="summary">Create <a href="../modules/Timer.html#">Timer</a> component</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_input">on_input(self, action_id, action)</a></td>
+	<td class="summary">Call this in gui_script on_input function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_message">on_message(self, message_id, message, sender)</a></td>
+	<td class="summary">Call this in gui_script on_message function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#remove">remove(self, component)</a></td>
+	<td class="summary">Remove created component from Druid instance.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_blacklist">set_blacklist(self[, blacklist_components=nil])</a></td>
+	<td class="summary">Set blacklist components for input processing.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_whitelist">set_whitelist(self[, whitelist_components=nil])</a></td>
+	<td class="summary">Set whitelist components for input processing.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#update">update(self, dt)</a></td>
+	<td class="summary">Call this in gui_script update function.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "final"></a>
+    <strong>final(self)</strong>
+    </dt>
+    <dd>
+    Call this in gui_script final function.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new"></a>
+    <strong>new(self, component, ...)</strong>
+    </dt>
+    <dd>
+    Create new component.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">component</span>
+            <span class="types"><span class="type">Component</span></span>
+         Component module
+        </li>
+        <li><span class="parameter">...</span>
+            <span class="types"><span class="type">args</span></span>
+         Other component params to pass it to component:init function
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_back_handler"></a>
+    <strong>new_back_handler(self, callback[, params])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/BackHandler.html#">BackHandler</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">callback</span></span>
+         On back button
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">any</span></span>
+         Callback argument
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">BackHandler</span></span>
+        <a href="../modules/BackHandler.html#">BackHandler</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_blocker"></a>
+    <strong>new_blocker(self, node)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Blocker.html#">Blocker</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Blocker</span></span>
+        <a href="../modules/Blocker.html#">Blocker</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_button"></a>
+    <strong>new_button(self, node, callback[, params[, anim_node]])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Button.html#">Button</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         GUI node
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Button callback
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Button callback params
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">anim_node</span>
+            <span class="types"><span class="type">node</span></span>
+         Button anim node (node, if not provided)
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Button</span></span>
+        <a href="../modules/Button.html#">Button</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_checkbox"></a>
+    <strong>new_checkbox(self, node, callback[, click_node=node[, initial_state=false]])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Checkbox.html#">Checkbox</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Checkbox callback
+        </li>
+        <li><span class="parameter">click_node</span>
+            <span class="types"><span class="type">node</span></span>
+         Trigger node, by default equals to node
+         (<em>default</em> node)
+        </li>
+        <li><span class="parameter">initial_state</span>
+            <span class="types"><span class="type">boolean</span></span>
+         The initial state of checkbox, default - false
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Checkbox</span></span>
+        <a href="../modules/Checkbox.html#">Checkbox</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_checkbox_group"></a>
+    <strong>new_checkbox_group(self, nodes, callback[, click_nodes=node])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">nodes</span>
+            <span class="types"><span class="type">node[]</span></span>
+         Array of gui node
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Checkbox callback
+        </li>
+        <li><span class="parameter">click_nodes</span>
+            <span class="types"><span class="type">node[]</span></span>
+         Array of trigger nodes, by default equals to nodes
+         (<em>default</em> node)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">CheckboxGroup</span></span>
+        <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_data_list"></a>
+    <strong>new_data_list(self, druid_scroll, druid_grid, create_function)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/DataList.html#">DataList</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">druid_scroll</span>
+            <span class="types"><span class="type">Scroll</span></span>
+         The Scroll instance for Data List component
+        </li>
+        <li><span class="parameter">druid_grid</span>
+            <span class="types"><span class="type">Grid</span></span>
+         The Grid instance for Data List component
+        </li>
+        <li><span class="parameter">create_function</span>
+            <span class="types"><span class="type">function</span></span>
+         The create function callback(self, data, index, data_list). Function should return (node, [component])
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">DataList</span></span>
+        <a href="../modules/DataList.html#">DataList</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_drag"></a>
+    <strong>new_drag(self, node, on_drag_callback)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Drag.html#">Drag</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         GUI node to detect dragging
+        </li>
+        <li><span class="parameter">on_drag_callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Callback for on_drag_event(self, dx, dy)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Drag</span></span>
+        <a href="../modules/Drag.html#">Drag</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_dynamic_grid"></a>
+    <strong>new_dynamic_grid(self, parent)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/DynamicGrid.html#">DynamicGrid</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">parent</span>
+            <span class="types"><span class="type">node</span></span>
+         The gui node parent, where items will be placed
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">DynamicGrid</span></span>
+        <a href="../modules/DynamicGrid.html#">DynamicGrid</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_hotkey"></a>
+    <strong>new_hotkey(self, keys_array, callback[, params])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Hotkey.html#">Hotkey</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">keys_array</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string[]</a></span>
+         Keys for trigger action. Should contains one action key and any amount of modificator keys
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Button callback
+        </li>
+        <li><span class="parameter">params</span>
+            <span class="types"><span class="type">value</span></span>
+         Button callback params
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Hotkey</span></span>
+        <a href="../modules/Hotkey.html#">Hotkey</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_hover"></a>
+    <strong>new_hover(self, node, on_hover_callback)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Hover.html#">Hover</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+        <li><span class="parameter">on_hover_callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Hover callback
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Hover</span></span>
+        <a href="../modules/Hover.html#">Hover</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_input"></a>
+    <strong>new_input(self, click_node, text_node[, keyboard_type])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Input.html#">Input</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">click_node</span>
+            <span class="types"><span class="type">node</span></span>
+         Button node to enabled input component
+        </li>
+        <li><span class="parameter">text_node</span>
+            <span class="types"><span class="type">node</span></span>
+         Text node what will be changed on user input
+        </li>
+        <li><span class="parameter">keyboard_type</span>
+            <span class="types"><span class="type">number</span></span>
+         Gui keyboard type for input field
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Input</span></span>
+        <a href="../modules/Input.html#">Input</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_lang_text"></a>
+    <strong>new_lang_text(self, node, locale_id, no_adjust)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/LangText.html#">LangText</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         The text node
+        </li>
+        <li><span class="parameter">locale_id</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Default locale id
+        </li>
+        <li><span class="parameter">no_adjust</span>
+            <span class="types"><span class="type">bool</span></span>
+         If true, will not correct text size
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">LangText</span></span>
+        <a href="../modules/LangText.html#">LangText</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_layout"></a>
+    <strong>new_layout(self, node, mode)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Layout.html#">Layout</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         Layout node
+        </li>
+        <li><span class="parameter">mode</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The layout mode
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Layout</span></span>
+        <a href="../modules/Layout.html#">Layout</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_progress"></a>
+    <strong>new_progress(self, node, key[, init_value=1])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Progress.html#">Progress</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         Progress bar fill node or node name
+        </li>
+        <li><span class="parameter">key</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Progress bar direction: const.SIDE.X or const.SIDE.Y
+        </li>
+        <li><span class="parameter">init_value</span>
+            <span class="types"><span class="type">number</span></span>
+         Initial value of progress bar
+         (<em>default</em> 1)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Progress</span></span>
+        <a href="../modules/Progress.html#">Progress</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_radio_group"></a>
+    <strong>new_radio_group(self, nodes, callback[, click_nodes=node])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/RadioGroup.html#">RadioGroup</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">nodes</span>
+            <span class="types"><span class="type">node[]</span></span>
+         Array of gui node
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Radio callback
+        </li>
+        <li><span class="parameter">click_nodes</span>
+            <span class="types"><span class="type">node[]</span></span>
+         Array of trigger nodes, by default equals to nodes
+         (<em>default</em> node)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">RadioGroup</span></span>
+        <a href="../modules/RadioGroup.html#">RadioGroup</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_rich_text"></a>
+    <strong>new_rich_text(self[, template[, nodes]])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/RichText.html#">RichText</a> component.
+ As a template please check rich_text.gui layout.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">template</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Template name if used
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">nodes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Nodes table from gui.clone_tree
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">RichText</span></span>
+        <a href="../modules/RichText.html#">RichText</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_scroll"></a>
+    <strong>new_scroll(self, view_node, content_node)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Scroll.html#">Scroll</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">view_node</span>
+            <span class="types"><span class="type">node</span></span>
+         GUI view scroll node
+        </li>
+        <li><span class="parameter">content_node</span>
+            <span class="types"><span class="type">node</span></span>
+         GUI content scroll node
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Scroll</span></span>
+        <a href="../modules/Scroll.html#">Scroll</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_slider"></a>
+    <strong>new_slider(self, node, end_pos[, callback])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Slider.html#">Slider</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui pin node
+        </li>
+        <li><span class="parameter">end_pos</span>
+            <span class="types"><span class="type">vector3</span></span>
+         The end position of slider
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         On slider change callback
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Slider</span></span>
+        <a href="../modules/Slider.html#">Slider</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_static_grid"></a>
+    <strong>new_static_grid(self, parent, element[, in_row=1])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/StaticGrid.html#">StaticGrid</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">parent</span>
+            <span class="types"><span class="type">node</span></span>
+         The gui node parent, where items will be placed
+        </li>
+        <li><span class="parameter">element</span>
+            <span class="types"><span class="type">node</span></span>
+         Element prefab. Need to get it size
+        </li>
+        <li><span class="parameter">in_row</span>
+            <span class="types"><span class="type">number</span></span>
+         How many nodes in row can be placed
+         (<em>default</em> 1)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">StaticGrid</span></span>
+        <a href="../modules/StaticGrid.html#">StaticGrid</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_swipe"></a>
+    <strong>new_swipe(self, node, on_swipe_callback)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Swipe.html#">Swipe</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+        <li><span class="parameter">on_swipe_callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Swipe callback for on_swipe_end event
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Swipe</span></span>
+        <a href="../modules/Swipe.html#">Swipe</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_text"></a>
+    <strong>new_text(self, node[, value[, no_adjust]])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Text.html#">Text</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui text node
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Initial text. Default value is node text from GUI scene.
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">no_adjust</span>
+            <span class="types"><span class="type">bool</span></span>
+         If true, text will be not auto-adjust size
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        <a href="../modules/Text.html#">Text</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_timer"></a>
+    <strong>new_timer(self, node, seconds_from[, seconds_to=0[, callback]])</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/Timer.html#">Timer</a> component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui text node
+        </li>
+        <li><span class="parameter">seconds_from</span>
+            <span class="types"><span class="type">number</span></span>
+         Start timer value in seconds
+        </li>
+        <li><span class="parameter">seconds_to</span>
+            <span class="types"><span class="type">number</span></span>
+         End timer value in seconds
+         (<em>default</em> 0)
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Function on timer end
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Timer</span></span>
+        <a href="../modules/Timer.html#">Timer</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_input"></a>
+    <strong>on_input(self, action_id, action)</strong>
+    </dt>
+    <dd>
+    Call this in gui_script on_input function.
+<p> Used for almost all components
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">action_id</span>
+            <span class="types"><span class="type">hash</span></span>
+         Action_id from on_input
+        </li>
+        <li><span class="parameter">action</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Action from on_input
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        The boolean value is input was consumed
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_message"></a>
+    <strong>on_message(self, message_id, message, sender)</strong>
+    </dt>
+    <dd>
+    Call this in gui_script on_message function.
+<p> Used for special actions. See SPECIFIC_UI_MESSAGES table
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">message_id</span>
+            <span class="types"><span class="type">hash</span></span>
+         Message_id from on_message
+        </li>
+        <li><span class="parameter">message</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         Message from on_message
+        </li>
+        <li><span class="parameter">sender</span>
+            <span class="types"><span class="type">hash</span></span>
+         Sender from on_message
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "remove"></a>
+    <strong>remove(self, component)</strong>
+    </dt>
+    <dd>
+    Remove created component from Druid instance.
+<p> Component `on_remove` function will be invoked, if exist.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">component</span>
+            <span class="types"><span class="type">Component</span></span>
+         Component instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_blacklist"></a>
+    <strong>set_blacklist(self[, blacklist_components=nil])</strong>
+    </dt>
+    <dd>
+    Set blacklist components for input processing.
+<p> If blacklist is not empty and component contains in this list,
+ component will be not processed on input step
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+         <a href="../modules/DruidInstance.html#">DruidInstance</a>
+        </li>
+        <li><span class="parameter">blacklist_components</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">Component</span></span>
+         The array of component to blacklist
+         (<em>default</em> nil)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">self</span></span>
+        <a href="../modules/DruidInstance.html#">DruidInstance</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_whitelist"></a>
+    <strong>set_whitelist(self[, whitelist_components=nil])</strong>
+    </dt>
+    <dd>
+    Set whitelist components for input processing.
+<p> If whitelist is not empty and component not contains in this list,
+ component will be not processed on input step
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">whitelist_components</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">Component</span></span>
+         The array of component to whitelist
+         (<em>default</em> nil)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">self</span></span>
+        <a href="../modules/DruidInstance.html#">DruidInstance</a>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "update"></a>
+    <strong>update(self, dt)</strong>
+    </dt>
+    <dd>
+    Call this in gui_script update function.
+<p> Used for: scroll, progress, timer components
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">dt</span>
+            <span class="types"><span class="type">number</span></span>
+         Delta time
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

@@ -1,0 +1,798 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Framework</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
+  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><strong>DynamicGrid</strong></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
+  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>DynamicGrid</code></h1>
+<p>Component to handle placing components in row</p>
+<p> <a href="https://insality.github.io/druid/druid/index.html?example=general_grid" target="_blank"><b>Example Link</b></a></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#_get_side_vector">_get_side_vector(self, side, is_forward)</a></td>
+	<td class="summary">Return side vector to correct node shifting</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#add">add(self, node[, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]]])</a></td>
+	<td class="summary">Add new node to the grid</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clear">clear(self)</a></td>
+	<td class="summary">Clear grid nodes array.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_all_pos">get_all_pos(self)</a></td>
+	<td class="summary">Return array of all node positions</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_borders">get_borders(self)</a></td>
+	<td class="summary">Return grid content borders</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_index_by_node">get_index_by_node(self, node)</a></td>
+	<td class="summary">Return grid index by node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_offset">get_offset(self)</a></td>
+	<td class="summary">Return DynamicGrid offset, where DynamicGrid content starts.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_pos">get_pos(self, index, node[, origin_index])</a></td>
+	<td class="summary">Return pos for grid node index</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_size">get_size(self, border)</a></td>
+	<td class="summary">Return grid content size</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, parent)</a></td>
+	<td class="summary">Component init function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#remove">remove(self, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</a></td>
+	<td class="summary">Remove the item from the grid.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_position_function">set_position_function(self, callback)</a></td>
+	<td class="summary">Change set position function for grid nodes.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#border">border</a></td>
+	<td class="summary">The size of item content</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#first_index">first_index</a></td>
+	<td class="summary">The first index of node in grid</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#last_index">last_index</a></td>
+	<td class="summary">The last index of node in grid</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#node_size">node_size</a></td>
+	<td class="summary">Item size</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#nodes">nodes</a></td>
+	<td class="summary">List of all grid elements.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_add_item">on_add_item</a></td>
+	<td class="summary">On item add callback(self, node, index)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_change_items">on_change_items</a></td>
+	<td class="summary">On item add or remove callback(self, index)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_clear">on_clear</a></td>
+	<td class="summary">On grid clear callback(self)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_remove_item">on_remove_item</a></td>
+	<td class="summary">On item remove callback(self, index)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_update_positions">on_update_positions</a></td>
+	<td class="summary">On update item positions callback(self)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#parent">parent</a></td>
+	<td class="summary">Parent gui node</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "_get_side_vector"></a>
+    <strong>_get_side_vector(self, side, is_forward)</strong>
+    </dt>
+    <dd>
+    Return side vector to correct node shifting
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+
+        </li>
+        <li><span class="parameter">side</span>
+
+        </li>
+        <li><span class="parameter">is_forward</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "add"></a>
+    <strong>add(self, node[, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]]])</strong>
+    </dt>
+    <dd>
+    Add new node to the grid
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         Gui node
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
+         The node position. By default add as last node
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">shift_policy</span>
+            <span class="types"><span class="type">number</span></span>
+         How shift nodes, if required. See const.SHIFT
+         (<em>default</em> SHIFT.RIGHT)
+        </li>
+        <li><span class="parameter">is_instant</span>
+            <span class="types"><span class="type">boolean</span></span>
+         If true, update node positions instantly
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "clear"></a>
+    <strong>clear(self)</strong>
+    </dt>
+    <dd>
+    Clear grid nodes array.  GUI nodes will be not deleted!
+ If you want to delete GUI nodes, use dynamic_grid.nodes array before grid:clear
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.dynamic_grid</span></span>
+        Current grid instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_all_pos"></a>
+    <strong>get_all_pos(self)</strong>
+    </dt>
+    <dd>
+    Return array of all node positions
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3[]</span></span>
+        All grid node positions
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_borders"></a>
+    <strong>get_borders(self)</strong>
+    </dt>
+    <dd>
+    Return grid content borders
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        The grid content borders
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_index_by_node"></a>
+    <strong>get_index_by_node(self, node)</strong>
+    </dt>
+    <dd>
+    Return grid index by node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         The gui node in the grid
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        The node index
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_offset"></a>
+    <strong>get_offset(self)</strong>
+    </dt>
+    <dd>
+    Return DynamicGrid offset, where DynamicGrid content starts.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a> The DynamicGrid instance
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        The DynamicGrid offset
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_pos"></a>
+    <strong>get_pos(self, index, node[, origin_index])</strong>
+    </dt>
+    <dd>
+    Return pos for grid node index
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
+         The grid element index
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><span class="type">node</span></span>
+         The node to be placed
+        </li>
+        <li><span class="parameter">origin_index</span>
+            <span class="types"><span class="type">number</span></span>
+         Index of nearby node
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        Node position
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_size"></a>
+    <strong>get_size(self, border)</strong>
+    </dt>
+    <dd>
+    Return grid content size
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+        <li><span class="parameter">border</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">vector3</span></span>
+        The grid content size
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, parent)</strong>
+    </dt>
+    <dd>
+    Component init function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+        <li><span class="parameter">parent</span>
+            <span class="types"><span class="type">node</span></span>
+         The gui node parent, where items will be placed
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "remove"></a>
+    <strong>remove(self, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</strong>
+    </dt>
+    <dd>
+    Remove the item from the grid.  Note that gui node will be not deleted
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span></span>
+         The grid node index to remove
+        </li>
+        <li><span class="parameter">shift_policy</span>
+            <span class="types"><span class="type">number</span></span>
+         How shift nodes, if required. See const.SHIFT
+         (<em>default</em> SHIFT.RIGHT)
+        </li>
+        <li><span class="parameter">is_instant</span>
+            <span class="types"><span class="type">boolean</span></span>
+         If true, update node positions instantly
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">node</span></span>
+        The deleted gui node from grid
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_position_function"></a>
+    <strong>set_position_function(self, callback)</strong>
+    </dt>
+    <dd>
+    Change set position function for grid nodes.  It will call on
+ update poses on grid elements. Default: gui.set_position
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DynamicGrid</span></span>
+         <a href="../modules/DynamicGrid.html#">DynamicGrid</a>
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Function on node set position
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.dynamic_grid</span></span>
+        Current grid instance
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "border"></a>
+    <strong>border</strong>
+    </dt>
+    <dd>
+    The size of item content
+
+
+    <ul>
+        <li><span class="parameter">border</span>
+            <span class="types"><span class="type">vector4</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "first_index"></a>
+    <strong>first_index</strong>
+    </dt>
+    <dd>
+    The first index of node in grid
+
+
+    <ul>
+        <li><span class="parameter">first_index</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "last_index"></a>
+    <strong>last_index</strong>
+    </dt>
+    <dd>
+    The last index of node in grid
+
+
+    <ul>
+        <li><span class="parameter">last_index</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "node_size"></a>
+    <strong>node_size</strong>
+    </dt>
+    <dd>
+    Item size
+
+
+    <ul>
+        <li><span class="parameter">node_size</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "nodes"></a>
+    <strong>nodes</strong>
+    </dt>
+    <dd>
+    List of all grid elements.  Contains from node, pos, size, pivot
+
+
+    <ul>
+        <li><span class="parameter">nodes</span>
+            <span class="types"><span class="type">node[]</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_add_item"></a>
+    <strong>on_add_item</strong>
+    </dt>
+    <dd>
+    On item add callback(self, node, index)
+
+
+    <ul>
+        <li><span class="parameter">on_add_item</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_change_items"></a>
+    <strong>on_change_items</strong>
+    </dt>
+    <dd>
+    On item add or remove callback(self, index)
+
+
+    <ul>
+        <li><span class="parameter">on_change_items</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_clear"></a>
+    <strong>on_clear</strong>
+    </dt>
+    <dd>
+    On grid clear callback(self)
+
+
+    <ul>
+        <li><span class="parameter">on_clear</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_remove_item"></a>
+    <strong>on_remove_item</strong>
+    </dt>
+    <dd>
+    On item remove callback(self, index)
+
+
+    <ul>
+        <li><span class="parameter">on_remove_item</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_update_positions"></a>
+    <strong>on_update_positions</strong>
+    </dt>
+    <dd>
+    On update item positions callback(self)
+
+
+    <ul>
+        <li><span class="parameter">on_update_positions</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "parent"></a>
+    <strong>parent</strong>
+    </dt>
+    <dd>
+    Parent gui node
+
+
+    <ul>
+        <li><span class="parameter">parent</span>
+            <span class="types"><span class="type">node</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
