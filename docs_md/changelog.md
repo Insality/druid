@@ -477,11 +477,12 @@ Have a good day!
 - **#219**: [System] UTF-8 performance optimization. Now Druid will try to use *utf8* native extension over lua utf8 library if exists. If you wanna use native utf8, just [add the extension](https://github.com/d954mas/defold-utf8) in your `game.project` dependency.
 - **#156**: [Button] Now button can work in HTML5 with `html5.set_interaction_listener`.
 	- The API is `button:set_web_user_interaction(true)`. In HTML5 mode button have several restrictions. Basically, only the single tap event will work.
-- **#227**: Update current URL in HTML5 example
+- **#227**: [System] Update current URL in HTML5 example
 	- Now if you will open the example from direct URL, it will be updated to the current URL in your browser. So now it's much easier to share the example link with each other.
-- **#183**: Documentation about [GUI in World Space](https://forum.defold.com/t/how-to-gui-in-defold/73256#gui-in-world-coordinates-49)
+- **#183**: [Docs] Documentation about [GUI in World Space](https://forum.defold.com/t/how-to-gui-in-defold/73256#gui-in-world-coordinates-49)
 	- Also not only the GUI in World Space, but overall How to GUI in Defold article.
-- **#234**: [BREAKING][Blocker] Now `blocker:set_enabled` and `blocker:is_enabled` affects only inner state of component. To consume input, the blocker component should be enabled and the node itself should be enabled.
+- **#234**: [**BREAKING**] [Blocker] Now `blocker:set_enabled` and `blocker:is_enabled` affects only inner state of component. To consume input, the blocker component should be enabled and the node itself should be enabled.
+	- Breaking due the changes can affect your current logic. Please if use this re-check Blocker component usage.
 - **#235**: [Drag] Fix Drag coordinates on streched screen.
 - **#236**: [Hover] Fix nil return in `hover:on_input`.
 - **#237**: [Layout] Add `layout:set_max_gui_upscale` function.
@@ -490,13 +491,12 @@ Have a good day!
 - [System] Now the documentation contains the **Druid** size. The current size as dependency is around **67KB**. It counted without extended components, which is not included by default in the build.
 
 
+Thanks to the my supporters:
+- [Defold Foundation](https://defold.com)
+- [Ragetto](https://forum.defold.com/u/ragetto)
+
 ❤️ Support ❤️
 
 Please support me if you like this project! It will help me keep engaged to update **Druid** and make it even better!
 
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
-
-
-Thanks for my the supporters:
-- [Defold Foundation](https://defold.com)
-- [Ragetto](https://forum.defold.com/u/ragetto)
