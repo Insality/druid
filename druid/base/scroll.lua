@@ -1,12 +1,38 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle scroll content.
--- Scroll consist from two nodes: scroll parent and scroll input
--- Scroll input the user input zone, it's static
--- Scroll parent the scroll moving part, it will change position.
--- Setup initial scroll size by changing scroll parent size. If scroll parent
--- size will be less than scroll_input size, no scroll is available. For scroll
--- parent size should be more than input size
+-- <b># Overview #</b>
+--
+-- The Scroll component is designed to handle scrollable content and consists of two nodes: the scroll parent and the scroll input.
+--
+-- The scroll input represents the user input zone and remains static.
+--
+-- The scroll parent is the movable part of the scroll and changes its position.
+--
+-- The initial scroll size can be set by adjusting the size of the scroll parent.
+-- If the size of the scroll parent is smaller than the scroll input size, scrolling is not available.
+--
+-- <b># Notes #</b>
+--
+-- • By default, the scroll style includes inertia and extra size for a stretching effect.
+-- These settings can be adjusted using the scroll style settings.
+-- For more details, refer to the scroll style settings.
+--
+-- • "Points of interest" can be set up for the scroll.
+-- The scroll will always be centered on the closest point of interest.
+-- This feature allows creating a slider without inertia and with points of interest on each scroll element.
+--
+-- • The scroll content size can be adjusted using the scroll:set_size(node_size) method.
+-- This method sets a new size for the _content node.
+--
+-- • Inertial scrolling mode can be enabled or disabled using the scroll:set_inert(state) method.
+--
+-- • The extra stretch size can be adjusted using the scroll:set_extra_stretch_size method.
+--
+-- • Multitouch is required for scrolling. The scroll component correctly handles
+-- touch ID swaps while dragging the scroll.
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_scroll" target="_blank"><b>Example Link</b></a>
 -- @module Scroll
 -- @within BaseComponent
 -- @alias druid.scroll
@@ -132,10 +158,10 @@ function Scroll.on_style_change(self, style)
 end
 
 
---- Scroll constructor
+--- @{Scroll} constructor
 -- @tparam Scroll self @{Scroll}
--- @tparam node view_node GUI view scroll node
--- @tparam node content_node GUI content scroll node
+-- @tparam string|node view_node GUI view scroll node
+-- @tparam string|node content_node GUI content scroll node
 function Scroll.init(self, view_node, content_node)
 	self.druid = self:get_druid()
 
@@ -143,7 +169,7 @@ function Scroll.init(self, view_node, content_node)
 	self.view_border = helper.get_border(self.view_node)
 	self.content_node = self:get_node(content_node)
 
-	self.view_size = vmath.mul_per_elem(gui.get_size(self.view_node), gui.get_scale(self.view_node))
+	self.view_size = helper.get_scaled_size(self.view_node)
 
 	self.position = gui.get_position(self.content_node)
 	self.target_position = vmath.vector3(self.position)
@@ -457,7 +483,6 @@ function Scroll.bind_grid(self, grid)
 		local size = grid:get_size()
 		local offset = grid:get_offset()
 		self:set_size(size, offset)
-		self:log_message("Change size from grid", { size = size, offset = offset })
 	end)
 	self:set_size(grid:get_size(), grid:get_offset())
 
@@ -694,7 +719,7 @@ end
 
 function Scroll._update_size(self)
 	local content_border = helper.get_border(self.content_node)
-	local content_size = vmath.mul_per_elem(gui.get_size(self.content_node), gui.get_scale(self.content_node))
+	local content_size = helper.get_scaled_size(self.content_node)
 
 	self.available_pos = get_border_vector(self.view_border - content_border, self._offset)
 	self.available_size = get_size_vector(self.available_pos)

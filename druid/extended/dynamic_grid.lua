@@ -1,6 +1,8 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Component to handle placing components in row
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_grid" target="_blank"><b>Example Link</b></a>
 -- @module DynamicGrid
 -- @within BaseComponent
 -- @alias druid.dynamic_grid
@@ -118,7 +120,7 @@ function DynamicGrid.get_pos(self, index, node, origin_index)
 		assert(not self.first_index, "Dynamic Grid can't have gaps between nodes. Error on grid:add")
 
 		-- If not origin node, so it should be first element in the grid
-		local size = self:_get_node_size(node)
+		local size = helper.get_scaled_size(node)
 		local pivot = const.PIVOTS[gui.get_pivot(node)]
 		return vmath.vector3(
 			size.x * pivot.x - size.x * self.pivot.x,
@@ -308,7 +310,7 @@ function DynamicGrid._add_node(self, node, index, origin_index)
 	self.nodes[index] = {
 		node = node,
 		pos = self:get_pos(index, node, origin_index),
-		size = self:_get_node_size(node),
+		size = helper.get_scaled_size(node),
 		pivot = const.PIVOTS[gui.get_pivot(node)]
 	}
 
@@ -394,7 +396,7 @@ end
 function DynamicGrid._get_next_node_pos(self, origin_node_index, new_node, place_side)
 	local node = self.nodes[origin_node_index]
 
-	local new_node_size = self:_get_node_size(new_node)
+	local new_node_size = helper.get_scaled_size(new_node)
 	local new_pivot = const.PIVOTS[gui.get_pivot(new_node)]
 
 	local dist_x = (node.size.x/2 + new_node_size.x/2) * place_side.x
@@ -407,11 +409,6 @@ function DynamicGrid._get_next_node_pos(self, origin_node_index, new_node, place
 		node_center_y - dist_y + new_node_size.y * new_pivot.y,
 		0
 	)
-end
-
-
-function DynamicGrid._get_node_size(self, node)
-	return vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
 end
 
 

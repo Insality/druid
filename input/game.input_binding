@@ -32,11 +32,11 @@ key_trigger {
 }
 mouse_trigger {
   input: MOUSE_WHEEL_UP
-  action: "scroll_up"
+  action: "mouse_wheel_up"
 }
 mouse_trigger {
   input: MOUSE_WHEEL_DOWN
-  action: "scroll_down"
+  action: "mouse_wheel_down"
 }
 mouse_trigger {
   input: MOUSE_BUTTON_1
@@ -44,7 +44,7 @@ mouse_trigger {
 }
 touch_trigger {
   input: TOUCH_MULTI
-  action: "multitouch"
+  action: "touch_multi"
 }
 text_trigger {
   input: TEXT

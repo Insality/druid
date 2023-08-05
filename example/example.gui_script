@@ -3,11 +3,40 @@ local druid = require("druid.druid")
 local monarch = require("monarch.monarch")
 local default_style = require("druid.styles.default.style")
 
+local checkbox = require("druid.extended.checkbox")
+local checkbox_group = require("druid.extended.checkbox_group")
+local dynamic_grid = require("druid.extended.dynamic_grid")
+local input = require("druid.extended.input")
+local lang_text = require("druid.extended.lang_text")
+local progress = require("druid.extended.progress")
+local radio_group = require("druid.extended.radio_group")
+local slider = require("druid.extended.slider")
+local timer_component = require("druid.extended.timer")
+local data_list = require("druid.extended.data_list")
+
 local cache_path = sys.get_save_file("druid", "cache")
 
 
 local function save_cache(self)
 	sys.save(cache_path, self.cache)
+end
+
+
+-- Change current browser URL to share the examples
+---@param self userdata
+---@param scene_name string
+local function set_scene_url(self, scene_name)
+	if not html5 then
+		return
+	end
+
+	local command
+	if scene_name then
+		command = string.format('window.history.replaceState(null, null, "?example=%s")', scene_name)
+	else
+		command = 'window.history.replaceState(null, null, "index.html")'
+	end
+	html5.run(command)
 end
 
 
@@ -26,6 +55,7 @@ local function back_to_lobby(self)
 
 	self.cache.last_scene = nil
 	save_cache(self)
+	set_scene_url(self, nil)
 end
 
 
@@ -43,6 +73,7 @@ local function show_scene(self, scene_name, text_header)
 
 	self.cache.last_scene = scene_name
 	save_cache(self)
+	set_scene_url(self, scene_name)
 end
 
 
@@ -54,7 +85,7 @@ local function init_top_panel(self)
 	gui.set_enabled(self.button_menu.node, false)
 
 	self.button_api = self.druid:new_button("button_api/button", function()
-		sys.open_url("https://insality.github.io/druid/")
+		sys.open_url("https://insality.github.io/druid/modules/Druid.html")
 	end)
 
 	self.button_code = self.druid:new_button("button_code/button", function()
@@ -121,6 +152,7 @@ local function init_lobby(self)
 	self.lobby_scroll = self.druid:new_scroll("lobby_view", "lobby_content")
 	self.lobby_grid = self.druid:new_dynamic_grid("lobby_content")
 	self.lobby_scroll:bind_grid(self.lobby_grid)
+	self.lobby_scroll.style.WHEEL_SCROLL_SPEED = 20
 
 	self.lobby_grid:add(get_title(self, "General examples"))
 	self.lobby_grid:add(get_button(self, "Overview", "general_overview", "/general/overview/overview.gui_script"))
@@ -133,6 +165,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "Checkboxes", "general_checkboxes", "/general/checkboxes/checkboxes.gui_script"))
 	self.lobby_grid:add(get_button(self, "Input text", "general_input", "/general/input/input.gui_script"))
 	self.lobby_grid:add(get_button(self, "Layout", "general_layout", "/general/layout/layout.gui_script"))
+	self.lobby_grid:add(get_button(self, "Hover", "general_hover", "/general/hover/hover.gui_script"))
 	self.lobby_grid:add(get_button(self, "Swipe", "general_swipe", "/general/swipe/swipe.gui_script"))
 	self.lobby_grid:add(get_button(self, "Drag", "general_drag", "/general/drag/drag.gui_script"))
 	self.lobby_grid:add(get_button(self, "Hotkey", "general_hotkey", "/general/hotkey/hotkey.gui_script"))
@@ -140,7 +173,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_title(self, "Texts"))
 	self.lobby_grid:add(get_button(self, "Texts", "texts_general", "/texts/texts_general/texts_general.gui_script"))
 	self.lobby_grid:add(get_button(self, "Adjust types", "texts_adjust", "/texts/texts_adjust/texts_adjust.gui_script"))
-	self.lobby_grid:add(get_button_disabled(self, "Lang Text", "texts_lang_text"))
+	self.lobby_grid:add(get_button(self, "Lang Text", "texts_lang_text", "/texts/texts_adjust/texts_lang_text.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Scrolls"))
 	self.lobby_grid:add(get_button_disabled(self, "Nested scrolls", "scroll_scene"))
@@ -154,12 +187,12 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button_disabled(self, "Scroll binding", "scroll_scene"))
 	self.lobby_grid:add(get_button(self, "Add/Remove animations", "grid_animations", "/grid/grid_animations/grid_animations.gui_script"))
 
-	self.lobby_grid:add(get_title(self, "Data list / Infinity scroll"))
+	self.lobby_grid:add(get_title(self, "Data list | Infinity scroll"))
 	self.lobby_grid:add(get_button(self, "With static grid", "data_list_static_grid", "/data_list/static_grid/static_grid.gui_script"))
 	self.lobby_grid:add(get_button(self, "With dynamic grid", "data_list_dynamic_grid", "/data_list/dynamic_grid/dynamic_grid.gui_script"))
-	self.lobby_grid:add(get_button_disabled(self, "Add/remove elements", "data_list_add_remove_nodes"))
 	self.lobby_grid:add(get_button(self, "Navigate over elements", "data_list_navigate", "/data_list/navigate/navigate.gui_script"))
 	self.lobby_grid:add(get_button(self, "Reinit data", "data_list_reinit_data", "/data_list/reinit_data/reinit_data.gui_script"))
+	self.lobby_grid:add(get_button_disabled(self, "Add / remove data", "data_list_manage_data", "/data_list/manage_data/manage_data.gui_script"))
 	self.lobby_grid:add(get_button(self, "With component", "data_list_with_component", "/data_list/with_component/with_component.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Layouts"))
@@ -168,6 +201,12 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_title(self, "Custom components"))
 	self.lobby_grid:add(get_button(self, "Rich Input", "custom_rich_input", "/custom/rich_input/rich_input.gui_script"))
 	self.lobby_grid:add(get_button(self, "Pin Knob", "custom_pin_knob", "/custom/pin_knob/pin_knob.gui_script"))
+	self.lobby_grid:add(get_button(self, "Rich Text", "custom_rich_text", "/custom/rich_text/rich_text.gui_script"))
+
+	self.lobby_grid:add(get_title(self, "Rich Texts"))
+	self.lobby_grid:add(get_button(self, "Rich Text Texts", "rich_text_texts", "/custom/rich_text_texts/rich_text_texts.gui_script"))
+	self.lobby_grid:add(get_button_disabled(self, "Rich Text Images"))--, "rich_text_images", "/custom/rich_text_texts/rich_text_texts.gui_script"))
+	self.lobby_grid:add(get_button_disabled(self, "Rich Text Tags"))--, "rich_text_images", "/custom/rich_text_texts/rich_text_texts.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "System"))
 	self.lobby_grid:add(get_button_disabled(self, "Styles"))
@@ -177,6 +216,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "Message input", "system_message_input", "/system/message_input/message_input.gui_script"))
 	self.lobby_grid:add(get_button_disabled(self, "Input priority"))
 	self.lobby_grid:add(get_button(self, "Inner templates", "system_inner_templates", "/system/inner_templates/inner_templates.gui_script"))
+	self.lobby_grid:add(get_button(self, "Late init check", "system_late_init_check", "/system/late_init_check/late_init_check.gui_script"))
 end
 
 
@@ -219,12 +259,28 @@ local function check_loading(self)
 end
 
 
+local function register_druid_extended_components(self)
+	druid.register("checkbox", checkbox)
+	druid.register("checkbox_group", checkbox_group)
+	druid.register("dynamic_grid", dynamic_grid)
+	druid.register("input", input)
+	druid.register("lang_text", lang_text)
+	druid.register("progress", progress)
+	druid.register("radio_group", radio_group)
+	druid.register("slider", slider)
+	druid.register("timer", timer_component)
+	druid.register("data_list", data_list)
+end
+
+
+
 function init(self)
 	-- Main lobby have more render priority (top panel)
 	gui.set_render_order(10)
 
 	window.set_listener(on_window_callback)
 	druid.set_default_style(default_style)
+	register_druid_extended_components(self)
 	self.druid = druid.new(self)
 	self.cache = sys.load(cache_path) or {}
 
@@ -255,5 +311,5 @@ end
 
 
 function on_input(self, action_id, action)
-	self.druid:on_input(action_id, action)
+	return self.druid:on_input(action_id, action)
 end

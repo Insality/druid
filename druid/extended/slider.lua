@@ -1,6 +1,8 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid slider component
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_sliders" target="_blank"><b>Example Link</b></a>
 -- @module Slider
 -- @within BaseComponent
 -- @alias druid.slider
@@ -64,7 +66,7 @@ function Slider.init(self, node, end_pos, callback)
 
 	self.start_pos = gui.get_position(self.node)
 	self.pos = gui.get_position(self.node)
-	self.target_pos = self.pos
+	self.target_pos = vmath.vector3(self.pos)
 	self.end_pos = end_pos
 
 	self.dist = self.end_pos - self.start_pos
@@ -72,6 +74,7 @@ function Slider.init(self, node, end_pos, callback)
 	self.value = 0
 
 	self.on_change_value = Event(callback)
+	self:on_window_resized()
 
 	assert(self.dist.x == 0 or self.dist.y == 0, "Slider for now can be only vertical or horizontal")
 end
@@ -79,6 +82,14 @@ end
 
 function Slider.on_layout_change(self)
 	self:set(self.value)
+end
+
+
+function Slider.on_window_resized(self)
+	local x_koef, y_koef = helper.get_screen_aspect_koef()
+	self._x_koef = x_koef
+	self._y_koef = y_koef
+	self._scene_scale = helper.get_scene_scale(self.node)
 end
 
 
@@ -90,15 +101,17 @@ function Slider.on_input(self, action_id, action)
 	if gui.pick_node(self.node, action.x, action.y) then
 		if action.pressed then
 			self.pos = gui.get_position(self.node)
+			self._scene_scale = helper.get_scene_scale(self.node)
 			self.is_drag = true
 		end
 	end
 
 	if not self.is_drag and self._input_node and gui.pick_node(self._input_node, action.x, action.y) then
 		if action.pressed and gui.screen_to_local then
+			self._scene_scale = helper.get_scene_scale(self.node)
 			self.pos = gui.screen_to_local(self.node, vmath.vector3(action.screen_x, action.screen_y, 0))
-			self.pos.x = helper.clamp(self.pos.x, self.start_pos.x, self.end_pos.x)
-			self.pos.y = helper.clamp(self.pos.y, self.start_pos.y, self.end_pos.y)
+			self.pos.x = helper.clamp(self.pos.x / self._scene_scale.x, self.start_pos.x, self.end_pos.x)
+			self.pos.y = helper.clamp(self.pos.y / self._scene_scale.y, self.start_pos.y, self.end_pos.y)
 
 			gui.set_position(self.node, self.pos)
 			self.is_drag = true
@@ -107,8 +120,8 @@ function Slider.on_input(self, action_id, action)
 
 	if self.is_drag and not action.pressed then
 		-- move
-		self.pos.x = self.pos.x + action.dx
-		self.pos.y = self.pos.y + action.dy
+		self.pos.x = self.pos.x + action.dx * self._x_koef / self._scene_scale.x
+		self.pos.y = self.pos.y + action.dy * self._y_koef / self._scene_scale.y
 
 		local prev_x = self.target_pos.x
 		local prev_y = self.target_pos.y

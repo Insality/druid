@@ -2,10 +2,19 @@
 
 local const = require("druid.const")
 local settings = require("druid.system.settings")
-local anims = require("druid.styles.default.anims")
 
 local M = {}
 
+
+local function button_hover_scale(node, target, time)
+	gui.animate(node, "scale", target, gui.EASING_OUTSINE, time)
+end
+
+local function button_tap_anim(node, tap_scale, start_scale)
+	gui.animate(node, gui.PROP_SCALE, tap_scale, gui.EASING_INSINE, 0.1, 0, function()
+		gui.animate(node, gui.PROP_SCALE, start_scale, gui.EASING_INSINE, 0.1)
+	end)
+end
 
 M["button"] = {
 	HOVER_SCALE = vmath.vector3(0.02, 0.02, 1),
@@ -24,19 +33,19 @@ M["button"] = {
 		local scale_to = self.start_scale + M.button.HOVER_SCALE
 
 		local target_scale = state and scale_to or self.start_scale
-		anims.hover_scale(self, target_scale, M.button.HOVER_TIME)
+		button_hover_scale(node, target_scale, M.button.HOVER_TIME)
 	end,
 
 	on_mouse_hover = function(self, node, state)
 		local scale_to = self.start_scale + M.button.HOVER_MOUSE_SCALE
 
 		local target_scale = state and scale_to or self.start_scale
-		anims.hover_scale(self, target_scale, M.button.HOVER_TIME)
+		button_hover_scale(node, target_scale, M.button.HOVER_TIME)
 	end,
 
 	on_click = function(self, node)
 		local scale_to = self.start_scale + M.button.SCALE_CHANGE
-		anims.tap_scale_animation(self, node, scale_to)
+		button_tap_anim(node, scale_to, self.start_scale)
 		settings.play_sound(M.button.BTN_SOUND)
 	end,
 
@@ -56,6 +65,7 @@ M["button"] = {
 
 M["drag"] = {
 	DRAG_DEADZONE = 10, -- Size in pixels of drag deadzone
+	NO_USE_SCREEN_KOEF = false,
 }
 
 
@@ -113,6 +123,7 @@ M["input"] = {
 	BUTTON_SELECT_INCREASE = 1.06,
 	MASK_DEFAULT_CHAR = "*",
 	IS_UNSELECT_ON_RESELECT = false,
+	NO_CONSUME_INPUT_WHILE_SELECTED = false,
 
 	on_select = function(self, button_node)
 		local target_scale = self.button.start_scale
@@ -148,7 +159,25 @@ M["text"] = {
 
 
 M["hotkey"] = {
-	MODIFICATORS = { "key_lshift", "key_rshift", "key_lctrl", "key_rctrl", "key_lalt", "key_ralt", "key_lsuper", "key_rsuper" }, -- Add key ids to mark it as modificator keys
+	-- Add key ids to mark it as modificator keys
+	MODIFICATORS = {
+		"key_lshift",
+		"key_rshift",
+		"key_lctrl",
+		"key_rctrl",
+		"key_lalt",
+		"key_ralt",
+		"key_lsuper",
+		"key_rsuper"
+	}
+}
+
+
+M["rich_text"] = {
+	COLORS = {
+		white = "#FFFFFF",
+		black = "#000000"
+	}
 }
 
 

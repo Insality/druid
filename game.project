@@ -9,10 +9,11 @@ width = 600
 height = 900
 display_profiles = /example/custom.display_profilesc
 dynamic_orientation = 1
+high_dpi = 1
 
 [project]
 title = druid
-version = 0.10.0
+version = 0.11.0
 publisher = Insality
 developer = Insality
 dependencies#0 = https://github.com/insalitygames/deftest/archive/master.zip
@@ -36,9 +37,9 @@ input_key_esc = key_esc
 input_key_back = key_back
 input_key_enter = key_enter
 input_key_backspace = key_backspace
-input_multitouch = multitouch
-input_scroll_up = scroll_up
-input_scroll_down = scroll_down
+input_multitouch = touch_multi
+input_scroll_up = mouse_wheel_up
+input_scroll_down = mouse_wheel_down
 
 [html5]
 engine_arguments = --verify-graphics-calls=false
@@ -54,8 +55,40 @@ app_manifest = /example/game.appmanifest
 
 [graphics]
 texture_profiles = /example/custom.texture_profiles
+max_draw_calls = 128
+verify_graphics_calls = 0
 
 [android]
 package = com.insality.druid
 input_method = HiddenInputField
+
+[factory]
+max_count = 16
+
+[label]
+max_count = 0
+
+[mesh]
+max_count = 0
+
+[model]
+max_count = 0
+
+[particle_fx]
+max_count = 0
+max_emitter_count = 0
+max_particle_count = 0
+
+[sprite]
+max_count = 16
+
+[tilemap]
+max_count = 0
+max_tile_count = 0
+
+[collectionfactory]
+max_count = 64
+
+[collection]
+max_instances = 128
 

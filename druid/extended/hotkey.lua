@@ -1,6 +1,8 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Druid hotkey component
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_hotkey" target="_blank"><b>Example Link</b></a>
 -- @module Hotkey
 -- @within BaseComponent
 -- @alias druid.hotkey

@@ -1,6 +1,8 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Radio group module
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_checkboxes" target="_blank"><b>Example Link</b></a>
 -- @module RadioGroup
 -- @within BaseComponent
 -- @alias druid.radio_group

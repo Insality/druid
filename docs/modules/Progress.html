@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -48,6 +48,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -61,13 +62,13 @@
   <li><strong>Progress</strong></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -75,9 +76,16 @@
 <div id="content">
 
 <h1>Module <code>Progress</code></h1>
-<p>Basic progress bar component.</p>
+<p>Druid component to handle the progress bars.</p>
 <p>
- For correct progress bar init it should be in max size from gui</p>
+ <b># Overview #</b>
+<p> <b># Notes #</b>
+<p> • Progress Node should be fully filled in your GUI scene node. It will be the progress maximum size
+<p> • Progress correct working with Slice9 nodes, it trying to set size by _set_size_ first, if it is not possible, it set up sizing via _set_scale_
+<p> • Progress bar can fill only by vertical or horizontal size. If you want make diagonal progress bar, just rotate node in GUI scene
+<p> • If you have glitchy or dark texture bug with progress bar, try to disable mipmaps in your texture profiles
+<p>
+ <a href="https://insality.github.io/druid/druid/index.html?example=general_progress_bar" target="_blank"><b>Example Link</b></a></p>
 
 
 <h2><a href="#Functions">Functions</a></h2>
@@ -96,7 +104,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, node, key[, init_value=1])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="summary"><a href="../modules/Progress.html#">Progress</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_max_size">set_max_size(self, max_size)</a></td>
@@ -126,7 +134,7 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#key">key</a></td>
-	<td class="summary">The progress bar direction</td>
+	<td class="summary">The progress bar direction.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#max_size">max_size</a></td>
@@ -229,7 +237,7 @@
     <strong>init(self, node, key[, init_value=1])</strong>
     </dt>
     <dd>
-    Component init function
+    <a href="../modules/Progress.html#">Progress</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -240,7 +248,7 @@
         </li>
         <li><span class="parameter">node</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="../modules/Progress.html#node">node</a></span>
-         Progress bar fill node or node name
+         Node name or GUI Node itself.
         </li>
         <li><span class="parameter">key</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
@@ -419,7 +427,8 @@
     <strong>key</strong>
     </dt>
     <dd>
-    The progress bar direction
+    The progress bar direction.
+<p> The values are: "x" or "y". (const.SIDE.X or const.SIDE.Y)
 
 
     <ul>

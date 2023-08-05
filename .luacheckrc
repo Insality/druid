@@ -2,7 +2,7 @@ std = "max"
 files['.luacheckrc'].global = false
 unused_args = false
 
-max_code_line_length = 90
+max_code_line_length = 120
 max_comment_line_length = false
 
 globals = {
@@ -45,8 +45,12 @@ globals = {
   "debug",
   "timer",
   "window",
-  "buffer", 
+  "buffer",
   "resource",
   "defos",
   "html5",
+  "describe",
+  "before",
+  "after",
+  "it",
 }

@@ -4,6 +4,8 @@
 -- Drag have correct handling for multitouch and swap
 -- touched while dragging. Drag will be processed even
 -- the cursor is outside of node, if drag is already started
+--
+-- <a href="https://insality.github.io/druid/druid/index.html?example=general_drag" target="_blank"><b>Example Link</b></a>
 -- @module Drag
 -- @within BaseComponent
 -- @alias druid.drag
@@ -63,6 +65,7 @@ local function start_touch(self, touch)
 
 	self.x = touch.x
 	self.y = touch.y
+	self._scene_scale = helper.get_scene_scale(self.node)
 
 	self.on_touch_start:trigger(self:get_context())
 end
@@ -70,7 +73,11 @@ end
 
 local function end_touch(self)
 	if self.is_drag then
-		self.on_drag_end:trigger(self:get_context(), self.x - self.touch_start_pos.x, self.y - self.touch_start_pos.y)
+		self.on_drag_end:trigger(
+			self:get_context(),
+			self.x - self.touch_start_pos.x,
+			self.y - self.touch_start_pos.y
+		)
 	end
 
 	self.is_drag = false
@@ -155,9 +162,11 @@ end
 -- or create your own style
 -- @table style
 -- @tfield[opt=10] number DRAG_DEADZONE Distance in pixels to start dragging
+-- @tfield[opt=false] boolean NO_USE_SCREEN_KOEF If screen aspect ratio affects on drag values
 function Drag.on_style_change(self, style)
 	self.style = {}
 	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
+	self.style.NO_USE_SCREEN_KOEF = style.NO_USE_SCREEN_KOEF or false
 end
 
 
@@ -176,10 +185,12 @@ function Drag.init(self, node, on_drag_callback)
 	self.is_touch = false
 	self.is_drag = false
 	self.touch_start_pos = vmath.vector3(0)
-	self._is_disabled = false
+	self._is_enabled = true
 
 	self.can_x = true
 	self.can_y = true
+
+	self._scene_scale = helper.get_scene_scale(self.node)
 
 	self.click_zone = nil
 	self.on_touch_start = Event()
@@ -206,6 +217,7 @@ function Drag.on_window_resized(self)
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self._x_koef = x_koef
 	self._y_koef = y_koef
+	self._scene_scale = helper.get_scene_scale(self.node)
 end
 
 
@@ -221,15 +233,11 @@ function Drag.on_input(self, action_id, action)
 		return false
 	end
 
-	if not helper.is_enabled(self.node) or self._is_disabled then
+	if not self._is_enabled or not gui.is_enabled(self.node, true) then
 		return false
 	end
 
-	local is_pick = gui.pick_node(self.node, action.x, action.y)
-	if self.click_zone then
-		is_pick = is_pick and gui.pick_node(self.click_zone, action.x, action.y)
-	end
-
+	local is_pick = helper.pick_node(self.node, action.x, action.y, self.click_zone)
 	if not is_pick and not self.is_drag then
 		end_touch(self)
 		return false
@@ -278,11 +286,16 @@ function Drag.on_input(self, action_id, action)
 	end
 
 	if self.is_drag then
+		local x_koef, y_koef = self._x_koef, self._y_koef
+		if self.style.NO_USE_SCREEN_KOEF then
+			x_koef, y_koef = 1, 1
+		end
+
 		self.on_drag:trigger(self:get_context(),
-			self.dx * self._x_koef,
-			self.dy * self._y_koef,
-			(self.x - self.touch_start_pos.x) * self._x_koef,
-			(self.y - self.touch_start_pos.y) * self._y_koef)
+			self.dx * x_koef / self._scene_scale.x,
+			self.dy * y_koef / self._scene_scale.y,
+			(self.x - self.touch_start_pos.x) * x_koef / self._scene_scale.x,
+			(self.y - self.touch_start_pos.y) * y_koef / self._scene_scale.y)
 	end
 
 	return self.is_drag
@@ -302,7 +315,7 @@ end
 -- @tparam Drag self @{Drag}
 -- @tparam bool is_enabled
 function Drag.set_enabled(self, is_enabled)
-	self._is_disabled = not is_enabled
+	self._is_enabled = is_enabled
 end
 
 
@@ -310,7 +323,7 @@ end
 -- @tparam Drag self @{Drag}
 -- @treturn bool
 function Drag.is_enabled(self)
-	return not self._is_disabled
+	return self._is_enabled
 end
 
 

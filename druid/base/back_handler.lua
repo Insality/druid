@@ -1,15 +1,38 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2023 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to handle back key (android, backspace)
+--- Component with event on back and backspace button.
+-- <b># Overview #</b>
+--
+-- Back Handler is recommended to put in every game window to close it
+-- or in main screen to call settings window.
+--
+-- <b># Notes #</b>
+--
+-- • Back Handler inheritance @{BaseComponent}, you can use all of its methods in addition to those described here.
+--
+-- • Back Handler react on release action ACTION_BACK or ACTION_BACKSPACE
+-- @usage
+-- local callback = function(self, params) ... end
+--
+-- local params = {}
+-- local back_handler = self.druid:new_back_handler(callback, [params])
 -- @module BackHandler
 -- @within BaseComponent
 -- @alias druid.back_handler
 
---- On back handler callback(self, params)
+--- The @{DruidEvent} Event on back handler action.
+--
+-- Trigger on input action ACTION_BACK or ACTION_BACKSPACE
+-- @usage
+-- -- Subscribe additional callbacks:
+-- back_handler.on_back:subscribe(callback)
 -- @tfield DruidEvent on_back @{DruidEvent}
 
---- Params to back callback
--- @tfield any params
+--- Custom args to pass in the callback
+-- @usage
+-- -- Replace params on runtime:
+-- back_handler.params = { ... }
+-- @tfield[opt] any params
 
 ---
 
@@ -20,22 +43,24 @@ local component = require("druid.component")
 local BackHandler = component.create("back_handler")
 
 
---- Component init function
+--- The @{BackHandler} constructor
 -- @tparam BackHandler self @{BackHandler}
 -- @tparam callback callback On back button
--- @tparam[opt] any params Callback argument
-function BackHandler.init(self, callback, params)
-	self.params = params
+-- @tparam[opt] any custom_args Button events custom arguments
+-- @local
+function BackHandler.init(self, callback, custom_args)
+	self.params = custom_args
 	self.on_back = Event(callback)
 end
 
 
---- Input handler for component
+--- Component input handler
 -- @tparam BackHandler self @{BackHandler}
 -- @tparam string action_id on_input action id
 -- @tparam table action on_input action
+-- @local
 function BackHandler.on_input(self, action_id, action)
-	if not action[const.RELEASED] then
+	if not action.released then
 		return false
 	end
 

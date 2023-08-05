@@ -1,18 +1,16 @@
-# Creating custom components
+# Creating Custom Components
 
 ## Overview
 
-Druid allows you to create your custom components which contains your custom logic, other Druid basic components or other custom components.
+Druid offers the flexibility to create custom components that contain your own logic, as well as other Druid basic components or custom components. While Druid provides a set of predefined components like buttons and scrolls, it goes beyond that and provides a way to handle all your GUI elements in a more abstract manner. Custom components are a powerful way to separate logic and create higher levels of abstraction in your code.
 
-I wanna make a point that Druid is not only set of defined components to place buttons, scroll, etc. But mostly it's a way how to handle all your GUI elements in general. Custom components is most powerful way to separate logic and make higher abstraction in your code.
+Every component is a child of the Basic Druid component. You can call methods of basic components using `self:{method_name}`.
 
-Every component is the children of Basic Druid component. Read the [basic component API here].(https://insality.github.io/druid/modules/component.html), Methods of basic components you can call via `self:{method_name}`
+## Custom Components
 
+### Basic Component Template
+A basic custom component template looks like this (you can copy it from `/druid/templates/component.template.lua`):
 
-## Custom components
-
-### Basic component template
-Basic custom component template looks like this. It's good start to create your own component! (you can copy it from `/druid/templates/component.template.lua`)
 ```lua
 local component = require("druid.component")
 
@@ -24,7 +22,6 @@ local SCHEME = {
     BUTTON = "button",
 }
 
--- Component constructor. Template name and nodes are optional. Pass it if you use it in your component
 function Component:init(template, nodes)
     self:set_template(template)
     self:set_nodes(nodes)
@@ -34,161 +31,127 @@ function Component:init(template, nodes)
     self.button = self.druid:new_button(SCHEME.BUTTON, function() end)
 end
 
--- [OPTIONAL] Call on component remove or on druid:final
 function Component:on_remove() end
 
 return Component
 ```
 
-### Full component template
+### Full Component Template
 
-Full custom component template looks like this (you can copy it from `/druid/templates/component_full.template.lua`:
+A full custom component template looks like this (you can copy it from `/druid/templates/component_full.template.lua`):
+
 ```lua
 local component =  require("druid.component")
 
 ---@class component_name : druid.base_component
 local Component = component.create("component_name")
--- Scheme of component gui nodes
 local SCHEME = {
-	ROOT =  "root",
-	BUTTON =  "button",
+    ROOT = "root",
+    BUTTON = "button",
 }
 
--- Component constructor. Template name and nodes are optional. Pass it if you use it in your component
 function Component:init(template, nodes)
-	-- If your component is gui template, pass the template name and set it
-	self:set_template(template)
-	-- If your component is cloned my gui.clone_tree, pass nodes to component and set it
-	self:set_nodes(nodes)
-
-	-- self:get_node will auto process component template and nodes
-	self.root =  self:get_node(SCHEME.ROOT)
-	-- Use inner druid instance to create components inside this component
-	self.druid =  self:get_druid()
+    self:set_template(template)
+    self:set_nodes(nodes)
+    self.root = self:get_node(SCHEME.ROOT)
+    self.druid = self:get_druid()
 end
 
--- [OPTIONAL] Call every update step
 function Component:update(dt) end
 
--- [OPTIONAL] Call default on_input from gui script
 function Component:on_input(action_id, action) return false end
 
--- [OPTIONAL] Call on component creation and on component:set_style() function
 function Component:on_style_change(style) end
 
--- [OPTIONAL] Call default on_message from gui script
 function Component:on_message(message_id, message, sender) end
 
--- [OPTIONAL] Call if druid has triggered on_language_change
 function Component:on_language_change() end
 
--- [OPTIONAL] Call if game layout has changed and need to restore values in component
 function Component:on_layout_change() end
 
--- [OPTIONAL] Call if game window size is changed
 function Component:on_window_resized() end
 
--- [OPTIONAL] Call, if input was capturing before this component
--- Example: scroll is start scrolling, so you need unhover button
 function Component:on_input_interrupt() end
 
--- [OPTIONAL] Call, if game lost focus
 function Component:on_focus_lost() end
 
--- [OPTIONAL] Call, if game gained focus
 function Component:on_focus_gained() end
 
--- [OPTIONAL] Call on component remove or on druid:final
 function Component:on_remove() end
 
 return Component
 ```
 
+### Spawning a Custom Component
 
-### Spawn custom component
-
-After the creating your custom component, you now able to create it.
-
-For example we made the component `my_component`. Now we able create it like this:
-```lua
-local druid = require("druid.druid")
-local my_component = require("my.amazing.component")
-
-function init(self)
-	self.druid = druid.new(self)
-	self.druid:new(my_component, "template_name", nodes)
-end
-```
-
-The template name - is the name of GUI template file if you use it in your custom component.
-The nodes - is table from `gui.clone_tree(node)`. If you spawn multiply nodes for component, pass it to component constructor.
-Inside component you have to set template and nodes via
-`self:set_template(template)` and `self:set_nodes(nodes)`
-
-
-### Register custom component
-
-You can register your custom component for use it without require component module in every file. Registering components is comfortable for very basic components in your game.
-
-Add your custom component to druid via `druid.register
+After creating your custom component, you can spawn it in your code. For example, if you have a component named `my_component`, you can create it like this:
 
 ```lua
 local druid = require("druid.druid")
 local my_component = require("my.amazing.component")
 
 function init(self)
-	druid.register("my_component", my_component)
+    self.druid = druid.new(self)
+    self.druid:new(my_component, "template_name", nodes)
 end
 ```
 
-Registering make new function with "new_{component_name}". In our example it will be: `druid:new_my_component()`.
+In the code above, `template_name` refers to the name of the GUI template file if you're using it in your custom component. `nodes` is a table obtained from `gui.clone_tree(node)`. If you're spawning multiple nodes for the component, pass the table to the component constructor. Inside the component, you need to set the template and nodes using `self:set_template(template)` and `self:set_nodes(nodes)`.
 
-As component registered, you can create your component with next code:
+### Registering a Custom Component
+
+You can register your custom component to use it without requiring the component module in every file. Registering components is convenient for very basic components in your game. Here's how you can register a custom component in Druid:
+
 ```lua
 local druid = require("druid.druid")
 local my_component = require("my.amazing.component")
 
 function init(self)
-	self.druid = druid.new(self)
-	self.my_component = self.druid:new_my_component(template, nodes)
+    druid.register("my_component", my_component)
 end
 ```
 
+Once the component is registered, a new function will be available with the name "new_{component_name}". In our example, it will be `druid:new_my_component()`. With the component registered, you can create an instance of it using the following code:
 
-## Create Druid Component editor script
+```lua
+local druid = require("druid.druid")
+local my_component = require("my.amazing.component")
 
-The Druid has editor script to help you with creating lua file for your GUI scene.
-The commands is available on *.gui scenes in menu `Edit -> Create Druid Component`
+function init(self)
+    self.druid = druid.new(self)
+    self.my_component = self.druid:new_my_component(template, nodes)
+end
+```
 
-The script will check current GUI scene and generate lua file with all Druid component stubs. The output file will be named as current GUI scene and placed nearby. The *.lua file should be not exists, the script will not override any file. If you want to re-generate file, delete previous one first.
+## Create Druid Component Editor Script
 
-The script required `python3` with `deftree` installed. If `deftree` is not installed the instructions will be prompt in console.
+Druid provides an editor script to assist you in creating Lua files for your GUI scenes. You can find the commands under the menu `Edit -> Create Druid Component` when working with *.gui scenes.
 
+The script analyzes the current GUI scene and generates a Lua file with stubs for all Druid components found. The output file is named after the current GUI scene and placed in the same directory. Note that the script does not override any existing *.lua files. If you want to regenerate a file, delete the previous version first.
 
-### Auto layout components
+The script requires `python3` with `deftree` installed. If `deftree` is not installed, the instructions will be displayed in the console.
 
-The generator script also check current GUI scene for Druid components to make stubs for them. The script will check the node names and if it starts with special keyword it will make component stubs in generated lua file. It will generate component declaring, callback functions stubs and annotations.
+### Auto-Layout Components
 
-Start your node names with one of next keyword to say parser make component stubs for your. For example for nodes `button` and `button_exit` will be generated two Druid Button components with callback stubs.
+The generator script also checks the current GUI scene for Druid components and creates stubs for them. If a node name starts with a specific keyword, the script generates component stubs in the Lua file. For example, nodes named `button` and `button_exit` will result in the generation of two Druid Button components with callback stubs.
 
 Available keywords:
-- `button` - add [Druid Button](docs_md/01-components.md#button) and generate callback stub
-- `text` - add [Druid Text](docs_md/01-components.md#text)
-- `lang_text` - add Druid [Druid Lang Text](docs_md/01-components.md#lang-text)
-- `grid` or `static_grid` - add Druid [Druid Static Grid](docs_md/01-components.md#static-grid). You should to setup Grid prefab for this component after file generation
-- `dynamic_grid` - add Druid [Druid Dynamic Grid](docs_md/01-components.md#dynamic-grid)
-- `scroll_view` - add [Druid Scroll](docs_md/01-components.md#scroll). It will add `scroll_content` node with the same postfix too. Check that is will correct node
-- `blocker` - add [Druid Blocker](docs_md/01-components.md#blocker)
-- `slider` - add [Druid Slider](docs_md/01-components.md#slider). You should to adjust end position of Slider after file generation
-- `progress` - add [Druid Progress](docs_md/01-components.md#progress)
-- `timer` - add [Druid Timer](docs_md/01-components.md#timer)
+- `button`: Adds a [Druid Button](01-components.md#button) component and generates the callback stub.
+- `text`: Adds a [Druid Text](01-components.md#text) component.
+- `lang_text`: Adds a [Druid Lang Text](01-components.md#lang-text) component.
+- `grid` or `static_grid`: Adds a [Druid Static Grid](01-components.md#static-grid) component. You should set up the Grid prefab for this component after generating the file.
+- `dynamic_grid`: Adds a [Druid Dynamic Grid](01-components.md#dynamic-grid) component.
+- `scroll_view`: Adds a [Druid Scroll](01-components.md#scroll) component. It also adds a `scroll_content` node with the same postfix. Ensure that it's the correct node.
+- `blocker`: Adds a [Druid Blocker](01-components.md#blocker) component.
+- `slider`: Adds a [Druid Slider](01-components.md#slider) component. You should adjust the end position of the Slider after generating the file.
+- `progress`: Adds a [Druid Progress](01-components.md#progress) component.
+- `timer`: Adds a [Dr
 
+uid Timer](01-components.md#timer) component.
 
+## Best Practices for Custom Components
 
-## Best practice on custom components
-
-On each component recommended describe component scheme in next way:
-To get this structure, Druid has editor script to help you with it. Select your GUI nodes in editor outline, right click and press "Print GUI Scheme". And copy the result from the output console.
+When working with each component, it's recommended to describe the component scheme in the following way:
 
 ```lua
 -- Component module
@@ -197,27 +160,22 @@ local component = require("druid.component")
 local M = component.create("your_component")
 
 local SCHEME = {
-	ROOT = "root",
-	ITEM = "item",
-	TITLE = "title"
+    ROOT = "root",
+    ITEM = "item",
+    TITLE = "title"
 }
 
 function M.init(self, template_name, node_table)
-	self:set_template(template_name)
-	self:set_nodes(node_table)
+    self:set_template(template_name)
+    self:set_nodes(node_table)
 
-	-- helper can get node from gui/template/table
-	local root = self:get_node(SCHEME.ROOT)
-	-- This component can spawn another druid components:
-	local druid = self:get_druid()
-	-- Button self on callback is self of _this_ component
-	local button = druid:new_button(...)
+    local root = self:get_node(SCHEME.ROOT)
+    local druid = self:get_druid()
+
+    -- Create components inside this component using the inner druid instance
 end
-
 ```
 
-## Power of using templates
+## The Power of Using Templates
 
-You can use one component, but creating and customizing templates for them. Templates only requires to match the component scheme.
-
-For example you have component `player_panel` and two GUI templates: `player_panel` and `enemy_panel` with different layout. But the same component script can be used for both of them.
+With Druid, you can use a single component but create and customize templates for it. Templates only need to match the component scheme. For example, you can have a component named `player_panel` and two GUI templates named `player_panel` and `enemy_panel` with different layouts. The same component script can be used for both templates.

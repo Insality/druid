@@ -445,4 +445,58 @@ And yeah, the new **Druid** logo is here!
 - **#189** [System] Add optional flag to `component:set_input_priority` to mark it as temporary. It will reset to default input priority after the `component:reset_input_priority`
 - **#204** [System] Fix: wrong code example link, if open example from direct URL
 - **#202** [System] Enabled stencil check to true by default. To disable this, use `druid.no_stencil_check` in game.project settings
-- [Examples] Add layout, layout fit, progres bar, data list + component examples
+- [Examples] Add layout, layout fit, progress bar, data list + component examples
+
+
+### Druid 0.11.0
+Hello! What a wonderful day for the new **Druid** update!
+
+Alright, let's get straight to the point. Look at what I have for you!
+
+**Druid Rich Text** has finally been released. The main difference from the existing **Bjorn's** Rich Text is that all visual parameters are customizable directly in the GUI. This allows you to integrate **Rich Text** more accurately and quickly. Additionally, this **Rich Text** aligns pixel perfect (well, [almost](https://github.com/defold/defold/issues/7197)) with regular GUI text node.
+
+This version is the most basic one. Honestly, just wanna to publish current version for your and polish it later. Read [RichText API here](https://insality.github.io/druid/modules/RichText.html)
+
+Another addition is the ability to enable the "HTML mode" for the Button component. In this mode, the button's action occurs in the context of `user action`, allowing operations like "copy and paste text" "show the keyboard" and more. However, in this mode, the button only responds to regular clicks due to the technical implementation of it (so no double clicks or long taps for this button).
+
+The huge work was done on documentation. Now it's more clear and have more examples. All documentation now moved to the API section. The separate `componentd.md` manual will be deleted soon as all documentation will be moved to the API section.
+
+The API section now filled with overview and usage examples. I've started with the basic modules, in future I will add more examples for all modules.
+
+Also, I've added the **Unit Tests**. It's not cover all **Druid** code, but it's a good start! 🎉
+
+Have a good day!
+
+
+**Changelog 0.11.0**
+
+---
+
+- **#191**: [RichText] Finally add **Druid [Rich Text](https://insality.github.io/druid/modules/RichText.html)** custom component. Component is used to make formatted text in your's GUI. This Rich Text mostly adjusted visually in GUI and have almost pixel-perfect match with similar GUI text node
+- **#39**: [System] Finally add **Unit Tests**. Yeah, it cover not all **Druid** code, but it's a good start! 🎉
+- **#219**: [System] UTF-8 performance optimization. Now Druid will try to use *utf8* native extension over lua utf8 library if exists. If you wanna use native utf8, just [add the extension](https://github.com/d954mas/defold-utf8) in your `game.project` dependency.
+- **#156**: [Button] Now button can work in HTML5 with `html5.set_interaction_listener`.
+	- The API is `button:set_web_user_interaction(true)`. In HTML5 mode button have several restrictions. Basically, only the single tap event will work.
+- **#227**: Update current URL in HTML5 example
+	- Now if you will open the example from direct URL, it will be updated to the current URL in your browser. So now it's much easier to share the example link with each other.
+- **#183**: Documentation about [GUI in World Space](https://forum.defold.com/t/how-to-gui-in-defold/73256#gui-in-world-coordinates-49)
+	- Also not only the GUI in World Space, but overall How to GUI in Defold article.
+- **#234**: [BREAKING][Blocker] Now `blocker:set_enabled` and `blocker:is_enabled` affects only inner state of component. To consume input, the blocker component should be enabled and the node itself should be enabled.
+- **#235**: [Drag] Fix Drag coordinates on streched screen.
+- **#236**: [Hover] Fix nil return in `hover:on_input`.
+- **#237**: [Layout] Add `layout:set_max_gui_upscale` function.
+	- This functions will scale down element, if current GUI scale is bigger than `max_gui_upscale` value. It can be useful for adapt mobile device to desktop screen.
+- **#238**: [System] Add Helper documentation.
+- [System] Now the documentation contains the **Druid** size. The current size as dependency is around **67KB**. It counted without extended components, which is not included by default in the build.
+
+
+❤️ Support ❤️
+
+Please support me if you like this project! It will help me keep engaged to update **Druid** and make it even better!
+
+[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
+
+
+Thanks for my the supporters:
+- [Defold Foundation](https://defold.com)
+- [Ragetto](https://forum.defold.com/u/ragetto)

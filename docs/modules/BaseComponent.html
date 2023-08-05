@@ -3,7 +3,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <head>
-    <title>Defold Druid UI Library</title>
+    <title>Defold Druid UI Framework</title>
     <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
 </head>
 <body>
@@ -33,7 +33,6 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
-<li><a href="#Fields">Fields</a></li>
 </ul>
 
 
@@ -47,6 +46,7 @@
   <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
   <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
   <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
   <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
@@ -60,13 +60,13 @@
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
   <li><a href="../modules/Slider.html">Slider</a></li>
   <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
   <li><a href="../modules/Swipe.html">Swipe</a></li>
   <li><a href="../modules/Text.html">Text</a></li>
   <li><a href="../modules/Timer.html">Timer</a></li>
-  <li><a href="../modules/druid.html">druid</a></li>
 </ul>
 
 </div>
@@ -76,90 +76,90 @@
 <h1>Module <code>BaseComponent</code></h1>
 <p>Basic class for all Druid components.</p>
 <p>
- To create you component, use `component.create`</p>
+ To create you custom component, use static function `component.create`</p>
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">-- Create your component:
+local component = require(&quot;druid.component&quot;)
+
+local AwesomeComponent = component.create(&quot;awesome_component&quot;)
+
+function AwesomeComponent:init(template, nodes)
+    self:set_template(template)
+    self:set_nodes(nodes)
+    self.druid = self:get_druid()
+end
+
+return AwesomeComponent
+</pre>
+    </ul>
 
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#get_childrens">get_childrens(self)</a></td>
-	<td class="summary">Return all children components, recursive (protected)</td>
+	<td class="name" nowrap><a href="#component:get_childrens">component:get_childrens(self)</a></td>
+	<td class="summary">Return all children components, recursive</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_context">get_context(self)</a></td>
-	<td class="summary">Get current component context (protected)</td>
+	<td class="name" nowrap><a href="#component:get_context">component:get_context(self)</a></td>
+	<td class="summary">Context used as first arg in all Druid events</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_druid">get_druid(self)</a></td>
-	<td class="summary">Return druid with context of calling component (protected).</td>
+	<td class="name" nowrap><a href="#component:get_druid">component:get_druid(self)</a></td>
+	<td class="summary">Get Druid instance for inner component creation.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_input_priority">get_input_priority(self)</a></td>
+	<td class="name" nowrap><a href="#component:get_input_priority">component:get_input_priority(self)</a></td>
 	<td class="summary">Return component input priority</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_name">get_name(self)</a></td>
+	<td class="name" nowrap><a href="#component:get_name">component:get_name(self)</a></td>
 	<td class="summary">Return component name</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_node">get_node(self, node_or_name)</a></td>
-	<td class="summary">Get node for component by name.</td>
+	<td class="name" nowrap><a href="#component:get_node">component:get_node(self, node_or_name)</a></td>
+	<td class="summary">Get component node by name.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_parent_component">get_parent_component(self)</a></td>
-	<td class="summary">Return the parent for current component (protected)</td>
+	<td class="name" nowrap><a href="#component:get_parent_component">component:get_parent_component(self)</a></td>
+	<td class="summary">Return the parent component if exist</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_parent_name">get_parent_name(self)</a></td>
+	<td class="name" nowrap><a href="#component:get_parent_name">component:get_parent_name(self)</a></td>
 	<td class="summary">Return parent component name</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_template">get_template(self)</a></td>
-	<td class="summary">Get current component template name (protected)</td>
+	<td class="name" nowrap><a href="#component:get_template">component:get_template(self)</a></td>
+	<td class="summary">Get current component template name.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_uid">get_uid(self)</a></td>
-	<td class="summary">Return component uid (protected).</td>
+	<td class="name" nowrap><a href="#component:get_uid">component:get_uid(self)</a></td>
+	<td class="summary">Return component UID.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#log_message">log_message(self, message, context)</a></td>
-	<td class="summary">Print log information if debug mode is enabled (protected)</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#reset_input_priority">reset_input_priority(self)</a></td>
+	<td class="name" nowrap><a href="#component:reset_input_priority">component:reset_input_priority(self)</a></td>
 	<td class="summary">Reset component input priority to default value</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_debug">set_debug(self, is_debug)</a></td>
-	<td class="summary">Set debug logs for component enabled or disabled</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_input_enabled">set_input_enabled(self, state)</a></td>
+	<td class="name" nowrap><a href="#component:set_input_enabled">component:set_input_enabled(self, state)</a></td>
 	<td class="summary">Set component input state.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_input_priority">set_input_priority(self, value, is_temporary)</a></td>
+	<td class="name" nowrap><a href="#component:set_input_priority">component:set_input_priority(self, value, is_temporary)</a></td>
 	<td class="summary">Set component input priority</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_nodes">set_nodes(self, nodes)</a></td>
-	<td class="summary">Set current component nodes (protected)</td>
+	<td class="name" nowrap><a href="#component:set_nodes">component:set_nodes(self, nodes)</a></td>
+	<td class="summary">Set current component nodes.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_style">set_style(self, druid_style)</a></td>
-	<td class="summary">Set current component style table (protected).</td>
+	<td class="name" nowrap><a href="#component:set_style">component:set_style(self, druid_style)</a></td>
+	<td class="summary">Set current component style table.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_template">set_template(self, template)</a></td>
-	<td class="summary">Set current component template name (protected)
- It will check parent template name to build full template name</td>
-	</tr>
-</table>
-<h2><a href="#Fields">Fields</a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#ON_INPUT">ON_INPUT</a></td>
-	<td class="summary">Component Interests</td>
+	<td class="name" nowrap><a href="#component:set_template">component:set_template(self, template)</a></td>
+	<td class="summary">Set component template name.</td>
 	</tr>
 </table>
 
@@ -171,11 +171,11 @@
 
     <dl class="function">
     <dt>
-    <a name = "get_childrens"></a>
-    <strong>get_childrens(self)</strong>
+    <a name = "component:get_childrens"></a>
+    <strong>component:get_childrens(self)</strong>
     </dt>
     <dd>
-    Return all children components, recursive (protected)
+    Return all children components, recursive
 
 
     <h3>Parameters:</h3>
@@ -198,11 +198,11 @@
 
 </dd>
     <dt>
-    <a name = "get_context"></a>
-    <strong>get_context(self)</strong>
+    <a name = "component:get_context"></a>
+    <strong>component:get_context(self)</strong>
     </dt>
     <dd>
-    Get current component context (protected)
+    Context used as first arg in all Druid events  Context is usually self of gui_script.
 
 
     <h3>Parameters:</h3>
@@ -225,12 +225,11 @@
 
 </dd>
     <dt>
-    <a name = "get_druid"></a>
-    <strong>get_druid(self)</strong>
+    <a name = "component:get_druid"></a>
+    <strong>component:get_druid(self)</strong>
     </dt>
     <dd>
-    Return druid with context of calling component (protected).
- Use it to create component inside of other components.
+    Get Druid instance for inner component creation.
 
 
     <h3>Parameters:</h3>
@@ -253,8 +252,8 @@
 
 </dd>
     <dt>
-    <a name = "get_input_priority"></a>
-    <strong>get_input_priority(self)</strong>
+    <a name = "component:get_input_priority"></a>
+    <strong>component:get_input_priority(self)</strong>
     </dt>
     <dd>
     Return component input priority
@@ -280,8 +279,8 @@
 
 </dd>
     <dt>
-    <a name = "get_name"></a>
-    <strong>get_name(self)</strong>
+    <a name = "component:get_name"></a>
+    <strong>component:get_name(self)</strong>
     </dt>
     <dd>
     Return component name
@@ -307,13 +306,13 @@
 
 </dd>
     <dt>
-    <a name = "get_node"></a>
-    <strong>get_node(self, node_or_name)</strong>
+    <a name = "component:get_node"></a>
+    <strong>component:get_node(self, node_or_name)</strong>
     </dt>
     <dd>
-    Get node for component by name.
- If component has nodes, node_or_name should be string
- It auto pick node by template name or from nodes by clone_tree
+    Get component node by name.
+<p> If component has nodes, node_or_name should be string
+ It autopick node by template name or from nodes by gui.clone_tree
  if they was setup via component:set_nodes, component:set_template.
  If node is not found, the exception will fired
 
@@ -342,11 +341,11 @@
 
 </dd>
     <dt>
-    <a name = "get_parent_component"></a>
-    <strong>get_parent_component(self)</strong>
+    <a name = "component:get_parent_component"></a>
+    <strong>component:get_parent_component(self)</strong>
     </dt>
     <dd>
-    Return the parent for current component (protected)
+    Return the parent component if exist
 
 
     <h3>Parameters:</h3>
@@ -369,8 +368,8 @@
 
 </dd>
     <dt>
-    <a name = "get_parent_name"></a>
-    <strong>get_parent_name(self)</strong>
+    <a name = "component:get_parent_name"></a>
+    <strong>component:get_parent_name(self)</strong>
     </dt>
     <dd>
     Return parent component name
@@ -396,11 +395,11 @@
 
 </dd>
     <dt>
-    <a name = "get_template"></a>
-    <strong>get_template(self)</strong>
+    <a name = "component:get_template"></a>
+    <strong>component:get_template(self)</strong>
     </dt>
     <dd>
-    Get current component template name (protected)
+    Get current component template name.
 
 
     <h3>Parameters:</h3>
@@ -423,12 +422,12 @@
 
 </dd>
     <dt>
-    <a name = "get_uid"></a>
-    <strong>get_uid(self)</strong>
+    <a name = "component:get_uid"></a>
+    <strong>component:get_uid(self)</strong>
     </dt>
     <dd>
-    Return component uid (protected).
- UID generated in component creation order
+    Return component UID.
+<p> UID generated in component creation order.
 
 
     <h3>Parameters:</h3>
@@ -451,37 +450,8 @@
 
 </dd>
     <dt>
-    <a name = "log_message"></a>
-    <strong>log_message(self, message, context)</strong>
-    </dt>
-    <dd>
-    Print log information if debug mode is enabled (protected)
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BaseComponent</span></span>
-         <a href="../modules/BaseComponent.html#">BaseComponent</a>
-        </li>
-        <li><span class="parameter">message</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-
-        </li>
-        <li><span class="parameter">context</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "reset_input_priority"></a>
-    <strong>reset_input_priority(self)</strong>
+    <a name = "component:reset_input_priority"></a>
+    <strong>component:reset_input_priority(self)</strong>
     </dt>
     <dd>
     Reset component input priority to default value
@@ -507,37 +477,12 @@
 
 </dd>
     <dt>
-    <a name = "set_debug"></a>
-    <strong>set_debug(self, is_debug)</strong>
-    </dt>
-    <dd>
-    Set debug logs for component enabled or disabled
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BaseComponent</span></span>
-         <a href="../modules/BaseComponent.html#">BaseComponent</a>
-        </li>
-        <li><span class="parameter">is_debug</span>
-            <span class="types"><span class="type">bool</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_input_enabled"></a>
-    <strong>set_input_enabled(self, state)</strong>
+    <a name = "component:set_input_enabled"></a>
+    <strong>component:set_input_enabled(self, state)</strong>
     </dt>
     <dd>
     Set component input state.  By default it enabled
- You can disable any input of component by this function
+<p> If input is disabled, the component will not receive input events
 
 
     <h3>Parameters:</h3>
@@ -564,11 +509,11 @@
 
 </dd>
     <dt>
-    <a name = "set_input_priority"></a>
-    <strong>set_input_priority(self, value, is_temporary)</strong>
+    <a name = "component:set_input_priority"></a>
+    <strong>component:set_input_priority(self, value, is_temporary)</strong>
     </dt>
     <dd>
-    Set component input priority
+    Set component input priority  Default value: 10
 
 
     <h3>Parameters:</h3>
@@ -599,11 +544,12 @@
 
 </dd>
     <dt>
-    <a name = "set_nodes"></a>
-    <strong>set_nodes(self, nodes)</strong>
+    <a name = "component:set_nodes"></a>
+    <strong>component:set_nodes(self, nodes)</strong>
     </dt>
     <dd>
-    Set current component nodes (protected)
+    Set current component nodes.
+ Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
 
 
     <h3>Parameters:</h3>
@@ -627,15 +573,21 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> nodes = gui.clone_tree(self.prefab)
+... In your component:
+self:set_nodes(nodes)</pre>
+    </ul>
 
 </dd>
     <dt>
-    <a name = "set_style"></a>
-    <strong>set_style(self, druid_style)</strong>
+    <a name = "component:set_style"></a>
+    <strong>component:set_style(self, druid_style)</strong>
     </dt>
     <dd>
-    Set current component style table (protected).
- Invoke `on_style_change` on component, if exist. BaseComponent should handle
+    Set current component style table.
+<p> Invoke `on_style_change` on component, if exist. Component should handle
  their style changing and store all style params
 
 
@@ -651,18 +603,25 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">BaseComponent</span></span>
+        <a href="../modules/BaseComponent.html#">BaseComponent</a>
+    </ol>
 
 
 
 
 </dd>
     <dt>
-    <a name = "set_template"></a>
-    <strong>set_template(self, template)</strong>
+    <a name = "component:set_template"></a>
+    <strong>component:set_template(self, template)</strong>
     </dt>
     <dd>
-    Set current component template name (protected)
- It will check parent template name to build full template name
+    Set component template name.
+<p> Use on all your custom components with GUI layouts used as templates.
+ It will check parent template name to build full template name in self:get_node()
 
 
     <h3>Parameters:</h3>
@@ -683,24 +642,6 @@
            <span class="types"><span class="type">BaseComponent</span></span>
         <a href="../modules/BaseComponent.html#">BaseComponent</a>
     </ol>
-
-
-
-
-</dd>
-</dl>
-    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "ON_INPUT"></a>
-    <strong>ON_INPUT</strong>
-    </dt>
-    <dd>
-    Component Interests
-
-
-
 
 
 
