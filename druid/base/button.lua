@@ -168,6 +168,10 @@ end
 
 
 local function on_button_click(self)
+	if self._is_html5_mode then
+		self._is_html5_listener_set = false
+		html5.set_interaction_listener(nil)
+	end
 	self.click_in_row = 1
 	self.on_click:trigger(self:get_context(), self.params, self)
 	self.style.on_click(self, self.anim_node)
@@ -302,6 +306,8 @@ function Button.init(self, node, callback, custom_args, anim_node)
 
 	self._check_function = nil
 	self._failure_callback = nil
+	self._is_html5_mode = false
+	self._is_html5_listener_set = false
 
 	-- Events
 	self.on_click = Event(callback)
@@ -349,7 +355,9 @@ function Button.on_input(self, action_id, action)
 		if action.released then
 			self.on_click_outside:trigger(self:get_context(), self.params, self)
 		end
-		if self._is_html5_mode then
+
+		if self._is_html5_mode and self._is_html5_listener_set then
+			self._is_html5_listener_set = false
 			html5.set_interaction_listener(nil)
 		end
 		return false
@@ -367,9 +375,9 @@ function Button.on_input(self, action_id, action)
 		self.on_pressed:trigger(self:get_context(), self.params, self)
 
 		if self._is_html5_mode then
+			self._is_html5_listener_set = true
 			html5.set_interaction_listener(function()
 				on_button_click(self)
-				html5.set_interaction_listener(nil)
 			end)
 		end
 		return true
@@ -528,7 +536,7 @@ end
 -- @usage
 -- button:set_web_user_interaction(true)
 function Button.set_web_user_interaction(self, is_web_mode)
-	self._is_html5_mode = is_web_mode and html5
+	self._is_html5_mode = not not (is_web_mode and html5)
 	return self
 end
 

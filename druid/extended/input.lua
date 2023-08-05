@@ -151,7 +151,7 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	self.button.on_long_click:subscribe(clear_and_select)
 
 	if html5 then
-		self.button:set_html5_user_interaction(true)
+		self.button:set_web_user_interaction(true)
 	end
 
 	self.on_input_select = Event()

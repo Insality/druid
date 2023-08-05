@@ -465,8 +465,6 @@ The API section now filled with overview and usage examples. I've started with t
 
 Also, I've added the **Unit Tests**. It's not cover all **Druid** code, but it's a good start! 🎉
 
-I have the feedback form for you, please fill it if you have a free minute. It will help me to improve **Druid** in future. %LINK HERE%
-
 Have a good day!
 
 
@@ -478,7 +476,7 @@ Have a good day!
 - **#39**: [System] Finally add **Unit Tests**. Yeah, it cover not all **Druid** code, but it's a good start! 🎉
 - **#219**: [System] UTF-8 performance optimization. Now Druid will try to use *utf8* native extension over lua utf8 library if exists. If you wanna use native utf8, just [add the extension](https://github.com/d954mas/defold-utf8) in your `game.project` dependency.
 - **#156**: [Button] Now button can work in HTML5 with `html5.set_interaction_listener`.
-	- The API is `button:set_html5_user_interaction(true)`. In HTML5 mode button have several restrictions. Basically, only the single tap event will work.
+	- The API is `button:set_web_user_interaction(true)`. In HTML5 mode button have several restrictions. Basically, only the single tap event will work.
 - **#227**: Update current URL in HTML5 example
 	- Now if you will open the example from direct URL, it will be updated to the current URL in your browser. So now it's much easier to share the example link with each other.
 - **#183**: Documentation about [GUI in World Space](https://forum.defold.com/t/how-to-gui-in-defold/73256#gui-in-world-coordinates-49)
