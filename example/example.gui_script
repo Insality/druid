@@ -192,7 +192,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "With dynamic grid", "data_list_dynamic_grid", "/data_list/dynamic_grid/dynamic_grid.gui_script"))
 	self.lobby_grid:add(get_button(self, "Navigate over elements", "data_list_navigate", "/data_list/navigate/navigate.gui_script"))
 	self.lobby_grid:add(get_button(self, "Reinit data", "data_list_reinit_data", "/data_list/reinit_data/reinit_data.gui_script"))
-	self.lobby_grid:add(get_button(self, "Add / remove data", "data_list_manage_data", "/data_list/manage_data/manage_data.gui_script"))
+	self.lobby_grid:add(get_button_disabled(self, "Add / remove data", "data_list_manage_data", "/data_list/manage_data/manage_data.gui_script"))
 	self.lobby_grid:add(get_button(self, "With component", "data_list_with_component", "/data_list/with_component/with_component.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Layouts"))

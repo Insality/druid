@@ -62,7 +62,6 @@ function init(self)
 	self.rich_text_6 = self.druid:new(RichText, "rich_text_6")
 	self.rich_text_6:set_text("Example text with <customlink><color=FFFF00>clickable tagged</color></customlink> words")
 	local tagged = self.rich_text_6:tagged("customlink")
-	pprint(tagged)
 	for index = 1, #tagged do
 		---@type rich_text.word
 		local word = tagged[index]
