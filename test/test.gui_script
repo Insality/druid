@@ -1,8 +1,10 @@
+local luacov_runner = require "luacov.runner"
 local deftest = require("deftest.deftest")
 
 function init(self)
 	print('[DefTest]: Init of DefTest')
 
+	luacov_runner.init()
 	deftest.add(require("test.tests.test_button"))
 	deftest.add(require("test.tests.test_hover"))
 	deftest.add(require("test.tests.test_drag"))
