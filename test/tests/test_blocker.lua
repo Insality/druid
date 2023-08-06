@@ -1,11 +1,10 @@
-
-local mock_gui = require "deftest.mock.gui"
-local mock_time = require("deftest.mock.time")
-local mock_input = require("test.helper.mock_input")
-local test_helper = require("test.helper.test_helper")
-local druid_system = require("druid.druid")
-
 return function()
+	local mock_gui = require "deftest.mock.gui"
+	local mock_time = require("deftest.mock.time")
+	local mock_input = require("test.helper.mock_input")
+	local test_helper = require("test.helper.test_helper")
+	local druid_system = require("druid.druid")
+
 	local druid = nil
 	local context = test_helper.get_context()
 	describe("Blocker component", function()
