@@ -7,6 +7,7 @@ return function()
 
 	local druid = nil
 	local context = nil
+
 	describe("Back Handler component", function()
 		before(function()
 			mock_gui = require("deftest.mock.gui")
@@ -18,6 +19,7 @@ return function()
 			mock_gui.mock()
 			mock_time.mock()
 			mock_time.set(60)
+
 			context = test_helper.get_context()
 			druid = druid_system.new(context)
 		end)

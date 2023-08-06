@@ -1,12 +1,13 @@
 return function()
-	local mock_gui = require "deftest.mock.gui"
-	local mock_time = require("deftest.mock.time")
-	local mock_input = require("test.helper.mock_input")
-	local test_helper = require("test.helper.test_helper")
-	local druid_system = require("druid.druid")
+	local mock_gui = nil
+	local mock_time = nil
+	local mock_input = nil
+	local test_helper = nil
+	local druid_system = nil
 
 	local druid = nil
-	local context = test_helper.get_context()
+	local context = nil
+
 	describe("Static Grid component", function()
 		local parent = nil
 		---@type druid.static_grid
@@ -14,9 +15,17 @@ return function()
 		local prefab = nil
 
 		before(function()
+			mock_gui = require("deftest.mock.gui")
+			mock_time = require("deftest.mock.time")
+			mock_input = require("test.helper.mock_input")
+			test_helper = require("test.helper.test_helper")
+			druid_system = require("druid.druid")
+
 			mock_gui.mock()
 			mock_time.mock()
 			mock_time.set(60)
+
+			context = test_helper.get_context()
 			druid = druid_system.new(context)
 
 			parent = mock_gui.add_box("parent", 0, 0, 50, 50)
