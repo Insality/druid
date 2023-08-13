@@ -67,6 +67,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -88,8 +90,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 1.0
-    y: 1.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -123,6 +125,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -144,8 +148,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 1.0
-    y: 1.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -179,6 +183,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -235,6 +241,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -291,6 +299,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -312,8 +322,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 1.0
-    y: 1.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -347,6 +357,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -403,11 +415,13 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
     x: 0.0
-    y: 0.0
+    y: -13.0
     z: 0.0
     w: 1.0
   }
@@ -461,12 +475,14 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 1.0
+  outline_alpha: 0.75
   shadow_alpha: 0.0
   template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -523,6 +539,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -579,6 +597,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -637,12 +657,14 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  outline_alpha: 1.0
+  outline_alpha: 0.75
   shadow_alpha: 0.0
   template_node_child: false
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -664,8 +686,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 1.0
-    y: 1.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -699,6 +721,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -755,6 +779,8 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -796,6 +822,7 @@ nodes {
   template: "/example/templates/button.gui"
   template_node_child: false
   custom_type: 0
+  enabled: true
 }
 nodes {
   position {
@@ -854,6 +881,8 @@ nodes {
   template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -923,6 +952,8 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -964,6 +995,7 @@ nodes {
   template: "/example/templates/button.gui"
   template_node_child: false
   custom_type: 0
+  enabled: true
 }
 nodes {
   position {
@@ -1022,6 +1054,8 @@ nodes {
   template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -1091,6 +1125,8 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -1132,6 +1168,7 @@ nodes {
   template: "/example/templates/button.gui"
   template_node_child: false
   custom_type: 0
+  enabled: true
 }
 nodes {
   position {
@@ -1190,6 +1227,8 @@ nodes {
   template_node_child: true
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -1259,6 +1298,8 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
+  enabled: true
+  visible: true
 }
 nodes {
   position {
@@ -1323,6 +1364,8 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
+  enabled: true
+  visible: true
 }
 layers {
   name: "image"
