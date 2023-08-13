@@ -1,5 +1,7 @@
 local druid = require("druid.druid")
 
+local Swipe = require("druid.extended.swipe")
+
 
 local function on_swipe_callback(self, direction, distance, swipe_time)
 	self.text:set_to(direction)
@@ -11,7 +13,7 @@ function init(self)
 	self.druid = druid.new(self)
 
 	self.text = self.druid:new_text("text_value")
-	self.swipe = self.druid:new_swipe("swipe_node", on_swipe_callback)
+	self.swipe = self.druid:new(Swipe, "swipe_node", on_swipe_callback)
 end
 
 

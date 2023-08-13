@@ -151,7 +151,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/overview/overview.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -217,7 +217,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/buttons/buttons.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -283,7 +283,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/texts/texts_general/texts_general.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -349,7 +349,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/sliders/sliders.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -415,7 +415,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/grid/grid.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -481,7 +481,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/input/input.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -547,7 +547,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/scroll/scroll.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -613,7 +613,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/data_list/data_list.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -679,7 +679,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/data_list/static_grid/static_grid.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -745,7 +745,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/data_list/dynamic_grid/dynamic_grid.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -811,7 +811,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/data_list/navigate/navigate.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -877,7 +877,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/data_list/add_remove_nodes/add_remove_nodes.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -943,7 +943,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/grid/static_grid/static_grid.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1009,7 +1009,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/grid/grid_animations/grid_animations.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1075,7 +1075,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/grid/static_grid_dynamic_pos/static_grid_dynamic_pos.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1141,7 +1141,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/system/whitelist_blacklist/whitelist_blacklist.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1207,7 +1207,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/texts/texts_adjust/texts_adjust.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1273,7 +1273,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/system/message_input/message_input.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1339,7 +1339,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/custom/rich_input/rich_input.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1405,7 +1405,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/custom/pin_knob/pin_knob.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1471,7 +1471,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/system/inner_templates/inner_templates.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1537,7 +1537,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/swipe/swipe.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1603,7 +1603,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/drag/drag.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1669,7 +1669,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/checkboxes/checkboxes.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1735,7 +1735,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/data_list/reinit_data/reinit_data.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1801,7 +1801,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/layout/layout.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1867,7 +1867,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/hotkey/hotkey.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1933,7 +1933,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/data_list/with_component/with_component.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -1999,7 +1999,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/layout/layout_fit/layout_fit.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -2065,7 +2065,7 @@ embedded_instances {
   "  type: \"collectionfactory\"\n"
   "  data: \"prototype: \\\"/example/examples/general/progress_bar/progress_bar.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -2098,7 +2098,7 @@ embedded_instances {
   }
 }
 embedded_instances {
-  id: "custom_upgraded_rich_input"
+  id: "system_late_init_check"
   data: "components {\n"
   "  id: \"screen_factory\"\n"
   "  component: \"/monarch/screen_factory.script\"\n"
@@ -2115,7 +2115,7 @@ embedded_instances {
   "  }\n"
   "  properties {\n"
   "    id: \"screen_id\"\n"
-  "    value: \"custom_upgraded_rich_input\"\n"
+  "    value: \"system_late_init_check\"\n"
   "    type: PROPERTY_TYPE_HASH\n"
   "  }\n"
   "  properties {\n"
@@ -2129,9 +2129,339 @@ embedded_instances {
   "embedded_components {\n"
   "  id: \"collectionfactory\"\n"
   "  type: \"collectionfactory\"\n"
-  "  data: \"prototype: \\\"/example/examples/custom/upgraded_rich_input/upgraded_rich_input.collection\\\"\\n"
+  "  data: \"prototype: \\\"/example/examples/system/late_init_check/late_init_check.collection\\\"\\n"
   "load_dynamically: false\\n"
-  "dynamic_prototype: false\\n"
+   
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "general_hover"
+  data: "components {\n"
+  "  id: \"screen_factory\"\n"
+  "  component: \"/monarch/screen_factory.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"screen_id\"\n"
+  "    value: \"general_hover\"\n"
+  "    type: PROPERTY_TYPE_HASH\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"popup\"\n"
+  "    value: \"true\"\n"
+  "    type: PROPERTY_TYPE_BOOLEAN\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collectionfactory\"\n"
+  "  type: \"collectionfactory\"\n"
+  "  data: \"prototype: \\\"/example/examples/general/hover/hover.collection\\\"\\n"
+  "load_dynamically: false\\n"
+   
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "texts_lang_text"
+  data: "components {\n"
+  "  id: \"screen_factory\"\n"
+  "  component: \"/monarch/screen_factory.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"screen_id\"\n"
+  "    value: \"texts_lang_text\"\n"
+  "    type: PROPERTY_TYPE_HASH\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"popup\"\n"
+  "    value: \"true\"\n"
+  "    type: PROPERTY_TYPE_BOOLEAN\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collectionfactory\"\n"
+  "  type: \"collectionfactory\"\n"
+  "  data: \"prototype: \\\"/example/examples/texts/lang_text/lang_text.collection\\\"\\n"
+  "load_dynamically: false\\n"
+   
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "custom_rich_text"
+  data: "components {\n"
+  "  id: \"screen_factory\"\n"
+  "  component: \"/monarch/screen_factory.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"screen_id\"\n"
+  "    value: \"custom_rich_text\"\n"
+  "    type: PROPERTY_TYPE_HASH\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"popup\"\n"
+  "    value: \"true\"\n"
+  "    type: PROPERTY_TYPE_BOOLEAN\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collectionfactory\"\n"
+  "  type: \"collectionfactory\"\n"
+  "  data: \"prototype: \\\"/example/examples/custom/rich_text/rich_text.collection\\\"\\n"
+  "load_dynamically: false\\n"
+   
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "data_list_manage_data"
+  data: "components {\n"
+  "  id: \"screen_factory\"\n"
+  "  component: \"/monarch/screen_factory.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"screen_id\"\n"
+  "    value: \"data_list_manage_data\"\n"
+  "    type: PROPERTY_TYPE_HASH\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"popup\"\n"
+  "    value: \"true\"\n"
+  "    type: PROPERTY_TYPE_BOOLEAN\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collectionfactory\"\n"
+  "  type: \"collectionfactory\"\n"
+  "  data: \"prototype: \\\"/example/examples/data_list/manage_data/manage_data.collection\\\"\\n"
+  "load_dynamically: false\\n"
+   
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "rich_text_texts"
+  data: "components {\n"
+  "  id: \"screen_factory\"\n"
+  "  component: \"/monarch/screen_factory.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"screen_id\"\n"
+  "    value: \"rich_text_texts\"\n"
+  "    type: PROPERTY_TYPE_HASH\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"popup\"\n"
+  "    value: \"true\"\n"
+  "    type: PROPERTY_TYPE_BOOLEAN\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collectionfactory\"\n"
+  "  type: \"collectionfactory\"\n"
+  "  data: \"prototype: \\\"/example/examples/rich_text/rich_text_texts/rich_text_texts.collection\\\"\\n"
+  "load_dynamically: false\\n"
+   
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"

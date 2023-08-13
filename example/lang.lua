@@ -3,6 +3,8 @@ local druid = require("druid.druid")
 local M = {}
 
 local en = {
+	ui_lang = "En",
+	ui_current_lang = "Current lang: %s",
 	main_page = "Main page",
 	texts_page = "Text page",
 	button_page = "Button page",
@@ -21,9 +23,14 @@ local en = {
 	ui_section_input = "Input",
 	ui_text_example = "Translated",
 	ui_text_change_lang = "Change lang",
+	ui_example_1 = "Some text example",
+	ui_example_2 = "Lang text with different length to be adjusted",
+	ui_example_3 = "Text with 3 params: %s, %s and %s",
 }
 
 local ru = {
+	ui_lang = "Ру",
+	ui_current_lang = "Текущий язык: %s",
 	main_page = "Основное",
 	texts_page = "Текст",
 	button_page = "Кнопки",
@@ -42,6 +49,9 @@ local ru = {
 	ui_section_input = "Ввод текста",
 	ui_text_example = "Переведен",
 	ui_text_change_lang = "Сменить язык",
+	ui_example_1 = "Пример текста",
+	ui_example_2 = "Короткий текст",
+	ui_example_3 = "Текст с 3 параметрами: %s, %s и %s",
 }
 
 
@@ -63,5 +73,6 @@ function M.toggle_locale()
 	data = data == en and ru or en
 	druid.on_language_change()
 end
+
 
 return M
