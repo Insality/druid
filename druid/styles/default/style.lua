@@ -84,7 +84,7 @@ M["scroll"] = {
 	INERT_SPEED = 30, -- koef. of inert speed
 	EXTRA_STRETCH_SIZE = 100, -- extra size in pixels outside of scroll (stretch effect)
 	POINTS_DEADZONE = 20, -- Speed to check points of interests in no_inertion mode
-	WHEEL_SCROLL_SPEED = 0, -- Amount of pixels to scroll by one wheel event (0 to disable)
+	WHEEL_SCROLL_SPEED = 40, -- Amount of pixels to scroll by one wheel event (0 to disable)
 	WHEEL_SCROLL_INVERTED = false, -- Boolean to invert wheel scroll side
 	WHEEL_SCROLL_BY_INERTION = false, -- If true, wheel will add inertion to scroll. Direct set position otherwise.
 	SMALL_CONTENT_SCROLL = true, -- If true, content node with size less than view node size can be scrolled
@@ -177,6 +177,42 @@ M["rich_text"] = {
 	COLORS = {
 		white = "#FFFFFF",
 		black = "#000000"
+	}
+}
+
+
+M["druid.upgraded_rich_input"] = {
+	IS_LONGTAP_ERASE = true,
+	IS_DOUBLETAP_OUTLINE = true,
+	IS_TRIPLETAP_OUTLINE_ALL = true,
+	BUTTON_SELECT_INCREASE = 1.06,
+	MASK_DEFAULT_CHAR = "*",
+	IS_UNSELECT_ON_RESELECT = false,
+	UNSELECT_IS_ENTER = false,
+
+	on_select = function(self, button_node)
+		local target_scale = self.button.start_scale
+		gui.animate(button_node, "scale", target_scale * M["druid.upgraded_rich_input"].BUTTON_SELECT_INCREASE, gui.EASING_OUTSINE, 0.15)
+	end,
+
+	on_unselect = function(self, button_node)
+		local start_scale = self.button.start_scale
+		gui.animate(button_node, "scale", start_scale, gui.EASING_OUTSINE, 0.15)
+	end,
+
+	on_input_wrong = function(self, button_node)
+		local start_pos = self.button.start_pos
+		gui.animate(button_node, "position.x", start_pos.x - 3, gui.EASING_OUTSINE, 0.05, 0, function()
+			gui.animate(button_node, "position.x", start_pos.x + 3, gui.EASING_OUTSINE, 0.1, 0, function()
+				gui.animate(button_node, "position.x", start_pos.x, gui.EASING_OUTSINE, 0.05)
+			end)
+		end)
+	end,
+
+	button = {
+		LONGTAP_TIME = 0.4,
+		AUTOHOLD_TRIGGER = 0.8,
+		DOUBLETAP_TIME = 0.4,
 	}
 }
 

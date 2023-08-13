@@ -1,0 +1,50 @@
+local druid = require("druid.druid")
+
+local upgraded_rich_input = require("druid.custom.upgraded_rich_input.upgraded_rich_input")
+
+local function local_func(self, text)
+	gui.set_text(gui.get_node("upgraded_input_header_1"), "Something: " .. text)
+end
+
+function global_func(self, text)
+	gui.set_text(gui.get_node("upgraded_input_header_2"), "Something: " .. text)
+end
+
+function init(self)
+	self.druid = druid.new(self)
+	
+	self.upgraded_rich_input_1 = self.druid:new(upgraded_rich_input, "upgraded_1")
+	self.upgraded_rich_input_1:set_placeholder("Enter text here")
+	self.upgraded_rich_input_1.on_input_enter:subscribe(local_func)
+
+	self.upgraded_rich_input_2 = self.druid:new(upgraded_rich_input, "upgraded_2")
+	self.upgraded_rich_input_2:set_placeholder("Enter text here")
+	self.upgraded_rich_input_2.on_input_enter:subscribe(global_func)
+
+	named_func = function(self, text)
+		gui.set_text(gui.get_node("upgraded_input_header_3"), "Password: " .. text)
+	end
+	self.upgraded_rich_input_3 = self.druid:new(upgraded_rich_input, "upgraded_3", nil, gui.KEYBOARD_TYPE_PASSWORD)
+	self.upgraded_rich_input_3:set_placeholder("Enter text here")
+	self.upgraded_rich_input_3.on_input_enter:subscribe(named_func)
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

@@ -58,12 +58,62 @@ local _instances = {}
 
 local function get_druid_instances()
 	for i = #_instances, 1, -1 do
+		if _instances[i].set_pr:is_exist() then
+			_instances[i].set_pr:clear()
+		end
+		_instances[i].set_pr:subscribe(update_instances)
+		_instances[i].reset:subscribe(reset_instances)
 		if _instances[i]._deleted then
 			table.remove(_instances, i)
 		end
 	end
-
+	sort_instances()
 	return _instances
+end
+
+
+function update_priority(url, value, freeze_or_unfreeze)
+	for i = #_instances, 1, -1 do
+		if _instances[i].url == url then
+			_instances[i]._priority = value
+		else 
+			if freeze_or_unfreeze == "freeze" then
+				msg.post(_instances[i].url, "on_freeze_keyboard_input")
+			else 
+				if freeze_or_unfreeze  == "unfreeze" then
+				msg.post(_instances[i].url, "on_unfreeze_keyboard_input")
+				end
+			end
+		end
+	end
+end
+
+
+function update_instances(params)
+	update_priority(params[1], params[2], params[3])
+	sort_instances()
+	for i = 1, #_instances, 1 do
+		msg.post(_instances[i].url, "acquire_input_focus")
+	end
+end
+
+function reset_instances(url)
+	sort_instances()
+	for i = 1, #_instances, 1 do
+		if  _instances[i].url == url then
+			
+		else
+			msg.post(_instances[i].url, "on_focus_lost")
+		end
+	end
+end
+
+
+function sort_instances()
+	table.sort(_instances, function(a, b)
+		return a:get_priority() < b:get_priority()
+	end
+)
 end
 
 
@@ -107,6 +157,7 @@ function M.new(context, style)
 
 	local new_instance = druid_instance(context, style)
 	table.insert(_instances, new_instance)
+	local instances = get_druid_instances()
 	return new_instance
 end
 

@@ -164,6 +164,13 @@ end
 
 local function on_button_mouse_hover(self, hover_state)
 	self.style.on_mouse_hover(self, self.anim_node, hover_state)
+	print("hover")
+end
+
+
+local function on_button_mouse_away(self, hover_state)
+	self.style.on_mouse_hover(self, self.anim_node, hover_state)
+	print("away")
 end
 
 
@@ -172,6 +179,7 @@ local function on_button_click(self)
 		self._is_html5_listener_set = false
 		html5.set_interaction_listener(nil)
 	end
+	self.druid:reset_instances()
 	self.click_in_row = 1
 	self.on_click:trigger(self:get_context(), self.params, self)
 	self.style.on_click(self, self.anim_node)
@@ -297,6 +305,7 @@ function Button.init(self, node, callback, custom_args, anim_node)
 	self.params = custom_args
 	self.hover = self.druid:new_hover(node, on_button_hover)
 	self.hover.on_mouse_hover:subscribe(on_button_mouse_hover)
+	self.hover.on_mouse_away:subscribe(on_button_mouse_away)
 	self.click_zone = nil
 	self.is_repeated_started = false
 	self.last_pressed_time = 0
