@@ -38,6 +38,9 @@ BaseComponent.ON_LAYOUT_CHANGE = const.ON_LAYOUT_CHANGE
 BaseComponent.ON_MESSAGE_INPUT = const.ON_MESSAGE_INPUT
 BaseComponent.ON_WINDOW_RESIZED = const.ON_WINDOW_RESIZED
 BaseComponent.ON_LANGUAGE_CHANGE = const.ON_LANGUAGE_CHANGE
+BaseComponent.ON_FREEZE_KEYBOARD_INPUT = const.ON_FREEZE_KEYBOARD_INPUT
+BaseComponent.ON_UNFREEZE_KEYBOARD_INPUT = const.ON_UNFREEZE_KEYBOARD_INPUT
+
 
 BaseComponent.ALL_INTERESTS = {
 	BaseComponent.ON_INPUT,
@@ -50,6 +53,8 @@ BaseComponent.ALL_INTERESTS = {
 	BaseComponent.ON_MESSAGE_INPUT,
 	BaseComponent.ON_WINDOW_RESIZED,
 	BaseComponent.ON_LANGUAGE_CHANGE,
+	BaseComponent.ON_FREEZE_KEYBOARD_INPUT,
+	BaseComponent.ON_UNFREEZE_KEYBOARD_INPUT,
 }
 
 -- Mapping from on_message method to specific method name
@@ -60,6 +65,8 @@ BaseComponent.SPECIFIC_UI_MESSAGES = {
 	[hash(BaseComponent.ON_WINDOW_RESIZED)] = BaseComponent.ON_WINDOW_RESIZED,
 	[hash(BaseComponent.ON_MESSAGE_INPUT)] = BaseComponent.ON_MESSAGE_INPUT,
 	[hash(BaseComponent.ON_LANGUAGE_CHANGE)] = BaseComponent.ON_LANGUAGE_CHANGE,
+	[hash(BaseComponent.ON_FREEZE_KEYBOARD_INPUT)] = BaseComponent.ON_FREEZE_KEYBOARD_INPUT,
+	[hash(BaseComponent.ON_UNFREEZE_KEYBOARD_INPUT)] = BaseComponent.ON_UNFREEZE_KEYBOARD_INPUT,
 }
 
 

@@ -35,6 +35,7 @@ function Hover.init(self, node, on_hover_callback)
 
 	self.on_hover = Event(on_hover_callback)
 	self.on_mouse_hover = Event()
+	self.on_mouse_away = Event()
 end
 
 
@@ -112,7 +113,12 @@ end
 function Hover.set_mouse_hover(self, state)
 	if self._is_mouse_hovered ~= state then
 		self._is_mouse_hovered = state
-		self.on_mouse_hover:trigger(self:get_context(), state, self)
+		if self._is_mouse_hovered then
+			self.on_mouse_hover:trigger(self:get_context(), state)
+		else
+			self.on_mouse_away:trigger(self:get_context(), state)
+
+		end
 	end
 end
 

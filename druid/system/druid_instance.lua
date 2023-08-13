@@ -101,6 +101,32 @@ local MSG_ADD_FOCUS = hash("acquire_input_focus")
 local MSG_REMOVE_FOCUS = hash("release_input_focus")
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
 
+
+function DruidInstance.get_url(self)
+	return self.url
+end
+
+
+function DruidInstance.get_priority(self)
+	self.get_pr:trigger(self)
+	return self._priority
+end
+
+
+function DruidInstance.set_priority(self, value, freeze_or_unfreeze)
+	self._priority = value
+	params = {self.url, value, freeze_or_unfreeze}
+	self.set_pr:trigger(params)
+	return self
+end
+
+
+function DruidInstance.reset_instances(self)
+	self.reset:trigger(self.url)
+	return self
+end
+
+
 local function set_input_state(self, is_input_inited)
 	if IS_NO_AUTO_INPUT or (self.input_inited == is_input_inited) then
 		return
@@ -241,6 +267,7 @@ function DruidInstance.initialize(self, context, style)
 	self._context = context
 	self._style = style or settings.default_style
 	self._deleted = false
+	self._priority = 10
 	self._is_late_remove_enabled = false
 	self._late_remove = {}
 	self._is_debug = false
@@ -248,6 +275,10 @@ function DruidInstance.initialize(self, context, style)
 
 	self._input_blacklist = nil
 	self._input_whitelist = nil
+
+	self.set_pr = Event()
+	self.get_pr = Event()
+	self.reset = Event()
 
 	self.components_all = {}
 	self.components_interest = {}
@@ -456,6 +487,30 @@ function DruidInstance.on_focus_gained(self)
 	for i = 1, #components do
 		components[i]:on_focus_gained()
 	end
+end
+
+--- Calls the on_focus_lost function in all related components
+-- @tparam DruidInstance self
+-- @local
+function DruidInstance.on_freeze_keyboard_input(self)
+	local components = self.components_interest[base_component.ON_FREEZE_KEYBOARD_INPUT]
+	for i = 1, #components do
+		components[i]:on_freeze_keyboard_input()
+	end
+
+	self:log_message("On freeze keyboard input")
+end
+
+--- Calls the on_focus_gained function in all related components
+-- @tparam DruidInstance self
+-- @local
+function DruidInstance.on_unfreeze_keyboard_input(self)
+	local components = self.components_interest[base_component.ON_UNFREEZE_KEYBOARD_INPUT]
+	for i = 1, #components do
+		components[i]:on_unfreeze_keyboard_input()
+	end
+
+	self:log_message("On unfreeze keyboard input")
 end
 
 

@@ -30,6 +30,14 @@ key_trigger {
   input: KEY_G
   action: "key_g"
 }
+key_trigger {
+  input: KEY_LEFT
+  action: "key_left"
+}
+key_trigger {
+  input: KEY_RIGHT
+  action: "key_right"
+}
 mouse_trigger {
   input: MOUSE_WHEEL_UP
   action: "mouse_wheel_up"

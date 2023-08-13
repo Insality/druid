@@ -130,6 +130,7 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	end
 
 	self.is_selected = false
+	self.freezed_keyboard_input = false
 	self.value = self.text.last_value
 	self.previous_value = self.text.last_value
 	self.current_value = self.text.last_value
@@ -165,64 +166,65 @@ end
 
 function Input.on_input(self, action_id, action)
 	if self.is_selected then
-		local input_text = nil
-		if action_id == const.ACTION_TEXT then
-			-- ignore return key
-			if action.text == "\n" or action.text == "\r" then
+		if not self.blocked_keyboard_input then
+			local input_text = nil
+			if action_id == const.ACTION_TEXT then
+				-- ignore return key
+				if action.text == "\n" or action.text == "\r" then
+					return true
+				end
+
+				local hex = string.gsub(action.text,"(.)", function (c)
+					return string.format("%02X%s",string.byte(c), "")
+				end)
+
+				-- ignore arrow keys
+				if not utf8.match(hex, "EF9C8[0-3]") then
+					if not self.allowed_characters or utf8.match(action.text, self.allowed_characters) then
+						input_text = self.value .. action.text
+						if self.max_length then
+							input_text = utf8.sub(input_text, 1, self.max_length)
+						end
+					else
+						self.on_input_wrong:trigger(self:get_context(), action.text)
+						self.style.on_input_wrong(self, self.button.node)
+					end
+					self.marked_value = ""
+				end
+			end
+
+			if action_id == const.ACTION_MARKED_TEXT then
+				self.marked_value = action.text or ""
+				if self.max_length then
+					self.marked_value = utf8.sub(self.marked_value, 1, self.max_length)
+				end
+			end
+
+			if action_id == const.ACTION_BACKSPACE and (action.pressed or action.repeated) then
+				input_text = utf8.sub(self.value, 1, -2)
+			end
+
+			if action_id == const.ACTION_ENTER and action.released then
+				self:unselect()
 				return true
 			end
 
-			local hex = string.gsub(action.text,"(.)", function (c)
-				return string.format("%02X%s",string.byte(c), "")
-			end)
-
-			-- ignore arrow keys
-			if not utf8.match(hex, "EF9C8[0-3]") then
-				if not self.allowed_characters or utf8.match(action.text, self.allowed_characters) then
-					input_text = self.value .. action.text
-					if self.max_length then
-						input_text = utf8.sub(input_text, 1, self.max_length)
-					end
-				else
-					self.on_input_wrong:trigger(self:get_context(), action.text)
-					self.style.on_input_wrong(self, self.button.node)
-				end
-				self.marked_value = ""
+			if action_id == const.ACTION_BACK and action.released then
+				self:unselect()
+				return true
 			end
-		end
 
-		if action_id == const.ACTION_MARKED_TEXT then
-			self.marked_value = action.text or ""
-			if self.max_length then
-				self.marked_value = utf8.sub(self.marked_value, 1, self.max_length)
+			if action_id == const.ACTION_ESC and action.released then
+				self:unselect()
+				return true
 			end
-		end
 
-		if action_id == const.ACTION_BACKSPACE and (action.pressed or action.repeated) then
-			input_text = utf8.sub(self.value, 1, -2)
-		end
-
-		if action_id == const.ACTION_ENTER and action.released then
-			self:unselect()
-			return true
-		end
-
-		if action_id == const.ACTION_BACK and action.released then
-			self:unselect()
-			return true
-		end
-
-		if action_id == const.ACTION_ESC and action.released then
-			self:unselect()
-			return true
-		end
-
-		if input_text or #self.marked_value > 0 then
-			self:set_text(input_text)
-			return true
+			if input_text or #self.marked_value > 0 then
+				self:set_text(input_text)
+				return true
+			end
 		end
 	end
-
 	local is_consume_input = not self.style.NO_CONSUME_INPUT_WHILE_SELECTED and self.is_selected
 	return is_consume_input
 end
@@ -230,6 +232,16 @@ end
 
 function Input.on_focus_lost(self)
 	self:unselect()
+end
+
+
+function Input.on_freeze_keyboard_input(self)
+	self.blocked_keyboard_input = true
+end
+
+
+function Input.on_unfreeze_keyboard_input(self)
+	self.blocked_keyboard_input = false
 end
 
 
@@ -291,8 +303,10 @@ function Input.select(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
 	if not self.is_selected then
-		self:set_input_priority(const.PRIORITY_INPUT_MAX, true)
-		self.button:set_input_priority(const.PRIORITY_INPUT_MAX, true)
+		print("select")
+		self.druid:set_priority(0, "freeze")
+		self:set_input_priority(0, true)
+		self.button:set_input_priority(100, true)
 		self.previous_value = self.value
 		self.is_selected = true
 
@@ -314,8 +328,10 @@ function Input.unselect(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
 	if self.is_selected then
-		self:reset_input_priority()
-		self.button:reset_input_priority()
+		print("unselect")
+		self.druid:set_priority(10, "unfreeze")
+		self:set_input_priority(10, true)
+		self.button:set_input_priority(10, true)
 		self.is_selected = false
 
 		gui.hide_keyboard()
