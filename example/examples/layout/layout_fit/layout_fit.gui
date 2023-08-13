@@ -67,8 +67,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -125,8 +123,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -148,8 +144,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 140.0
+    y: 172.0
     z: 0.0
     w: 1.0
   }
@@ -183,74 +179,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
-  enabled: true
-  visible: true
-}
-nodes {
-  position {
-    x: -185.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 0.75
-    y: 0.75
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 300.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Original image:"
-  font: "game"
-  id: "text_hint_"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "image"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 0.75
-  shadow_alpha: 0.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-  custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -307,8 +235,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -330,8 +256,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 140.0
+    y: 172.0
     z: 0.0
     w: 1.0
   }
@@ -365,8 +291,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -431,8 +355,6 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -489,8 +411,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -512,8 +432,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 140.0
+    y: 172.0
     z: 0.0
     w: 1.0
   }
@@ -547,8 +467,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -613,8 +531,6 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -671,8 +587,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -694,8 +608,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 140.0
+    y: 172.0
     z: 0.0
     w: 1.0
   }
@@ -729,8 +643,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -795,8 +707,6 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -853,8 +763,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -876,8 +784,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 140.0
+    y: 172.0
     z: 0.0
     w: 1.0
   }
@@ -911,8 +819,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -977,8 +883,6 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -1035,8 +939,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -1058,8 +960,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 140.0
+    y: 172.0
     z: 0.0
     w: 1.0
   }
@@ -1093,8 +995,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -1159,8 +1059,6 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -1217,8 +1115,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -1240,8 +1136,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 140.0
+    y: 172.0
     z: 0.0
     w: 1.0
   }
@@ -1275,8 +1171,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
   custom_type: 0
-  enabled: true
-  visible: true
 }
 nodes {
   position {
@@ -1341,8 +1235,6 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
   custom_type: 0
-  enabled: true
-  visible: true
 }
 layers {
   name: "image"
