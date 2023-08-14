@@ -67,6 +67,7 @@
 -- @see Text
 -- @see Timer
 
+local Event = require("druid.event")
 local helper = require("druid.helper")
 local class = require("druid.system.middleclass")
 local settings = require("druid.system.settings")
