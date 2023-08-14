@@ -337,7 +337,7 @@ end
 function UpgradedRichInput.on_input(self, action_id, action)
 	self.last_touch = action
 	if self.is_selected then
-		if not self.blocked_keyboard_input then
+		if not self.freezed_keyboard_input then
 			local input_text = nil
 			if action_id == const.ACTION_TEXT then
 				-- ignore return key
@@ -453,11 +453,11 @@ function UpgradedRichInput.on_focus_lost(self)
 end
 
 function UpgradedRichInput.on_freeze_keyboard_input(self)
-	self.blocked_keyboard_input = true
+	self.freezed_keyboard_input = true
 end
 
 function UpgradedRichInput.on_unfreeze_keyboard_input(self)
-	self.blocked_keyboard_input = false
+	self.freezed_keyboard_input = false
 end
 
 function UpgradedRichInput.on_input_interrupt(self)
