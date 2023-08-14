@@ -148,9 +148,10 @@ local function is_input_match(self, action_id)
 	if action_id == const.ACTION_TOUCH or action_id == const.ACTION_MULTITOUCH then
 		return true
 	end
-
-	if self.key_trigger and action_id == self.key_trigger then
-		return true
+	if not self.freezed_keyboard_input then
+		if self.key_trigger and action_id == self.key_trigger then
+			return true
+		end
 	end
 
 	return false

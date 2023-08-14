@@ -166,7 +166,7 @@ end
 
 function Input.on_input(self, action_id, action)
 	if self.is_selected then
-		if not self.blocked_keyboard_input then
+		if not self.freezed_keyboard_input then
 			local input_text = nil
 			if action_id == const.ACTION_TEXT then
 				-- ignore return key
@@ -236,12 +236,12 @@ end
 
 
 function Input.on_freeze_keyboard_input(self)
-	self.blocked_keyboard_input = true
+	self.freezed_keyboard_input = true
 end
 
 
 function Input.on_unfreeze_keyboard_input(self)
-	self.blocked_keyboard_input = false
+	self.freezed_keyboard_input = false
 end
 
 
