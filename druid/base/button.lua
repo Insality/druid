@@ -423,6 +423,15 @@ function Button.on_input(self, action_id, action)
 end
 
 
+function Button.on_freeze_keyboard_input(self)
+	self.freezed_keyboard_input = true
+end
+
+function Button.on_unfreeze_keyboard_input(self)
+	self.freezed_keyboard_input = false
+end
+
+
 function Button.on_input_interrupt(self)
 	self.can_action = false
 end
