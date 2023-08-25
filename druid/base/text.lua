@@ -95,6 +95,7 @@ end
 
 --- Reset initial scale for text
 local function reset_default_scale(self)
+	self.scale = self.start_scale
 	gui.set_scale(self.node, self.start_scale)
 	gui.set_size(self.node, self.start_size)
 end
@@ -108,6 +109,12 @@ local function update_text_area_size(self)
 	local max_height = self.text_area.y
 
 	local metrics = helper.get_text_metrics_from_node(self.node)
+
+	if metrics.width == 0 then
+		reset_default_scale(self)
+		self.on_update_text_scale:trigger(self:get_context(), self.start_scale, metrics)
+		return
+	end
 
 	local scale_modifier = max_width / metrics.width
 	scale_modifier = math.min(scale_modifier, self.start_scale.x)
@@ -128,7 +135,6 @@ local function update_text_area_size(self)
 	local new_scale = vmath.vector3(scale_modifier, scale_modifier, self.start_scale.z)
 	gui.set_scale(self.node, new_scale)
 	self.scale = new_scale
-
 	update_text_size(self)
 
 	self.on_update_text_scale:trigger(self:get_context(), new_scale, metrics)
