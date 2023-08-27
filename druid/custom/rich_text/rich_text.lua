@@ -124,6 +124,15 @@ function RichText.init(self, template, nodes)
 end
 
 
+function RichText.on_layout_change(self)
+	gui.set_enabled(self.text_prefab, false)
+	gui.set_enabled(self.icon_prefab, false)
+	if self._last_value then
+		self:set_text(self._last_value)
+	end
+end
+
+
 --- Component style params.
 -- You can override this component styles params in Druid styles table
 -- or create your own style
@@ -189,6 +198,7 @@ end
 -- <img=texture:image,width,height/>
 function RichText.set_text(self, text)
 	self:clear()
+	self._last_value = text
 
 	local words, settings, line_metrics = rich_text.create(text, self._settings, self.style)
 	line_metrics = rich_text.adjust_to_area(words, settings, line_metrics, self.style)
@@ -211,6 +221,7 @@ function RichText:clear()
 		rich_text.remove(self._words)
 		self._words = nil
 	end
+	self._last_value = nil
 end
 
 
