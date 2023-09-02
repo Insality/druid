@@ -53,7 +53,7 @@ end
 -- @tparam number margin Offset between nodes
 -- @local
 function M.centrate_text_with_icon(text_node, icon_node, margin)
-	M.centrate_nodes(margin, text_node, icon_node)
+	return M.centrate_nodes(margin, text_node, icon_node)
 end
 
 
@@ -66,7 +66,7 @@ end
 -- @tparam[opt=0] number margin Offset between nodes
 -- @local
 function M.centrate_icon_with_text(icon_node, text_node, margin)
-	M.centrate_nodes(margin, icon_node, text_node)
+	return M.centrate_nodes(margin, icon_node, text_node)
 end
 
 
@@ -107,6 +107,8 @@ function M.centrate_nodes(margin, ...)
 
 		pos_x = pos_x + node_widths[i]/2 + margin -- add second part of offset
 	end
+
+	return width
 end
 
 
