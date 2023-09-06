@@ -46,6 +46,7 @@ function LangText.init(self, node, locale_id, adjust_type)
 	self.on_change = Event()
 
 	self:translate(locale_id or gui.get_text(self.node))
+	self.text.on_set_text:subscribe(self.on_change.trigger, self.on_change)
 
 	return self
 end
