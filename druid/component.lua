@@ -75,7 +75,7 @@ end
 -- Invoke `on_style_change` on component, if exist. Component should handle
 -- their style changing and store all style params
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam table druid_style Druid style module
+-- @tparam table|nil druid_style Druid style module
 -- @treturn BaseComponent @{BaseComponent}
 function BaseComponent.set_style(self, druid_style)
 	self._meta.style = druid_style or {}

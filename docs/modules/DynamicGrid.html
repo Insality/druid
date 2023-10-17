@@ -86,7 +86,7 @@
 	<td class="summary">Return side vector to correct node shifting</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#add">add(self, node, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</a></td>
+	<td class="name" nowrap><a href="#add">add(self, node, index, shift_policy, is_instant)</a></td>
 	<td class="summary">Add new node to the grid</td>
 	</tr>
 	<tr>
@@ -122,7 +122,7 @@
 	<td class="summary">The <a href="../modules/DynamicGrid.html#">DynamicGrid</a> constructor</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#remove">remove(self, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</a></td>
+	<td class="name" nowrap><a href="#remove">remove(self, index, shift_policy, is_instant)</a></td>
 	<td class="summary">Remove the item from the grid.</td>
 	</tr>
 	<tr>
@@ -213,7 +213,7 @@
 </dd>
     <dt>
     <a name = "add"></a>
-    <strong>add(self, node, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</strong>
+    <strong>add(self, node, index, shift_policy, is_instant)</strong>
     </dt>
     <dd>
     Add new node to the grid
@@ -234,14 +234,12 @@
          The node position. By default add as last node
         </li>
         <li><span class="parameter">shift_policy</span>
-            <span class="types"><span class="type">number</span></span>
-         How shift nodes, if required. See const.SHIFT
-         (<em>default</em> SHIFT.RIGHT)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         How shift nodes, if required. Default: const.SHIFT.RIGHT
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          If true, update node positions instantly
-         (<em>default</em> false)
         </li>
     </ul>
 
@@ -487,7 +485,7 @@
 </dd>
     <dt>
     <a name = "remove"></a>
-    <strong>remove(self, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</strong>
+    <strong>remove(self, index, shift_policy, is_instant)</strong>
     </dt>
     <dd>
     Remove the item from the grid.  Note that gui node will be not deleted
@@ -504,14 +502,12 @@
          The grid node index to remove
         </li>
         <li><span class="parameter">shift_policy</span>
-            <span class="types"><span class="type">number</span></span>
-         How shift nodes, if required. See const.SHIFT
-         (<em>default</em> SHIFT.RIGHT)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         How shift nodes, if required. Default: const.SHIFT.RIGHT
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          If true, update node positions instantly
-         (<em>default</em> false)
         </li>
     </ul>
 

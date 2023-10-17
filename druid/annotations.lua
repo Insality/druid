@@ -137,7 +137,7 @@ function druid__base_component.set_nodes(self, nodes) end
 --- Set current component style table.
 --- Invoke `on_style_change` on component, if exist. Component should handle  their style changing and store all style params
 ---@param self druid.base_component @{BaseComponent}
----@param druid_style table Druid style module
+---@param druid_style table|nil Druid style module
 ---@return druid.base_component @{BaseComponent}
 function druid__base_component.set_style(self, druid_style) end
 
@@ -451,8 +451,8 @@ function druid__dynamic_grid._get_side_vector(self, side, is_forward) end
 ---@param self druid.dynamic_grid @{DynamicGrid}
 ---@param node node Gui node
 ---@param index number|nil The node position. By default add as last node
----@param shift_policy number How shift nodes, if required. See const.SHIFT
----@param is_instant boolean If true, update node positions instantly
+---@param shift_policy number|nil How shift nodes, if required. Default: const.SHIFT.RIGHT
+---@param is_instant boolean|nil If true, update node positions instantly
 function druid__dynamic_grid.add(self, node, index, shift_policy, is_instant) end
 
 --- Clear grid nodes array.
@@ -505,8 +505,8 @@ function druid__dynamic_grid.init(self, parent) end
 --- Note that gui node will be not deleted
 ---@param self druid.dynamic_grid @{DynamicGrid}
 ---@param index number The grid node index to remove
----@param shift_policy number How shift nodes, if required. See const.SHIFT
----@param is_instant boolean If true, update node positions instantly
+---@param shift_policy number|nil How shift nodes, if required. Default: const.SHIFT.RIGHT
+---@param is_instant boolean|nil If true, update node positions instantly
 ---@return node The deleted gui node from grid
 function druid__dynamic_grid.remove(self, index, shift_policy, is_instant) end
 
@@ -933,6 +933,7 @@ function druid__radio_group.set_state(self, index, is_instant) end
 ---@field druid druid_instance The component druid instance
 ---@field input druid.input On input field text change callback(self, input_text)
 ---@field placeholder druid.text On input field text change to max length string callback(self, input_text)
+---@field root node Root node
 local druid__rich_input = {}
 
 --- The @{RichInput} constructor
@@ -943,7 +944,7 @@ function druid__rich_input.init(self, template, nodes) end
 
 --- Set placeholder text
 ---@param self druid.rich_input @{RichInput}
----@param placeholder_text string The placeholder text
+---@param placeholder_text string|nil The placeholder text
 function druid__rich_input.set_placeholder(self, placeholder_text) end
 
 

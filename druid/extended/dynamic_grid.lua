@@ -141,8 +141,8 @@ end
 -- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam node node Gui node
 -- @tparam number|nil index The node position. By default add as last node
--- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+-- @tparam number|nil shift_policy How shift nodes, if required. Default: const.SHIFT.RIGHT
+-- @tparam boolean|nil is_instant If true, update node positions instantly
 function DynamicGrid.add(self, node, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 	local delta = shift_policy -- -1 or 1 or 0
@@ -183,8 +183,8 @@ end
 --- Remove the item from the grid. Note that gui node will be not deleted
 -- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam number index The grid node index to remove
--- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+-- @tparam number|nil shift_policy How shift nodes, if required. Default: const.SHIFT.RIGHT
+-- @tparam boolean|nil is_instant If true, update node positions instantly
 -- @treturn node The deleted gui node from grid
 function DynamicGrid.remove(self, index, shift_policy, is_instant)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
