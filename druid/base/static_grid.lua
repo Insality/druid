@@ -213,10 +213,10 @@ end
 
 --- Add new item to the grid
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam node item Gui node
+-- @tparam node item GUI node
 -- @tparam number|nil index The item position. By default add as last item
--- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+-- @tparam number|nil shift_policy How shift nodes, if required. Default: const.SHIFT.RIGHT
+-- @tparam boolean|nil is_instant If true, update node positions instantly
 function StaticGrid.add(self, item, index, shift_policy, is_instant)
 	index = index or ((self.last_index or 0) + 1)
 
@@ -239,8 +239,8 @@ end
 --- Remove the item from the grid. Note that gui node will be not deleted
 -- @tparam StaticGrid self @{StaticGrid}
 -- @tparam number index The grid node index to remove
--- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+-- @tparam number|nil shift_policy How shift nodes, if required. Default: const.SHIFT.RIGHT
+-- @tparam boolean|nil is_instant If true, update node positions instantly
 -- @treturn node The deleted gui node from grid
 function StaticGrid.remove(self, index, shift_policy, is_instant)
 	assert(self.nodes[index], "No grid item at given index " .. index)

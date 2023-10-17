@@ -91,7 +91,7 @@ helper.centrate_nodes(0, node_1, node_2)
 	<td class="summary">Add all elements from source array to the target array</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#helper.centrate_nodes">helper.centrate_nodes([margin=0], ...)</a></td>
+	<td class="name" nowrap><a href="#helper.centrate_nodes">helper.centrate_nodes(margin, ...)</a></td>
 	<td class="summary">Centerate nodes by x position with margin.</td>
 	</tr>
 	<tr>
@@ -163,7 +163,7 @@ helper.centrate_nodes(0, node_1, node_2)
 	<td class="summary">Remove value from array with shift policy</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#helper.round">helper.round(num[, num_decimal_places=0])</a></td>
+	<td class="name" nowrap><a href="#helper.round">helper.round(num, num_decimal_places)</a></td>
 	<td class="summary">Round number to specified decimal places</td>
 	</tr>
 	<tr>
@@ -220,7 +220,7 @@ helper.centrate_nodes(0, node_1, node_2)
 </dd>
     <dt>
     <a name = "helper.centrate_nodes"></a>
-    <strong>helper.centrate_nodes([margin=0], ...)</strong>
+    <strong>helper.centrate_nodes(margin, ...)</strong>
     </dt>
     <dd>
     Centerate nodes by x position with margin.
@@ -231,9 +231,8 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">margin</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Offset between nodes
-         (<em>default</em> 0)
         </li>
         <li><span class="parameter">...</span>
          Gui nodes
@@ -752,7 +751,7 @@ helper.centrate_nodes(0, node_1, node_2)
 </dd>
     <dt>
     <a name = "helper.round"></a>
-    <strong>helper.round(num[, num_decimal_places=0])</strong>
+    <strong>helper.round(num, num_decimal_places)</strong>
     </dt>
     <dd>
     Round number to specified decimal places
@@ -765,9 +764,8 @@ helper.centrate_nodes(0, node_1, node_2)
          Number
         </li>
         <li><span class="parameter">num_decimal_places</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Decimal places
-         (<em>default</em> 0)
         </li>
     </ul>
 

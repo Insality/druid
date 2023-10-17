@@ -359,7 +359,7 @@ end
 --- Set extra size for scroll stretching.
 -- Set 0 to disable stretching effect
 -- @tparam Scroll self @{Scroll}
--- @tparam[opt=0] number stretch_size Size in pixels of additional scroll area
+-- @tparam number|nil stretch_size Size in pixels of additional scroll area
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_extra_stretch_size(self, stretch_size)
 	self.style.EXTRA_STRETCH_SIZE = stretch_size or 0

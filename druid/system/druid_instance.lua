@@ -261,6 +261,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam BaseComponent component Component module
 -- @tparam any ... Other component params to pass it to component:init function
+-- @treturn BaseComponent Component instance
 function DruidInstance.new(self, component, ...)
 	local instance = create(self, component)
 
@@ -559,7 +560,7 @@ end
 --- Create @{Button} component
 -- @tparam DruidInstance self
 -- @tparam string|node node The node_id or gui.get_node(node_id)
--- @tparam function callback Button callback
+-- @tparam function|nil callback Button callback
 -- @tparam table|nil params Button callback params
 -- @tparam node|nil anim_node Button anim node (node, if not provided)
 -- @treturn Button @{Button} component
@@ -579,7 +580,7 @@ end
 
 --- Create @{BackHandler} component
 -- @tparam DruidInstance self
--- @tparam function callback @The callback(self, custom_args) to call on back event
+-- @tparam function|nil callback @The callback(self, custom_args) to call on back event
 -- @tparam any|nil params Callback argument
 -- @treturn BackHandler @{BackHandler} component
 function DruidInstance.new_back_handler(self, callback, params)
@@ -590,7 +591,7 @@ end
 --- Create @{Hover} component
 -- @tparam DruidInstance self
 -- @tparam string|node node The node_id or gui.get_node(node_id)
--- @tparam function on_hover_callback Hover callback
+-- @tparam function|nil on_hover_callback Hover callback
 -- @treturn Hover @{Hover} component
 function DruidInstance.new_hover(self, node, on_hover_callback)
 	return DruidInstance.new(self, hover, node, on_hover_callback)
@@ -612,24 +613,24 @@ end
 -- Deprecated
 -- @tparam DruidInstance self
 -- @tparam string|node parent_node The node_id or gui.get_node(node_id). Parent of all Grid items.
--- @tparam node element Element prefab. Need to get it size
--- @tparam[opt=1] number in_row How many nodes in row can be placed
+-- @tparam node item Element prefab. Required to get grid's item size. Can be adjusted separately.
+-- @tparam number|nil in_row How many nodes in row can be placed
 -- @treturn StaticGrid @{StaticGrid} component
 -- @local
-function DruidInstance.new_grid(self, parent_node, element, in_row)
+function DruidInstance.new_grid(self, parent_node, item, in_row)
 	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
-	return DruidInstance.new(self, static_grid, parent_node, element, in_row)
+	return DruidInstance.new(self, static_grid, parent_node, item, in_row)
 end
 
 
 --- Create @{StaticGrid} component
 -- @tparam DruidInstance self
 -- @tparam string|node parent_node The node_id or gui.get_node(node_id). Parent of all Grid items.
--- @tparam node element Element prefab. Need to get it size
--- @tparam[opt=1] number in_row How many nodes in row can be placed
+-- @tparam string|node item Item prefab. Required to get grid's item size. Can be adjusted separately.
+-- @tparam number|nil in_row How many nodes in row can be placed
 -- @treturn StaticGrid @{StaticGrid} component
-function DruidInstance.new_static_grid(self, parent_node, element, in_row)
-	return DruidInstance.new(self, static_grid, parent_node, element, in_row)
+function DruidInstance.new_static_grid(self, parent_node, item, in_row)
+	return DruidInstance.new(self, static_grid, parent_node, item, in_row)
 end
 
 
@@ -646,7 +647,7 @@ end
 --- Create @{Drag} component
 -- @tparam DruidInstance self
 -- @tparam string|node node The node_id or gui.get_node(node_id). Will used as user input node.
--- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
+-- @tparam function|nil on_drag_callback Callback for on_drag_event(self, dx, dy)
 -- @treturn Drag @{Drag} component
 function DruidInstance.new_drag(self, node, on_drag_callback)
 	return DruidInstance.new(self, drag, node, on_drag_callback)
@@ -656,7 +657,7 @@ end
 --- Create @{Swipe} component
 -- @tparam DruidInstance self
 -- @tparam string|node node The node_id or gui.get_node(node_id). Will used as user input node.
--- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
+-- @tparam function|nil on_swipe_callback Swipe callback for on_swipe_end event
 -- @treturn Swipe @{Swipe} component
 function DruidInstance.new_swipe(self, node, on_swipe_callback)
 	return helper.require_component_message("swipe")
@@ -697,9 +698,9 @@ end
 --- Create @{Checkbox} component
 -- @tparam DruidInstance self
 -- @tparam string|node node The_node id or gui.get_node(node_id).
--- @tparam function callback Checkbox callback
--- @tparam[opt=node] node click_node Trigger node, by default equals to node
--- @tparam[opt=false] boolean initial_state The initial state of checkbox, default - false
+-- @tparam function|nil callback Checkbox callback
+-- @tparam node|nil click_node Trigger node, Default: node
+-- @tparam boolean|nil initial_state The initial state of checkbox, Default: false
 -- @treturn Checkbox @{Checkbox} component
 function DruidInstance.new_checkbox(self, node, callback, click_node, initial_state)
 	return helper.require_component_message("checkbox")
@@ -754,7 +755,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam string|node node Gui text node
 -- @tparam number seconds_from Start timer value in seconds
--- @tparam[opt=0] number seconds_to End timer value in seconds
+-- @tparam number|nil seconds_to End timer value in seconds
 -- @tparam function|nil callback Function on timer end
 -- @treturn Timer @{Timer} component
 function DruidInstance.new_timer(self, node, seconds_from, seconds_to, callback)
@@ -766,7 +767,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam string|node node Progress bar fill node or node name
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
--- @tparam[opt=1] number init_value Initial value of progress bar
+-- @tparam number|nil init_value Initial value of progress bar. Default: 1
 -- @treturn Progress @{Progress} component
 function DruidInstance.new_progress(self, node, key, init_value)
 	return helper.require_component_message("progress")

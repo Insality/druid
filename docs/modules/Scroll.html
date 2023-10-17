@@ -144,7 +144,7 @@
 	<td class="summary">Strict drag scroll area.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_extra_stretch_size">set_extra_stretch_size(self[, stretch_size=0])</a></td>
+	<td class="name" nowrap><a href="#set_extra_stretch_size">set_extra_stretch_size(self, stretch_size)</a></td>
 	<td class="summary">Set extra size for scroll stretching.</td>
 	</tr>
 	<tr>
@@ -537,7 +537,7 @@
 </dd>
     <dt>
     <a name = "set_extra_stretch_size"></a>
-    <strong>set_extra_stretch_size(self[, stretch_size=0])</strong>
+    <strong>set_extra_stretch_size(self, stretch_size)</strong>
     </dt>
     <dd>
     Set extra size for scroll stretching.
@@ -551,9 +551,8 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">stretch_size</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Size in pixels of additional scroll area
-         (<em>default</em> 0)
         </li>
     </ul>
 

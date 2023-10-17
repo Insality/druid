@@ -347,7 +347,7 @@ end
 -- by `BaseComponent.create`
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string name BaseComponent name
--- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
+-- @tparam number|nil input_priority The input priority. The bigger number processed first
 -- @local
 function BaseComponent.initialize(self, name, input_priority)
 	self._component = {
@@ -483,7 +483,7 @@ end
 --- Create new component. It will inheritance from basic Druid component.
 -- @function BaseComponent.create
 -- @tparam string name BaseComponent name
--- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
+-- @tparam number|nil input_priority The input priority. The bigger number processed first
 -- @local
 function BaseComponent.create(name, input_priority)
 	-- Yea, inheritance here

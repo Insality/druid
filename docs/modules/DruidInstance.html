@@ -158,7 +158,7 @@ end
 	<td class="summary">Create <a href="../modules/Button.html#">Button</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_checkbox">new_checkbox(self, node, callback[, click_node=node[, initial_state=false]])</a></td>
+	<td class="name" nowrap><a href="#new_checkbox">new_checkbox(self, node, callback, click_node, initial_state)</a></td>
 	<td class="summary">Create <a href="../modules/Checkbox.html#">Checkbox</a> component</td>
 	</tr>
 	<tr>
@@ -198,7 +198,7 @@ end
 	<td class="summary">Create <a href="../modules/Layout.html#">Layout</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_progress">new_progress(self, node, key[, init_value=1])</a></td>
+	<td class="name" nowrap><a href="#new_progress">new_progress(self, node, key, init_value)</a></td>
 	<td class="summary">Create <a href="../modules/Progress.html#">Progress</a> component</td>
 	</tr>
 	<tr>
@@ -218,7 +218,7 @@ end
 	<td class="summary">Create <a href="../modules/Slider.html#">Slider</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_static_grid">new_static_grid(self, parent_node, element[, in_row=1])</a></td>
+	<td class="name" nowrap><a href="#new_static_grid">new_static_grid(self, parent_node, item, in_row)</a></td>
 	<td class="summary">Create <a href="../modules/StaticGrid.html#">StaticGrid</a> component</td>
 	</tr>
 	<tr>
@@ -230,7 +230,7 @@ end
 	<td class="summary">Create <a href="../modules/Text.html#">Text</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_timer">new_timer(self, node, seconds_from[, seconds_to=0], callback)</a></td>
+	<td class="name" nowrap><a href="#new_timer">new_timer(self, node, seconds_from, seconds_to, callback)</a></td>
 	<td class="summary">Create <a href="../modules/Timer.html#">Timer</a> component</td>
 	</tr>
 	<tr>
@@ -311,6 +311,12 @@ end
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">BaseComponent</span></span>
+        Component instance
+    </ol>
 
 
 
@@ -331,7 +337,7 @@ end
 
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          @The callback(self, custom_args) to call on back event
         </li>
         <li><span class="parameter">params</span>
@@ -401,7 +407,7 @@ end
          The node_id or gui.get_node(node_id)
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Button callback
         </li>
         <li><span class="parameter">params</span>
@@ -427,7 +433,7 @@ end
 </dd>
     <dt>
     <a name = "new_checkbox"></a>
-    <strong>new_checkbox(self, node, callback[, click_node=node[, initial_state=false]])</strong>
+    <strong>new_checkbox(self, node, callback, click_node, initial_state)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Checkbox.html#">Checkbox</a> component
@@ -444,18 +450,16 @@ end
          The_node id or gui.get_node(node_id).
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Checkbox callback
         </li>
         <li><span class="parameter">click_node</span>
-            <span class="types"><span class="type">node</span></span>
-         Trigger node, by default equals to node
-         (<em>default</em> node)
+            <span class="types"><span class="type">node</span> or <span class="type">nil</span></span>
+         Trigger node, Default: node
         </li>
         <li><span class="parameter">initial_state</span>
-            <span class="types"><span class="type">boolean</span></span>
-         The initial state of checkbox, default - false
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         The initial state of checkbox, Default: false
         </li>
     </ul>
 
@@ -568,7 +572,7 @@ end
          The node_id or gui.get_node(node_id). Will used as user input node.
         </li>
         <li><span class="parameter">on_drag_callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Callback for on_drag_event(self, dx, dy)
         </li>
     </ul>
@@ -673,7 +677,7 @@ end
          The node_id or gui.get_node(node_id)
         </li>
         <li><span class="parameter">on_hover_callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Hover callback
         </li>
     </ul>
@@ -804,7 +808,7 @@ end
 </dd>
     <dt>
     <a name = "new_progress"></a>
-    <strong>new_progress(self, node, key[, init_value=1])</strong>
+    <strong>new_progress(self, node, key, init_value)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Progress.html#">Progress</a> component
@@ -825,9 +829,8 @@ end
          Progress bar direction: const.SIDE.X or const.SIDE.Y
         </li>
         <li><span class="parameter">init_value</span>
-            <span class="types"><span class="type">number</span></span>
-         Initial value of progress bar
-         (<em>default</em> 1)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Initial value of progress bar. Default: 1
         </li>
     </ul>
 
@@ -994,7 +997,7 @@ end
 </dd>
     <dt>
     <a name = "new_static_grid"></a>
-    <strong>new_static_grid(self, parent_node, element[, in_row=1])</strong>
+    <strong>new_static_grid(self, parent_node, item, in_row)</strong>
     </dt>
     <dd>
     Create <a href="../modules/StaticGrid.html#">StaticGrid</a> component
@@ -1010,14 +1013,13 @@ end
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
          The node_id or gui.get_node(node_id). Parent of all Grid items.
         </li>
-        <li><span class="parameter">element</span>
-            <span class="types"><span class="type">node</span></span>
-         Element prefab. Need to get it size
+        <li><span class="parameter">item</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         Item prefab. Required to get grid's item size. Can be adjusted separately.
         </li>
         <li><span class="parameter">in_row</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          How many nodes in row can be placed
-         (<em>default</em> 1)
         </li>
     </ul>
 
@@ -1051,7 +1053,7 @@ end
          The node_id or gui.get_node(node_id). Will used as user input node.
         </li>
         <li><span class="parameter">on_swipe_callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Swipe callback for on_swipe_end event
         </li>
     </ul>
@@ -1108,7 +1110,7 @@ end
 </dd>
     <dt>
     <a name = "new_timer"></a>
-    <strong>new_timer(self, node, seconds_from[, seconds_to=0], callback)</strong>
+    <strong>new_timer(self, node, seconds_from, seconds_to, callback)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Timer.html#">Timer</a> component
@@ -1129,9 +1131,8 @@ end
          Start timer value in seconds
         </li>
         <li><span class="parameter">seconds_to</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          End timer value in seconds
-         (<em>default</em> 0)
         </li>
         <li><span class="parameter">callback</span>
             <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>

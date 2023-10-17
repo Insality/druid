@@ -48,7 +48,7 @@ end
 -- @tparam Timer self @{Timer}
 -- @tparam node node Gui text node
 -- @tparam number seconds_from Start timer value in seconds
--- @tparam[opt=0] number seconds_to End timer value in seconds
+-- @tparam number|nil seconds_to End timer value in seconds
 -- @tparam function|nil callback Function on timer end
 function Timer.init(self, node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)

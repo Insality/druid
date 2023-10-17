@@ -478,7 +478,7 @@ end
 --
 -- This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
 -- @tparam Button self @{Button}
--- @tparam node zone Gui node
+-- @tparam node|nil zone Gui node
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_click_zone("stencil_node")

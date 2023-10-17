@@ -63,7 +63,7 @@ end
 -- @function helper.centrate_icon_with_text
 -- @tparam box|nil icon_node Gui box node
 -- @tparam text|nil text_node Gui text node
--- @tparam[opt=0] number margin Offset between nodes
+-- @tparam number|nil margin Offset between nodes
 -- @local
 function M.centrate_icon_with_text(icon_node, text_node, margin)
 	return M.centrate_nodes(margin, icon_node, text_node)
@@ -75,7 +75,7 @@ end
 -- This functions calculate total width of nodes and set position for each node.
 -- The centrate will be around 0 x position.
 -- @function helper.centrate_nodes
--- @tparam[opt=0] number margin Offset between nodes
+-- @tparam number|nil margin Offset between nodes
 -- @param ... Gui nodes
 function M.centrate_nodes(margin, ...)
 	margin = margin or 0
@@ -200,7 +200,7 @@ end
 --- Round number to specified decimal places
 -- @function helper.round
 -- @tparam number num Number
--- @tparam[opt=0] number num_decimal_places Decimal places
+-- @tparam number|nil num_decimal_places Decimal places
 -- @treturn number Rounded number
 function M.round(num, num_decimal_places)
 	local mult = 10^(num_decimal_places or 0)

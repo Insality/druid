@@ -23,6 +23,9 @@
 --- The text component
 -- @tfield Text text @{Text}
 
+--- Text node
+-- @tfield node node
+
 ---
 
 local Event = require("druid.event")
