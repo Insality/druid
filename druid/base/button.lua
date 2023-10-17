@@ -282,10 +282,10 @@ end
 
 --- The @{Button} constructor
 -- @tparam Button self @{Button}
--- @tparam string|node node Node name or GUI Node itself
+-- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @tparam function callback On click button callback
--- @tparam[opt] any custom_args Button events custom arguments
--- @tparam[opt] string|node anim_node Node to animate instead of trigger node.
+-- @tparam any|nil custom_args Button events custom arguments
+-- @tparam string|node|nil anim_node Node to animate instead of trigger node.
 function Button.init(self, node, callback, custom_args, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
@@ -447,7 +447,7 @@ end
 -- The style.on_set_enabled will be triggered.
 -- Disabled button is not clickable.
 -- @tparam Button self @{Button}
--- @tparam boolean state Enabled state
+-- @tparam boolean|nil state Enabled state
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_enabled(false)
@@ -515,8 +515,8 @@ end
 
 --- Set function for additional check for button click availability
 -- @tparam Button self
--- @tparam[opt] function check_function Should return true or false. If true - button can be pressed.
--- @tparam[opt] function failure_callback Function will be called on button click, if check function return false
+-- @tparam function|nil check_function Should return true or false. If true - button can be pressed.
+-- @tparam function|nil failure_callback Function will be called on button click, if check function return false
 -- @treturn Button Current button instance
 function Button.set_check_function(self, check_function, failure_callback)
 	self._check_function = check_function
@@ -531,7 +531,7 @@ end
 --
 -- If the game is not HTML, html mode will be not enabled
 -- @tparam Button self
--- @tparam[opt] boolean is_web_mode If true - button will be called inside html5 callback
+-- @tparam boolean|nil is_web_mode If true - button will be called inside html5 callback
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_web_user_interaction(true)

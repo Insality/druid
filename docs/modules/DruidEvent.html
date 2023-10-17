@@ -87,7 +87,7 @@
 	<td class="summary">Clear the all event handlers</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#initialize">initialize(self[, initial_callback])</a></td>
+	<td class="name" nowrap><a href="#initialize">initialize(self, initial_callback)</a></td>
 	<td class="summary">DruidEvent constructor</td>
 	</tr>
 	<tr>
@@ -95,7 +95,7 @@
 	<td class="summary">Return true, if event have at lease one handler</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#subscribe">subscribe(self, callback[, context])</a></td>
+	<td class="name" nowrap><a href="#subscribe">subscribe(self, callback, context)</a></td>
 	<td class="summary">Subscribe callback on event</td>
 	</tr>
 	<tr>
@@ -103,7 +103,7 @@
 	<td class="summary">Trigger the event and call all subscribed callbacks</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#unsubscribe">unsubscribe(self, callback[, context])</a></td>
+	<td class="name" nowrap><a href="#unsubscribe">unsubscribe(self, callback, context)</a></td>
 	<td class="summary">Unsubscribe callback on event</td>
 	</tr>
 </table>
@@ -142,7 +142,7 @@
 </dd>
     <dt>
     <a name = "initialize"></a>
-    <strong>initialize(self[, initial_callback])</strong>
+    <strong>initialize(self, initial_callback)</strong>
     </dt>
     <dd>
     DruidEvent constructor
@@ -155,9 +155,8 @@
          <a href="../modules/DruidEvent.html#">DruidEvent</a>
         </li>
         <li><span class="parameter">initial_callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Subscribe the callback on new event, if callback exist
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -205,7 +204,7 @@
 </dd>
     <dt>
     <a name = "subscribe"></a>
-    <strong>subscribe(self, callback[, context])</strong>
+    <strong>subscribe(self, callback, context)</strong>
     </dt>
     <dd>
     Subscribe callback on event
@@ -222,9 +221,8 @@
          Callback itself
         </li>
         <li><span class="parameter">context</span>
-            <span class="types"><span class="type">any</span></span>
+            <span class="types"><span class="type">any</span> or <span class="type">nil</span></span>
          Additional context as first param to callback call, usually it's self
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -276,7 +274,7 @@ event:trigger(<span class="string">"Param1"</span>, <span class="string">"Param2
 </dd>
     <dt>
     <a name = "unsubscribe"></a>
-    <strong>unsubscribe(self, callback[, context])</strong>
+    <strong>unsubscribe(self, callback, context)</strong>
     </dt>
     <dd>
     Unsubscribe callback on event
@@ -293,9 +291,8 @@ event:trigger(<span class="string">"Param1"</span>, <span class="string">"Param2
          Callback itself
         </li>
         <li><span class="parameter">context</span>
-            <span class="types"><span class="type">any</span></span>
+            <span class="types"><span class="type">any</span> or <span class="type">nil</span></span>
          Additional context as first param to callback call
-         (<em>optional</em>)
         </li>
     </ul>
 

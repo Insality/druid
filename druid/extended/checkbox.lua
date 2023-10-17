@@ -71,9 +71,9 @@ end
 
 --- Set checkbox state
 -- @tparam Checkbox self @{Checkbox}
--- @tparam boolean state Checkbox state
--- @tparam boolean is_silent Don't trigger on_change_state if true
--- @tparam boolean is_instant If instant checkbox change
+-- @tparam boolean|nil state Checkbox state
+-- @tparam boolean|nil is_silent Don't trigger on_change_state if true
+-- @tparam boolean|nil is_instant If instant checkbox change
 function Checkbox.set_state(self, state, is_silent, is_instant)
 	self.state = state
 	self.style.on_change_state(self, self.node, state, is_instant)

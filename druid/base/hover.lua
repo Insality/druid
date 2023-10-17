@@ -89,7 +89,7 @@ end
 
 --- Set hover state
 -- @tparam Hover self @{Hover}
--- @tparam boolean state The hover state
+-- @tparam boolean|nil state The hover state
 function Hover.set_hover(self, state)
 	if self._is_hovered ~= state then
 		self._is_hovered = state
@@ -108,7 +108,7 @@ end
 
 --- Set mouse hover state
 -- @tparam Hover self @{Hover}
--- @tparam boolean state The mouse hover state
+-- @tparam boolean|nil state The mouse hover state
 function Hover.set_mouse_hover(self, state)
 	if self._is_mouse_hovered ~= state then
 		self._is_mouse_hovered = state
@@ -138,7 +138,7 @@ end
 -- If hover is not enabled, it will not generate
 -- any hover events
 -- @tparam Hover self @{Hover}
--- @tparam boolean state The hover enabled state
+-- @tparam boolean|nil state The hover enabled state
 function Hover.set_enabled(self, state)
 	self._is_enabled = state
 

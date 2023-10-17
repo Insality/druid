@@ -93,7 +93,7 @@
 	<td class="summary">Return current input field text</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, click_node, text_node[, keyboard_type])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, click_node, text_node, keyboard_type)</a></td>
 	<td class="summary">The <a href="../modules/Input.html#">Input</a> constructor</td>
 	</tr>
 	<tr>
@@ -220,7 +220,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, click_node, text_node[, keyboard_type])</strong>
+    <strong>init(self, click_node, text_node, keyboard_type)</strong>
     </dt>
     <dd>
     The <a href="../modules/Input.html#">Input</a> constructor
@@ -241,9 +241,8 @@
          Text node what will be changed on user input. You can pass text component instead of text node name <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">keyboard_type</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Gui keyboard type for input field
-         (<em>optional</em>)
         </li>
     </ul>
 

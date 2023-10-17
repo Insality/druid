@@ -13,7 +13,7 @@
 -- @tparam node node
 
 --- Restriction zone
--- @tparam[opt] node click_zone
+-- @tparam node|nil click_zone
 
 --- Trigger on swipe event(self, swipe_side, dist, delta_time)
 -- @tfield DruidEvent on_swipe) @{DruidEvent}

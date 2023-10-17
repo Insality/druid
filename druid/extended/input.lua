@@ -119,7 +119,7 @@ end
 -- @tparam Input self @{Input}
 -- @tparam node click_node Node to enabled input component
 -- @tparam node|Text text_node Text node what will be changed on user input. You can pass text component instead of text node name @{Text}
--- @tparam[opt] number keyboard_type Gui keyboard type for input field
+-- @tparam number|nil keyboard_type Gui keyboard type for input field
 function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
 

@@ -102,7 +102,7 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#add">add(self, item[, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]]])</a></td>
+	<td class="name" nowrap><a href="#add">add(self, item, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</a></td>
 	<td class="summary">Add new item to the grid</td>
 	</tr>
 	<tr>
@@ -230,7 +230,7 @@
     <dl class="function">
     <dt>
     <a name = "add"></a>
-    <strong>add(self, item[, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]]])</strong>
+    <strong>add(self, item, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</strong>
     </dt>
     <dd>
     Add new item to the grid
@@ -247,9 +247,8 @@
          Gui node
         </li>
         <li><span class="parameter">index</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          The item position. By default add as last item
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">shift_policy</span>
             <span class="types"><span class="type">number</span></span>

@@ -60,7 +60,7 @@ end
 -- @tparam Slider self @{Slider}
 -- @tparam node node Gui pin node
 -- @tparam vector3 end_pos The end position of slider
--- @tparam[opt] function callback On slider change callback
+-- @tparam function|nil callback On slider change callback
 function Slider.init(self, node, end_pos, callback)
 	self.node = self:get_node(node)
 
@@ -174,7 +174,7 @@ end
 --- Set value for slider
 -- @tparam Slider self @{Slider}
 -- @tparam number value Value from 0 to 1
--- @tparam[opt] boolean is_silent Don't trigger event if true
+-- @tparam boolean|nil is_silent Don't trigger event if true
 function Slider.set(self, value, is_silent)
 	value = helper.clamp(value, 0, 1)
 	set_position(self, value)

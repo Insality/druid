@@ -48,8 +48,8 @@ end
 -- Nodes will be center around 0 x position
 -- text_node will be first (at left side)
 -- @function helper.centrate_text_with_icon
--- @tparam[opt] text text_node Gui text node
--- @tparam[opt] box icon_node Gui box node
+-- @tparam text|nil text_node Gui text node
+-- @tparam box|nil icon_node Gui box node
 -- @tparam number margin Offset between nodes
 -- @local
 function M.centrate_text_with_icon(text_node, icon_node, margin)
@@ -61,8 +61,8 @@ end
 -- Nodes will be center around 0 x position
 -- icon_node will be first (at left side)
 -- @function helper.centrate_icon_with_text
--- @tparam[opt] box icon_node Gui box node
--- @tparam[opt] text text_node Gui text node
+-- @tparam box|nil icon_node Gui box node
+-- @tparam text|nil text_node Gui text node
 -- @tparam[opt=0] number margin Offset between nodes
 -- @local
 function M.centrate_icon_with_text(icon_node, text_node, margin)
@@ -256,7 +256,7 @@ end
 --- Add all elements from source array to the target array
 -- @function helper.add_array
 -- @tparam any[] target Array to put elements from source
--- @tparam[opt] any[] source The source array to get elements from
+-- @tparam any[]|nil source The source array to get elements from
 -- @treturn any[] The target array
 function M.add_array(target, source)
 	assert(target)
@@ -278,7 +278,7 @@ end
 -- @tparam node node
 -- @tparam number x
 -- @tparam number y
--- @tparam[opt] Node node_click_area
+-- @tparam node|nil node_click_area
 -- @local
 function M.pick_node(node, x, y, node_click_area)
 	local is_pick = gui.pick_node(node, x, y)
@@ -302,7 +302,7 @@ end
 --- Get cumulative parent's node scale
 -- @function helper.get_scene_scale
 -- @tparam node node Gui node
--- @tparam boolean include_passed_node_scale True if add current node scale to result
+-- @tparam boolean|nil include_passed_node_scale True if add current node scale to result
 -- @treturn vector3 The scene node scale
 function M.get_scene_scale(node, include_passed_node_scale)
 	local scale = include_passed_node_scale and gui.get_scale(node) or vmath.vector3(1)
@@ -394,7 +394,7 @@ end
 --- Distance from node position to his borders
 -- @function helper.get_border
 -- @tparam node node GUI node
--- @tparam[opt] vector3 offset Offset from node position. Pass current node position to get non relative border values
+-- @tparam vector3|nil offset Offset from node position. Pass current node position to get non relative border values
 -- @treturn vector4 Vector4 with border values (left, top, right, down)
 function M.get_border(node, offset)
 	local pivot = gui.get_pivot(node)
@@ -452,8 +452,8 @@ end
 -- @function helper.insert_with_shift
 -- @tparam table array Array
 -- @param any Item to insert
--- @tparam[opt] number index Index to insert. If nil, item will be inserted at the end of array
--- @tparam[opt] number shift_policy The druid_const.SHIFT.* constant
+-- @tparam number|nil index Index to insert. If nil, item will be inserted at the end of array
+-- @tparam number|nil shift_policy The druid_const.SHIFT.* constant
 -- @treturn any Inserted item
 function M.insert_with_shift(array, item, index, shift_policy)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
@@ -483,8 +483,8 @@ end
 -- Shift policy can be: left, right, no_shift
 -- @function helper.remove_with_shift
 -- @tparam table array Array
--- @tparam[opt] number index Index to remove. If nil, item will be removed from the end of array
--- @tparam[opt] number shift_policy The druid_const.SHIFT.* constant
+-- @tparam number|nil index Index to remove. If nil, item will be removed from the end of array
+-- @tparam number|nil shift_policy The druid_const.SHIFT.* constant
 -- @treturn any Removed item
 function M.remove_with_shift(array, index, shift_policy)
 	shift_policy = shift_policy or const.SHIFT.RIGHT

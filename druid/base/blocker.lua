@@ -71,7 +71,7 @@ end
 --
 -- Don't change node enabled state itself.
 -- @tparam Blocker self @{Blocker}
--- @tparam boolean state Enabled state
+-- @tparam boolean|nil state Enabled state
 function Blocker.set_enabled(self, state)
 	self._is_enabled = state
 end

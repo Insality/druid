@@ -84,7 +84,7 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, seconds_from[, seconds_to=0[, callback]])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node, seconds_from[, seconds_to=0], callback)</a></td>
 	<td class="summary">The <a href="../modules/Timer.html#">Timer</a> constructor</td>
 	</tr>
 	<tr>
@@ -141,7 +141,7 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, seconds_from[, seconds_to=0[, callback]])</strong>
+    <strong>init(self, node, seconds_from[, seconds_to=0], callback)</strong>
     </dt>
     <dd>
     The <a href="../modules/Timer.html#">Timer</a> constructor
@@ -167,9 +167,8 @@
          (<em>default</em> 0)
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Function on timer end
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -222,7 +221,7 @@
          <a href="../modules/Timer.html#">Timer</a>
         </li>
         <li><span class="parameter">is_on</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Timer enable state
         </li>
     </ul>

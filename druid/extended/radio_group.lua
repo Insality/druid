@@ -55,7 +55,7 @@ end
 --- Set radio group state
 -- @tparam RadioGroup self @{RadioGroup}
 -- @tparam number index Index in radio group
--- @tparam boolean is_instant If is instant state change
+-- @tparam boolean|nil is_instant If is instant state change
 function RadioGroup.set_state(self, index, is_instant)
 	on_checkbox_click(self, index, is_instant)
 end

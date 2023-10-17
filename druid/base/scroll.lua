@@ -234,7 +234,7 @@ end
 --- Start scroll to target point.
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 point Target point
--- @tparam[opt] boolean is_instant Instant scroll flag
+-- @tparam boolean|nil is_instant Instant scroll flag
 -- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
 -- @usage scroll:scroll_to(vmath.vector3(0), true)
 function Scroll.scroll_to(self, point, is_instant)
@@ -268,7 +268,7 @@ end
 --- Scroll to item in scroll by point index.
 -- @tparam Scroll self @{Scroll}
 -- @tparam number index Point index
--- @tparam[opt] boolean skip_cb If true, skip the point callback
+-- @tparam boolean|nil skip_cb If true, skip the point callback
 function Scroll.scroll_to_index(self, index, skip_cb)
 	if not self.points then
 		return
@@ -291,7 +291,7 @@ end
 --- Start scroll to target scroll percent
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 percent target percent
--- @tparam[opt] boolean is_instant instant scroll flag
+-- @tparam boolean|nil is_instant instant scroll flag
 -- @usage scroll:scroll_to_percent(vmath.vector3(0.5, 0, 0))
 function Scroll.scroll_to_percent(self, percent, is_instant)
 	local border = self.available_pos
@@ -339,7 +339,7 @@ end
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
 -- @tparam Scroll self @{Scroll}
--- @tparam boolean state Inert scroll state
+-- @tparam boolean|nil state Inert scroll state
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_inert(self, state)
 	self._is_inert = state
@@ -397,7 +397,7 @@ end
 
 --- Lock or unlock horizontal scroll
 -- @tparam Scroll self @{Scroll}
--- @tparam boolean state True, if horizontal scroll is enabled
+-- @tparam boolean|nil state True, if horizontal scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_horizontal_scroll(self, state)
 	self._is_horizontal_scroll = state
@@ -408,7 +408,7 @@ end
 
 --- Lock or unlock vertical scroll
 -- @tparam Scroll self @{Scroll}
--- @tparam boolean state True, if vertical scroll is enabled
+-- @tparam boolean|nil state True, if vertical scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_vertical_scroll(self, state)
 	self._is_vertical_scroll = state

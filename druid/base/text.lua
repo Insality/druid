@@ -225,7 +225,7 @@ end
 --- The @{Text} constructor
 -- @tparam Text self @{Text}
 -- @tparam string|node node Node name or GUI Text Node itself
--- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
+-- @tparam string|nil value Initial text. Default value is node text from GUI scene.
 -- @tparam[opt=downscale] string adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 function Text.init(self, node, value, adjust_type)
 	self.node = self:get_node(node)
@@ -273,7 +273,7 @@ end
 
 --- Calculate text width with font with respect to trailing space
 -- @tparam Text self @{Text}
--- @tparam[opt] string text
+-- @tparam string|nil text
 -- @treturn number Width
 -- @treturn number Height
 function Text.get_text_size(self, text)
@@ -392,8 +392,8 @@ end
 
 --- Set text adjust, refresh the current text visuals, if needed
 -- @tparam Text self @{Text}
--- @tparam[opt] number adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
--- @tparam[opt] number minimal_scale If pass nil - not use minimal scale
+-- @tparam number|nil adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
+-- @tparam number|nil minimal_scale If pass nil - not use minimal scale
 -- @treturn Text Current text instance
 function Text.set_text_adjust(self, adjust_type, minimal_scale)
 	self.adjust_type = adjust_type

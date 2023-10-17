@@ -82,11 +82,11 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, end_pos[, callback])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node, end_pos, callback)</a></td>
 	<td class="summary">The <a href="../modules/Slider.html#">Slider</a> constructor</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set">set(self, value[, is_silent])</a></td>
+	<td class="name" nowrap><a href="#set">set(self, value, is_silent)</a></td>
 	<td class="summary">Set value for slider</td>
 	</tr>
 	<tr>
@@ -147,7 +147,7 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, end_pos[, callback])</strong>
+    <strong>init(self, node, end_pos, callback)</strong>
     </dt>
     <dd>
     The <a href="../modules/Slider.html#">Slider</a> constructor
@@ -168,9 +168,8 @@
          The end position of slider
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          On slider change callback
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -181,7 +180,7 @@
 </dd>
     <dt>
     <a name = "set"></a>
-    <strong>set(self, value[, is_silent])</strong>
+    <strong>set(self, value, is_silent)</strong>
     </dt>
     <dd>
     Set value for slider
@@ -198,9 +197,8 @@
          Value from 0 to 1
         </li>
         <li><span class="parameter">is_silent</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Don't trigger event if true
-         (<em>optional</em>)
         </li>
     </ul>
 

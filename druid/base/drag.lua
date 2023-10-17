@@ -313,7 +313,7 @@ end
 
 --- Set Drag input enabled or disabled
 -- @tparam Drag self @{Drag}
--- @tparam boolean is_enabled
+-- @tparam boolean|nil is_enabled
 function Drag.set_enabled(self, is_enabled)
 	self._is_enabled = is_enabled
 end

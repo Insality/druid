@@ -100,7 +100,7 @@ end
 -- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam number index The grid element index
 -- @tparam node node The node to be placed
--- @tparam[opt] number origin_index Index of nearby node
+-- @tparam number|nil origin_index Index of nearby node
 -- @treturn vector3 Node position
 function DynamicGrid.get_pos(self, index, node, origin_index)
 	local origin_node = self.nodes[origin_index]
@@ -140,7 +140,7 @@ end
 --- Add new node to the grid
 -- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam node node Gui node
--- @tparam[opt] number index The node position. By default add as last node
+-- @tparam number|nil index The node position. By default add as last node
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
 -- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 function DynamicGrid.add(self, node, index, shift_policy, is_instant)
@@ -322,7 +322,7 @@ end
 
 --- Update grid inner state
 -- @tparam DynamicGrid self @{DynamicGrid}
--- @tparam boolean is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function DynamicGrid._update(self, is_instant)
 	self:_update_indexes()
@@ -378,7 +378,7 @@ end
 
 --- Update grid nodes position
 -- @tparam DynamicGrid self @{DynamicGrid}
--- @tparam boolean is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function DynamicGrid._update_pos(self, is_instant)
 	for index, node in pairs(self.nodes) do

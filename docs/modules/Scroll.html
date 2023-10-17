@@ -128,15 +128,15 @@
 	<td class="summary">Check node if it visible now on scroll.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#scroll_to">scroll_to(self, point[, is_instant])</a></td>
+	<td class="name" nowrap><a href="#scroll_to">scroll_to(self, point, is_instant)</a></td>
 	<td class="summary">Start scroll to target point.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#scroll_to_index">scroll_to_index(self, index[, skip_cb])</a></td>
+	<td class="name" nowrap><a href="#scroll_to_index">scroll_to_index(self, index, skip_cb)</a></td>
 	<td class="summary">Scroll to item in scroll by point index.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#scroll_to_percent">scroll_to_percent(self, percent[, is_instant])</a></td>
+	<td class="name" nowrap><a href="#scroll_to_percent">scroll_to_percent(self, percent, is_instant)</a></td>
 	<td class="summary">Start scroll to target scroll percent</td>
 	</tr>
 	<tr>
@@ -415,7 +415,7 @@
 </dd>
     <dt>
     <a name = "scroll_to"></a>
-    <strong>scroll_to(self, point[, is_instant])</strong>
+    <strong>scroll_to(self, point, is_instant)</strong>
     </dt>
     <dd>
     Start scroll to target point.
@@ -432,9 +432,8 @@
          Target point
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Instant scroll flag
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -450,7 +449,7 @@
 </dd>
     <dt>
     <a name = "scroll_to_index"></a>
-    <strong>scroll_to_index(self, index[, skip_cb])</strong>
+    <strong>scroll_to_index(self, index, skip_cb)</strong>
     </dt>
     <dd>
     Scroll to item in scroll by point index.
@@ -467,9 +466,8 @@
          Point index
         </li>
         <li><span class="parameter">skip_cb</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          If true, skip the point callback
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -480,7 +478,7 @@
 </dd>
     <dt>
     <a name = "scroll_to_percent"></a>
-    <strong>scroll_to_percent(self, percent[, is_instant])</strong>
+    <strong>scroll_to_percent(self, percent, is_instant)</strong>
     </dt>
     <dd>
     Start scroll to target scroll percent
@@ -497,9 +495,8 @@
          target percent
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          instant scroll flag
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -586,7 +583,7 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          True, if horizontal scroll is enabled
         </li>
     </ul>
@@ -619,7 +616,7 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Inert scroll state
         </li>
     </ul>
@@ -718,7 +715,7 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          True, if vertical scroll is enabled
         </li>
     </ul>

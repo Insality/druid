@@ -15,7 +15,7 @@ local DruidEvent = class("druid.event")
 
 --- DruidEvent constructor
 -- @tparam DruidEvent self @{DruidEvent}
--- @tparam[opt] function initial_callback Subscribe the callback on new event, if callback exist
+-- @tparam function|nil initial_callback Subscribe the callback on new event, if callback exist
 -- @usage
 -- local Event = require("druid.event")
 -- ...
@@ -32,7 +32,7 @@ end
 --- Subscribe callback on event
 -- @tparam DruidEvent self @{DruidEvent}
 -- @tparam function callback Callback itself
--- @tparam[opt] any context Additional context as first param to callback call, usually it's self
+-- @tparam any|nil context Additional context as first param to callback call, usually it's self
 -- @usage
 -- local function on_long_callback(self)
 --     print("Long click!")
@@ -57,7 +57,7 @@ end
 --- Unsubscribe callback on event
 -- @tparam DruidEvent self @{DruidEvent}
 -- @tparam function callback Callback itself
--- @tparam[opt] any context Additional context as first param to callback call
+-- @tparam any|nil context Additional context as first param to callback call
 -- @usage
 -- local function on_long_callback(self)
 --     print("Long click!")

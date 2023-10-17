@@ -242,7 +242,7 @@ end
 -- Default value: 10
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam number value The new input priority value
--- @tparam boolean is_temporary If true, the reset input priority will return to previous value
+-- @tparam boolean|nil is_temporary If true, the reset input priority will return to previous value
 -- @treturn number The component input priority
 function BaseComponent.set_input_priority(self, value, is_temporary)
 	assert(value)
@@ -290,7 +290,7 @@ end
 --
 -- If input is disabled, the component will not receive input events
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam boolean state The component input state
+-- @tparam boolean|nil state The component input state
 -- @treturn BaseComponent BaseComponent itself
 function BaseComponent.set_input_enabled(self, state)
 	self._meta.input_enabled = state
@@ -376,7 +376,7 @@ end
 
 --- Set debug logs for component enabled or disabled
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam boolean is_debug
+-- @tparam boolean|nil is_debug
 -- @local
 function BaseComponent.set_debug(self, is_debug)
 	self._component.is_debug = is_debug

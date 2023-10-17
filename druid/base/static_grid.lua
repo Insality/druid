@@ -214,7 +214,7 @@ end
 --- Add new item to the grid
 -- @tparam StaticGrid self @{StaticGrid}
 -- @tparam node item Gui node
--- @tparam[opt] number index The item position. By default add as last item
+-- @tparam number|nil index The item position. By default add as last item
 -- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
 -- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 function StaticGrid.add(self, item, index, shift_policy, is_instant)
@@ -379,7 +379,7 @@ end
 
 --- Update grid inner state
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam boolean is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function StaticGrid._update(self, is_instant)
 	self:_update_indexes()
@@ -425,7 +425,7 @@ end
 
 --- Update grid nodes position
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam boolean is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function StaticGrid._update_pos(self, is_instant)
 	local zero_offset = self:_get_zero_offset()

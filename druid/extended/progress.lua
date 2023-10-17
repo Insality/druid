@@ -210,7 +210,7 @@ end
 --- Start animation of a progress bar
 -- @tparam Progress self @{Progress}
 -- @tparam number to value between 0..1
--- @tparam[opt] function callback Callback on animation ends
+-- @tparam function|nil callback Callback on animation ends
 function Progress.to(self, to, callback)
 	to = helper.clamp(to, 0, 1)
 	-- cause of float error

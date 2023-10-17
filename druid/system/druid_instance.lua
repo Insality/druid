@@ -518,7 +518,7 @@ end
 
 --- Set debug mode for current Druid instance. It's enable debug log messages
 -- @tparam DruidInstance self @{DruidInstance}
--- @tparam boolean is_debug
+-- @tparam boolean|nil is_debug
 -- @treturn self @{DruidInstance}
 -- @local
 function DruidInstance.set_debug(self, is_debug)
@@ -530,7 +530,7 @@ end
 --- Log message, if is_debug mode is enabled
 -- @tparam DruidInstance self @{DruidInstance}
 -- @tparam string message
--- @tparam[opt] table context
+-- @tparam table|nil context
 -- @local
 function DruidInstance.log_message(self, message, context)
 	if not self._is_debug then
@@ -558,10 +558,10 @@ end
 
 --- Create @{Button} component
 -- @tparam DruidInstance self
--- @tparam node node GUI node
+-- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @tparam function callback Button callback
--- @tparam[opt] table params Button callback params
--- @tparam[opt] node anim_node Button anim node (node, if not provided)
+-- @tparam table|nil params Button callback params
+-- @tparam node|nil anim_node Button anim node (node, if not provided)
 -- @treturn Button @{Button} component
 function DruidInstance.new_button(self, node, callback, params, anim_node)
 	return DruidInstance.new(self, button, node, callback, params, anim_node)
@@ -570,7 +570,7 @@ end
 
 --- Create @{Blocker} component
 -- @tparam DruidInstance self
--- @tparam node node Gui node
+-- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @treturn Blocker @{Blocker} component
 function DruidInstance.new_blocker(self, node)
 	return DruidInstance.new(self, blocker, node)
@@ -580,7 +580,7 @@ end
 --- Create @{BackHandler} component
 -- @tparam DruidInstance self
 -- @tparam function callback @The callback(self, custom_args) to call on back event
--- @tparam[opt] any params Callback argument
+-- @tparam any|nil params Callback argument
 -- @treturn BackHandler @{BackHandler} component
 function DruidInstance.new_back_handler(self, callback, params)
 	return DruidInstance.new(self, back_handler, callback, params)
@@ -589,7 +589,7 @@ end
 
 --- Create @{Hover} component
 -- @tparam DruidInstance self
--- @tparam node node Gui node
+-- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @tparam function on_hover_callback Hover callback
 -- @treturn Hover @{Hover} component
 function DruidInstance.new_hover(self, node, on_hover_callback)
@@ -599,9 +599,9 @@ end
 
 --- Create @{Text} component
 -- @tparam DruidInstance self
--- @tparam node node Gui text node
--- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
--- @tparam[opt] boolean no_adjust If true, text will be not auto-adjust size
+-- @tparam string|node node The node_id or gui.get_node(node_id)
+-- @tparam string|nil value Initial text. Default value is node text from GUI scene.
+-- @tparam boolean|nil no_adjust If true, text will be not auto-adjust size
 -- @treturn Text @{Text} component
 function DruidInstance.new_text(self, node, value, no_adjust)
 	return DruidInstance.new(self, text, node, value, no_adjust)
@@ -611,32 +611,32 @@ end
 --- Create @{StaticGrid} component
 -- Deprecated
 -- @tparam DruidInstance self
--- @tparam node parent The gui node parent, where items will be placed
+-- @tparam string|node parent_node The node_id or gui.get_node(node_id). Parent of all Grid items.
 -- @tparam node element Element prefab. Need to get it size
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
 -- @treturn StaticGrid @{StaticGrid} component
 -- @local
-function DruidInstance.new_grid(self, parent, element, in_row)
+function DruidInstance.new_grid(self, parent_node, element, in_row)
 	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
-	return DruidInstance.new(self, static_grid, parent, element, in_row)
+	return DruidInstance.new(self, static_grid, parent_node, element, in_row)
 end
 
 
 --- Create @{StaticGrid} component
 -- @tparam DruidInstance self
--- @tparam node parent The gui node parent, where items will be placed
+-- @tparam string|node parent_node The node_id or gui.get_node(node_id). Parent of all Grid items.
 -- @tparam node element Element prefab. Need to get it size
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
 -- @treturn StaticGrid @{StaticGrid} component
-function DruidInstance.new_static_grid(self, parent, element, in_row)
-	return DruidInstance.new(self, static_grid, parent, element, in_row)
+function DruidInstance.new_static_grid(self, parent_node, element, in_row)
+	return DruidInstance.new(self, static_grid, parent_node, element, in_row)
 end
 
 
 --- Create @{Scroll} component
 -- @tparam DruidInstance self
--- @tparam node view_node GUI view scroll node
--- @tparam node content_node GUI content scroll node
+-- @tparam string|node view_node The node_id or gui.get_node(node_id). Will used as user input node.
+-- @tparam string|node content_node The node_id or gui.get_node(node_id). Will used as scrollable node inside view_node.
 -- @treturn Scroll @{Scroll} component
 function DruidInstance.new_scroll(self, view_node, content_node)
 	return DruidInstance.new(self, scroll, view_node, content_node)
@@ -645,7 +645,7 @@ end
 
 --- Create @{Drag} component
 -- @tparam DruidInstance self
--- @tparam node node GUI node to detect dragging
+-- @tparam string|node node The node_id or gui.get_node(node_id). Will used as user input node.
 -- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
 -- @treturn Drag @{Drag} component
 function DruidInstance.new_drag(self, node, on_drag_callback)
@@ -655,7 +655,7 @@ end
 
 --- Create @{Swipe} component
 -- @tparam DruidInstance self
--- @tparam node node Gui node
+-- @tparam string|node node The node_id or gui.get_node(node_id). Will used as user input node.
 -- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
 -- @treturn Swipe @{Swipe} component
 function DruidInstance.new_swipe(self, node, on_swipe_callback)
@@ -665,38 +665,38 @@ end
 
 --- Create @{DynamicGrid} component
 -- @tparam DruidInstance self
--- @tparam node parent The gui node parent, where items will be placed
+-- @tparam string|node parent_node The node_id or gui.get_node(node_id). Parent of all Grid items.
 -- @treturn DynamicGrid @{DynamicGrid} component
-function DruidInstance.new_dynamic_grid(self, parent)
+function DruidInstance.new_dynamic_grid(self, parent_node)
 	return helper.require_component_message("dynamic_grid")
 end
 
 
 --- Create @{LangText} component
 -- @tparam DruidInstance self
--- @tparam node node The text node
--- @tparam string locale_id Default locale id
--- @tparam boolean no_adjust If true, will not correct text size
+-- @tparam string|node node The_node id or gui.get_node(node_id)
+-- @tparam string|nil locale_id Default locale id or text from node as default
+-- @tparam string|nil adjust_type Adjust type for text node. Default: const.TEXT_ADJUST.DOWNSCALE
 -- @treturn LangText @{LangText} component
-function DruidInstance.new_lang_text(self, node, locale_id, no_adjust)
+function DruidInstance.new_lang_text(self, node, locale_id, adjust_type)
 	return helper.require_component_message("lang_text")
 end
 
 
 --- Create @{Slider} component
 -- @tparam DruidInstance self
--- @tparam node node Gui pin node
+-- @tparam string|node pin_node The_node id or gui.get_node(node_id).
 -- @tparam vector3 end_pos The end position of slider
--- @tparam[opt] function callback On slider change callback
+-- @tparam function|nil callback On slider change callback
 -- @treturn Slider @{Slider} component
-function DruidInstance.new_slider(self, node, end_pos, callback)
+function DruidInstance.new_slider(self, pin_node, end_pos, callback)
 	return helper.require_component_message("slider")
 end
 
 
 --- Create @{Checkbox} component
 -- @tparam DruidInstance self
--- @tparam node node Gui node
+-- @tparam string|node node The_node id or gui.get_node(node_id).
 -- @tparam function callback Checkbox callback
 -- @tparam[opt=node] node click_node Trigger node, by default equals to node
 -- @tparam[opt=false] boolean initial_state The initial state of checkbox, default - false
@@ -708,9 +708,9 @@ end
 
 --- Create @{Input} component
 -- @tparam DruidInstance self
--- @tparam node click_node Button node to enabled input component
--- @tparam node text_node Text node what will be changed on user input
--- @tparam[opt] number keyboard_type Gui keyboard type for input field
+-- @tparam string|node click_node Button node to enabled input component
+-- @tparam string|node text_node Text node what will be changed on user input
+-- @tparam number|nil keyboard_type Gui keyboard type for input field
 -- @treturn Input @{Input} component
 function DruidInstance.new_input(self, click_node, text_node, keyboard_type)
 	return helper.require_component_message("input")
@@ -752,10 +752,10 @@ end
 
 --- Create @{Timer} component
 -- @tparam DruidInstance self
--- @tparam node node Gui text node
+-- @tparam string|node node Gui text node
 -- @tparam number seconds_from Start timer value in seconds
 -- @tparam[opt=0] number seconds_to End timer value in seconds
--- @tparam[opt] function callback Function on timer end
+-- @tparam function|nil callback Function on timer end
 -- @treturn Timer @{Timer} component
 function DruidInstance.new_timer(self, node, seconds_from, seconds_to, callback)
 	return helper.require_component_message("timer")
@@ -775,7 +775,7 @@ end
 
 --- Create @{Layout} component
 -- @tparam DruidInstance self
--- @tparam string|node node Layout node
+-- @tparam string|node node The_node id or gui.get_node(node_id).
 -- @tparam string mode The layout mode
 -- @treturn Layout @{Layout} component
 function DruidInstance.new_layout(self, node, mode)
@@ -787,7 +787,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam string|string[] keys_array Keys for trigger action. Should contains one action key and any amount of modificator keys
 -- @tparam function callback The callback function
--- @tparam[opt] any callback_argument The argument to pass into the callback function
+-- @tparam any|nil callback_argument The argument to pass into the callback function
 -- @treturn Hotkey @{Hotkey} component
 function DruidInstance.new_hotkey(self, keys_array, callback, callback_argument)
 	return helper.require_component_message("hotkey")
@@ -797,8 +797,8 @@ end
 --- Create @{RichText} component.
 -- As a template please check rich_text.gui layout.
 -- @tparam DruidInstance self
--- @tparam[opt] string template Template name if used
--- @tparam[opt] table nodes Nodes table from gui.clone_tree
+-- @tparam string|nil template Template name if used
+-- @tparam table|nil nodes Nodes table from gui.clone_tree
 -- @treturn RichText @{RichText} component
 function DruidInstance.new_rich_text(self, template, nodes)
 	return helper.require_component_message("rich_text", "custom")

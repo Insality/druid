@@ -105,11 +105,11 @@
 	<td class="summary">Return current text adjust type</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_text_size">get_text_size(self[, text])</a></td>
+	<td class="name" nowrap><a href="#get_text_size">get_text_size(self, text)</a></td>
 	<td class="summary">Calculate text width with font with respect to trailing space</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node[, value[, adjust_type=downscale]])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node, value[, adjust_type=downscale])</a></td>
 	<td class="summary">The <a href="../modules/Text.html#">Text</a> constructor</td>
 	</tr>
 	<tr>
@@ -137,7 +137,7 @@
 	<td class="summary">Set scale</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_text_adjust">set_text_adjust(self[, adjust_type[, minimal_scale]])</a></td>
+	<td class="name" nowrap><a href="#set_text_adjust">set_text_adjust(self, adjust_type, minimal_scale)</a></td>
 	<td class="summary">Set text adjust, refresh the current text visuals, if needed</td>
 	</tr>
 	<tr>
@@ -242,7 +242,7 @@
 </dd>
     <dt>
     <a name = "get_text_size"></a>
-    <strong>get_text_size(self[, text])</strong>
+    <strong>get_text_size(self, text)</strong>
     </dt>
     <dd>
     Calculate text width with font with respect to trailing space
@@ -255,9 +255,8 @@
          <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">text</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
 
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -277,7 +276,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node[, value[, adjust_type=downscale]])</strong>
+    <strong>init(self, node, value[, adjust_type=downscale])</strong>
     </dt>
     <dd>
     The <a href="../modules/Text.html#">Text</a> constructor
@@ -294,9 +293,8 @@
          Node name or GUI Text Node itself
         </li>
         <li><span class="parameter">value</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Initial text. Default value is node text from GUI scene.
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">adjust_type</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
@@ -494,7 +492,7 @@
 </dd>
     <dt>
     <a name = "set_text_adjust"></a>
-    <strong>set_text_adjust(self[, adjust_type[, minimal_scale]])</strong>
+    <strong>set_text_adjust(self, adjust_type, minimal_scale)</strong>
     </dt>
     <dd>
     Set text adjust, refresh the current text visuals, if needed
@@ -507,14 +505,12 @@
          <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">adjust_type</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          See const.TEXT_ADJUST. If pass nil - use current adjust type
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">minimal_scale</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          If pass nil - not use minimal scale
-         (<em>optional</em>)
         </li>
     </ul>
 

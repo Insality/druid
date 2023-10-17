@@ -86,7 +86,7 @@
 	<td class="summary">Return side vector to correct node shifting</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#add">add(self, node[, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]]])</a></td>
+	<td class="name" nowrap><a href="#add">add(self, node, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</a></td>
 	<td class="summary">Add new node to the grid</td>
 	</tr>
 	<tr>
@@ -110,7 +110,7 @@
 	<td class="summary">Return DynamicGrid offset, where DynamicGrid content starts.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_pos">get_pos(self, index, node[, origin_index])</a></td>
+	<td class="name" nowrap><a href="#get_pos">get_pos(self, index, node, origin_index)</a></td>
 	<td class="summary">Return pos for grid node index</td>
 	</tr>
 	<tr>
@@ -213,7 +213,7 @@
 </dd>
     <dt>
     <a name = "add"></a>
-    <strong>add(self, node[, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]]])</strong>
+    <strong>add(self, node, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</strong>
     </dt>
     <dd>
     Add new node to the grid
@@ -230,9 +230,8 @@
          Gui node
         </li>
         <li><span class="parameter">index</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          The node position. By default add as last node
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">shift_policy</span>
             <span class="types"><span class="type">number</span></span>
@@ -393,7 +392,7 @@
 </dd>
     <dt>
     <a name = "get_pos"></a>
-    <strong>get_pos(self, index, node[, origin_index])</strong>
+    <strong>get_pos(self, index, node, origin_index)</strong>
     </dt>
     <dd>
     Return pos for grid node index
@@ -414,9 +413,8 @@
          The node to be placed
         </li>
         <li><span class="parameter">origin_index</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Index of nearby node
-         (<em>optional</em>)
         </li>
     </ul>
 

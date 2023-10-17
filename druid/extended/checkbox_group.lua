@@ -46,7 +46,7 @@ end
 --- Set checkbox group state
 -- @tparam CheckboxGroup self @{CheckboxGroup}
 -- @tparam boolean[] indexes Array of checkbox state
--- @tparam boolean is_instant If instant state change
+-- @tparam boolean|nil is_instant If instant state change
 function CheckboxGroup.set_state(self, indexes, is_instant)
 	for i = 1, #indexes do
 		if self.checkboxes[i] then
