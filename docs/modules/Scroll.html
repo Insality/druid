@@ -117,7 +117,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, view_node, content_node)</a></td>
-	<td class="summary"><a href="../modules/Scroll.html#">Scroll</a> constructor</td>
+	<td class="summary">The <a href="../modules/Scroll.html#">Scroll</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_inert">is_inert(self)</a></td>
@@ -200,10 +200,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#is_animate">is_animate</a></td>
 	<td class="summary">Flag, if scroll now animating by gui.animate</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#is_inert">is_inert</a></td>
-	<td class="summary">Flag, if scroll now moving by inertion</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_point_scroll">on_point_scroll</a></td>
@@ -334,7 +330,7 @@
     <strong>init(self, view_node, content_node)</strong>
     </dt>
     <dd>
-    <a href="../modules/Scroll.html#">Scroll</a> constructor
+    The <a href="../modules/Scroll.html#">Scroll</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -377,8 +373,8 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
-        If scroll have inertion
+           <span class="types"><span class="type">boolean</span></span>
+        @If scroll have inertion
     </ol>
 
 
@@ -436,7 +432,7 @@
          Target point
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          Instant scroll flag
          (<em>optional</em>)
         </li>
@@ -471,7 +467,7 @@
          Point index
         </li>
         <li><span class="parameter">skip_cb</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          If true, skip the point callback
          (<em>optional</em>)
         </li>
@@ -501,7 +497,7 @@
          target percent
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          instant scroll flag
          (<em>optional</em>)
         </li>
@@ -590,7 +586,7 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          True, if horizontal scroll is enabled
         </li>
     </ul>
@@ -623,7 +619,7 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          Inert scroll state
         </li>
     </ul>
@@ -722,7 +718,7 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          True, if vertical scroll is enabled
         </li>
     </ul>
@@ -795,22 +791,22 @@
          (<em>default</em> 0)
         </li>
         <li><span class="parameter">SMALL_CONTENT_SCROLL</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          If true, content node with size less than view node size can be scrolled
          (<em>default</em> false)
         </li>
         <li><span class="parameter">WHEEL_SCROLL_SPEED</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
          (<em>default</em> 0)
         </li>
         <li><span class="parameter">WHEEL_SCROLL_INVERTED</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          If true, invert direction for touchpad and mouse wheel scroll
          (<em>default</em> false)
         </li>
         <li><span class="parameter">WHEEL_SCROLL_BY_INERTION</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          If true, wheel will add inertion to scroll. Direct set position otherwise.
          (<em>default</em> false)
         </li>
@@ -935,27 +931,7 @@
 
     <ul>
         <li><span class="parameter">is_animate</span>
-            <span class="types"><span class="type">bool</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "is_inert"></a>
-    <strong>is_inert</strong>
-    </dt>
-    <dd>
-    Flag, if scroll now moving by inertion
-
-
-    <ul>
-        <li><span class="parameter">is_inert</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
 
         </li>
     </ul>

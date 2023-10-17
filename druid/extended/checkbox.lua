@@ -46,7 +46,7 @@ function Checkbox.on_style_change(self, style)
 end
 
 
---- Component init function
+--- The @{Checkbox} constructor
 -- @tparam Checkbox self @{Checkbox}
 -- @tparam node node Gui node
 -- @tparam function callback Checkbox callback
@@ -71,9 +71,9 @@ end
 
 --- Set checkbox state
 -- @tparam Checkbox self @{Checkbox}
--- @tparam bool state Checkbox state
--- @tparam bool is_silent Don't trigger on_change_state if true
--- @tparam bool is_instant If instant checkbox change
+-- @tparam boolean state Checkbox state
+-- @tparam boolean is_silent Don't trigger on_change_state if true
+-- @tparam boolean is_instant If instant checkbox change
 function Checkbox.set_state(self, state, is_silent, is_instant)
 	self.state = state
 	self.style.on_change_state(self, self.node, state, is_instant)
@@ -88,7 +88,7 @@ end
 
 --- Return checkbox state
 -- @tparam Checkbox self @{Checkbox}
--- @treturn bool Checkbox state
+-- @treturn boolean Checkbox state
 function Checkbox.get_state(self)
 	return self.state
 end

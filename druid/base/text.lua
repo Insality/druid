@@ -222,7 +222,7 @@ function Text.on_style_change(self, style)
 end
 
 
---- @{Text} constructor
+--- The @{Text} constructor
 -- @tparam Text self @{Text}
 -- @tparam string|node node Node name or GUI Text Node itself
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
@@ -358,7 +358,7 @@ end
 
 --- Set text pivot. Text will re-anchor inside text area
 -- @tparam Text self @{Text}
--- @tparam gui.pivot pivot Gui pivot constant
+-- @tparam number pivot The gui.PIVOT_* constant
 -- @treturn Text Current text instance
 function Text.set_pivot(self, pivot)
 	local prev_pivot = gui.get_pivot(self.node)
@@ -384,7 +384,7 @@ end
 
 --- Return true, if text with line break
 -- @tparam Text self @{Text}
--- @treturn bool Is text node with line break
+-- @treturn boolean Is text node with line break
 function Text.is_multiline(self)
 	return gui.get_line_break(self.node)
 end

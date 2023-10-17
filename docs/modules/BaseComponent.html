@@ -98,67 +98,67 @@ return AwesomeComponent
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#component:get_childrens">component:get_childrens(self)</a></td>
+	<td class="name" nowrap><a href="#get_childrens">get_childrens(self)</a></td>
 	<td class="summary">Return all children components, recursive</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:get_context">component:get_context(self)</a></td>
+	<td class="name" nowrap><a href="#get_context">get_context(self)</a></td>
 	<td class="summary">Context used as first arg in all Druid events</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:get_druid">component:get_druid(self)</a></td>
+	<td class="name" nowrap><a href="#get_druid">get_druid(self)</a></td>
 	<td class="summary">Get Druid instance for inner component creation.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:get_input_priority">component:get_input_priority(self)</a></td>
+	<td class="name" nowrap><a href="#get_input_priority">get_input_priority(self)</a></td>
 	<td class="summary">Return component input priority</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:get_name">component:get_name(self)</a></td>
+	<td class="name" nowrap><a href="#get_name">get_name(self)</a></td>
 	<td class="summary">Return component name</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:get_node">component:get_node(self, node_or_name)</a></td>
+	<td class="name" nowrap><a href="#get_node">get_node(self, node_or_name)</a></td>
 	<td class="summary">Get component node by name.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:get_parent_component">component:get_parent_component(self)</a></td>
+	<td class="name" nowrap><a href="#get_parent_component">get_parent_component(self)</a></td>
 	<td class="summary">Return the parent component if exist</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:get_parent_name">component:get_parent_name(self)</a></td>
+	<td class="name" nowrap><a href="#get_parent_name">get_parent_name(self)</a></td>
 	<td class="summary">Return parent component name</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:get_template">component:get_template(self)</a></td>
+	<td class="name" nowrap><a href="#get_template">get_template(self)</a></td>
 	<td class="summary">Get current component template name.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:get_uid">component:get_uid(self)</a></td>
+	<td class="name" nowrap><a href="#get_uid">get_uid(self)</a></td>
 	<td class="summary">Return component UID.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:reset_input_priority">component:reset_input_priority(self)</a></td>
+	<td class="name" nowrap><a href="#reset_input_priority">reset_input_priority(self)</a></td>
 	<td class="summary">Reset component input priority to default value</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:set_input_enabled">component:set_input_enabled(self, state)</a></td>
+	<td class="name" nowrap><a href="#set_input_enabled">set_input_enabled(self, state)</a></td>
 	<td class="summary">Set component input state.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:set_input_priority">component:set_input_priority(self, value, is_temporary)</a></td>
+	<td class="name" nowrap><a href="#set_input_priority">set_input_priority(self, value, is_temporary)</a></td>
 	<td class="summary">Set component input priority</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:set_nodes">component:set_nodes(self, nodes)</a></td>
+	<td class="name" nowrap><a href="#set_nodes">set_nodes(self, nodes)</a></td>
 	<td class="summary">Set current component nodes.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:set_style">component:set_style(self, druid_style)</a></td>
+	<td class="name" nowrap><a href="#set_style">set_style(self, druid_style)</a></td>
 	<td class="summary">Set current component style table.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#component:set_template">component:set_template(self, template)</a></td>
+	<td class="name" nowrap><a href="#set_template">set_template(self, template)</a></td>
 	<td class="summary">Set component template name.</td>
 	</tr>
 </table>
@@ -171,8 +171,8 @@ return AwesomeComponent
 
     <dl class="function">
     <dt>
-    <a name = "component:get_childrens"></a>
-    <strong>component:get_childrens(self)</strong>
+    <a name = "get_childrens"></a>
+    <strong>get_childrens(self)</strong>
     </dt>
     <dd>
     Return all children components, recursive
@@ -198,8 +198,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:get_context"></a>
-    <strong>component:get_context(self)</strong>
+    <a name = "get_context"></a>
+    <strong>get_context(self)</strong>
     </dt>
     <dd>
     Context used as first arg in all Druid events  Context is usually self of gui_script.
@@ -225,8 +225,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:get_druid"></a>
-    <strong>component:get_druid(self)</strong>
+    <a name = "get_druid"></a>
+    <strong>get_druid(self)</strong>
     </dt>
     <dd>
     Get Druid instance for inner component creation.
@@ -243,7 +243,7 @@ return AwesomeComponent
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Druid</span></span>
+           <span class="types"><span class="type">DruidInstance</span></span>
         Druid instance with component context
     </ol>
 
@@ -252,8 +252,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:get_input_priority"></a>
-    <strong>component:get_input_priority(self)</strong>
+    <a name = "get_input_priority"></a>
+    <strong>get_input_priority(self)</strong>
     </dt>
     <dd>
     Return component input priority
@@ -279,8 +279,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:get_name"></a>
-    <strong>component:get_name(self)</strong>
+    <a name = "get_name"></a>
+    <strong>get_name(self)</strong>
     </dt>
     <dd>
     Return component name
@@ -306,8 +306,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:get_node"></a>
-    <strong>component:get_node(self, node_or_name)</strong>
+    <a name = "get_node"></a>
+    <strong>get_node(self, node_or_name)</strong>
     </dt>
     <dd>
     Get component node by name.
@@ -341,8 +341,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:get_parent_component"></a>
-    <strong>component:get_parent_component(self)</strong>
+    <a name = "get_parent_component"></a>
+    <strong>get_parent_component(self)</strong>
     </dt>
     <dd>
     Return the parent component if exist
@@ -368,8 +368,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:get_parent_name"></a>
-    <strong>component:get_parent_name(self)</strong>
+    <a name = "get_parent_name"></a>
+    <strong>get_parent_name(self)</strong>
     </dt>
     <dd>
     Return parent component name
@@ -395,8 +395,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:get_template"></a>
-    <strong>component:get_template(self)</strong>
+    <a name = "get_template"></a>
+    <strong>get_template(self)</strong>
     </dt>
     <dd>
     Get current component template name.
@@ -422,8 +422,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:get_uid"></a>
-    <strong>component:get_uid(self)</strong>
+    <a name = "get_uid"></a>
+    <strong>get_uid(self)</strong>
     </dt>
     <dd>
     Return component UID.
@@ -450,8 +450,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:reset_input_priority"></a>
-    <strong>component:reset_input_priority(self)</strong>
+    <a name = "reset_input_priority"></a>
+    <strong>reset_input_priority(self)</strong>
     </dt>
     <dd>
     Reset component input priority to default value
@@ -477,8 +477,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:set_input_enabled"></a>
-    <strong>component:set_input_enabled(self, state)</strong>
+    <a name = "set_input_enabled"></a>
+    <strong>set_input_enabled(self, state)</strong>
     </dt>
     <dd>
     Set component input state.  By default it enabled
@@ -492,7 +492,7 @@ return AwesomeComponent
          <a href="../modules/BaseComponent.html#">BaseComponent</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          The component input state
         </li>
     </ul>
@@ -509,8 +509,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:set_input_priority"></a>
-    <strong>component:set_input_priority(self, value, is_temporary)</strong>
+    <a name = "set_input_priority"></a>
+    <strong>set_input_priority(self, value, is_temporary)</strong>
     </dt>
     <dd>
     Set component input priority  Default value: 10
@@ -544,8 +544,8 @@ return AwesomeComponent
 
 </dd>
     <dt>
-    <a name = "component:set_nodes"></a>
-    <strong>component:set_nodes(self, nodes)</strong>
+    <a name = "set_nodes"></a>
+    <strong>set_nodes(self, nodes)</strong>
     </dt>
     <dd>
     Set current component nodes.
@@ -582,8 +582,8 @@ self:set_nodes(nodes)</pre>
 
 </dd>
     <dt>
-    <a name = "component:set_style"></a>
-    <strong>component:set_style(self, druid_style)</strong>
+    <a name = "set_style"></a>
+    <strong>set_style(self, druid_style)</strong>
     </dt>
     <dd>
     Set current component style table.
@@ -615,8 +615,8 @@ self:set_nodes(nodes)</pre>
 
 </dd>
     <dt>
-    <a name = "component:set_template"></a>
-    <strong>component:set_template(self, template)</strong>
+    <a name = "set_template"></a>
+    <strong>set_template(self, template)</strong>
     </dt>
     <dd>
     Set component template name.

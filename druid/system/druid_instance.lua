@@ -259,8 +259,8 @@ end
 
 --- Create new component.
 -- @tparam DruidInstance self
--- @tparam Component component Component module
--- @tparam args ... Other component params to pass it to component:init function
+-- @tparam BaseComponent component Component module
+-- @tparam any ... Other component params to pass it to component:init function
 function DruidInstance.new(self, component, ...)
 	local instance = create(self, component)
 
@@ -296,7 +296,7 @@ end
 --
 -- Component `on_remove` function will be invoked, if exist.
 -- @tparam DruidInstance self
--- @tparam Component component Component instance
+-- @tparam BaseComponent component Component instance
 function DruidInstance.remove(self, component)
 	if self._is_late_remove_enabled then
 		table.insert(self._late_remove, component)
@@ -380,7 +380,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam hash action_id Action_id from on_input
 -- @tparam table action Action from on_input
--- @treturn bool The boolean value is input was consumed
+-- @treturn boolean The boolean value is input was consumed
 function DruidInstance.on_input(self, action_id, action)
 	self._is_late_remove_enabled = true
 
@@ -477,7 +477,7 @@ end
 -- If whitelist is not empty and component not contains in this list,
 -- component will be not processed on input step
 -- @tparam DruidInstance self
--- @tparam[opt=nil] table|Component whitelist_components The array of component to whitelist
+-- @tparam[opt=nil] table|BaseComponent whitelist_components The array of component to whitelist
 -- @treturn self @{DruidInstance}
 function DruidInstance.set_whitelist(self, whitelist_components)
 	if whitelist_components and whitelist_components.isInstanceOf then
@@ -499,7 +499,7 @@ end
 -- If blacklist is not empty and component contains in this list,
 -- component will be not processed on input step
 -- @tparam DruidInstance self @{DruidInstance}
--- @tparam[opt=nil] table|Component blacklist_components The array of component to blacklist
+-- @tparam[opt=nil] table|BaseComponent blacklist_components The array of component to blacklist
 -- @treturn self @{DruidInstance}
 function DruidInstance.set_blacklist(self, blacklist_components)
 	if blacklist_components and blacklist_components.isInstanceOf then
@@ -518,7 +518,7 @@ end
 
 --- Set debug mode for current Druid instance. It's enable debug log messages
 -- @tparam DruidInstance self @{DruidInstance}
--- @tparam bool is_debug
+-- @tparam boolean is_debug
 -- @treturn self @{DruidInstance}
 -- @local
 function DruidInstance.set_debug(self, is_debug)
@@ -579,7 +579,7 @@ end
 
 --- Create @{BackHandler} component
 -- @tparam DruidInstance self
--- @tparam callback callback On back button
+-- @tparam function callback @The callback(self, custom_args) to call on back event
 -- @tparam[opt] any params Callback argument
 -- @treturn BackHandler @{BackHandler} component
 function DruidInstance.new_back_handler(self, callback, params)
@@ -601,7 +601,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam node node Gui text node
 -- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
--- @tparam[opt] bool no_adjust If true, text will be not auto-adjust size
+-- @tparam[opt] boolean no_adjust If true, text will be not auto-adjust size
 -- @treturn Text @{Text} component
 function DruidInstance.new_text(self, node, value, no_adjust)
 	return DruidInstance.new(self, text, node, value, no_adjust)
@@ -676,7 +676,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam node node The text node
 -- @tparam string locale_id Default locale id
--- @tparam bool no_adjust If true, will not correct text size
+-- @tparam boolean no_adjust If true, will not correct text size
 -- @treturn LangText @{LangText} component
 function DruidInstance.new_lang_text(self, node, locale_id, no_adjust)
 	return helper.require_component_message("lang_text")
@@ -731,7 +731,7 @@ end
 --- Create @{DataList} component
 -- @tparam DruidInstance self
 -- @tparam Scroll druid_scroll The Scroll instance for Data List component
--- @tparam Grid druid_grid The Grid instance for Data List component
+-- @tparam StaticGrid|DynamicGrid druid_grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 -- @treturn DataList @{DataList} component
 function DruidInstance.new_data_list(self, druid_scroll, druid_grid, create_function)
@@ -786,10 +786,10 @@ end
 --- Create @{Hotkey} component
 -- @tparam DruidInstance self
 -- @tparam string|string[] keys_array Keys for trigger action. Should contains one action key and any amount of modificator keys
--- @tparam function callback Button callback
--- @tparam[opt] value params Button callback params
+-- @tparam function callback The callback function
+-- @tparam[opt] any callback_argument The argument to pass into the callback function
 -- @treturn Hotkey @{Hotkey} component
-function DruidInstance.new_hotkey(self, keys_array, callback, params)
+function DruidInstance.new_hotkey(self, keys_array, callback, callback_argument)
 	return helper.require_component_message("hotkey")
 end
 

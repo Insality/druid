@@ -110,7 +110,7 @@ function Progress.on_style_change(self, style)
 end
 
 
---- @{Progress} constructor
+--- The @{Progress} constructor
 -- @tparam Progress self @{Progress}
 -- @tparam string|node node Node name or GUI Node itself.
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y

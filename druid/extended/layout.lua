@@ -28,7 +28,7 @@ local Event = require("druid.event")
 local Layout = component.create("layout")
 
 
---- Component init function
+--- The @{Layout} constructor
 -- @tparam Layout self @{Layout}
 -- @tparam node node Gui node
 -- @tparam string mode The layout mode (from const.LAYOUT_MODE)
@@ -194,7 +194,7 @@ end
 
 --- Set node for layout node to fit inside it. Pass nil to reset
 -- @tparam Layout self @{Layout}
--- @tparam[opt] Node node
+-- @tparam[opt] node node
 -- @treturn Layout @{Layout}
 function Layout.fit_into_node(self, node)
 	self._fit_node = node

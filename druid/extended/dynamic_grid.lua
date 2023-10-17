@@ -65,7 +65,7 @@ local AVAILABLE_PIVOTS = {
 }
 
 
---- Component init function
+--- The @{DynamicGrid} constructor
 -- @tparam DynamicGrid self @{DynamicGrid}
 -- @tparam node parent The gui node parent, where items will be placed
 function DynamicGrid.init(self, parent)
@@ -322,7 +322,7 @@ end
 
 --- Update grid inner state
 -- @tparam DynamicGrid self @{DynamicGrid}
--- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @tparam boolean is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function DynamicGrid._update(self, is_instant)
 	self:_update_indexes()
@@ -378,7 +378,7 @@ end
 
 --- Update grid nodes position
 -- @tparam DynamicGrid self @{DynamicGrid}
--- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @tparam boolean is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function DynamicGrid._update_pos(self, is_instant)
 	for index, node in pairs(self.nodes) do

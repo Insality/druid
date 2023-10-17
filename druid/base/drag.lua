@@ -26,16 +26,16 @@
 -- @tfield DruidEvent on_drag_end @{DruidEvent}
 
 --- Is component now touching
--- @tfield bool is_touch
+-- @tfield boolean is_touch
 
 --- Is component now dragging
--- @tfield bool is_drag
+-- @tfield boolean is_drag
 
 --- Is drag component process vertical dragging. Default - true
--- @tfield bool can_x
+-- @tfield boolean can_x
 
 --- Is drag component process horizontal. Default - true
--- @tfield bool can_y
+-- @tfield boolean can_y
 
 --- Current touch x position
 -- @tfield number x
@@ -170,7 +170,7 @@ function Drag.on_style_change(self, style)
 end
 
 
---- Drag component constructor
+--- The @{Drag} constructor
 -- @tparam Drag self @{Drag}
 -- @tparam node node GUI node to detect dragging
 -- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
@@ -313,7 +313,7 @@ end
 
 --- Set Drag input enabled or disabled
 -- @tparam Drag self @{Drag}
--- @tparam bool is_enabled
+-- @tparam boolean is_enabled
 function Drag.set_enabled(self, is_enabled)
 	self._is_enabled = is_enabled
 end
@@ -321,7 +321,7 @@ end
 
 --- Check if Drag component is enabled
 -- @tparam Drag self @{Drag}
--- @treturn bool
+-- @treturn boolean
 function Drag.is_enabled(self)
 	return self._is_enabled
 end

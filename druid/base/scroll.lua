@@ -53,9 +53,6 @@
 --- Scroll content node
 -- @tfield node content_node
 
---- Flag, if scroll now moving by inertion
--- @tfield bool is_inert
-
 --- Current inert speed
 -- @tfield vector3 inertion
 
@@ -78,7 +75,7 @@
 -- @tfield[opt] number selected
 
 --- Flag, if scroll now animating by gui.animate
--- @tfield bool is_animate
+-- @tfield boolean is_animate
 
 ---
 
@@ -131,10 +128,10 @@ end
 -- @tfield[opt=0.35] number BACK_SPEED Scroll back returning lerp speed
 -- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
 -- @tfield[opt=0] number EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect)
--- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
--- @tfield[opt=0] bool WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
--- @tfield[opt=false] bool WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll
--- @tfield[opt=false] bool WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.
+-- @tfield[opt=false] boolean SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
+-- @tfield[opt=0] boolean WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
+-- @tfield[opt=false] boolean WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll
+-- @tfield[opt=false] boolean WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.
 function Scroll.on_style_change(self, style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
@@ -158,7 +155,7 @@ function Scroll.on_style_change(self, style)
 end
 
 
---- @{Scroll} constructor
+--- The @{Scroll} constructor
 -- @tparam Scroll self @{Scroll}
 -- @tparam string|node view_node GUI view scroll node
 -- @tparam string|node content_node GUI content scroll node
@@ -237,7 +234,7 @@ end
 --- Start scroll to target point.
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 point Target point
--- @tparam[opt] bool is_instant Instant scroll flag
+-- @tparam[opt] boolean is_instant Instant scroll flag
 -- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
 -- @usage scroll:scroll_to(vmath.vector3(0), true)
 function Scroll.scroll_to(self, point, is_instant)
@@ -271,7 +268,7 @@ end
 --- Scroll to item in scroll by point index.
 -- @tparam Scroll self @{Scroll}
 -- @tparam number index Point index
--- @tparam[opt] bool skip_cb If true, skip the point callback
+-- @tparam[opt] boolean skip_cb If true, skip the point callback
 function Scroll.scroll_to_index(self, index, skip_cb)
 	if not self.points then
 		return
@@ -294,7 +291,7 @@ end
 --- Start scroll to target scroll percent
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 percent target percent
--- @tparam[opt] bool is_instant instant scroll flag
+-- @tparam[opt] boolean is_instant instant scroll flag
 -- @usage scroll:scroll_to_percent(vmath.vector3(0.5, 0, 0))
 function Scroll.scroll_to_percent(self, percent, is_instant)
 	local border = self.available_pos
@@ -342,7 +339,7 @@ end
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
 -- @tparam Scroll self @{Scroll}
--- @tparam bool state Inert scroll state
+-- @tparam boolean state Inert scroll state
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_inert(self, state)
 	self._is_inert = state
@@ -353,7 +350,7 @@ end
 
 --- Return if scroll have inertion.
 -- @tparam Scroll self @{Scroll}
--- @treturn bool If scroll have inertion
+-- @treturn boolean @If scroll have inertion
 function Scroll.is_inert(self)
 	return self._is_inert
 end
@@ -400,7 +397,7 @@ end
 
 --- Lock or unlock horizontal scroll
 -- @tparam Scroll self @{Scroll}
--- @tparam bool state True, if horizontal scroll is enabled
+-- @tparam boolean state True, if horizontal scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_horizontal_scroll(self, state)
 	self._is_horizontal_scroll = state
@@ -411,7 +408,7 @@ end
 
 --- Lock or unlock vertical scroll
 -- @tparam Scroll self @{Scroll}
--- @tparam bool state True, if vertical scroll is enabled
+-- @tparam boolean state True, if vertical scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_vertical_scroll(self, state)
 	self._is_vertical_scroll = state

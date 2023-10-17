@@ -27,7 +27,7 @@
 --     print("Also the button component is passed in callback params")
 -- end
 --
--- local custom_args = "Any variable to pass inside callback"
+-- local custom_args = "any variable to pass inside callback"
 -- local button = self.druid:new_button("button_name", on_button_click, custom_args)
 --
 -- @module Button
@@ -114,7 +114,7 @@
 -- @tfield DruidEvent on_pressed @{DruidEvent}
 
 --- Button trigger node
--- @tfield Node node
+-- @tfield node node
 
 ---The GUI node id from button node
 -- @tfield hash node_id
@@ -257,15 +257,15 @@ end
 --- Component style params.
 -- You can override this component styles params in Druid styles table
 -- or create your own style
--- @table style
 -- @tfield[opt=0.4] number LONGTAP_TIME Minimum time to trigger on_hold_callback
 -- @tfield[opt=0.8] number AUTOHOLD_TRIGGER Maximum hold time to trigger button release while holding
 -- @tfield[opt=0.4] number DOUBLETAP_TIME Time between double taps
--- @tfield function on_click (self, node)
--- @tfield function on_click_disabled (self, node)
--- @tfield function on_hover (self, node, hover_state)
--- @tfield function on_mouse_hover (self, node, hover_state)
--- @tfield function on_set_enabled (self, node, enabled_state)
+-- @tfield function on_click function(self, node)
+-- @tfield function on_click_disabled function(self, node)
+-- @tfield function on_hover function(self, node, hover_state)
+-- @tfield function on_mouse_hover function(self, node, hover_state)
+-- @tfield function on_set_enabled function(self, node, enabled_state)
+-- @table style
 function Button.on_style_change(self, style)
 	self.style = {}
 	self.style.LONGTAP_TIME = style.LONGTAP_TIME or 0.4
@@ -282,10 +282,10 @@ end
 
 --- The @{Button} constructor
 -- @tparam Button self @{Button}
--- @tparam string|Node node Node name or GUI Node itself
+-- @tparam string|node node Node name or GUI Node itself
 -- @tparam function callback On click button callback
 -- @tparam[opt] any custom_args Button events custom arguments
--- @tparam[opt] string|Node anim_node Node to animate instead of trigger node.
+-- @tparam[opt] string|node anim_node Node to animate instead of trigger node.
 function Button.init(self, node, callback, custom_args, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
@@ -447,7 +447,7 @@ end
 -- The style.on_set_enabled will be triggered.
 -- Disabled button is not clickable.
 -- @tparam Button self @{Button}
--- @tparam bool state Enabled state
+-- @tparam boolean state Enabled state
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_enabled(false)
@@ -465,7 +465,7 @@ end
 --
 -- By default all Buttons is enabled on creating.
 -- @tparam Button self @{Button}
--- @treturn bool True, if button is enabled now, False overwise
+-- @treturn boolean @True, if button is enabled now, False overwise
 -- @usage
 -- local is_enabled = button:is_enabled()
 function Button.is_enabled(self)

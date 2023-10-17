@@ -32,7 +32,7 @@ end
 --- Subscribe callback on event
 -- @tparam DruidEvent self @{DruidEvent}
 -- @tparam function callback Callback itself
--- @tparam[opt] Any context Additional context as first param to callback call, usually it's self
+-- @tparam[opt] any context Additional context as first param to callback call, usually it's self
 -- @usage
 -- local function on_long_callback(self)
 --     print("Long click!")
@@ -57,7 +57,7 @@ end
 --- Unsubscribe callback on event
 -- @tparam DruidEvent self @{DruidEvent}
 -- @tparam function callback Callback itself
--- @tparam[opt] Any context Additional context as first param to callback call
+-- @tparam[opt] any context Additional context as first param to callback call
 -- @usage
 -- local function on_long_callback(self)
 --     print("Long click!")
@@ -80,7 +80,7 @@ end
 
 --- Return true, if event have at lease one handler
 -- @tparam DruidEvent self @{DruidEvent}
--- @treturn bool True if event have handlers
+-- @treturn boolean True if event have handlers
 -- @usage
 -- local is_long_click_handler_exists = button.on_long_click:is_exist()
 function DruidEvent.is_exist(self)
@@ -102,7 +102,7 @@ end
 
 --- Trigger the event and call all subscribed callbacks
 -- @tparam DruidEvent self @{DruidEvent}
--- @tparam Any ... All event params
+-- @tparam any ... All event params
 -- @usage
 -- local Event = require("druid.event")
 -- ...

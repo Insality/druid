@@ -45,7 +45,7 @@ local BackHandler = component.create("back_handler")
 
 --- The @{BackHandler} constructor
 -- @tparam BackHandler self @{BackHandler}
--- @tparam callback callback On back button
+-- @tparam function callback @The callback(self, custom_args) to call on back event
 -- @tparam[opt] any custom_args Button events custom arguments
 -- @local
 function BackHandler.init(self, callback, custom_args)

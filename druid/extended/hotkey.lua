@@ -27,11 +27,11 @@ local component = require("druid.component")
 local Hotkey = component.create("hotkey")
 
 
---- Component init function
+--- The @{Hotkey} constructor
 -- @tparam Hotkey self @{Hotkey}
 -- @tparam string[]|string keys The keys to be pressed for trigger callback. Should contains one key and any modificator keys
 -- @tparam function callback The callback function
--- @tparam[opt] value callback_argument The argument to pass into the callback function
+-- @tparam[opt] any callback_argument The argument to pass into the callback function
 function Hotkey.init(self, keys, callback, callback_argument)
 	self.druid = self:get_druid()
 
@@ -63,7 +63,7 @@ end
 --- Add hotkey for component callback
 -- @tparam Hotkey self @{Hotkey}
 -- @tparam string[]|hash[]|string|hash keys that have to be pressed before key pressed to activate
--- @tparam[opt] value callback_argument The argument to pass into the callback function
+-- @tparam[opt] any callback_argument The argument to pass into the callback function
 function Hotkey.add_hotkey(self, keys, callback_argument)
 	keys = keys or {}
 	if type(keys) == "string" then

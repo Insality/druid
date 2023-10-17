@@ -30,7 +30,7 @@ local component = require("druid.component")
 local Blocker = component.create("blocker")
 
 
---- @{Blocker} constructor
+--- The @{Blocker} constructor
 -- @tparam Blocker self @{Blocker}
 -- @tparam node node Gui node
 function Blocker.init(self, node)
@@ -71,7 +71,7 @@ end
 --
 -- Don't change node enabled state itself.
 -- @tparam Blocker self @{Blocker}
--- @tparam bool state Enabled state
+-- @tparam boolean state Enabled state
 function Blocker.set_enabled(self, state)
 	self._is_enabled = state
 end
@@ -79,7 +79,7 @@ end
 
 --- Return blocker enabled state
 -- @tparam Blocker self @{Blocker}
--- @treturn bool True, if blocker is enabled
+-- @treturn boolean @True, if blocker is enabled
 function Blocker.is_enabled(self)
 	return self._is_enabled
 end

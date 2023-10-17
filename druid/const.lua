@@ -20,7 +20,7 @@ M.ACTION_SCROLL_DOWN = hash(sys.get_config("druid.input_scroll_down", "mouse_whe
 
 M.IS_STENCIL_CHECK = not (sys.get_config("druid.no_stencil_check") == "1")
 
---- Component Interests
+
 M.ON_INPUT = "on_input"
 M.ON_UPDATE = "update"
 M.ON_MESSAGE = "on_message"

@@ -61,7 +61,7 @@ local function on_unselect(self)
 end
 
 
---- Component init function
+--- The @{RichInput} constructor
 -- @tparam RichInput self @{RichInput}
 -- @tparam string template The template string name
 -- @tparam table nodes Nodes table from gui.clone_tree

@@ -30,7 +30,7 @@ local function on_checkbox_click(self, index, is_instant)
 end
 
 
---- Component init function
+--- The @{RadioGroup} constructor
 -- @tparam RadioGroup self @{RadioGroup}
 -- @tparam node[] nodes Array of gui node
 -- @tparam function callback Radio callback

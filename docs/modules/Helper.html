@@ -143,7 +143,7 @@ helper.centrate_nodes(0, node_1, node_2)
 	<td class="summary">Get text metric from GUI node.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#helper.insert_with_shift">helper.insert_with_shift(array, item[, index[, shift_policy]])</a></td>
+	<td class="name" nowrap><a href="#helper.insert_with_shift">helper.insert_with_shift(array, any[, index[, shift_policy]])</a></td>
 	<td class="summary">Add value to array with shift policy</td>
 	</tr>
 	<tr>
@@ -198,11 +198,11 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">target</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+            <span class="types"><span class="type">any[]</span></span>
          Array to put elements from source
         </li>
         <li><span class="parameter">source</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+            <span class="types"><span class="type">any[]</span></span>
          The source array to get elements from
          (<em>optional</em>)
         </li>
@@ -211,7 +211,7 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">array</span></span>
+           <span class="types"><span class="type">any[]</span></span>
         The target array
     </ol>
 
@@ -471,8 +471,8 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">pivot</span>
-            <span class="types"><span class="type">gui.pivot</span></span>
-         The node pivot
+            <span class="types"><span class="type">number</span></span>
+         The gui.PIVOT_* constant
         </li>
     </ul>
 
@@ -529,7 +529,7 @@ helper.centrate_nodes(0, node_1, node_2)
          Gui node
         </li>
         <li><span class="parameter">include_passed_node_scale</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          True if add current node scale to result
         </li>
     </ul>
@@ -579,7 +579,7 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">text_node</span>
-            <span class="types"><span class="type">Node</span></span>
+            <span class="types"><span class="type">node</span></span>
 
         </li>
     </ul>
@@ -606,7 +606,7 @@ helper.centrate_nodes(0, node_1, node_2)
 </dd>
     <dt>
     <a name = "helper.insert_with_shift"></a>
-    <strong>helper.insert_with_shift(array, item[, index[, shift_policy]])</strong>
+    <strong>helper.insert_with_shift(array, any[, index[, shift_policy]])</strong>
     </dt>
     <dd>
     Add value to array with shift policy  Shift policy can be: left, right, no_shift
@@ -618,7 +618,7 @@ helper.centrate_nodes(0, node_1, node_2)
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
          Array
         </li>
-        <li><span class="parameter">item</span>
+        <li><span class="parameter">any</span>
          Item to insert
         </li>
         <li><span class="parameter">index</span>
@@ -627,8 +627,8 @@ helper.centrate_nodes(0, node_1, node_2)
          (<em>optional</em>)
         </li>
         <li><span class="parameter">shift_policy</span>
-            <span class="types"><span class="type">const.SHIFT</span></span>
-         Shift policy
+            <span class="types"><span class="type">number</span></span>
+         The druid_const.SHIFT.* constant
          (<em>optional</em>)
         </li>
     </ul>
@@ -636,7 +636,7 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">item</span></span>
+           <span class="types"><span class="type">any</span></span>
         Inserted item
     </ol>
 
@@ -656,7 +656,7 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         Is mobile
     </ol>
 
@@ -676,7 +676,7 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         Is web
     </ol>
 
@@ -739,8 +739,8 @@ helper.centrate_nodes(0, node_1, node_2)
          (<em>optional</em>)
         </li>
         <li><span class="parameter">shift_policy</span>
-            <span class="types"><span class="type">const.SHIFT</span></span>
-         Shift policy
+            <span class="types"><span class="type">number</span></span>
+         The druid_const.SHIFT.* constant
          (<em>optional</em>)
         </li>
     </ul>
@@ -748,7 +748,7 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">item</span></span>
+           <span class="types"><span class="type">any</span></span>
         Removed item
     </ol>
 

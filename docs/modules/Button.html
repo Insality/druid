@@ -97,7 +97,7 @@
     print(&quot;Also the button component is passed in callback params&quot;)
 end
 
-local custom_args = &quot;Any variable to pass inside callback&quot;
+local custom_args = &quot;any variable to pass inside callback&quot;
 local button = self.druid:new_button(&quot;button_name&quot;, on_button_click, custom_args)
 </pre>
     </ul>
@@ -254,7 +254,7 @@ local button = self.druid:new_button(&quot;button_name&quot;, on_button_click, c
          <a href="../modules/Button.html#">Button</a>
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">Node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="../modules/Button.html#node">node</a></span>
          Node name or GUI Node itself
         </li>
         <li><span class="parameter">callback</span>
@@ -267,7 +267,7 @@ local button = self.druid:new_button(&quot;button_name&quot;, on_button_click, c
          (<em>optional</em>)
         </li>
         <li><span class="parameter">anim_node</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">Node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="../modules/Button.html#node">node</a></span>
          Node to animate instead of trigger node.
          (<em>optional</em>)
         </li>
@@ -298,8 +298,8 @@ local button = self.druid:new_button(&quot;button_name&quot;, on_button_click, c
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
-        True, if button is enabled now, False overwise
+           <span class="types"><span class="type">boolean</span></span>
+        @True, if button is enabled now, False overwise
     </ol>
 
 
@@ -401,7 +401,7 @@ local button = self.druid:new_button(&quot;button_name&quot;, on_button_click, c
          <a href="../modules/Button.html#">Button</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          Enabled state
         </li>
     </ul>
@@ -529,23 +529,23 @@ button:set_enabled(<span class="keyword">true</span>)</pre>
         </li>
         <li><span class="parameter">on_click</span>
             <span class="types"><span class="type">function</span></span>
-         (self, node)
+         function(self, node)
         </li>
         <li><span class="parameter">on_click_disabled</span>
             <span class="types"><span class="type">function</span></span>
-         (self, node)
+         function(self, node)
         </li>
         <li><span class="parameter">on_hover</span>
             <span class="types"><span class="type">function</span></span>
-         (self, node, hover_state)
+         function(self, node, hover_state)
         </li>
         <li><span class="parameter">on_mouse_hover</span>
             <span class="types"><span class="type">function</span></span>
-         (self, node, hover_state)
+         function(self, node, hover_state)
         </li>
         <li><span class="parameter">on_set_enabled</span>
             <span class="types"><span class="type">function</span></span>
-         (self, node, enabled_state)
+         function(self, node, enabled_state)
         </li>
     </ul>
 
@@ -632,7 +632,7 @@ button:set_enabled(<span class="keyword">true</span>)</pre>
 
     <ul>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">Node</span></span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
 
         </li>
     </ul>
