@@ -64,6 +64,7 @@ end
 -- @tparam Hotkey self @{Hotkey}
 -- @tparam string[]|hash[]|string|hash keys that have to be pressed before key pressed to activate
 -- @tparam any|nil callback_argument The argument to pass into the callback function
+-- @treturn Hotkey Current instance
 function Hotkey.add_hotkey(self, keys, callback_argument)
 	keys = keys or {}
 	if type(keys) == "string" then

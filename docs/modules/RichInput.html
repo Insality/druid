@@ -83,8 +83,16 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#get_text">get_text(self)</a></td>
+	<td class="summary">GSet input field text</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#init">init(self, template, nodes)</a></td>
 	<td class="summary">The <a href="../modules/RichInput.html#">RichInput</a> constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_allowed_characters">set_allowed_characters(self, characters)</a></td>
+	<td class="summary">Set allowed charaters for input field.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_placeholder">set_placeholder(self, placeholder_text)</a></td>
@@ -123,6 +131,33 @@
 
     <dl class="function">
     <dt>
+    <a name = "get_text"></a>
+    <strong>get_text(self)</strong>
+    </dt>
+    <dd>
+    GSet input field text
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichInput</span></span>
+         <a href="../modules/RichInput.html#">RichInput</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        Current input text
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "init"></a>
     <strong>init(self, template, nodes)</strong>
     </dt>
@@ -152,6 +187,39 @@
 
 </dd>
     <dt>
+    <a name = "set_allowed_characters"></a>
+    <strong>set_allowed_characters(self, characters)</strong>
+    </dt>
+    <dd>
+    Set allowed charaters for input field.
+ See: https://defold.com/ref/stable/string/
+ ex: [%a%d] for alpha and numeric
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichInput</span></span>
+         <a href="../modules/RichInput.html#">RichInput</a>
+        </li>
+        <li><span class="parameter">characters</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Regulax exp. for validate user input
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">RichInput</span></span>
+        Current instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "set_placeholder"></a>
     <strong>set_placeholder(self, placeholder_text)</strong>
     </dt>
@@ -171,6 +239,12 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">RichInput</span></span>
+        Current instance
+    </ol>
 
 
 

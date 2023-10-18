@@ -137,6 +137,10 @@
 	<td class="summary">Set scale</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#set_size">set_size(self, size)</a></td>
+	<td class="summary">Set text area size</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set_text_adjust">set_text_adjust(self, adjust_type, minimal_scale)</a></td>
 	<td class="summary">Set text adjust, refresh the current text visuals, if needed</td>
 	</tr>
@@ -161,6 +165,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#color">color</a></td>
 	<td class="summary">Current text color</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#last_value">last_value</a></td>
+	<td class="summary">The last text value</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#node">node</a></td>
@@ -491,6 +499,37 @@
 
 </dd>
     <dt>
+    <a name = "set_size"></a>
+    <strong>set_size(self, size)</strong>
+    </dt>
+    <dd>
+    Set text area size
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Text</span></span>
+         <a href="../modules/Text.html#">Text</a>
+        </li>
+        <li><span class="parameter">size</span>
+            <span class="types"><span class="type">vector3</span></span>
+         The new text area size
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "set_text_adjust"></a>
     <strong>set_text_adjust(self, adjust_type, minimal_scale)</strong>
     </dt>
@@ -624,6 +663,26 @@
     <ul>
         <li><span class="parameter">color</span>
             <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "last_value"></a>
+    <strong>last_value</strong>
+    </dt>
+    <dd>
+    The last text value
+
+
+    <ul>
+        <li><span class="parameter">last_value</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
 
         </li>
     </ul>

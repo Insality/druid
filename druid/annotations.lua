@@ -1,8 +1,5 @@
 -- luacheck: ignore
----@diagnostic disable: lowercase-global
----@diagnostic disable: missing-return
----@diagnostic disable: duplicate-doc-param
----@diagnostic disable: duplicate-set-field
+---@meta
 
 ---@class druid
 local druid = {}
@@ -565,6 +562,7 @@ local druid__hotkey = {}
 ---@param self druid.hotkey @{Hotkey}
 ---@param keys string[]|hash[]|string|hash that have to be pressed before key pressed to activate
 ---@param callback_argument any|nil The argument to pass into the callback function
+---@return druid.hotkey Current instance
 function druid__hotkey.add_hotkey(self, keys, callback_argument) end
 
 --- The @{Hotkey} constructor
@@ -936,15 +934,28 @@ function druid__radio_group.set_state(self, index, is_instant) end
 ---@field root node Root node
 local druid__rich_input = {}
 
+--- GSet input field text
+---@param self druid.rich_input @{RichInput}
+---@return string Current input text
+function druid__rich_input.get_text(self) end
+
 --- The @{RichInput} constructor
 ---@param self druid.rich_input @{RichInput}
 ---@param template string The template string name
 ---@param nodes table Nodes table from gui.clone_tree
 function druid__rich_input.init(self, template, nodes) end
 
+--- Set allowed charaters for input field.
+--- See: https://defold.com/ref/stable/string/  ex: [%a%d] for alpha and numeric
+---@param self druid.rich_input @{RichInput}
+---@param characters string Regulax exp. for validate user input
+---@return druid.rich_input Current instance
+function druid__rich_input.set_allowed_characters(self, characters) end
+
 --- Set placeholder text
 ---@param self druid.rich_input @{RichInput}
 ---@param placeholder_text string|nil The placeholder text
+---@return druid.rich_input Current instance
 function druid__rich_input.set_placeholder(self, placeholder_text) end
 
 
@@ -1305,6 +1316,7 @@ local druid__swipe__style = {}
 ---@class druid.text : druid.base_component
 ---@field adjust_type number Current text size adjust settings
 ---@field color vector3 Current text color
+---@field last_value string The last text value
 ---@field node node Text node
 ---@field node_id hash The node id of text node
 ---@field on_set_pivot druid.event On change pivot callback(self, pivot)
@@ -1373,6 +1385,12 @@ function druid__text.set_pivot(self, pivot) end
 ---@param scale vector3 Scale for node
 ---@return druid.text Current text instance
 function druid__text.set_scale(self, scale) end
+
+--- Set text area size
+---@param self druid.text @{Text}
+---@param size vector3 The new text area size
+---@return druid.text Current text instance
+function druid__text.set_size(self, size) end
 
 --- Set text adjust, refresh the current text visuals, if needed
 ---@param self druid.text @{Text}

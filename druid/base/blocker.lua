@@ -51,7 +51,7 @@ function Blocker.on_input(self, action_id, action)
 		return false
 	end
 
-	if not self:is_enabled(self.node) then
+	if not self:is_enabled() then
 		return false
 	end
 

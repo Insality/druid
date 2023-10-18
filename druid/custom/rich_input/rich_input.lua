@@ -91,8 +91,30 @@ end
 --- Set placeholder text
 -- @tparam RichInput self @{RichInput}
 -- @tparam string|nil placeholder_text The placeholder text
+-- @treturn RichInput Current instance
 function RichInput.set_placeholder(self, placeholder_text)
 	self.placeholder:set_to(placeholder_text)
+	return self
+end
+
+
+---GSet input field text
+-- @tparam RichInput self @{RichInput}
+-- @treturn string Current input text
+function RichInput.get_text(self)
+	return self.input:get_text()
+end
+
+
+--- Set allowed charaters for input field.
+-- See: https://defold.com/ref/stable/string/
+-- ex: [%a%d] for alpha and numeric
+-- @tparam RichInput self @{RichInput}
+-- @tparam string characters Regulax exp. for validate user input
+-- @treturn RichInput Current instance
+function RichInput.set_allowed_characters(self, characters)
+	self.input:set_allowed_characters(characters)
+
 	return self
 end
 

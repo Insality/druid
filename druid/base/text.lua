@@ -53,6 +53,9 @@
 --- Current text position
 -- @tfield vector3 pos
 
+--- The last text value
+-- @tfield string last_value
+
 --- Initial text node scale
 -- @tfield vector3 start_scale
 
@@ -317,6 +320,19 @@ function Text.set_to(self, set_to)
 	update_adjust(self)
 
 	return self
+end
+
+
+--- Set text area size
+-- @tparam Text self @{Text}
+-- @tparam vector3 size The new text area size
+-- @treturn Text Current text instance
+function Text.set_size(self, size)
+	self.start_size = size
+	self.text_area = vmath.vector3(size)
+	self.text_area.x = self.text_area.x * self.start_scale.x
+	self.text_area.y = self.text_area.y * self.start_scale.y
+	update_adjust(self)
 end
 
 

@@ -302,7 +302,7 @@ function Input.select(self)
 		self.style.on_select(self, self.button.node)
 	else
 		if self.style.IS_UNSELECT_ON_RESELECT then
-			self:unselect(self)
+			self:unselect()
 		end
 	end
 end

@@ -621,8 +621,8 @@ function Scroll._check_points(self)
 
 	local temp_dist = math.huge
 	local temp_dist_on_inert = math.huge
-	local index = false
-	local index_on_inert = false
+	local index = -1
+	local index_on_inert = -1
 	local pos = self.position
 
 	for i = 1, #self.points do
@@ -647,7 +647,11 @@ function Scroll._check_points(self)
 		end
 	end
 
-	self:scroll_to_index(index_on_inert or index)
+	if index_on_inert >= 0 then
+		self:scroll_to_index(index_on_inert)
+	else
+		self:scroll_to_index(index)
+	end
 end
 
 
