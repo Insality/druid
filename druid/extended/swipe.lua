@@ -13,7 +13,7 @@
 -- @tparam node node
 
 --- Restriction zone
--- @tparam[opt] node click_zone
+-- @tparam node|nil click_zone
 
 --- Trigger on swipe event(self, swipe_side, dist, delta_time)
 -- @tfield DruidEvent on_swipe) @{DruidEvent}
@@ -76,7 +76,7 @@ end
 -- @table style
 -- @tfield[opt=0.4] number SWIPE_TIME Maximum time for swipe trigger
 -- @tfield[opt=50] number SWIPE_THRESHOLD Minimum distance for swipe trigger
--- @tfield[opt=false] bool SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action
+-- @tfield[opt=false] boolean SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action
 function Swipe.on_style_change(self, style)
 	self.style = {}
 	self.style.SWIPE_TIME = style.SWIPE_TIME or 0.4
@@ -85,7 +85,7 @@ function Swipe.on_style_change(self, style)
 end
 
 
---- Component init function
+--- The @{Swipe} constructor
 -- @tparam Swipe self @{Swipe}
 -- @tparam node node Gui node
 -- @tparam function on_swipe_callback Swipe callback for on_swipe_end event

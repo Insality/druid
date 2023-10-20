@@ -43,7 +43,7 @@ local Event = require("druid.event")
 local DataList = component.create("data_list")
 
 
---- Data list constructor
+--- The @{DataList} constructor
 -- @tparam DataList self @{DataList}
 -- @tparam Scroll scroll The @{Scroll} instance for Data List component
 -- @tparam StaticGrid|DynamicGrid grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
@@ -197,7 +197,7 @@ end
 
 --- Return all currenly created nodes in DataList
 -- @tparam DataList self @{DataList}
--- @treturn Node[] List of created nodes
+-- @treturn node[] List of created nodes
 function DataList.get_created_nodes(self)
 	local nodes = {}
 

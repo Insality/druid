@@ -10,7 +10,7 @@
 -- @tfield DruidInstance druid @{DruidInstance}
 
 --- Is currently under user control
--- @tfield bool is_drag
+-- @tfield boolean is_drag
 
 --- The pin node
 -- @tfield node node
@@ -52,7 +52,7 @@ local function set_angle(self, value)
 end
 
 
---- Component init function
+--- The @{PinKnob} constructor
 -- @tparam PinKnob self @{PinKnob}
 -- @tparam function callback Callback(self, value) on value changed
 -- @tparam string template The template string name

@@ -9,6 +9,9 @@
 --- The component druid instance
 -- @tfield DruidInstance druid @{DruidInstance}
 
+--- Root node
+-- @tfield node root
+
 --- On input field text change callback(self, input_text)
 -- @tfield Input input @{Input}
 
@@ -61,7 +64,7 @@ local function on_unselect(self)
 end
 
 
---- Component init function
+--- The @{RichInput} constructor
 -- @tparam RichInput self @{RichInput}
 -- @tparam string template The template string name
 -- @tparam table nodes Nodes table from gui.clone_tree
@@ -69,6 +72,8 @@ function RichInput.init(self, template, nodes)
 	self:set_template(template)
 	self:set_nodes(nodes)
 	self.druid = self:get_druid()
+	self.root = self:get_node(SCHEME.ROOT)
+
 	self.input = self.druid:new_input(self:get_node(SCHEME.BUTTON), self:get_node(SCHEME.INPUT))
 	self.cursor = self:get_node(SCHEME.CURSOR)
 
@@ -85,9 +90,31 @@ end
 
 --- Set placeholder text
 -- @tparam RichInput self @{RichInput}
--- @tparam string placeholder_text The placeholder text
+-- @tparam string|nil placeholder_text The placeholder text
+-- @treturn RichInput Current instance
 function RichInput.set_placeholder(self, placeholder_text)
 	self.placeholder:set_to(placeholder_text)
+	return self
+end
+
+
+---GSet input field text
+-- @tparam RichInput self @{RichInput}
+-- @treturn string Current input text
+function RichInput.get_text(self)
+	return self.input:get_text()
+end
+
+
+--- Set allowed charaters for input field.
+-- See: https://defold.com/ref/stable/string/
+-- ex: [%a%d] for alpha and numeric
+-- @tparam RichInput self @{RichInput}
+-- @tparam string characters Regulax exp. for validate user input
+-- @treturn RichInput Current instance
+function RichInput.set_allowed_characters(self, characters)
+	self.input:set_allowed_characters(characters)
+
 	return self
 end
 

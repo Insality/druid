@@ -53,6 +53,9 @@
 --- Current text position
 -- @tfield vector3 pos
 
+--- The last text value
+-- @tfield string last_value
+
 --- Initial text node scale
 -- @tfield vector3 start_scale
 
@@ -222,10 +225,10 @@ function Text.on_style_change(self, style)
 end
 
 
---- @{Text} constructor
+--- The @{Text} constructor
 -- @tparam Text self @{Text}
 -- @tparam string|node node Node name or GUI Text Node itself
--- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
+-- @tparam string|nil value Initial text. Default value is node text from GUI scene.
 -- @tparam[opt=downscale] string adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 function Text.init(self, node, value, adjust_type)
 	self.node = self:get_node(node)
@@ -273,7 +276,7 @@ end
 
 --- Calculate text width with font with respect to trailing space
 -- @tparam Text self @{Text}
--- @tparam[opt] string text
+-- @tparam string|nil text
 -- @treturn number Width
 -- @treturn number Height
 function Text.get_text_size(self, text)
@@ -320,6 +323,19 @@ function Text.set_to(self, set_to)
 end
 
 
+--- Set text area size
+-- @tparam Text self @{Text}
+-- @tparam vector3 size The new text area size
+-- @treturn Text Current text instance
+function Text.set_size(self, size)
+	self.start_size = size
+	self.text_area = vmath.vector3(size)
+	self.text_area.x = self.text_area.x * self.start_scale.x
+	self.text_area.y = self.text_area.y * self.start_scale.y
+	update_adjust(self)
+end
+
+
 --- Set color
 -- @tparam Text self @{Text}
 -- @tparam vector4 color Color for node
@@ -358,7 +374,7 @@ end
 
 --- Set text pivot. Text will re-anchor inside text area
 -- @tparam Text self @{Text}
--- @tparam gui.pivot pivot Gui pivot constant
+-- @tparam number pivot The gui.PIVOT_* constant
 -- @treturn Text Current text instance
 function Text.set_pivot(self, pivot)
 	local prev_pivot = gui.get_pivot(self.node)
@@ -384,7 +400,7 @@ end
 
 --- Return true, if text with line break
 -- @tparam Text self @{Text}
--- @treturn bool Is text node with line break
+-- @treturn boolean Is text node with line break
 function Text.is_multiline(self)
 	return gui.get_line_break(self.node)
 end
@@ -392,8 +408,8 @@ end
 
 --- Set text adjust, refresh the current text visuals, if needed
 -- @tparam Text self @{Text}
--- @tparam[opt] number adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
--- @tparam[opt] number minimal_scale If pass nil - not use minimal scale
+-- @tparam number|nil adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
+-- @tparam number|nil minimal_scale If pass nil - not use minimal scale
 -- @treturn Text Current text instance
 function Text.set_text_adjust(self, adjust_type, minimal_scale)
 	self.adjust_type = adjust_type

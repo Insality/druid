@@ -93,8 +93,8 @@
 	<td class="summary">Return current input field text</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, click_node, text_node[, keyboard_type])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#init">init(self, click_node, text_node, keyboard_type)</a></td>
+	<td class="summary">The <a href="../modules/Input.html#">Input</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#reset_changes">reset_changes(self)</a></td>
@@ -220,10 +220,10 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, click_node, text_node[, keyboard_type])</strong>
+    <strong>init(self, click_node, text_node, keyboard_type)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/Input.html#">Input</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -241,9 +241,8 @@
          Text node what will be changed on user input. You can pass text component instead of text node name <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">keyboard_type</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Gui keyboard type for input field
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -422,7 +421,7 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">IS_LONGTAP_ERASE</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          Is long tap will erase current input data
          (<em>default</em> false)
         </li>
@@ -432,12 +431,12 @@
          (<em>default</em> *)
         </li>
         <li><span class="parameter">IS_UNSELECT_ON_RESELECT</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          If true, call unselect on select selected input
          (<em>default</em> false)
         </li>
         <li><span class="parameter">NO_CONSUME_INPUT_WHILE_SELECTED</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured)
          (<em>default</em> false)
         </li>
@@ -519,7 +518,7 @@
 
     <ul>
         <li><span class="parameter">is_empty</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
 
         </li>
     </ul>
@@ -539,7 +538,7 @@
 
     <ul>
         <li><span class="parameter">is_selected</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
 
         </li>
     </ul>

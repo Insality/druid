@@ -117,7 +117,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, view_node, content_node)</a></td>
-	<td class="summary"><a href="../modules/Scroll.html#">Scroll</a> constructor</td>
+	<td class="summary">The <a href="../modules/Scroll.html#">Scroll</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_inert">is_inert(self)</a></td>
@@ -128,15 +128,15 @@
 	<td class="summary">Check node if it visible now on scroll.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#scroll_to">scroll_to(self, point[, is_instant])</a></td>
+	<td class="name" nowrap><a href="#scroll_to">scroll_to(self, point, is_instant)</a></td>
 	<td class="summary">Start scroll to target point.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#scroll_to_index">scroll_to_index(self, index[, skip_cb])</a></td>
+	<td class="name" nowrap><a href="#scroll_to_index">scroll_to_index(self, index, skip_cb)</a></td>
 	<td class="summary">Scroll to item in scroll by point index.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#scroll_to_percent">scroll_to_percent(self, percent[, is_instant])</a></td>
+	<td class="name" nowrap><a href="#scroll_to_percent">scroll_to_percent(self, percent, is_instant)</a></td>
 	<td class="summary">Start scroll to target scroll percent</td>
 	</tr>
 	<tr>
@@ -144,7 +144,7 @@
 	<td class="summary">Strict drag scroll area.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_extra_stretch_size">set_extra_stretch_size(self[, stretch_size=0])</a></td>
+	<td class="name" nowrap><a href="#set_extra_stretch_size">set_extra_stretch_size(self, stretch_size)</a></td>
 	<td class="summary">Set extra size for scroll stretching.</td>
 	</tr>
 	<tr>
@@ -200,10 +200,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#is_animate">is_animate</a></td>
 	<td class="summary">Flag, if scroll now animating by gui.animate</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#is_inert">is_inert</a></td>
-	<td class="summary">Flag, if scroll now moving by inertion</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_point_scroll">on_point_scroll</a></td>
@@ -334,7 +330,7 @@
     <strong>init(self, view_node, content_node)</strong>
     </dt>
     <dd>
-    <a href="../modules/Scroll.html#">Scroll</a> constructor
+    The <a href="../modules/Scroll.html#">Scroll</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -377,8 +373,8 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
-        If scroll have inertion
+           <span class="types"><span class="type">boolean</span></span>
+        @If scroll have inertion
     </ol>
 
 
@@ -419,7 +415,7 @@
 </dd>
     <dt>
     <a name = "scroll_to"></a>
-    <strong>scroll_to(self, point[, is_instant])</strong>
+    <strong>scroll_to(self, point, is_instant)</strong>
     </dt>
     <dd>
     Start scroll to target point.
@@ -436,9 +432,8 @@
          Target point
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Instant scroll flag
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -454,7 +449,7 @@
 </dd>
     <dt>
     <a name = "scroll_to_index"></a>
-    <strong>scroll_to_index(self, index[, skip_cb])</strong>
+    <strong>scroll_to_index(self, index, skip_cb)</strong>
     </dt>
     <dd>
     Scroll to item in scroll by point index.
@@ -471,9 +466,8 @@
          Point index
         </li>
         <li><span class="parameter">skip_cb</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          If true, skip the point callback
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -484,7 +478,7 @@
 </dd>
     <dt>
     <a name = "scroll_to_percent"></a>
-    <strong>scroll_to_percent(self, percent[, is_instant])</strong>
+    <strong>scroll_to_percent(self, percent, is_instant)</strong>
     </dt>
     <dd>
     Start scroll to target scroll percent
@@ -501,9 +495,8 @@
          target percent
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          instant scroll flag
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -544,7 +537,7 @@
 </dd>
     <dt>
     <a name = "set_extra_stretch_size"></a>
-    <strong>set_extra_stretch_size(self[, stretch_size=0])</strong>
+    <strong>set_extra_stretch_size(self, stretch_size)</strong>
     </dt>
     <dd>
     Set extra size for scroll stretching.
@@ -558,9 +551,8 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">stretch_size</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Size in pixels of additional scroll area
-         (<em>default</em> 0)
         </li>
     </ul>
 
@@ -590,7 +582,7 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          True, if horizontal scroll is enabled
         </li>
     </ul>
@@ -623,7 +615,7 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Inert scroll state
         </li>
     </ul>
@@ -722,7 +714,7 @@
          <a href="../modules/Scroll.html#">Scroll</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          True, if vertical scroll is enabled
         </li>
     </ul>
@@ -795,22 +787,22 @@
          (<em>default</em> 0)
         </li>
         <li><span class="parameter">SMALL_CONTENT_SCROLL</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          If true, content node with size less than view node size can be scrolled
          (<em>default</em> false)
         </li>
         <li><span class="parameter">WHEEL_SCROLL_SPEED</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
          (<em>default</em> 0)
         </li>
         <li><span class="parameter">WHEEL_SCROLL_INVERTED</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          If true, invert direction for touchpad and mouse wheel scroll
          (<em>default</em> false)
         </li>
         <li><span class="parameter">WHEEL_SCROLL_BY_INERTION</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
          If true, wheel will add inertion to scroll. Direct set position otherwise.
          (<em>default</em> false)
         </li>
@@ -935,27 +927,7 @@
 
     <ul>
         <li><span class="parameter">is_animate</span>
-            <span class="types"><span class="type">bool</span></span>
-
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "is_inert"></a>
-    <strong>is_inert</strong>
-    </dt>
-    <dd>
-    Flag, if scroll now moving by inertion
-
-
-    <ul>
-        <li><span class="parameter">is_inert</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
 
         </li>
     </ul>

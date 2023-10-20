@@ -104,7 +104,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, node, key[, init_value=1])</a></td>
-	<td class="summary"><a href="../modules/Progress.html#">Progress</a> constructor</td>
+	<td class="summary">The <a href="../modules/Progress.html#">Progress</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_max_size">set_max_size(self, max_size)</a></td>
@@ -119,7 +119,7 @@
 	<td class="summary">Instant fill progress bar to value</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#to">to(self, to[, callback])</a></td>
+	<td class="name" nowrap><a href="#to">to(self, to, callback)</a></td>
 	<td class="summary">Start animation of a progress bar</td>
 	</tr>
 </table>
@@ -237,7 +237,7 @@
     <strong>init(self, node, key[, init_value=1])</strong>
     </dt>
     <dd>
-    <a href="../modules/Progress.html#">Progress</a> constructor
+    The <a href="../modules/Progress.html#">Progress</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -357,7 +357,7 @@
 </dd>
     <dt>
     <a name = "to"></a>
-    <strong>to(self, to[, callback])</strong>
+    <strong>to(self, to, callback)</strong>
     </dt>
     <dd>
     Start animation of a progress bar
@@ -374,9 +374,8 @@
          value between 0..1
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Callback on animation ends
-         (<em>optional</em>)
         </li>
     </ul>
 

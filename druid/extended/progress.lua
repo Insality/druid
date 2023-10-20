@@ -110,7 +110,7 @@ function Progress.on_style_change(self, style)
 end
 
 
---- @{Progress} constructor
+--- The @{Progress} constructor
 -- @tparam Progress self @{Progress}
 -- @tparam string|node node Node name or GUI Node itself.
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
@@ -210,7 +210,7 @@ end
 --- Start animation of a progress bar
 -- @tparam Progress self @{Progress}
 -- @tparam number to value between 0..1
--- @tparam[opt] function callback Callback on animation ends
+-- @tparam function|nil callback Callback on animation ends
 function Progress.to(self, to, callback)
 	to = helper.clamp(to, 0, 1)
 	-- cause of float error

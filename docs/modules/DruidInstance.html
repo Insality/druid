@@ -146,7 +146,7 @@ end
 	<td class="summary">Create new component.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_back_handler">new_back_handler(self, callback[, params])</a></td>
+	<td class="name" nowrap><a href="#new_back_handler">new_back_handler(self, callback, params)</a></td>
 	<td class="summary">Create <a href="../modules/BackHandler.html#">BackHandler</a> component</td>
 	</tr>
 	<tr>
@@ -154,11 +154,11 @@ end
 	<td class="summary">Create <a href="../modules/Blocker.html#">Blocker</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_button">new_button(self, node, callback[, params[, anim_node]])</a></td>
+	<td class="name" nowrap><a href="#new_button">new_button(self, node, callback, params, anim_node)</a></td>
 	<td class="summary">Create <a href="../modules/Button.html#">Button</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_checkbox">new_checkbox(self, node, callback[, click_node=node[, initial_state=false]])</a></td>
+	<td class="name" nowrap><a href="#new_checkbox">new_checkbox(self, node, callback, click_node, initial_state)</a></td>
 	<td class="summary">Create <a href="../modules/Checkbox.html#">Checkbox</a> component</td>
 	</tr>
 	<tr>
@@ -174,11 +174,11 @@ end
 	<td class="summary">Create <a href="../modules/Drag.html#">Drag</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_dynamic_grid">new_dynamic_grid(self, parent)</a></td>
+	<td class="name" nowrap><a href="#new_dynamic_grid">new_dynamic_grid(self, parent_node)</a></td>
 	<td class="summary">Create <a href="../modules/DynamicGrid.html#">DynamicGrid</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_hotkey">new_hotkey(self, keys_array, callback[, params])</a></td>
+	<td class="name" nowrap><a href="#new_hotkey">new_hotkey(self, keys_array, callback, callback_argument)</a></td>
 	<td class="summary">Create <a href="../modules/Hotkey.html#">Hotkey</a> component</td>
 	</tr>
 	<tr>
@@ -186,11 +186,11 @@ end
 	<td class="summary">Create <a href="../modules/Hover.html#">Hover</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_input">new_input(self, click_node, text_node[, keyboard_type])</a></td>
+	<td class="name" nowrap><a href="#new_input">new_input(self, click_node, text_node, keyboard_type)</a></td>
 	<td class="summary">Create <a href="../modules/Input.html#">Input</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_lang_text">new_lang_text(self, node, locale_id, no_adjust)</a></td>
+	<td class="name" nowrap><a href="#new_lang_text">new_lang_text(self, node, locale_id, adjust_type)</a></td>
 	<td class="summary">Create <a href="../modules/LangText.html#">LangText</a> component</td>
 	</tr>
 	<tr>
@@ -198,7 +198,7 @@ end
 	<td class="summary">Create <a href="../modules/Layout.html#">Layout</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_progress">new_progress(self, node, key[, init_value=1])</a></td>
+	<td class="name" nowrap><a href="#new_progress">new_progress(self, node, key, init_value)</a></td>
 	<td class="summary">Create <a href="../modules/Progress.html#">Progress</a> component</td>
 	</tr>
 	<tr>
@@ -206,7 +206,7 @@ end
 	<td class="summary">Create <a href="../modules/RadioGroup.html#">RadioGroup</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_rich_text">new_rich_text(self[, template[, nodes]])</a></td>
+	<td class="name" nowrap><a href="#new_rich_text">new_rich_text(self, template, nodes)</a></td>
 	<td class="summary">Create <a href="../modules/RichText.html#">RichText</a> component.</td>
 	</tr>
 	<tr>
@@ -214,11 +214,11 @@ end
 	<td class="summary">Create <a href="../modules/Scroll.html#">Scroll</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_slider">new_slider(self, node, end_pos[, callback])</a></td>
+	<td class="name" nowrap><a href="#new_slider">new_slider(self, pin_node, end_pos, callback)</a></td>
 	<td class="summary">Create <a href="../modules/Slider.html#">Slider</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_static_grid">new_static_grid(self, parent, element[, in_row=1])</a></td>
+	<td class="name" nowrap><a href="#new_static_grid">new_static_grid(self, parent_node, item, in_row)</a></td>
 	<td class="summary">Create <a href="../modules/StaticGrid.html#">StaticGrid</a> component</td>
 	</tr>
 	<tr>
@@ -226,11 +226,11 @@ end
 	<td class="summary">Create <a href="../modules/Swipe.html#">Swipe</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_text">new_text(self, node[, value[, no_adjust]])</a></td>
+	<td class="name" nowrap><a href="#new_text">new_text(self, node, value, no_adjust)</a></td>
 	<td class="summary">Create <a href="../modules/Text.html#">Text</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_timer">new_timer(self, node, seconds_from[, seconds_to=0[, callback]])</a></td>
+	<td class="name" nowrap><a href="#new_timer">new_timer(self, node, seconds_from, seconds_to, callback)</a></td>
 	<td class="summary">Create <a href="../modules/Timer.html#">Timer</a> component</td>
 	</tr>
 	<tr>
@@ -302,15 +302,21 @@ end
 
         </li>
         <li><span class="parameter">component</span>
-            <span class="types"><span class="type">Component</span></span>
+            <span class="types"><span class="type">BaseComponent</span></span>
          Component module
         </li>
         <li><span class="parameter">...</span>
-            <span class="types"><span class="type">args</span></span>
+            <span class="types"><span class="type">any</span></span>
          Other component params to pass it to component:init function
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">BaseComponent</span></span>
+        Component instance
+    </ol>
 
 
 
@@ -318,7 +324,7 @@ end
 </dd>
     <dt>
     <a name = "new_back_handler"></a>
-    <strong>new_back_handler(self, callback[, params])</strong>
+    <strong>new_back_handler(self, callback, params)</strong>
     </dt>
     <dd>
     Create <a href="../modules/BackHandler.html#">BackHandler</a> component
@@ -331,13 +337,12 @@ end
 
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">callback</span></span>
-         On back button
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
+         @The callback(self, custom_args) to call on back event
         </li>
         <li><span class="parameter">params</span>
-            <span class="types"><span class="type">any</span></span>
+            <span class="types"><span class="type">any</span> or <span class="type">nil</span></span>
          Callback argument
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -367,8 +372,8 @@ end
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         Gui node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id)
         </li>
     </ul>
 
@@ -385,7 +390,7 @@ end
 </dd>
     <dt>
     <a name = "new_button"></a>
-    <strong>new_button(self, node, callback[, params[, anim_node]])</strong>
+    <strong>new_button(self, node, callback, params, anim_node)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Button.html#">Button</a> component
@@ -398,22 +403,20 @@ end
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         GUI node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id)
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Button callback
         </li>
         <li><span class="parameter">params</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">nil</span></span>
          Button callback params
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">anim_node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><span class="type">node</span> or <span class="type">nil</span></span>
          Button anim node (node, if not provided)
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -430,7 +433,7 @@ end
 </dd>
     <dt>
     <a name = "new_checkbox"></a>
-    <strong>new_checkbox(self, node, callback[, click_node=node[, initial_state=false]])</strong>
+    <strong>new_checkbox(self, node, callback, click_node, initial_state)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Checkbox.html#">Checkbox</a> component
@@ -443,22 +446,20 @@ end
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         Gui node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The_node id or gui.get_node(node_id).
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Checkbox callback
         </li>
         <li><span class="parameter">click_node</span>
-            <span class="types"><span class="type">node</span></span>
-         Trigger node, by default equals to node
-         (<em>default</em> node)
+            <span class="types"><span class="type">node</span> or <span class="type">nil</span></span>
+         Trigger node, Default: node
         </li>
         <li><span class="parameter">initial_state</span>
-            <span class="types"><span class="type">boolean</span></span>
-         The initial state of checkbox, default - false
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         The initial state of checkbox, Default: false
         </li>
     </ul>
 
@@ -532,8 +533,8 @@ end
          The Scroll instance for Data List component
         </li>
         <li><span class="parameter">druid_grid</span>
-            <span class="types"><span class="type">Grid</span></span>
-         The Grid instance for Data List component
+            <span class="types"><span class="type">StaticGrid</span> or <span class="type">DynamicGrid</span></span>
+         The <a href="../modules/StaticGrid.html#">StaticGrid</a> or <a href="../modules/DynamicGrid.html#">DynamicGrid</a> instance for Data List component
         </li>
         <li><span class="parameter">create_function</span>
             <span class="types"><span class="type">function</span></span>
@@ -567,11 +568,11 @@ end
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         GUI node to detect dragging
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id). Will used as user input node.
         </li>
         <li><span class="parameter">on_drag_callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Callback for on_drag_event(self, dx, dy)
         </li>
     </ul>
@@ -589,7 +590,7 @@ end
 </dd>
     <dt>
     <a name = "new_dynamic_grid"></a>
-    <strong>new_dynamic_grid(self, parent)</strong>
+    <strong>new_dynamic_grid(self, parent_node)</strong>
     </dt>
     <dd>
     Create <a href="../modules/DynamicGrid.html#">DynamicGrid</a> component
@@ -601,9 +602,9 @@ end
             <span class="types"><span class="type">DruidInstance</span></span>
 
         </li>
-        <li><span class="parameter">parent</span>
-            <span class="types"><span class="type">node</span></span>
-         The gui node parent, where items will be placed
+        <li><span class="parameter">parent_node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id). Parent of all Grid items.
         </li>
     </ul>
 
@@ -620,7 +621,7 @@ end
 </dd>
     <dt>
     <a name = "new_hotkey"></a>
-    <strong>new_hotkey(self, keys_array, callback[, params])</strong>
+    <strong>new_hotkey(self, keys_array, callback, callback_argument)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Hotkey.html#">Hotkey</a> component
@@ -638,12 +639,11 @@ end
         </li>
         <li><span class="parameter">callback</span>
             <span class="types"><span class="type">function</span></span>
-         Button callback
+         The callback function
         </li>
-        <li><span class="parameter">params</span>
-            <span class="types"><span class="type">value</span></span>
-         Button callback params
-         (<em>optional</em>)
+        <li><span class="parameter">callback_argument</span>
+            <span class="types"><span class="type">any</span> or <span class="type">nil</span></span>
+         The argument to pass into the callback function
         </li>
     </ul>
 
@@ -673,11 +673,11 @@ end
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         Gui node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id)
         </li>
         <li><span class="parameter">on_hover_callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Hover callback
         </li>
     </ul>
@@ -695,7 +695,7 @@ end
 </dd>
     <dt>
     <a name = "new_input"></a>
-    <strong>new_input(self, click_node, text_node[, keyboard_type])</strong>
+    <strong>new_input(self, click_node, text_node, keyboard_type)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Input.html#">Input</a> component
@@ -708,17 +708,16 @@ end
 
         </li>
         <li><span class="parameter">click_node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
          Button node to enabled input component
         </li>
         <li><span class="parameter">text_node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
          Text node what will be changed on user input
         </li>
         <li><span class="parameter">keyboard_type</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Gui keyboard type for input field
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -735,7 +734,7 @@ end
 </dd>
     <dt>
     <a name = "new_lang_text"></a>
-    <strong>new_lang_text(self, node, locale_id, no_adjust)</strong>
+    <strong>new_lang_text(self, node, locale_id, adjust_type)</strong>
     </dt>
     <dd>
     Create <a href="../modules/LangText.html#">LangText</a> component
@@ -748,16 +747,16 @@ end
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         The text node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The_node id or gui.get_node(node_id)
         </li>
         <li><span class="parameter">locale_id</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Default locale id
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         Default locale id or text from node as default
         </li>
-        <li><span class="parameter">no_adjust</span>
-            <span class="types"><span class="type">bool</span></span>
-         If true, will not correct text size
+        <li><span class="parameter">adjust_type</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         Adjust type for text node. Default: const.TEXT_ADJUST.DOWNSCALE
         </li>
     </ul>
 
@@ -788,7 +787,7 @@ end
         </li>
         <li><span class="parameter">node</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
-         Layout node
+         The_node id or gui.get_node(node_id).
         </li>
         <li><span class="parameter">mode</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
@@ -809,7 +808,7 @@ end
 </dd>
     <dt>
     <a name = "new_progress"></a>
-    <strong>new_progress(self, node, key[, init_value=1])</strong>
+    <strong>new_progress(self, node, key, init_value)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Progress.html#">Progress</a> component
@@ -830,9 +829,8 @@ end
          Progress bar direction: const.SIDE.X or const.SIDE.Y
         </li>
         <li><span class="parameter">init_value</span>
-            <span class="types"><span class="type">number</span></span>
-         Initial value of progress bar
-         (<em>default</em> 1)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Initial value of progress bar. Default: 1
         </li>
     </ul>
 
@@ -889,7 +887,7 @@ end
 </dd>
     <dt>
     <a name = "new_rich_text"></a>
-    <strong>new_rich_text(self[, template[, nodes]])</strong>
+    <strong>new_rich_text(self, template, nodes)</strong>
     </dt>
     <dd>
     Create <a href="../modules/RichText.html#">RichText</a> component.
@@ -903,14 +901,12 @@ end
 
         </li>
         <li><span class="parameter">template</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Template name if used
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">nodes</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">nil</span></span>
          Nodes table from gui.clone_tree
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -940,12 +936,12 @@ end
 
         </li>
         <li><span class="parameter">view_node</span>
-            <span class="types"><span class="type">node</span></span>
-         GUI view scroll node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id). Will used as user input node.
         </li>
         <li><span class="parameter">content_node</span>
-            <span class="types"><span class="type">node</span></span>
-         GUI content scroll node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id). Will used as scrollable node inside view_node.
         </li>
     </ul>
 
@@ -962,7 +958,7 @@ end
 </dd>
     <dt>
     <a name = "new_slider"></a>
-    <strong>new_slider(self, node, end_pos[, callback])</strong>
+    <strong>new_slider(self, pin_node, end_pos, callback)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Slider.html#">Slider</a> component
@@ -974,18 +970,17 @@ end
             <span class="types"><span class="type">DruidInstance</span></span>
 
         </li>
-        <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         Gui pin node
+        <li><span class="parameter">pin_node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The_node id or gui.get_node(node_id).
         </li>
         <li><span class="parameter">end_pos</span>
             <span class="types"><span class="type">vector3</span></span>
          The end position of slider
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          On slider change callback
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -1002,7 +997,7 @@ end
 </dd>
     <dt>
     <a name = "new_static_grid"></a>
-    <strong>new_static_grid(self, parent, element[, in_row=1])</strong>
+    <strong>new_static_grid(self, parent_node, item, in_row)</strong>
     </dt>
     <dd>
     Create <a href="../modules/StaticGrid.html#">StaticGrid</a> component
@@ -1014,18 +1009,17 @@ end
             <span class="types"><span class="type">DruidInstance</span></span>
 
         </li>
-        <li><span class="parameter">parent</span>
-            <span class="types"><span class="type">node</span></span>
-         The gui node parent, where items will be placed
+        <li><span class="parameter">parent_node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id). Parent of all Grid items.
         </li>
-        <li><span class="parameter">element</span>
-            <span class="types"><span class="type">node</span></span>
-         Element prefab. Need to get it size
+        <li><span class="parameter">item</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         Item prefab. Required to get grid's item size. Can be adjusted separately.
         </li>
         <li><span class="parameter">in_row</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          How many nodes in row can be placed
-         (<em>default</em> 1)
         </li>
     </ul>
 
@@ -1055,11 +1049,11 @@ end
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         Gui node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id). Will used as user input node.
         </li>
         <li><span class="parameter">on_swipe_callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Swipe callback for on_swipe_end event
         </li>
     </ul>
@@ -1077,7 +1071,7 @@ end
 </dd>
     <dt>
     <a name = "new_text"></a>
-    <strong>new_text(self, node[, value[, no_adjust]])</strong>
+    <strong>new_text(self, node, value, no_adjust)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Text.html#">Text</a> component
@@ -1090,18 +1084,16 @@ end
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
-         Gui text node
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The node_id or gui.get_node(node_id)
         </li>
         <li><span class="parameter">value</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Initial text. Default value is node text from GUI scene.
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">no_adjust</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          If true, text will be not auto-adjust size
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -1118,7 +1110,7 @@ end
 </dd>
     <dt>
     <a name = "new_timer"></a>
-    <strong>new_timer(self, node, seconds_from[, seconds_to=0[, callback]])</strong>
+    <strong>new_timer(self, node, seconds_from, seconds_to, callback)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Timer.html#">Timer</a> component
@@ -1131,7 +1123,7 @@ end
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
          Gui text node
         </li>
         <li><span class="parameter">seconds_from</span>
@@ -1139,14 +1131,12 @@ end
          Start timer value in seconds
         </li>
         <li><span class="parameter">seconds_to</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          End timer value in seconds
-         (<em>default</em> 0)
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Function on timer end
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -1189,7 +1179,7 @@ end
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         The boolean value is input was consumed
     </ol>
 
@@ -1247,7 +1237,7 @@ end
 
         </li>
         <li><span class="parameter">component</span>
-            <span class="types"><span class="type">Component</span></span>
+            <span class="types"><span class="type">BaseComponent</span></span>
          Component instance
         </li>
     </ul>
@@ -1274,7 +1264,7 @@ end
          <a href="../modules/DruidInstance.html#">DruidInstance</a>
         </li>
         <li><span class="parameter">blacklist_components</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">Component</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">BaseComponent</span></span>
          The array of component to blacklist
          (<em>default</em> nil)
         </li>
@@ -1308,7 +1298,7 @@ end
 
         </li>
         <li><span class="parameter">whitelist_components</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">Component</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">BaseComponent</span></span>
          The array of component to whitelist
          (<em>default</em> nil)
         </li>

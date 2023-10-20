@@ -17,7 +17,6 @@ local function init_scroll_with_grid(self)
 			local position = gui.get_position(clone_prefab["grid_prefab"])
 			grid_scroll:scroll_to(position)
 		end)
-		button:set_click_zone(gui.get_node("scroll_with_grid_size"))
 	end
 
 	gui.set_enabled(prefab, false)
@@ -37,7 +36,7 @@ end
 function init(self)
 	self.druid = druid.new(self)
 
-		-- Usual scroll for whole page
+	-- Usual scroll for whole page
 	self.druid:new_scroll("root", "scroll_page_content")
 
 	-- Simple scroll with no adjust

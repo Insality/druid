@@ -102,8 +102,8 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=false] bool IS_DYNAMIC_NODE_POSES If true, always center grid content as grid pivot sets
--- @tfield[opt=false] bool IS_ALIGN_LAST_ROW If true, always align last row of the grid as grid pivot sets
+-- @tfield[opt=false] boolean IS_DYNAMIC_NODE_POSES If true, always center grid content as grid pivot sets
+-- @tfield[opt=false] boolean IS_ALIGN_LAST_ROW If true, always align last row of the grid as grid pivot sets
 function StaticGrid.on_style_change(self, style)
 	self.style = {}
 	self.style.IS_DYNAMIC_NODE_POSES = style.IS_DYNAMIC_NODE_POSES or false
@@ -113,7 +113,7 @@ end
 
 --- The @{StaticGrid} constructor
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam string|Node parent The GUI Node container, where grid's items will be placed
+-- @tparam string|node parent The GUI Node container, where grid's items will be placed
 -- @tparam node element Element prefab. Need to get it size
 -- @tparam[opt=1] number in_row How many nodes in row can be placed
 function StaticGrid.init(self, parent, element, in_row)
@@ -151,7 +151,7 @@ local _temp_pos = vmath.vector3(0)
 --- Return pos for grid node index
 -- @tparam StaticGrid self @{StaticGrid}
 -- @tparam number index The grid element index
--- @treturn vector3 Node position
+-- @treturn vector3 @Node position
 function StaticGrid.get_pos(self, index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
@@ -213,10 +213,10 @@ end
 
 --- Add new item to the grid
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam node item Gui node
--- @tparam[opt] number index The item position. By default add as last item
--- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+-- @tparam node item GUI node
+-- @tparam number|nil index The item position. By default add as last item
+-- @tparam number|nil shift_policy How shift nodes, if required. Default: const.SHIFT.RIGHT
+-- @tparam boolean|nil is_instant If true, update node positions instantly
 function StaticGrid.add(self, item, index, shift_policy, is_instant)
 	index = index or ((self.last_index or 0) + 1)
 
@@ -239,9 +239,9 @@ end
 --- Remove the item from the grid. Note that gui node will be not deleted
 -- @tparam StaticGrid self @{StaticGrid}
 -- @tparam number index The grid node index to remove
--- @tparam[opt=SHIFT.RIGHT] number shift_policy How shift nodes, if required. See const.SHIFT
--- @tparam[opt=false] boolean is_instant If true, update node positions instantly
--- @treturn Node The deleted gui node from grid
+-- @tparam number|nil shift_policy How shift nodes, if required. Default: const.SHIFT.RIGHT
+-- @tparam boolean|nil is_instant If true, update node positions instantly
+-- @treturn node The deleted gui node from grid
 function StaticGrid.remove(self, index, shift_policy, is_instant)
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
@@ -379,7 +379,7 @@ end
 
 --- Update grid inner state
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function StaticGrid._update(self, is_instant)
 	self:_update_indexes()
@@ -425,7 +425,7 @@ end
 
 --- Update grid nodes position
 -- @tparam StaticGrid self @{StaticGrid}
--- @tparam bool is_instant If true, node position update instantly, otherwise with set_position_function callback
+-- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
 -- @local
 function StaticGrid._update_pos(self, is_instant)
 	local zero_offset = self:_get_zero_offset()

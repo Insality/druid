@@ -90,6 +90,7 @@
 --- The component druid instance
 -- @tfield DruidInstance druid @{DruidInstance}
 
+--
 
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
@@ -103,7 +104,7 @@ local SCHEME = {
 }
 
 
---- Rich Text component constructor
+--- The @{RichText} constructor
 -- @tparam RichText self @{RichText}
 -- @tparam string template The Rich Text template name
 -- @tparam table nodes The node table, if prefab was copied by gui.clone_tree()

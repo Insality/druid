@@ -83,12 +83,12 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#add_hotkey">add_hotkey(self, keys[, callback_argument])</a></td>
+	<td class="name" nowrap><a href="#add_hotkey">add_hotkey(self, keys, callback_argument)</a></td>
 	<td class="summary">Add hotkey for component callback</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, keys, callback[, callback_argument])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#init">init(self, keys, callback, callback_argument)</a></td>
+	<td class="summary">The <a href="../modules/Hotkey.html#">Hotkey</a> constructor</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -127,7 +127,7 @@
     <dl class="function">
     <dt>
     <a name = "add_hotkey"></a>
-    <strong>add_hotkey(self, keys[, callback_argument])</strong>
+    <strong>add_hotkey(self, keys, callback_argument)</strong>
     </dt>
     <dd>
     Add hotkey for component callback
@@ -144,12 +144,17 @@
          that have to be pressed before key pressed to activate
         </li>
         <li><span class="parameter">callback_argument</span>
-            <span class="types"><span class="type">value</span></span>
+            <span class="types"><span class="type">any</span> or <span class="type">nil</span></span>
          The argument to pass into the callback function
-         (<em>optional</em>)
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Hotkey</span></span>
+        Current instance
+    </ol>
 
 
 
@@ -157,10 +162,10 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, keys, callback[, callback_argument])</strong>
+    <strong>init(self, keys, callback, callback_argument)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/Hotkey.html#">Hotkey</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -178,9 +183,8 @@
          The callback function
         </li>
         <li><span class="parameter">callback_argument</span>
-            <span class="types"><span class="type">value</span></span>
+            <span class="types"><span class="type">any</span> or <span class="type">nil</span></span>
          The argument to pass into the callback function
-         (<em>optional</em>)
         </li>
     </ul>
 
