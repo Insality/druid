@@ -85,6 +85,8 @@ function M.register(name, module)
 	druid_instance["new_" .. name] = function(self, ...)
 		return druid_instance.new(self, module, ...)
 	end
+
+	return druid_instance["new_" .. name]
 end
 
 

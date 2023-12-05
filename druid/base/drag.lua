@@ -10,13 +10,16 @@
 -- @within BaseComponent
 -- @alias druid.drag
 
+--- Drag node
+-- @tfield node node
+
 --- Event on touch start callback(self)
 -- @tfield DruidEvent on_touch_start @{DruidEvent}
 
 --- Event on touch end callback(self)
 -- @tfield DruidEvent on_touch_end @{DruidEvent}
 
---- Event on drag start callback(self)
+--- Event on drag start callback(self, touch)
 -- @tfield DruidEvent on_drag_start @{DruidEvent}
 
 --- on drag progress callback(self, dx, dy, total_x, total_y)
@@ -67,23 +70,24 @@ local function start_touch(self, touch)
 	self.y = touch.y
 	self._scene_scale = helper.get_scene_scale(self.node)
 
-	self.on_touch_start:trigger(self:get_context())
+	self.on_touch_start:trigger(self:get_context(), touch)
 end
 
 
-local function end_touch(self)
+local function end_touch(self, touch)
 	if self.is_drag then
 		self.on_drag_end:trigger(
 			self:get_context(),
 			self.x - self.touch_start_pos.x,
-			self.y - self.touch_start_pos.y
+			self.y - self.touch_start_pos.y,
+			touch
 		)
 	end
 
 	self.is_drag = false
 	if self.is_touch then
 		self.is_touch = false
-		self.on_touch_end:trigger(self:get_context())
+		self.on_touch_end:trigger(self:get_context(), touch)
 	end
 	self:reset_input_priority()
 	self.touch_id = 0
@@ -102,7 +106,7 @@ local function process_touch(self, touch)
 	local distance = helper.distance(touch.x, touch.y, self.touch_start_pos.x, self.touch_start_pos.y)
 	if not self.is_drag and distance >= self.style.DRAG_DEADZONE then
 		self.is_drag = true
-		self.on_drag_start:trigger(self:get_context())
+		self.on_drag_start:trigger(self:get_context(), touch)
 		self:set_input_priority(const.PRIORITY_INPUT_MAX, true)
 	end
 end
@@ -266,7 +270,7 @@ function Drag.on_input(self, action_id, action)
 			on_touch_release(self, action_id, action)
 		else
 			-- PC
-			end_touch(self)
+			end_touch(self, touch)
 		end
 	end
 
@@ -285,7 +289,7 @@ function Drag.on_input(self, action_id, action)
 		self.y = touch_modified.y
 	end
 
-	if self.is_drag then
+	if self.is_drag and (self.dx ~= 0 or self.dy ~= 0) then
 		local x_koef, y_koef = self._x_koef, self._y_koef
 		if self.style.NO_USE_SCREEN_KOEF then
 			x_koef, y_koef = 1, 1
@@ -295,7 +299,7 @@ function Drag.on_input(self, action_id, action)
 			self.dx * x_koef / self._scene_scale.x,
 			self.dy * y_koef / self._scene_scale.y,
 			(self.x - self.touch_start_pos.x) * x_koef / self._scene_scale.x,
-			(self.y - self.touch_start_pos.y) * y_koef / self._scene_scale.y)
+			(self.y - self.touch_start_pos.y) * y_koef / self._scene_scale.y, touch_modified)
 	end
 
 	return self.is_drag

@@ -23,6 +23,8 @@
 
 local helper = require("druid.helper")
 local component = require("druid.component")
+local Event = require("druid.event")
+local const = require("druid.const")
 
 local Hotkey = component.create("hotkey")
 
@@ -37,7 +39,9 @@ function Hotkey.init(self, keys, callback, callback_argument)
 
 	self._hotkeys = {}
 	self._modificators = {}
-	self._callback = callback
+
+	self.on_hotkey_pressed = Event()
+	self.on_hotkey_released = Event(callback)
 
 	if keys then
 		self:add_hotkey(keys, callback_argument)
@@ -104,8 +108,15 @@ function Hotkey.add_hotkey(self, keys, callback_argument)
 end
 
 
+function Hotkey.on_focus_gained(self)
+	for k, v in pairs(self._modificators) do
+		self._modificators[k] = false
+	end
+end
+
+
 function Hotkey.on_input(self, action_id, action)
-	if not action_id then
+	if not action_id or #self._hotkeys == 0 then
 		return false
 	end
 
@@ -136,21 +147,31 @@ function Hotkey.on_input(self, action_id, action)
 
 			if action.pressed and is_modificator_ok then
 				hotkey.is_processing = true
+				self.on_hotkey_pressed:trigger(self:get_context(), hotkey.callback_argument)
+			end
+			if not action.pressed and self._is_process_repeated and action.repeated and is_modificator_ok and hotkey.is_processing then
+				self.on_hotkey_released:trigger(self:get_context(), hotkey.callback_argument)
+				return true
 			end
 			if action.released and is_modificator_ok and hotkey.is_processing then
 				hotkey.is_processing = false
-				if hotkey.callback_argument then
-					self._callback(self:get_context(), hotkey.callback_argument)
-					return true
-				else
-					self._callback(self:get_context())
-					return true
-				end
+				self.on_hotkey_released:trigger(self:get_context(), hotkey.callback_argument)
+				return true
 			end
 		end
 	end
 
 	return false
+end
+
+
+--- If true, the callback will be triggered on action.repeated
+-- @tparam Hotkey self @{Hotkey}
+-- @tparam bool is_enabled_repeated The flag value
+-- @treturn Hotkey
+function Hotkey.set_repeat(self, is_enabled_repeated)
+	self._is_process_repeated = is_enabled_repeated
+	return self
 end
 
 

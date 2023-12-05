@@ -53,6 +53,9 @@
 --- Scroll content node
 -- @tfield node content_node
 
+--- Flag, if scroll now moving by inertion
+-- @tfield bool _is_inert
+
 --- Current inert speed
 -- @tfield vector3 inertion
 
@@ -72,7 +75,7 @@
 -- @tfield Drag drag @{Drag}
 
 --- Current index of points of interests
--- @tfield[opt] number selected
+-- @tfield number|nil selected
 
 --- Flag, if scroll now animating by gui.animate
 -- @tfield boolean is_animate

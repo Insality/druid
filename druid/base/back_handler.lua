@@ -32,7 +32,7 @@
 -- @usage
 -- -- Replace params on runtime:
 -- back_handler.params = { ... }
--- @tfield[opt] any params
+-- @tfield any|nil params
 
 ---
 

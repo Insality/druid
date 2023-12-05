@@ -27,7 +27,7 @@
 --     print("Also the button component is passed in callback params")
 -- end
 --
--- local custom_args = "any variable to pass inside callback"
+-- local custom_args = "Any variable to pass inside callback"
 -- local button = self.druid:new_button("button_name", on_button_click, custom_args)
 --
 -- @module Button
@@ -131,8 +131,8 @@
 --- The @{Hover}: Button Hover component
 -- @tfield Hover hover @{Hover}
 
---- Additional button click area, defined by another GUI Node
--- @tfield[opt] node click_zone
+--- Additional button click area, defined by another GUI node
+-- @tfield node|nil click_zone
 
 ---
 
@@ -257,6 +257,7 @@ end
 --- Component style params.
 -- You can override this component styles params in Druid styles table
 -- or create your own style
+-- @table style
 -- @tfield[opt=0.4] number LONGTAP_TIME Minimum time to trigger on_hold_callback
 -- @tfield[opt=0.8] number AUTOHOLD_TRIGGER Maximum hold time to trigger button release while holding
 -- @tfield[opt=0.4] number DOUBLETAP_TIME Time between double taps
@@ -265,7 +266,6 @@ end
 -- @tfield function on_hover function(self, node, hover_state)
 -- @tfield function on_mouse_hover function(self, node, hover_state)
 -- @tfield function on_set_enabled function(self, node, enabled_state)
--- @table style
 function Button.on_style_change(self, style)
 	self.style = {}
 	self.style.LONGTAP_TIME = style.LONGTAP_TIME or 0.4
@@ -492,7 +492,7 @@ end
 
 --- Set key name to trigger this button by keyboard.
 -- @tparam Button self @{Button}
--- @tparam hash key The action_id of the input key
+-- @tparam hash|string key The action_id of the input key
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_key_trigger("key_space")

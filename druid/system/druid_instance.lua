@@ -96,7 +96,6 @@ local back_handler = require("druid.base.back_handler")
 
 local DruidInstance = class("druid.druid_instance")
 
-local PATH_OBJ = "."
 local MSG_ADD_FOCUS = hash("acquire_input_focus")
 local MSG_REMOVE_FOCUS = hash("release_input_focus")
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
@@ -107,11 +106,7 @@ local function set_input_state(self, is_input_inited)
 	end
 
 	self.input_inited = is_input_inited
-	if is_input_inited then
-		msg.post(PATH_OBJ, MSG_ADD_FOCUS)
-	else
-		msg.post(PATH_OBJ, MSG_REMOVE_FOCUS)
-	end
+	msg.post(".", is_input_inited and MSG_ADD_FOCUS or MSG_REMOVE_FOCUS)
 end
 
 
@@ -207,10 +202,10 @@ local function process_input(self, action_id, action, components)
 		local meta = component._meta
 		if meta.input_enabled and can_use_input_component(self, component) then
 			if not is_input_consumed then
-				is_input_consumed = component:on_input(action_id, action)
+				is_input_consumed = component:on_input(action_id, action) or false
 			else
 				if component.on_input_interrupt then
-					component:on_input_interrupt()
+					component:on_input_interrupt(action_id, action)
 				end
 			end
 		end

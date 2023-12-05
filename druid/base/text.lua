@@ -408,7 +408,7 @@ end
 
 --- Set text adjust, refresh the current text visuals, if needed
 -- @tparam Text self @{Text}
--- @tparam number|nil adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
+-- @tparam string|nil adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
 -- @tparam number|nil minimal_scale If pass nil - not use minimal scale
 -- @treturn Text Current text instance
 function Text.set_text_adjust(self, adjust_type, minimal_scale)

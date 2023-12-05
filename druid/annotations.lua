@@ -43,12 +43,19 @@ function druid.set_text_function(callback) end
 
 ---@class druid.back_handler : druid.base_component
 ---@field on_back druid.event The @{DruidEvent} Event on back handler action.
----@field params any Custom args to pass in the callback
+---@field params any|nil Custom args to pass in the callback
 local druid__back_handler = {}
 
 
 ---@class druid.base_component
 local druid__base_component = {}
+
+--- Set current component style table.
+--- Invoke `on_style_change` on component, if exist. Component should handle  their style changing and store all style params
+---@param self druid.base_component @{BaseComponent}
+---@param druid_style table|nil Druid style module
+---@return druid.base_component @{BaseComponent}
+function druid__base_component.component:set_style(self, druid_style) end
 
 --- Return all children components, recursive
 ---@param self druid.base_component @{BaseComponent}
@@ -131,13 +138,6 @@ function druid__base_component.set_input_priority(self, value, is_temporary) end
 ---@return druid.base_component @{BaseComponent}
 function druid__base_component.set_nodes(self, nodes) end
 
---- Set current component style table.
---- Invoke `on_style_change` on component, if exist. Component should handle  their style changing and store all style params
----@param self druid.base_component @{BaseComponent}
----@param druid_style table|nil Druid style module
----@return druid.base_component @{BaseComponent}
-function druid__base_component.set_style(self, druid_style) end
-
 --- Set component template name.
 --- Use on all your custom components with GUI layouts used as templates.  It will check parent template name to build full template name in self:get_node()
 ---@param self druid.base_component @{BaseComponent}
@@ -169,7 +169,7 @@ function druid__blocker.set_enabled(self, state) end
 
 ---@class druid.button : druid.base_component
 ---@field anim_node node Button animation node.
----@field click_zone node Additional button click area, defined by another GUI Node
+---@field click_zone node|nil Additional button click area, defined by another GUI node
 ---@field hover druid.hover The @{Hover}: Button Hover component
 ---@field node node Button trigger node
 ---@field node_id hash The GUI node id from button node
@@ -226,7 +226,7 @@ function druid__button.set_enabled(self, state) end
 
 --- Set key name to trigger this button by keyboard.
 ---@param self druid.button @{Button}
----@param key hash The action_id of the input key
+---@param key hash|string The action_id of the input key
 ---@return druid.button Current button instance
 function druid__button.set_key_trigger(self, key) end
 
@@ -384,9 +384,10 @@ function druid__data_list.set_data(self, data) end
 ---@field can_y boolean Is drag component process horizontal.
 ---@field is_drag boolean Is component now dragging
 ---@field is_touch boolean Is component now touching
+---@field node node Drag node
 ---@field on_drag druid.event on drag progress callback(self, dx, dy, total_x, total_y)
 ---@field on_drag_end druid.event Event on drag end callback(self, total_x, total_y)
----@field on_drag_start druid.event Event on drag start callback(self)
+---@field on_drag_start druid.event Event on drag start callback(self, touch)
 ---@field on_touch_end druid.event Event on touch end callback(self)
 ---@field on_touch_start druid.event Event on touch start callback(self)
 ---@field style druid.drag.style Component style params.
@@ -561,16 +562,21 @@ local druid__hotkey = {}
 --- Add hotkey for component callback
 ---@param self druid.hotkey @{Hotkey}
 ---@param keys string[]|hash[]|string|hash that have to be pressed before key pressed to activate
----@param callback_argument any|nil The argument to pass into the callback function
----@return druid.hotkey Current instance
+---@param callback_argument value The argument to pass into the callback function
 function druid__hotkey.add_hotkey(self, keys, callback_argument) end
 
---- The @{Hotkey} constructor
+--- Component init function
 ---@param self druid.hotkey @{Hotkey}
 ---@param keys string[]|string The keys to be pressed for trigger callback. Should contains one key and any modificator keys
 ---@param callback function The callback function
----@param callback_argument any|nil The argument to pass into the callback function
+---@param callback_argument value The argument to pass into the callback function
 function druid__hotkey.init(self, keys, callback, callback_argument) end
+
+--- If true, the callback will be triggered on action.repeated
+---@param self druid.hotkey @{Hotkey}
+---@param is_enabled_repeated bool The flag value
+---@return druid.hotkey
+function druid__hotkey.set_repeat(self, is_enabled_repeated) end
 
 
 ---@class druid.hotkey.style
@@ -630,12 +636,12 @@ function druid__hover.set_mouse_hover(self, state) end
 
 
 ---@class druid.input : druid.base_component
----@field allowerd_characters string Pattern matching for user input
+---@field allowerd_characters string|nil Pattern matching for user input
 ---@field button druid.button Button component
 ---@field is_empty boolean Is current input is empty now
 ---@field is_selected boolean Is current input selected now
 ---@field keyboard_type number Gui keyboard type for input field
----@field max_length number Max length for input text
+---@field max_length number|nil Max length for input text
 ---@field on_input_empty druid.event On input field text change to empty string callback(self, input_text)
 ---@field on_input_full druid.event On input field text change to max length string callback(self, input_text)
 ---@field on_input_select druid.event On input field select callback(self, button_node)
@@ -1002,6 +1008,7 @@ local druid__rich_text__style = {}
 
 
 ---@class druid.scroll : druid.base_component
+---@field _is_inert bool Flag, if scroll now moving by inertion
 ---@field available_pos vector4 Available position for content node: (min_x, max_y, max_x, min_y)
 ---@field available_size vector3 Size of available positions: (width, height, 0)
 ---@field content_node node Scroll content node
@@ -1012,7 +1019,7 @@ local druid__rich_text__style = {}
 ---@field on_scroll druid.event On scroll move callback(self, position)
 ---@field on_scroll_to druid.event On scroll_to function callback(self, target, is_instant)
 ---@field position vector3 Current scroll posisition
----@field selected number Current index of points of interests
+---@field selected number|nil Current index of points of interests
 ---@field style druid.scroll.style Component style params.
 ---@field target_position vector3 Current scroll target position
 ---@field view_node node Scroll view node
@@ -1394,7 +1401,7 @@ function druid__text.set_size(self, size) end
 
 --- Set text adjust, refresh the current text visuals, if needed
 ---@param self druid.text @{Text}
----@param adjust_type number|nil See const.TEXT_ADJUST. If pass nil - use current adjust type
+---@param adjust_type string|nil See const.TEXT_ADJUST. If pass nil - use current adjust type
 ---@param minimal_scale number|nil If pass nil - not use minimal scale
 ---@return druid.text Current text instance
 function druid__text.set_text_adjust(self, adjust_type, minimal_scale) end

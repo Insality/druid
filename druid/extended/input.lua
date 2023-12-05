@@ -40,10 +40,10 @@
 -- @tfield boolean is_empty
 
 --- Max length for input text
--- @tfield[opt] number max_length
+-- @tfield number|nil max_length
 
 --- Pattern matching for user input
--- @tfield[opt] string allowerd_characters
+-- @tfield string|nil allowerd_characters
 
 --- Gui keyboard type for input field
 -- @tfield number keyboard_type
