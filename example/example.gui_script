@@ -196,7 +196,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_button(self, "With component", "data_list_with_component", "/data_list/with_component/with_component.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Layouts"))
-	self.lobby_grid:add(get_button(self, "Layout fit", "layout_fit", "/custom/layout/layout_fit/layout_fit.gui_script"))
+	self.lobby_grid:add(get_button(self, "Layout fit", "layout_fit", "/layout/layout_fit/layout_fit.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Custom components"))
 	self.lobby_grid:add(get_button(self, "Rich Input", "custom_rich_input", "/custom/rich_input/rich_input.gui_script"))
