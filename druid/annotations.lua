@@ -50,13 +50,6 @@ local druid__back_handler = {}
 ---@class druid.base_component
 local druid__base_component = {}
 
---- Set current component style table.
---- Invoke `on_style_change` on component, if exist. Component should handle  their style changing and store all style params
----@param self druid.base_component @{BaseComponent}
----@param druid_style table|nil Druid style module
----@return druid.base_component @{BaseComponent}
-function druid__base_component.component:set_style(self, druid_style) end
-
 --- Return all children components, recursive
 ---@param self druid.base_component @{BaseComponent}
 ---@return table Array of childrens if the Druid component instance
@@ -137,6 +130,13 @@ function druid__base_component.set_input_priority(self, value, is_temporary) end
 ---@param nodes table BaseComponent nodes table
 ---@return druid.base_component @{BaseComponent}
 function druid__base_component.set_nodes(self, nodes) end
+
+--- Set current component style table.
+--- Invoke `on_style_change` on component, if exist. Component should handle  their style changing and store all style params
+---@param self druid.base_component @{BaseComponent}
+---@param druid_style table|nil Druid style module
+---@return druid.base_component @{BaseComponent}
+function druid__base_component.set_style(self, druid_style) end
 
 --- Set component template name.
 --- Use on all your custom components with GUI layouts used as templates.  It will check parent template name to build full template name in self:get_node()
@@ -562,14 +562,15 @@ local druid__hotkey = {}
 --- Add hotkey for component callback
 ---@param self druid.hotkey @{Hotkey}
 ---@param keys string[]|hash[]|string|hash that have to be pressed before key pressed to activate
----@param callback_argument value The argument to pass into the callback function
+---@param callback_argument any|nil The argument to pass into the callback function
+---@return druid.hotkey Current instance
 function druid__hotkey.add_hotkey(self, keys, callback_argument) end
 
---- Component init function
+--- The @{Hotkey} constructor
 ---@param self druid.hotkey @{Hotkey}
 ---@param keys string[]|string The keys to be pressed for trigger callback. Should contains one key and any modificator keys
 ---@param callback function The callback function
----@param callback_argument value The argument to pass into the callback function
+---@param callback_argument any|nil The argument to pass into the callback function
 function druid__hotkey.init(self, keys, callback, callback_argument) end
 
 --- If true, the callback will be triggered on action.repeated
