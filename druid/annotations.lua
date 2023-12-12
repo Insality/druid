@@ -111,9 +111,10 @@ function druid__base_component.reset_input_priority(self) end
 
 --- Set component input state.
 --- By default it enabled  If input is disabled, the component will not receive input events
----@param self druid.base_component @{BaseComponent}
+---@generic T: druid.base_component
+---@param self T @{BaseComponent}
 ---@param state boolean|nil The component input state
----@return druid.base_component BaseComponent itself
+---@return T BaseComponent itself
 function druid__base_component.set_input_enabled(self, state) end
 
 --- Set component input priority
@@ -126,23 +127,26 @@ function druid__base_component.set_input_priority(self, value, is_temporary) end
 
 --- Set current component nodes.
 --- Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
----@param self druid.base_component @{BaseComponent}
+---@generic T: druid.base_component
+---@param self T @{BaseComponent}
 ---@param nodes table BaseComponent nodes table
----@return druid.base_component @{BaseComponent}
+---@return T @{BaseComponent}
 function druid__base_component.set_nodes(self, nodes) end
 
 --- Set current component style table.
 --- Invoke `on_style_change` on component, if exist. Component should handle  their style changing and store all style params
----@param self druid.base_component @{BaseComponent}
+---@generic T: druid.base_component
+---@param self T @{BaseComponent}
 ---@param druid_style table|nil Druid style module
----@return druid.base_component @{BaseComponent}
+---@return T @{BaseComponent}
 function druid__base_component.set_style(self, druid_style) end
 
 --- Set component template name.
 --- Use on all your custom components with GUI layouts used as templates.  It will check parent template name to build full template name in self:get_node()
----@param self druid.base_component @{BaseComponent}
+---@generic T: druid.base_component
+---@param self T @{BaseComponent}
 ---@param template string BaseComponent template name
----@return druid.base_component @{BaseComponent}
+---@return T @{BaseComponent}
 function druid__base_component.set_template(self, template) end
 
 
@@ -1463,10 +1467,11 @@ local druid_instance = {}
 function druid_instance.final(self) end
 
 --- Create new component.
+---@generic T: druid.base_component
 ---@param self druid_instance
----@param component druid.base_component Component module
+---@param component T Component module
 ---@param ... any Other component params to pass it to component:init function
----@return druid.base_component Component instance
+---@return T Component instance
 function druid_instance.new(self, component, ...) end
 
 --- Create @{BackHandler} component
