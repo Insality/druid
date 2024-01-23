@@ -219,7 +219,7 @@ function Input.on_input(self, action_id, action)
 			return true
 		end
 
-		if input_text or #marked_text then
+		if input_text or #marked_text > 0 then
 			self:set_text(input_text)
 			return true
 		end
