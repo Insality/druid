@@ -313,6 +313,7 @@ end
 function Input.unselect(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
+	self.value = self.current_value
 	if self.is_selected then
 		self:reset_input_priority()
 		self.button:reset_input_priority()
