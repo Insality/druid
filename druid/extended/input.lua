@@ -166,7 +166,7 @@ end
 function Input.on_input(self, action_id, action)
 	if self.is_selected then
 		local input_text = nil
-		local marked_text = ""
+		local marked_text = nil
 		if action_id == const.ACTION_TEXT then
 			-- ignore return key
 			if action.text == "\n" or action.text == "\r" then
@@ -219,7 +219,7 @@ function Input.on_input(self, action_id, action)
 			return true
 		end
 
-		if input_text or #marked_text > 0 then
+		if input_text or marked_text then
 			self:set_text(input_text)
 			return true
 		end
