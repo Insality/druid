@@ -137,6 +137,7 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	self.is_empty = true
 
 	self.text_width = 0
+	self.text_height = 0
 	self.market_text_width = 0
 	self.total_width = 0
 
@@ -164,6 +165,7 @@ end
 
 
 function Input.on_input(self, action_id, action)
+	--print("Input.lua",action_id)
 	if self.is_selected then
 		local input_text = nil
 		if action_id == const.ACTION_TEXT then
@@ -270,7 +272,8 @@ function Input.set_text(self, input_text)
 		self.text:set_to(final_text)
 
 		-- measure it
-		self.text_width = self.text:get_text_size(value)
+		self.text_width, self.text_height = self.text:get_text_size(value)
+		
 		self.marked_text_width = self.text:get_text_size(marked_value)
 		self.total_width = self.text_width + self.marked_text_width
 

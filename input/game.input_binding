@@ -30,6 +30,10 @@ key_trigger {
   input: KEY_G
   action: "key_g"
 }
+key_trigger {
+  input: KEY_DEL
+  action: "key_del"
+}
 mouse_trigger {
   input: MOUSE_WHEEL_UP
   action: "mouse_wheel_up"
