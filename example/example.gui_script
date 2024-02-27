@@ -173,7 +173,7 @@ local function init_lobby(self)
 	self.lobby_grid:add(get_title(self, "Texts"))
 	self.lobby_grid:add(get_button(self, "Texts", "texts_general", "/texts/texts_general/texts_general.gui_script"))
 	self.lobby_grid:add(get_button(self, "Adjust types", "texts_adjust", "/texts/texts_adjust/texts_adjust.gui_script"))
-	self.lobby_grid:add(get_button(self, "Lang Text", "texts_lang_text", "/texts/texts_adjust/texts_lang_text.gui_script"))
+	self.lobby_grid:add(get_button(self, "Lang Text", "texts_lang_text", "/texts/lang_text/lang_text.gui_script"))
 
 	self.lobby_grid:add(get_title(self, "Scrolls"))
 	self.lobby_grid:add(get_button_disabled(self, "Nested scrolls", "scroll_scene"))
