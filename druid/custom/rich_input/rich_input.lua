@@ -34,50 +34,29 @@ local SCHEME = {
 	HIGHLIGHT = "highlight_node",
 }
 
-local function set_cursor(self)
-	--[[
-		if self.input:get_text() == "" then
-		gui.set_position(self.cursor, vmath.vector3(0, 0, 0))
-		self.cursor_letter_index = 0
-		return
-	end
 
-	if self.hold_cursor then
-		local text = self.input:get_text()
-		local cursor_width = self.text:get_text_size("|")/2
-		local gap = self.input.total_width/2 * -1
-		local cursor_delta = 0
-		cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, self.cursor_letter_index)) - cursor_width
-		gui.set_position(self.cursor, vmath.vector3(cursor_delta, 0, 0))		
-		self.hold_cursor = false
-		return
-	else
-		gui.set_position(self.cursor, vmath.vector3(self.input.total_width/2, 0, 0))
-	end
-	--]]
+local function set_cursor(self)
 	if self.touch_pos_x then
 		local text = self.input:get_text()
 		local node_pos = gui.get_screen_position(self.highlight)
 		local touch_delta_x = self.touch_pos_x - node_pos.x
 		local letters_count = utf8.len(self.input:get_text())
-		local cursor_width = self.text:get_text_size("|")/2
 		local cursor_delta = 0
 		local gap = self.input.total_width/2 * -1
 
 		for i = 1, letters_count do
-			cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, i)) - cursor_width
+			cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, i)) - self.half_cursor_width
 			if cursor_delta <= touch_delta_x then
 				gui.set_position(self.cursor, vmath.vector3(cursor_delta, 0, 0))
 				self.cursor_letter_index = i
 			end
 		end
+		
 		self.touch_pos_x = nil
 	else
 		local text = self.input:get_text()
-		local cursor_width = self.text:get_text_size("|")/2
 		local gap = self.input.total_width/2 * -1
-		local cursor_delta = 0
-		cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, self.cursor_letter_index)) - cursor_width
+		local cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, self.cursor_letter_index)) - self.half_cursor_width
 		gui.set_position(self.cursor, vmath.vector3(cursor_delta, 0, 0))
 	end
 end
@@ -163,10 +142,6 @@ function RichInput.init(self, template, nodes)
 	self.cursor = self:get_node(SCHEME.CURSOR)
 	self.highlight = self:get_node(SCHEME.HIGHLIGHT) 
 	
-	self.cursor_letter_index = 1
-	self.action_pos_x = nil
-	
-	--self.input:set_text("")
 	self.placeholder = self.druid:new_text(self:get_node(SCHEME.PLACEHOLDER))
 	self.text = self.druid:new_text(self:get_node(SCHEME.INPUT))
 
@@ -178,10 +153,13 @@ function RichInput.init(self, template, nodes)
 	self.input.button.on_double_click:subscribe(on_button_double_click, self)
 	self.input.style.NO_CONSUME_INPUT_WHILE_SELECTED = true
 	self.input.style.SKIP_INPUT_KEYS = true
+
+	self.cursor_letter_index = 1
+	self.action_pos_x = nil
+	self.half_cursor_width = self.text:get_text_size("|")/2
 	
 	on_unselect(self)	
 	clear_text(self)	
-	--update_text(self, "")
 end
 
 
@@ -192,6 +170,7 @@ function RichInput.set_placeholder(self, placeholder_text)
 	self.placeholder:set_to(placeholder_text)
 	return self
 end
+
 
 function RichInput.on_input(self, action_id, action)
 	self.action_pos_x = action.screen_x
@@ -208,26 +187,23 @@ function RichInput.on_input(self, action_id, action)
 			local text = self.input:get_text()
 			local new_text = utf8.sub(text, 1, self.cursor_letter_index) .. utf8.sub(text, self.cursor_letter_index +2 ) 
 			self.input:set_text(new_text)
-			update_text(self)
 		end		
 		if action_id == const.ACTION_BACKSPACE and action.pressed then
 			local text = self.input:get_text()
 			local new_text = utf8.sub(text, 1, self.cursor_letter_index-1) .. utf8.sub(text, self.cursor_letter_index +1 ) 
 			self.cursor_letter_index = self.cursor_letter_index -1
 			self.input:set_text(new_text)
-			update_text(self)
 		end
 		if action_id == const.ACTION_TEXT then			
 			self.cursor_letter_index = self.cursor_letter_index +1
-			update_text(self)
 		end
-
+		
+		update_text(self)
 		self.touch_pos_x = nil
 		
 		if utf8.len(self.input:get_text()) <=0 then
 			self.cursor_letter_index = 1
-		end
-		
+		end	
 	end
 	return true
 end
