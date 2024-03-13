@@ -48,7 +48,7 @@ local function set_cursor(self)
 			cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, i)) - self.half_cursor_width
 			if cursor_delta <= touch_delta_x then
 				gui.set_position(self.cursor, vmath.vector3(cursor_delta, 0, 0))
-				self.cursor_letter_index = i
+				self.input.cursor_letter_index = i
 			end
 		end
 		
@@ -56,7 +56,7 @@ local function set_cursor(self)
 	else
 		local text = self.input:get_text()
 		local gap = self.input.total_width/2 * -1
-		local cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, self.cursor_letter_index)) - self.half_cursor_width
+		local cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, self.input.cursor_letter_index)) - self.half_cursor_width
 		gui.set_position(self.cursor, vmath.vector3(cursor_delta, 0, 0))
 	end
 end
@@ -87,10 +87,10 @@ local function clear_text(self, replace_with_symbol)
 
 	if replace_with_symbol then
 		gui.set_position(self.cursor, vmath.vector3(self.input.total_width/2, 0, 0))
-		self.cursor_letter_index = 1
+		self.input.cursor_letter_index = 1
 	else
 		gui.set_position(self.cursor, vmath.vector3(0, 0, 0))
-		self.cursor_letter_index = 1
+		self.input.cursor_letter_index = 1
 	end
 	
 	gui.set_enabled(self.highlight, false)
@@ -99,7 +99,7 @@ end
 
 
 local function on_select(self)
-	self.cursor_letter_index = utf8.len(self.input:get_text()) or 0
+	self.input.cursor_letter_index = utf8.len(self.input:get_text()) or 0
 	gui.set_enabled(self.cursor, true)
 	gui.set_enabled(self.highlight, false)
 	gui.set_enabled(self.placeholder.node, false)
@@ -154,7 +154,7 @@ function RichInput.init(self, template, nodes)
 	self.input.style.NO_CONSUME_INPUT_WHILE_SELECTED = true
 	self.input.style.SKIP_INPUT_KEYS = true
 
-	self.cursor_letter_index = 0
+	self.input.cursor_letter_index = 0
 	self.action_pos_x = nil
 	self.half_cursor_width = self.text:get_text_size("|")/2
 	
@@ -185,31 +185,31 @@ function RichInput.on_input(self, action_id, action)
 	else
 		if action_id == const.ACTION_DEL and action.pressed then
 			local text = self.input:get_text()
-			local new_text = utf8.sub(text, 1, self.cursor_letter_index) .. utf8.sub(text, self.cursor_letter_index +2 ) 
+			local new_text = utf8.sub(text, 1, self.input.cursor_letter_index) .. utf8.sub(text, self.input.cursor_letter_index +2 ) 
 			self.input:set_text(new_text)
 		end
 		if action_id == const.ACTION_BACKSPACE and action.pressed then
-			if self.cursor_letter_index > 0 then 
+			if self.input.cursor_letter_index > 0 then 
 				local text = self.input:get_text()
-				local new_text = utf8.sub(text, 1, self.cursor_letter_index-1) .. utf8.sub(text, self.cursor_letter_index +1 ) 
-				self.cursor_letter_index = self.cursor_letter_index -1
+				local new_text = utf8.sub(text, 1, self.input.cursor_letter_index-1) .. utf8.sub(text, self.input.cursor_letter_index +1 ) 
+				self.input.cursor_letter_index = self.input.cursor_letter_index -1
 				self.input:set_text(new_text)
 			end
 		end
 		
 		if action_id == const.ACTION_TEXT then
-			self.cursor_letter_index = self.cursor_letter_index +1
+			--self.input.cursor_letter_index = self.input.cursor_letter_index +1
 		end
 
 		if action_id == const.ACTION_LEFT and action.pressed then
 			--print("left")
-			if self.cursor_letter_index > 1 then
-				self.cursor_letter_index = self.cursor_letter_index -1
+			if self.input.cursor_letter_index > 1 then
+				self.input.cursor_letter_index = self.input.cursor_letter_index -1
 			end
 		elseif action_id == const.ACTION_RIGHT and action.pressed then
 			--print("right")
-			if self.cursor_letter_index <  utf8.len(self.input:get_text()) then
-				self.cursor_letter_index = self.cursor_letter_index + 1
+			if self.input.cursor_letter_index <  utf8.len(self.input:get_text()) then
+				self.input.cursor_letter_index = self.input.cursor_letter_index + 1
 			end
 		end
 		
@@ -217,7 +217,7 @@ function RichInput.on_input(self, action_id, action)
 		self.touch_pos_x = nil
 		
 		if utf8.len(self.input:get_text()) <=0 then
-			self.cursor_letter_index = 0
+			self.input.cursor_letter_index = 0
 		end	
 	end
 	return true
