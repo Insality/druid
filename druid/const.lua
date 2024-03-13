@@ -18,6 +18,9 @@ M.ACTION_BACKSPACE = hash(sys.get_config("druid.input_key_backspace", "key_backs
 M.ACTION_DEL = hash(sys.get_config("druid.input_key_del", "key_del"))
 M.ACTION_SCROLL_UP = hash(sys.get_config("druid.input_scroll_up", "mouse_wheel_up"))
 M.ACTION_SCROLL_DOWN = hash(sys.get_config("druid.input_scroll_down", "mouse_wheel_down"))
+M.ACTION_LEFT = hash(sys.get_config("druid.input_key_left", "key_left"))
+M.ACTION_RIGHT = hash(sys.get_config("druid.input_key_right", "key_right"))
+
 
 M.IS_STENCIL_CHECK = not (sys.get_config("druid.no_stencil_check") == "1")
 

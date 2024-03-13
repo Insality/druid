@@ -99,7 +99,7 @@ end
 
 
 local function on_select(self)
-	self.cursor_letter_index = utf8.len(self.input:get_text())
+	self.cursor_letter_index = utf8.len(self.input:get_text()) or 0
 	gui.set_enabled(self.cursor, true)
 	gui.set_enabled(self.highlight, false)
 	gui.set_enabled(self.placeholder.node, false)
@@ -154,7 +154,7 @@ function RichInput.init(self, template, nodes)
 	self.input.style.NO_CONSUME_INPUT_WHILE_SELECTED = true
 	self.input.style.SKIP_INPUT_KEYS = true
 
-	self.cursor_letter_index = 1
+	self.cursor_letter_index = 0
 	self.action_pos_x = nil
 	self.half_cursor_width = self.text:get_text_size("|")/2
 	
@@ -187,22 +187,37 @@ function RichInput.on_input(self, action_id, action)
 			local text = self.input:get_text()
 			local new_text = utf8.sub(text, 1, self.cursor_letter_index) .. utf8.sub(text, self.cursor_letter_index +2 ) 
 			self.input:set_text(new_text)
-		end		
-		if action_id == const.ACTION_BACKSPACE and action.pressed then
-			local text = self.input:get_text()
-			local new_text = utf8.sub(text, 1, self.cursor_letter_index-1) .. utf8.sub(text, self.cursor_letter_index +1 ) 
-			self.cursor_letter_index = self.cursor_letter_index -1
-			self.input:set_text(new_text)
 		end
-		if action_id == const.ACTION_TEXT then			
+		if action_id == const.ACTION_BACKSPACE and action.pressed then
+			if self.cursor_letter_index > 0 then 
+				local text = self.input:get_text()
+				local new_text = utf8.sub(text, 1, self.cursor_letter_index-1) .. utf8.sub(text, self.cursor_letter_index +1 ) 
+				self.cursor_letter_index = self.cursor_letter_index -1
+				self.input:set_text(new_text)
+			end
+		end
+		
+		if action_id == const.ACTION_TEXT then
 			self.cursor_letter_index = self.cursor_letter_index +1
+		end
+
+		if action_id == const.ACTION_LEFT and action.pressed then
+			--print("left")
+			if self.cursor_letter_index > 1 then
+				self.cursor_letter_index = self.cursor_letter_index -1
+			end
+		elseif action_id == const.ACTION_RIGHT and action.pressed then
+			--print("right")
+			if self.cursor_letter_index <  utf8.len(self.input:get_text()) then
+				self.cursor_letter_index = self.cursor_letter_index + 1
+			end
 		end
 		
 		update_text(self)
 		self.touch_pos_x = nil
 		
 		if utf8.len(self.input:get_text()) <=0 then
-			self.cursor_letter_index = 1
+			self.cursor_letter_index = 0
 		end	
 	end
 	return true

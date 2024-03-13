@@ -142,6 +142,7 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	self.text_height = 0
 	self.market_text_width = 0
 	self.total_width = 0
+	self.cursor_letter_index = 0
 
 	self.max_length = nil
 	self.allowed_characters = nil
@@ -183,7 +184,7 @@ function Input.on_input(self, action_id, action)
 			-- ignore arrow keys
 			if not utf8.match(hex, "EF9C8[0-3]") then
 				if not self.allowed_characters or utf8.match(action.text, self.allowed_characters) then
-					input_text = self.value .. action.text
+					input_text = self.value .. action.text --<<
 					if self.max_length then
 						input_text = utf8.sub(input_text, 1, self.max_length)
 					end

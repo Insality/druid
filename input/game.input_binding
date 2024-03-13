@@ -34,6 +34,14 @@ key_trigger {
   input: KEY_DEL
   action: "key_del"
 }
+key_trigger {
+  input: KEY_LEFT
+  action: "key_left"
+}
+key_trigger {
+  input: KEY_RIGHT
+  action: "key_right"
+}
 mouse_trigger {
   input: MOUSE_WHEEL_UP
   action: "mouse_wheel_up"
