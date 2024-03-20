@@ -47,7 +47,7 @@ local function set_cursor(self)
 		for i = 1, letters_count do
 			cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, i)) - self.half_cursor_width
 			if cursor_delta <= touch_delta_x then
-				gui.set_position(self.cursor, vmath.vector3(cursor_delta, 0, 0))
+				gui.set_position(self.cursor, vmath.vector3(cursor_delta + self.half_cursor_width/2, 0, 0))
 				self.input.cursor_letter_index = i
 			end
 		end
@@ -57,7 +57,7 @@ local function set_cursor(self)
 		local text = self.input:get_text()
 		local gap = self.input.total_width/2 * -1
 		local cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, self.input.cursor_letter_index)) - self.half_cursor_width
-		gui.set_position(self.cursor, vmath.vector3(cursor_delta, 0, 0))
+		gui.set_position(self.cursor, vmath.vector3(cursor_delta + self.half_cursor_width/2, 0, 0))
 	end
 end
 
@@ -188,13 +188,14 @@ function RichInput.on_input(self, action_id, action)
 			local new_text = utf8.sub(text, 1, self.input.cursor_letter_index) .. utf8.sub(text, self.input.cursor_letter_index +2 ) 
 			self.input:set_text(new_text)
 		end
-		if action_id == const.ACTION_BACKSPACE and action.pressed then
-			if self.input.cursor_letter_index > 0 then 
+		if action_id == const.ACTION_BACKSPACE  then
+			if self.input.cursor_letter_index > 0 and gui.is_enabled(self.cursor) and action.pressed then 
 				local text = self.input:get_text()
 				local new_text = utf8.sub(text, 1, self.input.cursor_letter_index-1) .. utf8.sub(text, self.input.cursor_letter_index +1 ) 
 				self.input.cursor_letter_index = self.input.cursor_letter_index -1
 				self.input:set_text(new_text)
 			end
+			return true
 		end
 		
 		if action_id == const.ACTION_TEXT then
@@ -220,7 +221,7 @@ function RichInput.on_input(self, action_id, action)
 			self.input.cursor_letter_index = 0
 		end	
 	end
-	return true
+	return false
 end
 
 return RichInput
