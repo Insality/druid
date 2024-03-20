@@ -73,7 +73,6 @@ local function update_text(self)
 	local text_width = self.input.total_width
 	local text_height = self.input.text_height
 	animate_cursor(self)
-	--gui.set_position(self.cursor, vmath.vector3(text_width/2, 0, 0))
 	gui.set_scale(self.cursor, self.input.text.scale)
 	gui.set_size(self.highlight, vmath.vector3(text_width, text_height, 0))
 	set_cursor(self)
@@ -158,8 +157,8 @@ function RichInput.init(self, template, nodes)
 	self.action_pos_x = nil
 	self.half_cursor_width = self.text:get_text_size("|")/2
 	
-	on_unselect(self)	
-	clear_text(self)	
+	on_unselect(self)
+	clear_text(self)
 end
 
 
@@ -188,6 +187,7 @@ function RichInput.on_input(self, action_id, action)
 			local new_text = utf8.sub(text, 1, self.input.cursor_letter_index) .. utf8.sub(text, self.input.cursor_letter_index +2 ) 
 			self.input:set_text(new_text)
 		end
+		
 		if action_id == const.ACTION_BACKSPACE  then
 			if self.input.cursor_letter_index > 0 and gui.is_enabled(self.cursor) and action.pressed then 
 				local text = self.input:get_text()
@@ -198,10 +198,6 @@ function RichInput.on_input(self, action_id, action)
 			return true
 		end
 		
-		if action_id == const.ACTION_TEXT then
-			--self.input.cursor_letter_index = self.input.cursor_letter_index +1
-		end
-
 		if action_id == const.ACTION_LEFT and action.pressed then
 			--print("left")
 			if self.input.cursor_letter_index > 1 then

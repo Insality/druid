@@ -186,8 +186,8 @@ function Input.on_input(self, action_id, action)
 				if not self.allowed_characters or utf8.match(action.text, self.allowed_characters) then
 					local len = utf8.len(self.value)
 					local prefix = utf8.sub(self.value, 1, self.cursor_letter_index)
-					local postfix =  utf8.sub(self.value,  self.cursor_letter_index+1, (len-self.cursor_letter_index+1)*-1)
-					input_text =prefix .. action.text .. postfix  --input_text = self.value .. action.text 
+					local postfix =  utf8.sub(self.value,  self.cursor_letter_index+1)
+					input_text =prefix .. action.text .. postfix
 					self.cursor_letter_index = self.cursor_letter_index +1 
 					if self.max_length then
 						input_text = utf8.sub(input_text, 1, self.max_length)
