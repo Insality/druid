@@ -72,7 +72,6 @@ end
 local function update_text(self)
 	local text_width = self.input.total_width
 	local text_height = self.input.text_height
-	animate_cursor(self)
 	gui.set_scale(self.cursor, self.input.text.scale)
 	gui.set_size(self.highlight, vmath.vector3(text_width, text_height, 0))
 	set_cursor(self)
@@ -157,8 +156,8 @@ function RichInput.init(self, template, nodes)
 	self.action_pos_x = nil
 	self.half_cursor_width = self.text:get_text_size("|")/2
 	
-	on_unselect(self)
 	clear_text(self)
+	on_unselect(self)
 end
 
 
