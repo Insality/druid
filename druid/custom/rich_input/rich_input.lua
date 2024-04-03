@@ -45,7 +45,7 @@ local function set_cursor(self)
 		local gap = self.input.total_width/2 * -1
 
 		for i = 1, letters_count do
-			cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, i)) - self.half_cursor_width
+			cursor_delta =  gap + self.text:get_text_size(utf8.sub(text, 1, i)) - self.half_cursor_width
 			if cursor_delta <= touch_delta_x then
 				gui.set_position(self.cursor, vmath.vector3(cursor_delta + self.half_cursor_width/2, 0, 0))
 				self.input.cursor_letter_index = i
@@ -56,7 +56,7 @@ local function set_cursor(self)
 	else
 		local text = self.input:get_text()
 		local gap = self.input.total_width/2 * -1
-		local cursor_delta =  gap + self.text:get_text_size(string.sub(text, 1, self.input.cursor_letter_index)) - self.half_cursor_width
+		local cursor_delta =  gap + self.text:get_text_size(utf8.sub(text, 1, self.input.cursor_letter_index)) - self.half_cursor_width
 		gui.set_position(self.cursor, vmath.vector3(cursor_delta + self.half_cursor_width/2, 0, 0))
 	end
 end
@@ -151,6 +151,7 @@ function RichInput.init(self, template, nodes)
 	self.input.button.on_double_click:subscribe(on_button_double_click, self)
 	self.input.style.NO_CONSUME_INPUT_WHILE_SELECTED = true
 	self.input.style.SKIP_INPUT_KEYS = true
+	self.input.style.IS_LONGTAP_ERASE = false
 
 	self.input.cursor_letter_index = 0
 	self.action_pos_x = nil
