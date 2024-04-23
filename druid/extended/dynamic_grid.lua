@@ -274,7 +274,7 @@ end
 function DynamicGrid.get_all_pos(self)
 	local result = {}
 	for i, node in pairs(self.nodes) do
-		table.insert(result, gui.get_position(node))
+		table.insert(result, gui.get_position(node.node))
 	end
 
 	return result
