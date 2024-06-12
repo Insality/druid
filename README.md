@@ -203,6 +203,13 @@ If you have any issues, questions or suggestions please [create an issue](https:
 For a complete history of the development of **Druid**, please check the [changelog](docs_md/changelog.md).
 
 
+## 👏 Contributors
+
+<a href="https://github.com/Insality/druid/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=insality/druid"/>
+</a>
+
+
 ## ❤️ Support project ❤️
 
 Your donation helps me stay engaged in creating valuable projects for **Defold**. If you appreciate what I'm doing, please consider supporting me!

@@ -46,6 +46,12 @@
 --- Current touch y position
 -- @tfield number y
 
+--- Current touch x screen position
+-- @tfield number screen_x
+
+--- Current touch y screen position
+-- @tfield number screen_y
+
 --- Touch start position
 -- @tfield vector3 touch_start_pos
 
@@ -68,6 +74,10 @@ local function start_touch(self, touch)
 
 	self.x = touch.x
 	self.y = touch.y
+
+	self.screen_x = touch.screen_x
+	self.screen_y = touch.screen_y
+
 	self._scene_scale = helper.get_scene_scale(self.node)
 
 	self.on_touch_start:trigger(self:get_context(), touch)
@@ -186,6 +196,8 @@ function Drag.init(self, node, on_drag_callback)
 	self.touch_id = 0
 	self.x = 0
 	self.y = 0
+	self.screen_x = 0
+	self.screen_y = 0
 	self.is_touch = false
 	self.is_drag = false
 	self.touch_start_pos = vmath.vector3(0)
@@ -287,6 +299,9 @@ function Drag.on_input(self, action_id, action)
 	if touch_modified then
 		self.x = touch_modified.x
 		self.y = touch_modified.y
+
+		self.screen_x = touch_modified.screen_x
+		self.screen_y = touch_modified.screen_y
 	end
 
 	if self.is_drag and (self.dx ~= 0 or self.dy ~= 0) then
