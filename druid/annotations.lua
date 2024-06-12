@@ -1658,7 +1658,7 @@ function druid_instance.on_input(self, action_id, action) end
 ---@param self druid_instance
 ---@param message_id hash Message_id from on_message
 ---@param message table Message from on_message
----@param sender hash Sender from on_message
+---@param sender url Sender from on_message
 function druid_instance.on_message(self, message_id, message, sender) end
 
 --- Remove created component from Druid instance.
