@@ -397,7 +397,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam hash message_id Message_id from on_message
 -- @tparam table message Message from on_message
--- @tparam hash sender Sender from on_message
+-- @tparam url sender Sender from on_message
 function DruidInstance.on_message(self, message_id, message, sender)
 	local specific_ui_message = base_component.SPECIFIC_UI_MESSAGES[message_id]
 
