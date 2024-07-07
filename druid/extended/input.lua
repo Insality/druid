@@ -267,6 +267,7 @@ function Input.set_text(self, input_text)
 		self.is_empty = #value == 0 and #marked_value == 0
 
 		local final_text = value .. marked_value
+		local real_text = self.value .. self.marked_value
 		self.text:set_to(final_text)
 
 		-- measure it
@@ -274,12 +275,12 @@ function Input.set_text(self, input_text)
 		self.marked_text_width = self.text:get_text_size(marked_value)
 		self.total_width = self.text_width + self.marked_text_width
 
-		self.on_input_text:trigger(self:get_context(), final_text)
+		self.on_input_text:trigger(self:get_context(), real_text)
 		if #final_text == 0 then
-			self.on_input_empty:trigger(self:get_context(), final_text)
+			self.on_input_empty:trigger(self:get_context(), real_text)
 		end
 		if self.max_length and #final_text == self.max_length then
-			self.on_input_full:trigger(self:get_context(), final_text)
+			self.on_input_full:trigger(self:get_context(), real_text)
 		end
 	end
 end
