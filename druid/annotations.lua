@@ -536,18 +536,18 @@ function druid__event.is_exist(self) end
 --- Subscribe callback on event
 ---@param self druid.event @{DruidEvent}
 ---@param callback function Callback itself
----@param context Any Additional context as first param to callback call, usually it's self
+---@param context any Additional context as first param to callback call, usually it's self
 function druid__event.subscribe(self, callback, context) end
 
 --- Trigger the event and call all subscribed callbacks
 ---@param self druid.event @{DruidEvent}
----@param ... Any All event params
+---@param ... any All event params
 function druid__event.trigger(self, ...) end
 
 --- Unsubscribe callback on event
 ---@param self druid.event @{DruidEvent}
 ---@param callback function Callback itself
----@param context Any Additional context as first param to callback call
+---@param context any Additional context as first param to callback call
 function druid__event.unsubscribe(self, callback, context) end
 
 
