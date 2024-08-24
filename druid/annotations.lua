@@ -711,21 +711,21 @@ local druid__lang_text = {}
 
 --- Format string with new text params on localized text
 ---@param self druid.lang_text @{LangText}
----@param a string Optional param to string.format
----@param b string Optional param to string.format
----@param c string Optional param to string.format
----@param d string Optional param to string.format
----@param e string Optional param to string.format
----@param f string Optional param to string.format
----@param g string Optional param to string.format
+---@param a? string Optional param to string.format
+---@param b? string Optional param to string.format
+---@param c? string Optional param to string.format
+---@param d? string Optional param to string.format
+---@param e? string Optional param to string.format
+---@param f? string Optional param to string.format
+---@param g? string Optional param to string.format
 ---@return druid.lang_text Current instance
 function druid__lang_text.format(self, a, b, c, d, e, f, g) end
 
 --- The @{LangText} constructor
 ---@param self druid.lang_text @{LangText}
 ---@param node string|node Node name or GUI Text Node itself
----@param locale_id string Default locale id or text from node as default
----@param adjust_type string Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+---@param locale_id? string Default locale id or text from node as default
+---@param adjust_type? string Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 function druid__lang_text.init(self, node, locale_id, adjust_type) end
 
 --- Setup raw text to lang_text component
@@ -737,13 +737,13 @@ function druid__lang_text.set_to(self, text) end
 --- Translate the text by locale_id
 ---@param self druid.lang_text @{LangText}
 ---@param locale_id string Locale id
----@param a string Optional param to string.format
----@param b string Optional param to string.format
----@param c string Optional param to string.format
----@param d string Optional param to string.format
----@param e string Optional param to string.format
----@param f string Optional param to string.format
----@param g string Optional param to string.format
+---@param a? string Optional param to string.format
+---@param b? string Optional param to string.format
+---@param c? string Optional param to string.format
+---@param d? string Optional param to string.format
+---@param e? string Optional param to string.format
+---@param f? string Optional param to string.format
+---@param g? string Optional param to string.format
 ---@return druid.lang_text Current instance
 function druid__lang_text.translate(self, locale_id, a, b, c, d, e, f, g) end
 
