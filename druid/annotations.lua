@@ -171,7 +171,7 @@ function druid__blocker.set_enabled(self, state) end
 ---@field anim_node node Button animation node.
 ---@field click_zone node Additional button click area, defined by another GUI Node
 ---@field hover druid.hover The @{Hover}: Button Hover component
----@field node Node Button trigger node
+---@field node node Button trigger node
 ---@field node_id hash The GUI node id from button node
 ---@field on_click druid.event The @{DruidEvent}: Event on successful release action over button.
 ---@field on_click_outside druid.event The @{DruidEvent}: Event calls if click event was outside of button.
@@ -191,10 +191,10 @@ function druid__button.get_key_trigger(self) end
 
 --- The @{Button} constructor
 ---@param self druid.button @{Button}
----@param node string|Node Node name or GUI Node itself
+---@param node string|node Node name or GUI Node itself
 ---@param callback function On click button callback
 ---@param custom_args any Button events custom arguments
----@param anim_node string|Node Node to animate instead of trigger node.
+---@param anim_node string|node Node to animate instead of trigger node.
 function druid__button.init(self, node, callback, custom_args, anim_node) end
 
 --- Get button enabled state.
@@ -331,7 +331,7 @@ function druid__data_list.get_created_components(self) end
 
 --- Return all currenly created nodes in DataList
 ---@param self druid.data_list @{DataList}
----@return Node[] List of created nodes
+---@return node[] List of created nodes
 function druid__data_list.get_created_nodes(self) end
 
 --- Return current data from DataList component
@@ -757,7 +757,7 @@ local druid__layout = {}
 --- Set node for layout node to fit inside it.
 --- Pass nil to reset
 ---@param self druid.layout @{Layout}
----@param node Node
+---@param node node
 ---@return druid.layout @{Layout}
 function druid__layout.fit_into_node(self, node) end
 
@@ -1149,7 +1149,7 @@ function druid__slider.set(self, value, is_silent) end
 --- Set input zone for slider.
 --- User can touch any place of node, pin instantly will  move at this position and node drag will start.  This function require the Defold version 1.3.0+
 ---@param self druid.slider @{Slider}
----@param input_node Node
+---@param input_node node
 ---@return druid.slider @{Slider}
 function druid__slider.set_input_node(self, input_node) end
 
@@ -1232,7 +1232,7 @@ function druid__static_grid.get_size(self) end
 
 --- The @{StaticGrid} constructor
 ---@param self druid.static_grid @{StaticGrid}
----@param parent string|Node The GUI Node container, where grid's items will be placed
+---@param parent string|node The GUI Node container, where grid's items will be placed
 ---@param element node Element prefab. Need to get it size
 ---@param in_row number How many nodes in row can be placed
 function druid__static_grid.init(self, parent, element, in_row) end
@@ -1243,7 +1243,7 @@ function druid__static_grid.init(self, parent, element, in_row) end
 ---@param index number The grid node index to remove
 ---@param shift_policy number How shift nodes, if required. See const.SHIFT
 ---@param is_instant boolean If true, update node positions instantly
----@return Node The deleted gui node from grid
+---@return node The deleted gui node from grid
 function druid__static_grid.remove(self, index, shift_policy, is_instant) end
 
 --- Set grid anchor.
@@ -1737,7 +1737,7 @@ function helper.get_scene_scale(node, include_passed_node_scale) end
 function helper.get_screen_aspect_koef() end
 
 --- Get text metric from GUI node.
----@param text_node Node
+---@param text_node node
 ---@return GUITextMetrics
 function helper.get_text_metrics_from_node(text_node) end
 
@@ -1817,7 +1817,7 @@ function helper.table_to_string(t) end
 ---@field lines table<number, druid.rich_text.metrics>
 
 ---@class druid.rich_text.word
----@field node Node
+---@field node node
 ---@field relative_scale number
 ---@field color vector4
 ---@field position vector3
@@ -1843,7 +1843,7 @@ function helper.table_to_string(t) end
 ---@field height number
 
 ---@class druid.rich_text.settings
----@field parent Node
+---@field parent node
 ---@field size number
 ---@field fonts table<string, string>
 ---@field color vector4
@@ -1853,8 +1853,8 @@ function helper.table_to_string(t) end
 ---@field image_pixel_grid_snap boolean
 ---@field combine_words boolean
 ---@field default_animation string
----@field node_prefab Node
----@field text_prefab Node
+---@field node_prefab node
+---@field text_prefab node
 
 ---@class GUITextMetrics
 ---@field width number
