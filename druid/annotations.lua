@@ -1042,25 +1042,25 @@ function druid__scroll.is_node_in_view(self, node) end
 --- Start scroll to target point.
 ---@param self druid.scroll @{Scroll}
 ---@param point vector3 Target point
----@param is_instant bool Instant scroll flag
+---@param is_instant? bool Instant scroll flag
 function druid__scroll.scroll_to(self, point, is_instant) end
 
 --- Scroll to item in scroll by point index.
 ---@param self druid.scroll @{Scroll}
 ---@param index number Point index
----@param skip_cb bool If true, skip the point callback
+---@param skip_cb? bool If true, skip the point callback
 function druid__scroll.scroll_to_index(self, index, skip_cb) end
 
 --- Start scroll to target scroll percent
 ---@param self druid.scroll @{Scroll}
 ---@param percent vector3 target percent
----@param is_instant bool instant scroll flag
+---@param is_instant? bool instant scroll flag
 function druid__scroll.scroll_to_percent(self, percent, is_instant) end
 
 --- Strict drag scroll area.
 --- Useful for  restrict events outside stencil node
 ---@param self druid.drag
----@param node node Gui node
+---@param node node|string Gui node (or node id)
 function druid__scroll.set_click_zone(self, node) end
 
 --- Set extra size for scroll stretching.
@@ -1094,7 +1094,7 @@ function druid__scroll.set_points(self, points) end
 --- It will change content gui node size
 ---@param self druid.scroll @{Scroll}
 ---@param size vector3 The new size for content node
----@param offset vector3 Offset value to set, where content is starts
+---@param offset? vector3 Offset value to set, where content is starts
 ---@return druid.scroll Current scroll instance
 function druid__scroll.set_size(self, size, offset) end
 

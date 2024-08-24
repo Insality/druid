@@ -325,7 +325,7 @@ end
 -- It will change content gui node size
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 size The new size for content node
--- @tparam vector3 offset Offset value to set, where content is starts
+-- @tparam[opt] vector3 offset Offset value to set, where content is starts
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_size(self, size, offset)
 	if offset then
