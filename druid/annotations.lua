@@ -1137,19 +1137,19 @@ local druid__slider = {}
 ---@param self druid.slider @{Slider}
 ---@param node node Gui pin node
 ---@param end_pos vector3 The end position of slider
----@param callback function On slider change callback
+---@param callback? function On slider change callback
 function druid__slider.init(self, node, end_pos, callback) end
 
 --- Set value for slider
 ---@param self druid.slider @{Slider}
 ---@param value number Value from 0 to 1
----@param is_silent bool Don't trigger event if true
+---@param is_silent? bool Don't trigger event if true
 function druid__slider.set(self, value, is_silent) end
 
 --- Set input zone for slider.
 --- User can touch any place of node, pin instantly will  move at this position and node drag will start.  This function require the Defold version 1.3.0+
 ---@param self druid.slider @{Slider}
----@param input_node node
+---@param input_node node|string
 ---@return druid.slider @{Slider}
 function druid__slider.set_input_node(self, input_node) end
 
