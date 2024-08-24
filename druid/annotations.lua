@@ -6,7 +6,7 @@ local druid = {}
 
 --- Create a new Druid instance for creating GUI components.
 ---@param context table The Druid context. Usually, this is the self of the gui_script. It is passed into all Druid callbacks.
----@param style table The Druid style table to override style parameters for this Druid instance.
+---@param style? table The Druid style table to override style parameters for this Druid instance.
 ---@return druid_instance The Druid instance @{DruidInstance}.
 function druid.new(context, style) end
 
@@ -307,6 +307,7 @@ function druid__checkbox_group.init(self, nodes, callback, click_nodes) end
 ---@param is_instant boolean If instant state change
 function druid__checkbox_group.set_state(self, indexes, is_instant) end
 
+---@alias Grid druid.static_grid|druid.dynamic_grid
 
 ---@class druid.data_list : druid.base_component
 ---@field grid druid.static_grid|druid.dynamic_grid The Druid Grid component
@@ -1445,40 +1446,40 @@ function druid_instance.new(self, component, ...) end
 
 --- Create @{BackHandler} component
 ---@param self druid_instance
----@param callback callback On back button
+---@param callback function On back button
 ---@param params any Callback argument
 ---@return druid.back_handler @{BackHandler} component
 function druid_instance.new_back_handler(self, callback, params) end
 
 --- Create @{Blocker} component
 ---@param self druid_instance
----@param node node Gui node
+---@param node node|string Gui node (or node id)
 ---@return druid.blocker @{Blocker} component
 function druid_instance.new_blocker(self, node) end
 
 --- Create @{Button} component
 ---@param self druid_instance
----@param node node GUI node
+---@param node node|string GUI node (or node id)
 ---@param callback function Button callback
----@param params table Button callback params
----@param anim_node node Button anim node (node, if not provided)
+---@param params? table Button callback params
+---@param anim_node? node|string Button anim node (node, if not provided)
 ---@return druid.button @{Button} component
 function druid_instance.new_button(self, node, callback, params, anim_node) end
 
 --- Create @{Checkbox} component
 ---@param self druid_instance
----@param node node Gui node
+---@param node node|string Gui node (or node id)
 ---@param callback function Checkbox callback
----@param click_node node Trigger node, by default equals to node
----@param initial_state boolean The initial state of checkbox, default - false
+---@param click_node? node Trigger node, by default equals to node
+---@param initial_state? boolean The initial state of checkbox, default - false
 ---@return druid.checkbox @{Checkbox} component
 function druid_instance.new_checkbox(self, node, callback, click_node, initial_state) end
 
 --- Create @{CheckboxGroup} component
 ---@param self druid_instance
----@param nodes node[] Array of gui node
+---@param nodes (node | string)[] Array of gui node (or node id)
 ---@param callback function Checkbox callback
----@param click_nodes node[] Array of trigger nodes, by default equals to nodes
+---@param click_nodes? (node | string)[] Array of trigger nodes (or node id), by default equals to nodes
 ---@return druid.checkbox_group @{CheckboxGroup} component
 function druid_instance.new_checkbox_group(self, nodes, callback, click_nodes) end
 
@@ -1492,14 +1493,14 @@ function druid_instance.new_data_list(self, druid_scroll, druid_grid, create_fun
 
 --- Create @{Drag} component
 ---@param self druid_instance
----@param node node GUI node to detect dragging
+---@param node node|string GUI node (or node id) to detect dragging
 ---@param on_drag_callback function Callback for on_drag_event(self, dx, dy)
 ---@return druid.drag @{Drag} component
 function druid_instance.new_drag(self, node, on_drag_callback) end
 
 --- Create @{DynamicGrid} component
 ---@param self druid_instance
----@param parent node The gui node parent, where items will be placed
+---@param parent node|string The gui node (or node id) parent, where items will be placed
 ---@return druid.dynamic_grid @{DynamicGrid} component
 function druid_instance.new_dynamic_grid(self, parent) end
 
@@ -1507,53 +1508,54 @@ function druid_instance.new_dynamic_grid(self, parent) end
 ---@param self druid_instance
 ---@param keys_array string|string[] Keys for trigger action. Should contains one action key and any amount of modificator keys
 ---@param callback function Button callback
----@param params value Button callback params
+---@param params? value Button callback params
 ---@return druid.hotkey @{Hotkey} component
 function druid_instance.new_hotkey(self, keys_array, callback, params) end
 
 --- Create @{Hover} component
 ---@param self druid_instance
----@param node node Gui node
+---@param node node|string Gui node (or node id)
 ---@param on_hover_callback function Hover callback
 ---@return druid.hover @{Hover} component
 function druid_instance.new_hover(self, node, on_hover_callback) end
 
 --- Create @{Input} component
 ---@param self druid_instance
----@param click_node node Button node to enabled input component
----@param text_node node Text node what will be changed on user input
----@param keyboard_type number Gui keyboard type for input field
+---@param click_node node|string Button node (or node id) to enabled input component
+---@param text_node node|string|druid.text Text node what will be changed on user input
+---@param keyboard_type? number Gui keyboard type for input field
 ---@return druid.input @{Input} component
 function druid_instance.new_input(self, click_node, text_node, keyboard_type) end
 
 --- Create @{LangText} component
 ---@param self druid_instance
----@param node node The text node
----@param locale_id string Default locale id
----@param no_adjust bool If true, will not correct text size
+---@param node node|string The text node (or node id)
+---@param locale_id? string Default locale id
+---@param no_adjust? bool If true, will not correct text size
 ---@return druid.lang_text @{LangText} component
 function druid_instance.new_lang_text(self, node, locale_id, no_adjust) end
 
 --- Create @{Layout} component
 ---@param self druid_instance
----@param node string|node Layout node
+---@param node string|node Layout node (or node id)
 ---@param mode string The layout mode
+---@param on_size_changed_callback? function The callback on window resize
 ---@return druid.layout @{Layout} component
-function druid_instance.new_layout(self, node, mode) end
+function druid_instance.new_layout(self, node, mode, on_size_changed_callback) end
 
 --- Create @{Progress} component
 ---@param self druid_instance
 ---@param node string|node Progress bar fill node or node name
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
----@param init_value number Initial value of progress bar
+---@param init_value? number Initial value of progress bar
 ---@return druid.progress @{Progress} component
 function druid_instance.new_progress(self, node, key, init_value) end
 
 --- Create @{RadioGroup} component
 ---@param self druid_instance
----@param nodes node[] Array of gui node
+---@param nodes (node | string)[] Array of gui node (or node id)
 ---@param callback function Radio callback
----@param click_nodes node[] Array of trigger nodes, by default equals to nodes
+---@param click_nodes? (node | string)[] Array of trigger nodes (or node id), by default equals to nodes
 ---@return druid.radio_group @{RadioGroup} component
 function druid_instance.new_radio_group(self, nodes, callback, click_nodes) end
 
@@ -1567,48 +1569,48 @@ function druid_instance.new_rich_text(self, template, nodes) end
 
 --- Create @{Scroll} component
 ---@param self druid_instance
----@param view_node node GUI view scroll node
----@param content_node node GUI content scroll node
+---@param view_node node|string GUI view scroll node (or node id)
+---@param content_node node|string GUI content scroll node (or node id)
 ---@return druid.scroll @{Scroll} component
 function druid_instance.new_scroll(self, view_node, content_node) end
 
 --- Create @{Slider} component
 ---@param self druid_instance
----@param node node Gui pin node
+---@param node node|string Gui pin node (or node id)
 ---@param end_pos vector3 The end position of slider
----@param callback function On slider change callback
+---@param callback? function On slider change callback
 ---@return druid.slider @{Slider} component
 function druid_instance.new_slider(self, node, end_pos, callback) end
 
 --- Create @{StaticGrid} component
 ---@param self druid_instance
----@param parent node The gui node parent, where items will be placed
----@param element node Element prefab. Need to get it size
----@param in_row number How many nodes in row can be placed
+---@param parent node|string The gui node (or node id) parent, where items will be placed
+---@param element node|string Element prefab (or prefab id). Need to get it size
+---@param in_row? number How many nodes in row can be placed
 ---@return druid.static_grid @{StaticGrid} component
 function druid_instance.new_static_grid(self, parent, element, in_row) end
 
 --- Create @{Swipe} component
 ---@param self druid_instance
----@param node node Gui node
+---@param node node|string Gui node (or node id)
 ---@param on_swipe_callback function Swipe callback for on_swipe_end event
 ---@return druid.swipe @{Swipe} component
 function druid_instance.new_swipe(self, node, on_swipe_callback) end
 
 --- Create @{Text} component
 ---@param self druid_instance
----@param node node Gui text node
----@param value string Initial text. Default value is node text from GUI scene.
----@param no_adjust bool If true, text will be not auto-adjust size
+---@param node node|string Gui text node (or node id)
+---@param value? string Initial text. Default value is node text from GUI scene.
+---@param no_adjust? bool If true, text will be not auto-adjust size
 ---@return druid.text @{Text} component
 function druid_instance.new_text(self, node, value, no_adjust) end
 
 --- Create @{Timer} component
 ---@param self druid_instance
----@param node node Gui text node
+---@param node node|string Gui text node (or node id)
 ---@param seconds_from number Start timer value in seconds
----@param seconds_to number End timer value in seconds
----@param callback function Function on timer end
+---@param seconds_to? number End timer value in seconds
+---@param callback? function Function on timer end
 ---@return druid.timer @{Timer} component
 function druid_instance.new_timer(self, node, seconds_from, seconds_to, callback) end
 
