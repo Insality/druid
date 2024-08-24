@@ -448,9 +448,9 @@ function druid__dynamic_grid._get_side_vector(self, side, is_forward) end
 --- Add new node to the grid
 ---@param self druid.dynamic_grid @{DynamicGrid}
 ---@param node node Gui node
----@param index number The node position. By default add as last node
----@param shift_policy number How shift nodes, if required. See const.SHIFT
----@param is_instant boolean If true, update node positions instantly
+---@param index? number The node position. By default add as last node
+---@param shift_policy? number How shift nodes, if required. See const.SHIFT
+---@param is_instant? boolean If true, update node positions instantly
 function druid__dynamic_grid.add(self, node, index, shift_policy, is_instant) end
 
 --- Clear grid nodes array.
@@ -484,7 +484,7 @@ function druid__dynamic_grid.get_offset(self) end
 ---@param self druid.dynamic_grid @{DynamicGrid}
 ---@param index number The grid element index
 ---@param node node The node to be placed
----@param origin_index number Index of nearby node
+---@param origin_index? number Index of nearby node
 ---@return vector3 Node position
 function druid__dynamic_grid.get_pos(self, index, node, origin_index) end
 
@@ -503,8 +503,8 @@ function druid__dynamic_grid.init(self, parent) end
 --- Note that gui node will be not deleted
 ---@param self druid.dynamic_grid @{DynamicGrid}
 ---@param index number The grid node index to remove
----@param shift_policy number How shift nodes, if required. See const.SHIFT
----@param is_instant boolean If true, update node positions instantly
+---@param shift_policy? number How shift nodes, if required. See const.SHIFT
+---@param is_instant? boolean If true, update node positions instantly
 ---@return node The deleted gui node from grid
 function druid__dynamic_grid.remove(self, index, shift_policy, is_instant) end
 
@@ -1181,9 +1181,9 @@ local druid__static_grid = {}
 --- Add new item to the grid
 ---@param self druid.static_grid @{StaticGrid}
 ---@param item node Gui node
----@param index number The item position. By default add as last item
----@param shift_policy number How shift nodes, if required. See const.SHIFT
----@param is_instant boolean If true, update node positions instantly
+---@param index? number The item position. By default add as last item
+---@param shift_policy? number How shift nodes, if required. See const.SHIFT
+---@param is_instant? boolean If true, update node positions instantly
 function druid__static_grid.add(self, item, index, shift_policy, is_instant) end
 
 --- Clear grid nodes array.
@@ -1234,15 +1234,15 @@ function druid__static_grid.get_size(self) end
 ---@param self druid.static_grid @{StaticGrid}
 ---@param parent string|node The GUI Node container, where grid's items will be placed
 ---@param element node Element prefab. Need to get it size
----@param in_row number How many nodes in row can be placed
+---@param in_row? number How many nodes in row can be placed
 function druid__static_grid.init(self, parent, element, in_row) end
 
 --- Remove the item from the grid.
 --- Note that gui node will be not deleted
 ---@param self druid.static_grid @{StaticGrid}
 ---@param index number The grid node index to remove
----@param shift_policy number How shift nodes, if required. See const.SHIFT
----@param is_instant boolean If true, update node positions instantly
+---@param shift_policy? number How shift nodes, if required. See const.SHIFT
+---@param is_instant? boolean If true, update node positions instantly
 ---@return node The deleted gui node from grid
 function druid__static_grid.remove(self, index, shift_policy, is_instant) end
 
