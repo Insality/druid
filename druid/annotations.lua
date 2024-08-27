@@ -390,12 +390,12 @@ function druid__data_list.set_data(self, data) end
 ---@field on_drag_start druid.event Event on drag start callback(self, touch)
 ---@field on_touch_end druid.event Event on touch end callback(self)
 ---@field on_touch_start druid.event Event on touch start callback(self)
+---@field screen_x number Current touch x screen position
+---@field screen_y number Current touch y screen position
 ---@field style druid.drag.style Component style params.
 ---@field touch_start_pos vector3 Touch start position
 ---@field x number Current touch x position
 ---@field y number Current touch y position
----@field screen_x number Current touch x screen position
----@field screen_y number Current touch y screen position
 local druid__drag = {}
 
 --- The @{Drag} constructor

@@ -97,7 +97,7 @@
     print(&quot;Also the button component is passed in callback params&quot;)
 end
 
-local custom_args = &quot;any variable to pass inside callback&quot;
+local custom_args = &quot;Any variable to pass inside callback&quot;
 local button = self.druid:new_button(&quot;button_name&quot;, on_button_click, custom_args)
 </pre>
     </ul>
@@ -153,7 +153,7 @@ local button = self.druid:new_button(&quot;button_name&quot;, on_button_click, c
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#click_zone">click_zone</a></td>
-	<td class="summary">Additional button click area, defined by another GUI Node</td>
+	<td class="summary">Additional button click area, defined by another GUI node</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#hover">hover</a></td>
@@ -433,7 +433,7 @@ button:set_enabled(<span class="keyword">true</span>)</pre>
          <a href="../modules/Button.html#">Button</a>
         </li>
         <li><span class="parameter">key</span>
-            <span class="types"><span class="type">hash</span></span>
+            <span class="types"><span class="type">hash</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          The action_id of the input key
         </li>
     </ul>
@@ -581,14 +581,13 @@ button:set_enabled(<span class="keyword">true</span>)</pre>
     <strong>click_zone</strong>
     </dt>
     <dd>
-    Additional button click area, defined by another GUI Node
+    Additional button click area, defined by another GUI node
 
 
     <ul>
         <li><span class="parameter">click_zone</span>
-            <span class="types"><a class="type" href="../modules/Button.html#node">node</a></span>
+            <span class="types"><a class="type" href="../modules/Button.html#node">node</a> or <span class="type">nil</span></span>
 
-         (<em>optional</em>)
         </li>
     </ul>
 

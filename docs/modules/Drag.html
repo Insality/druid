@@ -129,6 +129,10 @@
 	<td class="summary">Is component now touching</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Drag node</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#on_drag">on_drag</a></td>
 	<td class="summary">on drag progress callback(self, dx, dy, total_x, total_y)</td>
 	</tr>
@@ -138,7 +142,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_drag_start">on_drag_start</a></td>
-	<td class="summary">Event on drag start callback(self)</td>
+	<td class="summary">Event on drag start callback(self, touch)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_touch_end">on_touch_end</a></td>
@@ -147,6 +151,14 @@
 	<tr>
 	<td class="name" nowrap><a href="#on_touch_start">on_touch_start</a></td>
 	<td class="summary">Event on touch start callback(self)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#screen_x">screen_x</a></td>
+	<td class="summary">Current touch x screen position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#screen_y">screen_y</a></td>
+	<td class="summary">Current touch y screen position</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#touch_start_pos">touch_start_pos</a></td>
@@ -184,7 +196,7 @@
          <a href="../modules/Drag.html#">Drag</a>
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="../modules/Drag.html#node">node</a></span>
          GUI node to detect dragging
         </li>
         <li><span class="parameter">on_drag_callback</span>
@@ -241,7 +253,7 @@
          <a href="../modules/Drag.html#">Drag</a>
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="../modules/Drag.html#node">node</a></span>
          Gui node
         </li>
     </ul>
@@ -394,6 +406,26 @@
 
 </dd>
     <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Drag node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Drag.html#node">node</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "on_drag"></a>
     <strong>on_drag</strong>
     </dt>
@@ -438,7 +470,7 @@
     <strong>on_drag_start</strong>
     </dt>
     <dd>
-    Event on drag start callback(self)
+    Event on drag start callback(self, touch)
 
 
     <ul>
@@ -485,6 +517,46 @@
         <li><span class="parameter">on_touch_start</span>
             <span class="types"><span class="type">DruidEvent</span></span>
          <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "screen_x"></a>
+    <strong>screen_x</strong>
+    </dt>
+    <dd>
+    Current touch x screen position
+
+
+    <ul>
+        <li><span class="parameter">screen_x</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "screen_y"></a>
+    <strong>screen_y</strong>
+    </dt>
+    <dd>
+    Current touch y screen position
+
+
+    <ul>
+        <li><span class="parameter">screen_y</span>
+            <span class="types"><span class="type">number</span></span>
+
         </li>
     </ul>
 
