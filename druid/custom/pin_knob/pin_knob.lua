@@ -87,7 +87,7 @@ end
 
 --- Set current and min/max angles for component
 -- @tparam PinKnob self @{PinKnob}
--- @tparam[opt=1] number value The spin speed multiplier
+-- @tparam number|nil value The spin speed multiplier. Default: 1
 -- @treturn PinKnob @{PinKnob}
 function PinKnob.set_friction(self, value)
 	self._friction = value or 1

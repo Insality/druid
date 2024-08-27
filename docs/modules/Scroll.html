@@ -529,7 +529,7 @@
 
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><span class="type">node</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Gui node
         </li>
     </ul>
@@ -687,7 +687,7 @@
          The new size for content node
         </li>
         <li><span class="parameter">offset</span>
-            <span class="types"><span class="type">vector3</span></span>
+            <span class="types"><span class="type">vector3</span> or <span class="type">nil</span></span>
          Offset value to set, where content is starts
         </li>
     </ul>
@@ -751,64 +751,52 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">FRICT</span>
-            <span class="types"><span class="type">number</span></span>
-         Multiplier for free inertion
-         (<em>default</em> 0)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Multiplier for free inertion. Default: 0
         </li>
         <li><span class="parameter">FRICT_HOLD</span>
-            <span class="types"><span class="type">number</span></span>
-         Multiplier for inertion, while touching
-         (<em>default</em> 0)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Multiplier for inertion, while touching. Default: 0
         </li>
         <li><span class="parameter">INERT_THRESHOLD</span>
-            <span class="types"><span class="type">number</span></span>
-         Scroll speed to stop inertion
-         (<em>default</em> 3)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Scroll speed to stop inertion. Default: 3
         </li>
         <li><span class="parameter">INERT_SPEED</span>
-            <span class="types"><span class="type">number</span></span>
-         Multiplier for inertion speed
-         (<em>default</em> 30)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Multiplier for inertion speed. Default: 30
         </li>
         <li><span class="parameter">POINTS_DEADZONE</span>
-            <span class="types"><span class="type">number</span></span>
-         Speed to check points of interests in no_inertion mode
-         (<em>default</em> 20)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Speed to check points of interests in no_inertion mode. Default: 20
         </li>
         <li><span class="parameter">BACK_SPEED</span>
-            <span class="types"><span class="type">number</span></span>
-         Scroll back returning lerp speed
-         (<em>default</em> 0.35)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Scroll back returning lerp speed. Default: 35
         </li>
         <li><span class="parameter">ANIM_SPEED</span>
-            <span class="types"><span class="type">number</span></span>
-         Scroll gui.animation speed for scroll_to function
-         (<em>default</em> 0.2)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Scroll gui.animation speed for scroll_to function. Default: 2
         </li>
         <li><span class="parameter">EXTRA_STRETCH_SIZE</span>
-            <span class="types"><span class="type">number</span></span>
-         extra size in pixels outside of scroll (stretch effect)
-         (<em>default</em> 0)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         extra size in pixels outside of scroll (stretch effect). Default: 0
         </li>
         <li><span class="parameter">SMALL_CONTENT_SCROLL</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true, content node with size less than view node size can be scrolled
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, content node with size less than view node size can be scrolled. Default: false
         </li>
         <li><span class="parameter">WHEEL_SCROLL_SPEED</span>
-            <span class="types"><span class="type">boolean</span></span>
-         The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
-         (<em>default</em> 0)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
         </li>
         <li><span class="parameter">WHEEL_SCROLL_INVERTED</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true, invert direction for touchpad and mouse wheel scroll
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, invert direction for touchpad and mouse wheel scroll. Default: false
         </li>
         <li><span class="parameter">WHEEL_SCROLL_BY_INERTION</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true, wheel will add inertion to scroll. Direct set position otherwise.
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
         </li>
     </ul>
 

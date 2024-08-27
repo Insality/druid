@@ -138,9 +138,9 @@ end
 -- You can override this component styles params in Druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt={}] table COLORS Rich Text color aliases
--- @tfield[opt=20] number ADJUST_STEPS Amount steps of attemps text adjust by height
--- @tfield[opt=0.02] number ADJUST_SCALE_DELTA Scale step on each height adjust step
+-- @tfield table|nil COLORS Rich Text color aliases. Default: {}
+-- @tfield number|nil ADJUST_STEPS Amount steps of attemps text adjust by height. Default: 20
+-- @tfield number|nil ADJUST_SCALE_DELTA Scale step on each height adjust step. Default: 0.02
 function RichText.on_style_change(self, style)
 	self.style = {}
 	self.style.COLORS = style.COLORS or {}

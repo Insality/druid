@@ -102,8 +102,8 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=false] boolean IS_DYNAMIC_NODE_POSES If true, always center grid content as grid pivot sets
--- @tfield[opt=false] boolean IS_ALIGN_LAST_ROW If true, always align last row of the grid as grid pivot sets
+-- @tfield boolean|nil IS_DYNAMIC_NODE_POSES If true, always center grid content as grid pivot sets. Default: false
+-- @tfield boolean|nil IS_ALIGN_LAST_ROW If true, always align last row of the grid as grid pivot sets. Default: false
 function StaticGrid.on_style_change(self, style)
 	self.style = {}
 	self.style.IS_DYNAMIC_NODE_POSES = style.IS_DYNAMIC_NODE_POSES or false
@@ -115,7 +115,7 @@ end
 -- @tparam StaticGrid self @{StaticGrid}
 -- @tparam string|node parent The GUI Node container, where grid's items will be placed
 -- @tparam node element Element prefab. Need to get it size
--- @tparam[opt=1] number in_row How many nodes in row can be placed
+-- @tparam number|nil in_row How many nodes in row can be placed. By default 1
 function StaticGrid.init(self, parent, element, in_row)
 	self.parent = self:get_node(parent)
 	self.nodes = {}

@@ -123,7 +123,7 @@
 -- In default case equals to clickable node.
 --
 -- Usecase: You have the big clickable panel, but want to animate only one small icon on it.
--- @tfield[opt=node] node anim_node
+-- @tfield node|nil anim_node Default node
 
 ---Custom args for any Button event. Setup in Button constructor
 -- @tfield any params
@@ -258,9 +258,9 @@ end
 -- You can override this component styles params in Druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=0.4] number LONGTAP_TIME Minimum time to trigger on_hold_callback
--- @tfield[opt=0.8] number AUTOHOLD_TRIGGER Maximum hold time to trigger button release while holding
--- @tfield[opt=0.4] number DOUBLETAP_TIME Time between double taps
+-- @tfield number|nil LONGTAP_TIME Minimum time to trigger on_hold_callback. Default: 0.4
+-- @tfield number|nil AUTOHOLD_TRIGGER Maximum hold time to trigger button release while holding. Default: 0.8
+-- @tfield number|nil DOUBLETAP_TIME Time between double taps. Default: 0.4
 -- @tfield function on_click function(self, node)
 -- @tfield function on_click_disabled function(self, node)
 -- @tfield function on_hover function(self, node, hover_state)
@@ -478,7 +478,7 @@ end
 --
 -- This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
 -- @tparam Button self @{Button}
--- @tparam node|nil zone Gui node
+-- @tparam node|string|nil zone Gui node
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_click_zone("stencil_node")

@@ -202,7 +202,7 @@ end
 -- move at this position and node drag will start.
 -- This function require the Defold version 1.3.0+
 -- @tparam Slider self @{Slider}
--- @tparam node input_node
+-- @tparam node|string|nil input_node
 -- @treturn Slider @{Slider}
 function Slider.set_input_node(self, input_node)
 	self._input_node = self:get_node(input_node)

@@ -14,7 +14,7 @@
 -- @tfield node node
 
 --- Button trigger node
--- @tfield[opt=node] node click_node
+-- @tfield node|nil click_node
 
 --- Button component from click_node
 -- @tfield Button button @{Button}

@@ -34,7 +34,7 @@ end
 -- @tparam RadioGroup self @{RadioGroup}
 -- @tparam node[] nodes Array of gui node
 -- @tparam function callback Radio callback
--- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+-- @tparam node[]|nil click_nodes Array of trigger nodes, by default equals to nodes. Default - nodes
 function RadioGroup.init(self, nodes, callback, click_nodes)
 	self.druid = self:get_druid()
 	self.checkboxes = {}

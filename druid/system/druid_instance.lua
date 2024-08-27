@@ -473,7 +473,7 @@ end
 -- If whitelist is not empty and component not contains in this list,
 -- component will be not processed on input step
 -- @tparam DruidInstance self
--- @tparam[opt=nil] table|BaseComponent whitelist_components The array of component to whitelist
+-- @tparam table|BaseComponent|nil whitelist_components The array of component to whitelist
 -- @treturn self @{DruidInstance}
 function DruidInstance.set_whitelist(self, whitelist_components)
 	if whitelist_components and whitelist_components.isInstanceOf then
@@ -495,7 +495,7 @@ end
 -- If blacklist is not empty and component contains in this list,
 -- component will be not processed on input step
 -- @tparam DruidInstance self @{DruidInstance}
--- @tparam[opt=nil] table|BaseComponent blacklist_components The array of component to blacklist
+-- @tparam table|BaseComponent|nil blacklist_components The array of component to blacklist
 -- @treturn self @{DruidInstance}
 function DruidInstance.set_blacklist(self, blacklist_components)
 	if blacklist_components and blacklist_components.isInstanceOf then
@@ -557,7 +557,7 @@ end
 -- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @tparam function|nil callback Button callback
 -- @tparam table|nil params Button callback params
--- @tparam node|nil anim_node Button anim node (node, if not provided)
+-- @tparam node|string|nil anim_node Button anim node (node, if not provided)
 -- @treturn Button @{Button} component
 function DruidInstance.new_button(self, node, callback, params, anim_node)
 	return DruidInstance.new(self, button, node, callback, params, anim_node)
@@ -705,7 +705,7 @@ end
 --- Create @{Input} component
 -- @tparam DruidInstance self
 -- @tparam string|node click_node Button node to enabled input component
--- @tparam string|node text_node Text node what will be changed on user input
+-- @tparam string|node|druid.text text_node Text node what will be changed on user input
 -- @tparam number|nil keyboard_type Gui keyboard type for input field
 -- @treturn Input @{Input} component
 function DruidInstance.new_input(self, click_node, text_node, keyboard_type)
@@ -715,9 +715,9 @@ end
 
 --- Create @{CheckboxGroup} component
 -- @tparam DruidInstance self
--- @tparam node[] nodes Array of gui node
+-- @tparam (node|string)[] nodes Array of gui node
 -- @tparam function callback Checkbox callback
--- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+-- @tparam (node|string)[]|nil click_nodes Array of trigger nodes, by default equals to nodes
 -- @treturn CheckboxGroup @{CheckboxGroup} component
 function DruidInstance.new_checkbox_group(self, nodes, callback, click_nodes)
 	return helper.require_component_message("checkbox_group")
@@ -737,9 +737,9 @@ end
 
 --- Create @{RadioGroup} component
 -- @tparam DruidInstance self
--- @tparam node[] nodes Array of gui node
+-- @tparam (node|string)[] nodes Array of gui node
 -- @tparam function callback Radio callback
--- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+-- @tparam (node|string)[]|nil click_nodes Array of trigger nodes, by default equals to nodes
 -- @treturn RadioGroup @{RadioGroup} component
 function DruidInstance.new_radio_group(self, nodes, callback, click_nodes)
 	return helper.require_component_message("radio_group")
@@ -773,8 +773,9 @@ end
 -- @tparam DruidInstance self
 -- @tparam string|node node The_node id or gui.get_node(node_id).
 -- @tparam string mode The layout mode
+-- @tparam function|nil on_size_changed_callback The callback on window resize
 -- @treturn Layout @{Layout} component
-function DruidInstance.new_layout(self, node, mode)
+function DruidInstance.new_layout(self, node, mode, on_size_changed_callback)
 	return helper.require_component_message("layout")
 end
 

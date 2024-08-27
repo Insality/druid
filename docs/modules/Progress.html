@@ -103,7 +103,7 @@
 	<td class="summary">Return current progress bar value</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, key[, init_value=1])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node, key, init_value)</a></td>
 	<td class="summary">The <a href="../modules/Progress.html#">Progress</a> constructor</td>
 	</tr>
 	<tr>
@@ -234,7 +234,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, key[, init_value=1])</strong>
+    <strong>init(self, node, key, init_value)</strong>
     </dt>
     <dd>
     The <a href="../modules/Progress.html#">Progress</a> constructor
@@ -255,9 +255,8 @@
          Progress bar direction: const.SIDE.X or const.SIDE.Y
         </li>
         <li><span class="parameter">init_value</span>
-            <span class="types"><span class="type">number</span></span>
-         Initial value of progress bar
-         (<em>default</em> 1)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Initial value of progress bar. Default: 1
         </li>
     </ul>
 
@@ -401,14 +400,12 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">SPEED</span>
-            <span class="types"><span class="type">number</span></span>
-         Progress bas fill rate. More -> faster
-         (<em>default</em> 5)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Progress bas fill rate. More -> faster. Default: 5
         </li>
         <li><span class="parameter">MIN_DELTA</span>
-            <span class="types"><span class="type">number</span></span>
-         Minimum step to fill progress bar
-         (<em>default</em> 0.005)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Minimum step to fill progress bar. Default: 0.005
         </li>
     </ul>
 

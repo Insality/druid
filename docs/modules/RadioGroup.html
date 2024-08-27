@@ -86,7 +86,7 @@
 	<td class="summary">Return radio group state</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, nodes, callback[, click_nodes=node])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, nodes, callback, click_nodes)</a></td>
 	<td class="summary">The <a href="../modules/RadioGroup.html#">RadioGroup</a> constructor</td>
 	</tr>
 	<tr>
@@ -142,7 +142,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, nodes, callback[, click_nodes=node])</strong>
+    <strong>init(self, nodes, callback, click_nodes)</strong>
     </dt>
     <dd>
     The <a href="../modules/RadioGroup.html#">RadioGroup</a> constructor
@@ -163,9 +163,8 @@
          Radio callback
         </li>
         <li><span class="parameter">click_nodes</span>
-            <span class="types"><span class="type">node[]</span></span>
-         Array of trigger nodes, by default equals to nodes
-         (<em>default</em> node)
+            <span class="types"><span class="type">node[]</span> or <span class="type">nil</span></span>
+         Array of trigger nodes, by default equals to nodes. Default - nodes
         </li>
     </ul>
 

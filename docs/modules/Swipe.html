@@ -169,7 +169,7 @@
          <a href="../modules/Swipe.html#">Swipe</a>
         </li>
         <li><span class="parameter">zone</span>
-            <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a></span>
+            <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Gui node
         </li>
     </ul>
@@ -196,19 +196,16 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">SWIPE_TIME</span>
-            <span class="types"><span class="type">number</span></span>
-         Maximum time for swipe trigger
-         (<em>default</em> 0.4)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Maximum time for swipe trigger. Default: 0.4
         </li>
         <li><span class="parameter">SWIPE_THRESHOLD</span>
-            <span class="types"><span class="type">number</span></span>
-         Minimum distance for swipe trigger
-         (<em>default</em> 50)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Minimum distance for swipe trigger. Default: 50
         </li>
         <li><span class="parameter">SWIPE_TRIGGER_ON_MOVE</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true, trigger on swipe moving, not only release action
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, trigger on swipe moving, not only release action. Default: false
         </li>
     </ul>
 

@@ -123,18 +123,18 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=0] number FRICT Multiplier for free inertion
--- @tfield[opt=0] number FRICT_HOLD Multiplier for inertion, while touching
--- @tfield[opt=3] number INERT_THRESHOLD Scroll speed to stop inertion
--- @tfield[opt=30] number INERT_SPEED Multiplier for inertion speed
--- @tfield[opt=20] number POINTS_DEADZONE Speed to check points of interests in no_inertion mode
--- @tfield[opt=0.35] number BACK_SPEED Scroll back returning lerp speed
--- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
--- @tfield[opt=0] number EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect)
--- @tfield[opt=false] boolean SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
--- @tfield[opt=0] boolean WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
--- @tfield[opt=false] boolean WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll
--- @tfield[opt=false] boolean WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.
+-- @tfield number|nil FRICT Multiplier for free inertion. Default: 0
+-- @tfield number|nil FRICT_HOLD Multiplier for inertion, while touching. Default: 0
+-- @tfield number|nil INERT_THRESHOLD Scroll speed to stop inertion. Default: 3
+-- @tfield number|nil INERT_SPEED Multiplier for inertion speed. Default: 30
+-- @tfield number|nil POINTS_DEADZONE Speed to check points of interests in no_inertion mode. Default: 20
+-- @tfield number|nil BACK_SPEED Scroll back returning lerp speed. Default: 35
+-- @tfield number|nil ANIM_SPEED Scroll gui.animation speed for scroll_to function. Default: 2
+-- @tfield number|nil EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect). Default: 0
+-- @tfield boolean|nil SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled. Default: false
+-- @tfield boolean|nil WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
+-- @tfield boolean|nil WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll. Default: false
+-- @tfield boolean|nil WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
 function Scroll.on_style_change(self, style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
@@ -325,7 +325,7 @@ end
 -- It will change content gui node size
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 size The new size for content node
--- @tparam vector3 offset Offset value to set, where content is starts
+-- @tparam vector3|nil offset Offset value to set, where content is starts
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_size(self, size, offset)
 	if offset then
@@ -493,7 +493,7 @@ end
 --- Strict drag scroll area. Useful for
 -- restrict events outside stencil node
 -- @tparam Drag self
--- @tparam node node Gui node
+-- @tparam node|string node Gui node
 function Scroll.set_click_zone(self, node)
 	self.drag:set_click_zone(node)
 end

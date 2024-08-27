@@ -109,7 +109,7 @@
 	<td class="summary">Calculate text width with font with respect to trailing space</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, value[, adjust_type=downscale])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node, value, adjust_type)</a></td>
 	<td class="summary">The <a href="../modules/Text.html#">Text</a> constructor</td>
 	</tr>
 	<tr>
@@ -284,7 +284,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, value[, adjust_type=downscale])</strong>
+    <strong>init(self, node, value, adjust_type)</strong>
     </dt>
     <dd>
     The <a href="../modules/Text.html#">Text</a> constructor
@@ -305,9 +305,8 @@
          Initial text. Default value is node text from GUI scene.
         </li>
         <li><span class="parameter">adjust_type</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
-         (<em>default</em> downscale)
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: downscale
         </li>
     </ul>
 
@@ -612,14 +611,12 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">TRIM_POSTFIX</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         The postfix for TRIM adjust type
-         (<em>default</em> ...)
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         The postfix for TRIM adjust type. Default: ...
         </li>
         <li><span class="parameter">DEFAULT_ADJUST</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         The default adjust type for any text component
-         (<em>default</em> DOWNSCALE)
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         The default adjust type for any text component. Default: DOWNSCALE
         </li>
     </ul>
 

@@ -93,7 +93,7 @@
 	<td class="summary">Format string with new text params on localized text</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node[, locale_id=node_text[, adjust_type=downscale]])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node, locale_id, adjust_type)</a></td>
 	<td class="summary">The <a href="../modules/LangText.html#">LangText</a> constructor</td>
 	</tr>
 	<tr>
@@ -185,7 +185,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node[, locale_id=node_text[, adjust_type=downscale]])</strong>
+    <strong>init(self, node, locale_id, adjust_type)</strong>
     </dt>
     <dd>
     The <a href="../modules/LangText.html#">LangText</a> constructor
@@ -202,14 +202,12 @@
          The node_id or gui.get_node(node_id)
         </li>
         <li><span class="parameter">locale_id</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Default locale id or text from node as default
-         (<em>default</em> node_text)
         </li>
         <li><span class="parameter">adjust_type</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
-         (<em>default</em> downscale)
         </li>
     </ul>
 

@@ -168,7 +168,7 @@ function druid__blocker.set_enabled(self, state) end
 
 
 ---@class druid.button : druid.base_component
----@field anim_node node Button animation node.
+---@field anim_node node|nil Button animation node.
 ---@field click_zone node|nil Additional button click area, defined by another GUI node
 ---@field hover druid.hover The @{Hover}: Button Hover component
 ---@field node node Button trigger node
@@ -213,7 +213,7 @@ function druid__button.set_check_function(self, check_function, failure_callback
 --- Set additional button click area.
 --- Useful to restrict click outside out stencil node or scrollable content.  This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
 ---@param self druid.button @{Button}
----@param zone node|nil Gui node
+---@param zone node|string|nil Gui node
 ---@return druid.button Current button instance
 function druid__button.set_click_zone(self, zone) end
 
@@ -239,9 +239,9 @@ function druid__button.set_web_user_interaction(self, is_web_mode) end
 
 
 ---@class druid.button.style
----@field AUTOHOLD_TRIGGER number Maximum hold time to trigger button release while holding
----@field DOUBLETAP_TIME number Time between double taps
----@field LONGTAP_TIME number Minimum time to trigger on_hold_callback
+---@field AUTOHOLD_TRIGGER number|nil Maximum hold time to trigger button release while holding. Default: 0.8
+---@field DOUBLETAP_TIME number|nil Time between double taps. Default: 0.4
+---@field LONGTAP_TIME number|nil Minimum time to trigger on_hold_callback. Default: 0.4
 ---@field on_click function function(self, node)
 ---@field on_click_disabled function function(self, node)
 ---@field on_hover function function(self, node, hover_state)
@@ -252,7 +252,7 @@ local druid__button__style = {}
 
 ---@class druid.checkbox : druid.base_component
 ---@field button druid.button Button component from click_node
----@field click_node node Button trigger node
+---@field click_node node|nil Button trigger node
 ---@field node node Visual node
 ---@field on_change_state druid.event On change state callback(self, state)
 ---@field style druid.checkbox.style Component style params.
@@ -267,8 +267,8 @@ function druid__checkbox.get_state(self) end
 ---@param self druid.checkbox @{Checkbox}
 ---@param node node Gui node
 ---@param callback function Checkbox callback
----@param click_node node Trigger node, by default equals to node
----@param initial_state boolean The initial state of checkbox, default - false
+---@param click_node node|nil Trigger node, by default equals to node. Default: node
+---@param initial_state boolean|nil The initial state of checkbox, default - false
 function druid__checkbox.init(self, node, callback, click_node, initial_state) end
 
 --- Set checkbox state
@@ -298,7 +298,7 @@ function druid__checkbox_group.get_state(self) end
 ---@param self druid.checkbox_group @{CheckboxGroup}
 ---@param nodes node[] Array of gui node
 ---@param callback function Checkbox callback
----@param click_nodes node[] Array of trigger nodes, by default equals to nodes
+---@param click_nodes node[]|nil Array of trigger nodes, by default equals to nodes
 function druid__checkbox_group.init(self, nodes, callback, click_nodes) end
 
 --- Set checkbox group state
@@ -412,7 +412,7 @@ function druid__drag.is_enabled(self) end
 --- Strict drag click area.
 --- Useful for  restrict events outside stencil node
 ---@param self druid.drag @{Drag}
----@param node node Gui node
+---@param node node|string|nil Gui node
 function druid__drag.set_click_zone(self, node) end
 
 --- Set Drag input enabled or disabled
@@ -422,8 +422,8 @@ function druid__drag.set_enabled(self, is_enabled) end
 
 
 ---@class druid.drag.style
----@field DRAG_DEADZONE number Distance in pixels to start dragging
----@field NO_USE_SCREEN_KOEF boolean If screen aspect ratio affects on drag values
+---@field DRAG_DEADZONE number|nil Distance in pixels to start dragging. Default: 10
+---@field NO_USE_SCREEN_KOEF boolean|nil If screen aspect ratio affects on drag values. Default: false
 local druid__drag__style = {}
 
 
@@ -487,7 +487,7 @@ function druid__dynamic_grid.get_offset(self) end
 ---@param index number The grid element index
 ---@param node node The node to be placed
 ---@param origin_index number|nil Index of nearby node
----@return vector3 Node position
+---@return vector3 node position
 function druid__dynamic_grid.get_pos(self, index, node, origin_index) end
 
 --- Return grid content size
@@ -555,7 +555,7 @@ function druid__event.unsubscribe(self, callback, context) end
 
 ---@class druid.hotkey : druid.base_component
 ---@field button druid.button Button component from click_node
----@field click_node node Button trigger node
+---@field click_node node|nil Button trigger node
 ---@field node node Visual node
 ---@field on_change_state druid.event On change state callback(self, state)
 ---@field style druid.hotkey.style Component style params.
@@ -618,7 +618,7 @@ function druid__hover.is_mouse_hovered(self) end
 --- Strict hover click area.
 --- Useful for  no click events outside stencil node
 ---@param self druid.hover @{Hover}
----@param zone node Gui node
+---@param zone node|string|nil Gui node
 function druid__hover.set_click_zone(self, zone) end
 
 --- Set enable state of hover component.
@@ -702,10 +702,10 @@ function druid__input.unselect(self) end
 
 
 ---@class druid.input.style
----@field IS_LONGTAP_ERASE boolean Is long tap will erase current input data
----@field IS_UNSELECT_ON_RESELECT boolean If true, call unselect on select selected input
----@field MASK_DEFAULT_CHAR string Default character mask for password input
----@field NO_CONSUME_INPUT_WHILE_SELECTED boolean If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured)
+---@field IS_LONGTAP_ERASE boolean Is long tap will erase current input data. Default: false
+---@field IS_UNSELECT_ON_RESELECT boolean If true, call unselect on select selected input. Default: false
+---@field MASK_DEFAULT_CHAR string Default character mask for password input. Default: *]
+---@field NO_CONSUME_INPUT_WHILE_SELECTED boolean If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured). Default: false
 ---@field button_style table Custom button style for input node
 ---@field on_input_wrong function (self, button_node) Callback on wrong user input
 ---@field on_select function (self, button_node) Callback on input field selecting
@@ -734,8 +734,8 @@ function druid__lang_text.format(self, a, b, c, d, e, f, g) end
 --- The @{LangText} constructor
 ---@param self druid.lang_text @{LangText}
 ---@param node string|node The node_id or gui.get_node(node_id)
----@param locale_id string Default locale id or text from node as default
----@param adjust_type string Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+---@param locale_id string|nil Default locale id or text from node as default
+---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 function druid__lang_text.init(self, node, locale_id, adjust_type) end
 
 --- Setup raw text to lang_text component
@@ -846,7 +846,7 @@ function druid__pin_knob.set_angle(self, cur_value, min, max) end
 
 --- Set current and min/max angles for component
 ---@param self druid.pin_knob @{PinKnob}
----@param value number The spin speed multiplier
+---@param value number|nil The spin speed multiplier. Default: 1
 ---@return druid.pin_knob @{PinKnob}
 function druid__pin_knob.set_friction(self, value) end
 
@@ -878,7 +878,7 @@ function druid__progress.get(self) end
 ---@param self druid.progress @{Progress}
 ---@param node string|node Node name or GUI Node itself.
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
----@param init_value number Initial value of progress bar
+---@param init_value number|nil Initial value of progress bar. Default: 1
 function druid__progress.init(self, node, key, init_value) end
 
 --- Set progress bar max node size
@@ -906,8 +906,8 @@ function druid__progress.to(self, to, callback) end
 
 
 ---@class druid.progress.style
----@field MIN_DELTA number Minimum step to fill progress bar
----@field SPEED number Progress bas fill rate. More -> faster
+---@field MIN_DELTA number|nil Minimum step to fill progress bar. Default: 0.005
+---@field SPEED number|nil Progress bas fill rate. More -> faster. Default: 5
 local druid__progress__style = {}
 
 
@@ -925,7 +925,7 @@ function druid__radio_group.get_state(self) end
 ---@param self druid.radio_group @{RadioGroup}
 ---@param nodes node[] Array of gui node
 ---@param callback function Radio callback
----@param click_nodes node[] Array of trigger nodes, by default equals to nodes
+---@param click_nodes node[]|nil Array of trigger nodes, by default equals to nodes. Default - nodes
 function druid__radio_group.init(self, nodes, callback, click_nodes) end
 
 --- Set radio group state
@@ -1004,9 +1004,9 @@ function druid__rich_text.tagged(tag) end
 
 
 ---@class druid.rich_text.style
----@field ADJUST_SCALE_DELTA number Scale step on each height adjust step
----@field ADJUST_STEPS number Amount steps of attemps text adjust by height
----@field COLORS table Rich Text color aliases
+---@field ADJUST_SCALE_DELTA number|nil Scale step on each height adjust step. Default: 0.02
+---@field ADJUST_STEPS number|nil Amount steps of attemps text adjust by height. Default: 20
+---@field COLORS table|nil Rich Text color aliases. Default: {}
 local druid__rich_text__style = {}
 
 
@@ -1084,7 +1084,7 @@ function druid__scroll.scroll_to_percent(self, percent, is_instant) end
 --- Strict drag scroll area.
 --- Useful for  restrict events outside stencil node
 ---@param self druid.drag
----@param node node Gui node
+---@param node node|string Gui node
 function druid__scroll.set_click_zone(self, node) end
 
 --- Set extra size for scroll stretching.
@@ -1118,7 +1118,7 @@ function druid__scroll.set_points(self, points) end
 --- It will change content gui node size
 ---@param self druid.scroll @{Scroll}
 ---@param size vector3 The new size for content node
----@param offset vector3 Offset value to set, where content is starts
+---@param offset vector3|nil Offset value to set, where content is starts
 ---@return druid.scroll Current scroll instance
 function druid__scroll.set_size(self, size, offset) end
 
@@ -1130,18 +1130,18 @@ function druid__scroll.set_vertical_scroll(self, state) end
 
 
 ---@class druid.scroll.style
----@field ANIM_SPEED number Scroll gui.animation speed for scroll_to function
----@field BACK_SPEED number Scroll back returning lerp speed
----@field EXTRA_STRETCH_SIZE number extra size in pixels outside of scroll (stretch effect)
----@field FRICT number Multiplier for free inertion
----@field FRICT_HOLD number Multiplier for inertion, while touching
----@field INERT_SPEED number Multiplier for inertion speed
----@field INERT_THRESHOLD number Scroll speed to stop inertion
----@field POINTS_DEADZONE number Speed to check points of interests in no_inertion mode
----@field SMALL_CONTENT_SCROLL boolean If true, content node with size less than view node size can be scrolled
----@field WHEEL_SCROLL_BY_INERTION boolean If true, wheel will add inertion to scroll. Direct set position otherwise.
----@field WHEEL_SCROLL_INVERTED boolean If true, invert direction for touchpad and mouse wheel scroll
----@field WHEEL_SCROLL_SPEED boolean The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
+---@field ANIM_SPEED number|nil Scroll gui.animation speed for scroll_to function. Default: 2
+---@field BACK_SPEED number|nil Scroll back returning lerp speed. Default: 35
+---@field EXTRA_STRETCH_SIZE number|nil extra size in pixels outside of scroll (stretch effect). Default: 0
+---@field FRICT number|nil Multiplier for free inertion. Default: 0
+---@field FRICT_HOLD number|nil Multiplier for inertion, while touching. Default: 0
+---@field INERT_SPEED number|nil Multiplier for inertion speed. Default: 30
+---@field INERT_THRESHOLD number|nil Scroll speed to stop inertion. Default: 3
+---@field POINTS_DEADZONE number|nil Speed to check points of interests in no_inertion mode. Default: 20
+---@field SMALL_CONTENT_SCROLL boolean|nil If true, content node with size less than view node size can be scrolled. Default: false
+---@field WHEEL_SCROLL_BY_INERTION boolean|nil If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
+---@field WHEEL_SCROLL_INVERTED boolean|nil If true, invert direction for touchpad and mouse wheel scroll. Default: false
+---@field WHEEL_SCROLL_SPEED boolean|nil The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
 local druid__scroll__style = {}
 
 
@@ -1173,7 +1173,7 @@ function druid__slider.set(self, value, is_silent) end
 --- Set input zone for slider.
 --- User can touch any place of node, pin instantly will  move at this position and node drag will start.  This function require the Defold version 1.3.0+
 ---@param self druid.slider @{Slider}
----@param input_node node
+---@param input_node node|string|nil
 ---@return druid.slider @{Slider}
 function druid__slider.set_input_node(self, input_node) end
 
@@ -1258,7 +1258,7 @@ function druid__static_grid.get_size(self) end
 ---@param self druid.static_grid @{StaticGrid}
 ---@param parent string|node The GUI Node container, where grid's items will be placed
 ---@param element node Element prefab. Need to get it size
----@param in_row number How many nodes in row can be placed
+---@param in_row number|nil How many nodes in row can be placed. By default 1
 function druid__static_grid.init(self, parent, element, in_row) end
 
 --- Remove the item from the grid.
@@ -1291,8 +1291,8 @@ function druid__static_grid.set_position_function(self, callback) end
 
 
 ---@class druid.static_grid.style
----@field IS_ALIGN_LAST_ROW boolean If true, always align last row of the grid as grid pivot sets
----@field IS_DYNAMIC_NODE_POSES boolean If true, always center grid content as grid pivot sets
+---@field IS_ALIGN_LAST_ROW boolean|nil If true, always align last row of the grid as grid pivot sets. Default: false
+---@field IS_DYNAMIC_NODE_POSES boolean|nil If true, always center grid content as grid pivot sets. Default: false
 local druid__static_grid__style = {}
 
 
@@ -1312,14 +1312,14 @@ function druid__swipe.init(self, node, on_swipe_callback) end
 --- Strict swipe click area.
 --- Useful for  restrict events outside stencil node
 ---@param self druid.swipe @{Swipe}
----@param zone node Gui node
+---@param zone node|string|nil Gui node
 function druid__swipe.set_click_zone(self, zone) end
 
 
 ---@class druid.swipe.style
----@field SWIPE_THRESHOLD number Minimum distance for swipe trigger
----@field SWIPE_TIME number Maximum time for swipe trigger
----@field SWIPE_TRIGGER_ON_MOVE boolean If true, trigger on swipe moving, not only release action
+---@field SWIPE_THRESHOLD number|nil Minimum distance for swipe trigger. Default: 50
+---@field SWIPE_TIME number|nil Maximum time for swipe trigger. Default: 0.4
+---@field SWIPE_TRIGGER_ON_MOVE boolean|nil If true, trigger on swipe moving, not only release action. Default: false
 local druid__swipe__style = {}
 
 
@@ -1357,7 +1357,7 @@ function druid__text.get_text_size(self, text) end
 ---@param self druid.text @{Text}
 ---@param node string|node Node name or GUI Text Node itself
 ---@param value string|nil Initial text. Default value is node text from GUI scene.
----@param adjust_type string Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: downscale
 function druid__text.init(self, node, value, adjust_type) end
 
 --- Return true, if text with line break
@@ -1417,8 +1417,8 @@ function druid__text.set_to(self, set_to) end
 
 
 ---@class druid.text.style
----@field DEFAULT_ADJUST string The default adjust type for any text component
----@field TRIM_POSTFIX string The postfix for TRIM adjust type
+---@field DEFAULT_ADJUST string|nil The default adjust type for any text component. Default: DOWNSCALE
+---@field TRIM_POSTFIX string|nil The postfix for TRIM adjust type. Default: ...
 local druid__text__style = {}
 
 
@@ -1489,7 +1489,7 @@ function druid_instance.new_blocker(self, node) end
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param callback function|nil Button callback
 ---@param params table|nil Button callback params
----@param anim_node node|nil Button anim node (node, if not provided)
+---@param anim_node node|string|nil Button anim node (node, if not provided)
 ---@return druid.button @{Button} component
 function druid_instance.new_button(self, node, callback, params, anim_node) end
 
@@ -1504,9 +1504,9 @@ function druid_instance.new_checkbox(self, node, callback, click_node, initial_s
 
 --- Create @{CheckboxGroup} component
 ---@param self druid_instance
----@param nodes node[] Array of gui node
+---@param nodes (node|string)[] Array of gui node
 ---@param callback function Checkbox callback
----@param click_nodes node[] Array of trigger nodes, by default equals to nodes
+---@param click_nodes (node|string)[]|nil Array of trigger nodes, by default equals to nodes
 ---@return druid.checkbox_group @{CheckboxGroup} component
 function druid_instance.new_checkbox_group(self, nodes, callback, click_nodes) end
 
@@ -1549,7 +1549,7 @@ function druid_instance.new_hover(self, node, on_hover_callback) end
 --- Create @{Input} component
 ---@param self druid_instance
 ---@param click_node string|node Button node to enabled input component
----@param text_node string|node Text node what will be changed on user input
+---@param text_node string|node|druid.text Text node what will be changed on user input
 ---@param keyboard_type number|nil Gui keyboard type for input field
 ---@return druid.input @{Input} component
 function druid_instance.new_input(self, click_node, text_node, keyboard_type) end
@@ -1566,8 +1566,9 @@ function druid_instance.new_lang_text(self, node, locale_id, adjust_type) end
 ---@param self druid_instance
 ---@param node string|node The_node id or gui.get_node(node_id).
 ---@param mode string The layout mode
+---@param on_size_changed_callback function|nil The callback on window resize
 ---@return druid.layout @{Layout} component
-function druid_instance.new_layout(self, node, mode) end
+function druid_instance.new_layout(self, node, mode, on_size_changed_callback) end
 
 --- Create @{Progress} component
 ---@param self druid_instance
@@ -1579,9 +1580,9 @@ function druid_instance.new_progress(self, node, key, init_value) end
 
 --- Create @{RadioGroup} component
 ---@param self druid_instance
----@param nodes node[] Array of gui node
+---@param nodes (node|string)[] Array of gui node
 ---@param callback function Radio callback
----@param click_nodes node[] Array of trigger nodes, by default equals to nodes
+---@param click_nodes (node|string)[]|nil Array of trigger nodes, by default equals to nodes
 ---@return druid.radio_group @{RadioGroup} component
 function druid_instance.new_radio_group(self, nodes, callback, click_nodes) end
 
@@ -1665,14 +1666,14 @@ function druid_instance.remove(self, component) end
 --- Set blacklist components for input processing.
 --- If blacklist is not empty and component contains in this list,  component will be not processed on input step
 ---@param self druid_instance @{DruidInstance}
----@param blacklist_components table|druid.base_component The array of component to blacklist
+---@param blacklist_components table|druid.base_component|nil The array of component to blacklist
 ---@return self @{DruidInstance}
 function druid_instance.set_blacklist(self, blacklist_components) end
 
 --- Set whitelist components for input processing.
 --- If whitelist is not empty and component not contains in this list,  component will be not processed on input step
 ---@param self druid_instance
----@param whitelist_components table|druid.base_component The array of component to whitelist
+---@param whitelist_components table|druid.base_component|nil The array of component to whitelist
 ---@return self @{DruidInstance}
 function druid_instance.set_whitelist(self, whitelist_components) end
 

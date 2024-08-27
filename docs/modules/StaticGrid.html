@@ -138,7 +138,7 @@
 	<td class="summary">Return grid content size</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, parent, element[, in_row=1])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, parent, element, in_row)</a></td>
 	<td class="summary">The <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor</td>
 	</tr>
 	<tr>
@@ -496,7 +496,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, parent, element[, in_row=1])</strong>
+    <strong>init(self, parent, element, in_row)</strong>
     </dt>
     <dd>
     The <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor
@@ -517,9 +517,8 @@
          Element prefab. Need to get it size
         </li>
         <li><span class="parameter">in_row</span>
-            <span class="types"><span class="type">number</span></span>
-         How many nodes in row can be placed
-         (<em>default</em> 1)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         How many nodes in row can be placed. By default 1
         </li>
     </ul>
 
@@ -672,14 +671,12 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">IS_DYNAMIC_NODE_POSES</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true, always center grid content as grid pivot sets
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, always center grid content as grid pivot sets. Default: false
         </li>
         <li><span class="parameter">IS_ALIGN_LAST_ROW</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true, always align last row of the grid as grid pivot sets
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, always align last row of the grid as grid pivot sets. Default: false
         </li>
     </ul>
 

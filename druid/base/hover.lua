@@ -128,7 +128,7 @@ end
 --- Strict hover click area. Useful for
 -- no click events outside stencil node
 -- @tparam Hover self @{Hover}
--- @tparam node zone Gui node
+-- @tparam node|string|nil zone Gui node
 function Hover.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
 end

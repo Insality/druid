@@ -87,10 +87,10 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=false] boolean IS_LONGTAP_ERASE Is long tap will erase current input data
--- @tfield[opt=*] string MASK_DEFAULT_CHAR Default character mask for password input
--- @tfield[opt=false] boolean IS_UNSELECT_ON_RESELECT If true, call unselect on select selected input
--- @tfield[opt=false] boolean NO_CONSUME_INPUT_WHILE_SELECTED If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured)
+-- @tfield boolean IS_LONGTAP_ERASE Is long tap will erase current input data. Default: false
+-- @tfield string MASK_DEFAULT_CHAR Default character mask for password input. Default: *]
+-- @tfield boolean IS_UNSELECT_ON_RESELECT If true, call unselect on select selected input. Default: false
+-- @tfield boolean NO_CONSUME_INPUT_WHILE_SELECTED If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured). Default: false
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input

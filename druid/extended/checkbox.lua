@@ -14,7 +14,7 @@
 -- @tfield node node
 
 --- Button trigger node
--- @tfield[opt=node] node click_node
+-- @tfield node|nil click_node
 
 --- Button component from click_node
 -- @tfield Button button @{Button}
@@ -50,8 +50,8 @@ end
 -- @tparam Checkbox self @{Checkbox}
 -- @tparam node node Gui node
 -- @tparam function callback Checkbox callback
--- @tparam[opt=node] node click_node Trigger node, by default equals to node
--- @tparam[opt=false] boolean initial_state The initial state of checkbox, default - false
+-- @tparam node|nil click_node Trigger node, by default equals to node. Default: node
+-- @tparam boolean|nil initial_state The initial state of checkbox, default - false
 function Checkbox.init(self, node, callback, click_node, initial_state)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)

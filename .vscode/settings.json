@@ -1,0 +1,17 @@
+{
+	"Lua.diagnostics.globals": [
+		"init",
+		"final",
+		"update",
+		"on_message",
+		"on_input",
+		"describe",
+		"before",
+		"after",
+		"it"
+	],
+	"Lua.workspace.ignoreDir": [
+		".vscode",
+		"test/*"
+	]
+}

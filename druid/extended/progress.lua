@@ -101,8 +101,8 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=5] number SPEED Progress bas fill rate. More -> faster
--- @tfield[opt=0.005] number MIN_DELTA Minimum step to fill progress bar
+-- @tfield number|nil SPEED Progress bas fill rate. More -> faster. Default: 5
+-- @tfield number|nil MIN_DELTA Minimum step to fill progress bar. Default: 0.005
 function Progress.on_style_change(self, style)
 	self.style = {}
 	self.style.SPEED = style.SPEED or 5
@@ -114,7 +114,7 @@ end
 -- @tparam Progress self @{Progress}
 -- @tparam string|node node Node name or GUI Node itself.
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
--- @tparam[opt=1] number init_value Initial value of progress bar
+-- @tparam number|nil init_value Initial value of progress bar. Default: 1
 function Progress.init(self, node, key, init_value)
 	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
