@@ -15,7 +15,7 @@ high_dpi = 1
 title = druid
 version = 0.11.0
 publisher = Insality
-developer = Insality
+developer = Maksim Tuprikov
 dependencies#0 = https://github.com/insalitygames/deftest/archive/master.zip
 dependencies#1 = https://github.com/britzl/monarch/archive/refs/tags/3.3.0.zip
 
