@@ -87,7 +87,7 @@ M["scroll"] = {
 	WHEEL_SCROLL_SPEED = 0, -- Amount of pixels to scroll by one wheel event (0 to disable)
 	WHEEL_SCROLL_INVERTED = false, -- Boolean to invert wheel scroll side
 	WHEEL_SCROLL_BY_INERTION = false, -- If true, wheel will add inertion to scroll. Direct set position otherwise.
-	SMALL_CONTENT_SCROLL = true, -- If true, content node with size less than view node size can be scrolled
+	SMALL_CONTENT_SCROLL = false, -- If true, content node with size less than view node size can be scrolled
 }
 
 

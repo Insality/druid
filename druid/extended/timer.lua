@@ -44,12 +44,12 @@ local function second_string_min(sec)
 end
 
 
---- Component init function
+--- The @{Timer} constructor
 -- @tparam Timer self @{Timer}
 -- @tparam node node Gui text node
 -- @tparam number seconds_from Start timer value in seconds
--- @tparam[opt=0] number seconds_to End timer value in seconds
--- @tparam[opt] function callback Function on timer end
+-- @tparam number|nil seconds_to End timer value in seconds
+-- @tparam function|nil callback Function on timer end
 function Timer.init(self, node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
 	seconds_from = math.max(seconds_from, 0)
@@ -110,7 +110,7 @@ end
 
 --- Called when update
 -- @tparam Timer self @{Timer}
--- @tparam bool is_on Timer enable state
+-- @tparam boolean|nil is_on Timer enable state
 function Timer.set_state(self, is_on)
 	self.is_on = is_on
 

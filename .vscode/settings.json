@@ -1,0 +1,30 @@
+{
+	"Lua.diagnostics.globals": [
+		"init",
+		"final",
+		"update",
+		"on_message",
+		"on_input",
+		"describe",
+		"before",
+		"after",
+		"it",
+		"utf8"
+	],
+	"Lua.workspace.checkThirdParty": false,
+	"Lua.diagnostics.neededFileStatus": {
+		"undefined-field": "Any",
+		"assign-type-mismatch": "Any",
+		"missing-return": "Any",
+		"missing-fields": "Any",
+		"return-type-mismatch": "Any",
+		"lowercase-global": "Any"
+	},
+	"Lua.workspace.ignoreDir": [
+		".vscode",
+		"test/tests/*.lua",
+		"utils/annotations_manual.lua"
+	],
+	"Lua.diagnostics.libraryFiles": "Enable",
+	"Lua.runtime.version": "Lua 5.1"
+}

@@ -48,12 +48,12 @@ end
 -- Nodes will be center around 0 x position
 -- text_node will be first (at left side)
 -- @function helper.centrate_text_with_icon
--- @tparam[opt] text text_node Gui text node
--- @tparam[opt] box icon_node Gui box node
+-- @tparam text|nil text_node Gui text node
+-- @tparam box|nil icon_node Gui box node
 -- @tparam number margin Offset between nodes
 -- @local
 function M.centrate_text_with_icon(text_node, icon_node, margin)
-	M.centrate_nodes(margin, text_node, icon_node)
+	return M.centrate_nodes(margin, text_node, icon_node)
 end
 
 
@@ -61,12 +61,12 @@ end
 -- Nodes will be center around 0 x position
 -- icon_node will be first (at left side)
 -- @function helper.centrate_icon_with_text
--- @tparam[opt] box icon_node Gui box node
--- @tparam[opt] text text_node Gui text node
--- @tparam[opt=0] number margin Offset between nodes
+-- @tparam box|nil icon_node Gui box node
+-- @tparam text|nil text_node Gui text node
+-- @tparam number|nil margin Offset between nodes
 -- @local
 function M.centrate_icon_with_text(icon_node, text_node, margin)
-	M.centrate_nodes(margin, icon_node, text_node)
+	return M.centrate_nodes(margin, icon_node, text_node)
 end
 
 
@@ -75,7 +75,7 @@ end
 -- This functions calculate total width of nodes and set position for each node.
 -- The centrate will be around 0 x position.
 -- @function helper.centrate_nodes
--- @tparam[opt=0] number margin Offset between nodes
+-- @tparam number|nil margin Offset between nodes
 -- @param ... Gui nodes
 function M.centrate_nodes(margin, ...)
 	margin = margin or 0
@@ -107,6 +107,8 @@ function M.centrate_nodes(margin, ...)
 
 		pos_x = pos_x + node_widths[i]/2 + margin -- add second part of offset
 	end
+
+	return width
 end
 
 
@@ -198,7 +200,7 @@ end
 --- Round number to specified decimal places
 -- @function helper.round
 -- @tparam number num Number
--- @tparam[opt=0] number num_decimal_places Decimal places
+-- @tparam number|nil num_decimal_places Decimal places
 -- @treturn number Rounded number
 function M.round(num, num_decimal_places)
 	local mult = 10^(num_decimal_places or 0)
@@ -253,9 +255,9 @@ end
 
 --- Add all elements from source array to the target array
 -- @function helper.add_array
--- @tparam table target Array to put elements from source
--- @tparam[opt] table source The source array to get elements from
--- @treturn array The target array
+-- @tparam any[] target Array to put elements from source
+-- @tparam any[]|nil source The source array to get elements from
+-- @treturn any[] The target array
 function M.add_array(target, source)
 	assert(target)
 
@@ -273,10 +275,10 @@ end
 
 --- Make a check with gui.pick_node, but with additional node_click_area check.
 -- @function helper.pick_node
--- @tparam Node node
+-- @tparam node node
 -- @tparam number x
 -- @tparam number y
--- @tparam[opt] Node node_click_area
+-- @tparam node|nil node_click_area
 -- @local
 function M.pick_node(node, x, y, node_click_area)
 	local is_pick = gui.pick_node(node, x, y)
@@ -300,7 +302,7 @@ end
 --- Get cumulative parent's node scale
 -- @function helper.get_scene_scale
 -- @tparam node node Gui node
--- @tparam bool include_passed_node_scale True if add current node scale to result
+-- @tparam boolean|nil include_passed_node_scale True if add current node scale to result
 -- @treturn vector3 The scene node scale
 function M.get_scene_scale(node, include_passed_node_scale)
 	local scale = include_passed_node_scale and gui.get_scale(node) or vmath.vector3(1)
@@ -343,7 +345,7 @@ end
 --
 -- Offset shown in [-0.5 .. 0.5] range, where -0.5 is left or bottom, 0.5 is right or top.
 -- @function helper.get_pivot_offset
--- @tparam gui.pivot pivot The node pivot
+-- @tparam number pivot The gui.PIVOT_* constant
 -- @treturn vector3 Vector offset with [-0.5..0.5] values
 function M.get_pivot_offset(pivot)
 	return const.PIVOTS[pivot]
@@ -352,7 +354,7 @@ end
 
 --- Check if device is native mobile (Android or iOS)
 -- @function helper.is_mobile
--- @treturn bool Is mobile
+-- @treturn boolean Is mobile
 function M.is_mobile()
 	return const.CURRENT_SYSTEM_NAME == const.OS.IOS or
 			 const.CURRENT_SYSTEM_NAME == const.OS.ANDROID
@@ -361,7 +363,7 @@ end
 
 --- Check if device is HTML5
 -- @function helper.is_web
--- @treturn bool Is web
+-- @treturn boolean Is web
 function M.is_web()
 	return const.CURRENT_SYSTEM_NAME == const.OS.BROWSER
 end
@@ -392,7 +394,7 @@ end
 --- Distance from node position to his borders
 -- @function helper.get_border
 -- @tparam node node GUI node
--- @tparam[opt] vector3 offset Offset from node position. Pass current node position to get non relative border values
+-- @tparam vector3|nil offset Offset from node position. Pass current node position to get non relative border values
 -- @treturn vector4 Vector4 with border values (left, top, right, down)
 function M.get_border(node, offset)
 	local pivot = gui.get_pivot(node)
@@ -418,7 +420,7 @@ end
 
 --- Get text metric from GUI node.
 -- @function helper.get_text_metrics_from_node
--- @tparam Node text_node
+-- @tparam node text_node
 -- @treturn GUITextMetrics
 -- @usage
 -- type GUITextMetrics = {
@@ -449,10 +451,10 @@ end
 -- Shift policy can be: left, right, no_shift
 -- @function helper.insert_with_shift
 -- @tparam table array Array
--- @param item Item to insert
--- @tparam[opt] number index Index to insert. If nil, item will be inserted at the end of array
--- @tparam[opt] const.SHIFT shift_policy Shift policy
--- @treturn item Inserted item
+-- @param any Item to insert
+-- @tparam number|nil index Index to insert. If nil, item will be inserted at the end of array
+-- @tparam number|nil shift_policy The druid_const.SHIFT.* constant
+-- @treturn any Inserted item
 function M.insert_with_shift(array, item, index, shift_policy)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
@@ -481,9 +483,9 @@ end
 -- Shift policy can be: left, right, no_shift
 -- @function helper.remove_with_shift
 -- @tparam table array Array
--- @tparam[opt] number index Index to remove. If nil, item will be removed from the end of array
--- @tparam[opt] const.SHIFT shift_policy Shift policy
--- @treturn item Removed item
+-- @tparam number|nil index Index to remove. If nil, item will be removed from the end of array
+-- @tparam number|nil shift_policy The druid_const.SHIFT.* constant
+-- @treturn any Removed item
 function M.remove_with_shift(array, index, shift_policy)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 

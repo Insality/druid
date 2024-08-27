@@ -120,7 +120,7 @@ end
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#druid.new">druid.new(context[, style])</a></td>
+	<td class="name" nowrap><a href="#druid.new">druid.new(context, style)</a></td>
 	<td class="summary">Create a new Druid instance for creating GUI components.</td>
 	</tr>
 	<tr>
@@ -158,7 +158,7 @@ end
     <dl class="function">
     <dt>
     <a name = "druid.new"></a>
-    <strong>druid.new(context[, style])</strong>
+    <strong>druid.new(context, style)</strong>
     </dt>
     <dd>
     Create a new Druid instance for creating GUI components.
@@ -171,9 +171,8 @@ end
          The Druid context. Usually, this is the self of the gui_script. It is passed into all Druid callbacks.
         </li>
         <li><span class="parameter">style</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">nil</span></span>
          The Druid style table to override style parameters for this Druid instance.
-         (<em>optional</em>)
         </li>
     </ul>
 

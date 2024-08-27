@@ -21,11 +21,11 @@ local component = require("druid.component")
 local CheckboxGroup = component.create("checkbox_group")
 
 
---- Component init function
+--- The @{CheckboxGroup} constructor
 -- @tparam CheckboxGroup self @{CheckboxGroup}
 -- @tparam node[] nodes Array of gui node
 -- @tparam function callback Checkbox callback
--- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+-- @tparam node[]|nil click_nodes Array of trigger nodes, by default equals to nodes
 function CheckboxGroup.init(self, nodes, callback, click_nodes)
 	self.druid = self:get_druid()
 	self.checkboxes = {}
@@ -45,8 +45,8 @@ end
 
 --- Set checkbox group state
 -- @tparam CheckboxGroup self @{CheckboxGroup}
--- @tparam bool[] indexes Array of checkbox state
--- @tparam boolean is_instant If instant state change
+-- @tparam boolean[] indexes Array of checkbox state
+-- @tparam boolean|nil is_instant If instant state change
 function CheckboxGroup.set_state(self, indexes, is_instant)
 	for i = 1, #indexes do
 		if self.checkboxes[i] then
@@ -58,7 +58,7 @@ end
 
 --- Return checkbox group state
 -- @tparam CheckboxGroup self @{CheckboxGroup}
--- @treturn bool[] Array if checkboxes state
+-- @treturn boolean[] Array if checkboxes state
 function CheckboxGroup.get_state(self)
 	local result = {}
 

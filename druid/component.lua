@@ -25,7 +25,7 @@ local helper = require("druid.helper")
 local BaseComponent = class("druid.component")
 
 local INTERESTS = {} -- Cache interests per component class in runtime
-local IS_AUTO_TEMPLATE = not (sys.get_config("druid.no_auto_template") == "1")
+local IS_AUTO_TEMPLATE = not (sys.get_config_int("druid.no_auto_template", 0) == "1")
 
 -- Component Interests
 BaseComponent.ON_INPUT = const.ON_INPUT
@@ -74,9 +74,8 @@ end
 --
 -- Invoke `on_style_change` on component, if exist. Component should handle
 -- their style changing and store all style params
--- @function component:set_style
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam table druid_style Druid style module
+-- @tparam table|nil druid_style Druid style module
 -- @treturn BaseComponent @{BaseComponent}
 function BaseComponent.set_style(self, druid_style)
 	self._meta.style = druid_style or {}
@@ -94,7 +93,6 @@ end
 --
 -- Use on all your custom components with GUI layouts used as templates.
 -- It will check parent template name to build full template name in self:get_node()
--- @function component:set_template
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string template BaseComponent template name
 -- @treturn BaseComponent @{BaseComponent}
@@ -118,7 +116,6 @@ end
 
 
 --- Get current component template name.
--- @function component:get_template
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn string Component full template name
 function BaseComponent.get_template(self)
@@ -128,7 +125,6 @@ end
 
 --- Set current component nodes.
 -- Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
--- @function component:set_nodes
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam table nodes BaseComponent nodes table
 -- @treturn BaseComponent @{BaseComponent}
@@ -155,7 +151,6 @@ end
 --- Context used as first arg in all Druid events
 --
 -- Context is usually self of gui_script.
--- @function component:get_context
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn table BaseComponent context
 function BaseComponent.get_context(self)
@@ -164,7 +159,6 @@ end
 
 
 --- Increase input priority in input stack
--- @function component:increase_input_priority
 -- @tparam BaseComponent self @{BaseComponent}
 -- @local
 function BaseComponent.increase_input_priority(self)
@@ -178,7 +172,6 @@ end
 -- It autopick node by template name or from nodes by gui.clone_tree
 -- if they was setup via component:set_nodes, component:set_template.
 -- If node is not found, the exception will fired
--- @function component:get_node
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string|node node_or_name Node name or node itself
 -- @treturn node Gui node
@@ -211,9 +204,8 @@ end
 
 
 --- Get Druid instance for inner component creation.
--- @function component:get_druid
 -- @tparam BaseComponent self @{BaseComponent}
--- @treturn Druid Druid instance with component context
+-- @treturn DruidInstance Druid instance with component context
 function BaseComponent.get_druid(self)
 	local context = { _context = self }
 	return setmetatable(context, { __index = self._meta.druid })
@@ -221,7 +213,6 @@ end
 
 
 --- Return component name
--- @function component:get_name
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn string The component name
 function BaseComponent.get_name(self)
@@ -230,7 +221,6 @@ end
 
 
 --- Return parent component name
--- @function component:get_parent_name
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn string|nil The parent component name if exist or bil
 function BaseComponent.get_parent_name(self)
@@ -240,7 +230,6 @@ end
 
 
 --- Return component input priority
--- @function component:get_input_priority
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn number The component input priority
 function BaseComponent.get_input_priority(self)
@@ -251,10 +240,9 @@ end
 --- Set component input priority
 --
 -- Default value: 10
--- @function component:set_input_priority
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam number value The new input priority value
--- @tparam boolean is_temporary If true, the reset input priority will return to previous value
+-- @tparam boolean|nil is_temporary If true, the reset input priority will return to previous value
 -- @treturn number The component input priority
 function BaseComponent.set_input_priority(self, value, is_temporary)
 	assert(value)
@@ -280,7 +268,6 @@ end
 
 
 --- Reset component input priority to default value
--- @function component:reset_input_priority
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn number The component input priority
 function BaseComponent.reset_input_priority(self)
@@ -292,7 +279,6 @@ end
 --- Return component UID.
 --
 -- UID generated in component creation order.
--- @function component:get_uid
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn number The component uid
 function BaseComponent.get_uid(self)
@@ -303,9 +289,8 @@ end
 --- Set component input state. By default it enabled
 --
 -- If input is disabled, the component will not receive input events
--- @function component:set_input_enabled
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam bool state The component input state
+-- @tparam boolean|nil state The component input state
 -- @treturn BaseComponent BaseComponent itself
 function BaseComponent.set_input_enabled(self, state)
 	self._meta.input_enabled = state
@@ -319,7 +304,6 @@ end
 
 
 --- Return the parent component if exist
--- @function component:get_parent_component
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn BaseComponent|nil The druid component instance or nil
 function BaseComponent.get_parent_component(self)
@@ -328,7 +312,6 @@ end
 
 
 --- Setup component context and his style table
--- @function component:setup_component
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam table druid_instance The parent druid instance
 -- @tparam table context Druid context. Usually it is self of script
@@ -362,10 +345,9 @@ end
 
 --- Basic constructor of component. It will call automaticaly
 -- by `BaseComponent.create`
--- @function component:initialize
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string name BaseComponent name
--- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
+-- @tparam number|nil input_priority The input priority. The bigger number processed first
 -- @local
 function BaseComponent.initialize(self, name, input_priority)
 	self._component = {
@@ -380,7 +362,6 @@ end
 
 
 --- Print log information if debug mode is enabled
--- @function component:log_message
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string message
 -- @tparam table context
@@ -394,9 +375,8 @@ end
 
 
 --- Set debug logs for component enabled or disabled
--- @function component:set_debug
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam bool is_debug
+-- @tparam boolean|nil is_debug
 -- @local
 function BaseComponent.set_debug(self, is_debug)
 	self._component.is_debug = is_debug
@@ -404,7 +384,6 @@ end
 
 
 --- Return true, if input priority was changed
--- @function component:_is_input_priority_changed
 -- @tparam BaseComponent self @{BaseComponent}
 -- @local
 function BaseComponent._is_input_priority_changed(self)
@@ -413,7 +392,6 @@ end
 
 
 --- Reset is_input_priority_changed field
--- @function component:_reset_input_priority_changed
 -- @tparam BaseComponent self @{BaseComponent}
 -- @local
 function BaseComponent._reset_input_priority_changed(self)
@@ -427,7 +405,6 @@ end
 
 
 --- Get current component interests
--- @function component:__get_interests
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn table List of component interests
 -- @local
@@ -451,7 +428,6 @@ end
 
 
 --- Get current component nodes
--- @function component:__get_nodes
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn table BaseComponent nodes table
 -- @local
@@ -466,7 +442,6 @@ end
 
 
 --- Add child to component children list
--- @function component:__add_children
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam component children The druid component instance
 -- @local
@@ -476,7 +451,6 @@ end
 
 
 --- Remove child from component children list
--- @function component:__remove_children
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam component children The druid component instance
 -- @local
@@ -490,7 +464,6 @@ end
 
 
 --- Return all children components, recursive
--- @function component:get_childrens
 -- @tparam BaseComponent self @{BaseComponent}
 -- @treturn table Array of childrens if the Druid component instance
 function BaseComponent.get_childrens(self)
@@ -510,7 +483,7 @@ end
 --- Create new component. It will inheritance from basic Druid component.
 -- @function BaseComponent.create
 -- @tparam string name BaseComponent name
--- @tparam[opt=DEFAULT] number input_priority The input priority. The bigger number processed first
+-- @tparam number|nil input_priority The input priority. The bigger number processed first
 -- @local
 function BaseComponent.create(name, input_priority)
 	-- Yea, inheritance here

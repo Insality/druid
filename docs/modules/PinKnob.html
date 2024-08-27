@@ -84,14 +84,14 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, callback, template, nodes)</a></td>
-	<td class="summary">Component init function</td>
+	<td class="summary">The <a href="../modules/PinKnob.html#">PinKnob</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_angle">set_angle(self, cur_value, min, max)</a></td>
 	<td class="summary">Set current and min/max angles for component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_friction">set_friction(self[, value=1])</a></td>
+	<td class="name" nowrap><a href="#set_friction">set_friction(self, value)</a></td>
 	<td class="summary">Set current and min/max angles for component</td>
 	</tr>
 </table>
@@ -123,7 +123,7 @@
     <strong>init(self, callback, template, nodes)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/PinKnob.html#">PinKnob</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -192,7 +192,7 @@
 </dd>
     <dt>
     <a name = "set_friction"></a>
-    <strong>set_friction(self[, value=1])</strong>
+    <strong>set_friction(self, value)</strong>
     </dt>
     <dd>
     Set current and min/max angles for component
@@ -205,9 +205,8 @@
          <a href="../modules/PinKnob.html#">PinKnob</a>
         </li>
         <li><span class="parameter">value</span>
-            <span class="types"><span class="type">number</span></span>
-         The spin speed multiplier
-         (<em>default</em> 1)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         The spin speed multiplier. Default: 1
         </li>
     </ul>
 
@@ -256,7 +255,7 @@
 
     <ul>
         <li><span class="parameter">is_drag</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
 
         </li>
     </ul>

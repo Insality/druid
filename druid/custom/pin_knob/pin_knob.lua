@@ -10,7 +10,7 @@
 -- @tfield DruidInstance druid @{DruidInstance}
 
 --- Is currently under user control
--- @tfield bool is_drag
+-- @tfield boolean is_drag
 
 --- The pin node
 -- @tfield node node
@@ -30,7 +30,7 @@ local SCHEME = {
 
 local function update_visual(self)
 	local rotation = vmath.vector3(0, 0, self.angle)
-	gui.set_rotation(self.node, rotation)
+	gui.set_euler(self.node, rotation)
 end
 
 
@@ -52,7 +52,7 @@ local function set_angle(self, value)
 end
 
 
---- Component init function
+--- The @{PinKnob} constructor
 -- @tparam PinKnob self @{PinKnob}
 -- @tparam function callback Callback(self, value) on value changed
 -- @tparam string template The template string name
@@ -87,7 +87,7 @@ end
 
 --- Set current and min/max angles for component
 -- @tparam PinKnob self @{PinKnob}
--- @tparam[opt=1] number value The spin speed multiplier
+-- @tparam number|nil value The spin speed multiplier. Default: 1
 -- @treturn PinKnob @{PinKnob}
 function PinKnob.set_friction(self, value)
 	self._friction = value or 1

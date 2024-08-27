@@ -30,11 +30,11 @@ local function on_checkbox_click(self, index, is_instant)
 end
 
 
---- Component init function
+--- The @{RadioGroup} constructor
 -- @tparam RadioGroup self @{RadioGroup}
 -- @tparam node[] nodes Array of gui node
 -- @tparam function callback Radio callback
--- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+-- @tparam node[]|nil click_nodes Array of trigger nodes, by default equals to nodes. Default - nodes
 function RadioGroup.init(self, nodes, callback, click_nodes)
 	self.druid = self:get_druid()
 	self.checkboxes = {}
@@ -55,7 +55,7 @@ end
 --- Set radio group state
 -- @tparam RadioGroup self @{RadioGroup}
 -- @tparam number index Index in radio group
--- @tparam boolean is_instant If is instant state change
+-- @tparam boolean|nil is_instant If is instant state change
 function RadioGroup.set_state(self, index, is_instant)
 	on_checkbox_click(self, index, is_instant)
 end

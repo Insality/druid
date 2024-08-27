@@ -34,16 +34,16 @@
 -- @tfield Button button @{Button}
 
 --- Is current input selected now
--- @tfield bool is_selected
+-- @tfield boolean is_selected
 
 --- Is current input is empty now
--- @tfield bool is_empty
+-- @tfield boolean is_empty
 
 --- Max length for input text
--- @tfield[opt] number max_length
+-- @tfield number|nil max_length
 
 --- Pattern matching for user input
--- @tfield[opt] string allowerd_characters
+-- @tfield string|nil allowerd_characters
 
 --- Gui keyboard type for input field
 -- @tfield number keyboard_type
@@ -87,10 +87,10 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=false] bool IS_LONGTAP_ERASE Is long tap will erase current input data
--- @tfield[opt=*] string MASK_DEFAULT_CHAR Default character mask for password input
--- @tfield[opt=false] bool IS_UNSELECT_ON_RESELECT If true, call unselect on select selected input
--- @tfield[opt=false] bool NO_CONSUME_INPUT_WHILE_SELECTED If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured)
+-- @tfield boolean IS_LONGTAP_ERASE Is long tap will erase current input data. Default: false
+-- @tfield string MASK_DEFAULT_CHAR Default character mask for password input. Default: *]
+-- @tfield boolean IS_UNSELECT_ON_RESELECT If true, call unselect on select selected input. Default: false
+-- @tfield boolean NO_CONSUME_INPUT_WHILE_SELECTED If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured). Default: false
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
@@ -115,11 +115,11 @@ function Input.on_style_change(self, style)
 end
 
 
---- Component init function
+--- The @{Input} constructor
 -- @tparam Input self @{Input}
 -- @tparam node click_node Node to enabled input component
 -- @tparam node|Text text_node Text node what will be changed on user input. You can pass text component instead of text node name @{Text}
--- @tparam[opt] number keyboard_type Gui keyboard type for input field
+-- @tparam number|nil keyboard_type Gui keyboard type for input field
 function Input.init(self, click_node, text_node, keyboard_type)
 	self.druid = self:get_druid(self)
 
@@ -267,6 +267,7 @@ function Input.set_text(self, input_text)
 		self.is_empty = #value == 0 and #marked_value == 0
 
 		local final_text = value .. marked_value
+		local real_text = self.value .. self.marked_value
 		self.text:set_to(final_text)
 
 		-- measure it
@@ -274,12 +275,12 @@ function Input.set_text(self, input_text)
 		self.marked_text_width = self.text:get_text_size(marked_value)
 		self.total_width = self.text_width + self.marked_text_width
 
-		self.on_input_text:trigger(self:get_context(), final_text)
+		self.on_input_text:trigger(self:get_context(), real_text)
 		if #final_text == 0 then
-			self.on_input_empty:trigger(self:get_context(), final_text)
+			self.on_input_empty:trigger(self:get_context(), real_text)
 		end
 		if self.max_length and #final_text == self.max_length then
-			self.on_input_full:trigger(self:get_context(), final_text)
+			self.on_input_full:trigger(self:get_context(), real_text)
 		end
 	end
 end
@@ -302,7 +303,7 @@ function Input.select(self)
 		self.style.on_select(self, self.button.node)
 	else
 		if self.style.IS_UNSELECT_ON_RESELECT then
-			self:unselect(self)
+			self:unselect()
 		end
 	end
 end

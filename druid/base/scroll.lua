@@ -54,7 +54,7 @@
 -- @tfield node content_node
 
 --- Flag, if scroll now moving by inertion
--- @tfield bool is_inert
+-- @tfield bool _is_inert
 
 --- Current inert speed
 -- @tfield vector3 inertion
@@ -75,10 +75,10 @@
 -- @tfield Drag drag @{Drag}
 
 --- Current index of points of interests
--- @tfield[opt] number selected
+-- @tfield number|nil selected
 
 --- Flag, if scroll now animating by gui.animate
--- @tfield bool is_animate
+-- @tfield boolean is_animate
 
 ---
 
@@ -123,18 +123,18 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=0] number FRICT Multiplier for free inertion
--- @tfield[opt=0] number FRICT_HOLD Multiplier for inertion, while touching
--- @tfield[opt=3] number INERT_THRESHOLD Scroll speed to stop inertion
--- @tfield[opt=30] number INERT_SPEED Multiplier for inertion speed
--- @tfield[opt=20] number POINTS_DEADZONE Speed to check points of interests in no_inertion mode
--- @tfield[opt=0.35] number BACK_SPEED Scroll back returning lerp speed
--- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
--- @tfield[opt=0] number EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect)
--- @tfield[opt=false] bool SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
--- @tfield[opt=0] bool WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
--- @tfield[opt=false] bool WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll
--- @tfield[opt=false] bool WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.
+-- @tfield number|nil FRICT Multiplier for free inertion. Default: 0
+-- @tfield number|nil FRICT_HOLD Multiplier for inertion, while touching. Default: 0
+-- @tfield number|nil INERT_THRESHOLD Scroll speed to stop inertion. Default: 3
+-- @tfield number|nil INERT_SPEED Multiplier for inertion speed. Default: 30
+-- @tfield number|nil POINTS_DEADZONE Speed to check points of interests in no_inertion mode. Default: 20
+-- @tfield number|nil BACK_SPEED Scroll back returning lerp speed. Default: 35
+-- @tfield number|nil ANIM_SPEED Scroll gui.animation speed for scroll_to function. Default: 2
+-- @tfield number|nil EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect). Default: 0
+-- @tfield boolean|nil SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled. Default: false
+-- @tfield boolean|nil WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
+-- @tfield boolean|nil WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll. Default: false
+-- @tfield boolean|nil WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
 function Scroll.on_style_change(self, style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
@@ -158,7 +158,7 @@ function Scroll.on_style_change(self, style)
 end
 
 
---- @{Scroll} constructor
+--- The @{Scroll} constructor
 -- @tparam Scroll self @{Scroll}
 -- @tparam string|node view_node GUI view scroll node
 -- @tparam string|node content_node GUI content scroll node
@@ -237,7 +237,7 @@ end
 --- Start scroll to target point.
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 point Target point
--- @tparam[opt] bool is_instant Instant scroll flag
+-- @tparam boolean|nil is_instant Instant scroll flag
 -- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
 -- @usage scroll:scroll_to(vmath.vector3(0), true)
 function Scroll.scroll_to(self, point, is_instant)
@@ -271,7 +271,7 @@ end
 --- Scroll to item in scroll by point index.
 -- @tparam Scroll self @{Scroll}
 -- @tparam number index Point index
--- @tparam[opt] bool skip_cb If true, skip the point callback
+-- @tparam boolean|nil skip_cb If true, skip the point callback
 function Scroll.scroll_to_index(self, index, skip_cb)
 	if not self.points then
 		return
@@ -294,7 +294,7 @@ end
 --- Start scroll to target scroll percent
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 percent target percent
--- @tparam[opt] bool is_instant instant scroll flag
+-- @tparam boolean|nil is_instant instant scroll flag
 -- @usage scroll:scroll_to_percent(vmath.vector3(0.5, 0, 0))
 function Scroll.scroll_to_percent(self, percent, is_instant)
 	local border = self.available_pos
@@ -325,7 +325,7 @@ end
 -- It will change content gui node size
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 size The new size for content node
--- @tparam[opt] vector3 offset Offset value to set, where content is starts
+-- @tparam vector3|nil offset Offset value to set, where content is starts
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_size(self, size, offset)
 	if offset then
@@ -342,7 +342,7 @@ end
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
 -- @tparam Scroll self @{Scroll}
--- @tparam bool state Inert scroll state
+-- @tparam boolean|nil state Inert scroll state
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_inert(self, state)
 	self._is_inert = state
@@ -353,7 +353,7 @@ end
 
 --- Return if scroll have inertion.
 -- @tparam Scroll self @{Scroll}
--- @treturn bool If scroll have inertion
+-- @treturn boolean @If scroll have inertion
 function Scroll.is_inert(self)
 	return self._is_inert
 end
@@ -362,7 +362,7 @@ end
 --- Set extra size for scroll stretching.
 -- Set 0 to disable stretching effect
 -- @tparam Scroll self @{Scroll}
--- @tparam[opt=0] number stretch_size Size in pixels of additional scroll area
+-- @tparam number|nil stretch_size Size in pixels of additional scroll area
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_extra_stretch_size(self, stretch_size)
 	self.style.EXTRA_STRETCH_SIZE = stretch_size or 0
@@ -400,7 +400,7 @@ end
 
 --- Lock or unlock horizontal scroll
 -- @tparam Scroll self @{Scroll}
--- @tparam bool state True, if horizontal scroll is enabled
+-- @tparam boolean|nil state True, if horizontal scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_horizontal_scroll(self, state)
 	self._is_horizontal_scroll = state
@@ -411,7 +411,7 @@ end
 
 --- Lock or unlock vertical scroll
 -- @tparam Scroll self @{Scroll}
--- @tparam bool state True, if vertical scroll is enabled
+-- @tparam boolean|nil state True, if vertical scroll is enabled
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_vertical_scroll(self, state)
 	self._is_vertical_scroll = state
@@ -493,7 +493,7 @@ end
 --- Strict drag scroll area. Useful for
 -- restrict events outside stencil node
 -- @tparam Drag self
--- @tparam node node Gui node
+-- @tparam node|string node Gui node
 function Scroll.set_click_zone(self, node)
 	self.drag:set_click_zone(node)
 end
@@ -624,8 +624,8 @@ function Scroll._check_points(self)
 
 	local temp_dist = math.huge
 	local temp_dist_on_inert = math.huge
-	local index = false
-	local index_on_inert = false
+	local index = -1
+	local index_on_inert = -1
 	local pos = self.position
 
 	for i = 1, #self.points do
@@ -650,7 +650,11 @@ function Scroll._check_points(self)
 		end
 	end
 
-	self:scroll_to_index(index_on_inert or index)
+	if index_on_inert >= 0 then
+		self:scroll_to_index(index_on_inert)
+	else
+		self:scroll_to_index(index)
+	end
 end
 
 

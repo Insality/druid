@@ -8,7 +8,7 @@ use_latest_bob=false
 enable_incremental_version=true
 
 # You can point bob version for project in format "filename:sha"
-bob_sha="1.4.7:7a608d3ce6ed895d484956c1e76110ed8b78422a"
+bob_sha="1.6.0:d9e9c49ab946c058f29a8b688c862d70f30e9c43"
 
 # Select Defold channel. Values: stable, beta, alpha
 bob_channel="stable"

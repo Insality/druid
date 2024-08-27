@@ -14,7 +14,7 @@
 -- @tfield node node
 
 --- Button trigger node
--- @tfield[opt=node] node click_node
+-- @tfield node|nil click_node
 
 --- Button component from click_node
 -- @tfield Button button @{Button}
@@ -23,21 +23,25 @@
 
 local helper = require("druid.helper")
 local component = require("druid.component")
+local Event = require("druid.event")
+local const = require("druid.const")
 
 local Hotkey = component.create("hotkey")
 
 
---- Component init function
+--- The @{Hotkey} constructor
 -- @tparam Hotkey self @{Hotkey}
 -- @tparam string[]|string keys The keys to be pressed for trigger callback. Should contains one key and any modificator keys
 -- @tparam function callback The callback function
--- @tparam[opt] value callback_argument The argument to pass into the callback function
+-- @tparam any|nil callback_argument The argument to pass into the callback function
 function Hotkey.init(self, keys, callback, callback_argument)
 	self.druid = self:get_druid()
 
 	self._hotkeys = {}
 	self._modificators = {}
-	self._callback = callback
+
+	self.on_hotkey_pressed = Event()
+	self.on_hotkey_released = Event(callback)
 
 	if keys then
 		self:add_hotkey(keys, callback_argument)
@@ -63,7 +67,8 @@ end
 --- Add hotkey for component callback
 -- @tparam Hotkey self @{Hotkey}
 -- @tparam string[]|hash[]|string|hash keys that have to be pressed before key pressed to activate
--- @tparam[opt] value callback_argument The argument to pass into the callback function
+-- @tparam any|nil callback_argument The argument to pass into the callback function
+-- @treturn Hotkey Current instance
 function Hotkey.add_hotkey(self, keys, callback_argument)
 	keys = keys or {}
 	if type(keys) == "string" then
@@ -103,8 +108,15 @@ function Hotkey.add_hotkey(self, keys, callback_argument)
 end
 
 
+function Hotkey.on_focus_gained(self)
+	for k, v in pairs(self._modificators) do
+		self._modificators[k] = false
+	end
+end
+
+
 function Hotkey.on_input(self, action_id, action)
-	if not action_id then
+	if not action_id or #self._hotkeys == 0 then
 		return false
 	end
 
@@ -135,21 +147,31 @@ function Hotkey.on_input(self, action_id, action)
 
 			if action.pressed and is_modificator_ok then
 				hotkey.is_processing = true
+				self.on_hotkey_pressed:trigger(self:get_context(), hotkey.callback_argument)
+			end
+			if not action.pressed and self._is_process_repeated and action.repeated and is_modificator_ok and hotkey.is_processing then
+				self.on_hotkey_released:trigger(self:get_context(), hotkey.callback_argument)
+				return true
 			end
 			if action.released and is_modificator_ok and hotkey.is_processing then
 				hotkey.is_processing = false
-				if hotkey.callback_argument then
-					self._callback(self:get_context(), hotkey.callback_argument)
-					return true
-				else
-					self._callback(self:get_context())
-					return true
-				end
+				self.on_hotkey_released:trigger(self:get_context(), hotkey.callback_argument)
+				return true
 			end
 		end
 	end
 
 	return false
+end
+
+
+--- If true, the callback will be triggered on action.repeated
+-- @tparam Hotkey self @{Hotkey}
+-- @tparam bool is_enabled_repeated The flag value
+-- @treturn Hotkey
+function Hotkey.set_repeat(self, is_enabled_repeated)
+	self._is_process_repeated = is_enabled_repeated
+	return self
 end
 
 

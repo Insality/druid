@@ -84,8 +84,8 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, seconds_from[, seconds_to=0[, callback]])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#init">init(self, node, seconds_from, seconds_to, callback)</a></td>
+	<td class="summary">The <a href="../modules/Timer.html#">Timer</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_interval">set_interval(self, from, to)</a></td>
@@ -141,10 +141,10 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, seconds_from[, seconds_to=0[, callback]])</strong>
+    <strong>init(self, node, seconds_from, seconds_to, callback)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/Timer.html#">Timer</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -162,14 +162,12 @@
          Start timer value in seconds
         </li>
         <li><span class="parameter">seconds_to</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          End timer value in seconds
-         (<em>default</em> 0)
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Function on timer end
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -222,7 +220,7 @@
          <a href="../modules/Timer.html#">Timer</a>
         </li>
         <li><span class="parameter">is_on</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Timer enable state
         </li>
     </ul>

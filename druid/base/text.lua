@@ -53,6 +53,9 @@
 --- Current text position
 -- @tfield vector3 pos
 
+--- The last text value
+-- @tfield string last_value
+
 --- Initial text node scale
 -- @tfield vector3 start_scale
 
@@ -95,6 +98,7 @@ end
 
 --- Reset initial scale for text
 local function reset_default_scale(self)
+	self.scale = self.start_scale
 	gui.set_scale(self.node, self.start_scale)
 	gui.set_size(self.node, self.start_size)
 end
@@ -108,6 +112,12 @@ local function update_text_area_size(self)
 	local max_height = self.text_area.y
 
 	local metrics = helper.get_text_metrics_from_node(self.node)
+
+	if metrics.width == 0 then
+		reset_default_scale(self)
+		self.on_update_text_scale:trigger(self:get_context(), self.start_scale, metrics)
+		return
+	end
 
 	local scale_modifier = max_width / metrics.width
 	scale_modifier = math.min(scale_modifier, self.start_scale.x)
@@ -128,7 +138,6 @@ local function update_text_area_size(self)
 	local new_scale = vmath.vector3(scale_modifier, scale_modifier, self.start_scale.z)
 	gui.set_scale(self.node, new_scale)
 	self.scale = new_scale
-
 	update_text_size(self)
 
 	self.on_update_text_scale:trigger(self:get_context(), new_scale, metrics)
@@ -207,8 +216,8 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=...] string TRIM_POSTFIX The postfix for TRIM adjust type
--- @tfield[opt=DOWNSCALE] string DEFAULT_ADJUST The default adjust type for any text component
+-- @tfield string|nil TRIM_POSTFIX The postfix for TRIM adjust type. Default: ...
+-- @tfield string|nil DEFAULT_ADJUST The default adjust type for any text component. Default: DOWNSCALE
 function Text.on_style_change(self, style)
 	self.style = {}
 	self.style.TRIM_POSTFIX = style.TRIM_POSTFIX or "..."
@@ -216,11 +225,11 @@ function Text.on_style_change(self, style)
 end
 
 
---- @{Text} constructor
+--- The @{Text} constructor
 -- @tparam Text self @{Text}
 -- @tparam string|node node Node name or GUI Text Node itself
--- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
--- @tparam[opt=downscale] string adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+-- @tparam string|nil value Initial text. Default value is node text from GUI scene.
+-- @tparam string|nil adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: downscale
 function Text.init(self, node, value, adjust_type)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)
@@ -267,7 +276,7 @@ end
 
 --- Calculate text width with font with respect to trailing space
 -- @tparam Text self @{Text}
--- @tparam[opt] string text
+-- @tparam string|nil text
 -- @treturn number Width
 -- @treturn number Height
 function Text.get_text_size(self, text)
@@ -314,6 +323,19 @@ function Text.set_to(self, set_to)
 end
 
 
+--- Set text area size
+-- @tparam Text self @{Text}
+-- @tparam vector3 size The new text area size
+-- @treturn Text Current text instance
+function Text.set_size(self, size)
+	self.start_size = size
+	self.text_area = vmath.vector3(size)
+	self.text_area.x = self.text_area.x * self.start_scale.x
+	self.text_area.y = self.text_area.y * self.start_scale.y
+	update_adjust(self)
+end
+
+
 --- Set color
 -- @tparam Text self @{Text}
 -- @tparam vector4 color Color for node
@@ -352,7 +374,7 @@ end
 
 --- Set text pivot. Text will re-anchor inside text area
 -- @tparam Text self @{Text}
--- @tparam gui.pivot pivot Gui pivot constant
+-- @tparam number pivot The gui.PIVOT_* constant
 -- @treturn Text Current text instance
 function Text.set_pivot(self, pivot)
 	local prev_pivot = gui.get_pivot(self.node)
@@ -378,7 +400,7 @@ end
 
 --- Return true, if text with line break
 -- @tparam Text self @{Text}
--- @treturn bool Is text node with line break
+-- @treturn boolean Is text node with line break
 function Text.is_multiline(self)
 	return gui.get_line_break(self.node)
 end
@@ -386,8 +408,8 @@ end
 
 --- Set text adjust, refresh the current text visuals, if needed
 -- @tparam Text self @{Text}
--- @tparam[opt] number adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
--- @tparam[opt] number minimal_scale If pass nil - not use minimal scale
+-- @tparam string|nil adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
+-- @tparam number|nil minimal_scale If pass nil - not use minimal scale
 -- @treturn Text Current text instance
 function Text.set_text_adjust(self, adjust_type, minimal_scale)
 	self.adjust_type = adjust_type
