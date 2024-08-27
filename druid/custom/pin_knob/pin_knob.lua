@@ -30,7 +30,7 @@ local SCHEME = {
 
 local function update_visual(self)
 	local rotation = vmath.vector3(0, 0, self.angle)
-	gui.set_rotation(self.node, rotation)
+	gui.set_euler(self.node, rotation)
 end
 
 

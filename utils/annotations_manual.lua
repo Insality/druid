@@ -1,5 +1,3 @@
----@diagnostic disable: duplicate-doc-field
-
 -- Manual Annotations --
 
 ---@class druid.rich_text.metrics

@@ -1824,6 +1824,8 @@ function helper.step(current, target, step) end
 function helper.table_to_string(t) end
 
 
+---@diagnostic disable: duplicate-doc-field
+
 -- Manual Annotations --
 
 ---@class druid.rich_text.metrics

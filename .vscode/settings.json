@@ -8,10 +8,23 @@
 		"describe",
 		"before",
 		"after",
-		"it"
+		"it",
+		"utf8"
 	],
+	"Lua.workspace.checkThirdParty": false,
+	"Lua.diagnostics.neededFileStatus": {
+		"undefined-field": "Any",
+		"assign-type-mismatch": "Any",
+		"missing-return": "Any",
+		"missing-fields": "Any",
+		"return-type-mismatch": "Any",
+		"lowercase-global": "Any"
+	},
 	"Lua.workspace.ignoreDir": [
 		".vscode",
-		"test/*"
-	]
+		"test/tests/*.lua",
+		"utils/annotations_manual.lua"
+	],
+	"Lua.diagnostics.libraryFiles": "Enable",
+	"Lua.runtime.version": "Lua 5.1"
 }
