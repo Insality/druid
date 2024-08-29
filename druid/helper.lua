@@ -10,12 +10,15 @@
 local const = require("druid.const")
 
 local M = {}
+local POSITION_X = hash("position.x")
+local SCALE_X = hash("scale.x")
+local SIZE_X = hash("size.x")
 
 
 local function get_text_width(text_node)
 	if text_node then
 		local text_metrics = M.get_text_metrics_from_node(text_node)
-		local text_scale = gui.get_scale(text_node).x
+		local text_scale = gui.get(text_node, SCALE_X)
 		return text_metrics.width * text_scale
 	end
 
@@ -25,8 +28,7 @@ end
 
 local function get_icon_width(icon_node)
 	if icon_node then
-		local icon_scale_x = gui.get_scale(icon_node).x
-		return gui.get_size(icon_node).x * icon_scale_x -- icon width
+		return gui.get(icon_node, SIZE_X) * gui.get(icon_node, SCALE_X) -- icon width
 	end
 
 	return 0
@@ -97,13 +99,12 @@ function M.centrate_nodes(margin, ...)
 	for i = 1, count do
 		local node = select(i, ...)
 		local node_width = node_widths[i]
-		local pos = gui.get_position(node)
 
 		pos_x = pos_x + node_width/2 -- made offset for single item
 
 		local pivot_offset = M.get_pivot_offset(gui.get_pivot(node))
-		pos.x = pos_x - width/2 + pivot_offset.x * node_width -- centrate node
-		gui.set_position(node, pos)
+		local new_pos_x = pos_x - width/2 + pivot_offset.x * node_width -- centrate node
+		gui.set(node, POSITION_X, new_pos_x)
 
 		pos_x = pos_x + node_widths[i]/2 + margin -- add second part of offset
 	end

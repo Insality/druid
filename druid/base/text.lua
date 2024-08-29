@@ -307,7 +307,7 @@ end
 
 --- Set text to text field
 -- @tparam Text self @{Text}
--- @tparam string set_to Text for node
+-- @tparam string|number|boolean set_to Text for node
 -- @treturn Text Current text instance
 function Text.set_to(self, set_to)
 	set_to = set_to or ""
