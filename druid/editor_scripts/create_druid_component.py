@@ -32,7 +32,7 @@ def process_component(node_name, component_name):
 
 	if node_name.startswith("button"):
 		component_annotations += "\n---@field {0} druid.button".format(node_name)
-		component_functions += "\nfunction {1}:_on_{0}()\n\tprint(\"Click on {0}\")\nend\n\n".format(node_name, component_name)
+		component_functions += "\nfunction M:_on_{0}()\n\tprint(\"Click on {0}\")\nend\n\n".format(node_name)
 		component_define += "\n\tself.{0} = self.druid:new_button(SCHEME.{1}, self._on_{0})".format(node_name, get_id(node_name))
 
 	if node_name.startswith("text"):
@@ -66,7 +66,7 @@ def process_component(node_name, component_name):
 		component_annotations += "\n---@field {0} druid.slider".format(node_name)
 		component_define += "\n--TODO: Replace slider end position. It should be only vertical or horizontal"
 		component_define += "\n\tself.{0} = self.druid:new_slider(SCHEME.{1}, vmath.vector3(100, 0, 0), self._on_{0}_change)".format(node_name, get_id(node_name))
-		component_functions += "\nfunction {1}:_on_{0}_change(value)\n\tprint(\"Slider change:\", value)\nend\n\n".format(node_name, component_name)
+		component_functions += "\nfunction M:_on_{0}_change(value)\n\tprint(\"Slider change:\", value)\nend\n\n".format(node_name)
 
 	if node_name.startswith("progress"):
 		component_annotations += "\n---@field {0} druid.progress".format(node_name)
@@ -75,7 +75,7 @@ def process_component(node_name, component_name):
 	if node_name.startswith("timer"):
 		component_annotations += "\n---@field {0} druid.timer".format(node_name)
 		component_define += "\n\tself.{0} = self.druid:new_timer(SCHEME.{1}, 59, 0, self._on_{0}_end)".format(node_name, get_id(node_name))
-		component_functions += "\nfunction {1}:_on_{0}_end()\n\tprint(\"Timer {0} trigger\")\nend\n\n".format(node_name, component_name)
+		component_functions += "\nfunction M:_on_{0}_end()\n\tprint(\"Timer {0} trigger\")\nend\n\n".format(node_name)
 
 
 def main():
