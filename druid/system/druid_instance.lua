@@ -590,9 +590,10 @@ end
 -- @tparam DruidInstance self
 -- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @tparam function|nil on_hover_callback Hover callback
+-- @tparam function|nil on_mouse_hover_callback Mouse hover callback
 -- @treturn Hover @{Hover} component
-function DruidInstance.new_hover(self, node, on_hover_callback)
-	return DruidInstance.new(self, hover, node, on_hover_callback)
+function DruidInstance.new_hover(self, node, on_hover_callback, on_mouse_hover_callback)
+	return DruidInstance.new(self, hover, node, on_hover_callback, on_mouse_hover_callback)
 end
 
 

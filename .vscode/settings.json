@@ -9,7 +9,8 @@
 		"before",
 		"after",
 		"it",
-		"utf8"
+		"utf8",
+		"defos"
 	],
 	"Lua.workspace.checkThirdParty": false,
 	"Lua.diagnostics.neededFileStatus": {

@@ -54,6 +54,10 @@ M["button"] = {
 	end
 }
 
+M["hover"] = {
+	ON_HOVER_CURSOR = nil,
+	ON_MOUSE_HOVER_CURSOR = nil,
+}
 
 M["drag"] = {
 	DRAG_DEADZONE = 10, -- Size in pixels of drag deadzone

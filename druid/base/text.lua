@@ -98,12 +98,18 @@ end
 
 --- Reset initial scale for text
 local function reset_default_scale(self)
-	self.scale = self.start_scale
+	self.scale.x = self.start_scale.x
+	self.scale.y = self.start_scale.y
+	self.scale.z = self.start_scale.z
 	gui.set_scale(self.node, self.start_scale)
 	gui.set_size(self.node, self.start_size)
 end
 
 
+local function is_fit_info_area(self, metrics)
+	return metrics.width * self.scale.x <= self.text_area.x and
+		   metrics.height * self.scale.y <= self.text_area.y
+end
 --- Setup scale x, but can only be smaller, than start text scale
 local function update_text_area_size(self)
 	reset_default_scale(self)
