@@ -5,6 +5,9 @@
 -- @within BaseComponent
 -- @alias druid.hover
 
+--- Hover node
+-- @tfield node node
+
 --- On hover callback(self, state, hover_instance)
 -- @tfield DruidEvent on_hover @{DruidEvent}
 

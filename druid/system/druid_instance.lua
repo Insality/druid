@@ -193,10 +193,6 @@ end
 local function process_input(self, action_id, action, components)
 	local is_input_consumed = false
 
-	if #components == 0 then
-		return false
-	end
-
 	for i = #components, 1, -1 do
 		local component = components[i]
 		local meta = component._meta
@@ -293,22 +289,26 @@ end
 -- Component `on_remove` function will be invoked, if exist.
 -- @tparam DruidInstance self
 -- @tparam BaseComponent component Component instance
+-- @treturn boolean True if component was removed
 function DruidInstance.remove(self, component)
 	if self._is_late_remove_enabled then
 		table.insert(self._late_remove, component)
-		return
+		return false
 	end
 
 	-- Recursive remove all children of component
 	local children = component._meta.children
 	for i = #children, 1, -1 do
 		self:remove(children[i])
-		local parent = children[i]:get_parent_component()
-		if parent then
-			parent:__remove_children(children[i])
-		end
 		children[i] = nil
 	end
+
+	local parent = component:get_parent_component()
+	if parent then
+		parent:__remove_child(component)
+	end
+
+	local is_removed = false
 
 	local all_components = self.components_all
 	for i = #all_components, 1, -1 do
@@ -317,6 +317,7 @@ function DruidInstance.remove(self, component)
 				component:on_remove()
 			end
 			table.remove(all_components, i)
+			is_removed = true
 		end
 	end
 
@@ -330,6 +331,8 @@ function DruidInstance.remove(self, component)
 			end
 		end
 	end
+
+	return is_removed
 end
 
 
@@ -556,7 +559,7 @@ end
 -- @tparam DruidInstance self
 -- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @tparam function|nil callback Button callback
--- @tparam table|nil params Button callback params
+-- @tparam any|nil params Button callback params
 -- @tparam node|string|nil anim_node Button anim node (node, if not provided)
 -- @treturn Button @{Button} component
 function DruidInstance.new_button(self, node, callback, params, anim_node)

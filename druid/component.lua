@@ -336,7 +336,7 @@ function BaseComponent.setup_component(self, druid_instance, context, style, ins
 	self:set_template("")
 
 	if self._meta.parent then
-		self._meta.parent:__add_children(self)
+		self._meta.parent:__add_child(self)
 	end
 
 	return self
@@ -445,8 +445,8 @@ end
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam component children The druid component instance
 -- @local
-function BaseComponent.__add_children(self, children)
-	table.insert(self._meta.children, children)
+function BaseComponent.__add_child(self, child)
+	table.insert(self._meta.children, child)
 end
 
 
@@ -454,10 +454,11 @@ end
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam component children The druid component instance
 -- @local
-function BaseComponent.__remove_children(self, children)
+function BaseComponent.__remove_child(self, child)
 	for i = #self._meta.children, 1, -1 do
-		if self._meta.children[i] == children then
+		if self._meta.children[i] == child then
 			table.remove(self._meta.children, i)
+			return true
 		end
 	end
 end

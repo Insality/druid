@@ -216,6 +216,12 @@ end
 
 
 function Scroll.update(self, dt)
+	if self.is_animate then
+		self.position.x = gui.get(self.content_node, "position.x")
+		self.position.y = gui.get(self.content_node, "position.y")
+		self.on_scroll:trigger(self:get_context(), self.position)
+	end
+
 	if self.drag.is_drag then
 		self:_update_hand_scroll(dt)
 	else
@@ -255,12 +261,12 @@ function Scroll.scroll_to(self, point, is_instant)
 
 	if is_instant then
 		self.target_position = target
-		self:_set_scroll_position(target)
+		self:_set_scroll_position(target.x, target.y)
 	else
 		gui.animate(self.content_node, gui.PROP_POSITION, target, gui.EASING_OUTSINE, self.style.ANIM_SPEED, 0, function()
 			self.is_animate = false
 			self.target_position = target
-			self:_set_scroll_position(target)
+			self:_set_scroll_position(target.x, target.y)
 		end)
 	end
 
@@ -305,6 +311,13 @@ function Scroll.scroll_to_percent(self, percent, is_instant)
 		0
 	)
 
+	if not self.drag.can_x then
+		pos.x = self.position.x
+	end
+	if not self.drag.can_y then
+		pos.y = self.position.y
+	end
+
 	self:scroll_to(pos, is_instant)
 end
 
@@ -332,6 +345,20 @@ function Scroll.set_size(self, size, offset)
 		self._offset = offset
 	end
 	gui.set_size(self.content_node, size)
+	self:_update_size()
+
+	return self
+end
+
+
+--- Set scroll view size.
+-- @tparam Scroll self @{Scroll}
+-- @tparam vector3 size The new size for view node
+-- @treturn druid.scroll Current scroll instance
+function Scroll.set_view_size(self, size)
+	gui.set_size(self.view_node, size)
+	self.view_size = size
+	self.view_border = helper.get_border(self.view_node)
 	self:_update_size()
 
 	return self
@@ -583,14 +610,14 @@ function Scroll._cancel_animate(self)
 end
 
 
-function Scroll._set_scroll_position(self, position)
+function Scroll._set_scroll_position(self, position_x, position_y)
 	local available_extra = self.available_pos_extra
-	position.x = helper.clamp(position.x, available_extra.x, available_extra.z)
-	position.y = helper.clamp(position.y, available_extra.w, available_extra.y)
+	position_x = helper.clamp(position_x, available_extra.x, available_extra.z)
+	position_y = helper.clamp(position_y, available_extra.w, available_extra.y)
 
-	if self.position.x ~= position.x or self.position.y ~= position.y then
-		self.position.x = position.x
-		self.position.y = position.y
+	if self.position.x ~= position_x or self.position.y ~= position_y then
+		self.position.x = position_x
+		self.position.y = position_y
 		gui.set_position(self.content_node, self.position)
 
 		self.on_scroll:trigger(self:get_context(), self.position)
@@ -692,7 +719,7 @@ function Scroll._update_free_scroll(self, dt)
 
 	self:_check_soft_zone()
 	if self.position.x ~= target.x or self.position.y ~= target.y then
-		self:_set_scroll_position(target)
+		self:_set_scroll_position(target.x, target.y)
 	end
 end
 
@@ -704,7 +731,7 @@ function Scroll._update_hand_scroll(self, dt)
 	self.inertion.x = (self.inertion.x + dx) * self.style.FRICT_HOLD
 	self.inertion.y = (self.inertion.y + dy) * self.style.FRICT_HOLD
 
-	self:_set_scroll_position(self.target_position)
+	self:_set_scroll_position(self.target_position.x, self.target_position.y)
 end
 
 
@@ -746,14 +773,14 @@ function Scroll._update_size(self)
 	content_border_extra.w = content_border_extra.w - stretch_size * sign_y
 
 	if not self.style.SMALL_CONTENT_SCROLL then
-		self.drag.can_x = content_size.x > self.view_size.x
-		self.drag.can_y = content_size.y > self.view_size.y
+		self.drag.can_x = content_size.x > self.view_size.x and self._is_horizontal_scroll
+		self.drag.can_y = content_size.y > self.view_size.y and self._is_vertical_scroll
 	end
 
 	self.available_pos_extra = get_border_vector(self.view_border - content_border_extra, self._offset)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
 
-	self:_set_scroll_position(self.position)
+	self:_set_scroll_position(self.position.x, self.position.y)
 	self.target_position.x = self.position.x
 	self.target_position.y = self.position.y
 end
@@ -788,7 +815,7 @@ function Scroll._process_scroll_wheel(self, action_id, action)
 			self.inertion.x = 0
 		end
 
-		self:_set_scroll_position(self.target_position)
+		self:_set_scroll_position(self.target_position.x, self.target_position.y)
 	end
 
 	return true

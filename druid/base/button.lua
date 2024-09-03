@@ -343,6 +343,7 @@ function Button.on_input(self, action_id, action)
 		return false
 	end
 
+	local is_consume = true
 	local is_pick = true
 	local is_key_trigger = (action_id == self.key_trigger)
 	if not is_key_trigger then
@@ -365,6 +366,7 @@ function Button.on_input(self, action_id, action)
 
 	if is_key_trigger then
 		self.hover:set_hover(not action.released)
+		is_consume = false
 	end
 
 	if action.pressed then
@@ -380,19 +382,19 @@ function Button.on_input(self, action_id, action)
 				on_button_click(self)
 			end)
 		end
-		return true
+		return is_consume
 	end
 
 	-- While hold button, repeat rate pick from input.repeat_interval
 	if action.repeated then
 		if self.on_repeated_click:is_exist() and self.can_action then
 			on_button_repeated_click(self)
-			return true
+			return is_consume
 		end
 	end
 
 	if action.released then
-		return on_button_release(self)
+		return on_button_release(self) and is_consume
 	end
 
 	if self.can_action and self.on_long_click:is_exist() then
@@ -400,16 +402,16 @@ function Button.on_input(self, action_id, action)
 
 		if self.style.AUTOHOLD_TRIGGER <= press_time then
 			on_button_release(self)
-			return true
+			return is_consume
 		end
 
 		if press_time >= self.style.LONGTAP_TIME then
 			on_button_hold(self, press_time)
-			return true
+			return is_consume
 		end
 	end
 
-	return not self.disabled
+	return not self.disabled and is_consume
 end
 
 

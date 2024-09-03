@@ -102,7 +102,7 @@ function M.unsubscribe(self, callback, callback_context)
 		return false
 	end
 
-	tremove(self, event_index --[[@as number]])
+	tremove(self, event_index)
 	return true
 end
 

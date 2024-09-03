@@ -171,8 +171,12 @@ end
 -- @tparam vector3 pos The node position in the grid
 -- @treturn number The node index
 function StaticGrid.get_index(self, pos)
-	local col = pos.x / self.node_size.x + 1
-	local row = -pos.y / self.node_size.y
+	-- Offset to left-top corner from node pivot
+	local node_offset_x = self.node_size.x * (-0.5 + self.node_pivot.x)
+	local node_offset_y = self.node_size.y * (0.5 - self.node_pivot.y)
+
+	local col = (pos.x + node_offset_x) / self.node_size.x + 1
+	local row = -(pos.y + node_offset_y) / self.node_size.y
 
 	col = helper.round(col)
 	row = helper.round(row)
@@ -337,6 +341,7 @@ function StaticGrid.clear(self)
 	self:_update()
 
 	self.on_clear:trigger(self:get_context())
+	self.on_change_items:trigger(self:get_context())
 
 	return self
 end

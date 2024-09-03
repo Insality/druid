@@ -227,9 +227,10 @@ end
 
 
 --- Get all words, which has a passed tag.
+-- @tparam RichText self @{RichText}
 -- @tparam string tag
 -- @treturn druid.rich_text.word[] words
-function RichText:tagged(tag)
+function RichText.tagged(self, tag)
 	if not self._words then
 		return
 	end

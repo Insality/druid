@@ -588,6 +588,7 @@ local druid__hotkey__style = {}
 
 
 ---@class druid.hover : druid.base_component
+---@field node node Hover node
 ---@field on_hover druid.event On hover callback(self, state, hover_instance)
 ---@field on_mouse_hover druid.event On mouse hover callback(self, state, hover_instance)
 local druid__hover = {}
@@ -998,9 +999,10 @@ function druid__rich_text.init(self, template, nodes) end
 function druid__rich_text.set_text(self, text) end
 
 --- Get all words, which has a passed tag.
+---@param self druid.rich_text @{RichText}
 ---@param tag string
 ---@return druid.rich_text.word[] words
-function druid__rich_text.tagged(tag) end
+function druid__rich_text.tagged(self, tag) end
 
 
 ---@class druid.rich_text.style

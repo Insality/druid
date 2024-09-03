@@ -24,6 +24,7 @@
 ---
 
 local component = require("druid.component")
+local input = require("druid.extended.input")
 
 local RichInput = component.create("druid.rich_input")
 
@@ -74,7 +75,7 @@ function RichInput.init(self, template, nodes)
 	self.druid = self:get_druid()
 	self.root = self:get_node(SCHEME.ROOT)
 
-	self.input = self.druid:new_input(self:get_node(SCHEME.BUTTON), self:get_node(SCHEME.INPUT))
+	self.input = self.druid:new(input, self:get_node(SCHEME.BUTTON), self:get_node(SCHEME.INPUT))
 	self.cursor = self:get_node(SCHEME.CURSOR)
 
 	self.input:set_text("")

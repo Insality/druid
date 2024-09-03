@@ -1,11 +1,11 @@
 
 [![](media/druid_logo.png)](https://insality.github.io/druid/)
 
-[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/tag/insality/druid?style=for-the-badge&label=Release)](https://github.com/Insality/druid/tags)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/insality/druid/ci-workflow.yml?branch=master&style=for-the-badge)](https://github.com/Insality/druid/actions)
+[![codecov](https://img.shields.io/codecov/c/github/Insality/druid?style=for-the-badge)](https://codecov.io/gh/Insality/druid)
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/insality/druid)](https://github.com/Insality/druid/releases)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/insality/druid/ci-workflow.yml?branch=master)](https://github.com/Insality/druid/actions)
-[![codecov](https://codecov.io/gh/Insality/druid/branch/master/graph/badge.svg)](https://codecov.io/gh/Insality/druid)
+[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
 
 **Druid** - powerful **Defold** component UI framework that empowers developers to create stunning and customizable GUIs by leveraging a wide range of embedded components or effortlessly designing their own game-specific components.
 
@@ -23,11 +23,19 @@ To integrate the **Druid** extension into your own project, add this project as 
 
 Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
-Size: **67.16 KB**
 
-> The size metrics exlcude the extended components, which are including only on demand.
+### Library Size
+
+> **Note:** The library size is calculated based on the build report per platform. The extended components are exlcuded, which are including only on demand.
+
+| Platform         | Library Size  |
+| ---------------- | ------------- |
+| HTML5            | **38.96 KB**  |
+| Desktop / Mobile | **65.97 KB**  |
+
 
 ### Input Bindings
+
 **Druid** utilizes the `/builtins/input/all.input_binding` input bindings. For custom input bindings, refer to the Input Binding section in the  **_[Advanced Setup](docs_md/advanced-setup.md#input-bindings)_**.
 
 
@@ -172,8 +180,6 @@ Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Dr
 Each example page provides a direct link to the corresponding example code, making it easier for you to understand how to use **Druid**.
 
 Or refer directly to the [**example folder**](https://github.com/Insality/druid/tree/develop/example) for code examples demonstrating how to use **Druid**.
-
-If you want to see examples of GUIs created with Druid, please refer to the [game_examples.md](docs_md/game_examples.md) file.
 
 ## Documentation
 

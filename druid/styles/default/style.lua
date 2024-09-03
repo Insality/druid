@@ -6,21 +6,11 @@ local settings = require("druid.system.settings")
 local M = {}
 
 
-local function button_hover_scale(node, target, time)
-	gui.animate(node, "scale", target, gui.EASING_OUTSINE, time)
-end
-
-local function button_tap_anim(node, tap_scale, start_scale)
-	gui.animate(node, gui.PROP_SCALE, tap_scale, gui.EASING_INSINE, 0.1, 0, function()
-		gui.animate(node, gui.PROP_SCALE, start_scale, gui.EASING_INSINE, 0.1)
-	end)
-end
-
 M["button"] = {
-	HOVER_SCALE = vmath.vector3(0.02, 0.02, 1),
-	HOVER_MOUSE_SCALE = vmath.vector3(0.01, 0.01, 1),
-	HOVER_TIME = 0.04,
-	SCALE_CHANGE = vmath.vector3(0.035, 0.035, 1),
+	HOVER_SCALE = vmath.vector3(0.08, 0.08, 1),
+	HOVER_MOUSE_SCALE = vmath.vector3(0.04, 0.04, 1),
+	HOVER_TIME = 0.05,
+	SCALE_CHANGE = vmath.vector3(0.12, 0.12, 1),
 	BTN_SOUND = "click",
 	BTN_SOUND_DISABLED = "click",
 	DISABLED_COLOR = vmath.vector4(0, 0, 0, 1),
@@ -33,19 +23,21 @@ M["button"] = {
 		local scale_to = self.start_scale + M.button.HOVER_SCALE
 
 		local target_scale = state and scale_to or self.start_scale
-		button_hover_scale(node, target_scale, M.button.HOVER_TIME)
+		gui.animate(node, "scale", target_scale, gui.EASING_OUTSINE, M.button.HOVER_TIME)
 	end,
 
 	on_mouse_hover = function(self, node, state)
 		local scale_to = self.start_scale + M.button.HOVER_MOUSE_SCALE
 
 		local target_scale = state and scale_to or self.start_scale
-		button_hover_scale(node, target_scale, M.button.HOVER_TIME)
+		gui.animate(node, "scale", target_scale, gui.EASING_OUTSINE, M.button.HOVER_TIME)
 	end,
 
 	on_click = function(self, node)
 		local scale_to = self.start_scale + M.button.SCALE_CHANGE
-		button_tap_anim(node, scale_to, self.start_scale)
+		gui.set_scale(node, scale_to)
+		gui.animate(node, gui.PROP_SCALE, self.start_scale, gui.EASING_OUTBACK, 0.24)
+
 		settings.play_sound(M.button.BTN_SOUND)
 	end,
 
@@ -84,8 +76,8 @@ M["scroll"] = {
 	INERT_SPEED = 30, -- koef. of inert speed
 	EXTRA_STRETCH_SIZE = 100, -- extra size in pixels outside of scroll (stretch effect)
 	POINTS_DEADZONE = 20, -- Speed to check points of interests in no_inertion mode
-	WHEEL_SCROLL_SPEED = 0, -- Amount of pixels to scroll by one wheel event (0 to disable)
-	WHEEL_SCROLL_INVERTED = false, -- Boolean to invert wheel scroll side
+	WHEEL_SCROLL_SPEED = 20, -- Amount of pixels to scroll by one wheel event (0 to disable)
+	WHEEL_SCROLL_INVERTED = true, -- Boolean to invert wheel scroll side
 	WHEEL_SCROLL_BY_INERTION = false, -- If true, wheel will add inertion to scroll. Direct set position otherwise.
 	SMALL_CONTENT_SCROLL = false, -- If true, content node with size less than view node size can be scrolled
 }
