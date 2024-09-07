@@ -17,6 +17,10 @@ M.ACTION_MULTITOUCH = hash(sys.get_config_string("druid.input_multitouch", "touc
 M.ACTION_BACKSPACE = hash(sys.get_config_string("druid.input_key_backspace", "key_backspace"))
 M.ACTION_SCROLL_UP = hash(sys.get_config_string("druid.input_scroll_up", "mouse_wheel_up"))
 M.ACTION_SCROLL_DOWN = hash(sys.get_config_string("druid.input_scroll_down", "mouse_wheel_down"))
+M.ACTION_LEFT = hash(sys.get_config_string("druid.input_key_left", "key_left"))
+M.ACTION_RIGHT = hash(sys.get_config_string("druid.input_key_right", "key_right"))
+M.ACTION_LSHIFT = hash(sys.get_config_string("druid.input_key_lshift", "key_lshift"))
+M.ACTION_LCTRL = hash(sys.get_config_string("druid.input_key_lctrl", "key_lctrl"))
 
 M.IS_STENCIL_CHECK = not (sys.get_config_string("druid.no_stencil_check") == "1")
 

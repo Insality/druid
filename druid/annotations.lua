@@ -652,6 +652,7 @@ function druid__hover.set_mouse_hover(self, state) end
 ---@field on_input_text druid.event On input field text change callback(self, input_text)
 ---@field on_input_unselect druid.event On input field unselect callback(self, input_text)
 ---@field on_input_wrong druid.event On trying user input with not allowed character callback(self, params, button_instance)
+---@field on_select_cursor_change druid.event On cursor position change callback(self, cursor_index, selection_start_index, selection_end_index)
 ---@field style druid.input.style Component style params.
 ---@field text druid.text Text component
 local druid__input = {}
@@ -993,7 +994,7 @@ function druid__rich_text.init(self, template, nodes) end
 
 --- Set text for Rich Text
 ---@param self druid.rich_text @{RichText}
----@param text string The text to set
+---@param text string|nil The text to set
 ---@return druid.rich_text.word[] words
 ---@return druid.rich_text.lines_metrics line_metrics
 function druid__rich_text.set_text(self, text) end

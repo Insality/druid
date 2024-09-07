@@ -58,9 +58,7 @@ end
 -- @tparam string template The template string name
 -- @tparam table nodes Nodes table from gui.clone_tree
 function PinKnob.init(self, callback, template, nodes)
-	self:set_template(template)
-	self:set_nodes(nodes)
-	self.druid = self:get_druid()
+	self.druid = self:get_druid(template, nodes)
 	self.node = self:get_node(SCHEME.PIN)
 	self.is_drag = false
 

@@ -109,11 +109,9 @@ local SCHEME = {
 -- @tparam string template The Rich Text template name
 -- @tparam table nodes The node table, if prefab was copied by gui.clone_tree()
 function RichText.init(self, template, nodes)
-	self:set_template(template)
-	self:set_nodes(nodes)
+	self.druid = self:get_druid(template, nodes)
 
 	self.root = self:get_node(SCHEME.ROOT)
-	self.druid = self:get_druid()
 
 	self.text_prefab = self:get_node(SCHEME.TEXT_PREFAB)
 	self.icon_prefab = self:get_node(SCHEME.ICON_PREFAB)
@@ -151,7 +149,7 @@ end
 
 --- Set text for Rich Text
 -- @tparam RichText self @{RichText}
--- @tparam string text The text to set
+-- @tparam string text|nil The text to set
 -- @treturn druid.rich_text.word[] words
 -- @treturn druid.rich_text.lines_metrics line_metrics
 -- @usage
@@ -198,6 +196,7 @@ end
 -- <img=texture:image,size/>
 -- <img=texture:image,width,height/>
 function RichText.set_text(self, text)
+	text = text or ""
 	self:clear()
 	self._last_value = text
 

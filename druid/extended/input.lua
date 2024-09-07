@@ -52,6 +52,7 @@
 
 local Event = require("druid.event")
 local const = require("druid.const")
+local helper = require("druid.helper")
 local component = require("druid.component")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
@@ -90,7 +91,6 @@ end
 -- @tfield boolean IS_LONGTAP_ERASE Is long tap will erase current input data. Default: false
 -- @tfield string MASK_DEFAULT_CHAR Default character mask for password input. Default: *]
 -- @tfield boolean IS_UNSELECT_ON_RESELECT If true, call unselect on select selected input. Default: false
--- @tfield boolean NO_CONSUME_INPUT_WHILE_SELECTED If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured). Default: false
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
@@ -101,7 +101,6 @@ function Input.on_style_change(self, style)
 	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
 	self.style.MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*"
 	self.style.IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false
-	self.style.NO_CONSUME_INPUT_WHILE_SELECTED = style.NO_CONSUME_INPUT_WHILE_SELECTED or false
 
 	self.style.on_select = style.on_select or function(_, button_node) end
 	self.style.on_unselect = style.on_unselect or function(_, button_node) end
@@ -121,7 +120,7 @@ end
 -- @tparam node|Text text_node Text node what will be changed on user input. You can pass text component instead of text node name @{Text}
 -- @tparam number|nil keyboard_type Gui keyboard type for input field
 function Input.init(self, click_node, text_node, keyboard_type)
-	self.druid = self:get_druid(self)
+	self.druid = self:get_druid()
 
 	if type(text_node) == "table" then
 		self.text = text_node
@@ -139,6 +138,9 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	self.text_width = 0
 	self.market_text_width = 0
 	self.total_width = 0
+	self.cursor_index = utf8.len(self.value)
+	self.start_index = self.cursor_index
+	self.end_index = self.cursor_index
 
 	self.max_length = nil
 	self.allowed_characters = nil
@@ -150,6 +152,11 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	self.button.on_click_outside:subscribe(self.unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
 
+	if defos then
+		self.button.hover.style.ON_HOVER_CURSOR = defos.CURSOR_IBEAM
+		self.button.hover.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_IBEAM
+	end
+
 	if html5 then
 		self.button:set_web_user_interaction(true)
 	end
@@ -160,6 +167,7 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	self.on_input_empty = Event()
 	self.on_input_full = Event()
 	self.on_input_wrong = Event()
+	self.on_select_cursor_change = Event()
 end
 
 

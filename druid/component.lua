@@ -205,10 +205,22 @@ end
 
 --- Get Druid instance for inner component creation.
 -- @tparam BaseComponent self @{BaseComponent}
+-- @tparam string|nil template The template name
+-- @tparam table|nil nodes The nodes table
 -- @treturn DruidInstance Druid instance with component context
-function BaseComponent.get_druid(self)
+function BaseComponent.get_druid(self, template, nodes)
 	local context = { _context = self }
-	return setmetatable(context, { __index = self._meta.druid })
+	local druid_instance = setmetatable(context, { __index = self._meta.druid })
+
+	if template then
+		self:set_template(template)
+	end
+
+	if nodes then
+		self:set_nodes(nodes)
+	end
+
+	return druid_instance
 end
 
 

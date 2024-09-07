@@ -85,6 +85,12 @@ function Slider.on_layout_change(self)
 end
 
 
+function Slider.on_remove(self)
+	-- Return pin to start position
+	gui.set_position(self.node, self.start_pos)
+end
+
+
 function Slider.on_window_resized(self)
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self._x_koef = x_koef

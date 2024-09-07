@@ -234,6 +234,9 @@ function M._split_on_lines(words, settings)
 
 	repeat
 		local word = words[i]
+		if word == nil then
+			break
+		end
 		if word.image then
 			word.default_animation = settings.default_animation
 		end

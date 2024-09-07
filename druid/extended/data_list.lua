@@ -80,7 +80,6 @@ end
 -- @treturn druid.data_list Current DataList instance
 function DataList.set_data(self, data)
 	self._data = data or {}
-	self.scroll:set_size(self.grid:get_size_for(#self._data))
 	self:_refresh()
 
 	return self
@@ -102,7 +101,7 @@ end
 -- @tparam number shift_policy The constant from const.SHIFT.*
 -- @local
 function DataList.add(self, data, index, shift_policy)
-	index = index or self._data_last_index + 1
+	index = index or #self._data + 1
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
 	helper.insert_with_shift(self._data, data, index, shift_policy)
@@ -205,6 +204,7 @@ function DataList._add_at(self, index)
 
 	local node, instance = self._create_function(self:get_context(), self._data[index], index, self)
 	self._data_visual[index] = {
+		data = self._data[index],
 		node = node,
 		component = instance,
 	}
@@ -240,6 +240,8 @@ end
 -- @tparam DataList self @{DataList}
 -- @local
 function DataList._refresh(self)
+	self.scroll:set_size(self.grid:get_size_for(#self._data))
+
 	local start_pos = -self.scroll.position
 	local start_index = self.grid:get_index(start_pos)
 	start_index = math.max(1, start_index)
@@ -257,6 +259,10 @@ function DataList._refresh(self)
 	-- Clear from non range elements
 	for index, data in pairs(self._data_visual) do
 		if index < start_index or index > end_index then
+			self:_remove_at(index)
+		elseif self._data[index] ~= data.data then
+			-- TODO We want to find currently created data instances and move them to new positions
+			-- Now it will re-create them
 			self:_remove_at(index)
 		end
 	end

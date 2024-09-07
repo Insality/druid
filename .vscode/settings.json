@@ -10,7 +10,8 @@
 		"after",
 		"it",
 		"utf8",
-		"defos"
+		"defos",
+		"clipboard"
 	],
 	"Lua.workspace.checkThirdParty": false,
 	"Lua.diagnostics.neededFileStatus": {
