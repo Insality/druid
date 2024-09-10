@@ -370,6 +370,25 @@ function M.is_web()
 end
 
 
+--- Check if device is HTML5 mobile
+-- @function helper.is_web_mobile
+-- @treturn boolean Is web mobile
+function M.is_web_mobile()
+	if html5 then
+		return html5.run("(typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1);") == "true"
+	end
+	return false
+end
+
+
+--- Check if device is mobile and can support multitouch
+-- @function helper.is_multitouch_supported
+-- @treturn boolean Is multitouch supported
+function M.is_multitouch_supported()
+	return M.is_mobile() or M.is_web_mobile()
+end
+
+
 --- Simple table to one-line string converter
 -- @function helper.table_to_string
 -- @tparam table t

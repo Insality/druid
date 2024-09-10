@@ -201,9 +201,9 @@ function Hover:_set_cursor(priority, cursor)
 	local priority = nil
 	local cursor_to_set = nil
 	for _, stack in pairs(cursor_stack) do
-		for priority, _ in pairs(stack) do
-			if priority > (priority or 0) then
-				priority = priority
+		for pr, _ in pairs(stack) do
+			if pr > (priority or 0) then
+				priority = pr
 				cursor_to_set = stack[priority]
 			end
 		end

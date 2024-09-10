@@ -26,7 +26,7 @@
 -- @tfield vector3 end_pos
 
 --- Length between start and end position
--- @tfield number dist
+-- @tfield vector3 dist
 
 --- Current drag state
 -- @tfield boolean is_drag
@@ -68,6 +68,7 @@ function Slider.init(self, node, end_pos, callback)
 	self.pos = gui.get_position(self.node)
 	self.target_pos = vmath.vector3(self.pos)
 	self.end_pos = end_pos
+	self._is_enabled = true
 
 	self.dist = self.end_pos - self.start_pos
 	self.is_drag = false
@@ -101,6 +102,10 @@ end
 
 function Slider.on_input(self, action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
+		return false
+	end
+
+	if not self._is_enabled or not gui.is_enabled(self.node, true) then
 		return false
 	end
 
@@ -138,11 +143,11 @@ function Slider.on_input(self, action_id, action)
 		if prev_x ~= self.target_pos.x or prev_y ~= self.target_pos.y then
 			local prev_value = self.value
 
-			if self.dist.x > 0 then
+			if math.abs(self.dist.x) > 0 then
 				self.value = (self.target_pos.x - self.start_pos.x) / self.dist.x
 			end
 
-			if self.dist.y > 0 then
+			if math.abs(self.dist.y) > 0 then
 				self.value = (self.target_pos.y - self.start_pos.y) / self.dist.y
 			end
 
@@ -213,6 +218,22 @@ end
 function Slider.set_input_node(self, input_node)
 	self._input_node = self:get_node(input_node)
 	return self
+end
+
+
+--- Set Slider input enabled or disabled
+-- @tparam Slider self @{Slider}
+-- @tparam boolean is_enabled
+function Slider.set_enabled(self, is_enabled)
+	self._is_enabled = is_enabled
+end
+
+
+--- Check if Slider component is enabled
+-- @tparam Slider self @{Slider}
+-- @treturn boolean
+function Slider.is_enabled(self)
+	return self._is_enabled
 end
 
 

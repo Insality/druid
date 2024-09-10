@@ -54,7 +54,7 @@
 -- @tfield node content_node
 
 --- Flag, if scroll now moving by inertion
--- @tfield bool _is_inert
+-- @tfield boolean _is_inert
 
 --- Current inert speed
 -- @tfield vector3 inertion
@@ -704,6 +704,10 @@ end
 
 
 function Scroll._update_free_scroll(self, dt)
+	if self.is_animate then
+		return
+	end
+
 	local target = self.target_position
 
 	if self._is_inert and (self.inertion.x ~= 0 or self.inertion.y ~= 0) then
@@ -725,6 +729,10 @@ end
 
 
 function Scroll._update_hand_scroll(self, dt)
+	if self.is_animate then
+		self:_cancel_animate()
+	end
+
 	local dx = self.target_position.x - self.position.x
 	local dy = self.target_position.y - self.position.y
 

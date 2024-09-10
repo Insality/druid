@@ -240,6 +240,23 @@ function StaticGrid.add(self, item, index, shift_policy, is_instant)
 end
 
 
+--- Set new items to the grid. All previous items will be removed
+-- @tparam StaticGrid self @{StaticGrid}
+-- @tparam node[] nodes The new grid nodes
+-- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+function StaticGrid.set_items(self, nodes, is_instant)
+	self.nodes = nodes
+	for index = 1, #nodes do
+		local item = nodes[index]
+		gui.set_parent(item, self.parent)
+	end
+
+	self:_update(is_instant)
+
+	self.on_change_items:trigger(self:get_context())
+end
+
+
 --- Remove the item from the grid. Note that gui node will be not deleted
 -- @tparam StaticGrid self @{StaticGrid}
 -- @tparam number index The grid node index to remove
@@ -379,6 +396,35 @@ function StaticGrid.set_in_row(self, in_row)
 	self.on_change_items:trigger(self:get_context())
 
 	return self
+end
+
+
+--- Set new node size for grid
+-- @tparam StaticGrid self @{StaticGrid}
+-- @tparam[opt] number width The new node width
+-- @tparam[opt] number height The new node height
+-- @treturn druid.static_grid Current grid instance
+function StaticGrid.set_item_size(self, width, height)
+	if width then
+		self.node_size.x = width
+	end
+	if height then
+		self.node_size.y = height
+	end
+	self:_update()
+	self.on_change_items:trigger(self:get_context())
+
+	return self
+end
+
+
+--- Sort grid nodes by custom comparator function
+-- @tparam StaticGrid self @{StaticGrid}
+-- @tparam function comparator The comparator function. (a, b) -> boolean
+-- @treturn druid.static_grid Current grid instance
+function StaticGrid.sort_nodes(self, comparator)
+	table.sort(self.nodes, comparator)
+	self:_update(true)
 end
 
 
