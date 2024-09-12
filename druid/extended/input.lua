@@ -9,10 +9,10 @@
 -- @within BaseComponent
 -- @alias druid.input
 
---- On input field select callback(self, button_node)
+--- On input field select callback(self, input_instance)
 -- @tfield DruidEvent on_input_select @{DruidEvent}
 
---- On input field unselect callback(self, input_text)
+--- On input field unselect callback(self, input_text, input_instance)
 -- @tfield DruidEvent on_input_unselect @{DruidEvent}
 
 --- On input field text change callback(self, input_text)
@@ -24,11 +24,41 @@
 --- On input field text change to max length string callback(self, input_text)
 -- @tfield DruidEvent on_input_full @{DruidEvent}
 
---- On trying user input with not allowed character callback(self, params, button_instance)
+--- On trying user input with not allowed character callback(self, params, input_text)
 -- @tfield DruidEvent on_input_wrong @{DruidEvent}
+
+--- On cursor position change callback(self, cursor_index, start_index, end_index)
+-- @tfield DruidEvent on_select_cursor_change @{DruidEvent}
+
+--- The cursor index. The index of letter cursor after. Leftmost cursor - 0
+-- @tfield number cursor_index
+
+--- The selection start index. The index of letter cursor after. Leftmost selection - 0
+-- @tfield number start_index
+
+--- Theselection end index. The index of letter cursor before. Rightmost selection - #text
+-- @tfield number end_index
 
 --- Text component
 -- @tfield Text text @{Text}
+
+--- Current input value
+-- @tfield string value
+
+--- Previous input value
+-- @tfield string previous_value
+
+--- Current input value with marked text
+-- @tfield string current_value
+
+--- Marked text for input field. Info: https://defold.com/manuals/input-key-and-text/#marked-text
+-- @tfield string marked_value
+
+--- Text width
+-- @tfield number text_width
+
+--- Marked text width
+-- @tfield number marked_text_width
 
 --- Button component
 -- @tfield Button button @{Button}
@@ -59,6 +89,14 @@ local utf8 = utf8 or utf8_lua
 
 local Input = component.create("input")
 
+Input.ALLOWED_ACTIONS = {
+	[const.ACTION_TOUCH] = true,
+	[const.ACTION_TEXT] = true,
+	[const.ACTION_MARKED_TEXT] = true,
+	[const.ACTION_BACKSPACE] = true,
+	[const.ACTION_ENTER] = true,
+	[const.ACTION_ESC] = true,
+}
 
 --- Mask text by replacing every character with a mask character
 -- @tparam string text
@@ -172,25 +210,31 @@ end
 
 
 function Input.on_input(self, action_id, action)
+	if not (action_id == nil or Input.ALLOWED_ACTIONS[action_id]) then
+		return false
+	end
+
 	if self.is_selected then
 		local input_text = nil
+		local is_marked_text_changed = false
+		local cursor_shift_indexes = nil
+
 		if action_id == const.ACTION_TEXT then
 			-- ignore return key
 			if action.text == "\n" or action.text == "\r" then
 				return true
 			end
 
-			local hex = string.gsub(action.text,"(.)", function (c)
+			local hex = string.gsub(action.text, "(.)", function(c)
 				return string.format("%02X%s",string.byte(c), "")
 			end)
 
 			-- ignore arrow keys
 			if not utf8.match(hex, "EF9C8[0-3]") then
 				if not self.allowed_characters or utf8.match(action.text, self.allowed_characters) then
-					input_text = self.value .. action.text
-					if self.max_length then
-						input_text = utf8.sub(input_text, 1, self.max_length)
-					end
+					local shift_offset = self.cursor_index - self.start_index
+					input_text = self:get_text_selected_replaced(action.text)
+					cursor_shift_indexes = utf8.len(action.text) - shift_offset
 				else
 					self.on_input_wrong:trigger(self:get_context(), action.text)
 					self.style.on_input_wrong(self, self.button.node)
@@ -204,10 +248,28 @@ function Input.on_input(self, action_id, action)
 			if self.max_length then
 				self.marked_value = utf8.sub(self.marked_value, 1, self.max_length)
 			end
+			is_marked_text_changed = true
 		end
 
 		if action_id == const.ACTION_BACKSPACE and (action.pressed or action.repeated) then
-			input_text = utf8.sub(self.value, 1, -2)
+			local start_index = self.start_index or utf8.len(self.value)
+			local end_index = self.end_index or utf8.len(self.value)
+
+			-- If start == end index, remove left of this selection letter, else delete all selection
+			if start_index == end_index then
+				local left_part = utf8.sub(self.value, 1, math.max(0, start_index - 1))
+				local right_part = utf8.sub(self.value, end_index + 1, utf8.len(self.value))
+				input_text = left_part .. right_part
+
+				cursor_shift_indexes = -1
+			else
+				local left_part = utf8.sub(self.value, 1, start_index)
+				local right_part = utf8.sub(self.value, end_index + 1, utf8.len(self.value))
+				input_text = left_part .. right_part
+
+				-- Calculate offsets from cursor pos to start index
+				cursor_shift_indexes = start_index - self.cursor_index
+			end
 		end
 
 		if action_id == const.ACTION_ENTER and action.released then
@@ -225,14 +287,23 @@ function Input.on_input(self, action_id, action)
 			return true
 		end
 
-		if input_text or #self.marked_value > 0 then
+		if input_text or is_marked_text_changed then
 			self:set_text(input_text)
+
+			if cursor_shift_indexes then
+				self:select_cursor(self.cursor_index + cursor_shift_indexes)
+			end
+
 			return true
 		end
 	end
 
-	local is_consume_input = not self.style.NO_CONSUME_INPUT_WHILE_SELECTED and self.is_selected
-	return is_consume_input
+	local is_mouse_action = action_id == const.ACTION_TOUCH or not action_id
+	if is_mouse_action then
+		return false
+	end
+
+	return false
 end
 
 
@@ -242,7 +313,33 @@ end
 
 
 function Input.on_input_interrupt(self)
-	-- self:unselect()
+	--self:unselect()
+end
+
+
+function Input.get_text_selected(self)
+	if self.start_index == self.end_index then
+		return self.value
+	end
+
+	return utf8.sub(self.value, self.start_index + 1, self.end_index)
+end
+
+--- Replace selected text with new text
+-- @tparam Input self @{Input}
+-- @tparam string text The text to replace selected text
+-- @treturn string New input text
+function Input.get_text_selected_replaced(self, text)
+	local left_part = utf8.sub(self.value, 1, self.start_index)
+	local right_part = utf8.sub(self.value, self.end_index + 1, utf8.len(self.value))
+	local result = left_part .. text .. right_part
+
+
+	if self.max_length then
+		result = utf8.sub(result, 1, self.max_length)
+	end
+
+	return result
 end
 
 
@@ -250,6 +347,8 @@ end
 -- @tparam Input self @{Input}
 -- @tparam string input_text The string to apply for input field
 function Input.set_text(self, input_text)
+	input_text = tostring(input_text or "")
+
 	-- Case when update with marked text
 	if input_text then
 		self.value = input_text
@@ -275,7 +374,6 @@ function Input.set_text(self, input_text)
 		self.is_empty = #value == 0 and #marked_value == 0
 
 		local final_text = value .. marked_value
-		local real_text = self.value .. self.marked_value
 		self.text:set_to(final_text)
 
 		-- measure it
@@ -283,12 +381,12 @@ function Input.set_text(self, input_text)
 		self.marked_text_width = self.text:get_text_size(marked_value)
 		self.total_width = self.text_width + self.marked_text_width
 
-		self.on_input_text:trigger(self:get_context(), real_text)
+		self.on_input_text:trigger(self:get_context(), final_text)
 		if #final_text == 0 then
-			self.on_input_empty:trigger(self:get_context(), real_text)
+			self.on_input_empty:trigger(self:get_context(), final_text)
 		end
 		if self.max_length and #final_text == self.max_length then
-			self.on_input_full:trigger(self:get_context(), real_text)
+			self.on_input_full:trigger(self:get_context(), final_text)
 		end
 	end
 end
@@ -306,8 +404,10 @@ function Input.select(self)
 		self.is_selected = true
 
 		gui.show_keyboard(self.keyboard_type, false)
-		self.on_input_select:trigger(self:get_context())
 
+		local len = utf8.len(self.value)
+		self:select_cursor(len, len, len)
+		self.on_input_select:trigger(self:get_context(), self)
 		self.style.on_select(self, self.button.node)
 	else
 		if self.style.IS_UNSELECT_ON_RESELECT then
@@ -322,13 +422,14 @@ end
 function Input.unselect(self)
 	gui.reset_keyboard()
 	self.marked_value = ""
+	self.value = self.current_value
 	if self.is_selected then
 		self:reset_input_priority()
 		self.button:reset_input_priority()
 		self.is_selected = false
 
 		gui.hide_keyboard()
-		self.on_input_unselect:trigger(self:get_context(), self:get_text())
+		self.on_input_unselect:trigger(self:get_context(), self:get_text(), self)
 
 		self.style.on_unselect(self, self.button.node)
 	end
@@ -339,7 +440,11 @@ end
 -- @tparam Input self @{Input}
 -- @treturn string The current input field text
 function Input.get_text(self)
-	return self.value .. self.marked_value
+	if self.marked_value ~= "" then
+		return self.value .. self.marked_value
+	end
+
+	return self.value
 end
 
 
@@ -368,9 +473,97 @@ end
 
 --- Reset current input selection and return previous value
 -- @tparam Input self @{Input}
+-- @treturn druid.input Current input instance
 function Input.reset_changes(self)
 	self:set_text(self.previous_value)
 	self:unselect()
+	return self
+end
+
+
+--- Set cursor position in input field
+-- @tparam Input self @{Input}
+-- @tparam number|nil cursor_index Cursor index for cursor position, if nil - will be set to the end of the text
+-- @tparam number|nils start_index Start index for cursor position, if nil - will be set to the end of the text
+-- @tparam number|nil end_index End index for cursor position, if nil - will be set to the start_index
+-- @treturn druid.input Current input instance
+function Input.select_cursor(self, cursor_index, start_index, end_index)
+	local len = utf8.len(self.value)
+
+	self.cursor_index = cursor_index or len
+	self.start_index = start_index or self.cursor_index
+	self.end_index = end_index or self.start_index
+
+	self.cursor_index = helper.clamp(self.cursor_index, 0, len)
+	self.start_index = helper.clamp(self.start_index, 0, len)
+	self.end_index = helper.clamp(self.end_index, 0, len)
+
+	self.on_select_cursor_change:trigger(self:get_context(), self.cursor_index, self.start_index, self.end_index)
+
+	return self
+end
+
+
+--- Change cursor position by delta
+-- @tparam Input self @{Input}
+-- @tparam number delta side for cursor position, -1 for left, 1 for right
+-- @tparam boolean is_add_to_selection (Shift key)
+-- @tparam boolean is_move_to_end (Ctrl key)
+function Input.move_selection(self, delta, is_add_to_selection, is_move_to_end)
+	local len = utf8.len(self.value)
+	local cursor_index = self.cursor_index
+	local start_index, end_index -- if nil, the selection will be 0 at cursor position
+	local is_right = delta > 0
+
+	local target_index = cursor_index + delta
+	if is_move_to_end then
+		target_index = is_right and len or 0
+	end
+
+	-- The Shift is not pressed
+	if not is_add_to_selection then
+		cursor_index = target_index
+
+		if self.start_index ~= self.end_index then
+			-- Reset selection without moving cursor
+			cursor_index = self.cursor_index
+		end
+	end
+
+	-- The Shift is pressed
+	if is_add_to_selection then
+		cursor_index = target_index
+		start_index = self.start_index
+		end_index = self.end_index
+
+		local is_cursor_extends_selection = (self.cursor_index == (is_right and end_index or start_index))
+
+		if is_cursor_extends_selection then
+			if is_right then
+				end_index = cursor_index
+			else
+				start_index = cursor_index
+			end
+		else
+			if is_right then
+				start_index = cursor_index
+
+				if is_move_to_end then
+					start_index = end_index
+					end_index = cursor_index
+				end
+			else
+				end_index = cursor_index
+
+				if is_move_to_end then
+					end_index = start_index
+					start_index = cursor_index
+				end
+			end
+		end
+	end
+
+	self:select_cursor(cursor_index, start_index, end_index)
 end
 
 

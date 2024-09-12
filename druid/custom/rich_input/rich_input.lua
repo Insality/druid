@@ -89,7 +89,6 @@ local function on_select(self)
 
 	animate_cursor(self)
 	self.drag:set_enabled(true)
-	self:_set_hotkeys_enabled(true)
 end
 
 
@@ -100,7 +99,6 @@ local function on_unselect(self)
 	gui.set_enabled(self.placeholder.node, true and #self.input:get_text() == 0)
 
 	self.drag:set_enabled(false)
-	self:_set_hotkeys_enabled(false)
 end
 
 
