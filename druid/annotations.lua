@@ -63,8 +63,10 @@ function druid__base_component.get_context(self) end
 
 --- Get Druid instance for inner component creation.
 ---@param self druid.base_component @{BaseComponent}
+---@param template string|nil The template name
+---@param nodes table|nil The nodes table
 ---@return druid_instance Druid instance with component context
-function druid__base_component.get_druid(self) end
+function druid__base_component.get_druid(self, template, nodes) end
 
 --- Return component input priority
 ---@param self druid.base_component @{BaseComponent}
@@ -310,13 +312,11 @@ function druid__checkbox_group.set_state(self, indexes, is_instant) end
 
 ---@class druid.data_list : druid.base_component
 ---@field grid druid.static_grid|druid.dynamic_grid The Druid Grid component
----@field last_index number The current visual last data index
 ---@field on_element_add druid.event On DataList visual element created Event callback(self, index, node, instance)
 ---@field on_element_remove druid.event On DataList visual element created Event callback(self, index)
 ---@field on_scroll_progress_change druid.event Event triggered when scroll progress is changed; event(self, progress_value)
 ---@field scroll druid.scroll The Druid scroll component
 ---@field scroll_progress number The current progress of scroll posititon
----@field top_index number The current visual top data index
 local druid__data_list = {}
 
 --- Clear the DataList and refresh visuals
@@ -338,23 +338,10 @@ function druid__data_list.get_created_nodes(self) end
 ---@return table The current data array
 function druid__data_list.get_data(self) end
 
---- Return first index from data.
---- It not always equals to 1
----@param self druid.data_list @{DataList}
-function druid__data_list.get_first_index(self) end
-
 --- Return index for data value
 ---@param self druid.data_list @{DataList}
 ---@param data table
 function druid__data_list.get_index(self, data) end
-
---- Return last index from data
----@param self druid.data_list @{DataList}
-function druid__data_list.get_last_index(self) end
-
---- Return amount of data
----@param self druid.data_list @{DataList}
-function druid__data_list.get_length(self) end
 
 --- The @{DataList} constructor
 ---@param self druid.data_list @{DataList}
@@ -526,20 +513,33 @@ local druid__event = {}
 function druid__event.clear(self) end
 
 --- DruidEvent constructor
+---@param callback function|nil Subscribe the callback on new event, if callback exist
+---@param callback_context any|nil Additional context as first param to callback call
+function druid__event.create(callback, callback_context) end
+
+--- Return true, if event not have handler
 ---@param self druid.event @{DruidEvent}
----@param initial_callback function|nil Subscribe the callback on new event, if callback exist
-function druid__event.initialize(self, initial_callback) end
+---@return boolean True if event not have handlers
+function druid__event.is_empty(self) end
 
 --- Return true, if event have at lease one handler
 ---@param self druid.event @{DruidEvent}
 ---@return boolean True if event have handlers
 function druid__event.is_exist(self) end
 
+--- Check is event subscribed.
+---@param self druid.event @{DruidEvent}
+---@param callback function Callback itself
+---@param callback_context any|nil Additional context as first param to callback call
+---@return boolean, number|nil @Is event subscribed, return index of callback in event as second param
+function druid__event.is_subscribed(self, callback, callback_context) end
+
 --- Subscribe callback on event
 ---@param self druid.event @{DruidEvent}
 ---@param callback function Callback itself
----@param context any|nil Additional context as first param to callback call, usually it's self
-function druid__event.subscribe(self, callback, context) end
+---@param callback_context any|nil Additional context as first param to callback call, usually it's self
+---@return boolean True if callback was subscribed
+function druid__event.subscribe(self, callback, callback_context) end
 
 --- Trigger the event and call all subscribed callbacks
 ---@param self druid.event @{DruidEvent}
@@ -549,8 +549,8 @@ function druid__event.trigger(self, ...) end
 --- Unsubscribe callback on event
 ---@param self druid.event @{DruidEvent}
 ---@param callback function Callback itself
----@param context any|nil Additional context as first param to callback call
-function druid__event.unsubscribe(self, callback, context) end
+---@param callback_context any|nil Additional context as first param to callback call
+function druid__event.unsubscribe(self, callback, callback_context) end
 
 
 ---@class druid.hotkey : druid.base_component
@@ -591,13 +591,15 @@ local druid__hotkey__style = {}
 ---@field node node Hover node
 ---@field on_hover druid.event On hover callback(self, state, hover_instance)
 ---@field on_mouse_hover druid.event On mouse hover callback(self, state, hover_instance)
+---@field style druid.hover.style Component style params.
 local druid__hover = {}
 
 --- The @{Hover} constructor
 ---@param self druid.hover @{Hover}
 ---@param node node Gui node
 ---@param on_hover_callback function Hover callback
-function druid__hover.init(self, node, on_hover_callback) end
+---@param on_mouse_hover function On mouse hover callback
+function druid__hover.init(self, node, on_hover_callback, on_mouse_hover) end
 
 --- Return current hover enabled state
 ---@param self druid.hover @{Hover}
@@ -639,28 +641,49 @@ function druid__hover.set_hover(self, state) end
 function druid__hover.set_mouse_hover(self, state) end
 
 
+---@class druid.hover.style
+---@field ON_HOVER_CURSOR string Mouse hover style on node hover
+---@field ON_MOUSE_HOVER_CURSOR string Mouse hover style on node mouse hover
+local druid__hover__style = {}
+
+
 ---@class druid.input : druid.base_component
 ---@field allowerd_characters string|nil Pattern matching for user input
 ---@field button druid.button Button component
+---@field current_value string Current input value with marked text
+---@field cursor_index number The cursor index.
+---@field end_index number Theselection end index.
 ---@field is_empty boolean Is current input is empty now
 ---@field is_selected boolean Is current input selected now
 ---@field keyboard_type number Gui keyboard type for input field
+---@field marked_text_width number Marked text width
+---@field marked_value string Marked text for input field.
 ---@field max_length number|nil Max length for input text
 ---@field on_input_empty druid.event On input field text change to empty string callback(self, input_text)
 ---@field on_input_full druid.event On input field text change to max length string callback(self, input_text)
----@field on_input_select druid.event On input field select callback(self, button_node)
+---@field on_input_select druid.event On input field select callback(self, input_instance)
 ---@field on_input_text druid.event On input field text change callback(self, input_text)
----@field on_input_unselect druid.event On input field unselect callback(self, input_text)
----@field on_input_wrong druid.event On trying user input with not allowed character callback(self, params, button_instance)
----@field on_select_cursor_change druid.event On cursor position change callback(self, cursor_index, selection_start_index, selection_end_index)
+---@field on_input_unselect druid.event On input field unselect callback(self, input_text, input_instance)
+---@field on_input_wrong druid.event On trying user input with not allowed character callback(self, params, input_text)
+---@field on_select_cursor_change druid.event On cursor position change callback(self, cursor_index, start_index, end_index)
+---@field previous_value string Previous input value
+---@field start_index number The selection start index.
 ---@field style druid.input.style Component style params.
 ---@field text druid.text Text component
+---@field text_width number Text width
+---@field value string Current input value
 local druid__input = {}
 
 --- Return current input field text
 ---@param self druid.input @{Input}
 ---@return string The current input field text
 function druid__input.get_text(self) end
+
+--- Replace selected text with new text
+---@param self druid.input @{Input}
+---@param text string The text to replace selected text
+---@return string New input text
+function druid__input.get_text_selected_replaced(self, text) end
 
 --- The @{Input} constructor
 ---@param self druid.input @{Input}
@@ -669,14 +692,30 @@ function druid__input.get_text(self) end
 ---@param keyboard_type number|nil Gui keyboard type for input field
 function druid__input.init(self, click_node, text_node, keyboard_type) end
 
+--- Change cursor position by delta
+---@param self druid.input @{Input}
+---@param delta number side for cursor position, -1 for left, 1 for right
+---@param is_add_to_selection boolean (Shift key)
+---@param is_move_to_end boolean (Ctrl key)
+function druid__input.move_selection(self, delta, is_add_to_selection, is_move_to_end) end
+
 --- Reset current input selection and return previous value
 ---@param self druid.input @{Input}
+---@return druid.input Current input instance
 function druid__input.reset_changes(self) end
 
 --- Select input field.
 --- It will show the keyboard and trigger on_select events
 ---@param self druid.input @{Input}
 function druid__input.select(self) end
+
+--- Set cursor position in input field
+---@param self druid.input @{Input}
+---@param cursor_index number|nil Cursor index for cursor position, if nil - will be set to the end of the text
+---@param start_index number|nils Start index for cursor position, if nil - will be set to the end of the text
+---@param end_index number|nil End index for cursor position, if nil - will be set to the start_index
+---@return druid.input Current input instance
+function druid__input.select_cursor(self, cursor_index, start_index, end_index) end
 
 --- Set allowed charaters for input field.
 --- See: https://defold.com/ref/stable/string/  ex: [%a%d] for alpha and numeric
@@ -707,7 +746,6 @@ function druid__input.unselect(self) end
 ---@field IS_LONGTAP_ERASE boolean Is long tap will erase current input data. Default: false
 ---@field IS_UNSELECT_ON_RESELECT boolean If true, call unselect on select selected input. Default: false
 ---@field MASK_DEFAULT_CHAR string Default character mask for password input. Default: *]
----@field NO_CONSUME_INPUT_WHILE_SELECTED boolean If true, will not consume input while input is selected. It's allow to interact with other components while input is selected (text input still captured). Default: false
 ---@field button_style table Custom button style for input node
 ---@field on_input_wrong function (self, button_node) Callback on wrong user input
 ---@field on_select function (self, button_node) Callback on input field selecting
@@ -937,7 +975,7 @@ function druid__radio_group.init(self, nodes, callback, click_nodes) end
 function druid__radio_group.set_state(self, index, is_instant) end
 
 
----@class druid.rich_input : druid.input
+---@class druid.rich_input
 ---@field cursor node On input field text change to empty string callback(self, input_text)
 ---@field druid druid_instance The component druid instance
 ---@field input druid.input On input field text change callback(self, input_text)
@@ -945,9 +983,8 @@ function druid__radio_group.set_state(self, index, is_instant) end
 ---@field root node Root node
 local druid__rich_input = {}
 
---- GSet input field text
+--- Set input field text
 ---@param self druid.rich_input @{RichInput}
----@return string Current input text
 function druid__rich_input.get_text(self) end
 
 --- The @{RichInput} constructor
@@ -956,6 +993,10 @@ function druid__rich_input.get_text(self) end
 ---@param nodes table Nodes table from gui.clone_tree
 function druid__rich_input.init(self, template, nodes) end
 
+--- Select input field
+---@param self druid.rich_input @{RichInput}
+function druid__rich_input.select(self) end
+
 --- Set allowed charaters for input field.
 --- See: https://defold.com/ref/stable/string/  ex: [%a%d] for alpha and numeric
 ---@param self druid.rich_input @{RichInput}
@@ -963,17 +1004,34 @@ function druid__rich_input.init(self, template, nodes) end
 ---@return druid.rich_input Current instance
 function druid__rich_input.set_allowed_characters(self, characters) end
 
+--- Set input field font
+---@param self druid.rich_input @{RichInput}
+---@param font hash The font hash
+---@return druid.input Current input instance
+function druid__rich_input.set_font(self, font) end
+
 --- Set placeholder text
 ---@param self druid.rich_input @{RichInput}
----@param placeholder_text string|nil The placeholder text
----@return druid.rich_input Current instance
+---@param placeholder_text string The placeholder text
 function druid__rich_input.set_placeholder(self, placeholder_text) end
+
+--- Set input field text
+---@param self druid.rich_input @{RichInput}
+---@param text string The input text
+---@return druid.input Current input instance
+function druid__rich_input.set_text(self, text) end
 
 
 ---@class druid.rich_text : druid.base_component
 ---@field druid druid_instance The component druid instance
 ---@field style druid.rich_text.style Component style params.
 local druid__rich_text = {}
+
+--- Split a word into it's characters
+---@param self druid.rich_text @{RichText}
+---@param word druid.rich_text.word
+---@return druid.rich_text.word[] characters
+function druid__rich_text.characters(self, word) end
 
 --- Clear all created words.
 function druid__rich_text.clear() end
@@ -994,7 +1052,7 @@ function druid__rich_text.init(self, template, nodes) end
 
 --- Set text for Rich Text
 ---@param self druid.rich_text @{RichText}
----@param text string|nil The text to set
+---@param text string |nil The text to set
 ---@return druid.rich_text.word[] words
 ---@return druid.rich_text.lines_metrics line_metrics
 function druid__rich_text.set_text(self, text) end
@@ -1014,7 +1072,7 @@ local druid__rich_text__style = {}
 
 
 ---@class druid.scroll : druid.base_component
----@field _is_inert bool Flag, if scroll now moving by inertion
+---@field _is_inert boolean Flag, if scroll now moving by inertion
 ---@field available_pos vector4 Available position for content node: (min_x, max_y, max_x, min_y)
 ---@field available_size vector3 Size of available positions: (width, height, 0)
 ---@field content_node node Scroll content node
@@ -1131,6 +1189,12 @@ function druid__scroll.set_size(self, size, offset) end
 ---@return druid.scroll Current scroll instance
 function druid__scroll.set_vertical_scroll(self, state) end
 
+--- Set new scroll view size in case the node size was changed.
+---@param self druid.scroll @{Scroll}
+---@param size vector3 The new size for view node
+---@return druid.scroll Current scroll instance
+function druid__scroll.set_view_size(self, size) end
+
 
 ---@class druid.scroll.style
 ---@field ANIM_SPEED number|nil Scroll gui.animation speed for scroll_to function. Default: 2
@@ -1149,7 +1213,7 @@ local druid__scroll__style = {}
 
 
 ---@class druid.slider : druid.base_component
----@field dist number Length between start and end position
+---@field dist vector3 Length between start and end position
 ---@field end_pos vector3 End pin node position
 ---@field is_drag boolean Current drag state
 ---@field node node Slider pin node
@@ -1167,11 +1231,21 @@ local druid__slider = {}
 ---@param callback function|nil On slider change callback
 function druid__slider.init(self, node, end_pos, callback) end
 
+--- Check if Slider component is enabled
+---@param self druid.slider @{Slider}
+---@return boolean
+function druid__slider.is_enabled(self) end
+
 --- Set value for slider
 ---@param self druid.slider @{Slider}
 ---@param value number Value from 0 to 1
 ---@param is_silent boolean|nil Don't trigger event if true
 function druid__slider.set(self, value, is_silent) end
+
+--- Set Slider input enabled or disabled
+---@param self druid.slider @{Slider}
+---@param is_enabled boolean
+function druid__slider.set_enabled(self, is_enabled) end
 
 --- Set input zone for slider.
 --- User can touch any place of node, pin instantly will  move at this position and node drag will start.  This function require the Defold version 1.3.0+
@@ -1285,12 +1359,32 @@ function druid__static_grid.set_anchor(self, anchor) end
 ---@return druid.static_grid Current grid instance
 function druid__static_grid.set_in_row(self, in_row) end
 
+--- Set new node size for grid
+---@param self druid.static_grid @{StaticGrid}
+---@param width number The new node width
+---@param height number The new node height
+---@return druid.static_grid Current grid instance
+function druid__static_grid.set_item_size(self, width, height) end
+
+--- Set new items to the grid.
+--- All previous items will be removed
+---@param self druid.static_grid @{StaticGrid}
+---@param nodes node[] The new grid nodes
+---@param is_instant boolean If true, update node positions instantly
+function druid__static_grid.set_items(self, nodes, is_instant) end
+
 --- Change set position function for grid nodes.
 --- It will call on  update poses on grid elements. Default: gui.set_position
 ---@param self druid.static_grid @{StaticGrid}
 ---@param callback function Function on node set position
 ---@return druid.static_grid Current grid instance
 function druid__static_grid.set_position_function(self, callback) end
+
+--- Sort grid nodes by custom comparator function
+---@param self druid.static_grid @{StaticGrid}
+---@param comparator function The comparator function. (a, b) -> boolean
+---@return druid.static_grid Current grid instance
+function druid__static_grid.sort_nodes(self, comparator) end
 
 
 ---@class druid.static_grid.style
@@ -1349,9 +1443,15 @@ local druid__text = {}
 ---@return number The current text adjust type
 function druid__text.get_text_adjust(self, adjust_type) end
 
+--- Get chars count by width
+---@param self druid.text @{Text}
+---@param width number
+---@return number Chars count
+function druid__text.get_text_index_by_width(self, width) end
+
 --- Calculate text width with font with respect to trailing space
 ---@param self druid.text @{Text}
----@param text string|nil
+---@param text string |nil
 ---@return number Width
 ---@return number Height
 function druid__text.get_text_size(self, text) end
@@ -1359,8 +1459,8 @@ function druid__text.get_text_size(self, text) end
 --- The @{Text} constructor
 ---@param self druid.text @{Text}
 ---@param node string|node Node name or GUI Text Node itself
----@param value string|nil Initial text. Default value is node text from GUI scene.
----@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: downscale
+---@param value string|nil Initial text. Default value is node text from GUI scene. Default: nil
+---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
 function druid__text.init(self, node, value, adjust_type) end
 
 --- Return true, if text with line break
@@ -1420,6 +1520,8 @@ function druid__text.set_to(self, set_to) end
 
 
 ---@class druid.text.style
+---@field ADJUST_SCALE_DELTA string|nil Scale step on each height adjust step. Default: 0.02
+---@field ADJUST_STEPS string|nil Amount of iterations for text adjust by height. Default: 20
 ---@field DEFAULT_ADJUST string|nil The default adjust type for any text component. Default: DOWNSCALE
 ---@field TRIM_POSTFIX string|nil The postfix for TRIM adjust type. Default: ...
 local druid__text__style = {}
@@ -1491,7 +1593,7 @@ function druid_instance.new_blocker(self, node) end
 ---@param self druid_instance
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param callback function|nil Button callback
----@param params table|nil Button callback params
+---@param params any|nil Button callback params
 ---@param anim_node node|string|nil Button anim node (node, if not provided)
 ---@return druid.button @{Button} component
 function druid_instance.new_button(self, node, callback, params, anim_node) end
@@ -1546,8 +1648,9 @@ function druid_instance.new_hotkey(self, keys_array, callback, callback_argument
 ---@param self druid_instance
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param on_hover_callback function|nil Hover callback
+---@param on_mouse_hover_callback function|nil Mouse hover callback
 ---@return druid.hover @{Hover} component
-function druid_instance.new_hover(self, node, on_hover_callback) end
+function druid_instance.new_hover(self, node, on_hover_callback, on_mouse_hover_callback) end
 
 --- Create @{Input} component
 ---@param self druid_instance
@@ -1664,6 +1767,7 @@ function druid_instance.on_message(self, message_id, message, sender) end
 --- Component `on_remove` function will be invoked, if exist.
 ---@param self druid_instance
 ---@param component druid.base_component Component instance
+---@return boolean True if component was removed
 function druid_instance.remove(self, component) end
 
 --- Set blacklist components for input processing.
@@ -1784,9 +1888,17 @@ function helper.insert_with_shift(array, any, index, shift_policy) end
 ---@return boolean Is mobile
 function helper.is_mobile() end
 
+--- Check if device is mobile and can support multitouch
+---@return boolean Is multitouch supported
+function helper.is_multitouch_supported() end
+
 --- Check if device is HTML5
 ---@return boolean Is web
 function helper.is_web() end
+
+--- Check if device is HTML5 mobile
+---@return boolean Is web mobile
+function helper.is_web_mobile() end
 
 --- Lerp between two values
 ---@param a number First value
@@ -1827,8 +1939,6 @@ function helper.step(current, target, step) end
 function helper.table_to_string(t) end
 
 
----@diagnostic disable: duplicate-doc-field
-
 -- Manual Annotations --
 
 ---@class druid.rich_text.metrics
@@ -1846,24 +1956,19 @@ function helper.table_to_string(t) end
 ---@class druid.rich_text.word
 ---@field node node
 ---@field relative_scale number
----@field adjust_scale number
 ---@field color vector4
 ---@field position vector3
 ---@field offset vector3
 ---@field scale vector3
 ---@field size vector3
 ---@field metrics druid.rich_text.metrics
----@field pivot userdata @ The gui.PIVOT_* constant
+---@field pivot number @ The gui.PIVOT_* constant
 ---@field text string
----@field source_text string
----@field text_color vector4
 ---@field shadow vector4
 ---@field outline vector4
 ---@field font string
 ---@field image druid.rich_text.image
----@field image_color vector4
 ---@field default_animation string
----@field default_texture string
 ---@field anchor number
 ---@field br boolean
 ---@field nobr boolean
@@ -1885,10 +1990,8 @@ function helper.table_to_string(t) end
 ---@field image_pixel_grid_snap boolean
 ---@field combine_words boolean
 ---@field default_animation string
----@field default_texture string
 ---@field node_prefab node
 ---@field text_prefab node
----@field is_multiline boolean
 
 ---@class GUITextMetrics
 ---@field width number

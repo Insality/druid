@@ -227,7 +227,7 @@ function DataList._remove_at(self, index)
 
 	gui.delete_node(node)
 	if instance then
-		--- We should remove instance from druid that spawned component
+		-- We should remove instance from druid that spawned component
 		instance._meta.druid:remove(instance)
 	end
 	self._data_visual[index] = nil

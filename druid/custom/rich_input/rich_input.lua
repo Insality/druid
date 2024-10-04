@@ -3,7 +3,6 @@
 --- Druid Rich Input custom component.
 -- It's wrapper on Input component with cursor and placeholder text
 -- @module RichInput
--- @within Input
 -- @alias druid.rich_input
 
 --- The component druid instance
@@ -29,7 +28,6 @@ local const  = require("druid.const")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
-local hotkey = require("druid.extended.hotkey")
 local input = require("druid.extended.input")
 local RichInput = component.create("druid.rich_input")
 
@@ -191,7 +189,6 @@ function RichInput.init(self, template, nodes)
 	self.is_lshift = false
 	self.is_lctrl = false
 
-	---@type druid.input
 	self.input = self.druid:new(input, self:get_node(SCHEME.BUTTON), self:get_node(SCHEME.INPUT))
 	self.is_button_input_enabled = gui.is_enabled(self.input.button.node)
 

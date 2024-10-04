@@ -455,7 +455,7 @@ end
 
 --- Add child to component children list
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam component children The druid component instance
+-- @tparam component child The druid component instance
 -- @local
 function BaseComponent.__add_child(self, child)
 	table.insert(self._meta.children, child)
@@ -464,7 +464,7 @@ end
 
 --- Remove child from component children list
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam component children The druid component instance
+-- @tparam component child The druid component instance
 -- @local
 function BaseComponent.__remove_child(self, child)
 	for i = #self._meta.children, 1, -1 do

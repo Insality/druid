@@ -20,12 +20,12 @@ local tinsert = table.insert
 local tremove = table.remove
 
 --- DruidEvent constructor
--- @tparam DruidEvent self @{DruidEvent}
--- @tparam function|nil initial_callback Subscribe the callback on new event, if callback exist
+-- @tparam function|nil callback Subscribe the callback on new event, if callback exist
+-- @tparam any|nil callback_context Additional context as first param to callback call
 -- @usage
 -- local Event = require("druid.event")
 -- ...
--- local event = Event(initial_callback)
+-- local event = Event(callback)
 function M.create(callback, callback_context)
 	local instance = setmetatable({}, EVENT_METATABLE)
 
