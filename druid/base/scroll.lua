@@ -351,7 +351,7 @@ function Scroll.set_size(self, size, offset)
 end
 
 
---- Set scroll view size.
+--- Set new scroll view size in case the node size was changed.
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 size The new size for view node
 -- @treturn druid.scroll Current scroll instance

@@ -149,7 +149,7 @@ function M.parse(text, default_settings, style)
 		end
 
 		-- parse the tag, split into name and optional parameters
-		local endtag, name, params, empty = tag:match("<(/?)(%a+)=?(%S-)(/?)>")
+		local endtag, name, params, empty = tag:match("<(/?)([%a_]+)=?(%S-)(/?)>")
 
 		local is_endtag = endtag == "/"
 		local is_empty = empty == "/"

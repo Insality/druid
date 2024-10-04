@@ -1846,19 +1846,24 @@ function helper.table_to_string(t) end
 ---@class druid.rich_text.word
 ---@field node node
 ---@field relative_scale number
+---@field adjust_scale number
 ---@field color vector4
 ---@field position vector3
 ---@field offset vector3
 ---@field scale vector3
 ---@field size vector3
 ---@field metrics druid.rich_text.metrics
----@field pivot number @ The gui.PIVOT_* constant
+---@field pivot userdata @ The gui.PIVOT_* constant
 ---@field text string
+---@field source_text string
+---@field text_color vector4
 ---@field shadow vector4
 ---@field outline vector4
 ---@field font string
 ---@field image druid.rich_text.image
+---@field image_color vector4
 ---@field default_animation string
+---@field default_texture string
 ---@field anchor number
 ---@field br boolean
 ---@field nobr boolean
@@ -1880,8 +1885,10 @@ function helper.table_to_string(t) end
 ---@field image_pixel_grid_snap boolean
 ---@field combine_words boolean
 ---@field default_animation string
+---@field default_texture string
 ---@field node_prefab node
 ---@field text_prefab node
+---@field is_multiline boolean
 
 ---@class GUITextMetrics
 ---@field width number

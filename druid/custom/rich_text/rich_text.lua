@@ -210,7 +210,15 @@ function RichText.set_text(self, text)
 end
 
 
+function RichText.get_text(self)
+	return self._last_value
+end
+
+
 function RichText:on_remove()
+	pcall(gui.set_texture, self.icon_prefab, self._settings.default_texture)
+	pcall(gui.play_flipbook, self.icon_prefab, self._settings.default_animation)
+
 	self:clear()
 end
 
@@ -235,6 +243,15 @@ function RichText.tagged(self, tag)
 	end
 
 	return rich_text.tagged(self._words, tag)
+end
+
+
+---Split a word into it's characters
+-- @tparam RichText self @{RichText}
+-- @tparam druid.rich_text.word word
+-- @treturn druid.rich_text.word[] characters
+function RichText.characters(self, word)
+	return rich_text.characters(word)
 end
 
 
@@ -277,6 +294,7 @@ function RichText:_create_settings()
 		node_scale = gui.get_scale(self.icon_prefab),
 		image_scale = gui.get_scale(self.icon_prefab),
 		default_animation = gui.get_flipbook(self.icon_prefab),
+		default_texture = gui.get_texture(self.icon_prefab),
 	}
 end
 
