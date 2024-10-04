@@ -312,11 +312,13 @@ function druid__checkbox_group.set_state(self, indexes, is_instant) end
 
 ---@class druid.data_list : druid.base_component
 ---@field grid druid.static_grid|druid.dynamic_grid The Druid Grid component
+---@field last_index number The current last index of visual elements
 ---@field on_element_add druid.event On DataList visual element created Event callback(self, index, node, instance)
 ---@field on_element_remove druid.event On DataList visual element created Event callback(self, index)
 ---@field on_scroll_progress_change druid.event Event triggered when scroll progress is changed; event(self, progress_value)
 ---@field scroll druid.scroll The Druid scroll component
 ---@field scroll_progress number The current progress of scroll posititon
+---@field top_index number The current top index of visual elements
 local druid__data_list = {}
 
 --- Clear the DataList and refresh visuals
@@ -712,7 +714,7 @@ function druid__input.select(self) end
 --- Set cursor position in input field
 ---@param self druid.input @{Input}
 ---@param cursor_index number|nil Cursor index for cursor position, if nil - will be set to the end of the text
----@param start_index number|nils Start index for cursor position, if nil - will be set to the end of the text
+---@param start_index number|nil Start index for cursor position, if nil - will be set to the end of the text
 ---@param end_index number|nil End index for cursor position, if nil - will be set to the start_index
 ---@return druid.input Current input instance
 function druid__input.select_cursor(self, cursor_index, start_index, end_index) end
@@ -1024,7 +1026,10 @@ function druid__rich_input.set_text(self, text) end
 
 ---@class druid.rich_text : druid.base_component
 ---@field druid druid_instance The component druid instance
+---@field icon_prefab node The icon prefab node
+---@field root node The root node of the Rich Text
 ---@field style druid.rich_text.style Component style params.
+---@field text_prefab node The text prefab node
 local druid__rich_text = {}
 
 --- Split a word into it's characters
@@ -1040,6 +1045,11 @@ function druid__rich_text.clear() end
 ---@return druid.rich_text.lines_metrics
 function druid__rich_text.get_line_metric() end
 
+--- Get current text
+---@param self druid.rich_text @{RichText}
+---@return string text
+function druid__rich_text.get_text(self) end
+
 --- Get all current words.
 ---@return table druid.rich_text.word[]
 function druid__rich_text.get_words() end
@@ -1052,7 +1062,7 @@ function druid__rich_text.init(self, template, nodes) end
 
 --- Set text for Rich Text
 ---@param self druid.rich_text @{RichText}
----@param text string |nil The text to set
+---@param text string|nil The text to set
 ---@return druid.rich_text.word[] words
 ---@return druid.rich_text.lines_metrics line_metrics
 function druid__rich_text.set_text(self, text) end
@@ -1962,7 +1972,7 @@ function helper.table_to_string(t) end
 ---@field scale vector3
 ---@field size vector3
 ---@field metrics druid.rich_text.metrics
----@field pivot number @ The gui.PIVOT_* constant
+---@field pivot userdata @ The gui.PIVOT_* constant
 ---@field text string
 ---@field shadow vector4
 ---@field outline vector4
@@ -1972,6 +1982,9 @@ function helper.table_to_string(t) end
 ---@field anchor number
 ---@field br boolean
 ---@field nobr boolean
+---@field source_text string
+---@field image_color vector4
+---@field text_color vector4
 
 ---@class druid.rich_text.image
 ---@field texture string
@@ -1992,6 +2005,15 @@ function helper.table_to_string(t) end
 ---@field default_animation string
 ---@field node_prefab node
 ---@field text_prefab node
+---@field text_scale vector3
+---@field adjust_scale number
+---@field default_texture string
+---@field node_scale vector3
+---@field is_multiline boolean
+---@field text_leading number
+---@field font hash
+---@field width number
+---@field height number
 
 ---@class GUITextMetrics
 ---@field width number

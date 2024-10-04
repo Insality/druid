@@ -303,7 +303,7 @@ function Input.on_input(self, action_id, action)
 		return false
 	end
 
-	return false
+	return self.is_selected
 end
 
 
@@ -484,7 +484,7 @@ end
 --- Set cursor position in input field
 -- @tparam Input self @{Input}
 -- @tparam number|nil cursor_index Cursor index for cursor position, if nil - will be set to the end of the text
--- @tparam number|nils start_index Start index for cursor position, if nil - will be set to the end of the text
+-- @tparam number|nil start_index Start index for cursor position, if nil - will be set to the end of the text
 -- @tparam number|nil end_index End index for cursor position, if nil - will be set to the start_index
 -- @treturn druid.input Current input instance
 function Input.select_cursor(self, cursor_index, start_index, end_index)

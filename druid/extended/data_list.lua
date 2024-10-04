@@ -18,6 +18,12 @@
 --- The current progress of scroll posititon
 -- @tfield number scroll_progress
 
+--- The current top index of visual elements
+-- @tfield number top_index
+
+--- The current last index of visual elements
+-- @tfield number last_index
+
 --- Event triggered when scroll progress is changed; event(self, progress_value)
 -- @tfield DruidEvent on_scroll_progress_change @{DruidEvent}
 

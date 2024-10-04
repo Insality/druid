@@ -21,7 +21,7 @@
 ---@field scale vector3
 ---@field size vector3
 ---@field metrics druid.rich_text.metrics
----@field pivot number @ The gui.PIVOT_* constant
+---@field pivot userdata @ The gui.PIVOT_* constant
 ---@field text string
 ---@field shadow vector4
 ---@field outline vector4
@@ -31,6 +31,9 @@
 ---@field anchor number
 ---@field br boolean
 ---@field nobr boolean
+---@field source_text string
+---@field image_color vector4
+---@field text_color vector4
 
 ---@class druid.rich_text.image
 ---@field texture string
@@ -51,6 +54,15 @@
 ---@field default_animation string
 ---@field node_prefab node
 ---@field text_prefab node
+---@field text_scale vector3
+---@field adjust_scale number
+---@field default_texture string
+---@field node_scale vector3
+---@field is_multiline boolean
+---@field text_leading number
+---@field font hash
+---@field width number
+---@field height number
 
 ---@class GUITextMetrics
 ---@field width number

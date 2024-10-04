@@ -90,6 +90,15 @@
 --- The component druid instance
 -- @tfield DruidInstance druid @{DruidInstance}
 
+--- The root node of the Rich Text
+-- @tfield node root
+
+--- The text prefab node
+-- @tfield node text_prefab
+
+--- The icon prefab node
+-- @tfield node icon_prefab
+
 --
 
 local component = require("druid.component")
@@ -149,7 +158,7 @@ end
 
 --- Set text for Rich Text
 -- @tparam RichText self @{RichText}
--- @tparam string text|nil The text to set
+-- @tparam string|nil text The text to set
 -- @treturn druid.rich_text.word[] words
 -- @treturn druid.rich_text.lines_metrics line_metrics
 -- @usage
@@ -210,6 +219,9 @@ function RichText.set_text(self, text)
 end
 
 
+--- Get current text
+-- @tparam RichText self @{RichText}
+-- @treturn string text
 function RichText.get_text(self)
 	return self._last_value
 end
