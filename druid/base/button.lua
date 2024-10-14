@@ -240,7 +240,12 @@ local function on_button_release(self)
 			is_double_click = is_double_click and self.on_double_click:is_exist()
 
 			if is_long_click then
-				on_button_long_click(self)
+				local is_hold_complete = (time - self.last_pressed_time) >= self.style.AUTOHOLD_TRIGGER
+				if is_hold_complete then
+					on_button_long_click(self)
+				else
+					self.on_click_outside:trigger(self:get_context(), self.params, self)
+				end
 			elseif is_double_click then
 				on_button_double_click(self)
 			else

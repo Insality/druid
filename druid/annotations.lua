@@ -1952,6 +1952,8 @@ function helper.table_to_string(t) end
 
 -- Manual Annotations --
 
+---@class druid.component: druid.base_component
+
 ---@class druid.rich_text.metrics
 ---@field width number
 ---@field height number

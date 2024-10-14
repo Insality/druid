@@ -7,7 +7,7 @@
 
 local component = require("druid.component")
 
----@class {COMPONENT_TYPE}: druid.base_component
+---@class {COMPONENT_TYPE}: druid.component
 ---@field druid druid_instance{COMPONENT_ANNOTATIONS}
 local M = component.create("{COMPONENT_TYPE}")
 

@@ -1,5 +1,7 @@
 -- Manual Annotations --
 
+---@class druid.component: druid.base_component
+
 ---@class druid.rich_text.metrics
 ---@field width number
 ---@field height number
