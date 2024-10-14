@@ -93,14 +93,16 @@ function M:set_type(type)
 end
 
 
----@param is_hug boolean
+
+---@param is_hug_width boolean
+---@param is_hug_height boolean
 ---@return druid.figma_layout
-function M:set_hug_content(entity, is_hug)
-	self.is_resize_width = is_hug
-	self.is_resize_height = is_hug
+function M:set_hug_content(is_hug_width, is_hug_height)
+	self.is_resize_width = is_hug_width or false
+	self.is_resize_height = is_hug_height or false
 	self.is_dirty = true
 
-	return entity
+	return self
 end
 
 ---@param node_or_node_id string|node

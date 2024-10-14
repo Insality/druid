@@ -1,9 +1,9 @@
 --- For component interest functions
---- see https://github.com/Insality/druid/blob/develop/docs_md/02-creating_custom_components.md
+--- see https://github.com/Insality/druid/blob/master/docs_md/02-creating_custom_components.md
 --- Require this component in you gui file:
---- local {COMPONENT_NAME} = require("{COMPONENT_PATH}")
+--- $   local {COMPONENT_NAME} = require("{COMPONENT_PATH}")
 --- And create this component via:
---- self.{COMPONENT_TYPE} = self.druid:new({COMPONENT_NAME}, template, nodes)
+--- $   self.{COMPONENT_TYPE} = self.druid:new({COMPONENT_NAME}, template, nodes)
 
 local component = require("druid.component")
 
@@ -11,19 +11,11 @@ local component = require("druid.component")
 ---@field druid druid_instance{COMPONENT_ANNOTATIONS}
 local M = component.create("{COMPONENT_TYPE}")
 
-local SCHEME = {
-{SCHEME_LIST}
-}
-
 
 ---@param template string
 ---@param nodes table<hash, node>
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes){COMPONENT_DEFINE}
-end
-
-
-function M:on_remove()
 end
 
 {COMPONENT_FUNCTIONS}
