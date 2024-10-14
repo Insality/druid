@@ -1752,7 +1752,7 @@ function druid_instance.new_text(self, node, value, no_adjust) end
 --- Create @{Timer} component
 ---@param self druid_instance
 ---@param node string|node Gui text node
----@param seconds_from number Start timer value in seconds
+---@param seconds_from number|nil Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
 ---@param callback function|nil Function on timer end
 ---@return druid.timer @{Timer} component

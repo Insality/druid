@@ -86,6 +86,13 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 local Text = component.create("text")
 
 local function update_text_size(self)
+	if self.scale.x == 0 or self.scale.y == 0 then
+		return
+	end
+	if self.start_scale.x == 0 or self.start_scale.y == 0 then
+		return
+	end
+
 	local size = vmath.vector3(
 		self.start_size.x * (self.start_scale.x / self.scale.x),
 		self.start_size.y * (self.start_scale.y / self.scale.y),
@@ -207,6 +214,8 @@ local function update_text_with_trim(self, trim_postfix)
 		end
 
 		gui.set_text(self.node, new_text .. trim_postfix)
+	else
+		gui.set_text(self.node, self.last_value)
 	end
 end
 
