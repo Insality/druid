@@ -117,8 +117,8 @@ end
 ---@return druid.rich_text.metrics
 local function get_image_metrics(word, settings)
 	local node_prefab = settings.node_prefab
-	gui.set_texture(node_prefab, word.image.texture or settings.default_texture)
-	gui.play_flipbook(node_prefab, word.image.anim or settings.default_animation)
+	gui.set_texture(node_prefab, word.image.texture)
+	gui.play_flipbook(node_prefab, word.image.anim)
 	local node_size = gui.get_size(node_prefab)
 	local aspect = node_size.x / node_size.y
 	node_size.x = word.image.width or node_size.x
@@ -175,7 +175,7 @@ function M.create(text, settings, style)
 		-- Image params
 		---@type druid.rich_text.image
 		image = nil,
-		image_color = gui.get_color(settings.node_prefab),
+		--image_color = gui.get_color(settings.node_prefab),
 		-- Tags
 		br = nil,
 		nobr = nil,
@@ -204,8 +204,8 @@ function M._fill_properties(word, metrics, settings)
 
 	if word.image then
 		-- Image properties
-		word.scale = gui.get_scale(settings.node_prefab) * word.relative_scale * settings.adjust_scale
-		word.pivot = gui.get_pivot(settings.node_prefab)
+		word.scale = vmath.vector3(word.relative_scale * settings.adjust_scale)
+		word.pivot = gui.PIVOT_CENTER
 		word.size = metrics.node_size
 		word.offset = vmath.vector3(0, 0, 0)
 		if word.image.width then
@@ -407,7 +407,7 @@ function M._update_nodes(lines, settings)
 			local word = line[word_index]
 			local node
 			if word.image then
-				node = word.node or gui.clone(settings.node_prefab)
+				node = word.node or gui.new_box_node(vmath.vector3(0), word.size)
 				gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
 				gui.set_texture(node, word.image.texture or settings.default_texture)
 				gui.play_flipbook(node, hash(word.image.anim or settings.default_animation))

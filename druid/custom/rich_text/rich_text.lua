@@ -106,29 +106,23 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 
 local RichText = component.create("rich_text")
 
-local SCHEME = {
-	ROOT = "root",
-	TEXT_PREFAB = "text_prefab",
-	ICON_PREFAB = "icon_prefab"
-}
-
 
 --- The @{RichText} constructor
 -- @tparam RichText self @{RichText}
 -- @tparam string template The Rich Text template name
 -- @tparam table nodes The node table, if prefab was copied by gui.clone_tree()
-function RichText.init(self, template, nodes)
-	self.druid = self:get_druid(template, nodes)
+function RichText.init(self, text_node, value)
+	self.root = self:get_node(text_node)
+	self.text_prefab = self.root
 
-	self.root = self:get_node(SCHEME.ROOT)
-
-	self.text_prefab = self:get_node(SCHEME.TEXT_PREFAB)
-	self.icon_prefab = self:get_node(SCHEME.ICON_PREFAB)
-
-	gui.set_enabled(self.text_prefab, false)
-	gui.set_enabled(self.icon_prefab, false)
-
+	self._last_value = value or gui.get_text(self.text_prefab)
+	gui.set_text(self.root, "")
 	self._settings = self:_create_settings()
+
+	if value then
+		self:set_text(value)
+	end
+
 end
 
 
@@ -228,9 +222,6 @@ end
 
 
 function RichText:on_remove()
-	pcall(gui.set_texture, self.icon_prefab, self._settings.default_texture)
-	pcall(gui.play_flipbook, self.icon_prefab, self._settings.default_animation)
-
 	self:clear()
 end
 
@@ -292,7 +283,6 @@ function RichText:_create_settings()
 		height = root_size.y,
 		combine_words = false, -- disabled now
 		text_prefab = self.text_prefab,
-		node_prefab = self.icon_prefab,
 
 		-- Text Settings
 		shadow = gui.get_shadow(self.text_prefab),
@@ -303,10 +293,10 @@ function RichText:_create_settings()
 
 		-- Image settings
 		image_pixel_grid_snap = false, -- disabled now
-		node_scale = gui.get_scale(self.icon_prefab),
-		image_scale = gui.get_scale(self.icon_prefab),
-		default_animation = gui.get_flipbook(self.icon_prefab),
-		default_texture = gui.get_texture(self.icon_prefab),
+		node_scale = gui.get_scale(self.text_prefab),
+		image_scale = gui.get_scale(self.text_prefab),
+		--default_animation = gui.get_flipbook(self.icon_prefab),
+		--default_texture = gui.get_texture(self.icon_prefab),
 	}
 end
 
