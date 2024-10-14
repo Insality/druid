@@ -52,7 +52,7 @@ end
 local function setup_slider(self)
 	local slider = self.druid:new_slider("slider_pin", vmath.vector3(95, 0, 0), function(_, value)
 		gui.set_text(gui.get_node("text_progress_slider"), math.ceil(value * 100) .. "%")
-	end)
+	end) --[[@as druid.slider]]
 
 	slider:set(0.2)
 end

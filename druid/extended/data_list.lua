@@ -61,6 +61,8 @@ function DataList.init(self, scroll, grid, create_function)
 	self.scroll_progress = 0
 
 	self._create_function = create_function
+	self._is_use_cache = false
+	self._cache = {}
 	self._data = {}
 	self._data_visual = {}
 
@@ -77,6 +79,14 @@ end
 function DataList.on_remove(self)
 	self:clear()
 	self.scroll.on_scroll:unsubscribe(self._refresh, self)
+end
+
+
+--- Set refresh function for DataList component
+-- @tparam DataList self @{DataList}
+function DataList.set_use_cache(self, is_use_cache)
+	self._is_use_cache = is_use_cache
+	return self
 end
 
 
@@ -199,7 +209,7 @@ function DataList.scroll_to_index(self, index)
 end
 
 
---- Add element at passed index
+--- Add element at passed index using cache or create new
 -- @tparam DataList self @{DataList}
 -- @tparam number index
 -- @local
@@ -208,19 +218,32 @@ function DataList._add_at(self, index)
 		self:_remove_at(index)
 	end
 
-	local node, instance = self._create_function(self:get_context(), self._data[index], index, self)
+	local data = self._data[index]
+	local node, instance
+
+	-- Use cache if available and is_use_cache is set
+	if #self._cache > 0 and self._is_use_cache then
+		local cached = table.remove(self._cache)
+		node = cached.node
+		instance = cached.component
+		gui.set_enabled(node, true)
+	else
+		-- Create a new element if no cache or refresh function is not set
+		node, instance = self._create_function(self:get_context(), data, index, self)
+	end
+
 	self._data_visual[index] = {
-		data = self._data[index],
+		data = data,
 		node = node,
 		component = instance,
 	}
 	self.grid:add(node, index, const.SHIFT.NO_SHIFT)
 
-	self.on_element_add:trigger(self:get_context(), index, node, instance)
+	self.on_element_add:trigger(self:get_context(), index, node, instance, data)
 end
 
 
---- Remove element from passed index
+--- Remove element from passed index and add it to cache if applicable
 -- @tparam DataList self @{DataList}
 -- @tparam number index
 -- @local
@@ -230,16 +253,25 @@ function DataList._remove_at(self, index)
 	local visual_data = self._data_visual[index]
 	local node = visual_data.node
 	local instance = visual_data.component
+	local data = visual_data.data
 
-	gui.delete_node(node)
-	if instance then
-		-- We should remove instance from druid that spawned component
-		instance._meta.druid:remove(instance)
+	self.on_element_remove:trigger(self:get_context(), index, node, instance, data)
+
+	if self._is_use_cache then
+		-- Disable the node and add it to the cache instead of deleting it
+		gui.set_enabled(node, false)
+		table.insert(self._cache, visual_data)  -- Cache the removed element
+	else
+		-- If no refresh function, delete the node and component as usual
+		gui.delete_node(node)
+		if instance then
+			instance._meta.druid:remove(instance)
+		end
 	end
-	self._data_visual[index] = nil
 
-	self.on_element_remove:trigger(self:get_context(), index)
+	self._data_visual[index] = nil
 end
+
 
 
 --- Refresh all elements in DataList

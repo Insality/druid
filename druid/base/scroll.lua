@@ -365,6 +365,17 @@ function Scroll.set_view_size(self, size)
 end
 
 
+--- Refresh scroll view size
+-- @tparam Scroll self @{Scroll}
+function Scroll.update_view_size(self)
+	self.view_size = helper.get_scaled_size(self.view_node)
+	self.view_border = helper.get_border(self.view_node)
+	self:_update_size()
+
+	return self
+end
+
+
 --- Enable or disable scroll inert.
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion

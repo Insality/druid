@@ -54,9 +54,10 @@ function init(self)
 	self.druid:new_scroll("children_scroll_3", "children_scroll_content_3")
 
 	-- Content with less size than view
-	self.druid:new_scroll("scroll_smaller_view", "scroll_smaller_content")
-		:set_extra_stretch_size(0)
-		:set_inert(false)
+	local small_scroll = self.druid:new_scroll("scroll_smaller_view", "scroll_smaller_content") --[[@as druid.scroll]]
+	small_scroll.style.SMALL_CONTENT_SCROLL = true
+	small_scroll:set_extra_stretch_size(0) -- it also update scroll size due the change of SMALL_CONTENT_SCROLL
+	small_scroll:set_inert(false)
 
 	-- Scroll with points of interests
 	self.druid:new_scroll("scroll_with_points", "scroll_with_points_content")

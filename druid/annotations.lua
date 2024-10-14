@@ -1580,10 +1580,11 @@ local druid_instance = {}
 function druid_instance.final(self) end
 
 --- Create new component.
+---@generic T
 ---@param self druid_instance
----@param component druid.base_component Component module
+---@param component T Component module
 ---@param ... any Other component params to pass it to component:init function
----@return druid.base_component Component instance
+---@return T Component instance
 function druid_instance.new(self, component, ...) end
 
 --- Create @{BackHandler} component
