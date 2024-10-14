@@ -68,7 +68,6 @@
 -- @see Timer
 
 local helper = require("druid.helper")
-local class = require("druid.system.middleclass")
 local settings = require("druid.system.settings")
 local base_component = require("druid.component")
 
@@ -94,7 +93,7 @@ local back_handler = require("druid.base.back_handler")
 -- local dynamic_grid = require("druid.extended.dynamic_grid")
 -- local checkbox_group = require("druid.extended.checkbox_group")
 
-local DruidInstance = class("druid.druid_instance")
+local DruidInstance = {}
 
 local MSG_ADD_FOCUS = hash("acquire_input_focus")
 local MSG_REMOVE_FOCUS = hash("release_input_focus")
@@ -479,7 +478,7 @@ end
 -- @tparam table|BaseComponent|nil whitelist_components The array of component to whitelist
 -- @treturn self @{DruidInstance}
 function DruidInstance.set_whitelist(self, whitelist_components)
-	if whitelist_components and whitelist_components.isInstanceOf then
+	if whitelist_components and whitelist_components._component then
 		whitelist_components = { whitelist_components }
 	end
 
@@ -501,7 +500,7 @@ end
 -- @tparam table|BaseComponent|nil blacklist_components The array of component to blacklist
 -- @treturn self @{DruidInstance}
 function DruidInstance.set_blacklist(self, blacklist_components)
-	if blacklist_components and blacklist_components.isInstanceOf then
+	if blacklist_components and blacklist_components._component then
 		blacklist_components = { blacklist_components }
 	end
 

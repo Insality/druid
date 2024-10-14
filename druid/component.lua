@@ -19,10 +19,9 @@
 -- @alias druid.base_component
 
 local const = require("druid.const")
-local class = require("druid.system.middleclass")
 local helper = require("druid.helper")
 
-local BaseComponent = class("druid.component")
+local BaseComponent = {}
 
 local INTERESTS = {} -- Cache interests per component class in runtime
 local IS_AUTO_TEMPLATE = not (sys.get_config_int("druid.no_auto_template", 0) == "1")
@@ -355,24 +354,6 @@ function BaseComponent.setup_component(self, druid_instance, context, style, ins
 end
 
 
---- Basic constructor of component. It will call automaticaly
--- by `BaseComponent.create`
--- @tparam BaseComponent self @{BaseComponent}
--- @tparam string name BaseComponent name
--- @tparam number|nil input_priority The input priority. The bigger number processed first
--- @local
-function BaseComponent.initialize(self, name, input_priority)
-	self._component = {
-		name = name,
-		input_priority = input_priority or const.PRIORITY_INPUT,
-		default_input_priority = input_priority or const.PRIORITY_INPUT,
-		is_debug = false,
-		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
-		_uid = BaseComponent.create_uid()
-	}
-end
-
-
 --- Print log information if debug mode is enabled
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string message
@@ -499,12 +480,24 @@ end
 -- @tparam number|nil input_priority The input priority. The bigger number processed first
 -- @local
 function BaseComponent.create(name, input_priority)
-	-- Yea, inheritance here
-	local new_class = class(name, BaseComponent)
-
-	new_class.initialize = function(self)
-		BaseComponent.initialize(self, name, input_priority)
-	end
+	local new_class = setmetatable({}, {
+		__index = BaseComponent,
+		__call = function(cls, ...)
+			local self = setmetatable({
+				_component = {
+					name = name,
+					input_priority = input_priority or const.PRIORITY_INPUT,
+					default_input_priority = input_priority or const.PRIORITY_INPUT,
+					is_debug = false,
+					_is_input_priority_changed = true, -- Default true for sort once time after GUI init
+					_uid = BaseComponent.create_uid()
+				}
+			}, {
+				__index = cls
+			})
+			return self
+		end
+	})
 
 	return new_class
 end
