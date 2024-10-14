@@ -127,8 +127,6 @@ end
 
 
 function RichText.on_layout_change(self)
-	gui.set_enabled(self.text_prefab, false)
-	gui.set_enabled(self.icon_prefab, false)
 	if self._last_value then
 		self:set_text(self._last_value)
 	end
@@ -294,9 +292,6 @@ function RichText:_create_settings()
 		-- Image settings
 		image_pixel_grid_snap = false, -- disabled now
 		node_scale = gui.get_scale(self.text_prefab),
-		image_scale = gui.get_scale(self.text_prefab),
-		--default_animation = gui.get_flipbook(self.icon_prefab),
-		--default_texture = gui.get_texture(self.icon_prefab),
 	}
 end
 

@@ -154,7 +154,6 @@ function M.create(text, settings, style)
 
 	-- default settings for a word
 	-- will be assigned to each word unless tags override the values
-	local font = gui.get_font(settings.text_prefab)
 	local word_params = {
 		node = nil, -- Autofill on node creation
 		relative_scale = 1,
@@ -171,7 +170,7 @@ function M.create(text, settings, style)
 		text_color = gui.get_color(settings.text_prefab),
 		shadow = settings.shadow,
 		outline = settings.outline,
-		font = font,
+		font = gui.get_font(settings.text_prefab),
 		-- Image params
 		---@type druid.rich_text.image
 		image = nil,
@@ -409,8 +408,8 @@ function M._update_nodes(lines, settings)
 			if word.image then
 				node = word.node or gui.new_box_node(vmath.vector3(0), word.size)
 				gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
-				gui.set_texture(node, word.image.texture or settings.default_texture)
-				gui.play_flipbook(node, hash(word.image.anim or settings.default_animation))
+				gui.set_texture(node, word.image.texture)
+				gui.play_flipbook(node, hash(word.image.anim))
 				gui.set_color(node, word.color or word.image_color)
 			else
 				node = word.node or gui.clone(settings.text_prefab)
