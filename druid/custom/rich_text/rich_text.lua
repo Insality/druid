@@ -273,11 +273,19 @@ end
 
 function RichText:_create_settings()
 	local root_size = gui.get_size(self.root)
+	local scale = gui.get_scale(self.root)
+
+	root_size.x = root_size.x * scale.x
+	root_size.y = root_size.y * scale.y
+	gui.set_size(self.root, root_size)
+	gui.set_scale(self.root, vmath.vector3(1))
+
 	return {
 		-- General settings
 		-- Adjust scale using to fit the text to the root node area
 		adjust_scale = 1,
 		parent = self.root,
+		scale = scale,
 		width = root_size.x,
 		height = root_size.y,
 		combine_words = false, -- disabled now
@@ -287,13 +295,11 @@ function RichText:_create_settings()
 		-- Text Settings
 		shadow = gui.get_shadow(self.root),
 		outline = gui.get_outline(self.root),
-		text_scale = gui.get_scale(self.root),
 		text_leading = gui.get_leading(self.root),
 		is_multiline = gui.get_line_break(self.root),
 
 		-- Image settings
 		image_pixel_grid_snap = false, -- disabled now
-		node_scale = gui.get_scale(self.root),
 	}
 end
 

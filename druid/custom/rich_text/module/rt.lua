@@ -12,6 +12,7 @@ local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
 local VECTOR_ZERO = vmath.vector3(0)
+local VECTOR_ONE = vmath.vector3(1)
 local COLOR_WHITE = vmath.vector4(1)
 
 local M = {}
@@ -84,8 +85,8 @@ local function get_text_metrics(word, previous_word, settings)
 
 	---@type druid.rich_text.metrics
 	local metrics
-	local word_scale_x = word.relative_scale * settings.text_scale.x * settings.adjust_scale
-	local word_scale_y = word.relative_scale * settings.text_scale.y * settings.adjust_scale
+	local word_scale_x = word.relative_scale * settings.scale.x * settings.adjust_scale
+	local word_scale_y = word.relative_scale * settings.scale.y * settings.adjust_scale
 
 	if utf8.len(text) == 0 then
 		metrics = resource.get_text_metrics(font_resource, "|")
@@ -128,8 +129,8 @@ local function get_image_metrics(word, settings)
 	node_size.y = word.image.height or (node_size.x / aspect)
 
 	return {
-		width = node_size.x * word.relative_scale * settings.node_scale.x * settings.adjust_scale,
-		height = node_size.y * word.relative_scale * settings.node_scale.y * settings.adjust_scale,
+		width = node_size.x * word.relative_scale * settings.scale.x * settings.adjust_scale,
+		height = node_size.y * word.relative_scale * settings.scale.y * settings.adjust_scale,
 		node_size = node_size,
 	}
 end
@@ -225,7 +226,7 @@ function M._fill_properties(word, metrics, settings)
 		end
 	else
 		-- Text properties
-		word.scale = gui.get_scale(settings.text_prefab) * word.relative_scale * settings.adjust_scale
+		word.scale = settings.scale * word.relative_scale * settings.adjust_scale
 		word.pivot = gui.PIVOT_W -- With this pivot adjustments works correctly, but with another some misalignment
 		word.size = vmath.vector3(metrics.width, metrics.height, 0)
 		word.offset = vmath.vector3(metrics.offset_x, metrics.offset_y, 0)
@@ -339,7 +340,7 @@ function M._position_lines(lines, settings)
 			local pivot_offset = helper.get_pivot_offset(word.pivot)
 			local word_width = word.metrics.width
 			word.position.x = current_x + word_width * (pivot_offset.x + 0.5) + word.offset.x
-			word.position.y = current_y + word.offset.y
+			word.position.y = current_y + word.metrics.height * (pivot_offset.y - 0.5) + word.offset.y
 
 			-- Align item on text line depends on anchor
 			word.position.y = word.position.y - (word.metrics.height - line_metrics.height) * (pivot_offset.y - 0.5)
@@ -477,7 +478,7 @@ function M.adjust_to_area(words, settings, lines_metrics, style)
 			if lines_metrics.text_width * scale_koef > settings.width then
 				scale_koef = math.sqrt(settings.width / lines_metrics.text_width)
 			end
-			local adjust_scale = math.min(scale_koef, 1)
+			local adjust_scale = math.min(scale_koef, settings.scale.x)
 
 			local lines = M.apply_scale_without_update(words, settings, adjust_scale)
 			local is_fit = M.is_fit_info_area(lines, settings)

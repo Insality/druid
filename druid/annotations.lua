@@ -1997,6 +1997,7 @@ function helper.table_to_string(t) end
 ---@field parent node
 ---@field size number
 ---@field fonts table<string, string>
+---@field scale vector3
 ---@field color vector4
 ---@field shadow vector4
 ---@field outline vector4
@@ -2005,10 +2006,8 @@ function helper.table_to_string(t) end
 ---@field combine_words boolean
 ---@field default_animation string
 ---@field text_prefab node
----@field text_scale vector3
 ---@field adjust_scale number
 ---@field default_texture string
----@field node_scale vector3
 ---@field is_multiline boolean
 ---@field text_leading number
 ---@field font hash
