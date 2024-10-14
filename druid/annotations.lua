@@ -2004,7 +2004,6 @@ function helper.table_to_string(t) end
 ---@field image_pixel_grid_snap boolean
 ---@field combine_words boolean
 ---@field default_animation string
----@field node_prefab node
 ---@field text_prefab node
 ---@field text_scale vector3
 ---@field adjust_scale number

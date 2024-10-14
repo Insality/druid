@@ -11,6 +11,9 @@ local parser = require("druid.custom.rich_text.module.rt_parse")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
+local VECTOR_ZERO = vmath.vector3(0)
+local COLOR_WHITE = vmath.vector4(1)
+
 local M = {}
 
 -- Trim spaces on string start
@@ -116,10 +119,10 @@ end
 ---@param settings druid.rich_text.settings
 ---@return druid.rich_text.metrics
 local function get_image_metrics(word, settings)
-	local node_prefab = settings.node_prefab
-	gui.set_texture(node_prefab, word.image.texture)
-	gui.play_flipbook(node_prefab, word.image.anim)
-	local node_size = gui.get_size(node_prefab)
+	local node = word.node
+	gui.set_texture(node, word.image.texture)
+	gui.play_flipbook(node, word.image.anim)
+	local node_size = gui.get_size(node)
 	local aspect = node_size.x / node_size.y
 	node_size.x = word.image.width or node_size.x
 	node_size.y = word.image.height or (node_size.x / aspect)
@@ -137,6 +140,16 @@ end
 ---@param previous_word druid.rich_text.word|nil
 ---@return druid.rich_text.metrics
 local function measure_node(word, settings, previous_word)
+	do -- Clone node if required
+		local node
+		if word.image then
+			node = word.node or gui.new_box_node(vmath.vector3(0), vmath.vector3(word.image.width, word.image.height, 0))
+		else
+			node = word.node or gui.clone(settings.text_prefab)
+		end
+		word.node = node
+	end
+
 	local metrics = word.image and get_image_metrics(word, settings) or get_text_metrics(word, previous_word, settings)
 	return metrics
 end
@@ -174,7 +187,6 @@ function M.create(text, settings, style)
 		-- Image params
 		---@type druid.rich_text.image
 		image = nil,
-		--image_color = gui.get_color(settings.node_prefab),
 		-- Tags
 		br = nil,
 		nobr = nil,
@@ -214,7 +226,7 @@ function M._fill_properties(word, metrics, settings)
 	else
 		-- Text properties
 		word.scale = gui.get_scale(settings.text_prefab) * word.relative_scale * settings.adjust_scale
-		word.pivot = gui.get_pivot(settings.text_prefab)
+		word.pivot = gui.PIVOT_W -- With this pivot adjustments works correctly, but with another some misalignment
 		word.size = vmath.vector3(metrics.width, metrics.height, 0)
 		word.offset = vmath.vector3(metrics.offset_x, metrics.offset_y, 0)
 	end
@@ -327,7 +339,7 @@ function M._position_lines(lines, settings)
 			local pivot_offset = helper.get_pivot_offset(word.pivot)
 			local word_width = word.metrics.width
 			word.position.x = current_x + word_width * (pivot_offset.x + 0.5) + word.offset.x
-			word.position.y = current_y + word.metrics.height * (pivot_offset.y - 0.5) + word.offset.y
+			word.position.y = current_y + word.offset.y
 
 			-- Align item on text line depends on anchor
 			word.position.y = word.position.y - (word.metrics.height - line_metrics.height) * (pivot_offset.y - 0.5)
@@ -406,11 +418,11 @@ function M._update_nodes(lines, settings)
 			local word = line[word_index]
 			local node
 			if word.image then
-				node = word.node or gui.new_box_node(vmath.vector3(0), word.size)
+				node = word.node or gui.new_box_node(VECTOR_ZERO, word.size)
 				gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
 				gui.set_texture(node, word.image.texture)
 				gui.play_flipbook(node, hash(word.image.anim))
-				gui.set_color(node, word.color or word.image_color)
+				gui.set_color(node, word.color or COLOR_WHITE)
 			else
 				node = word.node or gui.clone(settings.text_prefab)
 				gui.set_outline(node, word.outline)
@@ -422,6 +434,7 @@ function M._update_nodes(lines, settings)
 			word.node = node
 			gui.set_enabled(node, true)
 			gui.set_parent(node, settings.parent)
+			gui.set_pivot(node, word.pivot)
 			gui.set_size(node, word.size)
 			gui.set_scale(node, word.scale)
 			gui.set_position(node, word.position)

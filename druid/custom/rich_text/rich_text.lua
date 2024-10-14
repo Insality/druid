@@ -116,8 +116,9 @@ function RichText.init(self, text_node, value)
 	self.text_prefab = self.root
 
 	self._last_value = value or gui.get_text(self.text_prefab)
-	gui.set_text(self.root, "")
 	self._settings = self:_create_settings()
+
+	gui.set_text(self.root, "")
 
 	if value then
 		self:set_text(value)
@@ -281,17 +282,18 @@ function RichText:_create_settings()
 		height = root_size.y,
 		combine_words = false, -- disabled now
 		text_prefab = self.text_prefab,
+		pivot = gui.get_pivot(self.root),
 
 		-- Text Settings
-		shadow = gui.get_shadow(self.text_prefab),
-		outline = gui.get_outline(self.text_prefab),
-		text_scale = gui.get_scale(self.text_prefab),
-		text_leading = gui.get_leading(self.text_prefab),
-		is_multiline = gui.get_line_break(self.text_prefab),
+		shadow = gui.get_shadow(self.root),
+		outline = gui.get_outline(self.root),
+		text_scale = gui.get_scale(self.root),
+		text_leading = gui.get_leading(self.root),
+		is_multiline = gui.get_line_break(self.root),
 
 		-- Image settings
 		image_pixel_grid_snap = false, -- disabled now
-		node_scale = gui.get_scale(self.text_prefab),
+		node_scale = gui.get_scale(self.root),
 	}
 end
 
