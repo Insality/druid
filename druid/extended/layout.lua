@@ -297,9 +297,9 @@ function M.clear_layout(self)
 end
 
 
--- @private
 -- @tparam node node
 -- @treturn number, number
+-- @local
 function M.get_node_size(node)
 	if not gui.is_enabled(node, false) then
 		return 0, 0
@@ -318,10 +318,10 @@ function M.get_node_size(node)
 end
 
 
--- @private
 -- @tparam Layout self @{Layout}
 -- Calculate rows data for layout. Contains total width, height and rows info (width, height, count of elements in row)
 -- @treturn druid.layout.rows_data
+-- @local
 function M.calculate_rows_data(self)
 	local entities = self.entities
 	local margin = self.margin
@@ -401,11 +401,11 @@ function M.calculate_rows_data(self)
 	return rows_data
 end
 
--- @private
 -- @tparam node node
 -- @tparam number x
 -- @tparam number y
 -- @treturn node
+-- @local
 function M:set_node_position(node, x, y)
 	local position = gui.get_position(node)
 	position.x = x

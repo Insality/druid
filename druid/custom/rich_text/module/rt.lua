@@ -12,7 +12,6 @@ local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
 local VECTOR_ZERO = vmath.vector3(0)
-local VECTOR_ONE = vmath.vector3(1)
 local COLOR_WHITE = vmath.vector4(1)
 
 local M = {}

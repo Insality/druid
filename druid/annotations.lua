@@ -321,6 +321,14 @@ function druid__checkbox_group.set_state(self, indexes, is_instant) end
 ---@field top_index number The current top index of visual elements
 local druid__data_list = {}
 
+--- Add element to DataList.
+--- Currenly untested
+---@param self druid.data_list @{DataList}
+---@param data table
+---@param index number|nil
+---@param shift_policy number|nil The constant from const.SHIFT.*
+function druid__data_list.add(self, data, index, shift_policy) end
+
 --- Clear the DataList and refresh visuals
 ---@param self druid.data_list @{DataList}
 function druid__data_list.clear(self) end
@@ -355,6 +363,20 @@ function druid__data_list.init(self, scroll, grid, create_function) end
 --- Druid System on_remove function
 ---@param self druid.data_list @{DataList}
 function druid__data_list.on_remove(self) end
+
+--- Remove element from DataList.
+--- Currenly untested
+---@param self druid.data_list @{DataList}
+---@param index number|nil
+---@param shift_policy number|nil The constant from const.SHIFT.*
+function druid__data_list.remove(self, index, shift_policy) end
+
+--- Remove element from DataList by data value.
+--- Currenly untested
+---@param self druid.data_list @{DataList}
+---@param data table
+---@param shift_policy number|nil The constant from const.SHIFT.*
+function druid__data_list.remove_by_data(self, data, shift_policy) end
 
 --- Instant scroll to element with passed index
 ---@param self druid.data_list @{DataList}
@@ -1903,6 +1925,8 @@ function helper.table_to_string(t) end
 ---@field height number
 ---@field offset_x number|nil
 ---@field offset_y number|nil
+---@field max_ascent number
+---@field max_descent number
 ---@field node_size vector3|nil @For images only
 
 ---@class druid.rich_text.lines_metrics
@@ -1967,12 +1991,22 @@ function helper.table_to_string(t) end
 ---@field max_descent number
 
 ---@class utf8
----@field len fun(string: string): number
----@field sub fun(string: string, i: number, j: number): string
----@field gmatch fun(string: string, pattern: string): fun(): string
----@field gsub fun(string: string, pattern: string, repl: string, n: number): string
----@field char fun(...: number): string
----@field byte fun(string: string, i: number, j: number): number
+---@field len fun(s: string):number
+---@field sub fun(s: string, start_index: number, length: number)
+---@field reverse fun()
+---@field char fun()
+---@field unicode fun()
+---@field gensub fun()
+---@field byte fun()
+---@field find fun()
+---@field match fun(s: string, m: string)
+---@field gmatch fun(s: string, m: string)
+---@field gsub fun()
+---@field dump fun()
+---@field format fun()
+---@field lower fun()
+---@field upper fun()
+---@field rep fun()
 
 
 ---Add generics to some functions.

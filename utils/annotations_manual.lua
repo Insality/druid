@@ -73,12 +73,22 @@
 ---@field max_descent number
 
 ---@class utf8
----@field len fun(string: string): number
----@field sub fun(string: string, i: number, j: number): string
----@field gmatch fun(string: string, pattern: string): fun(): string
----@field gsub fun(string: string, pattern: string, repl: string, n: number): string
----@field char fun(...: number): string
----@field byte fun(string: string, i: number, j: number): number
+---@field len fun(s: string):number
+---@field sub fun(s: string, start_index: number, length: number)
+---@field reverse fun()
+---@field char fun()
+---@field unicode fun()
+---@field gensub fun()
+---@field byte fun()
+---@field find fun()
+---@field match fun(s: string, m: string)
+---@field gmatch fun(s: string, m: string)
+---@field gsub fun()
+---@field dump fun()
+---@field format fun()
+---@field lower fun()
+---@field upper fun()
+---@field rep fun()
 
 
 ---Add generics to some functions.

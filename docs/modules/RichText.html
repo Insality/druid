@@ -81,19 +81,7 @@
  <b># Overview #</b>
 <p> This custom component is inspired by <a href="https://github.com/britzl/defold-richtext" target="_blank">defold-richtext</a> by britzl.
  It uses a similar syntax for tags but currently supports fewer tags.
-<p> All parameters for the Rich Text component are adjusted in the GUI scene.
-<p> This component uses GUI component template. (/druid/custom/rich_text/rich_text.gui).
-<p> You able to customize it or make your own with the next node scructure:
-<p> root
-<p>   - text_prefab
-<p>   - icon_prefab
-<p> <b># Rich Text Setup #</b>
-<p> • Root node size: Set the maximum width and height of the text.
-<p> • Root anchor: Define the alignment of the Rich Text inside the root node size area.
-<p> • Text prefab: Configure all default text parameters for the text node.
-<p> • Text prefab anchor: Set the anchor for each text node (adjust this only if animating text).
-<p> • Icon prefab: Configure all default node parameters for the icon node.
-<p> • Icon prefab anchor: Set the anchor for each icon node (adjust this only if animating the icon).
+<p> Create Rich Text on your GUI Text Node. All properties of the text node will be used as default for the text.
 <p> <b># Notes #</b>
 <p> • Nested tags are supported
 <p> <a href="https://insality.github.io/druid/druid/index.html?example=custom_rich_text" target="_blank"><b>Example Link</b></a></p>
@@ -119,7 +107,6 @@ self.rich_text:set_text(&quot;Hello, Druid Rich Text!&quot;)
   outline: vector4,
   font: string,
   image: druid.rich_text.image,
-  default_animation: string,
   br: boolean,
   nobr: boolean,
 }

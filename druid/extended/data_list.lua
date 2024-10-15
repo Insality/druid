@@ -115,9 +115,8 @@ end
 --- Add element to DataList. Currenly untested
 -- @tparam DataList self @{DataList}
 -- @tparam table data
--- @tparam number index
--- @tparam number shift_policy The constant from const.SHIFT.*
--- @local
+-- @tparam number|nil index
+-- @tparam number|nil shift_policy The constant from const.SHIFT.*
 function DataList.add(self, data, index, shift_policy)
 	index = index or #self._data + 1
 	shift_policy = shift_policy or const.SHIFT.RIGHT
@@ -129,9 +128,8 @@ end
 
 --- Remove element from DataList. Currenly untested
 -- @tparam DataList self @{DataList}
--- @tparam number index
--- @tparam number shift_policy The constant from const.SHIFT.*
--- @local
+-- @tparam number|nil index
+-- @tparam number|nil shift_policy The constant from const.SHIFT.*
 function DataList.remove(self, index, shift_policy)
 	helper.remove_with_shift(self._data, index, shift_policy)
 	self:_refresh()
@@ -140,9 +138,8 @@ end
 
 --- Remove element from DataList by data value. Currenly untested
 -- @tparam DataList self @{DataList}
--- @tparam tabe data
--- @tparam number shift_policy The constant from const.SHIFT.*
--- @local
+-- @tparam table data
+-- @tparam number|nil shift_policy The constant from const.SHIFT.*
 function DataList.remove_by_data(self, data, shift_policy)
 	local index = helper.contains(self._data, data)
 	if index then

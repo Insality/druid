@@ -84,6 +84,10 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#add">add(self, data, index, shift_policy)</a></td>
+	<td class="summary">Add element to DataList.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#clear">clear(self)</a></td>
 	<td class="summary">Clear the DataList and refresh visuals</td>
 	</tr>
@@ -110,6 +114,14 @@
 	<tr>
 	<td class="name" nowrap><a href="#on_remove">on_remove(self)</a></td>
 	<td class="summary">Druid System on_remove function</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#remove">remove(self, index, shift_policy)</a></td>
+	<td class="summary">Remove element from DataList.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#remove_by_data">remove_by_data(self, data, shift_policy)</a></td>
+	<td class="summary">Remove element from DataList by data value.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#scroll_to_index">scroll_to_index(self, index)</a></td>
@@ -167,6 +179,39 @@
     <h2 class="section-header "><a name="Functions"></a>Functions</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "add"></a>
+    <strong>add(self, data, index, shift_policy)</strong>
+    </dt>
+    <dd>
+    Add element to DataList.  Currenly untested
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+        <li><span class="parameter">data</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+
+        </li>
+        <li><span class="parameter">shift_policy</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         The constant from const.SHIFT.*
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "clear"></a>
     <strong>clear(self)</strong>
@@ -340,6 +385,64 @@
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">DataList</span></span>
          <a href="../modules/DataList.html#">DataList</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "remove"></a>
+    <strong>remove(self, index, shift_policy)</strong>
+    </dt>
+    <dd>
+    Remove element from DataList.  Currenly untested
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+
+        </li>
+        <li><span class="parameter">shift_policy</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         The constant from const.SHIFT.*
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "remove_by_data"></a>
+    <strong>remove_by_data(self, data, shift_policy)</strong>
+    </dt>
+    <dd>
+    Remove element from DataList by data value.  Currenly untested
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+        <li><span class="parameter">data</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+        </li>
+        <li><span class="parameter">shift_policy</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         The constant from const.SHIFT.*
         </li>
     </ul>
 
