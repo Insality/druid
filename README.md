@@ -17,9 +17,9 @@ Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Dr
 
 To integrate the **Druid** extension into your own project, add this project as a [dependency](https://www.defold.com/manuals/libraries/) in your **Defold** game. Open your `game.project` file and add the following line to the dependencies field under the project section:
 
-**Druid v0.11.0**
+**Druid v0.12.0**
 
-> [https://github.com/Insality/druid/archive/refs/tags/0.11.0.zip](https://github.com/Insality/druid/archive/refs/tags/0.11.0.zip)
+> [https://github.com/Insality/druid/archive/refs/tags/0.12.0.zip](https://github.com/Insality/druid/archive/refs/tags/0.12.0.zip)
 
 Here is a list of [all releases](https://github.com/Insality/druid/releases).
 

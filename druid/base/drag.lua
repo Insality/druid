@@ -22,10 +22,10 @@
 --- Event on drag start callback(self, touch)
 -- @tfield DruidEvent on_drag_start @{DruidEvent}
 
---- on drag progress callback(self, dx, dy, total_x, total_y)
+--- on drag progress callback(self, dx, dy, total_x, total_y, touch)
 -- @tfield DruidEvent on_drag Event @{DruidEvent}
 
---- Event on drag end callback(self, total_x, total_y)
+--- Event on drag end callback(self, total_x, total_y, touch)
 -- @tfield DruidEvent on_drag_end @{DruidEvent}
 
 --- Is component now touching

@@ -7,6 +7,8 @@
 ---@field height number
 ---@field offset_x number|nil
 ---@field offset_y number|nil
+---@field max_ascent number
+---@field max_descent number
 ---@field node_size vector3|nil @For images only
 
 ---@class druid.rich_text.lines_metrics
@@ -47,6 +49,7 @@
 ---@field parent node
 ---@field size number
 ---@field fonts table<string, string>
+---@field scale vector3
 ---@field color vector4
 ---@field shadow vector4
 ---@field outline vector4
@@ -54,12 +57,9 @@
 ---@field image_pixel_grid_snap boolean
 ---@field combine_words boolean
 ---@field default_animation string
----@field node_prefab node
 ---@field text_prefab node
----@field text_scale vector3
 ---@field adjust_scale number
 ---@field default_texture string
----@field node_scale vector3
 ---@field is_multiline boolean
 ---@field text_leading number
 ---@field font hash
@@ -71,3 +71,22 @@
 ---@field height number
 ---@field max_ascent number
 ---@field max_descent number
+
+---@class utf8
+---@field len fun(string: string): number
+---@field sub fun(string: string, i: number, j: number): string
+---@field gmatch fun(string: string, pattern: string): fun(): string
+---@field gsub fun(string: string, pattern: string, repl: string, n: number): string
+---@field char fun(...: number): string
+---@field byte fun(string: string, i: number, j: number): number
+
+
+---Add generics to some functions.
+
+---Create new component.
+---@generic T: druid.base_component
+---@param self druid_instance
+---@param component T Component module
+---@param ... any Other component params to pass it to component:init function
+---@return T Component instance
+function druid_instance.new(self, component, ...) end

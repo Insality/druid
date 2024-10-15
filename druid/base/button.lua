@@ -344,10 +344,6 @@ function Button.on_input(self, action_id, action)
 		return false
 	end
 
-	if not self:is_enabled() then
-		return false
-	end
-
 	local is_consume = true
 	local is_pick = true
 	local is_key_trigger = (action_id == self.key_trigger)

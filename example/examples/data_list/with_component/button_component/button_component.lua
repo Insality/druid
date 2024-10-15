@@ -14,24 +14,15 @@ local component = require("druid.component")
 ---@field druid druid_instance
 local ButtonComponent = component.create("button_component")
 
-local SCHEME = {
-	ROOT = "root",
-	TEXT = "text",
-	ICON = "icon",
-	CHECKBOX = "checkbox"
-}
-
 
 ---@param template string
 ---@param nodes table<hash, node>
 function ButtonComponent:init(template, nodes)
-	self:set_template(template)
-	self:set_nodes(nodes)
-	self.druid = self:get_druid()
+	self.druid = self:get_druid(template, nodes)
 
-	self.root = self:get_node(SCHEME.ROOT)
-	self.text = self.druid:new_text(SCHEME.TEXT)
-	self.checkbox = self:get_node(SCHEME.CHECKBOX)
+	self.root = self:get_node("root")
+	self.text = self.druid:new_text("text")
+	self.checkbox = self:get_node("checkbox")
 
 	self.button = self.druid:new_button(self.root, self._on_click)
 

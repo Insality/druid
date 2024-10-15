@@ -227,7 +227,7 @@ function M._fill_properties(word, metrics, settings)
 	else
 		-- Text properties
 		word.scale = settings.scale * word.relative_scale * settings.adjust_scale
-		word.pivot = gui.PIVOT_W -- With this pivot adjustments works correctly, but with another some misalignment
+		word.pivot = gui.PIVOT_SW -- With this pivot adjustments works more correctly than with other pivots
 		word.size = vmath.vector3(metrics.width, metrics.height, 0)
 		word.offset = vmath.vector3(metrics.offset_x, metrics.offset_y, 0)
 	end

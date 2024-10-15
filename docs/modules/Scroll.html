@@ -167,6 +167,14 @@
 	<td class="name" nowrap><a href="#set_vertical_scroll">set_vertical_scroll(self, state)</a></td>
 	<td class="summary">Lock or unlock vertical scroll</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_view_size">set_view_size(self, size)</a></td>
+	<td class="summary">Set new scroll view size in case the node size was changed.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#update_view_size">update_view_size(self)</a></td>
+	<td class="summary">Refresh scroll view size</td>
+	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
 <table class="function_list">
@@ -232,6 +240,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#view_node">view_node</a></td>
 	<td class="summary">Scroll view node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#view_size">view_size</a></td>
+	<td class="summary">Scroll view size</td>
 	</tr>
 </table>
 
@@ -734,6 +746,58 @@
 
 
 </dd>
+    <dt>
+    <a name = "set_view_size"></a>
+    <strong>set_view_size(self, size)</strong>
+    </dt>
+    <dd>
+    Set new scroll view size in case the node size was changed.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Scroll</span></span>
+         <a href="../modules/Scroll.html#">Scroll</a>
+        </li>
+        <li><span class="parameter">size</span>
+            <span class="types"><span class="type">vector3</span></span>
+         The new size for view node
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.scroll</span></span>
+        Current scroll instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "update_view_size"></a>
+    <strong>update_view_size(self)</strong>
+    </dt>
+    <dd>
+    Refresh scroll view size
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Scroll</span></span>
+         <a href="../modules/Scroll.html#">Scroll</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
 </dl>
     <h2 class="section-header "><a name="Tables"></a>Tables</h2>
 
@@ -819,7 +883,7 @@
 
     <ul>
         <li><span class="parameter">_is_inert</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
 
         </li>
     </ul>
@@ -1080,6 +1144,26 @@
     <ul>
         <li><span class="parameter">view_node</span>
             <span class="types"><span class="type">node</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "view_size"></a>
+    <strong>view_size</strong>
+    </dt>
+    <dd>
+    Scroll view size
+
+
+    <ul>
+        <li><span class="parameter">view_size</span>
+            <span class="types"><span class="type">vector3</span></span>
 
         </li>
     </ul>

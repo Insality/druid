@@ -3,13 +3,6 @@ local component = require("druid.component")
 ---@class component_name : druid.base_component
 local Component = component.create("component_name")
 
--- Scheme of component gui nodes
-local SCHEME = {
-	ROOT = "root",
-	BUTTON = "button",
-}
-
-
 -- Component constructor. Template name and nodes are optional. Pass it if you use it in your component
 function Component:init(template, nodes)
 	-- If your component is gui template, pass the template name and set it
@@ -18,7 +11,7 @@ function Component:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
 	-- self:get_node will auto process component template and nodes
-	self.root = self:get_node(SCHEME.ROOT)
+	self.root = self:get_node("root")
 
 end
 

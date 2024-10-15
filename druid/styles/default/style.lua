@@ -42,15 +42,15 @@ M["button"] = {
 	end,
 
 	on_click_disabled = function(self, node)
-		settings.play_sound(M.button.BTN_SOUND_DISABLED)
+		local start_pos = self.start_pos
+		gui.animate(node, "position.x", start_pos.x - 3, gui.EASING_OUTSINE, 0.05, 0, function()
+			gui.animate(node, "position.x", start_pos.x + 3, gui.EASING_OUTSINE, 0.1, 0, function()
+				gui.animate(node, "position.x", start_pos.x, gui.EASING_OUTSINE, 0.05)
+			end)
+		end)
 	end,
 
 	on_set_enabled = function(self, node, state)
-		if state then
-			gui.set_color(node, M.button.ENABLED_COLOR)
-		else
-			gui.set_color(node, M.button.DISABLED_COLOR)
-		end
 	end
 }
 

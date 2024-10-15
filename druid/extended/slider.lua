@@ -151,6 +151,8 @@ function Slider.on_input(self, action_id, action)
 				self.value = (self.target_pos.y - self.start_pos.y) / self.dist.y
 			end
 
+			self.value = math.abs(self.value)
+
 			if self.steps then
 				local closest_dist = 1000
 				local closest = nil

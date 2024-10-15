@@ -14,21 +14,14 @@ A basic custom component template looks like this (you can copy it from `/druid/
 ```lua
 local component = require("druid.component")
 
----@class component_name : druid.base_component
+---@class component_name: druid.base_component
 local Component = component.create("component_name")
 
-local SCHEME = {
-    ROOT = "root",
-    BUTTON = "button",
-}
-
 function Component:init(template, nodes)
-    self:set_template(template)
-    self:set_nodes(nodes)
-    self.root = self:get_node(SCHEME.ROOT)
-    self.druid = self:get_druid()
+    self.druid = self:get_druid(template, nodes)
+    self.root = self:get_node("root")
 
-    self.button = self.druid:new_button(SCHEME.BUTTON, function() end)
+    self.button = self.druid:new_button("button", function() end)
 end
 
 function Component:on_remove() end
@@ -43,18 +36,12 @@ A full custom component template looks like this (you can copy it from `/druid/t
 ```lua
 local component =  require("druid.component")
 
----@class component_name : druid.base_component
+---@class component_name: druid.base_component
 local Component = component.create("component_name")
-local SCHEME = {
-    ROOT = "root",
-    BUTTON = "button",
-}
 
 function Component:init(template, nodes)
-    self:set_template(template)
-    self:set_nodes(nodes)
-    self.root = self:get_node(SCHEME.ROOT)
-    self.druid = self:get_druid()
+    self.druid = self:get_druid(template, nodes)
+    self.root = self:get_node("root")
 end
 
 function Component:update(dt) end
@@ -92,7 +79,7 @@ local my_component = require("my.amazing.component")
 
 function init(self)
     self.druid = druid.new(self)
-    self.druid:new(my_component, "template_name", nodes)
+    self.druid:new(my_component, "template_name")
 end
 ```
 
@@ -107,6 +94,7 @@ local druid = require("druid.druid")
 local my_component = require("my.amazing.component")
 
 function init(self)
+    -- Register makes a "druid:new_{component_name}" function available
     druid.register("my_component", my_component)
 end
 ```
@@ -148,33 +136,6 @@ Available keywords:
 - `timer`: Adds a [Dr
 
 uid Timer](01-components.md#timer) component.
-
-## Best Practices for Custom Components
-
-When working with each component, it's recommended to describe the component scheme in the following way:
-
-```lua
--- Component module
-local component = require("druid.component")
-
-local M = component.create("your_component")
-
-local SCHEME = {
-    ROOT = "root",
-    ITEM = "item",
-    TITLE = "title"
-}
-
-function M.init(self, template_name, node_table)
-    self:set_template(template_name)
-    self:set_nodes(node_table)
-
-    local root = self:get_node(SCHEME.ROOT)
-    local druid = self:get_druid()
-
-    -- Create components inside this component using the inner druid instance
-end
-```
 
 ## The Power of Using Templates
 

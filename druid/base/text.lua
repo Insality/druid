@@ -211,6 +211,9 @@ local function update_text_with_trim(self, trim_postfix)
 			text_length = text_length - 1
 			new_text = utf8.sub(self.last_value, 1, text_length)
 			text_width = self:get_text_size(new_text .. trim_postfix)
+			if text_length == 0 then
+				break
+			end
 		end
 
 		gui.set_text(self.node, new_text .. trim_postfix)

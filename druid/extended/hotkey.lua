@@ -27,7 +27,6 @@
 local helper = require("druid.helper")
 local component = require("druid.component")
 local Event = require("druid.event")
-local const = require("druid.const")
 
 local Hotkey = component.create("hotkey")
 

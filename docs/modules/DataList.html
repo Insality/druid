@@ -100,20 +100,8 @@
 	<td class="summary">Return current data from DataList component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_first_index">get_first_index(self)</a></td>
-	<td class="summary">Return first index from data.</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#get_index">get_index(self, data)</a></td>
 	<td class="summary">Return index for data value</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_last_index">get_last_index(self)</a></td>
-	<td class="summary">Return last index from data</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#get_length">get_length(self)</a></td>
-	<td class="summary">Return amount of data</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, scroll, grid, create_function)</a></td>
@@ -131,6 +119,10 @@
 	<td class="name" nowrap><a href="#set_data">set_data(self, data)</a></td>
 	<td class="summary">Set new data set for DataList component</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_use_cache">set_use_cache(self, is_use_cache)</a></td>
+	<td class="summary">Set refresh function for DataList component</td>
+	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
@@ -140,7 +132,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#last_index">last_index</a></td>
-	<td class="summary">The current visual last data index</td>
+	<td class="summary">The current last index of visual elements</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_element_add">on_element_add</a></td>
@@ -164,7 +156,7 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#top_index">top_index</a></td>
-	<td class="summary">The current visual top data index</td>
+	<td class="summary">The current top index of visual elements</td>
 	</tr>
 </table>
 
@@ -278,27 +270,6 @@
 
 </dd>
     <dt>
-    <a name = "get_first_index"></a>
-    <strong>get_first_index(self)</strong>
-    </dt>
-    <dd>
-    Return first index from data.  It not always equals to 1
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DataList</span></span>
-         <a href="../modules/DataList.html#">DataList</a>
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
     <a name = "get_index"></a>
     <strong>get_index(self, data)</strong>
     </dt>
@@ -315,48 +286,6 @@
         <li><span class="parameter">data</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
 
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_last_index"></a>
-    <strong>get_last_index(self)</strong>
-    </dt>
-    <dd>
-    Return last index from data
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DataList</span></span>
-         <a href="../modules/DataList.html#">DataList</a>
-        </li>
-    </ul>
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "get_length"></a>
-    <strong>get_length(self)</strong>
-    </dt>
-    <dd>
-    Return amount of data
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DataList</span></span>
-         <a href="../modules/DataList.html#">DataList</a>
         </li>
     </ul>
 
@@ -475,6 +404,37 @@
 
 
 </dd>
+    <dt>
+    <a name = "set_use_cache"></a>
+    <strong>set_use_cache(self, is_use_cache)</strong>
+    </dt>
+    <dd>
+    Set refresh function for DataList component
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DataList</span></span>
+         <a href="../modules/DataList.html#">DataList</a>
+        </li>
+        <li><span class="parameter">is_use_cache</span>
+            <span class="types"><span class="type">boolean</span></span>
+         Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.data_list</span></span>
+        Current DataList instance
+    </ol>
+
+
+
+
+</dd>
 </dl>
     <h2 class="section-header "><a name="Fields"></a>Fields</h2>
 
@@ -504,7 +464,7 @@
     <strong>last_index</strong>
     </dt>
     <dd>
-    The current visual last data index
+    The current last index of visual elements
 
 
     <ul>
@@ -624,7 +584,7 @@
     <strong>top_index</strong>
     </dt>
     <dd>
-    The current visual top data index
+    The current top index of visual elements
 
 
     <ul>

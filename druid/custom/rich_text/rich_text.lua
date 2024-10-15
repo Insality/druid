@@ -109,8 +109,8 @@ local RichText = component.create("rich_text")
 
 --- The @{RichText} constructor
 -- @tparam RichText self @{RichText}
--- @tparam string template The Rich Text template name
--- @tparam table nodes The node table, if prefab was copied by gui.clone_tree()
+-- @tparam node|string text_node The text node to make Rich Text
+-- @tparam string|nil value The initial text value. Default will be gui.get_text(text_node)
 function RichText.init(self, text_node, value)
 	self.root = self:get_node(text_node)
 	self.text_prefab = self.root

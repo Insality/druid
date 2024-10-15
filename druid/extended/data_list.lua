@@ -84,6 +84,8 @@ end
 
 --- Set refresh function for DataList component
 -- @tparam DataList self @{DataList}
+-- @tparam boolean is_use_cache Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
+-- @treturn druid.data_list Current DataList instance
 function DataList.set_use_cache(self, is_use_cache)
 	self._is_use_cache = is_use_cache
 	return self
@@ -280,7 +282,7 @@ end
 function DataList._refresh(self)
 	self.scroll:set_size(self.grid:get_size_for(#self._data))
 
-	local start_pos = -self.scroll.position
+	local start_pos = -self.scroll.position --[[@as vector3]]
 	local start_index = self.grid:get_index(start_pos)
 	start_index = math.max(1, start_index)
 

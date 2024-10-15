@@ -142,10 +142,6 @@ end
 	<td class="summary">Call this in gui_script final function.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new">new(self, component, ...)</a></td>
-	<td class="summary">Create new component.</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#new_back_handler">new_back_handler(self, callback, params)</a></td>
 	<td class="summary">Create <a href="../modules/BackHandler.html#">BackHandler</a> component</td>
 	</tr>
@@ -182,7 +178,7 @@ end
 	<td class="summary">Create <a href="../modules/Hotkey.html#">Hotkey</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_hover">new_hover(self, node, on_hover_callback)</a></td>
+	<td class="name" nowrap><a href="#new_hover">new_hover(self, node, on_hover_callback, on_mouse_hover_callback)</a></td>
 	<td class="summary">Create <a href="../modules/Hover.html#">Hover</a> component</td>
 	</tr>
 	<tr>
@@ -194,7 +190,7 @@ end
 	<td class="summary">Create <a href="../modules/LangText.html#">LangText</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_layout">new_layout(self, node, mode, on_size_changed_callback)</a></td>
+	<td class="name" nowrap><a href="#new_layout">new_layout(self, node, mode)</a></td>
 	<td class="summary">Create <a href="../modules/Layout.html#">Layout</a> component</td>
 	</tr>
 	<tr>
@@ -282,41 +278,6 @@ end
         </li>
     </ul>
 
-
-
-
-
-</dd>
-    <dt>
-    <a name = "new"></a>
-    <strong>new(self, component, ...)</strong>
-    </dt>
-    <dd>
-    Create new component.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DruidInstance</span></span>
-
-        </li>
-        <li><span class="parameter">component</span>
-            <span class="types"><span class="type">BaseComponent</span></span>
-         Component module
-        </li>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">any</span></span>
-         Other component params to pass it to component:init function
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">BaseComponent</span></span>
-        Component instance
-    </ol>
 
 
 
@@ -411,7 +372,7 @@ end
          Button callback
         </li>
         <li><span class="parameter">params</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">nil</span></span>
+            <span class="types"><span class="type">any</span> or <span class="type">nil</span></span>
          Button callback params
         </li>
         <li><span class="parameter">anim_node</span>
@@ -659,7 +620,7 @@ end
 </dd>
     <dt>
     <a name = "new_hover"></a>
-    <strong>new_hover(self, node, on_hover_callback)</strong>
+    <strong>new_hover(self, node, on_hover_callback, on_mouse_hover_callback)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Hover.html#">Hover</a> component
@@ -678,6 +639,10 @@ end
         <li><span class="parameter">on_hover_callback</span>
             <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Hover callback
+        </li>
+        <li><span class="parameter">on_mouse_hover_callback</span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
+         Mouse hover callback
         </li>
     </ul>
 
@@ -772,7 +737,7 @@ end
 </dd>
     <dt>
     <a name = "new_layout"></a>
-    <strong>new_layout(self, node, mode, on_size_changed_callback)</strong>
+    <strong>new_layout(self, node, mode)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Layout.html#">Layout</a> component
@@ -791,10 +756,6 @@ end
         <li><span class="parameter">mode</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          The layout mode
-        </li>
-        <li><span class="parameter">on_size_changed_callback</span>
-            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
-         The callback on window resize
         </li>
     </ul>
 
@@ -1244,6 +1205,12 @@ end
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        True if component was removed
+    </ol>
 
 
 

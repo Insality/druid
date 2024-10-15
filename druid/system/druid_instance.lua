@@ -247,7 +247,7 @@ function DruidInstance.initialize(self, context, style)
 end
 
 
---- Create new component.
+-- Create new component.
 -- @tparam DruidInstance self
 -- @tparam BaseComponent component Component module
 -- @tparam any ... Other component params to pass it to component:init function
@@ -776,9 +776,8 @@ end
 -- @tparam DruidInstance self
 -- @tparam string|node node The_node id or gui.get_node(node_id).
 -- @tparam string mode The layout mode
--- @tparam function|nil on_size_changed_callback The callback on window resize
 -- @treturn Layout @{Layout} component
-function DruidInstance.new_layout(self, node, mode, on_size_changed_callback)
+function DruidInstance.new_layout(self, node, mode)
 	return helper.require_component_message("layout")
 end
 

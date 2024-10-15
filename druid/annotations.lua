@@ -367,6 +367,12 @@ function druid__data_list.scroll_to_index(self, index) end
 ---@return druid.data_list Current DataList instance
 function druid__data_list.set_data(self, data) end
 
+--- Set refresh function for DataList component
+---@param self druid.data_list @{DataList}
+---@param is_use_cache boolean Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
+---@return druid.data_list Current DataList instance
+function druid__data_list.set_use_cache(self, is_use_cache) end
+
 
 ---@class druid.drag : druid.base_component
 ---@field can_x boolean Is drag component process vertical dragging.
@@ -374,8 +380,8 @@ function druid__data_list.set_data(self, data) end
 ---@field is_drag boolean Is component now dragging
 ---@field is_touch boolean Is component now touching
 ---@field node node Drag node
----@field on_drag druid.event on drag progress callback(self, dx, dy, total_x, total_y)
----@field on_drag_end druid.event Event on drag end callback(self, total_x, total_y)
+---@field on_drag druid.event on drag progress callback(self, dx, dy, total_x, total_y, touch)
+---@field on_drag_end druid.event Event on drag end callback(self, total_x, total_y, touch)
 ---@field on_drag_start druid.event Event on drag start callback(self, touch)
 ---@field on_touch_end druid.event Event on touch end callback(self)
 ---@field on_touch_start druid.event Event on touch start callback(self)
@@ -559,7 +565,8 @@ function druid__event.unsubscribe(self, callback, callback_context) end
 ---@field button druid.button Button component from click_node
 ---@field click_node node|nil Button trigger node
 ---@field node node Visual node
----@field on_change_state druid.event On change state callback(self, state)
+---@field on_hotkey_pressed druid.event On hotkey released callback(self, argument)
+---@field on_hotkey_released druid.event On hotkey released callback(self, argument)
 ---@field style druid.hotkey.style Component style params.
 local druid__hotkey = {}
 
@@ -803,66 +810,7 @@ function druid__lang_text.translate(self, locale_id, a, b, c, d, e, f, g) end
 ---@class druid.layout : druid.base_component
 ---@field mode string Current layout mode
 ---@field node node Layout node
----@field on_size_changed druid.event On window resize callback(self, new_size)
 local druid__layout = {}
-
---- Set node for layout node to fit inside it.
---- Pass nil to reset
----@param self druid.layout @{Layout}
----@param node node|nil
----@return druid.layout @{Layout}
-function druid__layout.fit_into_node(self, node) end
-
---- Set size for layout node to fit inside it
----@param self druid.layout @{Layout}
----@param target_size vector3
----@return druid.layout @{Layout}
-function druid__layout.fit_into_size(self, target_size) end
-
---- Set current size for layout node to fit inside it
----@param self druid.layout @{Layout}
----@return druid.layout @{Layout}
-function druid__layout.fit_into_window(self) end
-
---- The @{Layout} constructor
----@param self druid.layout @{Layout}
----@param node node Gui node
----@param mode string The layout mode (from const.LAYOUT_MODE)
----@param on_size_changed_callback function|nil The callback on window resize
-function druid__layout.init(self, node, mode, on_size_changed_callback) end
-
---- Set max gui upscale for FIT adjust mode (or side).
---- It happens on bigger render gui screen
----@param self druid.layout @{Layout}
----@param max_gui_upscale number
----@return druid.layout @{Layout}
-function druid__layout.set_max_gui_upscale(self, max_gui_upscale) end
-
---- Set maximum size of layout node
----@param self druid.layout @{Layout}
----@param max_size vector3
----@return druid.layout @{Layout}
-function druid__layout.set_max_size(self, max_size) end
-
---- Set minimal size of layout node
----@param self druid.layout @{Layout}
----@param min_size vector3
----@return druid.layout @{Layout}
-function druid__layout.set_min_size(self, min_size) end
-
---- Set new origin position of layout node.
---- You should apply this on node movement
----@param self druid.layout @{Layout}
----@param new_origin_position vector3
----@return druid.layout @{Layout}
-function druid__layout.set_origin_position(self, new_origin_position) end
-
---- Set new origin size of layout node.
---- You should apply this on node manual size change
----@param self druid.layout @{Layout}
----@param new_origin_size vector3
----@return druid.layout @{Layout}
-function druid__layout.set_origin_size(self, new_origin_size) end
 
 
 ---@class druid.pin_knob : druid.base_component
@@ -1056,9 +1004,9 @@ function druid__rich_text.get_words() end
 
 --- The @{RichText} constructor
 ---@param self druid.rich_text @{RichText}
----@param template string The Rich Text template name
----@param nodes table The node table, if prefab was copied by gui.clone_tree()
-function druid__rich_text.init(self, template, nodes) end
+---@param text_node node|string The text node to make Rich Text
+---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
+function druid__rich_text.init(self, text_node, value) end
 
 --- Set text for Rich Text
 ---@param self druid.rich_text @{RichText}
@@ -1097,6 +1045,7 @@ local druid__rich_text__style = {}
 ---@field style druid.scroll.style Component style params.
 ---@field target_position vector3 Current scroll target position
 ---@field view_node node Scroll view node
+---@field view_size vector3 Scroll view size
 local druid__scroll = {}
 
 --- Bind the grid component (Static or Dynamic) to recalculate  scroll size on grid changes
@@ -1204,6 +1153,10 @@ function druid__scroll.set_vertical_scroll(self, state) end
 ---@param size vector3 The new size for view node
 ---@return druid.scroll Current scroll instance
 function druid__scroll.set_view_size(self, size) end
+
+--- Refresh scroll view size
+---@param self druid.scroll @{Scroll}
+function druid__scroll.update_view_size(self) end
 
 
 ---@class druid.scroll.style
@@ -1550,7 +1503,7 @@ local druid__timer = {}
 --- The @{Timer} constructor
 ---@param self druid.timer @{Timer}
 ---@param node node Gui text node
----@param seconds_from number Start timer value in seconds
+---@param seconds_from number|nil Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
 ---@param callback function|nil Function on timer end
 function druid__timer.init(self, node, seconds_from, seconds_to, callback) end
@@ -1578,14 +1531,6 @@ local druid_instance = {}
 --- Call this in gui_script final function.
 ---@param self druid_instance
 function druid_instance.final(self) end
-
---- Create new component.
----@generic T
----@param self druid_instance
----@param component T Component module
----@param ... any Other component params to pass it to component:init function
----@return T Component instance
-function druid_instance.new(self, component, ...) end
 
 --- Create @{BackHandler} component
 ---@param self druid_instance
@@ -1683,9 +1628,8 @@ function druid_instance.new_lang_text(self, node, locale_id, adjust_type) end
 ---@param self druid_instance
 ---@param node string|node The_node id or gui.get_node(node_id).
 ---@param mode string The layout mode
----@param on_size_changed_callback function|nil The callback on window resize
 ---@return druid.layout @{Layout} component
-function druid_instance.new_layout(self, node, mode, on_size_changed_callback) end
+function druid_instance.new_layout(self, node, mode) end
 
 --- Create @{Progress} component
 ---@param self druid_instance
@@ -1752,7 +1696,7 @@ function druid_instance.new_text(self, node, value, no_adjust) end
 --- Create @{Timer} component
 ---@param self druid_instance
 ---@param node string|node Gui text node
----@param seconds_from number|nil Start timer value in seconds
+---@param seconds_from number Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
 ---@param callback function|nil Function on timer end
 ---@return druid.timer @{Timer} component
@@ -2021,3 +1965,22 @@ function helper.table_to_string(t) end
 ---@field height number
 ---@field max_ascent number
 ---@field max_descent number
+
+---@class utf8
+---@field len fun(string: string): number
+---@field sub fun(string: string, i: number, j: number): string
+---@field gmatch fun(string: string, pattern: string): fun(): string
+---@field gsub fun(string: string, pattern: string, repl: string, n: number): string
+---@field char fun(...: number): string
+---@field byte fun(string: string, i: number, j: number): number
+
+
+---Add generics to some functions.
+
+---Create new component.
+---@generic T: druid.base_component
+---@param self druid_instance
+---@param component T Component module
+---@param ... any Other component params to pass it to component:init function
+---@return T Component instance
+function druid_instance.new(self, component, ...) end

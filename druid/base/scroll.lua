@@ -50,6 +50,9 @@
 --- Scroll view node
 -- @tfield node view_node
 
+--- Scroll view size
+-- @tfield vector3 view_size
+
 --- Scroll content node
 -- @tfield node content_node
 
