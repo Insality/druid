@@ -500,3 +500,28 @@ Thanks to the my supporters:
 Please support me if you like this project! It will help me keep engaged to update **Druid** and make it even better!
 
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
+
+
+
+### Druid 0.12.0
+
+**Changelog 0.12.0**
+- Remove `middleclass.lua`
+- The Rich Text now applied to the text node instead of Rich Text Template (contained 3 nodes before - root, text and image prefabs)
+- New Logo!
+- New Example Page with 40+ examples
+- Updated and fixed annotations
+- Add `self:get_druid(template, nodes)` to escape the `self:set_template(template)` and `self:set_nodes(nodes)` calls
+- Update Rich Input. Now with selection and cursor navigation. Updated Input settings for Druid
+- Rework Data List. Now only works with Static Grid only. Now the Data List more stable with extended API.
+- Add Cached Data List option. This used less memory (it's really much optimized) but requires uses the `on_add_element` and `on_remove_element` events to setup your nodes. All components should be the same class.
+- Now user can tap from one text input area to another with one click. Before first tap is closed the focus on selected input.
+- Removed Layout component. Add new Layout component what do a some different things. It's like Dynamic Grid but with more control and settings.
+- Deprecated Dynamic Grid. Layout will be instead of it.
+- Add touch param to Drag callbacks, it's much easier to add custom logic with knowledge of input action data.
+- Add `scroll.view_size`, `scroll:set_view_size(size)` and `scroll:update_view_size()` functions to manage with current scroll input area and scroll visible part
+- Add `grid:set_item_size(size)`, `grid:sort_nodes(comparator)` functions
+- Seems adjust by height for multiline text is workings good now
+- Extended Rich Input API
+- More accurate scaling for progress bars fow images with slice9 params
+- Fix several slider issues

@@ -13,7 +13,7 @@
 -- @tfield Scroll scroll @{Scroll}
 
 --- The Druid Grid component
--- @tfield StaticGrid|DynamicGrid grid @{StaticGrid}, @{DynamicGrid}
+-- @tfield StaticGrid grid @{StaticGrid}, @{DynamicGrid}
 
 --- The current progress of scroll posititon
 -- @tfield number scroll_progress
@@ -46,7 +46,7 @@ local DataList = component.create("data_list")
 --- The @{DataList} constructor
 -- @tparam DataList self @{DataList}
 -- @tparam Scroll scroll The @{Scroll} instance for Data List component
--- @tparam StaticGrid|DynamicGrid grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
+-- @tparam StaticGrid grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 function DataList.init(self, scroll, grid, create_function)
 	self.scroll = scroll

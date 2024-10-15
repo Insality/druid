@@ -505,7 +505,7 @@ end
 --- Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
 -- @tparam Scroll self @{Scroll}
--- @tparam StaticGrid|DynamicGrid grid Druid grid component
+-- @tparam StaticGrid grid Druid grid component
 -- @treturn druid.scroll Current scroll instance
 function Scroll.bind_grid(self, grid)
 	if self._grid_on_change then

@@ -36,7 +36,7 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 ### Input Bindings
 
-**Druid** utilizes the `/builtins/input/all.input_binding` input bindings. For custom input bindings, refer to the Input Binding section in the  **_[Advanced Setup](docs_md/advanced-setup.md#input-bindings)_**.
+**Druid** utilizes the `/builtins/input/all.input_binding` input bindings. Either use this file for your project by setting the `Runtime -> Input -> Game Binding` field in the `game.project` input section to `/builtins/input/all.input_binding`, or add the specific bindings you need to your game's input binding file. For custom input bindings, refer to the Input Binding section in the [Advanced Setup](https://github.com/Insality/druid/blob/master/docs_md/advanced-setup.md#input-bindings).
 
 
 ## Usage

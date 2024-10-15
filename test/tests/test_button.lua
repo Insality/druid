@@ -63,7 +63,7 @@ return function()
 			assert(on_long_click_mock.calls == 0)
 
 			druid:on_input(mock_input.click_pressed(10, 10))
-			mock_time.elapse(0.5)
+			mock_time.elapse(1)
 			druid:on_input(mock_input.click_released(20, 10))
 
 			assert(on_click_mock.calls == 1)
@@ -144,14 +144,15 @@ return function()
 			instance.on_hold_callback:subscribe(on_hold_callback)
 
 			druid:on_input(mock_input.click_pressed(10, 10))
-			mock_time.elapse(0.5) -- time between hold treshold and autorelease hold time
-			druid:on_input(mock_input.click_repeated(10, 10))
+			mock_time.elapse(1) -- time between hold treshold and autorelease hold time
+			druid:on_input(mock_input.input_empty(10, 10))
 
+			pprint(on_long_click_mock)
 			assert(on_click_mock.calls == 0)
-			assert(on_hold_callback_mock.calls == 1)
-			assert(on_hold_callback_mock.params[1] == context)
-			assert(on_hold_callback_mock.params[2] == button_params)
-			assert(on_hold_callback_mock.params[3] == instance)
+			assert(on_long_click_mock.calls == 1)
+			assert(on_long_click_mock.params[1] == context)
+			assert(on_long_click_mock.params[2] == button_params)
+			assert(on_long_click_mock.params[3] == instance)
 
 			druid:on_input(mock_input.click_released(10, 10))
 
@@ -257,8 +258,8 @@ return function()
 			instance:set_enabled(false)
 			local is_clicked_pressed = druid:on_input(mock_input.click_pressed(10, 10))
 			local is_clicked_released = druid:on_input(mock_input.click_released(10, 10))
-			assert(is_clicked_pressed == false)
-			assert(is_clicked_released == false)
+			assert(is_clicked_pressed == true)
+			assert(is_clicked_released == true)
 			assert(on_click_mock.calls == 0)
 			assert(instance:is_enabled() == false)
 

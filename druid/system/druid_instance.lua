@@ -730,7 +730,7 @@ end
 --- Create @{DataList} component
 -- @tparam DruidInstance self
 -- @tparam Scroll druid_scroll The Scroll instance for Data List component
--- @tparam StaticGrid|DynamicGrid druid_grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
+-- @tparam StaticGrid druid_grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 -- @treturn DataList @{DataList} component
 function DruidInstance.new_data_list(self, druid_scroll, druid_grid, create_function)
