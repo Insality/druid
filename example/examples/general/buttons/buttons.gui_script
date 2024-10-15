@@ -1,5 +1,4 @@
 local druid = require("druid.druid")
-local sprite_style = require("druid.styles.sprites.style")
 
 
 local function usual_callback()
@@ -51,9 +50,6 @@ end
 
 local function setup_buttons(self)
 	self.druid:new_button("button_usual/button", usual_callback)
-
-	local custom_style = self.druid:new_button("button_custom_style/button", usual_callback)
-	custom_style:set_style(sprite_style)
 
 	local long_button = self.druid:new_button("button_long_tap/button", usual_callback)
 	long_button.on_hold_callback:subscribe(hold_callback)
