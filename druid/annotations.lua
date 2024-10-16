@@ -311,7 +311,7 @@ function druid__checkbox_group.set_state(self, indexes, is_instant) end
 
 
 ---@class druid.data_list : druid.base_component
----@field grid druid.static_grid|druid.dynamic_grid The Druid Grid component
+---@field grid druid.static_grid The Druid Grid component
 ---@field last_index number The current last index of visual elements
 ---@field on_element_add druid.event On DataList visual element created Event callback(self, index, node, instance)
 ---@field on_element_remove druid.event On DataList visual element created Event callback(self, index)
@@ -356,7 +356,7 @@ function druid__data_list.get_index(self, data) end
 --- The @{DataList} constructor
 ---@param self druid.data_list @{DataList}
 ---@param scroll druid.scroll The @{Scroll} instance for Data List component
----@param grid druid.static_grid|druid.dynamic_grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
+---@param grid druid.static_grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
 function druid__data_list.init(self, scroll, grid, create_function) end
 
@@ -834,34 +834,6 @@ function druid__lang_text.translate(self, locale_id, a, b, c, d, e, f, g) end
 local druid__layout = {}
 
 
----@class druid.pin_knob : druid.base_component
----@field druid druid_instance The component druid instance
----@field is_drag boolean Is currently under user control
----@field node node The pin node
-local druid__pin_knob = {}
-
---- The @{PinKnob} constructor
----@param self druid.pin_knob @{PinKnob}
----@param callback function Callback(self, value) on value changed
----@param template string The template string name
----@param nodes table Nodes table from gui.clone_tree
-function druid__pin_knob.init(self, callback, template, nodes) end
-
---- Set current and min/max angles for component
----@param self druid.pin_knob @{PinKnob}
----@param cur_value number The new value for pin knob
----@param min number The minimum value for pin knob
----@param max number The maximum value for pin knob
----@return druid.pin_knob @{PinKnob}
-function druid__pin_knob.set_angle(self, cur_value, min, max) end
-
---- Set current and min/max angles for component
----@param self druid.pin_knob @{PinKnob}
----@param value number|nil The spin speed multiplier. Default: 1
----@return druid.pin_knob @{PinKnob}
-function druid__pin_knob.set_friction(self, value) end
-
-
 ---@class druid.progress : druid.base_component
 ---@field key string The progress bar direction.
 ---@field max_size number Maximum size of progress bar
@@ -948,10 +920,16 @@ function druid__radio_group.set_state(self, index, is_instant) end
 
 ---@class druid.rich_input
 ---@field cursor node On input field text change to empty string callback(self, input_text)
+---@field cursor_position vector3 On input field text change to empty string callback(self, input_text)
+---@field cursor_text node On input field text change to empty string callback(self, input_text)
+---@field drag druid.drag On input field text change to empty string callback(self, input_text)
 ---@field druid druid_instance The component druid instance
 ---@field input druid.input On input field text change callback(self, input_text)
+---@field input_text druid.text On input field text change to empty string callback(self, input_text)
 ---@field placeholder druid.text On input field text change to max length string callback(self, input_text)
+---@field placeholder druid.text On input field text change to empty string callback(self, input_text)
 ---@field root node Root node
+---@field text_position vector3 On input field text change to empty string callback(self, input_text)
 local druid__rich_input = {}
 
 --- Set input field text
@@ -995,7 +973,6 @@ function druid__rich_input.set_text(self, text) end
 
 ---@class druid.rich_text : druid.base_component
 ---@field druid druid_instance The component druid instance
----@field icon_prefab node The icon prefab node
 ---@field root node The root node of the Rich Text
 ---@field style druid.rich_text.style Component style params.
 ---@field text_prefab node The text prefab node
@@ -1071,7 +1048,7 @@ local druid__scroll = {}
 
 --- Bind the grid component (Static or Dynamic) to recalculate  scroll size on grid changes
 ---@param self druid.scroll @{Scroll}
----@param grid druid.static_grid|druid.dynamic_grid Druid grid component
+---@param grid druid.static_grid Druid grid component
 ---@return druid.scroll Current scroll instance
 function druid__scroll.bind_grid(self, grid) end
 
@@ -1595,7 +1572,7 @@ function druid_instance.new_checkbox_group(self, nodes, callback, click_nodes) e
 --- Create @{DataList} component
 ---@param self druid_instance
 ---@param druid_scroll druid.scroll The Scroll instance for Data List component
----@param druid_grid druid.static_grid|druid.dynamic_grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
+---@param druid_grid druid.static_grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
 ---@return druid.data_list @{DataList} component
 function druid_instance.new_data_list(self, druid_scroll, druid_grid, create_function) end

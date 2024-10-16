@@ -7,7 +7,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>druid 0.11.718</title>
+	<title>Druid 1.0.0</title>
 	<style type='text/css'>
 	/* Disable user selection to avoid strange bug in Chrome on Windows:
 	* Selecting a text outside the canvas, then clicking+draging would
@@ -54,7 +54,7 @@
 		-moz-outline-style: none;
 	}
 
-	div {
+	body, div {
 		-webkit-tap-highlight-color: rgba(0,0,0,0);
 		-webkit-touch-callout: none;
 		-webkit-user-select: none;
@@ -66,7 +66,7 @@
 
 		.canvas-app-progress {
 		position: absolute;
-		background-color: #d1dbeb;
+		background-color: #394046;
 		height: 6px;
 		margin-top: -6px;
 		width: 100%;
@@ -79,6 +79,9 @@
 		background-color: #1a72eb;
 		text-align: center;
 		line-height: 20px;
+		transition: transform 1s ease;
+		transform-origin: left;
+		transform: scaleX(1.0);
 	}
 	.link, .button {
 		font-family: sans-serif;
@@ -92,133 +95,54 @@
 	}
 
 	.buttons-background {
-		background-color: #ffffff;
+		background-color: #1e2226;
 		width: 100%;
 		height: 42px;
 	}
 
 	body {
-		background-color: #ffffff;
+		background-color: #1e2226;
 	}
 
 	.canvas-app-container {
-		background: rgba(250,252,255,1);
-		background: -moz-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(250,252,255,1)), color-stop(50%, rgba(250,252,255,1)), color-stop(50%, rgba(245,249,255,1)), color-stop(100%, rgba(245,249,255,1)));
-		background: -webkit-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		background: -o-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		background: -ms-linear-gradient(-45deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		background: linear-gradient(135deg, rgba(250,252,255,1) 0%, rgba(250,252,255,1) 50%, rgba(245,249,255,1) 50%, rgba(245,249,255,1) 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafcff', endColorstr='#f5f9ff', GradientType=1 );
+		background: rgba(36,41,46,1);
+		background: -moz-linear-gradient(-45deg, rgba(36,41,46,1) 0%, rgba(36,41,46,1) 49%, rgba(38,43,49,1) 50%, rgba(38,43,49,1) 100%);
+		background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(36,41,46,1)), color-stop(49%, rgba(36,41,46,1)), color-stop(50%, rgba(38,43,49,1)), color-stop(100%, rgba(38,43,49,1)));
+		background: -webkit-linear-gradient(-45deg, rgba(36,41,46,1) 0%, rgba(36,41,46,1) 49%, rgba(38,43,49,1) 50%, rgba(38,43,49,1) 100%);
+		background: -o-linear-gradient(-45deg, rgba(36,41,46,1) 0%, rgba(36,41,46,1) 49%, rgba(38,43,49,1) 50%, rgba(38,43,49,1) 100%);
+		background: -ms-linear-gradient(-45deg, rgba(36,41,46,1) 0%, rgba(36,41,46,1) 49%, rgba(38,43,49,1) 50%, rgba(38,43,49,1) 100%);
+		background: linear-gradient(135deg, rgba(36,41,46,1) 0%, rgba(36,41,46,1) 49%, rgba(38,43,49,1) 50%, rgba(38,43,49,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#24292e', endColorstr='#262b31', GradientType=1 );
 	}
 
 	.canvas-app-canvas {
 		background-repeat:no-repeat;
 		background-position: center center;
-		background-size: contain;
 		background-image: url("druid_logo.png");
 	}
-
 	</style>
 </head>
 
 <body>
-	<div id="running-from-file-warning" style="display: none; margin: 3em;">
-		<h1>Running from local file ⚠️</h1>
-		<p>It seems like you have opened this file by double-clicking on it. In order to test your build in a browser <b>you need to load this file from a web server</b>. You can either upload this file and the rest of the files from a Defold HTML5 bundle to a web hosting service OR host them using a local web server on your home network.</p>
-		<p><a href="https://defold.com/manuals/html5/#testing-html5-build" target="_blank">Learn more about running a local web server in the Defold HTML5 manual</a>.</p>
-	</div>
+
 	<div id="app-container" class="canvas-app-container">
+		<div id="running-from-file-warning" style="display: none; margin: 3em;">
+			<h1>Running from local file ⚠️</h1>
+			<p>It seems like you have opened this file by double-clicking on it. In order to test your build in a browser <b>you need to load this file from a web server</b>. You can either upload this file and the rest of the files from a Defold HTML5 bundle to a web hosting service OR host them using a local web server on your home network.</p>
+			<p><a href="https://defold.com/manuals/html5/#testing-html5-build" target="_blank">Learn more about running a local web server in the Defold HTML5 manual</a>.</p>
+		</div>
+		<div id="webgl-not-supported" style="display: none; margin: 3em;">
+			<h1>WebGL not supported ⚠️</h1>
+			<p>WebGL is not supported by your browser - visit <a href="https://get.webgl.org/">https://get.webgl.org/</a> to learn more.</p>
+		</div>
 		<div id="canvas-container" class="canvas-app-canvas-container">
-			<canvas id="canvas" class="canvas-app-canvas" tabindex="1" width="600" height="900"></canvas>
+			<canvas id="canvas" class="canvas-app-canvas" tabindex="1" width="1920" height="1080"></canvas>
 		</div>
 		<div class="buttons-background">
 		</div>
 	</div>
 	<!-- -->
 	<script id='engine-loader' type='text/javascript' src="dmloader.js"></script>
-	<!-- -->
-	<script id='engine-setup' type='text/javascript'>
-	var extra_params = {
-		archive_location_filter: function( path ) {
-			return ("archive" + path + "");
-		},
-		engine_arguments: ["--verify-graphics-calls=false",],
-		custom_heap_size: 67108864,
-		full_screen_container: "#canvas-container",
-		disable_context_menu: true
-	}
-
-	Module['INITIAL_MEMORY'] = extra_params.custom_heap_size;
-
-	Module['onRuntimeInitialized'] = function() {
-		Module.runApp("canvas", extra_params);
-	};
-
-	Module["locateFile"] = function(path, scriptDirectory)
-	{
-		// dmengine*.wasm is hardcoded in the built JS loader for WASM,
-		// we need to replace it here with the correct project name.
-		if (path == "dmengine.wasm" || path == "dmengine_release.wasm" || path == "dmengine_headless.wasm") {
-			path = "druid.wasm";
-		}
-		return scriptDirectory + path;
-	};
-
-	
-
-	var is_iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-	var buttonHeight = 0;
-	var prevInnerWidth = -1;
-	var prevInnerHeight = -1;
-	function resize_game_canvas() {
-		// Hack for iOS when exit from Fullscreen mode
-		if (is_iOS) {
-			window.scrollTo(0, 0);
-		}
-
-		var app_container = document.getElementById('app-container');
-		var game_canvas = document.getElementById('canvas');
-		var innerWidth = window.innerWidth;
-		var innerHeight = window.innerHeight - buttonHeight;
-		if (prevInnerWidth == innerWidth && prevInnerHeight == innerHeight)
-		{
-			return;
-		}
-		prevInnerWidth = innerWidth;
-		prevInnerHeight = innerHeight;
-		var width = 600;
-		var height = 900;
-		var targetRatio = width / height;
-		var actualRatio = innerWidth / innerHeight;
-	
-	
-	
-		//Fit
-		if (actualRatio > targetRatio) {
-			width = innerHeight * targetRatio;
-			height = innerHeight;
-			app_container.style.marginLeft = ((innerWidth - width) / 2) + "px";
-			app_container.style.marginTop = "0px";
-		}
-		else {
-			width = innerWidth;
-			height = innerWidth / targetRatio;
-			app_container.style.marginLeft = "0px";
-			app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
-		}
-	
-	
-		app_container.style.width = width + "px";
-		app_container.style.height = height + buttonHeight + "px";
-		game_canvas.width = width;
-		game_canvas.height = height;
-	}
-	resize_game_canvas();
-	window.addEventListener('resize', resize_game_canvas, false);
-	window.addEventListener('orientationchange', resize_game_canvas, false);
-	window.addEventListener('focus', resize_game_canvas, false);
-	</script>
 
 	<script id='engine-start' type='text/javascript'>
 		var runningFromFileWarning = document.getElementById("running-from-file-warning");
@@ -226,8 +150,7 @@
 			runningFromFileWarning.style.display = "block";
 		}
 		else {
-			EngineLoader.stream_wasm = "false" === "true";
-			EngineLoader.load("canvas", "druid");
+			EngineLoader.load("canvas", "Druid");
 			runningFromFileWarning.parentNode.removeChild(runningFromFileWarning);
 		}
 	</script>
