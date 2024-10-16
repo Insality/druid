@@ -1,17 +1,17 @@
-#!/bin/bash
+# Path to bob folder. It will find and save new bob.jar files inside
+bob_folder=./
+
+# You can point bob version for project in format "filename:sha"
+bob_sha="181:fd1ad4c17bfdcd890ea7176f2672c35102384419"
+
+# Select Defold channel. Values: stable, beta, alpha
+bob_channel="stable"
 
 # If true, it will check and download latest bob version. It will ignore bob_sha param
 use_latest_bob=false
 
-# Set patch (last value after dot) game version value as total git commits count (1.2.0 -> 1.2.{commits_count})
-# You allow to get SHA commit from version via: git rev-list --all --reverse | sed -n {N}p
-enable_incremental_version=true
-
-# You can point bob version for project in format "filename:sha"
-bob_sha="1.6.0:d9e9c49ab946c058f29a8b688c862d70f30e9c43"
-
-# Select Defold channel. Values: stable, beta, alpha
-bob_channel="stable"
+# Select Defold build server
+build_server="https://build.defold.com"
 
 # Is need to build html report
 is_build_html_report=true

@@ -87,7 +87,7 @@
 	<td class="summary">Return checkbox state</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, callback[, click_node=node[, initial_state=false]])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node, callback, click_node, initial_state)</a></td>
 	<td class="summary">The <a href="../modules/Checkbox.html#">Checkbox</a> constructor</td>
 	</tr>
 	<tr>
@@ -158,7 +158,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, callback[, click_node=node[, initial_state=false]])</strong>
+    <strong>init(self, node, callback, click_node, initial_state)</strong>
     </dt>
     <dd>
     The <a href="../modules/Checkbox.html#">Checkbox</a> constructor
@@ -179,14 +179,12 @@
          Checkbox callback
         </li>
         <li><span class="parameter">click_node</span>
-            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a></span>
-         Trigger node, by default equals to node
-         (<em>default</em> node)
+            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a> or <span class="type">nil</span></span>
+         Trigger node, by default equals to node. Default: node
         </li>
         <li><span class="parameter">initial_state</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          The initial state of checkbox, default - false
-         (<em>default</em> false)
         </li>
     </ul>
 
@@ -289,9 +287,8 @@
 
     <ul>
         <li><span class="parameter">click_node</span>
-            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a></span>
+            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a> or <span class="type">nil</span></span>
 
-         (<em>default</em> node)
         </li>
     </ul>
 

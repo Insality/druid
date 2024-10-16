@@ -138,7 +138,7 @@
 	<td class="summary">Return grid content size</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, parent, element[, in_row=1])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, parent, element, in_row)</a></td>
 	<td class="summary">The <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor</td>
 	</tr>
 	<tr>
@@ -154,8 +154,20 @@
 	<td class="summary">Set new in_row elements for grid</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#set_item_size">set_item_size(self[, width[, height]])</a></td>
+	<td class="summary">Set new node size for grid</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_items">set_items(self, nodes[, is_instant=false])</a></td>
+	<td class="summary">Set new items to the grid.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set_position_function">set_position_function(self, callback)</a></td>
 	<td class="summary">Change set position function for grid nodes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sort_nodes">sort_nodes(self, comparator)</a></td>
+	<td class="summary">Sort grid nodes by custom comparator function</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -496,7 +508,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, parent, element[, in_row=1])</strong>
+    <strong>init(self, parent, element, in_row)</strong>
     </dt>
     <dd>
     The <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor
@@ -517,9 +529,8 @@
          Element prefab. Need to get it size
         </li>
         <li><span class="parameter">in_row</span>
-            <span class="types"><span class="type">number</span></span>
-         How many nodes in row can be placed
-         (<em>default</em> 1)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         How many nodes in row can be placed. By default 1
         </li>
     </ul>
 
@@ -624,6 +635,73 @@
 
 </dd>
     <dt>
+    <a name = "set_item_size"></a>
+    <strong>set_item_size(self[, width[, height]])</strong>
+    </dt>
+    <dd>
+    Set new node size for grid
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">StaticGrid</span></span>
+         <a href="../modules/StaticGrid.html#">StaticGrid</a>
+        </li>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">number</span></span>
+         The new node width
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">height</span>
+            <span class="types"><span class="type">number</span></span>
+         The new node height
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.static_grid</span></span>
+        Current grid instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_items"></a>
+    <strong>set_items(self, nodes[, is_instant=false])</strong>
+    </dt>
+    <dd>
+    Set new items to the grid.  All previous items will be removed
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">StaticGrid</span></span>
+         <a href="../modules/StaticGrid.html#">StaticGrid</a>
+        </li>
+        <li><span class="parameter">nodes</span>
+            <span class="types"><span class="type">node[]</span></span>
+         The new grid nodes
+        </li>
+        <li><span class="parameter">is_instant</span>
+            <span class="types"><span class="type">boolean</span></span>
+         If true, update node positions instantly
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "set_position_function"></a>
     <strong>set_position_function(self, callback)</strong>
     </dt>
@@ -655,6 +733,37 @@
 
 
 </dd>
+    <dt>
+    <a name = "sort_nodes"></a>
+    <strong>sort_nodes(self, comparator)</strong>
+    </dt>
+    <dd>
+    Sort grid nodes by custom comparator function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">StaticGrid</span></span>
+         <a href="../modules/StaticGrid.html#">StaticGrid</a>
+        </li>
+        <li><span class="parameter">comparator</span>
+            <span class="types"><span class="type">function</span></span>
+         The comparator function. (a, b) -> boolean
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.static_grid</span></span>
+        Current grid instance
+    </ol>
+
+
+
+
+</dd>
 </dl>
     <h2 class="section-header "><a name="Tables"></a>Tables</h2>
 
@@ -672,14 +781,12 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">IS_DYNAMIC_NODE_POSES</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true, always center grid content as grid pivot sets
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, always center grid content as grid pivot sets. Default: false
         </li>
         <li><span class="parameter">IS_ALIGN_LAST_ROW</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If true, always align last row of the grid as grid pivot sets
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, always align last row of the grid as grid pivot sets. Default: false
         </li>
     </ul>
 

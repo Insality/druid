@@ -68,7 +68,6 @@
 -- @see Timer
 
 local helper = require("druid.helper")
-local class = require("druid.system.middleclass")
 local settings = require("druid.system.settings")
 local base_component = require("druid.component")
 
@@ -94,7 +93,7 @@ local back_handler = require("druid.base.back_handler")
 -- local dynamic_grid = require("druid.extended.dynamic_grid")
 -- local checkbox_group = require("druid.extended.checkbox_group")
 
-local DruidInstance = class("druid.druid_instance")
+local DruidInstance = {}
 
 local MSG_ADD_FOCUS = hash("acquire_input_focus")
 local MSG_REMOVE_FOCUS = hash("release_input_focus")
@@ -193,10 +192,6 @@ end
 local function process_input(self, action_id, action, components)
 	local is_input_consumed = false
 
-	if #components == 0 then
-		return false
-	end
-
 	for i = #components, 1, -1 do
 		local component = components[i]
 		local meta = component._meta
@@ -252,7 +247,7 @@ function DruidInstance.initialize(self, context, style)
 end
 
 
---- Create new component.
+-- Create new component.
 -- @tparam DruidInstance self
 -- @tparam BaseComponent component Component module
 -- @tparam any ... Other component params to pass it to component:init function
@@ -293,22 +288,26 @@ end
 -- Component `on_remove` function will be invoked, if exist.
 -- @tparam DruidInstance self
 -- @tparam BaseComponent component Component instance
+-- @treturn boolean True if component was removed
 function DruidInstance.remove(self, component)
 	if self._is_late_remove_enabled then
 		table.insert(self._late_remove, component)
-		return
+		return false
 	end
 
 	-- Recursive remove all children of component
 	local children = component._meta.children
 	for i = #children, 1, -1 do
 		self:remove(children[i])
-		local parent = children[i]:get_parent_component()
-		if parent then
-			parent:__remove_children(children[i])
-		end
 		children[i] = nil
 	end
+
+	local parent = component:get_parent_component()
+	if parent then
+		parent:__remove_child(component)
+	end
+
+	local is_removed = false
 
 	local all_components = self.components_all
 	for i = #all_components, 1, -1 do
@@ -317,6 +316,7 @@ function DruidInstance.remove(self, component)
 				component:on_remove()
 			end
 			table.remove(all_components, i)
+			is_removed = true
 		end
 	end
 
@@ -330,6 +330,8 @@ function DruidInstance.remove(self, component)
 			end
 		end
 	end
+
+	return is_removed
 end
 
 
@@ -473,10 +475,10 @@ end
 -- If whitelist is not empty and component not contains in this list,
 -- component will be not processed on input step
 -- @tparam DruidInstance self
--- @tparam[opt=nil] table|BaseComponent whitelist_components The array of component to whitelist
+-- @tparam table|BaseComponent|nil whitelist_components The array of component to whitelist
 -- @treturn self @{DruidInstance}
 function DruidInstance.set_whitelist(self, whitelist_components)
-	if whitelist_components and whitelist_components.isInstanceOf then
+	if whitelist_components and whitelist_components._component then
 		whitelist_components = { whitelist_components }
 	end
 
@@ -495,10 +497,10 @@ end
 -- If blacklist is not empty and component contains in this list,
 -- component will be not processed on input step
 -- @tparam DruidInstance self @{DruidInstance}
--- @tparam[opt=nil] table|BaseComponent blacklist_components The array of component to blacklist
+-- @tparam table|BaseComponent|nil blacklist_components The array of component to blacklist
 -- @treturn self @{DruidInstance}
 function DruidInstance.set_blacklist(self, blacklist_components)
-	if blacklist_components and blacklist_components.isInstanceOf then
+	if blacklist_components and blacklist_components._component then
 		blacklist_components = { blacklist_components }
 	end
 
@@ -556,8 +558,8 @@ end
 -- @tparam DruidInstance self
 -- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @tparam function|nil callback Button callback
--- @tparam table|nil params Button callback params
--- @tparam node|nil anim_node Button anim node (node, if not provided)
+-- @tparam any|nil params Button callback params
+-- @tparam node|string|nil anim_node Button anim node (node, if not provided)
 -- @treturn Button @{Button} component
 function DruidInstance.new_button(self, node, callback, params, anim_node)
 	return DruidInstance.new(self, button, node, callback, params, anim_node)
@@ -587,9 +589,10 @@ end
 -- @tparam DruidInstance self
 -- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @tparam function|nil on_hover_callback Hover callback
+-- @tparam function|nil on_mouse_hover_callback Mouse hover callback
 -- @treturn Hover @{Hover} component
-function DruidInstance.new_hover(self, node, on_hover_callback)
-	return DruidInstance.new(self, hover, node, on_hover_callback)
+function DruidInstance.new_hover(self, node, on_hover_callback, on_mouse_hover_callback)
+	return DruidInstance.new(self, hover, node, on_hover_callback, on_mouse_hover_callback)
 end
 
 
@@ -705,7 +708,7 @@ end
 --- Create @{Input} component
 -- @tparam DruidInstance self
 -- @tparam string|node click_node Button node to enabled input component
--- @tparam string|node text_node Text node what will be changed on user input
+-- @tparam string|node|druid.text text_node Text node what will be changed on user input
 -- @tparam number|nil keyboard_type Gui keyboard type for input field
 -- @treturn Input @{Input} component
 function DruidInstance.new_input(self, click_node, text_node, keyboard_type)
@@ -715,9 +718,9 @@ end
 
 --- Create @{CheckboxGroup} component
 -- @tparam DruidInstance self
--- @tparam node[] nodes Array of gui node
+-- @tparam (node|string)[] nodes Array of gui node
 -- @tparam function callback Checkbox callback
--- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+-- @tparam (node|string)[]|nil click_nodes Array of trigger nodes, by default equals to nodes
 -- @treturn CheckboxGroup @{CheckboxGroup} component
 function DruidInstance.new_checkbox_group(self, nodes, callback, click_nodes)
 	return helper.require_component_message("checkbox_group")
@@ -727,7 +730,7 @@ end
 --- Create @{DataList} component
 -- @tparam DruidInstance self
 -- @tparam Scroll druid_scroll The Scroll instance for Data List component
--- @tparam StaticGrid|DynamicGrid druid_grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
+-- @tparam StaticGrid druid_grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 -- @treturn DataList @{DataList} component
 function DruidInstance.new_data_list(self, druid_scroll, druid_grid, create_function)
@@ -737,9 +740,9 @@ end
 
 --- Create @{RadioGroup} component
 -- @tparam DruidInstance self
--- @tparam node[] nodes Array of gui node
+-- @tparam (node|string)[] nodes Array of gui node
 -- @tparam function callback Radio callback
--- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+-- @tparam (node|string)[]|nil click_nodes Array of trigger nodes, by default equals to nodes
 -- @treturn RadioGroup @{RadioGroup} component
 function DruidInstance.new_radio_group(self, nodes, callback, click_nodes)
 	return helper.require_component_message("radio_group")

@@ -106,7 +106,7 @@ return AwesomeComponent
 	<td class="summary">Context used as first arg in all Druid events</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_druid">get_druid(self)</a></td>
+	<td class="name" nowrap><a href="#get_druid">get_druid(self, template, nodes)</a></td>
 	<td class="summary">Get Druid instance for inner component creation.</td>
 	</tr>
 	<tr>
@@ -226,7 +226,7 @@ return AwesomeComponent
 </dd>
     <dt>
     <a name = "get_druid"></a>
-    <strong>get_druid(self)</strong>
+    <strong>get_druid(self, template, nodes)</strong>
     </dt>
     <dd>
     Get Druid instance for inner component creation.
@@ -237,6 +237,14 @@ return AwesomeComponent
         <li><span class="parameter">self</span>
             <span class="types"><span class="type">BaseComponent</span></span>
          <a href="../modules/BaseComponent.html#">BaseComponent</a>
+        </li>
+        <li><span class="parameter">template</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         The template name
+        </li>
+        <li><span class="parameter">nodes</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">nil</span></span>
+         The nodes table
         </li>
     </ul>
 

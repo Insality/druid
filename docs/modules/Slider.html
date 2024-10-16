@@ -86,8 +86,16 @@
 	<td class="summary">The <a href="../modules/Slider.html#">Slider</a> constructor</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#is_enabled">is_enabled(self)</a></td>
+	<td class="summary">Check if Slider component is enabled</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set">set(self, value, is_silent)</a></td>
 	<td class="summary">Set value for slider</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_enabled">set_enabled(self, is_enabled)</a></td>
+	<td class="summary">Set Slider input enabled or disabled</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_input_node">set_input_node(self, input_node)</a></td>
@@ -179,6 +187,33 @@
 
 </dd>
     <dt>
+    <a name = "is_enabled"></a>
+    <strong>is_enabled(self)</strong>
+    </dt>
+    <dd>
+    Check if Slider component is enabled
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Slider</span></span>
+         <a href="../modules/Slider.html#">Slider</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "set"></a>
     <strong>set(self, value, is_silent)</strong>
     </dt>
@@ -208,6 +243,31 @@
 
 </dd>
     <dt>
+    <a name = "set_enabled"></a>
+    <strong>set_enabled(self, is_enabled)</strong>
+    </dt>
+    <dd>
+    Set Slider input enabled or disabled
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Slider</span></span>
+         <a href="../modules/Slider.html#">Slider</a>
+        </li>
+        <li><span class="parameter">is_enabled</span>
+            <span class="types"><span class="type">boolean</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "set_input_node"></a>
     <strong>set_input_node(self, input_node)</strong>
     </dt>
@@ -225,7 +285,7 @@
          <a href="../modules/Slider.html#">Slider</a>
         </li>
         <li><span class="parameter">input_node</span>
-            <span class="types"><a class="type" href="../modules/Slider.html#node">node</a></span>
+            <span class="types"><a class="type" href="../modules/Slider.html#node">node</a>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
 
         </li>
     </ul>
@@ -291,7 +351,7 @@
 
     <ul>
         <li><span class="parameter">dist</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">vector3</span></span>
 
         </li>
     </ul>

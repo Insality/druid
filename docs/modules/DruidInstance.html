@@ -142,10 +142,6 @@ end
 	<td class="summary">Call this in gui_script final function.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new">new(self, component, ...)</a></td>
-	<td class="summary">Create new component.</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#new_back_handler">new_back_handler(self, callback, params)</a></td>
 	<td class="summary">Create <a href="../modules/BackHandler.html#">BackHandler</a> component</td>
 	</tr>
@@ -162,7 +158,7 @@ end
 	<td class="summary">Create <a href="../modules/Checkbox.html#">Checkbox</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_checkbox_group">new_checkbox_group(self, nodes, callback[, click_nodes=node])</a></td>
+	<td class="name" nowrap><a href="#new_checkbox_group">new_checkbox_group(self, nodes, callback, click_nodes)</a></td>
 	<td class="summary">Create <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> component</td>
 	</tr>
 	<tr>
@@ -182,7 +178,7 @@ end
 	<td class="summary">Create <a href="../modules/Hotkey.html#">Hotkey</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_hover">new_hover(self, node, on_hover_callback)</a></td>
+	<td class="name" nowrap><a href="#new_hover">new_hover(self, node, on_hover_callback, on_mouse_hover_callback)</a></td>
 	<td class="summary">Create <a href="../modules/Hover.html#">Hover</a> component</td>
 	</tr>
 	<tr>
@@ -202,7 +198,7 @@ end
 	<td class="summary">Create <a href="../modules/Progress.html#">Progress</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_radio_group">new_radio_group(self, nodes, callback[, click_nodes=node])</a></td>
+	<td class="name" nowrap><a href="#new_radio_group">new_radio_group(self, nodes, callback, click_nodes)</a></td>
 	<td class="summary">Create <a href="../modules/RadioGroup.html#">RadioGroup</a> component</td>
 	</tr>
 	<tr>
@@ -246,11 +242,11 @@ end
 	<td class="summary">Remove created component from Druid instance.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_blacklist">set_blacklist(self[, blacklist_components=nil])</a></td>
+	<td class="name" nowrap><a href="#set_blacklist">set_blacklist(self, blacklist_components)</a></td>
 	<td class="summary">Set blacklist components for input processing.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_whitelist">set_whitelist(self[, whitelist_components=nil])</a></td>
+	<td class="name" nowrap><a href="#set_whitelist">set_whitelist(self, whitelist_components)</a></td>
 	<td class="summary">Set whitelist components for input processing.</td>
 	</tr>
 	<tr>
@@ -282,41 +278,6 @@ end
         </li>
     </ul>
 
-
-
-
-
-</dd>
-    <dt>
-    <a name = "new"></a>
-    <strong>new(self, component, ...)</strong>
-    </dt>
-    <dd>
-    Create new component.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DruidInstance</span></span>
-
-        </li>
-        <li><span class="parameter">component</span>
-            <span class="types"><span class="type">BaseComponent</span></span>
-         Component module
-        </li>
-        <li><span class="parameter">...</span>
-            <span class="types"><span class="type">any</span></span>
-         Other component params to pass it to component:init function
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">BaseComponent</span></span>
-        Component instance
-    </ol>
 
 
 
@@ -411,11 +372,11 @@ end
          Button callback
         </li>
         <li><span class="parameter">params</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">nil</span></span>
+            <span class="types"><span class="type">any</span> or <span class="type">nil</span></span>
          Button callback params
         </li>
         <li><span class="parameter">anim_node</span>
-            <span class="types"><span class="type">node</span> or <span class="type">nil</span></span>
+            <span class="types"><span class="type">node</span>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Button anim node (node, if not provided)
         </li>
     </ul>
@@ -476,7 +437,7 @@ end
 </dd>
     <dt>
     <a name = "new_checkbox_group"></a>
-    <strong>new_checkbox_group(self, nodes, callback[, click_nodes=node])</strong>
+    <strong>new_checkbox_group(self, nodes, callback, click_nodes)</strong>
     </dt>
     <dd>
     Create <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> component
@@ -489,7 +450,7 @@ end
 
         </li>
         <li><span class="parameter">nodes</span>
-            <span class="types"><span class="type">node[]</span></span>
+            <span class="types"><span class="type">(node</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string)[]</a></span>
          Array of gui node
         </li>
         <li><span class="parameter">callback</span>
@@ -497,9 +458,8 @@ end
          Checkbox callback
         </li>
         <li><span class="parameter">click_nodes</span>
-            <span class="types"><span class="type">node[]</span></span>
+            <span class="types"><span class="type">(node</span>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string)[]</a> or <span class="type">nil</span></span>
          Array of trigger nodes, by default equals to nodes
-         (<em>default</em> node)
         </li>
     </ul>
 
@@ -660,7 +620,7 @@ end
 </dd>
     <dt>
     <a name = "new_hover"></a>
-    <strong>new_hover(self, node, on_hover_callback)</strong>
+    <strong>new_hover(self, node, on_hover_callback, on_mouse_hover_callback)</strong>
     </dt>
     <dd>
     Create <a href="../modules/Hover.html#">Hover</a> component
@@ -679,6 +639,10 @@ end
         <li><span class="parameter">on_hover_callback</span>
             <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Hover callback
+        </li>
+        <li><span class="parameter">on_mouse_hover_callback</span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
+         Mouse hover callback
         </li>
     </ul>
 
@@ -712,7 +676,7 @@ end
          Button node to enabled input component
         </li>
         <li><span class="parameter">text_node</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a>, <span class="type">node</span> or <span class="type">druid.text</span></span>
          Text node what will be changed on user input
         </li>
         <li><span class="parameter">keyboard_type</span>
@@ -847,7 +811,7 @@ end
 </dd>
     <dt>
     <a name = "new_radio_group"></a>
-    <strong>new_radio_group(self, nodes, callback[, click_nodes=node])</strong>
+    <strong>new_radio_group(self, nodes, callback, click_nodes)</strong>
     </dt>
     <dd>
     Create <a href="../modules/RadioGroup.html#">RadioGroup</a> component
@@ -860,7 +824,7 @@ end
 
         </li>
         <li><span class="parameter">nodes</span>
-            <span class="types"><span class="type">node[]</span></span>
+            <span class="types"><span class="type">(node</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string)[]</a></span>
          Array of gui node
         </li>
         <li><span class="parameter">callback</span>
@@ -868,9 +832,8 @@ end
          Radio callback
         </li>
         <li><span class="parameter">click_nodes</span>
-            <span class="types"><span class="type">node[]</span></span>
+            <span class="types"><span class="type">(node</span>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string)[]</a> or <span class="type">nil</span></span>
          Array of trigger nodes, by default equals to nodes
-         (<em>default</em> node)
         </li>
     </ul>
 
@@ -1211,7 +1174,7 @@ end
          Message from on_message
         </li>
         <li><span class="parameter">sender</span>
-            <span class="types"><span class="type">hash</span></span>
+            <span class="types"><span class="type">url</span></span>
          Sender from on_message
         </li>
     </ul>
@@ -1242,6 +1205,12 @@ end
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        True if component was removed
+    </ol>
 
 
 
@@ -1249,7 +1218,7 @@ end
 </dd>
     <dt>
     <a name = "set_blacklist"></a>
-    <strong>set_blacklist(self[, blacklist_components=nil])</strong>
+    <strong>set_blacklist(self, blacklist_components)</strong>
     </dt>
     <dd>
     Set blacklist components for input processing.
@@ -1264,9 +1233,8 @@ end
          <a href="../modules/DruidInstance.html#">DruidInstance</a>
         </li>
         <li><span class="parameter">blacklist_components</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">BaseComponent</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a>, <span class="type">BaseComponent</span> or <span class="type">nil</span></span>
          The array of component to blacklist
-         (<em>default</em> nil)
         </li>
     </ul>
 
@@ -1283,7 +1251,7 @@ end
 </dd>
     <dt>
     <a name = "set_whitelist"></a>
-    <strong>set_whitelist(self[, whitelist_components=nil])</strong>
+    <strong>set_whitelist(self, whitelist_components)</strong>
     </dt>
     <dd>
     Set whitelist components for input processing.
@@ -1298,9 +1266,8 @@ end
 
         </li>
         <li><span class="parameter">whitelist_components</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">BaseComponent</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a>, <span class="type">BaseComponent</span> or <span class="type">nil</span></span>
          The array of component to whitelist
-         (<em>default</em> nil)
         </li>
     </ul>
 

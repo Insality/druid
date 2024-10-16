@@ -17,7 +17,7 @@ jobs:
           - name: Build && Run
             run: |
               deployer_url="https://raw.githubusercontent.com/Insality/defold-deployer/1/deployer.sh"
-              curl -s ${deployer_url} | bash -s lbd --headless --settings ./unit_test.txt
+              curl -s ${deployer_url} | bash -s lbd --headless --settings ./test/test.ini
 
           - name: Upload test report
             run: bash <(curl -s https://codecov.io/bash)

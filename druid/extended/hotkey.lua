@@ -7,14 +7,17 @@
 -- @within BaseComponent
 -- @alias druid.hotkey
 
---- On change state callback(self, state)
--- @tfield DruidEvent on_change_state @{DruidEvent}
+--- On hotkey released callback(self, argument)
+-- @tfield DruidEvent on_hotkey_pressed @{DruidEvent}
+
+--- On hotkey released callback(self, argument)
+-- @tfield DruidEvent on_hotkey_released @{DruidEvent}
 
 --- Visual node
 -- @tfield node node
 
 --- Button trigger node
--- @tfield[opt=node] node click_node
+-- @tfield node|nil click_node
 
 --- Button component from click_node
 -- @tfield Button button @{Button}
@@ -24,7 +27,6 @@
 local helper = require("druid.helper")
 local component = require("druid.component")
 local Event = require("druid.event")
-local const = require("druid.const")
 
 local Hotkey = component.create("hotkey")
 

@@ -10,4 +10,8 @@ Thumbs.db
 builtins
 dist
 deployer_version_settings.txt
+
 .deployer_cache
+bob*.jar
+manifest.private.der
+manifest.public.der

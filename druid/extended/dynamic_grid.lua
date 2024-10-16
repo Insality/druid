@@ -101,7 +101,7 @@ end
 -- @tparam number index The grid element index
 -- @tparam node node The node to be placed
 -- @tparam number|nil origin_index Index of nearby node
--- @treturn vector3 Node position
+-- @treturn vector3 node position
 function DynamicGrid.get_pos(self, index, node, origin_index)
 	local origin_node = self.nodes[origin_index]
 

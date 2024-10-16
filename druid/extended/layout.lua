@@ -1,4 +1,4 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
+-- Copyright (c) 2024 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
 --- Layout management on node
 --
@@ -13,205 +13,411 @@
 --- Current layout mode
 -- @tfield string mode
 
----On window resize callback(self, new_size)
--- @tfield DruidEvent on_size_changed @{DruidEvent}
-
 ---
 
-
-local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
-local Event = require("druid.event")
 
+-- @class druid.layout.row_data
+-- @tfield width number
+-- @tfield height number
+-- @tfield count number
 
-local Layout = component.create("layout")
+-- @class druid.layout.rows_data
+-- @tfield total_width number
+-- @tfield total_height number
+-- @tfield nodes_width table<node, number>
+-- @tfield nodes_height table<node, number>
+-- @tfield rows druid.layout.row_data[]>
 
+-- @class druid.layout: druid.base_component
+local M = component.create("layout")
 
---- The @{Layout} constructor
+-- The @{Layout} constructor
 -- @tparam Layout self @{Layout}
 -- @tparam node node Gui node
--- @tparam string mode The layout mode (from const.LAYOUT_MODE)
+-- @tparam string layout_type The layout mode (from const.LAYOUT_MODE)
 -- @tparam function|nil on_size_changed_callback The callback on window resize
-function Layout.init(self, node, mode, on_size_changed_callback)
+function M.init(self, node, layout_type)
 	self.node = self:get_node(node)
 
-	self._min_size = nil
-	self._max_size = nil
-	self._current_size = vmath.vector3(0)
-	self._inited = false
-	self._max_gui_upscale = nil
-	self._fit_node = nil
-
-	self._anchors = {}
-
-	self.mode = mode or const.LAYOUT_MODE.FIT
-
-	self.on_size_changed = Event(on_size_changed_callback)
+	self.is_dirty = true
+	self.entities = {}
+	self.margin = { x = 0, y = 0 }
+	self.padding = gui.get_slice9(self.node)
+	self.type = layout_type or "horizontal"
+	self.is_resize_width = false
+	self.is_resize_height = false
+	self.is_justify = false
 end
 
-
-function Layout.on_late_init(self)
-	self._inited = true
-	self.origin_size = self.origin_size or gui.get_size(self.node)
-	self.fit_size = self.fit_size or vmath.vector3(self.origin_size)
-	self.pivot = helper.get_pivot_offset(gui.get_pivot(self.node))
-	self.origin_position = gui.get_position(self.node)
-	self.position = vmath.vector3(self.origin_position)
-	gui.set_size_mode(self.node, gui.SIZE_MODE_MANUAL)
-	gui.set_adjust_mode(self.node, gui.ADJUST_FIT)
-	self:on_window_resized()
-end
-
-
-function Layout.on_window_resized(self)
-	if not self._inited then
+function M:update()
+	if not self.is_dirty then
 		return
 	end
 
-	local x_koef, y_koef = helper.get_screen_aspect_koef()
-
-	local revert_scale = 1
-	if self._max_gui_upscale then
-		revert_scale = self._max_gui_upscale / helper.get_gui_scale()
-		revert_scale = math.min(revert_scale, 1)
-	end
-	gui.set_scale(self.node, vmath.vector3(revert_scale))
-
-	if self._fit_node then
-		self.fit_size = gui.get_size(self._fit_node)
-		self.fit_size.x = self.fit_size.x / x_koef
-		self.fit_size.y = self.fit_size.y / y_koef
-	end
-
-	x_koef = self.fit_size.x / self.origin_size.x * x_koef
-	y_koef = self.fit_size.y / self.origin_size.y * y_koef
-
-	local new_size = vmath.vector3(self.origin_size)
-
-	if self.mode == const.LAYOUT_MODE.STRETCH then
-		new_size.x = new_size.x * x_koef / revert_scale
-		new_size.y = new_size.y * y_koef / revert_scale
-	end
-
-	if self.mode == const.LAYOUT_MODE.STRETCH_X then
-		new_size.x = new_size.x * x_koef / revert_scale
-	end
-
-	if self.mode == const.LAYOUT_MODE.STRETCH_Y then
-		new_size.y = new_size.y * y_koef / revert_scale
-	end
-
-	-- Fit to the stretched container (node size or other defined)
-	if self.mode == const.LAYOUT_MODE.ZOOM_MIN then
-		new_size = new_size * math.min(x_koef, y_koef)
-	end
-	if self.mode == const.LAYOUT_MODE.ZOOM_MAX then
-		new_size = new_size * math.max(x_koef, y_koef)
-	end
-
-	if self._min_size then
-		new_size.x = math.max(new_size.x, self._min_size.x)
-		new_size.y = math.max(new_size.y, self._min_size.y)
-	end
-	if self._max_size then
-		new_size.x = math.min(new_size.x, self._max_size.x)
-		new_size.y = math.min(new_size.y, self._max_size.y)
-	end
-	self._current_size = new_size
-	gui.set_size(self.node, new_size)
-
-	self.position.x = self.origin_position.x + self.origin_position.x * (x_koef - 1)
-	self.position.y = self.origin_position.y + self.origin_position.y * (y_koef - 1)
-	gui.set_position(self.node, self.position)
-
-	self.on_size_changed:trigger(self:get_context(), new_size)
+	self:refresh_layout()
 end
 
 
---- Set minimal size of layout node
 -- @tparam Layout self @{Layout}
--- @tparam vector3 min_size
--- @treturn Layout @{Layout}
-function Layout.set_min_size(self, min_size)
-	self._min_size = min_size
+-- @tparam number|nil margin_x
+-- @tparam number|nil margin_y
+-- @treturn druid.layout @{Layout}
+function M.set_margin(self, margin_x, margin_y)
+	self.margin.x = margin_x or self.margin.x
+	self.margin.y = margin_y or self.margin.y
+	self.is_dirty = true
+
 	return self
 end
 
 
---- Set maximum size of layout node
 -- @tparam Layout self @{Layout}
--- @tparam vector3 max_size
--- @treturn Layout @{Layout}
-function Layout.set_max_size(self, max_size)
-	self._max_size = max_size
+-- @tparam vector4 padding The vector4 with padding values, where x - left, y - top, z - right, w - bottom
+-- @treturn druid.layout @{Layout}
+function M.set_padding(self, padding)
+	self.padding = padding
+	self.is_dirty = true
+
 	return self
 end
 
 
---- Set new origin position of layout node. You should apply this on node movement
 -- @tparam Layout self @{Layout}
--- @tparam vector3 new_origin_position
--- @treturn Layout @{Layout}
-function Layout.set_origin_position(self, new_origin_position)
-	self.origin_position = new_origin_position or self.origin_position
-	self:on_window_resized()
+-- @treturn druid.layout @{Layout}
+function M.set_dirty(self)
+	self.is_dirty = true
+
 	return self
 end
 
 
---- Set new origin size of layout node. You should apply this on node manual size change
 -- @tparam Layout self @{Layout}
--- @tparam vector3 new_origin_size
--- @treturn Layout @{Layout}
-function Layout.set_origin_size(self, new_origin_size)
-	self.origin_size = new_origin_size or self.origin_size
-	self:on_window_resized()
+-- @tparam boolean is_justify
+-- @treturn druid.layout @{Layout}
+function M.set_justify(self, is_justify)
+	self.is_justify = is_justify
+	self.is_dirty = true
+
 	return self
 end
 
 
---- Set max gui upscale for FIT adjust mode (or side). It happens on bigger render gui screen
 -- @tparam Layout self @{Layout}
--- @tparam number max_gui_upscale
--- @treturn Layout @{Layout}
-function Layout.set_max_gui_upscale(self, max_gui_upscale)
-	self._max_gui_upscale = max_gui_upscale
-	self:on_window_resized()
-end
+-- @tparam string type The layout type: "horizontal", "vertical", "horizontal_wrap"
+-- @treturn druid.layout @{Layout}
+function M.set_type(self, type)
+	self.type = type
+	self.is_dirty = true
 
-
---- Set size for layout node to fit inside it
--- @tparam Layout self @{Layout}
--- @tparam vector3 target_size
--- @treturn Layout @{Layout}
-function Layout.fit_into_size(self, target_size)
-	self.fit_size = target_size
-	self:on_window_resized()
 	return self
 end
 
 
---- Set node for layout node to fit inside it. Pass nil to reset
 -- @tparam Layout self @{Layout}
--- @tparam node|nil node
--- @treturn Layout @{Layout}
-function Layout.fit_into_node(self, node)
-	self._fit_node = node
-	self:on_window_resized()
+-- @tparam boolean is_hug_width
+-- @tparam boolean is_hug_height
+-- @treturn druid.layout @{Layout}
+function M.set_hug_content(self, is_hug_width, is_hug_height)
+	self.is_resize_width = is_hug_width or false
+	self.is_resize_height = is_hug_height or false
+	self.is_dirty = true
+
 	return self
 end
 
 
---- Set current size for layout node to fit inside it
 -- @tparam Layout self @{Layout}
--- @treturn Layout @{Layout}
-function Layout.fit_into_window(self)
-	return self:fit_into_size(vmath.vector3(
-		gui.get_width(),
-		gui.get_height(),
-		0))
+-- @tparam string|node node_or_node_id
+-- @treturn druid.layout @{Layout}
+function M.add(self, node_or_node_id)
+	-- Acquire node from entity or by id
+	local node = node_or_node_id
+	if type(node_or_node_id) == "table" then
+		assert(node_or_node_id.node, "The entity should have a node")
+		node = node_or_node_id.node
+	else
+		-- @cast node_or_node_id string|node
+		node = self:get_node(node_or_node_id)
+	end
+
+	-- @cast node node
+	table.insert(self.entities, node)
+	gui.set_parent(node, self.node)
+
+	self.is_dirty = true
+
+	return self
 end
 
 
-return Layout
+-- @tparam Layout self @{Layout}
+-- @treturn druid.layout @{Layout}
+function M.refresh_layout(self)
+	local layout_node = self.node
+
+	local entities = self.entities
+	local type = self.type -- vertical, horizontal, horizontal_wrap
+	local margin = self.margin -- {x: horizontal, y: vertical} in pixels, between elements
+	local padding = self.padding -- {x: left, y: top, z: right, w: bottom} in pixels
+	local is_justify = self.is_justify
+	local size = gui.get_size(layout_node)
+	local max_width = size.x - padding.x - padding.z
+	local max_height = size.y - padding.y - padding.w
+	local layout_pivot_offset = helper.get_pivot_offset(gui.get_pivot(layout_node)) -- {x: -0.5, y: -0.5} - is left bot, {x: 0.5, y: 0.5} - is right top
+
+	local rows_data = self:calculate_rows_data()
+	local rows = rows_data.rows
+	local row_index = 1
+	local row = rows[row_index]
+
+	-- Current x and Current y is a top left corner of the node
+	local current_x = -row.width * (0.5 + layout_pivot_offset.x)
+	local current_y = rows_data.total_height * (0.5 - layout_pivot_offset.y)
+
+	if is_justify then
+		if (type == "horizontal" or type == "horizontal_wrap") and row.count > 1 then
+			current_x = -max_width * (0.5 + layout_pivot_offset.x)
+		end
+		if type == "vertical" then
+			current_y = max_height * (0.5 - layout_pivot_offset.y)
+		end
+	end
+
+	for index = 1, #entities do
+		local node = entities[index]
+		local node_width = rows_data.nodes_width[node]
+		local node_height = rows_data.nodes_height[node]
+		local pivot_offset = helper.get_pivot_offset(gui.get_pivot(node))
+
+		if node_width > 0 and node_height > 0 then
+			-- Calculate position for current node
+			local position_x, position_y
+
+			if type == "horizontal" then
+				position_x = current_x + node_width * (0.5 + pivot_offset.x)
+				position_y = current_y - row.height * (0.5 - pivot_offset.y)
+
+				local node_margin = margin.x
+				if is_justify and row.count > 1 then
+					node_margin = (max_width - row.width) / (row.count - 1) + margin.x
+				end
+				current_x = current_x + node_width + node_margin
+			end
+
+			if type == "vertical" then
+				local node_margin = margin.y
+				if is_justify then
+					node_margin = (max_height - rows_data.total_height) / (#rows - 1) + margin.y
+				end
+
+				current_x = -row.width * (0.5 + layout_pivot_offset.x)
+
+				position_x = current_x + row.width * (0.5 + pivot_offset.x)
+				position_y = current_y - node_height * (0.5 - pivot_offset.y)
+
+				current_y = current_y - node_height - node_margin
+
+				row_index = row_index + 1
+				row = rows[row_index]
+			end
+
+			if type == "horizontal_wrap" then
+				local width = row.width
+				if is_justify and row.count > 0 then
+					width = math.max(row.width, max_width)
+				end
+				local new_row_width = width * (0.5 - layout_pivot_offset.x)
+
+				-- Compare with eps due the float loss and element flickering
+				if current_x + node_width - new_row_width > 0.0001 then
+					if row_index < #rows then
+						row_index = row_index + 1
+						row = rows[row_index]
+					end
+
+					current_x = -row.width * (0.5 + layout_pivot_offset.x)
+					current_y = current_y - row.height - margin.y
+					if is_justify and row.count > 1 then
+						current_x = -max_width * (0.5 + layout_pivot_offset.x)
+					end
+				end
+
+				position_x = current_x + node_width * (0.5 + pivot_offset.x)
+				position_y = current_y - row.height * (0.5 - pivot_offset.y)
+
+				local node_margin = margin.x
+				if is_justify and row.count > 1 then
+					node_margin = (max_width - row.width) / (row.count - 1) + margin.x
+				end
+				current_x = current_x + node_width + node_margin
+			end
+
+			do -- Padding offset
+				if layout_pivot_offset.x == -0.5 then
+					position_x = position_x + padding.x
+				end
+				if layout_pivot_offset.y == 0.5 then
+					position_y = position_y - padding.y
+				end
+				if layout_pivot_offset.x == 0.5 then
+					position_x = position_x - padding.z
+				end
+				if layout_pivot_offset.y == -0.5 then
+					position_y = position_y + padding.w
+				end
+			end
+
+			self:set_node_position(node, position_x, position_y)
+		end
+	end
+
+	if self.is_resize_width or self.is_resize_height then
+		if self.is_resize_width then
+			size.x = rows_data.total_width + padding.x + padding.z
+		end
+		if self.is_resize_height then
+			size.y = rows_data.total_height + padding.y + padding.w
+		end
+		gui.set_size(layout_node, size)
+	end
+
+	self.is_dirty = false
+
+	return self
+end
+
+
+-- @tparam Layout self @{Layout}
+-- @treturn druid.layout @{Layout}
+function M.clear_layout(self)
+	for index = #self.entities, 1, -1 do
+		self.entities[index] = nil
+	end
+
+	self.is_dirty = true
+
+	return self
+end
+
+
+-- @tparam node node
+-- @treturn number, number
+-- @local
+function M.get_node_size(node)
+	if not gui.is_enabled(node, false) then
+		return 0, 0
+	end
+
+	local scale = gui.get_scale(node)
+
+	-- If node has text - get text size instead of node size
+	if gui.get_text(node) then
+		local text_metrics = helper.get_text_metrics_from_node(node)
+		return text_metrics.width * scale.x, text_metrics.height * scale.y
+	end
+
+	local size = gui.get_size(node)
+	return size.x * scale.x, size.y * scale.y
+end
+
+
+-- @tparam Layout self @{Layout}
+-- Calculate rows data for layout. Contains total width, height and rows info (width, height, count of elements in row)
+-- @treturn druid.layout.rows_data
+-- @local
+function M.calculate_rows_data(self)
+	local entities = self.entities
+	local margin = self.margin
+	local type = self.type
+	local padding = self.padding
+
+	local size = gui.get_size(self.node)
+	local max_width = size.x - padding.x - padding.z
+
+	-- Collect rows info about width, height and count of elements in row
+	local current_row = { width = 0, height = 0, count = 0 }
+	local rows_data = {
+		total_width = 0,
+		total_height = 0,
+		nodes_width = {},
+		nodes_height = {},
+		rows = { current_row }
+	}
+
+	for index = 1, #entities do
+		local node = entities[index]
+		local node_width = rows_data.nodes_width[node]
+		local node_height = rows_data.nodes_height[node]
+
+		-- Get node size if it's not calculated yet
+		if not node_width or not node_height then
+			node_width, node_height = M.get_node_size(node)
+			rows_data.nodes_width[node] = node_width
+			rows_data.nodes_height[node] = node_height
+		end
+
+		if node_width > 0 and node_height > 0 then
+			if type == "horizontal" then
+				current_row.width = current_row.width + node_width + margin.x
+				current_row.height = math.max(current_row.height, node_height)
+				current_row.count = current_row.count + 1
+			end
+
+			if type == "vertical" then
+				if current_row.count > 0 then
+					current_row = { width = 0, height = 0, count = 0 }
+					table.insert(rows_data.rows, current_row)
+				end
+
+				current_row.width = math.max(current_row.width, node_width + margin.x)
+				current_row.height = node_height
+				current_row.count = current_row.count + 1
+			end
+
+			if type == "horizontal_wrap" then
+				if current_row.width + node_width > max_width and current_row.count > 0 then
+					current_row = { width = 0, height = 0, count = 0 }
+					table.insert(rows_data.rows, current_row)
+				end
+
+				current_row.width = current_row.width + node_width + margin.x
+				current_row.height = math.max(current_row.height, node_height)
+				current_row.count = current_row.count + 1
+			end
+		end
+	end
+
+	-- Remove last margin of each row
+	-- Calculate total width and height
+	local rows_count = #rows_data.rows
+	for index = 1, rows_count do
+		local row = rows_data.rows[index]
+		if row.width > 0 then
+			row.width = row.width - margin.x
+		end
+
+		rows_data.total_width = math.max(rows_data.total_width, row.width)
+		rows_data.total_height = rows_data.total_height + row.height
+	end
+
+	rows_data.total_height = rows_data.total_height + margin.y * (rows_count - 1)
+	return rows_data
+end
+
+-- @tparam node node
+-- @tparam number x
+-- @tparam number y
+-- @treturn node
+-- @local
+function M:set_node_position(node, x, y)
+	local position = gui.get_position(node)
+	position.x = x
+	position.y = y
+	gui.set_position(node, position)
+
+	return node
+end
+
+return M

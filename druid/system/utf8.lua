@@ -688,7 +688,8 @@ local function matcherGenerator(regex, plain)
 		local sum = 0
 		local bc, ec = utf8sub(str, 1, 1), utf8sub(str, 2, 2)
 		local skip = len(bc) + len(ec)
-		bc, ec = utf8unicode(bc), utf8unicode(ec)
+		bc = utf8unicode(bc) --[[@as string]]
+		ec = utf8unicode(ec) --[[@as string]]
 		return function(cC)
 			if cC == ec and sum > 0 then
 				sum = sum - 1

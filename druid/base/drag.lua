@@ -22,10 +22,10 @@
 --- Event on drag start callback(self, touch)
 -- @tfield DruidEvent on_drag_start @{DruidEvent}
 
---- on drag progress callback(self, dx, dy, total_x, total_y)
+--- on drag progress callback(self, dx, dy, total_x, total_y, touch)
 -- @tfield DruidEvent on_drag Event @{DruidEvent}
 
---- Event on drag end callback(self, total_x, total_y)
+--- Event on drag end callback(self, total_x, total_y, touch)
 -- @tfield DruidEvent on_drag_end @{DruidEvent}
 
 --- Is component now touching
@@ -175,8 +175,8 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=10] number DRAG_DEADZONE Distance in pixels to start dragging
--- @tfield[opt=false] boolean NO_USE_SCREEN_KOEF If screen aspect ratio affects on drag values
+-- @tfield number|nil DRAG_DEADZONE Distance in pixels to start dragging. Default: 10
+-- @tfield boolean|nil NO_USE_SCREEN_KOEF If screen aspect ratio affects on drag values. Default: false
 function Drag.on_style_change(self, style)
 	self.style = {}
 	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
@@ -324,7 +324,7 @@ end
 --- Strict drag click area. Useful for
 -- restrict events outside stencil node
 -- @tparam Drag self @{Drag}
--- @tparam node node Gui node
+-- @tparam node|string|nil node Gui node
 function Drag.set_click_zone(self, node)
 	self.click_zone = self:get_node(node)
 end

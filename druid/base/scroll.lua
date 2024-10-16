@@ -50,11 +50,14 @@
 --- Scroll view node
 -- @tfield node view_node
 
+--- Scroll view size
+-- @tfield vector3 view_size
+
 --- Scroll content node
 -- @tfield node content_node
 
 --- Flag, if scroll now moving by inertion
--- @tfield bool _is_inert
+-- @tfield boolean _is_inert
 
 --- Current inert speed
 -- @tfield vector3 inertion
@@ -123,18 +126,18 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=0] number FRICT Multiplier for free inertion
--- @tfield[opt=0] number FRICT_HOLD Multiplier for inertion, while touching
--- @tfield[opt=3] number INERT_THRESHOLD Scroll speed to stop inertion
--- @tfield[opt=30] number INERT_SPEED Multiplier for inertion speed
--- @tfield[opt=20] number POINTS_DEADZONE Speed to check points of interests in no_inertion mode
--- @tfield[opt=0.35] number BACK_SPEED Scroll back returning lerp speed
--- @tfield[opt=0.2] number ANIM_SPEED Scroll gui.animation speed for scroll_to function
--- @tfield[opt=0] number EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect)
--- @tfield[opt=false] boolean SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled
--- @tfield[opt=0] boolean WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling
--- @tfield[opt=false] boolean WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll
--- @tfield[opt=false] boolean WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.
+-- @tfield number|nil FRICT Multiplier for free inertion. Default: 0
+-- @tfield number|nil FRICT_HOLD Multiplier for inertion, while touching. Default: 0
+-- @tfield number|nil INERT_THRESHOLD Scroll speed to stop inertion. Default: 3
+-- @tfield number|nil INERT_SPEED Multiplier for inertion speed. Default: 30
+-- @tfield number|nil POINTS_DEADZONE Speed to check points of interests in no_inertion mode. Default: 20
+-- @tfield number|nil BACK_SPEED Scroll back returning lerp speed. Default: 35
+-- @tfield number|nil ANIM_SPEED Scroll gui.animation speed for scroll_to function. Default: 2
+-- @tfield number|nil EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect). Default: 0
+-- @tfield boolean|nil SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled. Default: false
+-- @tfield boolean|nil WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
+-- @tfield boolean|nil WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll. Default: false
+-- @tfield boolean|nil WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
 function Scroll.on_style_change(self, style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
@@ -216,6 +219,12 @@ end
 
 
 function Scroll.update(self, dt)
+	if self.is_animate then
+		self.position.x = gui.get(self.content_node, "position.x")
+		self.position.y = gui.get(self.content_node, "position.y")
+		self.on_scroll:trigger(self:get_context(), self.position)
+	end
+
 	if self.drag.is_drag then
 		self:_update_hand_scroll(dt)
 	else
@@ -255,12 +264,12 @@ function Scroll.scroll_to(self, point, is_instant)
 
 	if is_instant then
 		self.target_position = target
-		self:_set_scroll_position(target)
+		self:_set_scroll_position(target.x, target.y)
 	else
 		gui.animate(self.content_node, gui.PROP_POSITION, target, gui.EASING_OUTSINE, self.style.ANIM_SPEED, 0, function()
 			self.is_animate = false
 			self.target_position = target
-			self:_set_scroll_position(target)
+			self:_set_scroll_position(target.x, target.y)
 		end)
 	end
 
@@ -305,6 +314,13 @@ function Scroll.scroll_to_percent(self, percent, is_instant)
 		0
 	)
 
+	if not self.drag.can_x then
+		pos.x = self.position.x
+	end
+	if not self.drag.can_y then
+		pos.y = self.position.y
+	end
+
 	self:scroll_to(pos, is_instant)
 end
 
@@ -325,13 +341,38 @@ end
 -- It will change content gui node size
 -- @tparam Scroll self @{Scroll}
 -- @tparam vector3 size The new size for content node
--- @tparam vector3 offset Offset value to set, where content is starts
+-- @tparam vector3|nil offset Offset value to set, where content is starts
 -- @treturn druid.scroll Current scroll instance
 function Scroll.set_size(self, size, offset)
 	if offset then
 		self._offset = offset
 	end
 	gui.set_size(self.content_node, size)
+	self:_update_size()
+
+	return self
+end
+
+
+--- Set new scroll view size in case the node size was changed.
+-- @tparam Scroll self @{Scroll}
+-- @tparam vector3 size The new size for view node
+-- @treturn druid.scroll Current scroll instance
+function Scroll.set_view_size(self, size)
+	gui.set_size(self.view_node, size)
+	self.view_size = size
+	self.view_border = helper.get_border(self.view_node)
+	self:_update_size()
+
+	return self
+end
+
+
+--- Refresh scroll view size
+-- @tparam Scroll self @{Scroll}
+function Scroll.update_view_size(self)
+	self.view_size = helper.get_scaled_size(self.view_node)
+	self.view_border = helper.get_border(self.view_node)
 	self:_update_size()
 
 	return self
@@ -464,7 +505,7 @@ end
 --- Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
 -- @tparam Scroll self @{Scroll}
--- @tparam StaticGrid|DynamicGrid grid Druid grid component
+-- @tparam StaticGrid grid Druid grid component
 -- @treturn druid.scroll Current scroll instance
 function Scroll.bind_grid(self, grid)
 	if self._grid_on_change then
@@ -493,7 +534,7 @@ end
 --- Strict drag scroll area. Useful for
 -- restrict events outside stencil node
 -- @tparam Drag self
--- @tparam node node Gui node
+-- @tparam node|string node Gui node
 function Scroll.set_click_zone(self, node)
 	self.drag:set_click_zone(node)
 end
@@ -583,14 +624,14 @@ function Scroll._cancel_animate(self)
 end
 
 
-function Scroll._set_scroll_position(self, position)
+function Scroll._set_scroll_position(self, position_x, position_y)
 	local available_extra = self.available_pos_extra
-	position.x = helper.clamp(position.x, available_extra.x, available_extra.z)
-	position.y = helper.clamp(position.y, available_extra.w, available_extra.y)
+	position_x = helper.clamp(position_x, available_extra.x, available_extra.z)
+	position_y = helper.clamp(position_y, available_extra.w, available_extra.y)
 
-	if self.position.x ~= position.x or self.position.y ~= position.y then
-		self.position.x = position.x
-		self.position.y = position.y
+	if self.position.x ~= position_x or self.position.y ~= position_y then
+		self.position.x = position_x
+		self.position.y = position_y
 		gui.set_position(self.content_node, self.position)
 
 		self.on_scroll:trigger(self:get_context(), self.position)
@@ -677,6 +718,10 @@ end
 
 
 function Scroll._update_free_scroll(self, dt)
+	if self.is_animate then
+		return
+	end
+
 	local target = self.target_position
 
 	if self._is_inert and (self.inertion.x ~= 0 or self.inertion.y ~= 0) then
@@ -692,19 +737,23 @@ function Scroll._update_free_scroll(self, dt)
 
 	self:_check_soft_zone()
 	if self.position.x ~= target.x or self.position.y ~= target.y then
-		self:_set_scroll_position(target)
+		self:_set_scroll_position(target.x, target.y)
 	end
 end
 
 
 function Scroll._update_hand_scroll(self, dt)
+	if self.is_animate then
+		self:_cancel_animate()
+	end
+
 	local dx = self.target_position.x - self.position.x
 	local dy = self.target_position.y - self.position.y
 
 	self.inertion.x = (self.inertion.x + dx) * self.style.FRICT_HOLD
 	self.inertion.y = (self.inertion.y + dy) * self.style.FRICT_HOLD
 
-	self:_set_scroll_position(self.target_position)
+	self:_set_scroll_position(self.target_position.x, self.target_position.y)
 end
 
 
@@ -746,14 +795,14 @@ function Scroll._update_size(self)
 	content_border_extra.w = content_border_extra.w - stretch_size * sign_y
 
 	if not self.style.SMALL_CONTENT_SCROLL then
-		self.drag.can_x = content_size.x > self.view_size.x
-		self.drag.can_y = content_size.y > self.view_size.y
+		self.drag.can_x = content_size.x > self.view_size.x and self._is_horizontal_scroll
+		self.drag.can_y = content_size.y > self.view_size.y and self._is_vertical_scroll
 	end
 
 	self.available_pos_extra = get_border_vector(self.view_border - content_border_extra, self._offset)
 	self.available_size_extra = get_size_vector(self.available_pos_extra)
 
-	self:_set_scroll_position(self.position)
+	self:_set_scroll_position(self.position.x, self.position.y)
 	self.target_position.x = self.position.x
 	self.target_position.y = self.position.y
 end
@@ -788,7 +837,7 @@ function Scroll._process_scroll_wheel(self, action_id, action)
 			self.inertion.x = 0
 		end
 
-		self:_set_scroll_position(self.target_position)
+		self:_set_scroll_position(self.target_position.x, self.target_position.y)
 	end
 
 	return true

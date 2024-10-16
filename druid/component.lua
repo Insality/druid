@@ -19,13 +19,12 @@
 -- @alias druid.base_component
 
 local const = require("druid.const")
-local class = require("druid.system.middleclass")
 local helper = require("druid.helper")
 
-local BaseComponent = class("druid.component")
+local BaseComponent = {}
 
 local INTERESTS = {} -- Cache interests per component class in runtime
-local IS_AUTO_TEMPLATE = not (sys.get_config("druid.no_auto_template") == "1")
+local IS_AUTO_TEMPLATE = not (sys.get_config_int("druid.no_auto_template", 0) == 1)
 
 -- Component Interests
 BaseComponent.ON_INPUT = const.ON_INPUT
@@ -205,10 +204,22 @@ end
 
 --- Get Druid instance for inner component creation.
 -- @tparam BaseComponent self @{BaseComponent}
+-- @tparam string|nil template The template name
+-- @tparam table|nil nodes The nodes table
 -- @treturn DruidInstance Druid instance with component context
-function BaseComponent.get_druid(self)
+function BaseComponent.get_druid(self, template, nodes)
 	local context = { _context = self }
-	return setmetatable(context, { __index = self._meta.druid })
+	local druid_instance = setmetatable(context, { __index = self._meta.druid })
+
+	if template then
+		self:set_template(template)
+	end
+
+	if nodes then
+		self:set_nodes(nodes)
+	end
+
+	return druid_instance
 end
 
 
@@ -336,28 +347,10 @@ function BaseComponent.setup_component(self, druid_instance, context, style, ins
 	self:set_template("")
 
 	if self._meta.parent then
-		self._meta.parent:__add_children(self)
+		self._meta.parent:__add_child(self)
 	end
 
 	return self
-end
-
-
---- Basic constructor of component. It will call automaticaly
--- by `BaseComponent.create`
--- @tparam BaseComponent self @{BaseComponent}
--- @tparam string name BaseComponent name
--- @tparam number|nil input_priority The input priority. The bigger number processed first
--- @local
-function BaseComponent.initialize(self, name, input_priority)
-	self._component = {
-		name = name,
-		input_priority = input_priority or const.PRIORITY_INPUT,
-		default_input_priority = input_priority or const.PRIORITY_INPUT,
-		is_debug = false,
-		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
-		_uid = BaseComponent.create_uid()
-	}
 end
 
 
@@ -443,21 +436,22 @@ end
 
 --- Add child to component children list
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam component children The druid component instance
+-- @tparam component child The druid component instance
 -- @local
-function BaseComponent.__add_children(self, children)
-	table.insert(self._meta.children, children)
+function BaseComponent.__add_child(self, child)
+	table.insert(self._meta.children, child)
 end
 
 
 --- Remove child from component children list
 -- @tparam BaseComponent self @{BaseComponent}
--- @tparam component children The druid component instance
+-- @tparam component child The druid component instance
 -- @local
-function BaseComponent.__remove_children(self, children)
+function BaseComponent.__remove_child(self, child)
 	for i = #self._meta.children, 1, -1 do
-		if self._meta.children[i] == children then
+		if self._meta.children[i] == child then
 			table.remove(self._meta.children, i)
+			return true
 		end
 	end
 end
@@ -486,12 +480,24 @@ end
 -- @tparam number|nil input_priority The input priority. The bigger number processed first
 -- @local
 function BaseComponent.create(name, input_priority)
-	-- Yea, inheritance here
-	local new_class = class(name, BaseComponent)
-
-	new_class.initialize = function(self)
-		BaseComponent.initialize(self, name, input_priority)
-	end
+	local new_class = setmetatable({}, {
+		__index = BaseComponent,
+		__call = function(cls, ...)
+			local self = setmetatable({
+				_component = {
+					name = name,
+					input_priority = input_priority or const.PRIORITY_INPUT,
+					default_input_priority = input_priority or const.PRIORITY_INPUT,
+					is_debug = false,
+					_is_input_priority_changed = true, -- Default true for sort once time after GUI init
+					_uid = BaseComponent.create_uid()
+				}
+			}, {
+				__index = cls
+			})
+			return self
+		end
+	})
 
 	return new_class
 end

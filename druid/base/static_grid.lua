@@ -102,8 +102,8 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=false] boolean IS_DYNAMIC_NODE_POSES If true, always center grid content as grid pivot sets
--- @tfield[opt=false] boolean IS_ALIGN_LAST_ROW If true, always align last row of the grid as grid pivot sets
+-- @tfield boolean|nil IS_DYNAMIC_NODE_POSES If true, always center grid content as grid pivot sets. Default: false
+-- @tfield boolean|nil IS_ALIGN_LAST_ROW If true, always align last row of the grid as grid pivot sets. Default: false
 function StaticGrid.on_style_change(self, style)
 	self.style = {}
 	self.style.IS_DYNAMIC_NODE_POSES = style.IS_DYNAMIC_NODE_POSES or false
@@ -115,7 +115,7 @@ end
 -- @tparam StaticGrid self @{StaticGrid}
 -- @tparam string|node parent The GUI Node container, where grid's items will be placed
 -- @tparam node element Element prefab. Need to get it size
--- @tparam[opt=1] number in_row How many nodes in row can be placed
+-- @tparam number|nil in_row How many nodes in row can be placed. By default 1
 function StaticGrid.init(self, parent, element, in_row)
 	self.parent = self:get_node(parent)
 	self.nodes = {}
@@ -171,8 +171,12 @@ end
 -- @tparam vector3 pos The node position in the grid
 -- @treturn number The node index
 function StaticGrid.get_index(self, pos)
-	local col = pos.x / self.node_size.x + 1
-	local row = -pos.y / self.node_size.y
+	-- Offset to left-top corner from node pivot
+	local node_offset_x = self.node_size.x * (-0.5 + self.node_pivot.x)
+	local node_offset_y = self.node_size.y * (0.5 - self.node_pivot.y)
+
+	local col = (pos.x + node_offset_x) / self.node_size.x + 1
+	local row = -(pos.y + node_offset_y) / self.node_size.y
 
 	col = helper.round(col)
 	row = helper.round(row)
@@ -233,6 +237,23 @@ function StaticGrid.add(self, item, index, shift_policy, is_instant)
 
 	self.on_add_item:trigger(self:get_context(), item, index)
 	self.on_change_items:trigger(self:get_context(), index)
+end
+
+
+--- Set new items to the grid. All previous items will be removed
+-- @tparam StaticGrid self @{StaticGrid}
+-- @tparam node[] nodes The new grid nodes
+-- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+function StaticGrid.set_items(self, nodes, is_instant)
+	self.nodes = nodes
+	for index = 1, #nodes do
+		local item = nodes[index]
+		gui.set_parent(item, self.parent)
+	end
+
+	self:_update(is_instant)
+
+	self.on_change_items:trigger(self:get_context())
 end
 
 
@@ -337,6 +358,7 @@ function StaticGrid.clear(self)
 	self:_update()
 
 	self.on_clear:trigger(self:get_context())
+	self.on_change_items:trigger(self:get_context())
 
 	return self
 end
@@ -374,6 +396,35 @@ function StaticGrid.set_in_row(self, in_row)
 	self.on_change_items:trigger(self:get_context())
 
 	return self
+end
+
+
+--- Set new node size for grid
+-- @tparam StaticGrid self @{StaticGrid}
+-- @tparam[opt] number width The new node width
+-- @tparam[opt] number height The new node height
+-- @treturn druid.static_grid Current grid instance
+function StaticGrid.set_item_size(self, width, height)
+	if width then
+		self.node_size.x = width
+	end
+	if height then
+		self.node_size.y = height
+	end
+	self:_update()
+	self.on_change_items:trigger(self:get_context())
+
+	return self
+end
+
+
+--- Sort grid nodes by custom comparator function
+-- @tparam StaticGrid self @{StaticGrid}
+-- @tparam function comparator The comparator function. (a, b) -> boolean
+-- @treturn druid.static_grid Current grid instance
+function StaticGrid.sort_nodes(self, comparator)
+	table.sort(self.nodes, comparator)
+	self:_update(true)
 end
 
 

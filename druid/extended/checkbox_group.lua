@@ -25,7 +25,7 @@ local CheckboxGroup = component.create("checkbox_group")
 -- @tparam CheckboxGroup self @{CheckboxGroup}
 -- @tparam node[] nodes Array of gui node
 -- @tparam function callback Checkbox callback
--- @tparam[opt=node] node[] click_nodes Array of trigger nodes, by default equals to nodes
+-- @tparam node[]|nil click_nodes Array of trigger nodes, by default equals to nodes
 function CheckboxGroup.init(self, nodes, callback, click_nodes)
 	self.druid = self:get_druid()
 	self.checkboxes = {}

@@ -38,8 +38,8 @@ local LangText = component.create("lang_text")
 --- The @{LangText} constructor
 -- @tparam LangText self @{LangText}
 -- @tparam string|node node The node_id or gui.get_node(node_id)
--- @tparam[opt=node_text] string locale_id Default locale id or text from node as default
--- @tparam[opt=downscale] string adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+-- @tparam string|nil locale_id Default locale id or text from node as default
+-- @tparam string|nil adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 function LangText.init(self, node, locale_id, adjust_type)
 	self.druid = self:get_druid()
 	self.text = self.druid:new_text(node, locale_id, adjust_type)
