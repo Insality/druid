@@ -6,8 +6,6 @@ compress_archive = 1
 publisher = Insality
 developer = Maksim Tuprikov
 custom_resources = /example/locales
-commit_sha = 3579370287f00a1a03e89dbb01a2a5b953e83991
-build_date = 2024-10-16T22:59:05Z
 title_as_file_name = Druid
 
 [display]
@@ -130,7 +128,7 @@ default_language = en
 localizations = en
 
 [android]
-version_code = 806
+version_code = 1
 minimum_sdk_version = 19
 target_sdk_version = 34
 package = com.insality.druid
