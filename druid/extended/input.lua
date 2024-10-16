@@ -132,7 +132,6 @@ end
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
--- @tfield table button_style Custom button style for input node
 function Input.on_style_change(self, style)
 	self.style = {}
 
@@ -143,12 +142,6 @@ function Input.on_style_change(self, style)
 	self.style.on_select = style.on_select or function(_, button_node) end
 	self.style.on_unselect = style.on_unselect or function(_, button_node) end
 	self.style.on_input_wrong = style.on_input_wrong or function(_, button_node) end
-
-	self.style.button_style = style.button_style or {
-		LONGTAP_TIME = 0.4,
-		AUTOHOLD_TRIGGER = 0.8,
-		DOUBLETAP_TIME = 0.4
-	}
 end
 
 
@@ -186,7 +179,6 @@ function Input.init(self, click_node, text_node, keyboard_type)
 	self.keyboard_type = keyboard_type or gui.KEYBOARD_TYPE_DEFAULT
 
 	self.button = self.druid:new_button(click_node, self.select)
-	self.button:set_style(self.button_style)
 	self.button.on_click_outside:subscribe(self.unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
 

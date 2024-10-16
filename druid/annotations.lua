@@ -777,7 +777,6 @@ function druid__input.unselect(self) end
 ---@field IS_LONGTAP_ERASE boolean Is long tap will erase current input data. Default: false
 ---@field IS_UNSELECT_ON_RESELECT boolean If true, call unselect on select selected input. Default: false
 ---@field MASK_DEFAULT_CHAR string Default character mask for password input. Default: *]
----@field button_style table Custom button style for input node
 ---@field on_input_wrong function (self, button_node) Callback on wrong user input
 ---@field on_select function (self, button_node) Callback on input field selecting
 ---@field on_unselect function (self, button_node) Callback on input field unselecting

@@ -141,12 +141,6 @@ M["input"] = {
 			end)
 		end)
 	end,
-
-	button = {
-		LONGTAP_TIME = 0.4,
-		AUTOHOLD_TRIGGER = 0.8,
-		DOUBLETAP_TIME = 0.4,
-	}
 }
 
 
