@@ -36,7 +36,10 @@ M["button"] = {
 	on_click = function(self, node)
 		local scale_to = self.start_scale + M.button.SCALE_CHANGE
 		gui.set_scale(node, scale_to)
-		gui.animate(node, gui.PROP_SCALE, self.start_scale, gui.EASING_OUTBACK, 0.24)
+
+		local is_hover = self.hover:is_mouse_hovered()
+		local target_scale = is_hover and self.start_scale + M.button.HOVER_MOUSE_SCALE or self.start_scale
+		gui.animate(node, gui.PROP_SCALE, target_scale, gui.EASING_OUTBACK, 0.24)
 
 		settings.play_sound(M.button.BTN_SOUND)
 	end,

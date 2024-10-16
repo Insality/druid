@@ -3,7 +3,7 @@
 
 ## Input Bindings
 
-By default, **Druid** utilizes the `/builtins/input/all.input_binding` for input bindings.
+By default, **Druid** uses all key names from Defold's default `/builtins/input/all.input_binding` for input bindings.
 
 **Druid** requires the following input bindings:
 
@@ -18,6 +18,7 @@ By default, **Druid** utilizes the `/builtins/input/all.input_binding` for input
 - Key trigger: `Right` -> `key_right` (for Rich Input component, optional)
 - Key trigger: `Shift` -> `key_lshift` (for Rich Input component, optional)
 - Key trigger: `Ctrl` -> `key_lctrl` (for Rich Input component, optional)
+- Key trigger: `Super` -> `key_lsuper` (for Rich Input component, optional)
 - Touch triggers: `Touch multi` -> `touch_multi` (for Scroll component)
 
 ![](../media/input_binding_2.png)
@@ -45,6 +46,7 @@ input_key_left = key_left
 input_key_right = key_right
 input_key_lshift = key_lshift
 input_key_lctrl = key_lctrl
+input_key_lsuper = key_lsuper
 ```
 
 

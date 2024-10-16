@@ -418,6 +418,8 @@ end
 
 function Button.on_input_interrupt(self)
 	self.can_action = false
+	self.hover:set_hover(false)
+	self.hover:set_mouse_hover(false)
 end
 
 

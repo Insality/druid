@@ -26,7 +26,7 @@ end
 function M.get_commands()
 	return {
 		{
-			label = "Assign layers",
+			label = "Assign Layers",
 
 			locations = {"Edit"},
 

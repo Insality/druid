@@ -207,15 +207,20 @@ function M.refresh_layout(self)
 			end
 
 			if type == "vertical" then
-				position_x = current_x + row.width * (0.5 - pivot_offset.x)
-				position_y = current_y - node_height * (0.5 + pivot_offset.y)
-
 				local node_margin = margin.y
 				if is_justify then
 					node_margin = (max_height - rows_data.total_height) / (#rows - 1) + margin.y
 				end
 
+				current_x = -row.width * (0.5 + layout_pivot_offset.x)
+
+				position_x = current_x + row.width * (0.5 + pivot_offset.x)
+				position_y = current_y - node_height * (0.5 - pivot_offset.y)
+
 				current_y = current_y - node_height - node_margin
+
+				row_index = row_index + 1
+				row = rows[row_index]
 			end
 
 			if type == "horizontal_wrap" then

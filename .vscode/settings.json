@@ -11,7 +11,8 @@
 		"it",
 		"utf8",
 		"defos",
-		"clipboard"
+		"clipboard",
+		"editor"
 	],
 	"Lua.workspace.checkThirdParty": false,
 	"Lua.diagnostics.neededFileStatus": {

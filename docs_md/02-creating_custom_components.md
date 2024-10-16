@@ -133,9 +133,7 @@ Available keywords:
 - `blocker`: Adds a [Druid Blocker](01-components.md#blocker) component.
 - `slider`: Adds a [Druid Slider](01-components.md#slider) component. You should adjust the end position of the Slider after generating the file.
 - `progress`: Adds a [Druid Progress](01-components.md#progress) component.
-- `timer`: Adds a [Dr
-
-uid Timer](01-components.md#timer) component.
+- `timer`: Adds a [Druid Timer](01-components.md#timer) component.
 
 ## The Power of Using Templates
 

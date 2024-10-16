@@ -108,13 +108,15 @@ end
 -- @tparam Hover self @{Hover}
 -- @tparam boolean|nil state The hover state
 function Hover.set_hover(self, state)
-	if self._is_hovered ~= state then
-		self._is_hovered = state
-		self.on_hover:trigger(self:get_context(), state, self)
+	if self._is_hovered == state then
+		return
+	end
 
-		if defos and self.style.ON_HOVER_CURSOR then
-			self:_set_cursor(3, state and self.style.ON_HOVER_CURSOR or nil)
-		end
+	self._is_hovered = state
+	self.on_hover:trigger(self:get_context(), state, self)
+
+	if defos and self.style.ON_HOVER_CURSOR then
+		self:_set_cursor(3, state and self.style.ON_HOVER_CURSOR or nil)
 	end
 end
 
@@ -131,13 +133,15 @@ end
 -- @tparam Hover self @{Hover}
 -- @tparam boolean|nil state The mouse hover state
 function Hover.set_mouse_hover(self, state)
-	if self._is_mouse_hovered ~= state then
-		self._is_mouse_hovered = state
-		self.on_mouse_hover:trigger(self:get_context(), state, self)
+	if self._is_mouse_hovered == state then
+		return
+	end
 
-		if defos and self.style.ON_MOUSE_HOVER_CURSOR then
-			self:_set_cursor(2, state and self.style.ON_MOUSE_HOVER_CURSOR or nil)
-		end
+	self._is_mouse_hovered = state
+	self.on_mouse_hover:trigger(self:get_context(), state, self)
+
+	if defos and self.style.ON_MOUSE_HOVER_CURSOR then
+		self:_set_cursor(2, state and self.style.ON_MOUSE_HOVER_CURSOR or nil)
 	end
 end
 

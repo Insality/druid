@@ -71,9 +71,6 @@
 --- The text prefab node
 -- @tfield node text_prefab
 
---- The icon prefab node
--- @tfield node icon_prefab
-
 --
 
 local component = require("druid.component")

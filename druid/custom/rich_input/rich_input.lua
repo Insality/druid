@@ -224,7 +224,7 @@ function RichInput.on_input(self, action_id, action)
 		end
 	end
 
-	if action_id == const.ACTION_LCTRL then
+	if action_id == const.ACTION_LCTRL or action_id == const.ACTION_LCMD then
 		if action.pressed then
 			self.is_lctrl = true
 		elseif action.released then

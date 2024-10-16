@@ -24,7 +24,7 @@ local helper = require("druid.helper")
 local BaseComponent = {}
 
 local INTERESTS = {} -- Cache interests per component class in runtime
-local IS_AUTO_TEMPLATE = not (sys.get_config_int("druid.no_auto_template", 0) == "1")
+local IS_AUTO_TEMPLATE = not (sys.get_config_int("druid.no_auto_template", 0) == 1)
 
 -- Component Interests
 BaseComponent.ON_INPUT = const.ON_INPUT
