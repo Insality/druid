@@ -12,7 +12,7 @@ dynamic_orientation = 1
 high_dpi = 1
 
 [project]
-title = Druid
+title = druid
 version = 1.0.0
 publisher = Insality
 developer = Maksim Tuprikov

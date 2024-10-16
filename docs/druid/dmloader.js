@@ -193,7 +193,7 @@ var FileLoader = {
 var EngineLoader = {
     wasm_size: 2374239,
     wasmjs_size: 340441,
-    asmjs_size: 5039346,
+    asmjs_size: 4000000,
     wasm_instantiate_progress: 0,
 
     stream_wasm: "false" === "true",
@@ -1001,7 +1001,7 @@ Module["locateFile"] = function(path, scriptDirectory)
     // dmengine*.wasm is hardcoded in the built JS loader for WASM,
     // we need to replace it here with the correct project name.
     if (path == "dmengine.wasm" || path == "dmengine_release.wasm" || path == "dmengine_headless.wasm") {
-        path = "Druid.wasm";
+        path = "druid.wasm";
     }
     return scriptDirectory + path;
 };
