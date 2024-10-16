@@ -1,23 +1,28 @@
 [bootstrap]
-main_collection = /test/test.collectionc
+main_collection = /example/druid.collectionc
 
 [script]
 shared_state = 1
 
 [display]
-width = 600
-height = 900
-display_profiles = /example/custom.display_profilesc
+width = 1920
+height = 1080
+display_profiles = /builtins/render/default.display_profilesc
 dynamic_orientation = 1
 high_dpi = 1
 
 [project]
-title = druid
-version = 0.11.0
+title = Druid
+version = 1.0.0
 publisher = Insality
 developer = Maksim Tuprikov
+custom_resources = /example/locales
 dependencies#0 = https://github.com/insalitygames/deftest/archive/master.zip
 dependencies#1 = https://github.com/britzl/monarch/archive/refs/tags/3.3.0.zip
+dependencies#2 = https://github.com/Insality/defold-saver/archive/refs/tags/1.zip
+dependencies#3 = https://github.com/Insality/defold-tweener/archive/refs/tags/3.zip
+dependencies#4 = https://github.com/Insality/panthera/archive/refs/heads/develop.zip
+dependencies#5 = https://github.com/Insality/defold-lang/archive/refs/tags/3.zip
 
 [library]
 include_dirs = druid
@@ -25,6 +30,7 @@ include_dirs = druid
 [input]
 gamepads = /builtins/input/default.gamepadsc
 use_accelerometer = 0
+game_binding = /builtins/input/all.input_bindingc
 
 [druid]
 no_auto_input = 0
@@ -45,16 +51,17 @@ input_scroll_down = mouse_wheel_down
 engine_arguments = --verify-graphics-calls=false
 heap_size = 64
 splash_image = /media/druid_logo.png
-scale_mode = fit
+scale_mode = stretch
 show_fullscreen_button = 0
 show_made_with_defold = 0
-cssfile = /example/light_theme.css
+cssfile = /builtins/manifests/web/dark_theme.css
+show_console_banner = 0
 
 [native_extension]
-app_manifest = /example/game.appmanifest
+app_manifest = 
 
 [graphics]
-texture_profiles = /example/custom.texture_profiles
+texture_profiles = /builtins/graphics/default.texture_profiles
 max_draw_calls = 128
 verify_graphics_calls = 0
 
@@ -91,4 +98,12 @@ max_count = 64
 
 [collection]
 max_instances = 128
+
+[saver]
+autosave_timer = 2
+
+[lang]
+path = /example/locales
+langs = en,ru,es,de,fr,ja,pt,it,kr,zh
+default = es
 

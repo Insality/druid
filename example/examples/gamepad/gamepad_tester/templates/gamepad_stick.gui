@@ -1,0 +1,191 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+nodes {
+  size {
+    x: 12.0
+    y: 12.0
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "root"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 256.0
+    y: 256.0
+  }
+  type: TYPE_PIE
+  id: "background_mask"
+  parent: "root"
+  inherit_alpha: true
+  perimeterVertices: 64
+  clipping_mode: CLIPPING_MODE_STENCIL
+  clipping_visible: false
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 256.0
+    y: 256.0
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_BOX
+  texture: "druid/pixel"
+  id: "background"
+  parent: "background_mask"
+  inherit_alpha: true
+  slice9 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+}
+nodes {
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "stick_root"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_64_blur_8"
+  id: "stick_shadow"
+  parent: "stick_root"
+  inherit_alpha: true
+  alpha: 0.25
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  color {
+    x: 0.463
+    y: 0.475
+    z: 0.49
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_64"
+  id: "stick"
+  parent: "stick_root"
+  inherit_alpha: true
+  slice9 {
+    x: 32.0
+    y: 32.0
+    z: 32.0
+    w: 32.0
+  }
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -22.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_16"
+  id: "dot_1"
+  parent: "stick"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: 22.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_16"
+  id: "dot_2"
+  parent: "stick"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 22.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_16"
+  id: "dot_3"
+  parent: "stick"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: -22.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_16"
+  id: "dot_4"
+  parent: "stick"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
