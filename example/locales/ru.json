@@ -1,0 +1,172 @@
+{
+	"ui_examples": "Примеры",
+	"ui_properties_panel": "Свойства",
+	"ui_output": "Вывод",
+	"ui_view_code": "Просмотр кода",
+	"ui_profiler": "Профайлер",
+	"ui_profiler_memory": "Память",
+	"ui_profiler_fps": "FPS",
+	"ui_profiler_components": "Компоненты",
+	"ui_profiler_events": "События",
+	"ui_confirm": "Подтвердить",
+	"ui_cancel": "Отмена",
+	"ui_value": "Значение",
+	"ui_scroll": "Прокрутка",
+	"ui_clipping": "Обрезка",
+	"ui_no_properties": "Нет свойств для этого примера",
+	"ui_padding": "Отступ",
+	"ui_margin_x": "Отступ по X",
+	"ui_margin_y": "Отступ по Y",
+	"ui_justify": "Выровнять",
+	"ui_pivot_next": "След. якорь",
+	"ui_type_next": "След. тип",
+	"ui_adjust_next": "След. тип сжатия",
+	"ui_enabled": "Включено",
+
+	"ui_examples_basic": "Основные",
+	"ui_examples_data_list": "Список данных",
+	"ui_examples_gamepad": "Геймпад",
+	"ui_examples_window": "Окна",
+	"ui_examples_panthera": "Пантера",
+
+	"ui_example_intro": "Введение",
+	"ui_example_intro_description": "Здесь будет краткое описание выбранного примера.",
+
+	"ui_example_basic_button": "Кнопка",
+	"ui_example_basic_button_description": "Пример базовой кнопки Druid",
+
+	"ui_example_basic_button_double_click": "Двойной щелчок",
+	"ui_example_basic_button_double_click_description": "Как добавить функциональность двойного щелчка к кнопке.",
+
+	"ui_example_basic_button_hold": "Удержание кнопки",
+	"ui_example_basic_button_hold_description": "Как сделать функционал удержания и триггера для кнопки.",
+
+	"ui_example_basic_text": "Текст",
+	"ui_example_basic_text_description": "Проверьте, как текст настраивается с различными свойствами.",
+
+	"ui_example_basic_multiline_text": "Многострочный текст",
+	"ui_example_basic_multiline_text_description": "Проверьте, как многострочный текст настраивается с различными свойствами.",
+
+	"ui_example_basic_hover": "Наведение",
+	"ui_example_basic_hover_description": "Наведение имеет два события. Одно для мыши и одно для касания. Используйте mouse_callback для событий мыши.",
+
+	"ui_example_basic_drag": "Перетаскивание",
+	"ui_example_basic_drag_description": "Как создать простой узел перетаскивания.",
+
+	"ui_example_basic_drag_to_node": "Перетаскивание к узлу",
+	"ui_example_basic_drag_to_node_description": "Как перетащить узел к другому узлу и получить обратные вызовы.",
+
+	"ui_example_basic_slider": "Слайдер",
+	"ui_example_basic_slider_description": "Как сделать простой слайдер.",
+
+	"ui_example_basic_slider_vertical": "Вертикальный слайдер",
+	"ui_example_basic_slider_vertical_description": "Как сделать простой вертикальный слайдер.",
+
+	"ui_example_basic_slider_stepped": "Слайдер с шагами",
+	"ui_example_basic_slider_stepped_description": "Слайдеры могут иметь свойство «шаги», чтобы сделать их пошаговыми.",
+
+	"ui_example_basic_progress_bar": "Полоса прогресса",
+	"ui_example_basic_progress_bar_description": "Как сделать простую полосу прогресса.",
+
+	"ui_example_basic_progress_bar_slice9": "Полоса прогресса Slice9",
+	"ui_example_basic_progress_bar_slice9_description": "Компонент прогресса может обрабатывать свойство slice9, чтобы сделать его масштабируемым с самого начала.",
+
+	"ui_example_basic_timer": "Таймер",
+	"ui_example_basic_timer_description": "Компонент Таймера используется для отображения секундомера с обратным вызовом.",
+
+	"ui_example_basic_hotkey": "Горячая клавиша",
+	"ui_example_basic_hotkey_description": "Как создать горячую клавишу для обратного вызова.",
+
+	"ui_example_basic_scroll": "Прокрутка",
+	"ui_example_basic_scroll_description": "Как сделать простую прокрутку.",
+	"ui_elastic_scroll": "Эластичная прокрутка",
+
+	"ui_example_basic_scroll_slider": "Прокрутка со слайдером",
+	"ui_example_basic_scroll_slider_description": "Как добавить элемент управления слайдером к прокрутке и использовать их.",
+
+	"ui_example_basic_grid": "Статическая сетка",
+	"ui_example_basic_grid_description": "Как разместить узлы в сетке.",
+	"ui_grid_in_row": "Элементы в строке",
+	"ui_add_element": "Добавить элемент",
+	"ui_remove_element": "Удалить элемент",
+	"ui_clear_elements": "Очистить элементы",
+
+	"ui_example_basic_scroll_bind_grid": "Прокрутка с привязанной сеткой",
+	"ui_example_basic_scroll_bind_grid_description": "Прокрутка хорошо работает с сетками и заранее заданными размерами, это пример привязанной прокрутки с сеткой.",
+
+	"ui_example_basic_scroll_bind_grid_horizontal": "Горизонтальная привязанная прокрутка",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "Прокрутка хорошо работает с сетками и заранее заданными размерами, это пример горизонтальной привязанной прокрутки с сеткой.",
+
+	"ui_example_basic_input": "Ввод",
+	"ui_example_basic_input_description": "Как сделать самый простой ввод в Druid.",
+
+	"ui_example_input_password": "Ввод пароля",
+	"ui_example_input_password_description": "Как работает ввод пароля.",
+
+	"ui_example_basic_rich_input": "Расширенный ввод",
+	"ui_example_basic_rich_input_description": "Как сделать расширенный ввод в Druid.",
+
+	"ui_example_basic_rich_text": "Расширенный текст",
+	"ui_example_basic_rich_text_description": "Как создать расширенный текст в Druid.",
+
+	"ui_example_rich_text_tags": "Теги расширенного текста",
+	"ui_example_rich_text_tags_description": "Здесь простой пример расширенного текста с тегами\n - <color=A1D7F5>цвет</color>\n - шрифт\n - размер\n - br\n - img",
+
+	"ui_example_basic_swipe": "Свайп",
+	"ui_example_basic_swipe_description": "Как добавить обратные вызовы на события свайпа.",
+
+	"ui_example_data_list_basic": "Основной список данных",
+	"ui_example_data_list_basic_description": "Как сделать простой список данных.",
+
+	"ui_example_data_list_horizontal_basic": "Горизонтальный основной список данных",
+	"ui_example_data_list_horizontal_basic_description": "Как сделать простой горизонтальный список данных.",
+
+	"ui_example_data_list_add_remove_clear": "Добавление, удаление и очистка в списке данных",
+	"ui_example_data_list_add_remove_clear_description": "Как работают функции добавления, удаления и очистки в списке данных.",
+
+	"ui_example_data_list_cache_with_component": "Кэшированная версия списка данных",
+	"ui_example_data_list_cache_with_component_description": "Кэшированная версия требует большего количества настроек для обратных вызовов добавления/удаления, но более эффективна с точки зрения памяти.",
+
+	"ui_language": "Язык",
+	"ui_example_window_language": "Окно выбора языка",
+	"ui_example_window_language_description": "Здесь простой пример окна с выбором языка.",
+
+	"ui_confirmation": "Подтверждение",
+	"ui_example_window_confirmation": "Окно подтверждения",
+	"ui_confirmation_description": "Подтвердить покупку автомобиля за миллион долларов?",
+
+	"ui_information": "Информация",
+	"ui_example_window_information": "Окно информации",
+	"ui_example_window_information_text": "Ты лучший из лучших!",
+	"ui_example_window_information_description": "Здесь простой пример окна с информационным сообщением.",
+
+	"ui_example_gamepad_tester": "Тестер геймпада",
+	"ui_example_gamepad_tester_description": "Проверьте здесь свой геймпад, чтобы настроить кнопки и оси.",
+
+	"ui_example_on_screen_control": "Наэкранное управление",
+	"ui_example_on_screen_control_description": "Здесь простой пример наэкранного управления. Наэкранный ввод здесь — это простой джойстик с обратным вызовом в качестве компонента Druid.",
+
+	"ui_example_layout_basic": "Макет",
+	"ui_example_layout_basic_description": "Этот макет может быть настроен так, как в Figma.",
+
+	"ui_example_panthera_basic_animation": "Базовая анимация Panthera",
+	"ui_example_panthera_basic_animation_description": "Здесь простой пример базовой анимации Panthera.",
+
+	"ui_example_panthera_animation_blend": "Смешивание анимаций Panthera",
+	"ui_example_panthera_animation_blend_description": "Здесь простой пример смешивания анимаций Panthera.",
+	"ui_example_panthera_animation_blend_hint": "Наведите мышь на эту область.",
+
+	"ui_animation_vertical": "Вертикальная",
+	"ui_animation_horizontal": "Горизонтальная",
+
+	"ui_language_en": "English",
+	"ui_language_ru": "Русский",
+	"ui_language_es": "Español",
+	"ui_language_de": "Deutsch",
+	"ui_language_fr": "Français",
+	"ui_language_ja": "日本語",
+	"ui_language_pt": "Português",
+	"ui_language_it": "Italiano",
+	"ui_language_kr": "한국어",
+	"ui_language_zh": "中文"
+}

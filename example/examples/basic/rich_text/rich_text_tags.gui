@@ -1,0 +1,167 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+fonts {
+  name: "text_regular"
+  font: "/example/assets/fonts/text_regular.font"
+}
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+textures {
+  name: "druid_logo"
+  texture: "/example/assets/druid_logo.atlas"
+}
+nodes {
+  size {
+    x: 1000.0
+    y: 1000.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  size {
+    x: 400.0
+    y: 1000.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_64"
+  id: "background"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 32.0
+    y: 32.0
+    z: 32.0
+    w: 32.0
+  }
+}
+nodes {
+  position {
+    x: -200.0
+    y: 400.0
+  }
+  size {
+    x: 400.0
+    y: 100.0
+  }
+  color {
+    x: 0.941
+    y: 0.984
+  }
+  type: TYPE_TEXT
+  text: "Rich text"
+  font: "text_regular"
+  id: "rich_text_color"
+  pivot: PIVOT_W
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -200.0
+    y: 200.0
+  }
+  size {
+    x: 400.0
+    y: 100.0
+  }
+  color {
+    x: 0.941
+    y: 0.984
+  }
+  type: TYPE_TEXT
+  text: "Rich text"
+  font: "text_regular"
+  id: "rich_text_breaks"
+  pivot: PIVOT_W
+  line_break: true
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: 200.0
+  }
+  size {
+    x: 400.0
+    y: 100.0
+  }
+  color {
+    x: 0.941
+    y: 0.984
+  }
+  type: TYPE_TEXT
+  text: "Rich text"
+  font: "text_regular"
+  id: "rich_text_size"
+  pivot: PIVOT_SE
+  line_break: true
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -200.0
+    y: -200.0
+  }
+  size {
+    x: 400.0
+    y: 100.0
+  }
+  color {
+    x: 0.941
+    y: 0.984
+  }
+  type: TYPE_TEXT
+  text: "Rich text"
+  font: "text_regular"
+  id: "rich_text_font"
+  pivot: PIVOT_W
+  line_break: true
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -200.0
+    y: -400.0
+  }
+  size {
+    x: 400.0
+    y: 100.0
+  }
+  color {
+    x: 0.941
+    y: 0.984
+  }
+  type: TYPE_TEXT
+  text: "Rich text"
+  font: "text_regular"
+  id: "rich_text_image"
+  pivot: PIVOT_W
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

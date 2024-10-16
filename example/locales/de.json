@@ -1,0 +1,172 @@
+{
+	"ui_examples": "Beispiele",
+	"ui_properties_panel": "Eigenschaften",
+	"ui_output": "Ausgabe",
+	"ui_view_code": "Code anzeigen",
+	"ui_profiler": "Profiler",
+	"ui_profiler_memory": "Speicher",
+	"ui_profiler_fps": "FPS",
+	"ui_profiler_components": "Komponenten",
+	"ui_profiler_events": "Ereignisse",
+	"ui_confirm": "Bestätigen",
+	"ui_cancel": "Abbrechen",
+	"ui_value": "Wert",
+	"ui_scroll": "Scrollen",
+	"ui_clipping": "Zuschneiden",
+	"ui_no_properties": "Keine Eigenschaften für dieses Beispiel",
+	"ui_padding": "Innenabstand",
+	"ui_margin_x": "Außenabstand X",
+	"ui_margin_y": "Außenabstand Y",
+	"ui_justify": "Ausrichten",
+	"ui_pivot_next": "Nächster Pivot",
+	"ui_type_next": "Nächster Typ",
+	"ui_adjust_next": "Nächste Anpassung",
+	"ui_enabled": "Aktiviert",
+
+	"ui_examples_basic": "Basis",
+	"ui_examples_data_list": "Datenliste",
+	"ui_examples_gamepad": "Gamepad",
+	"ui_examples_window": "Fenster",
+	"ui_examples_panthera": "Panthera",
+
+	"ui_example_intro": "Einführung",
+	"ui_example_intro_description": "Hier wird eine kurze Beschreibung des ausgewählten Beispiels stehen.",
+
+	"ui_example_basic_button": "Schaltfläche",
+	"ui_example_basic_button_description": "Beispiel für eine grundlegende Druid-Schaltfläche",
+
+	"ui_example_basic_button_double_click": "Doppelklick",
+	"ui_example_basic_button_double_click_description": "Wie man Doppelklick-Funktionalität zur Schaltfläche hinzufügt.",
+
+	"ui_example_basic_button_hold": "Halten",
+	"ui_example_basic_button_hold_description": "Wie man Halte- und Triggerfunktionalität für die Schaltfläche erstellt.",
+
+	"ui_example_basic_text": "Text",
+	"ui_example_basic_text_description": "Überprüfen Sie, wie Text mit verschiedenen Eigenschaften angepasst wird.",
+
+	"ui_example_basic_multiline_text": "Mehrzeiliger Text",
+	"ui_example_basic_multiline_text_description": "Überprüfen Sie, wie mehrzeiliger Text mit verschiedenen Eigenschaften angepasst wird.",
+
+	"ui_example_basic_hover": "Hover",
+	"ui_example_basic_hover_description": "Hover hat zwei Hover-Ereignisse. Eines für die Maus und eines für den Touch. Verwenden Sie mouse_callback für Mausereignisse.",
+
+	"ui_example_basic_drag": "Ziehen",
+	"ui_example_basic_drag_description": "Wie man einen einfachen Zieh-Knoten erstellt",
+
+	"ui_example_basic_drag_to_node": "Ziehen zu Knoten",
+	"ui_example_basic_drag_to_node_description": "Wie man einen Knoten zu einem anderen Knoten zieht und Rückrufe erhält",
+
+	"ui_example_basic_slider": "Schieberegler",
+	"ui_example_basic_slider_description": "Wie man einen einfachen Schieberegler erstellt",
+
+	"ui_example_basic_slider_vertical": "Vertikaler Schieberegler",
+	"ui_example_basic_slider_vertical_description": "Wie man einen einfachen vertikalen Schieberegler erstellt",
+
+	"ui_example_basic_slider_stepped": "Schieberegler mit Schritten",
+	"ui_example_basic_slider_stepped_description": "Schieberegler können eine \"Schritte\"-Eigenschaft haben, um ihn gestuft zu machen",
+
+	"ui_example_basic_progress_bar": "Fortschrittsanzeige",
+	"ui_example_basic_progress_bar_description": "Wie man eine einfache Fortschrittsanzeige erstellt",
+
+	"ui_example_basic_progress_bar_slice9": "Fortschrittsanzeige Slice9",
+	"ui_example_basic_progress_bar_slice9_description": "Die Fortschrittskomponente kann die Eigenschaft slice9 verarbeiten, um sie am Anfang skalierbar zu machen",
+
+	"ui_example_basic_timer": "Timer",
+	"ui_example_basic_timer_description": "Die Timer-Komponente wird verwendet, um einen Sekunden-Timer mit einem Rückruf anzuzeigen",
+
+	"ui_example_basic_hotkey": "Tastenkombination",
+	"ui_example_basic_hotkey_description": "Wie man eine Tastenkombination für einen Rückruf erstellt",
+
+	"ui_example_basic_scroll": "Scrollen",
+	"ui_example_basic_scroll_description": "Wie man einfaches Scrollen erstellt",
+	"ui_elastic_scroll": "Elastisches Scrollen",
+
+	"ui_example_basic_scroll_slider": "Scrollen mit Schieberegler",
+	"ui_example_basic_scroll_slider_description": "Wie man eine Schieberegler-Steuerung zum Scrollen hinzufügt und sie verwendet",
+
+	"ui_example_basic_grid": "Statische Gitter",
+	"ui_example_basic_grid_description": "Wie man Knoten in einem Gitter platziert",
+	"ui_grid_in_row": "Elemente in Zeile",
+	"ui_add_element": "Element hinzufügen",
+	"ui_remove_element": "Element entfernen",
+	"ui_clear_elements": "Elemente löschen",
+
+	"ui_example_basic_scroll_bind_grid": "Scrollen mit gebundenem Gitter",
+	"ui_example_basic_scroll_bind_grid_description": "Scrollen funktioniert gut mit Gittern und vordefinierten Größen, dies ist ein Beispiel für ein gebundenes Scrollgitter.",
+
+	"ui_example_basic_scroll_bind_grid_horizontal": "Scrollen mit gebundenem horizontalem Gitter",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "Scrollen funktioniert gut mit Gittern und vordefinierten Größen, dies ist ein Beispiel für ein gebundenes horizontales Scrollgitter.",
+
+	"ui_example_basic_input": "Eingabe",
+	"ui_example_basic_input_description": "Wie man die einfachste Eingabe in Druid macht",
+
+	"ui_example_input_password": "Passworteingabe",
+	"ui_example_input_password_description": "Wie die Passworteingabe funktioniert",
+
+	"ui_example_basic_rich_input": "Reiche Eingabe",
+	"ui_example_basic_rich_input_description": "Wie man eine reiche Eingabe in Druid erstellt",
+
+	"ui_example_basic_rich_text": "Reicher Text",
+	"ui_example_basic_rich_text_description": "Wie man einen reichen Text in Druid erstellt",
+
+	"ui_example_rich_text_tags": "Tags für reichen Text",
+	"ui_example_rich_text_tags_description": "Hier ist ein einfaches Beispiel für reichen Text mit Tags\n - <color=A1D7F5>Farbe</color>\n - Schriftart\n - Größe\n - br\n - img",
+
+	"ui_example_basic_swipe": "Wischen",
+	"ui_example_basic_swipe_description": "Wie man Rückrufe für Wischereignisse hinzufügt",
+
+	"ui_example_data_list_basic": "Einfache Datenliste",
+	"ui_example_data_list_basic_description": "Wie man eine einfache Datenliste erstellt",
+
+	"ui_example_data_list_horizontal_basic": "Einfache horizontale Datenliste",
+	"ui_example_data_list_horizontal_basic_description": "Wie man eine einfache horizontale Datenliste erstellt",
+
+	"ui_example_data_list_add_remove_clear": "Datenliste hinzufügen, entfernen, löschen",
+	"ui_example_data_list_add_remove_clear_description": "Wie die Funktionen Hinzufügen, Entfernen und Löschen in der Datenliste funktionieren",
+
+	"ui_example_data_list_cache_with_component": "Gecachte Version der Datenliste",
+	"ui_example_data_list_cache_with_component_description": "Die gecachte Version erfordert mehr Einrichtung für Rückrufe zum Hinzufügen/Entfernen, ist aber speichereffizienter",
+
+	"ui_language": "Sprache",
+	"ui_example_window_language": "Fenster Sprache",
+	"ui_example_window_language_description": "Hier ist ein einfaches Beispiel für ein Fenster mit Sprachenauswahl.",
+
+	"ui_confirmation": "Bestätigung",
+	"ui_example_window_confirmation": "Fensterbestätigung",
+	"ui_confirmation_description": "Bestätigen Sie den Kauf des Autos für eine Million Dollar?",
+
+	"ui_information": "Information",
+	"ui_example_window_information": "Fensterinformation",
+	"ui_example_window_information_text": "Du bist der Beste der Besten!",
+	"ui_example_window_information_description": "Hier ist ein einfaches Beispiel für ein Fenster mit Informationsnachricht.",
+
+	"ui_example_gamepad_tester": "Gamepad-Tester",
+	"ui_example_gamepad_tester_description": "Testen Sie hier Ihr Gamepad, um Tasten und Achsen zu binden",
+
+	"ui_example_on_screen_control": "Bildschirmsteuerung",
+	"ui_example_on_screen_control_description": "Hier ist ein einfaches Beispiel für eine Bildschirmsteuerung. Die on_screen_input hier ist ein einfacher Joystick mit einem Rückruf als Druid-Komponente",
+
+	"ui_example_layout_basic": "Layout",
+	"ui_example_layout_basic_description": "Dieses Layout kann so angepasst werden, dass es mit Figma übereinstimmt",
+
+	"ui_example_panthera_basic_animation": "Panthera Grundanimation",
+	"ui_example_panthera_basic_animation_description": "Hier ist ein einfaches Beispiel für die Grundanimation von Panthera.",
+
+	"ui_example_panthera_animation_blend": "Panthera Animationsmischung",
+	"ui_example_panthera_animation_blend_description": "Hier ist ein einfaches Beispiel für die Animationsmischung von Panthera.",
+	"ui_example_panthera_animation_blend_hint": "Bewege die Maus über diesen Bereich",
+
+	"ui_animation_vertical": "Vertikal",
+	"ui_animation_horizontal": "Horizontal",
+
+	"ui_language_en": "Englisch",
+	"ui_language_ru": "Русский",
+	"ui_language_es": "Español",
+	"ui_language_de": "Deutsch",
+	"ui_language_fr": "Français",
+	"ui_language_ja": "日本語",
+	"ui_language_pt": "Português",
+	"ui_language_it": "Italiano",
+	"ui_language_kr": "한국어",
+	"ui_language_zh": "中文"
+}
