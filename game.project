@@ -7,7 +7,7 @@ shared_state = 1
 [display]
 width = 600
 height = 900
-display_profiles = /example/custom.display_profilesc
+display_profiles = /builtins/render/default.display_profilesc
 dynamic_orientation = 1
 high_dpi = 1
 
@@ -51,10 +51,10 @@ show_made_with_defold = 0
 cssfile = /example/light_theme.css
 
 [native_extension]
-app_manifest = /example/game.appmanifest
+app_manifest = 
 
 [graphics]
-texture_profiles = /example/custom.texture_profiles
+texture_profiles = /builtins/graphics/default.texture_profiles
 max_draw_calls = 128
 verify_graphics_calls = 0
 
