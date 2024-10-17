@@ -57,7 +57,6 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
@@ -86,8 +85,8 @@
 	<td class="summary">Return checkbox group state</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, nodes, callback[, click_nodes=node])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#init">init(self, nodes, callback, click_nodes)</a></td>
+	<td class="summary">The <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_state">set_state(self, indexes, is_instant)</a></td>
@@ -132,7 +131,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool[]</span></span>
+           <span class="types"><span class="type">boolean[]</span></span>
         Array if checkboxes state
     </ol>
 
@@ -142,10 +141,10 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, nodes, callback[, click_nodes=node])</strong>
+    <strong>init(self, nodes, callback, click_nodes)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -163,9 +162,8 @@
          Checkbox callback
         </li>
         <li><span class="parameter">click_nodes</span>
-            <span class="types"><span class="type">node[]</span></span>
+            <span class="types"><span class="type">node[]</span> or <span class="type">nil</span></span>
          Array of trigger nodes, by default equals to nodes
-         (<em>default</em> node)
         </li>
     </ul>
 
@@ -189,11 +187,11 @@
          <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a>
         </li>
         <li><span class="parameter">indexes</span>
-            <span class="types"><span class="type">bool[]</span></span>
+            <span class="types"><span class="type">boolean[]</span></span>
          Array of checkbox state
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          If instant state change
         </li>
     </ul>

@@ -11,6 +11,9 @@ local parser = require("druid.custom.rich_text.module.rt_parse")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
+local VECTOR_ZERO = vmath.vector3(0)
+local COLOR_WHITE = vmath.vector4(1)
+
 local M = {}
 
 -- Trim spaces on string start
@@ -71,18 +74,18 @@ function M.length(text)
 end
 
 
----@param word rich_text.word
----@param previous_word rich_text.word|nil
----@param settings rich_text.settings
----@return rich_text.metrics
+---@param word druid.rich_text.word
+---@param previous_word druid.rich_text.word|nil
+---@param settings druid.rich_text.settings
+---@return druid.rich_text.metrics
 local function get_text_metrics(word, previous_word, settings)
 	local text = word.text
 	local font_resource = gui.get_font_resource(word.font)
 
 	---@type druid.rich_text.metrics
 	local metrics
-	local word_scale_x = word.relative_scale * settings.text_scale.x * settings.adjust_scale
-	local word_scale_y = word.relative_scale * settings.text_scale.y * settings.adjust_scale
+	local word_scale_x = word.relative_scale * settings.scale.x * settings.adjust_scale
+	local word_scale_y = word.relative_scale * settings.scale.y * settings.adjust_scale
 
 	if utf8.len(text) == 0 then
 		metrics = resource.get_text_metrics(font_resource, "|")
@@ -116,16 +119,17 @@ end
 ---@param settings druid.rich_text.settings
 ---@return druid.rich_text.metrics
 local function get_image_metrics(word, settings)
-	local node_prefab = settings.node_prefab
-	gui.play_flipbook(node_prefab, word.image.anim)
-	local node_size = gui.get_size(node_prefab)
+	local node = word.node
+	gui.set_texture(node, word.image.texture)
+	gui.play_flipbook(node, word.image.anim)
+	local node_size = gui.get_size(node)
 	local aspect = node_size.x / node_size.y
 	node_size.x = word.image.width or node_size.x
 	node_size.y = word.image.height or (node_size.x / aspect)
 
 	return {
-		width = node_size.x * word.relative_scale * settings.node_scale.x * settings.adjust_scale,
-		height = node_size.y * word.relative_scale * settings.node_scale.y * settings.adjust_scale,
+		width = node_size.x * word.relative_scale * settings.scale.x * settings.adjust_scale,
+		height = node_size.y * word.relative_scale * settings.scale.y * settings.adjust_scale,
 		node_size = node_size,
 	}
 end
@@ -136,6 +140,16 @@ end
 ---@param previous_word druid.rich_text.word|nil
 ---@return druid.rich_text.metrics
 local function measure_node(word, settings, previous_word)
+	do -- Clone node if required
+		local node
+		if word.image then
+			node = word.node or gui.new_box_node(vmath.vector3(0), vmath.vector3(word.image.width, word.image.height, 0))
+		else
+			node = word.node or gui.clone(settings.text_prefab)
+		end
+		word.node = node
+	end
+
 	local metrics = word.image and get_image_metrics(word, settings) or get_text_metrics(word, previous_word, settings)
 	return metrics
 end
@@ -145,14 +159,14 @@ end
 --- @param text string The text to create rich text nodes from
 --- @param settings table Optional settings table (refer to documentation for details)
 --- @param style druid.rich_text.style
---- @return words
---- @return metrics
+--- @return druid.rich_text.word[]
+--- @return druid.rich_text.settings
+--- @return druid.rich_text.lines_metrics
 function M.create(text, settings, style)
 	assert(text, "You must provide a text")
 
 	-- default settings for a word
 	-- will be assigned to each word unless tags override the values
-	local font = gui.get_font(settings.text_prefab)
 	local word_params = {
 		node = nil, -- Autofill on node creation
 		relative_scale = 1,
@@ -169,12 +183,10 @@ function M.create(text, settings, style)
 		text_color = gui.get_color(settings.text_prefab),
 		shadow = settings.shadow,
 		outline = settings.outline,
-		font = font,
+		font = gui.get_font(settings.text_prefab),
 		-- Image params
-		---@type rich_text.word.image
+		---@type druid.rich_text.image
 		image = nil,
-		image_color = gui.get_color(settings.node_prefab),
-		default_animation = nil,
 		-- Tags
 		br = nil,
 		nobr = nil,
@@ -203,8 +215,8 @@ function M._fill_properties(word, metrics, settings)
 
 	if word.image then
 		-- Image properties
-		word.scale = gui.get_scale(settings.node_prefab) * word.relative_scale * settings.adjust_scale
-		word.pivot = gui.get_pivot(settings.node_prefab)
+		word.scale = vmath.vector3(word.relative_scale * settings.adjust_scale)
+		word.pivot = gui.PIVOT_CENTER
 		word.size = metrics.node_size
 		word.offset = vmath.vector3(0, 0, 0)
 		if word.image.width then
@@ -213,8 +225,8 @@ function M._fill_properties(word, metrics, settings)
 		end
 	else
 		-- Text properties
-		word.scale = gui.get_scale(settings.text_prefab) * word.relative_scale * settings.adjust_scale
-		word.pivot = gui.get_pivot(settings.text_prefab)
+		word.scale = settings.scale * word.relative_scale * settings.adjust_scale
+		word.pivot = gui.PIVOT_SW -- With this pivot adjustments works more correctly than with other pivots
 		word.size = vmath.vector3(metrics.width, metrics.height, 0)
 		word.offset = vmath.vector3(metrics.offset_x, metrics.offset_y, 0)
 	end
@@ -234,8 +246,8 @@ function M._split_on_lines(words, settings)
 
 	repeat
 		local word = words[i]
-		if word.image then
-			word.default_animation = settings.default_animation
+		if word == nil then
+			break
 		end
 
 		-- Reset texts to start measure again
@@ -305,9 +317,9 @@ function M._split_on_lines(words, settings)
 end
 
 
----@param lines rich_text.word[][]
----@param settings rich_text.settings
----@return rich_text.lines_metrics
+---@param lines druid.rich_text.word[][]
+---@param settings druid.rich_text.settings
+---@return druid.rich_text.lines_metrics
 function M._position_lines(lines, settings)
 	local lines_metrics = M._get_lines_metrics(lines, settings)
 	-- current x-y is left top point of text spawn
@@ -352,9 +364,9 @@ function M._position_lines(lines, settings)
 end
 
 
----@param lines rich_text.word[][]
----@param settings rich_text.settings
----@return rich_text.lines_metrics
+---@param lines druid.rich_text.word[][]
+---@param settings druid.rich_text.settings
+---@return druid.rich_text.lines_metrics
 function M._get_lines_metrics(lines, settings)
 	local metrics = {}
 	local text_width = 0
@@ -386,7 +398,7 @@ function M._get_lines_metrics(lines, settings)
 		}
 	end
 
-	---@type rich_text.lines_metrics
+	---@type druid.rich_text.lines_metrics
 	local lines_metrics = {
 		text_width = text_width,
 		text_height = text_height,
@@ -397,8 +409,8 @@ function M._get_lines_metrics(lines, settings)
 end
 
 
----@param lines rich_text.word[][]
----@param settings rich_text.settings
+---@param lines druid.rich_text.word[][]
+---@param settings druid.rich_text.settings
 function M._update_nodes(lines, settings)
 	for line_index = 1, #lines do
 		local line = lines[line_index]
@@ -406,10 +418,11 @@ function M._update_nodes(lines, settings)
 			local word = line[word_index]
 			local node
 			if word.image then
-				node = word.node or gui.clone(settings.node_prefab)
+				node = word.node or gui.new_box_node(VECTOR_ZERO, word.size)
 				gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
-				gui.play_flipbook(node, hash(word.image.anim or word.default_animation))
-				gui.set_color(node, word.color or word.image_color)
+				gui.set_texture(node, word.image.texture)
+				gui.play_flipbook(node, hash(word.image.anim))
+				gui.set_color(node, word.color or COLOR_WHITE)
 			else
 				node = word.node or gui.clone(settings.text_prefab)
 				gui.set_outline(node, word.outline)
@@ -421,6 +434,7 @@ function M._update_nodes(lines, settings)
 			word.node = node
 			gui.set_enabled(node, true)
 			gui.set_parent(node, settings.parent)
+			gui.set_pivot(node, word.pivot)
 			gui.set_size(node, word.size)
 			gui.set_scale(node, word.scale)
 			gui.set_position(node, word.position)
@@ -429,10 +443,10 @@ function M._update_nodes(lines, settings)
 end
 
 
----@param words rich_text.word[]
----@param settings rich_text.settings
+---@param words druid.rich_text.word[]
+---@param settings druid.rich_text.settings
 ---@param scale number
----@return rich_text.lines_metrics
+---@return druid.rich_text.lines_metrics
 function M.set_text_scale(words, settings, scale)
 	settings.adjust_scale = scale
 
@@ -463,7 +477,7 @@ function M.adjust_to_area(words, settings, lines_metrics, style)
 			if lines_metrics.text_width * scale_koef > settings.width then
 				scale_koef = math.sqrt(settings.width / lines_metrics.text_width)
 			end
-			local adjust_scale = math.min(scale_koef, 1)
+			local adjust_scale = math.min(scale_koef, settings.scale.x)
 
 			local lines = M.apply_scale_without_update(words, settings, adjust_scale)
 			local is_fit = M.is_fit_info_area(lines, settings)
@@ -496,15 +510,15 @@ function M.adjust_to_area(words, settings, lines_metrics, style)
 end
 
 
----@return boolean @If we fit into area size
+---@return druid.rich_text.word[][] lines
 function M.apply_scale_without_update(words, settings, scale)
 	settings.adjust_scale = scale
 	return M._split_on_lines(words, settings)
 end
 
 
----@param lines rich_text.word[][]
----@param settings rich_text.settings
+---@param lines druid.rich_text.word[][]
+---@param settings druid.rich_text.settings
 function M.is_fit_info_area(lines, settings)
 	local lines_metrics = M._get_lines_metrics(lines, settings)
 	local area_size = gui.get_size(settings.parent)

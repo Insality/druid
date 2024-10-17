@@ -1,0 +1,172 @@
+{
+	"ui_examples": "Exemplos",
+	"ui_properties_panel": "Propriedades",
+	"ui_output": "Saída",
+	"ui_view_code": "Ver código",
+	"ui_profiler": "Profiler",
+	"ui_profiler_memory": "Memória",
+	"ui_profiler_fps": "FPS",
+	"ui_profiler_components": "Componentes",
+	"ui_profiler_events": "Eventos",
+	"ui_confirm": "Confirmar",
+	"ui_cancel": "Cancelar",
+	"ui_value": "Valor",
+	"ui_scroll": "Rolagem",
+	"ui_clipping": "Recorte",
+	"ui_no_properties": "Sem propriedades para este exemplo",
+	"ui_padding": "Preenchimento",
+	"ui_margin_x": "Margem X",
+	"ui_margin_y": "Margem Y",
+	"ui_justify": "Justificar",
+	"ui_pivot_next": "Próximo Ponto de Pivô",
+	"ui_type_next": "Próximo Tipo",
+	"ui_adjust_next": "Próxima Ajuste",
+	"ui_enabled": "Habilitado",
+
+	"ui_examples_basic": "Básico",
+	"ui_examples_data_list": "Lista de dados",
+	"ui_examples_gamepad": "Gamepad",
+	"ui_examples_window": "Janelas",
+	"ui_examples_panthera": "Panthera",
+
+	"ui_example_intro": "Introdução",
+	"ui_example_intro_description": "Aqui haverá uma breve descrição do exemplo selecionado.",
+
+	"ui_example_basic_button": "Botão",
+	"ui_example_basic_button_description": "Exemplo de botão básico do Druid",
+
+	"ui_example_basic_button_double_click": "Duplo Clique",
+	"ui_example_basic_button_double_click_description": "Como adicionar funcionalidade de duplo clique ao botão.",
+
+	"ui_example_basic_button_hold": "Manter Botão",
+	"ui_example_basic_button_hold_description": "Como fazer a funcionalidade de manter e acionar para o botão.",
+
+	"ui_example_basic_text": "Texto",
+	"ui_example_basic_text_description": "Verifique como o texto é ajustado com diferentes propriedades.",
+
+	"ui_example_basic_multiline_text": "Texto Multilinha",
+	"ui_example_basic_multiline_text_description": "Verifique como o texto multilinha é ajustado com diferentes propriedades.",
+
+	"ui_example_basic_hover": "Hover",
+	"ui_example_basic_hover_description": "O hover possui dois eventos de hover. Um para o mouse e um para toque. Use mouse_callback para eventos de mouse.",
+
+	"ui_example_basic_drag": "Arrastar",
+	"ui_example_basic_drag_description": "Como criar um nó de arrastar simples",
+
+	"ui_example_basic_drag_to_node": "Arrastar para Nó",
+	"ui_example_basic_drag_to_node_description": "Como arrastar um nó para outro nó e obter callbacks",
+
+	"ui_example_basic_slider": "Slider",
+	"ui_example_basic_slider_description": "Como fazer um slider simples",
+
+	"ui_example_basic_slider_vertical": "Slider Vertical",
+	"ui_example_basic_slider_vertical_description": "Como fazer um slider vertical simples",
+
+	"ui_example_basic_slider_stepped": "Slider com Passos",
+	"ui_example_basic_slider_stepped_description": "Os sliders podem ter uma propriedade \"passos\" para torná-los escalonados.",
+
+	"ui_example_basic_progress_bar": "Barra de Progresso",
+	"ui_example_basic_progress_bar_description": "Como fazer uma barra de progresso simples",
+
+	"ui_example_basic_progress_bar_slice9": "Barra de Progresso Slice9",
+	"ui_example_basic_progress_bar_slice9_description": "O componente de progresso pode lidar com a propriedade slice9 para torná-lo escalável desde o início.",
+
+	"ui_example_basic_timer": "Temporizador",
+	"ui_example_basic_timer_description": "O componente Temporizador é usado para exibir um temporizador de segundos com um callback.",
+
+	"ui_example_basic_hotkey": "Tecla de Atalho",
+	"ui_example_basic_hotkey_description": "Como criar uma tecla de atalho para um callback.",
+
+	"ui_example_basic_scroll": "Rolagem",
+	"ui_example_basic_scroll_description": "Como fazer uma rolagem simples.",
+	"ui_elastic_scroll": "Rolagem Elástica",
+
+	"ui_example_basic_scroll_slider": "Rolagem com Slider",
+	"ui_example_basic_scroll_slider_description": "Como adicionar um controle deslizante à rolagem e usá-lo.",
+
+	"ui_example_basic_grid": "Grade Estática",
+	"ui_example_basic_grid_description": "Como posicionar nós em uma grade.",
+	"ui_grid_in_row": "Elementos na Linha",
+	"ui_add_element": "Adicionar Elemento",
+	"ui_remove_element": "Remover Elemento",
+	"ui_clear_elements": "Limpar Elementos",
+
+	"ui_example_basic_scroll_bind_grid": "Rolagem com Grade Vinculada",
+	"ui_example_basic_scroll_bind_grid_description": "A rolagem funciona bem com grades e tamanhos predefinidos; este é um exemplo de rolagem com grade vinculada.",
+
+	"ui_example_basic_scroll_bind_grid_horizontal": "Rolagem com Grade Vinculada Horizontal",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "A rolagem funciona bem com grades e tamanhos predefinidos; este é um exemplo de rolagem com grade vinculada horizontal.",
+
+	"ui_example_basic_input": "Entrada",
+	"ui_example_basic_input_description": "Como fazer a entrada mais simples no Druid.",
+
+	"ui_example_input_password": "Entrada de Senha",
+	"ui_example_input_password_description": "Como funciona a entrada de senha.",
+
+	"ui_example_basic_rich_input": "Entrada Rica",
+	"ui_example_basic_rich_input_description": "Como fazer uma entrada rica no Druid.",
+
+	"ui_example_basic_rich_text": "Texto Rico",
+	"ui_example_basic_rich_text_description": "Como criar um texto rico no Druid.",
+
+	"ui_example_rich_text_tags": "Tags de Texto Rico",
+	"ui_example_rich_text_tags_description": "Aqui está um exemplo simples de texto rico com tags\n - <color=A1D7F5>cor</color>\n - fonte\n - tamanho\n - br\n - img",
+
+	"ui_example_basic_swipe": "Deslizar",
+	"ui_example_basic_swipe_description": "Como adicionar callbacks em eventos de deslizar.",
+
+	"ui_example_data_list_basic": "Lista de Dados Básica",
+	"ui_example_data_list_basic_description": "Como fazer uma lista de dados simples.",
+
+	"ui_example_data_list_horizontal_basic": "Lista de Dados Horizontal Básica",
+	"ui_example_data_list_horizontal_basic_description": "Como fazer uma lista de dados horizontal simples.",
+
+	"ui_example_data_list_add_remove_clear": "Adicionar, Remover e Limpar na Lista de Dados",
+	"ui_example_data_list_add_remove_clear_description": "Como as funções de adicionar, remover e limpar funcionam na lista de dados.",
+
+	"ui_example_data_list_cache_with_component": "Versão em Cache da Lista de Dados",
+	"ui_example_data_list_cache_with_component_description": "A versão em cache requer mais configuração para callbacks de adicionar/remover, mas é mais eficiente em memória.",
+
+	"ui_language": "Idioma",
+	"ui_example_window_language": "Janela de Idioma",
+	"ui_example_window_language_description": "Aqui está um exemplo simples de uma janela com seleção de idioma.",
+
+	"ui_confirmation": "Confirmação",
+	"ui_example_window_confirmation": "Janela de Confirmação",
+	"ui_confirmation_description": "Confirmar a compra do carro de um milhão de dólares?",
+
+	"ui_information": "Informação",
+	"ui_example_window_information": "Janela de Informação",
+	"ui_example_window_information_text": "Você é o melhor dos melhores!",
+	"ui_example_window_information_description": "Aqui está um exemplo simples de uma janela com uma mensagem de informação.",
+
+	"ui_example_gamepad_tester": "Testador de Gamepad",
+	"ui_example_gamepad_tester_description": "Teste seu gamepad aqui para vincular botões e eixos.",
+
+	"ui_example_on_screen_control": "Controle na Tela",
+	"ui_example_on_screen_control_description": "Aqui está um exemplo simples de controle na tela. A entrada na tela aqui é um joystick simples com um callback como componente do Druid.",
+
+	"ui_example_layout_basic": "Layout",
+	"ui_example_layout_basic_description": "Este layout pode ser ajustado para ser igual ao do Figma.",
+
+	"ui_example_panthera_basic_animation": "Animação Básica da Panthera",
+	"ui_example_panthera_basic_animation_description": "Aqui está um exemplo simples da animação básica da Panthera.",
+
+	"ui_example_panthera_animation_blend": "Mistura de Animações da Panthera",
+	"ui_example_panthera_animation_blend_description": "Aqui está um exemplo simples da mistura de animações da Panthera.",
+	"ui_example_panthera_animation_blend_hint": "Passe o mouse sobre esta área.",
+
+	"ui_animation_vertical": "Vertical",
+	"ui_animation_horizontal": "Horizontal",
+
+	"ui_language_en": "English",
+	"ui_language_ru": "Русский",
+	"ui_language_es": "Español",
+	"ui_language_de": "Deutsch",
+	"ui_language_fr": "Français",
+	"ui_language_ja": "日本語",
+	"ui_language_pt": "Português",
+	"ui_language_it": "Italiano",
+	"ui_language_kr": "한국어",
+	"ui_language_zh": "中文"
+}

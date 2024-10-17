@@ -1,0 +1,172 @@
+{
+	"ui_examples": "예시",
+	"ui_properties_panel": "속성",
+	"ui_output": "출력",
+	"ui_view_code": "코드 보기",
+	"ui_profiler": "프로파일러",
+	"ui_profiler_memory": "메모리",
+	"ui_profiler_fps": "FPS",
+	"ui_profiler_components": "구성 요소",
+	"ui_profiler_events": "이벤트",
+	"ui_confirm": "확인",
+	"ui_cancel": "취소",
+	"ui_value": "값",
+	"ui_scroll": "스크롤",
+	"ui_clipping": "클리핑",
+	"ui_no_properties": "이 예제에 대한 속성이 없습니다.",
+	"ui_padding": "패딩",
+	"ui_margin_x": "여백 X",
+	"ui_margin_y": "여백 Y",
+	"ui_justify": "정렬",
+	"ui_pivot_next": "다음 피벗",
+	"ui_type_next": "다음 유형",
+	"ui_adjust_next": "다음 조정",
+	"ui_enabled": "활성화",
+
+	"ui_examples_basic": "기본",
+	"ui_examples_data_list": "데이터 목록",
+	"ui_examples_gamepad": "게임패드",
+	"ui_examples_window": "윈도우",
+	"ui_examples_panthera": "팬테라",
+
+	"ui_example_intro": "소개",
+	"ui_example_intro_description": "여기에는 선택한 예제에 대한 간략한 설명이 표시됩니다.",
+
+	"ui_example_basic_button": "버튼",
+	"ui_example_basic_button_description": "Druid의 기본 버튼 예시",
+
+	"ui_example_basic_button_double_click": "더블 클릭",
+	"ui_example_basic_button_double_click_description": "버튼에 더블 클릭 기능을 추가하는 방법입니다.",
+
+	"ui_example_basic_button_hold": "버튼 누르기",
+	"ui_example_basic_button_hold_description": "버튼에 대해 누르기 및 트리거 기능을 만드는 방법입니다.",
+
+	"ui_example_basic_text": "텍스트",
+	"ui_example_basic_text_description": "텍스트가 다양한 속성으로 어떻게 조정되는지 확인하십시오.",
+
+	"ui_example_basic_multiline_text": "다중 행 텍스트",
+	"ui_example_basic_multiline_text_description": "다중 행 텍스트가 다양한 속성으로 어떻게 조정되는지 확인하십시오.",
+
+	"ui_example_basic_hover": "호버",
+	"ui_example_basic_hover_description": "호버에는 두 개의 호버 이벤트가 있습니다. 하나는 마우스용이고, 다른 하나는 터치용입니다. 마우스 이벤트에는 mouse_callback을 사용하십시오.",
+
+	"ui_example_basic_drag": "드래그",
+	"ui_example_basic_drag_description": "간단한 드래그 노드를 만드는 방법입니다.",
+
+	"ui_example_basic_drag_to_node": "노드로 드래그",
+	"ui_example_basic_drag_to_node_description": "노드를 다른 노드로 드래그하고 콜백을 받는 방법입니다.",
+
+	"ui_example_basic_slider": "슬라이더",
+	"ui_example_basic_slider_description": "간단한 슬라이더를 만드는 방법입니다.",
+
+	"ui_example_basic_slider_vertical": "수직 슬라이더",
+	"ui_example_basic_slider_vertical_description": "간단한 수직 슬라이더를 만드는 방법입니다.",
+
+	"ui_example_basic_slider_stepped": "단계 슬라이더",
+	"ui_example_basic_slider_stepped_description": "슬라이더는 \"단계\" 속성을 가질 수 있어 단계를 만들 수 있습니다.",
+
+	"ui_example_basic_progress_bar": "진행 바",
+	"ui_example_basic_progress_bar_description": "간단한 진행 바를 만드는 방법입니다.",
+
+	"ui_example_basic_progress_bar_slice9": "진행 바 Slice9",
+	"ui_example_basic_progress_bar_slice9_description": "진행 컴포넌트는 시작할 때 스케일 가능하도록 slice9 속성을 처리할 수 있습니다.",
+
+	"ui_example_basic_timer": "타이머",
+	"ui_example_basic_timer_description": "타이머 구성 요소는 콜백이 있는 초 타이머를 표시하는 데 사용됩니다.",
+
+	"ui_example_basic_hotkey": "단축키",
+	"ui_example_basic_hotkey_description": "콜백에 대한 단축키를 만드는 방법입니다.",
+
+	"ui_example_basic_scroll": "스크롤",
+	"ui_example_basic_scroll_description": "간단한 스크롤을 만드는 방법입니다.",
+	"ui_elastic_scroll": "탄력 스크롤",
+
+	"ui_example_basic_scroll_slider": "슬라이더와 함께 스크롤",
+	"ui_example_basic_scroll_slider_description": "스크롤에 슬라이더 컨트롤을 추가하고 사용하는 방법입니다.",
+
+	"ui_example_basic_grid": "정적 그리드",
+	"ui_example_basic_grid_description": "그리드에 노드를 배치하는 방법입니다.",
+	"ui_grid_in_row": "행 내 요소",
+	"ui_add_element": "요소 추가",
+	"ui_remove_element": "요소 제거",
+	"ui_clear_elements": "요소 지우기",
+
+	"ui_example_basic_scroll_bind_grid": "스크롤 바인드 그리드",
+	"ui_example_basic_scroll_bind_grid_description": "스크롤은 그리드 및 사전 정의된 크기와 잘 작동합니다. 이것은 스크롤 바인드 그리드의 예입니다.",
+
+	"ui_example_basic_scroll_bind_grid_horizontal": "수평 스크롤 바인드 그리드",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "스크롤은 그리드 및 사전 정의된 크기와 잘 작동합니다. 이것은 수평 스크롤 바인드 그리드의 예입니다.",
+
+	"ui_example_basic_input": "입력",
+	"ui_example_basic_input_description": "Druid에서 가장 간단한 입력을 만드는 방법입니다.",
+
+	"ui_example_input_password": "비밀번호 입력",
+	"ui_example_input_password_description": "비밀번호 입력이 어떻게 작동하는지입니다.",
+
+	"ui_example_basic_rich_input": "리치 입력",
+	"ui_example_basic_rich_input_description": "Druid에서 리치 입력을 만드는 방법입니다.",
+
+	"ui_example_basic_rich_text": "리치 텍스트",
+	"ui_example_basic_rich_text_description": "Druid에서 리치 텍스트를 만드는 방법입니다.",
+
+	"ui_example_rich_text_tags": "리치 텍스트 태그",
+	"ui_example_rich_text_tags_description": "여기에는 태그가 있는 리치 텍스트의 간단한 예가 있습니다\n - <color=A1D7F5>색상</color>\n - 글꼴\n - 크기\n - br\n - img",
+
+	"ui_example_basic_swipe": "스와이프",
+	"ui_example_basic_swipe_description": "스와이프 이벤트에 콜백을 추가하는 방법입니다.",
+
+	"ui_example_data_list_basic": "기본 데이터 목록",
+	"ui_example_data_list_basic_description": "간단한 데이터 목록을 만드는 방법입니다.",
+
+	"ui_example_data_list_horizontal_basic": "수평 기본 데이터 목록",
+	"ui_example_data_list_horizontal_basic_description": "간단한 수평 데이터 목록을 만드는 방법입니다.",
+
+	"ui_example_data_list_add_remove_clear": "데이터 목록 추가, 제거, 지우기",
+	"ui_example_data_list_add_remove_clear_description": "데이터 목록에서 추가, 제거 및 지우기 기능이 어떻게 작동하는지입니다.",
+
+	"ui_example_data_list_cache_with_component": "캐시된 데이터 목록 버전",
+	"ui_example_data_list_cache_with_component_description": "캐시된 버전은 추가/제거 콜백에 대해 더 많은 설정이 필요하지만 메모리 효율이 더 좋습니다.",
+
+	"ui_language": "언어",
+	"ui_example_window_language": "창 언어",
+	"ui_example_window_language_description": "언어 선택이 있는 창의 간단한 예입니다.",
+
+	"ui_confirmation": "확인",
+	"ui_example_window_confirmation": "창 확인",
+	"ui_confirmation_description": "100만 달러 자동차 구매를 확인하시겠습니까?",
+
+	"ui_information": "정보",
+	"ui_example_window_information": "정보 창",
+	"ui_example_window_information_text": "당신은 최고 중의 최고입니다!",
+	"ui_example_window_information_description": "정보 메시지를 포함한 창의 간단한 예입니다.",
+
+	"ui_example_gamepad_tester": "게임패드 테스터",
+	"ui_example_gamepad_tester_description": "여기에서 게임패드를 테스트하여 버튼과 축을 바인딩합니다.",
+
+	"ui_example_on_screen_control": "화면 위의 제어",
+	"ui_example_on_screen_control_description": "화면 위의 제어에 대한 간단한 예입니다. 여기의 on_screen_input은 Druid 구성 요소로서 콜백이 있는 간단한 조이스틱입니다.",
+
+	"ui_example_layout_basic": "레이아웃",
+	"ui_example_layout_basic_description": "이 레이아웃은 Figma와 같도록 조정할 수 있습니다.",
+
+	"ui_example_panthera_basic_animation": "팬테라 기본 애니메이션",
+	"ui_example_panthera_basic_animation_description": "여기에는 팬테라 기본 애니메이션의 간단한 예가 있습니다.",
+
+	"ui_example_panthera_animation_blend": "팬테라 애니메이션 혼합",
+	"ui_example_panthera_animation_blend_description": "여기에는 팬테라 애니메이션 혼합의 간단한 예가 있습니다.",
+	"ui_example_panthera_animation_blend_hint": "이 영역 위에 마우스를 올려 놓으세요.",
+
+	"ui_animation_vertical": "수직",
+	"ui_animation_horizontal": "수평",
+
+	"ui_language_en": "English",
+	"ui_language_ru": "Русский",
+	"ui_language_es": "Español",
+	"ui_language_de": "Deutsch",
+	"ui_language_fr": "Français",
+	"ui_language_ja": "日本語",
+	"ui_language_pt": "Português",
+	"ui_language_it": "Italiano",
+	"ui_language_kr": "한국어",
+	"ui_language_zh": "中文"
+}

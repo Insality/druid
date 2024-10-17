@@ -28,54 +28,54 @@ def process_component(node_name, component_name):
 
 	if node_name == "root":
 		component_annotations += "\n---@field root node"
-		component_define += "\n\tself.root = self:get_node(SCHEME.ROOT)"
+		component_define += "\n\tself.root = self:get_node(\"root\")"
 
 	if node_name.startswith("button"):
 		component_annotations += "\n---@field {0} druid.button".format(node_name)
-		component_functions += "\nfunction {1}:_on_{0}()\n\tprint(\"Click on {0}\")\nend\n\n".format(node_name, component_name)
-		component_define += "\n\tself.{0} = self.druid:new_button(SCHEME.{1}, self._on_{0})".format(node_name, get_id(node_name))
+		component_functions += "\nfunction M:_on_{0}()\n\tprint(\"Click on {0}\")\nend\n\n".format(node_name)
+		component_define += "\n\tself.{0} = self.druid:new_button(\"{1}\", self._on_{0})".format(node_name, node_name)
 
 	if node_name.startswith("text"):
 		component_annotations += "\n---@field {0} druid.text".format(node_name)
-		component_define += "\n\tself.{0} = self.druid:new_text(SCHEME.{1})".format(node_name, get_id(node_name))
+		component_define += "\n\tself.{0} = self.druid:new_text(\"{1}\")".format(node_name, node_name)
 
 	if node_name.startswith("lang_text"):
 		component_annotations += "\n---@field {0} druid.text".format(node_name)
-		component_define += "\n\tself.{0} = self.druid:new_lang_text(SCHEME.{1}, \"lang_id\")".format(node_name, get_id(node_name))
+		component_define += "\n\tself.{0} = self.druid:new_lang_text(\"{1}\", \"lang_id\")".format(node_name, node_name)
 
 	if node_name.startswith("grid") or node_name.startswith("static_grid"):
 		component_annotations += "\n---@field {0} druid.static_grid".format(node_name)
 		component_define += "\n--TODO: Replace prefab_name with grid element prefab"
-		component_define += "\n\tself.{0} = self.druid:new_static_grid(SCHEME.{1}, \"prefab_name\", 1)".format(node_name, get_id(node_name))
+		component_define += "\n\tself.{0} = self.druid:new_static_grid(\"{1}\", \"prefab_name\", 1)".format(node_name, node_name)
 
 	if node_name.startswith("dynamic_grid"):
 		component_annotations += "\n---@field {0} druid.dynamic_grid".format(node_name)
-		component_define += "\n\tself.{0} = self.druid:new_dynamic_grid(SCHEME.{1})".format(node_name, get_id(node_name))
+		component_define += "\n\tself.{0} = self.druid:new_dynamic_grid(\"{1}\")".format(node_name, node_name)
 
 	if node_name.startswith("scroll_view"):
 		field_name = node_name.replace("_view", "")
 		content_name = node_name.replace("_view", "_content")
 		component_annotations += "\n---@field {0} druid.scroll".format(field_name)
-		component_define += "\n\tself.{0} = self.druid:new_scroll(SCHEME.{1}, SCHEME.{2})".format(field_name, get_id(node_name), get_id(content_name))
+		component_define += "\n\tself.{0} = self.druid:new_scroll(\"{1}\", \"{2}\")".format(field_name, node_name, content_name)
 
 	if node_name.startswith("blocker"):
 		component_annotations += "\n---@field {0} druid.blocker".format(node_name)
-		component_define += "\n\tself.{0} = self.druid:new_blocker(SCHEME.{1})".format(node_name, get_id(node_name))
+		component_define += "\n\tself.{0} = self.druid:new_blocker(\"{1}\")".format(node_name, node_name)
 
 	if node_name.startswith("slider"):
 		component_annotations += "\n---@field {0} druid.slider".format(node_name)
 		component_define += "\n--TODO: Replace slider end position. It should be only vertical or horizontal"
-		component_define += "\n\tself.{0} = self.druid:new_slider(SCHEME.{1}, vmath.vector3(100, 0, 0), self._on_{0}_change)".format(node_name, get_id(node_name))
-		component_functions += "\nfunction {1}:_on_{0}_change(value)\n\tprint(\"Slider change:\", value)\nend\n\n".format(node_name, component_name)
+		component_define += "\n\tself.{0} = self.druid:new_slider(\"{1}\", vmath.vector3(100, 0, 0), self._on_{0}_change)".format(node_name, node_name)
+		component_functions += "\nfunction M:_on_{0}_change(value)\n\tprint(\"Slider change:\", value)\nend\n\n".format(node_name)
 
 	if node_name.startswith("progress"):
 		component_annotations += "\n---@field {0} druid.progress".format(node_name)
-		component_define += "\n\tself.{0} = self.druid:new_progress(SCHEME.{1}, \"x\")".format(node_name, get_id(node_name))
+		component_define += "\n\tself.{0} = self.druid:new_progress(\"{1}\", \"x\")".format(node_name, get_id(node_name))
 
 	if node_name.startswith("timer"):
 		component_annotations += "\n---@field {0} druid.timer".format(node_name)
-		component_define += "\n\tself.{0} = self.druid:new_timer(SCHEME.{1}, 59, 0, self._on_{0}_end)".format(node_name, get_id(node_name))
-		component_functions += "\nfunction {1}:_on_{0}_end()\n\tprint(\"Timer {0} trigger\")\nend\n\n".format(node_name, component_name)
+		component_define += "\n\tself.{0} = self.druid:new_timer(\"{1}\", 59, 0, self._on_{0}_end)".format(node_name, get_id(node_name))
+		component_functions += "\nfunction M:_on_{0}_end()\n\tprint(\"Timer {0} trigger\")\nend\n\n".format(node_name)
 
 
 def main():
@@ -126,7 +126,7 @@ def main():
 	filedata = filedata.replace("{COMPONENT_DEFINE}", component_define)
 	filedata = filedata.replace("{COMPONENT_FUNCTIONS}", component_functions)
 	filedata = filedata.replace("{COMPONENT_ANNOTATIONS}", component_annotations)
-	filedata = filedata.replace("{SCHEME_LIST}", ",\n".join(scheme_list))
+	#filedata = filedata.replace("{SCHEME_LIST}", ",\n".join(scheme_list))
 
 	output_file = open(output_full_path, "w")
 	output_file.write(filedata)

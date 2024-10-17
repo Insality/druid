@@ -85,6 +85,8 @@ function M.register(name, module)
 	druid_instance["new_" .. name] = function(self, ...)
 		return druid_instance.new(self, module, ...)
 	end
+
+	return druid_instance["new_" .. name]
 end
 
 
@@ -92,7 +94,7 @@ end
 --
 -- @function druid.new
 -- @tparam table context The Druid context. Usually, this is the self of the gui_script. It is passed into all Druid callbacks.
--- @tparam[opt] table style The Druid style table to override style parameters for this Druid instance.
+-- @tparam table|nil style The Druid style table to override style parameters for this Druid instance.
 -- @treturn druid_instance The Druid instance @{DruidInstance}.
 -- @usage
 -- local druid = require("druid.druid")
@@ -105,7 +107,9 @@ function M.new(context, style)
 		M.set_default_style(default_style)
 	end
 
-	local new_instance = druid_instance(context, style)
+	local new_instance = setmetatable({}, { __index = druid_instance })
+	new_instance:initialize(context, style)
+
 	table.insert(_instances, new_instance)
 	return new_instance
 end

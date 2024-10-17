@@ -14,7 +14,7 @@
 -- @tfield node node
 
 --- Button trigger node
--- @tfield[opt=node] node click_node
+-- @tfield node|nil click_node
 
 --- Button component from click_node
 -- @tfield Button button @{Button}
@@ -46,12 +46,12 @@ function Checkbox.on_style_change(self, style)
 end
 
 
---- Component init function
+--- The @{Checkbox} constructor
 -- @tparam Checkbox self @{Checkbox}
 -- @tparam node node Gui node
 -- @tparam function callback Checkbox callback
--- @tparam[opt=node] node click_node Trigger node, by default equals to node
--- @tparam[opt=false] boolean initial_state The initial state of checkbox, default - false
+-- @tparam node|nil click_node Trigger node, by default equals to node. Default: node
+-- @tparam boolean|nil initial_state The initial state of checkbox, default - false
 function Checkbox.init(self, node, callback, click_node, initial_state)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
@@ -71,9 +71,9 @@ end
 
 --- Set checkbox state
 -- @tparam Checkbox self @{Checkbox}
--- @tparam bool state Checkbox state
--- @tparam bool is_silent Don't trigger on_change_state if true
--- @tparam bool is_instant If instant checkbox change
+-- @tparam boolean|nil state Checkbox state
+-- @tparam boolean|nil is_silent Don't trigger on_change_state if true
+-- @tparam boolean|nil is_instant If instant checkbox change
 function Checkbox.set_state(self, state, is_silent, is_instant)
 	self.state = state
 	self.style.on_change_state(self, self.node, state, is_instant)
@@ -88,7 +88,7 @@ end
 
 --- Return checkbox state
 -- @tparam Checkbox self @{Checkbox}
--- @treturn bool Checkbox state
+-- @treturn boolean Checkbox state
 function Checkbox.get_state(self)
 	return self.state
 end

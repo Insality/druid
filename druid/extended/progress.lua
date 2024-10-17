@@ -76,15 +76,29 @@ end
 
 local function set_bar_to(self, set_to, is_silent)
 	local prev_value = self.last_value
+	local other_side = self.key == const.SIDE.X and const.SIDE.Y or const.SIDE.X
 	self.last_value = set_to
 
-	local total_width = set_to * self.max_size
+	local total_width = set_to * self.max_size[self.key]
 
-	local scale = math.min(total_width / self.slice_size, 1)
-	local size = math.max(total_width, self.slice_size)
+	local scale = 1
+	if self.slice_size[self.key] > 0 then
+		scale = math.min(total_width / self.slice_size[self.key], 1)
+	end
+	local size = math.max(total_width, self.slice_size[self.key])
+
+	do -- Scale other side
+		-- Decrease other side of progress bar to match the oppotize slice_size
+		local minimal_size = self.size[other_side] - self.slice_size[other_side]
+		local maximum_size = self.size[other_side]
+		local scale_diff = (maximum_size - minimal_size) / maximum_size
+		local other_scale = 1 - (scale_diff * (1 - scale))
+		self.scale[other_side] = other_scale
+	end
 
 	self.scale[self.key] = scale
 	gui.set_scale(self.node, self.scale)
+
 	self.size[self.key] = size
 	gui.set_size(self.node, self.size)
 
@@ -101,8 +115,8 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=5] number SPEED Progress bas fill rate. More -> faster
--- @tfield[opt=0.005] number MIN_DELTA Minimum step to fill progress bar
+-- @tfield number|nil SPEED Progress bas fill rate. More -> faster. Default: 5
+-- @tfield number|nil MIN_DELTA Minimum step to fill progress bar. Default: 0.005
 function Progress.on_style_change(self, style)
 	self.style = {}
 	self.style.SPEED = style.SPEED or 5
@@ -110,11 +124,11 @@ function Progress.on_style_change(self, style)
 end
 
 
---- @{Progress} constructor
+--- The @{Progress} constructor
 -- @tparam Progress self @{Progress}
 -- @tparam string|node node Node name or GUI Node itself.
 -- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
--- @tparam[opt=1] number init_value Initial value of progress bar
+-- @tparam number|nil init_value Initial value of progress bar. Default: 1
 function Progress.init(self, node, key, init_value)
 	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
@@ -125,15 +139,15 @@ function Progress.init(self, node, key, init_value)
 	self.node = self:get_node(node)
 	self.scale = gui.get_scale(self.node)
 	self.size = gui.get_size(self.node)
-	self.max_size = self.size[self.key]
+	self.max_size = gui.get_size(self.node)
 	self.slice = gui.get_slice9(self.node)
 	self.last_value = self._init_value
 
-	if self.key == const.SIDE.X then
-		self.slice_size = self.slice.x + self.slice.z
-	else
-		self.slice_size = self.slice.y + self.slice.w
-	end
+	self.slice_size = vmath.vector3(
+		self.slice.x + self.slice.z,
+		self.slice.y + self.slice.w,
+		0
+	)
 
 	self.on_change = Event()
 
@@ -143,6 +157,12 @@ end
 
 function Progress.on_layout_change(self)
 	self:set_to(self.last_value)
+end
+
+
+function Progress.on_remove(self)
+	-- Return default size
+	gui.set_size(self.node, self.max_size)
 end
 
 
@@ -210,7 +230,7 @@ end
 --- Start animation of a progress bar
 -- @tparam Progress self @{Progress}
 -- @tparam number to value between 0..1
--- @tparam[opt] function callback Callback on animation ends
+-- @tparam function|nil callback Callback on animation ends
 function Progress.to(self, to, callback)
 	to = helper.clamp(to, 0, 1)
 	-- cause of float error
@@ -231,7 +251,7 @@ end
 -- @tparam vector3 max_size The new node maximum (full) size
 -- @treturn Progress @{Progress}
 function Progress.set_max_size(self, max_size)
-	self.max_size = max_size[self.key]
+	self.max_size[self.key] = max_size[self.key]
 	self:set_to(self.last_value)
 	return self
 end

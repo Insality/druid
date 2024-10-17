@@ -32,7 +32,7 @@
 -- @usage
 -- -- Replace params on runtime:
 -- back_handler.params = { ... }
--- @tfield[opt] any params
+-- @tfield any|nil params
 
 ---
 
@@ -45,8 +45,8 @@ local BackHandler = component.create("back_handler")
 
 --- The @{BackHandler} constructor
 -- @tparam BackHandler self @{BackHandler}
--- @tparam callback callback On back button
--- @tparam[opt] any custom_args Button events custom arguments
+-- @tparam function callback @The callback(self, custom_args) to call on back event
+-- @tparam any|nil custom_args Button events custom arguments
 -- @local
 function BackHandler.init(self, callback, custom_args)
 	self.params = custom_args

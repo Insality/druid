@@ -9,7 +9,7 @@ local M = {}
 M.default_style = nil
 
 
-function M.get_text(name, a, b, c, d, e, f)
+function M.get_text(name, a, b, c, d, e, f, g)
 	return "[Druid]: locales not inited"
 end
 

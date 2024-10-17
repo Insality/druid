@@ -1,0 +1,172 @@
+{
+	"ui_examples": "例",
+	"ui_properties_panel": "プロパティ",
+	"ui_output": "出力",
+	"ui_view_code": "コードを見る",
+	"ui_profiler": "プロファイラ",
+	"ui_profiler_memory": "メモリ",
+	"ui_profiler_fps": "FPS",
+	"ui_profiler_components": "コンポーネント",
+	"ui_profiler_events": "イベント",
+	"ui_confirm": "確認",
+	"ui_cancel": "キャンセル",
+	"ui_value": "値",
+	"ui_scroll": "スクロール",
+	"ui_clipping": "クリッピング",
+	"ui_no_properties": "この例にプロパティはありません",
+	"ui_padding": "パディング",
+	"ui_margin_x": "マージン X",
+	"ui_margin_y": "マージン Y",
+	"ui_justify": "両端揃え",
+	"ui_pivot_next": "次のピボット",
+	"ui_type_next": "次のタイプ",
+	"ui_adjust_next": "次の調整",
+	"ui_enabled": "有効",
+
+	"ui_examples_basic": "基本",
+	"ui_examples_data_list": "データリスト",
+	"ui_examples_gamepad": "ゲームパッド",
+	"ui_examples_window": "ウィンドウ",
+	"ui_examples_panthera": "パンテラ",
+
+	"ui_example_intro": "紹介",
+	"ui_example_intro_description": "ここには、選択された例の簡単な説明が表示されます。",
+
+	"ui_example_basic_button": "ボタン",
+	"ui_example_basic_button_description": "Druid の基本的なボタンの例",
+
+	"ui_example_basic_button_double_click": "ダブルクリック",
+	"ui_example_basic_button_double_click_description": "ボタンにダブルクリック機能を追加する方法。",
+
+	"ui_example_basic_button_hold": "長押し",
+	"ui_example_basic_button_hold_description": "ボタンの長押しとトリガー機能を作成する方法。",
+
+	"ui_example_basic_text": "テキスト",
+	"ui_example_basic_text_description": "異なるプロパティでテキストがどのように調整されるかを確認します。",
+
+	"ui_example_basic_multiline_text": "複数行テキスト",
+	"ui_example_basic_multiline_text_description": "異なるプロパティで複数行のテキストがどのように調整されるかを確認します。",
+
+	"ui_example_basic_hover": "ホバー",
+	"ui_example_basic_hover_description": "ホバーには2つのホバーイベントがあります。マウス用とタッチ用です。マウスイベントには mouse_callback を使用してください。",
+
+	"ui_example_basic_drag": "ドラッグ",
+	"ui_example_basic_drag_description": "簡単なドラッグノードを作成する方法",
+
+	"ui_example_basic_drag_to_node": "ノードにドラッグ",
+	"ui_example_basic_drag_to_node_description": "ノードを別のノードにドラッグしてコールバックを取得する方法",
+
+	"ui_example_basic_slider": "スライダー",
+	"ui_example_basic_slider_description": "簡単なスライダーを作成する方法",
+
+	"ui_example_basic_slider_vertical": "垂直スライダー",
+	"ui_example_basic_slider_vertical_description": "簡単な垂直スライダーを作成する方法",
+
+	"ui_example_basic_slider_stepped": "ステップ付きスライダー",
+	"ui_example_basic_slider_stepped_description": "スライダーには「ステップ」プロパティがあり、ステップ付きにすることができます。",
+
+	"ui_example_basic_progress_bar": "プログレスバー",
+	"ui_example_basic_progress_bar_description": "簡単なプログレスバーを作成する方法",
+
+	"ui_example_basic_progress_bar_slice9": "プログレスバー Slice9",
+	"ui_example_basic_progress_bar_slice9_description": "プログレスコンポーネントは、最初からスケーラブルにするために slice9 プロパティを処理できます。",
+
+	"ui_example_basic_timer": "タイマー",
+	"ui_example_basic_timer_description": "タイマーコンポーネントは、コールバック付きの秒数のタイマーを表示するために使用されます。",
+
+	"ui_example_basic_hotkey": "ホットキー",
+	"ui_example_basic_hotkey_description": "コールバック用のホットキーを作成する方法",
+
+	"ui_example_basic_scroll": "スクロール",
+	"ui_example_basic_scroll_description": "簡単なスクロールを作成する方法",
+	"ui_elastic_scroll": "エラスティックスクロール",
+
+	"ui_example_basic_scroll_slider": "スライダー付きスクロール",
+	"ui_example_basic_scroll_slider_description": "スクロールにスライダーコントロールを追加して使用する方法",
+
+	"ui_example_basic_grid": "静的グリッド",
+	"ui_example_basic_grid_description": "ノードをグリッドに配置する方法",
+	"ui_grid_in_row": "行の要素",
+	"ui_add_element": "要素を追加",
+	"ui_remove_element": "要素を削除",
+	"ui_clear_elements": "要素をクリア",
+
+	"ui_example_basic_scroll_bind_grid": "スクロールバインドグリッド",
+	"ui_example_basic_scroll_bind_grid_description": "スクロールはグリッドと事前定義されたサイズでうまく機能します。これはスクロールバインドグリッドの例です。",
+
+	"ui_example_basic_scroll_bind_grid_horizontal": "水平スクロールバインドグリッド",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "スクロールはグリッドと事前定義されたサイズでうまく機能します。これは水平スクロールバインドグリッドの例です。",
+
+	"ui_example_basic_input": "入力",
+	"ui_example_basic_input_description": "Druid で最も単純な入力を作成する方法",
+
+	"ui_example_input_password": "パスワード入力",
+	"ui_example_input_password_description": "パスワード入力がどのように機能するか",
+
+	"ui_example_basic_rich_input": "リッチ入力",
+	"ui_example_basic_rich_input_description": "Druid でリッチ入力を作成する方法",
+
+	"ui_example_basic_rich_text": "リッチテキスト",
+	"ui_example_basic_rich_text_description": "Druid でリッチテキストを作成する方法",
+
+	"ui_example_rich_text_tags": "リッチテキストタグ",
+	"ui_example_rich_text_tags_description": "ここにタグ付きリッチテキストの簡単な例があります\n - <color=A1D7F5>色</color>\n - フォント\n - サイズ\n - br\n - img",
+
+	"ui_example_basic_swipe": "スワイプ",
+	"ui_example_basic_swipe_description": "スワイプイベントにコールバックを追加する方法",
+
+	"ui_example_data_list_basic": "基本データリスト",
+	"ui_example_data_list_basic_description": "シンプルなデータリストを作成する方法",
+
+	"ui_example_data_list_horizontal_basic": "基本水平データリスト",
+	"ui_example_data_list_horizontal_basic_description": "シンプルな水平データリストを作成する方法",
+
+	"ui_example_data_list_add_remove_clear": "データリストの追加、削除、クリア",
+	"ui_example_data_list_add_remove_clear_description": "データリスト内の追加、削除、およびクリア機能がどのように機能するか",
+
+	"ui_example_data_list_cache_with_component": "キャッシュされたデータリスト",
+	"ui_example_data_list_cache_with_component_description": "キャッシュされたバージョンは、追加/削除のコールバックにより多くの設定が必要ですが、メモリ効率が向上します。",
+
+	"ui_language": "言語",
+	"ui_example_window_language": "ウィンドウ言語",
+	"ui_example_window_language_description": "言語選択のあるウィンドウの簡単な例です。",
+
+	"ui_confirmation": "確認",
+	"ui_example_window_confirmation": "ウィンドウ確認",
+	"ui_confirmation_description": "100万ドルの車を購入することを確認しますか？",
+
+	"ui_information": "情報",
+	"ui_example_window_information": "ウィンドウ情報",
+	"ui_example_window_information_text": "あなたは最高の中の最高です！",
+	"ui_example_window_information_description": "情報メッセージを含むウィンドウの簡単な例です。",
+
+	"ui_example_gamepad_tester": "ゲームパッドテスター",
+	"ui_example_gamepad_tester_description": "ここでゲームパッドをテストして、ボタンと軸をバインドします",
+
+	"ui_example_on_screen_control": "画面上のコントロール",
+	"ui_example_on_screen_control_description": "画面上のコントロールの簡単な例です。ここでの on_screen_input はコールバックを持つシンプルなジョイスティックです。Druid コンポーネントとして",
+
+	"ui_example_layout_basic": "レイアウト",
+	"ui_example_layout_basic_description": "このレイアウトは、Figma と同じになるように調整できます。",
+
+	"ui_example_panthera_basic_animation": "パンテラ基本アニメーション",
+	"ui_example_panthera_basic_animation_description": "ここにパンテラ基本アニメーションの簡単な例があります。",
+
+	"ui_example_panthera_animation_blend": "パンテラアニメーションブレンド",
+	"ui_example_panthera_animation_blend_description": "ここにパンテラアニメーションブレンドの簡単な例があります。",
+	"ui_example_panthera_animation_blend_hint": "この領域にマウスをホバーします。",
+
+	"ui_animation_vertical": "垂直",
+	"ui_animation_horizontal": "水平",
+
+	"ui_language_en": "English",
+	"ui_language_ru": "Русский",
+	"ui_language_es": "Español",
+	"ui_language_de": "Deutsch",
+	"ui_language_fr": "Français",
+	"ui_language_ja": "日本語",
+	"ui_language_pt": "Português",
+	"ui_language_it": "Italiano",
+	"ui_language_kr": "한국어",
+	"ui_language_zh": "中文"
+}

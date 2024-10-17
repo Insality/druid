@@ -3,20 +3,13 @@ local component = require("druid.component")
 ---@class component_name : druid.base_component
 local Component = component.create("component_name")
 
-local SCHEME = {
-    ROOT = "root",
-    BUTTON = "button",
-}
-
 
 -- Component constructor. Template name and nodes are optional. Pass it if you use it in your component
 function Component:init(template, nodes)
-    self:set_template(template)
-    self:set_nodes(nodes)
-    self.root = self:get_node(SCHEME.ROOT)
-    self.druid = self:get_druid()
+    self.druid = self:get_druid(template, nodes)
+    self.root = self:get_node("root")
 
-    self.button = self.druid:new_button(SCHEME.BUTTON, function() end)
+    self.button = self.druid:new_button("button", function() end)
 end
 
 

@@ -1,0 +1,91 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+nodes {
+  size {
+    x: 1000.0
+    y: 1000.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_64"
+  id: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 32.0
+    y: 32.0
+    z: 32.0
+    w: 32.0
+  }
+}
+nodes {
+  size {
+    x: 512.0
+    y: 512.0
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "blocker"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "button"
+  parent: "blocker"
+  inherit_alpha: true
+  template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button/root"
+  parent: "button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button/text"
+  parent: "button/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -246.0
+    y: 246.0
+  }
+  size {
+    x: 300.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Blocker"
+  font: "text_bold"
+  id: "text"
+  pivot: PIVOT_NW
+  parent: "blocker"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

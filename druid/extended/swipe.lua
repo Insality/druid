@@ -13,7 +13,7 @@
 -- @tparam node node
 
 --- Restriction zone
--- @tparam[opt] node click_zone
+-- @tparam node|nil click_zone
 
 --- Trigger on swipe event(self, swipe_side, dist, delta_time)
 -- @tfield DruidEvent on_swipe) @{DruidEvent}
@@ -74,9 +74,9 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=0.4] number SWIPE_TIME Maximum time for swipe trigger
--- @tfield[opt=50] number SWIPE_THRESHOLD Minimum distance for swipe trigger
--- @tfield[opt=false] bool SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action
+-- @tfield number|nil SWIPE_TIME Maximum time for swipe trigger. Default: 0.4
+-- @tfield number|nil SWIPE_THRESHOLD Minimum distance for swipe trigger. Default: 50
+-- @tfield boolean|nil SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action. Default: false
 function Swipe.on_style_change(self, style)
 	self.style = {}
 	self.style.SWIPE_TIME = style.SWIPE_TIME or 0.4
@@ -85,7 +85,7 @@ function Swipe.on_style_change(self, style)
 end
 
 
---- Component init function
+--- The @{Swipe} constructor
 -- @tparam Swipe self @{Swipe}
 -- @tparam node node Gui node
 -- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
@@ -150,7 +150,7 @@ end
 --- Strict swipe click area. Useful for
 -- restrict events outside stencil node
 -- @tparam Swipe self @{Swipe}
--- @tparam node zone Gui node
+-- @tparam node|string|nil zone Gui node
 function Swipe.set_click_zone(self, zone)
 	self.click_zone = self:get_node(zone)
 end

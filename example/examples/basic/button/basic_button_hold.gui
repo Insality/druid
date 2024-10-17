@@ -1,0 +1,107 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 280.0
+    y: 90.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "button"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  size {
+    x: 400.0
+    y: 400.0
+  }
+  type: TYPE_PIE
+  id: "mask"
+  parent: "button"
+  inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
+  clipping_visible: false
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 280.0
+    y: 90.0
+  }
+  color {
+    x: 0.557
+    y: 0.835
+    z: 0.62
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "button_image"
+  parent: "mask"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  size {
+    x: 245.0
+    y: 50.0
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_TEXT
+  text: "Confirm"
+  font: "text_bold"
+  id: "text"
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "button"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

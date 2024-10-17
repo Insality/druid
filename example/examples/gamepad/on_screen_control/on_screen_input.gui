@@ -1,0 +1,132 @@
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+nodes {
+  size {
+    x: 1000.0
+    y: 400.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: -300.0
+  }
+  type: TYPE_TEMPLATE
+  id: "on_screen_stick"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_stick.gui"
+}
+nodes {
+  size {
+    x: 400.0
+    y: 400.0
+  }
+  type: TYPE_BOX
+  id: "on_screen_stick/root"
+  parent: "on_screen_stick"
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  type: TYPE_PIE
+  id: "on_screen_stick/background_mask"
+  parent: "on_screen_stick/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_stick/background"
+  parent: "on_screen_stick/background_mask"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_stick/stick_root"
+  parent: "on_screen_stick/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_stick/stick_shadow"
+  parent: "on_screen_stick/stick_root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_stick/stick"
+  parent: "on_screen_stick/stick_root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_stick/dot_1"
+  parent: "on_screen_stick/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_stick/dot_2"
+  parent: "on_screen_stick/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_stick/dot_3"
+  parent: "on_screen_stick/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_stick/dot_4"
+  parent: "on_screen_stick/stick"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 400.0
+    y: 400.0
+  }
+  type: TYPE_BOX
+  id: "on_screen_button"
+  parent: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "button_action"
+  parent: "on_screen_button"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_action/button"
+  parent: "button_action"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button_action/text"
+  parent: "button_action/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_action/icon"
+  parent: "button_action/button"
+  overridden_fields: 45
+  template_node_child: true
+  enabled: false
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

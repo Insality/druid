@@ -1,15 +1,14 @@
 -- Manual Annotations --
 
----@class druid.rich_text.style
----@field COLORS table
----@field ADJUST_STEPS number
----@field ADJUST_SCALE_DELTA number
+---@class druid.component: druid.base_component
 
 ---@class druid.rich_text.metrics
 ---@field width number
 ---@field height number
 ---@field offset_x number|nil
 ---@field offset_y number|nil
+---@field max_ascent number
+---@field max_descent number
 ---@field node_size vector3|nil @For images only
 
 ---@class druid.rich_text.lines_metrics
@@ -18,7 +17,7 @@
 ---@field lines table<number, druid.rich_text.metrics>
 
 ---@class druid.rich_text.word
----@field node Node
+---@field node node
 ---@field relative_scale number
 ---@field color vector4
 ---@field position vector3
@@ -26,7 +25,7 @@
 ---@field scale vector3
 ---@field size vector3
 ---@field metrics druid.rich_text.metrics
----@field pivot Pivot
+---@field pivot userdata @ The gui.PIVOT_* constant
 ---@field text string
 ---@field shadow vector4
 ---@field outline vector4
@@ -36,17 +35,21 @@
 ---@field anchor number
 ---@field br boolean
 ---@field nobr boolean
+---@field source_text string
+---@field image_color vector4
+---@field text_color vector4
 
----@class druid.rich_text.word.image
+---@class druid.rich_text.image
 ---@field texture string
 ---@field anim string
 ---@field width number
 ---@field height number
 
 ---@class druid.rich_text.settings
----@field parent Node
+---@field parent node
 ---@field size number
 ---@field fonts table<string, string>
+---@field scale vector3
 ---@field color vector4
 ---@field shadow vector4
 ---@field outline vector4
@@ -54,11 +57,46 @@
 ---@field image_pixel_grid_snap boolean
 ---@field combine_words boolean
 ---@field default_animation string
----@field node_prefab Node
----@field text_prefab Node
+---@field text_prefab node
+---@field adjust_scale number
+---@field default_texture string
+---@field is_multiline boolean
+---@field text_leading number
+---@field font hash
+---@field width number
+---@field height number
 
 ---@class GUITextMetrics
 ---@field width number
 ---@field height number
 ---@field max_ascent number
 ---@field max_descent number
+
+---@class utf8
+---@field len fun(s: string):number
+---@field sub fun(s: string, start_index: number, length: number)
+---@field reverse fun()
+---@field char fun()
+---@field unicode fun()
+---@field gensub fun()
+---@field byte fun()
+---@field find fun()
+---@field match fun(s: string, m: string)
+---@field gmatch fun(s: string, m: string)
+---@field gsub fun()
+---@field dump fun()
+---@field format fun()
+---@field lower fun()
+---@field upper fun()
+---@field rep fun()
+
+
+---Add generics to some functions.
+
+---Create new component.
+---@generic T: druid.base_component
+---@param self druid_instance
+---@param component T Component module
+---@param ... any Other component params to pass it to component:init function
+---@return T Component instance
+function druid_instance.new(self, component, ...) end
