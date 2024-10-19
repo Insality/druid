@@ -144,6 +144,27 @@ function M.get_examples()
 					end
 					instance.text:set_text_adjust(adjust_types[adjust_index], 0.8)
 				end)
+
+				local pivot_index = 1
+				local pivot_list = {
+					gui.PIVOT_CENTER,
+					gui.PIVOT_W,
+					gui.PIVOT_SW,
+					gui.PIVOT_S,
+					gui.PIVOT_SE,
+					gui.PIVOT_E,
+					gui.PIVOT_NE,
+					gui.PIVOT_N,
+					gui.PIVOT_NW,
+				}
+
+				properties_panel:add_button("ui_pivot_next", function()
+					pivot_index = pivot_index + 1
+					if pivot_index > #pivot_list then
+						pivot_index = 1
+					end
+					instance:set_pivot(pivot_list[pivot_index])
+				end)
 			end,
 			get_debug_info = function(instance)
 				---@cast instance multiline_text
@@ -323,6 +344,7 @@ function M.get_examples()
 			end,
 			properties_control = function(instance, properties_panel)
 				---@cast instance scroll
+				local scroll = instance.scroll
 				local is_stretch = instance.scroll.style.EXTRA_STRETCH_SIZE > 0
 				properties_panel:add_checkbox("ui_elastic_scroll", is_stretch, function(value)
 					instance.scroll:set_extra_stretch_size(value and 100 or 0)
@@ -333,6 +355,35 @@ function M.get_examples()
 				properties_panel:add_checkbox("ui_clipping", is_stencil, function(value)
 					gui.set_clipping_mode(view_node, value and gui.CLIPPING_MODE_STENCIL or gui.CLIPPING_MODE_NONE)
 				end)
+
+				local slider_frict = properties_panel:add_slider("ui_slider_friction", 0, function(value)
+					scroll.style.FRICT = 1 - ((1 - value) * 0.1)
+				end)
+				slider_frict:set_text_function(function(value)
+					return string.format("%.2f", 1 - ((1 - value) * 0.1))
+				end)
+				slider_frict:set_value(1 - (1 - scroll.style.FRICT) / 0.1)
+
+				local slider_speed = properties_panel:add_slider("ui_slider_speed", 0, function(value)
+					scroll.style.INERT_SPEED = value * 50
+				end)
+				slider_speed:set_value(scroll.style.INERT_SPEED / 50)
+				slider_speed:set_text_function(function(value)
+					return string.format("%.1f", value * 50)
+				end)
+
+				local slider_wheel_speed = properties_panel:add_slider("ui_slider_wheel_speed", 0, function(value)
+					scroll.style.WHEEL_SCROLL_SPEED = value * 30
+				end)
+				slider_wheel_speed:set_value(scroll.style.WHEEL_SCROLL_SPEED / 30)
+				slider_wheel_speed:set_text_function(function(value)
+					return string.format("%.1f", value * 30)
+				end)
+
+				local wheel_by_inertion = properties_panel:add_checkbox("ui_wheel_by_inertion", scroll.style.WHEEL_SCROLL_BY_INERTION, function(value)
+					scroll.style.WHEEL_SCROLL_BY_INERTION = value
+				end)
+				wheel_by_inertion:set_value(scroll.style.WHEEL_SCROLL_BY_INERTION)
 			end,
 			get_debug_info = function(instance)
 				---@cast instance scroll
@@ -377,10 +428,12 @@ function M.get_examples()
 			properties_control = function(instance, properties_panel)
 				---@cast instance grid
 
+				local grid = instance.grid
+
 				local slider = properties_panel:add_slider("ui_grid_in_row", 0.3, function(value)
 					local in_row_amount = math.ceil(value * 10)
 					in_row_amount = math.max(1, in_row_amount)
-					instance.grid:set_in_row(in_row_amount)
+					grid:set_in_row(in_row_amount)
 				end)
 				slider:set_text_function(function(value)
 					return tostring(math.ceil(value * 10))
@@ -400,7 +453,58 @@ function M.get_examples()
 				properties_panel:add_button("ui_clear_elements", function()
 					instance:clear()
 				end)
+
+				properties_panel:add_checkbox("ui_dynamic_pos", grid.style.IS_DYNAMIC_NODE_POSES, function()
+					grid.style.IS_DYNAMIC_NODE_POSES = not grid.style.IS_DYNAMIC_NODE_POSES
+					grid:refresh()
+				end)
+
+				properties_panel:add_checkbox("ui_align_last_row", grid.style.IS_ALIGN_LAST_ROW, function()
+					grid.style.IS_ALIGN_LAST_ROW = not grid.style.IS_ALIGN_LAST_ROW
+					grid:refresh()
+				end)
+
+				local pivot_index = 1
+				local pivot_list = {
+					gui.PIVOT_CENTER,
+					gui.PIVOT_W,
+					gui.PIVOT_SW,
+					gui.PIVOT_S,
+					gui.PIVOT_SE,
+					gui.PIVOT_E,
+					gui.PIVOT_NE,
+					gui.PIVOT_N,
+					gui.PIVOT_NW,
+				}
+
+				properties_panel:add_button("ui_pivot_next", function()
+					pivot_index = pivot_index + 1
+					if pivot_index > #pivot_list then
+						pivot_index = 1
+					end
+					grid:set_pivot(pivot_list[pivot_index])
+				end)
+
+				local slider_size = properties_panel:add_slider("ui_item_size", 0.5, function(value)
+					local size = 50 + value * 100
+					grid:set_item_size(size, size)
+				end)
+				slider_size:set_text_function(function(value)
+					return tostring(50 + math.ceil(value * 100))
+				end)
+				slider_size:set_value(0.5)
 			end,
+			get_debug_info = function(instance)
+				---@cast instance grid
+				local info = ""
+
+				local grid = instance.grid
+				info = info .. "Grid Items: " .. #grid.nodes .. "\n"
+				info = info .. "Grid Item Size: " .. grid.node_size.x .. " x " .. grid.node_size.y .. "\n"
+				info = info .. "Pivot: " .. tostring(grid.pivot)
+
+				return info
+			end
 		},
 		{
 			name_id = "ui_example_basic_scroll_bind_grid",
@@ -702,16 +806,44 @@ function M.get_examples()
 			end,
 		},
 		{
-			name_id = "ui_example_basic_checkbox",
-			information_text_id = "ui_example_basic_checkbox_description",
-			template = "basic_checkbox",
-			root = "basic_checkbox/root",
-			code_url = "example/examples/basic/checkbox/basic_checkbox.lua",
-			component_class = require("example.examples.basic.checkbox.basic_checkbox"),
+			name_id = "ui_example_checkbox",
+			information_text_id = "ui_example_checkbox_description",
+			template = "checkbox",
+			root = "checkbox/root",
+			code_url = "example/examples/basic/checkbox/checkbox.lua",
+			component_class = require("example.examples.basic.checkbox.checkbox"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_checkbox
+				---@cast instance checkbox
 				instance.button.on_click:subscribe(function()
 					output_log:add_log_text("Checkbox Clicked: " .. tostring(instance.is_enabled))
+				end)
+			end,
+		},
+		{
+			name_id = "ui_example_checkbox_group",
+			information_text_id = "ui_example_checkbox_group_description",
+			template = "checkbox_group",
+			root = "checkbox_group/root",
+			code_url = "example/examples/basic/checkbox_group/checkbox_group.lua",
+			component_class = require("example.examples.basic.checkbox_group.checkbox_group"),
+			on_create = function(instance, output_log)
+				---@cast instance checkbox_group
+				instance.on_state_changed:subscribe(function(state1, state2, state3)
+					output_log:add_log_text("State: " .. tostring(state1) .. " " .. tostring(state2) .. " " .. tostring(state3))
+				end)
+			end,
+		},
+		{
+			name_id = "ui_example_radio_group",
+			information_text_id = "ui_example_radio_group_description",
+			template = "radio_group",
+			root = "radio_group/root",
+			code_url = "example/examples/basic/radio_group/radio_group.lua",
+			component_class = require("example.examples.basic.radio_group.radio_group"),
+			on_create = function(instance, output_log)
+				---@cast instance radio_group
+				instance.on_state_changed:subscribe(function(selected)
+					output_log:add_log_text("Selected: " .. selected)
 				end)
 			end,
 		},

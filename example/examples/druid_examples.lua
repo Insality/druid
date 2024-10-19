@@ -4,6 +4,7 @@ local data_list_examples = require("example.examples.data_list.examples_list")
 local layout_examples = require("example.examples.layout.examples_list")
 local gamepad_examples = require("example.examples.gamepad.examples_list")
 local window_examples = require("example.examples.windows.examples_list")
+local widgets_examples = require("example.examples.widgets.examples_list")
 local panthera_examples = require("example.examples.panthera.examples_list")
 
 local M = {}
@@ -42,6 +43,7 @@ function M.get_examples()
 	add_examples(examples, "ui_examples_gamepad", gamepad_examples.get_examples())
 	add_examples(examples, "ui_examples_window", window_examples.get_examples())
 	add_examples(examples, "ui_examples_panthera", panthera_examples.get_examples())
+	add_examples(examples, "ui_examples_widgets", widgets_examples.get_examples())
 
 	return examples
 end

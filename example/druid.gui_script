@@ -118,7 +118,7 @@ local function setup_components(self)
 				return
 			end
 
-			local url_prefix = "https://github.com/Insality/druid/blob/master/"
+			local url_prefix = "https://github.com/Insality/druid/blob/develop/"
 			sys.open_url(url_prefix .. code_url, { target = "_blank" })
 		end)
 	end
@@ -166,6 +166,8 @@ local function setup_examples(self)
 	end
 
 	select_start_example(self)
+
+	print("Loaded examples: " .. #self.examples_list_view.examples)
 end
 
 

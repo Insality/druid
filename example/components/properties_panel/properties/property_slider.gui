@@ -1,4 +1,3 @@
-script: ""
 fonts {
   name: "text_bold"
   font: "/example/assets/fonts/text_bold.font"
@@ -7,237 +6,89 @@ textures {
   name: "druid"
   texture: "/example/assets/druid.atlas"
 }
-background_color {
-  x: 0.0
-  y: 0.0
-  z: 0.0
-  w: 0.0
-}
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
   size {
     x: 400.0
     y: 40.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "druid/empty"
   id: "root"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
-  layer: ""
   inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
   visible: false
-  material: ""
 }
 nodes {
   position {
-    x: 0.0
     y: -20.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
   }
   scale {
     x: 0.65
     y: 0.65
-    z: 1.0
-    w: 1.0
   }
   size {
     x: 200.0
     y: 40.0
-    z: 0.0
-    w: 1.0
   }
   color {
     x: 0.463
     y: 0.475
     z: 0.49
-    w: 1.0
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "Checkbox"
+  text: "Slider"
   font: "text_bold"
   id: "text_name"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
   pivot: PIVOT_W
   outline {
     x: 1.0
     y: 1.0
     z: 1.0
-    w: 1.0
   }
   shadow {
     x: 1.0
     y: 1.0
     z: 1.0
-    w: 1.0
   }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
   parent: "root"
-  layer: ""
   inherit_alpha: true
-  alpha: 1.0
   outline_alpha: 0.0
   shadow_alpha: 0.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-  custom_type: 0
-  enabled: true
-  visible: true
-  material: ""
 }
 nodes {
   position {
     x: 400.0
     y: -20.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "druid/empty"
   id: "E_Anchor"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
   pivot: PIVOT_E
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "root"
-  layer: ""
   inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
   size_mode: SIZE_MODE_AUTO
-  custom_type: 0
-  enabled: true
   visible: false
-  material: ""
 }
 nodes {
   position {
     x: -20.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
   }
   size {
     x: 60.0
     y: 40.0
-    z: 0.0
-    w: 1.0
   }
   color {
     x: 0.463
     y: 0.475
     z: 0.49
-    w: 1.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "druid/rect_round2_width1"
   id: "button"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
   pivot: PIVOT_E
-  adjust_mode: ADJUST_MODE_FIT
   parent: "E_Anchor"
-  layer: ""
   inherit_alpha: true
   slice9 {
     x: 4.0
@@ -245,243 +96,98 @@ nodes {
     z: 4.0
     w: 4.0
   }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
-  visible: true
-  material: ""
 }
 nodes {
   position {
-    x: 0.0
     y: -20.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
   }
   size {
     x: 60.0
     y: 4.0
-    z: 0.0
-    w: 1.0
   }
   color {
     x: 0.894
     y: 0.506
     z: 0.333
-    w: 1.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "druid/pixel"
   id: "selected"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
   pivot: PIVOT_SE
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "button"
-  layer: ""
   inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
-  visible: true
-  material: ""
 }
 nodes {
   position {
     x: -30.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
   }
   scale {
     x: 0.55
     y: 0.55
-    z: 1.0
-    w: 1.0
   }
   size {
     x: 100.0
     y: 40.0
-    z: 0.0
-    w: 1.0
   }
   color {
     x: 0.722
     y: 0.741
     z: 0.761
-    w: 1.0
   }
   type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
   text: "25 %"
   font: "text_bold"
   id: "text_value"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
   outline {
     x: 1.0
     y: 1.0
     z: 1.0
-    w: 1.0
   }
   shadow {
     x: 1.0
     y: 1.0
     z: 1.0
-    w: 1.0
   }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
   parent: "button"
-  layer: ""
   inherit_alpha: true
-  alpha: 1.0
   outline_alpha: 0.0
   shadow_alpha: 0.0
-  template_node_child: false
-  text_leading: 1.0
-  text_tracking: 0.0
-  custom_type: 0
-  enabled: true
-  visible: true
-  material: ""
 }
 nodes {
   position {
     x: 234.0
     y: -20.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
   }
   size {
     x: 160.0
     y: 40.0
-    z: 0.0
-    w: 1.0
   }
   color {
     x: 0.129
     y: 0.141
     z: 0.157
-    w: 1.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "druid/empty"
   id: "slider"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
   parent: "root"
-  layer: ""
   inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
-  visible: true
-  material: ""
 }
 nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
   size {
     x: 160.0
     y: 8.0
-    z: 0.0
-    w: 1.0
   }
   color {
     x: 0.129
     y: 0.141
     z: 0.157
-    w: 1.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "druid/ui_circle_8"
   id: "slider_back"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
   parent: "slider"
-  layer: ""
   inherit_alpha: true
   slice9 {
     x: 4.0
@@ -489,58 +195,24 @@ nodes {
     z: 4.0
     w: 4.0
   }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
-  visible: true
-  material: ""
 }
 nodes {
   position {
     x: -68.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
   }
   size {
     x: 24.0
     y: 24.0
-    z: 0.0
-    w: 1.0
   }
   color {
     x: 0.722
     y: 0.741
     z: 0.761
-    w: 1.0
   }
   type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
   texture: "druid/ui_circle_8"
   id: "slider_pin"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
   parent: "slider"
-  layer: ""
   inherit_alpha: true
   slice9 {
     x: 4.0
@@ -548,17 +220,6 @@ nodes {
     z: 4.0
     w: 4.0
   }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-  custom_type: 0
-  enabled: true
-  visible: true
-  material: ""
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
-max_nodes: 512

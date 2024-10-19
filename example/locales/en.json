@@ -1,5 +1,5 @@
 {
-	"additional_characters": "\"&! :%1234567890*абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯÀàÂâÆæÇçÈèÉéÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿ",
+	"additional_characters": " 1234567890!@#$%^&*()_+-=`[]{}|;':\",.<>/?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯÀàÂâÆæÇçÈèÉéÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿ",
 	"ui_examples": "Examples",
 	"ui_properties_panel": "Properties",
 	"ui_output": "Output",
@@ -85,8 +85,12 @@
 	"ui_example_basic_hotkey_description": "How to create a hotkey for a callback",
 
 	"ui_example_basic_scroll": "Scroll",
-	"ui_example_basic_scroll_description": "How to make simple scroll",
+	"ui_example_basic_scroll_description": "How to make a simple scroll",
 	"ui_elastic_scroll": "Elastic Scroll",
+	"ui_slider_friction": "Scroll Friction",
+	"ui_slider_speed": "Scroll Speed",
+	"ui_slider_wheel_speed": "Wheel Speed",
+	"ui_wheel_by_inertion": "Wheel By Inertion",
 
 	"ui_example_basic_scroll_slider": "Scroll with Slider",
 	"ui_example_basic_scroll_slider_description": "How to add a slider control to the scroll and use them",
@@ -97,6 +101,8 @@
 	"ui_add_element": "Add Element",
 	"ui_remove_element": "Remove Element",
 	"ui_clear_elements": "Clear Elements",
+	"ui_dynamic_pos": "Dynamic Position",
+	"ui_align_last_row": "Align Last Row",
 
 	"ui_example_basic_scroll_bind_grid": "Scroll Grid",
 	"ui_example_basic_scroll_bind_grid_description": "Scroll works good with grids and predefined sizes, this is an example of scroll bind grid.",
@@ -105,6 +111,7 @@
 	"ui_example_basic_scroll_bind_grid_horizontal_description": "Scroll works good with grids and predefined sizes, this is an example of scroll bind grid horizontal.",
 
 	"ui_example_basic_scroll_bind_grid_points": "Scroll Grid Points",
+	"ui_example_basic_scroll_bind_grid_points_description": "Scrolls with points of interest to snap to",
 
 	"ui_example_basic_input": "Input",
 	"ui_example_basic_input_description": "How to make most simple input in Druid",
@@ -119,19 +126,25 @@
 	"ui_example_basic_rich_text_description": "How to create a rich text in Druid",
 
 	"ui_example_rich_text_tags": "Rich Text Tags",
-	"ui_example_rich_text_tags_description": "Here is a simple example of rich text with tags\n - <color=A1D7F5>color</color>\n - font\n - size\n - br\n - img",
+	"ui_example_rich_text_tags_description": "Here is a example of rich text with tags\n - <color=A1D7F5>color</color>\n - font\n - size\n - br\n - img",
 
 	"ui_example_basic_swipe": "Swipe",
 	"ui_example_basic_swipe_description": "How to add callbacks on swipe events",
 
-	"ui_example_basic_checkbox": "Checkbox",
-	"ui_example_basic_checkbox_description": "How to make a simple checkbox using Druid Button",
+	"ui_example_checkbox": "Checkbox",
+	"ui_example_checkbox_description": "How to make a checkbox using Druid Button",
+
+	"ui_example_checkbox_group": "Checkbox Group",
+	"ui_example_checkbox_group_description": "How to make a checkbox group using Druid Buttons",
+
+	"ui_example_radio_group": "Radio Group",
+	"ui_example_radio_group_description": "How to make a radio group using Druid Buttons",
 
 	"ui_example_data_list_basic": "Data List Basic",
-	"ui_example_data_list_basic_description": "How to make a simple data list",
+	"ui_example_data_list_basic_description": "How to make a data list",
 
 	"ui_example_data_list_horizontal_basic": "Data List Horizontal Basic",
-	"ui_example_data_list_horizontal_basic_description": "How to make a simple horizontal data list",
+	"ui_example_data_list_horizontal_basic_description": "How to make a horizontal data list",
 
 	"ui_example_data_list_add_remove_clear": "Data List Add Remove Clear",
 	"ui_example_data_list_add_remove_clear_description": "How the add, remove and clear functions work in the data list",
@@ -141,7 +154,7 @@
 
 	"ui_language": "Language",
 	"ui_example_window_language": "Window Language",
-	"ui_example_window_language_description": "Here is a simple example of window with language selection.",
+	"ui_example_window_language_description": "Here is a example of window with language selection.",
 
 	"ui_confirmation": "Confirmation",
 	"ui_example_window_confirmation": "Window Confirmation",
@@ -150,22 +163,34 @@
 	"ui_information": "Information",
 	"ui_example_window_information": "Window Information",
 	"ui_example_window_information_text": "You are the best of the best!",
-	"ui_example_window_information_description": "Here is a simple example of window with information message.",
+	"ui_example_window_information_description": "Here is a example of window with information message.",
+
+	"ui_example_widget_hover_hint": "Hint on Hover",
+	"ui_example_widget_hover_hint_description": "Here is a example of show hint on mouse hover",
+
+	"ui_example_widget_property_button": "Property Button",
+	"ui_example_widget_property_button_description": "Here is a widget used in Properties panel",
+
+	"ui_example_widget_property_slider": "Property Slider",
+	"ui_example_widget_property_slider_description": "Here is a widget used in Properties panel",
+
+	"ui_example_widget_property_checkbox": "Property Checkbox",
+	"ui_example_widget_property_checkbox_description": "Here is a widget used in Properties panel",
 
 	"ui_example_gamepad_tester": "Gamepad Tester",
 	"ui_example_gamepad_tester_description": "Test your gamepad here to bind buttons and axes",
 
 	"ui_example_on_screen_control": "On Screen Control",
-	"ui_example_on_screen_control_description": "Here is a simple example of on screen control. The on_screen_input here is a simple joystick with a callback as Druid component",
+	"ui_example_on_screen_control_description": "Here is a example of on screen control. The on_screen_input here is a joystick with a callback as Druid component",
 
 	"ui_example_layout_basic": "Layout",
 	"ui_example_layout_basic_description": "This layout can be adjusted to be the same as in Figma",
 
 	"ui_example_panthera_basic_animation": "Panthera Basic Animation",
-	"ui_example_panthera_basic_animation_description": "Here is a simple example of Panthera Basic Animation.",
+	"ui_example_panthera_basic_animation_description": "Here is a example of Panthera Basic Animation.",
 
 	"ui_example_panthera_animation_blend": "Panthera Animation Blend",
-	"ui_example_panthera_animation_blend_description": "Here is a simple example of Panthera Animation Blend.",
+	"ui_example_panthera_animation_blend_description": "Here is a example of Panthera Animation Blend.",
 	"ui_example_panthera_animation_blend_hint": "Hover mouse over this area",
 
 	"ui_animation_vertical": "Vertical",

@@ -6,6 +6,7 @@ function M.get_examples()
 	return {
 		{
 			name_id = "ui_example_window_language",
+			information_text_id = "ui_example_window_language_description",
 			template = "window_language",
 			root = "window_language/root",
 			code_url = "example/examples/windows/window_language/window_language.lua",
@@ -38,9 +39,6 @@ function M.get_examples()
 					output_list:add_log_text("Confirmation Declined")
 				end)
 			end,
-			get_debug_info = function(instance)
-				return "Any info we want"
-			end
 		},
 		{
 			name_id = "ui_example_window_information",

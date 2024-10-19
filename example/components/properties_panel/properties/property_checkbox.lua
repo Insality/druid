@@ -25,7 +25,7 @@ function M:init(template, nodes)
 
 	self.text_name = self.druid:new(lang_text, "text_name") --[[@as druid.lang_text]]
 
-	self.button = self.druid:new_button("button")
+	self.button = self.druid:new_button("button", self.on_click)
 end
 
 
@@ -48,6 +48,11 @@ end
 ---@return boolean
 function M:get_value()
 	return self._value
+end
+
+
+function M:on_click()
+	self:set_value(not self:get_value())
 end
 
 

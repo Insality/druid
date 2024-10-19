@@ -1,6 +1,6 @@
 --- Container component
 -- Container setup in GUI
--- parent container - container that contains this container. If not, then it's a window default container
+-- parent container - container that contains this container. If not, then it's a window default container or parent node
 -- container pivot - the point of the parent container that will be used as a pivot point for positioning
 -- node_offset - position offset from parent container pivot point (vector4 - offset in pixels from each side)
 -- adjust mode FIT - container will keep it's size and will be positioned inside parent container
@@ -9,7 +9,6 @@
 -- adjust mode STRETCH_Y - container will have percentage of parent container size (only y side)
 -- Adjust Stretch and x_anchor == None: container will be positioned by pivot point with one side fixed margin, stretched to pivot side by percentage
 -- Adjust stretch and x_anchor ~= None: container will be positioned by pivot point, stretched to pivot side by percentage, but with fixed margins
--- Inner container should be inside other container
 
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -34,7 +33,7 @@ local Event = require("druid.event")
 ---@field _parent_container druid.container
 ---@field _containers table
 ---@field _draggable_corners table
-local Container = component.create("container")
+local M = component.create("container")
 
 local abs = math.abs
 local min = math.min
@@ -52,7 +51,7 @@ local CORNER_PIVOTS = {
 ---@param node node Gui node
 ---@param mode string Layout mode
 ---@param callback fun(self: druid.container, size: vector3) Callback on size changed
-function Container:init(node, mode, callback)
+function M:init(node, mode, callback)
 	self.node = self:get_node(node)
 	self.druid = self:get_druid()
 
@@ -91,7 +90,7 @@ function Container:init(node, mode, callback)
 end
 
 
-function Container:on_late_init()
+function M:on_late_init()
 	if not gui.get_parent(self.node) then
 		-- TODO: Scale issue here, in fit into window!
 		self:fit_into_window()
@@ -99,12 +98,12 @@ function Container:on_late_init()
 end
 
 
-function Container:on_remove()
+function M:on_remove()
 	self:clear_draggable_corners()
 end
 
 
-function Container:refresh_origins()
+function M:refresh_origins()
 	self.origin_size = gui.get_size(self.node)
 	self.origin_position = gui.get_position(self.node)
 	self:set_pivot(gui.get_pivot(self.node))
@@ -112,7 +111,7 @@ end
 
 
 ---@param pivot constant
-function Container:set_pivot(pivot)
+function M:set_pivot(pivot)
 	gui.set_pivot(self.node, pivot)
 	self.pivot_offset = helper.get_pivot_offset(pivot)
 	self.center_offset = -vmath.vector3(self.size.x * self.pivot_offset.x, self.size.y * self.pivot_offset.y, 0)
@@ -125,7 +124,7 @@ end
 -- @table style
 -- @tfield[opt=vector3(24, 24, 0)] vector3 DRAGGABLE_CORNER_SIZE Size of box node for debug draggable corners
 -- @tfield[opt=vector4(1)] vector4 DRAGGABLE_CORNER_COLOR Color of debug draggable corners
-function Container:on_style_change(style)
+function M:on_style_change(style)
 	self.style = {}
 	self.style.DRAGGABLE_CORNER_SIZE = style.DRAGGABLE_CORNER_SIZE or vmath.vector3(24, 24, 0)
 	self.style.DRAGGABLE_CORNER_COLOR = style.DRAGGABLE_CORNER_COLOR or vmath.vector4(10)
@@ -136,7 +135,7 @@ end
 ---@param width number|nil
 ---@param height number|nil
 ---@return druid.container @{Container}
-function Container:set_size(width, height)
+function M:set_size(width, height)
 	width = width or self.size.x
 	height = height or self.size.y
 
@@ -165,7 +164,7 @@ end
 
 ---@param pos_x number
 ---@param pos_y number
-function Container:set_position(pos_x, pos_y)
+function M:set_position(pos_x, pos_y)
 	if self._position.x == pos_x and self._position.y == pos_y then
 		return
 	end
@@ -178,14 +177,14 @@ end
 
 ---Get current size of layout node
 ---@return vector3 size
-function Container:get_size()
+function M:get_size()
 	return self.size
 end
 
 
 ---Get current scale of layout node
 ---@return vector3 scale
-function Container:get_scale()
+function M:get_scale()
 	return helper.get_scene_scale(self.node, true) --[[@as vector3]]
 end
 
@@ -193,7 +192,7 @@ end
 --- Set size for layout node to fit inside it
 ---@param target_size vector3
 ---@return druid.container @{Container}
-function Container:fit_into_size(target_size)
+function M:fit_into_size(target_size)
 	self.fit_size = target_size
 	self:refresh()
 	return self
@@ -202,13 +201,13 @@ end
 
 --- Set current size for layout node to fit inside it
 ---@return druid.container @{Container}
-function Container:fit_into_window()
+function M:fit_into_window()
 	return self:fit_into_size(vmath.vector3(gui.get_width(), gui.get_height(), 0))
 end
 
 
 ---@param self druid.container
-function Container:on_window_resized()
+function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self.x_koef = x_koef
 	self.y_koef = y_koef
@@ -223,7 +222,7 @@ end
 ---@param mode string|nil stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
 ---@param on_resize_callback fun(self: userdata, size: vector3)|nil
 ---@return druid.container @{Container} New created layout instance
-function Container:add_container(node_or_container, mode, on_resize_callback)
+function M:add_container(node_or_container, mode, on_resize_callback)
 	local container = nil
 	local node = node_or_container
 
@@ -237,7 +236,7 @@ function Container:add_container(node_or_container, mode, on_resize_callback)
 	-- Covert node_id to node if needed
 	node = self:get_node(node)
 
-	container = container or self.druid:new(Container, node, mode)
+	container = container or self.druid:new(M, node, mode)
 	container:set_parent_container(self)
 	if on_resize_callback then
 		container.on_size_changed:subscribe(on_resize_callback)
@@ -249,7 +248,7 @@ end
 
 
 ---@return druid.container|nil
-function Container:remove_container_by_node(node)
+function M:remove_container_by_node(node)
 	for index = 1, #self._containers do
 		local container = self._containers[index]
 		if container.node == node then
@@ -264,7 +263,7 @@ end
 
 
 ---@param parent_container druid.container|nil
-function Container:set_parent_container(parent_container)
+function M:set_parent_container(parent_container)
 	if not parent_container then
 		self._parent_container = nil
 		gui.set_parent(self.node, nil)
@@ -328,7 +327,7 @@ end
 
 -- Glossary
 -- Center Offset - vector from node position to visual center of node
-function Container:refresh()
+function M:refresh()
 	local x_koef, y_koef = self.x_koef, self.y_koef
 	self:refresh_scale()
 
@@ -400,7 +399,7 @@ function Container:refresh()
 end
 
 
-function Container:refresh_scale()
+function M:refresh_scale()
 	if self._fit_node then
 		local fit_node_size = gui.get_size(self._fit_node)
 
@@ -416,7 +415,7 @@ function Container:refresh_scale()
 end
 
 
-function Container:update_child_containers()
+function M:update_child_containers()
 	for index = 1, #self._containers do
 		self._containers[index]:refresh()
 	end
@@ -424,7 +423,7 @@ end
 
 
 ---@return druid.container @{Container}
-function Container:create_draggable_corners()
+function M:create_draggable_corners()
 	self:clear_draggable_corners()
 
 	for _, corner_pivot in pairs(CORNER_PIVOTS) do
@@ -454,7 +453,7 @@ end
 
 
 ---@return druid.container @{Container}
-function Container:clear_draggable_corners()
+function M:clear_draggable_corners()
 	for index = 1, #self._draggable_corners do
 		local drag_component = self._draggable_corners[index]
 		self.druid:remove(drag_component)
@@ -468,7 +467,7 @@ function Container:clear_draggable_corners()
 end
 
 
-function Container:_on_corner_drag(x, y, corner_offset)
+function M:_on_corner_drag(x, y, corner_offset)
 	x = corner_offset.x >= 0 and x or -x
 	y = corner_offset.y >= 0 and y or -y
 
@@ -507,7 +506,7 @@ end
 --- Set node for layout node to fit inside it. Pass nil to reset
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@return druid.container @{Layout}
-function Container:fit_into_node(node)
+function M:fit_into_node(node)
 	self._fit_node = self:get_node(node)
 	self:refresh_scale()
 	return self
@@ -516,7 +515,7 @@ end
 
 ---@param min_size_x number|nil
 ---@param min_size_y number|nil
-function Container:set_min_size(min_size_x, min_size_y)
+function M:set_min_size(min_size_x, min_size_y)
 	self.min_size_x = min_size_x or self.min_size_x
 	self.min_size_y = min_size_y or self.min_size_y
 	self:refresh()
@@ -525,4 +524,4 @@ function Container:set_min_size(min_size_x, min_size_y)
 end
 
 
-return Container
+return M

@@ -28,6 +28,12 @@ function M:init(template, nodes)
 	self.scroll:set_horizontal_scroll(false)
 
 	self.druid:new(lang_text, "text_header", "ui_output")
+
+	local defold_version = sys.get_engine_info().version
+	gui.set_text(self:get_node("text_version_defold"), "Defold v" .. defold_version)
+
+	local druid_version = sys.get_config_string("project.version")
+	gui.set_text(self:get_node("text_version_druid"), "Druid v" .. druid_version)
 end
 
 

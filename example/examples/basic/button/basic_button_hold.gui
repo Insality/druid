@@ -85,7 +85,7 @@ nodes {
     z: 0.322
   }
   type: TYPE_TEXT
-  text: "Confirm"
+  text: "Hold Me"
   font: "text_bold"
   id: "text"
   outline {

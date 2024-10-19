@@ -111,6 +111,8 @@ function M:add_example(examples, druid_example)
 				self.on_set_information("")
 			end
 
+			druid_example.example_scene:set_gui_path(example_data.code_url)
+
 			druid_example.properties_panel:clear()
 			if example_data.properties_control then
 				example_data.properties_control(instance, druid_example.properties_panel)
@@ -135,11 +137,14 @@ end
 ---@param name_id string
 ---@return boolean @true if example was found and selected
 function M:select_example_by_name_id(name_id)
+	print("Select example by name_id", name_id)
 	for index = 1, #self.examples do
 		local example = self.examples[index]
 
 		-- Scroll to the element
-		self.scroll:scroll_to(gui.get_position(example.list_item.root.node), true)
+		local target_pos = gui.get_position(example.list_item.root.node)
+		target_pos.y = target_pos.y + self.scroll.view_size.y / 2
+		self.scroll:scroll_to(target_pos, true)
 
 		-- Select the element
 		if example.data.name_id == name_id then

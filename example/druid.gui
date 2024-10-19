@@ -614,6 +614,18 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_TEXT
+  id: "output_list/text_version_defold"
+  parent: "output_list/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "output_list/text_version_druid"
+  parent: "output_list/root"
+  template_node_child: true
+}
+nodes {
   position {
     x: -20.0
     y: 25.0
@@ -648,6 +660,12 @@ nodes {
 nodes {
   type: TYPE_TEXT
   id: "example_scene/text_debug_info"
+  parent: "example_scene/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "example_scene/text_gui_path"
   parent: "example_scene/root"
   template_node_child: true
 }
@@ -939,6 +957,12 @@ nodes {
   type: TYPE_TEXT
   id: "scroll/button_stencil/text"
   parent: "scroll/button_stencil/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll/ui_scroll_text_fill"
+  parent: "scroll/scroll_content"
   template_node_child: true
 }
 nodes {
@@ -2164,33 +2188,239 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "basic_checkbox"
+  id: "checkbox"
   parent: "basic"
   inherit_alpha: true
-  template: "/example/examples/basic/checkbox/basic_checkbox.gui"
+  template: "/example/examples/basic/checkbox/checkbox.gui"
 }
 nodes {
   type: TYPE_BOX
-  id: "basic_checkbox/root"
-  parent: "basic_checkbox"
+  id: "checkbox/root"
+  parent: "checkbox"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "basic_checkbox/button"
-  parent: "basic_checkbox/root"
+  id: "checkbox/button"
+  parent: "checkbox/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "basic_checkbox/icon"
-  parent: "basic_checkbox/button"
+  id: "checkbox/icon"
+  parent: "checkbox/button"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "basic_checkbox/selected"
-  parent: "basic_checkbox/button"
+  id: "checkbox/selected"
+  parent: "checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "radio_group"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/radio_group/radio_group.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/root"
+  parent: "radio_group"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "radio_group/checkbox_1"
+  parent: "radio_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_1/root"
+  parent: "radio_group/checkbox_1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_1/button"
+  parent: "radio_group/checkbox_1/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_1/icon"
+  parent: "radio_group/checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_1/selected"
+  parent: "radio_group/checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "radio_group/checkbox_2"
+  parent: "radio_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_2/root"
+  parent: "radio_group/checkbox_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_2/button"
+  parent: "radio_group/checkbox_2/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_2/icon"
+  parent: "radio_group/checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_2/selected"
+  parent: "radio_group/checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "radio_group/checkbox_3"
+  parent: "radio_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_3/root"
+  parent: "radio_group/checkbox_3"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_3/button"
+  parent: "radio_group/checkbox_3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_3/icon"
+  parent: "radio_group/checkbox_3/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_3/selected"
+  parent: "radio_group/checkbox_3/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox_group"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/checkbox_group/checkbox_group.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/root"
+  parent: "checkbox_group"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox_group/checkbox_1"
+  parent: "checkbox_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_1/root"
+  parent: "checkbox_group/checkbox_1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_1/button"
+  parent: "checkbox_group/checkbox_1/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_1/icon"
+  parent: "checkbox_group/checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_1/selected"
+  parent: "checkbox_group/checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox_group/checkbox_2"
+  parent: "checkbox_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_2/root"
+  parent: "checkbox_group/checkbox_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_2/button"
+  parent: "checkbox_group/checkbox_2/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_2/icon"
+  parent: "checkbox_group/checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_2/selected"
+  parent: "checkbox_group/checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox_group/checkbox_3"
+  parent: "checkbox_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_3/root"
+  parent: "checkbox_group/checkbox_3"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_3/button"
+  parent: "checkbox_group/checkbox_3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_3/icon"
+  parent: "checkbox_group/checkbox_3/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_3/selected"
+  parent: "checkbox_group/checkbox_3/button"
   template_node_child: true
 }
 nodes {
@@ -3473,6 +3703,220 @@ nodes {
   type: TYPE_BOX
   id: "basic_layout/prefab"
   parent: "basic_layout/layout"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "widgets"
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "hover_hint_example"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/examples/widgets/hover_hint/hover_hint_example.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/root"
+  parent: "hover_hint_example"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "hover_hint_example/hover_hint"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/hover_hint/root"
+  parent: "hover_hint_example/hover_hint"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/hover_hint/panel_hint"
+  parent: "hover_hint_example/hover_hint/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "hover_hint_example/hover_hint/text_hint"
+  parent: "hover_hint_example/hover_hint/panel_hint"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/node_yellow"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/node_red"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/node_blue"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/node_green"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -200.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_button"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/components/properties_panel/properties/property_button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/root"
+  parent: "property_button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_button/text_name"
+  parent: "property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/button"
+  parent: "property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/selected"
+  parent: "property_button/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_button/text_button"
+  parent: "property_button/button"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -200.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_checkbox"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/components/properties_panel/properties/property_checkbox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/root"
+  parent: "property_checkbox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_checkbox/text_name"
+  parent: "property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/button"
+  parent: "property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/icon"
+  parent: "property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/selected"
+  parent: "property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -200.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_slider"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/components/properties_panel/properties/property_slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/root"
+  parent: "property_slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_slider/text_name"
+  parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/E_Anchor"
+  parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/button"
+  parent: "property_slider/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/selected"
+  parent: "property_slider/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_slider/text_value"
+  parent: "property_slider/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider"
+  parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider_back"
+  parent: "property_slider/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider_pin"
+  parent: "property_slider/slider"
   template_node_child: true
 }
 nodes {

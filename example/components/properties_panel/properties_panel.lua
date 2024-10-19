@@ -71,7 +71,6 @@ function M:add_checkbox(text_id, initial_value, on_change_callback)
 	instance.text_name:translate(text_id)
 	instance:set_value(initial_value, true)
 	instance.button.on_click:subscribe(function()
-		instance:set_value(not instance:get_value())
 		on_change_callback(instance:get_value())
 	end)
 

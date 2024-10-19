@@ -117,15 +117,15 @@ function M.get_examples()
 					instance.scroll:scroll_to_percent(vmath.vector3(0, 1 - value, 0), true)
 				end)
 
-				properties_panel:add_button("ui_add_item", function()
+				properties_panel:add_button("ui_add_element", function()
 					instance:add_item()
 				end)
 
-				properties_panel:add_button("ui_remove_item", function()
+				properties_panel:add_button("ui_remove_element", function()
 					instance:remove_item()
 				end)
 
-				properties_panel:add_button("ui_clear_items", function()
+				properties_panel:add_button("ui_clear_elements", function()
 					instance.data_list:clear()
 				end)
 			end,
