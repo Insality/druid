@@ -507,46 +507,46 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 **Description**
 
-Hello! The long-awaited update for Druid is finally here!
-
-I'm releasing this version as 1.0, since Druid is pretty stable and packed with features.
+Hello! The long-awaited update for Druid is finally here! The Druid now is finally 1.0 version! 🎉 This was a long path to achieve current state!
 
 This update brings a lot of improvements, so let's dive in:
 
 **New Example Page**
-I’ve updated Druid's main examples page. Since Druid has become quite popular, I wanted to ensure the examples meet high standards of quality and aesthetics. The examples are now clearer and provide more information. I’ve also added many new examples. Check them out!
+I’ve updated Druid's main examples page. Since Druid has become quite popular, I wanted to ensure the examples meet high standards of quality and aesthetics. The examples are now clearer and provide more information. I’ve also added many new examples. Check them out! Share your feedback and suggestions for new examples. Now it's much easier to learn Druid!
 
 **Component Reworking**
 Several components have been reworked. While I generally avoid introducing breaking changes, sometimes they are necessary for progress.
 
-- Rich Text is now applied directly to the text node, rather than using a Rich Text Template. This makes setup and usage much easier! I’m still working on figuring out how to apply this approach to Rich Input.
+- **Rich Text** is now applied directly to the text node, rather than using a `Rich Text Template`. This makes setup and usage much easier! I’m still working on figuring out how to apply this approach to Rich Input.
 
-- The Layout component has been completely replaced. It now functions similarly to Dynamic Grid but is responsible for adjusting nodes in the GUI. It’s easier to use and offers more configuration options.
+- The **Layout** component has been completely replaced. It now functions similarly to **Dynamic Grid** but with more settings and modes. This layout now works similarly to Figma Auto Layout, allowing you to arrange nodes in various ways.
 
-- Dynamic Grid will be deprecated in the future, with the new Layout component serving as its replacement.
+- **Dynamic Grid** will be deprecated in the future, with the new Layout component serving as its replacement.
 
-- Data List now works exclusively with Static Grid, making it more stable and optimized. Additionally, a new "cached" version is available, which optimizes node reuse. However, the cached version requires using `on_add_element` and `on_remove_element` events to properly set up nodes.
+- **Data List** now works exclusively with **Static Grid**, making it more stable and optimized. Additionally, a new `cached` version is available, which optimizes node reuse. However, the cached version requires using `on_add_element` and `on_remove_element` events to properly set up nodes.
 
 **Code Cleanup**
-I’ve finally removed "middleclass" from Druid. If you were using it for some reason, you’ll need to copy the "middleclass" code into your project.
+I’ve finally removed `middleclass` from Druid. If you were using it for some reason, you’ll need to copy the "middleclass" code into your project.
 
 **Annotations**
-Druid’s annotations were originally created when there were no Lua language servers. These annotations are of the older LDoc type and not EmmyLua. In the future, I aim to eliminate annotations altogether and rely on annotated code, which is easier to read, maintain, and feature-rich. The Defold will support the LLS (Lua Language Server) as well as VSCode with amazing Defold-Kit extension.
+Druid’s annotations were originally created when there were no Lua language servers. These annotations are of the older LDoc type and not EmmyLua. In the future, I aim to get rid of annotations altogether and rely on annotated code, which is easier to read, maintain, and feature-rich. The Defold will support the LLS (Lua Language Server) as well as VSCode with amazing Defold-Kit extension.
 
 ---
 
 **Milestone**: https://github.com/Insality/druid/milestone/12
 
-**Changelog 1.0.0**
+**Changelog 1.0**
 
 - New Druid logo!
 - **[Example]** New Example Page with 40+ examples.
+- **BREAKING** **[Rich Text]** Now applied directly to the text node instead of using a Rich Text Template (which previously contained three nodes: root, text, and image prefabs). This simplifies usage in the GUI.
+- **BREAKING** **[System]** Removed `middleclass.lua`. If you were using it, you’ll need to copy the code into your project.
+- **BREAKING** **[System]** Removed: `checkbox`, `checkbox_group`, and `radio_button` components. These components can be easily created using the Button component. Check the examples for implementation.
+- **BREAKING** **[Layout]** Reworked the Layout component. The new version allows arranging nodes in various modes (vertical, horizontal, horizontal wrap) and includes more settings (margins, padding, justification, pivots, and content hugging options). This will replace Dynamic Grid in the future.
 - **[Data List]** Reworked Data List to work only with **Static Grid**. It’s now more stable and has an extended API.
     - Added a **Cached Data List** option, which uses less memory (highly optimized) but requires `on_add_element` and `on_remove_element` events for node setup. All components must be of the same class in this case.
-- **[Rich Text]** Now applied directly to the text node instead of using a Rich Text Template (which previously contained three nodes: root, text, and image prefabs). This simplifies usage in the GUI.
 - **[Rich Input]** Updated with new features such as selection and cursor navigation. New input keys can be configured in Druid (arrows, ctrl, shift).
 - **[Input]** Users can now switch between text input areas with a single click, instead of needing to tap twice (once to close the focus and once to open the new input).
-- **[Layout]** Reworked the Layout component. The new version allows arranging nodes in various modes (vertical, horizontal, horizontal wrap) and includes more settings (margins, padding, justification, pivots, and content hugging options). This will replace Dynamic Grid in the future.
 - **[Dynamic Grid]** Deprecated in favor of the new Layout component.
 - **[Drag]** Added a touch parameter to Drag callbacks, making it easier to add custom logic with input action data.
 - **[Scroll]** Added `scroll.view_size`, `scroll:set_view_size(size)`, and `scroll:update_view_size()` functions for better management of the scroll input area and visible part.
@@ -555,8 +555,6 @@ Druid’s annotations were originally created when there were no Lua language se
 - **[Progress Bar]** Improved accuracy when scaling progress bars for images with slice9 parameters.
 - **[Slider]** Fixed several slider setup issues.
 - **[System]** Updated and fixed annotations.
-- **[System]** Removed `middleclass.lua`.
-- **[System]** Removed: `checkbox`, `checkbox_group`, and `radio_button` components. These components can be easily created using the Button component. Check the examples for implementation.
 - **[System]** Removed: `pin_knob` custom component. It mostly was created as an example and now is not needed.
 - **[System]** Added `self:get_druid(template, nodes)` to replace `self:set_template(template)` and `self:set_nodes(nodes)` calls in custom components.
 - Various improvements and fixes.
