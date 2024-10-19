@@ -9,7 +9,11 @@
 
 **Druid** - powerful **Defold** component UI framework that empowers developers to create stunning and customizable GUIs by leveraging a wide range of embedded components or effortlessly designing their own game-specific components.
 
-Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Druid** example app.
+## Druid Example
+
+Check the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Druid** example app.
+
+In this example you can inspect a variety of **Druid** components and see how they work. Each example page provides a direct link to the corresponding example code, making it easier for you to understand how to use **Druid**.
 
 ## Setup
 
@@ -17,9 +21,9 @@ Try the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **Dr
 
 To integrate the **Druid** extension into your own project, add this project as a [dependency](https://www.defold.com/manuals/libraries/) in your **Defold** game. Open your `game.project` file and add the following line to the dependencies field under the project section:
 
-**Druid v0.12.0**
+**Druid v1.0**
 
-> [https://github.com/Insality/druid/archive/refs/tags/0.12.0.zip](https://github.com/Insality/druid/archive/refs/tags/0.12.0.zip)
+> [https://github.com/Insality/druid/archive/refs/tags/1.0.zip](https://github.com/Insality/druid/archive/refs/tags/1.0.zip)
 
 Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
@@ -30,7 +34,7 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 | Platform         | Library Size  |
 | ---------------- | ------------- |
-| HTML5            | **38.96 KB**  |
+| HTML5            | **38.00 KB**  |
 | Desktop / Mobile | **65.97 KB**  |
 
 
@@ -118,10 +122,10 @@ Here is full **Druid** components list.
 | **[Button](https://insality.github.io/druid/modules/Button.html)** | Logic over GUI Node. Handle the user click interactions: click, long click, double click, etc. | [Button Example](https://insality.github.io/druid/druid/?example=general_buttons) | <img src="media/preview/button.gif" width="200" height="100"> |
 | **[Text](https://insality.github.io/druid/modules/Text.html)** | Logic over GUI Text. By default Text component fit the text inside text node size area with different adjust modes. | [Text Example](https://insality.github.io/druid/druid/?example=texts_general) | <img src="media/preview/text.gif" width="200" height="100"> |
 | **[Scroll](https://insality.github.io/druid/modules/Scroll.html)** | Logic over two GUI Nodes: input and content. Provides basic behaviour for scrollable content. | [Scroll Example](https://insality.github.io/druid/druid/?example=general_scroll) | <img src="media/preview/scroll.gif" width="200" height="100"> |
-| **[Blocker](https://insality.github.io/druid/modules/Blocker.html)** | Logic over GUI Node. Don't pass any user input below node area size. | ❌ | |
-| **[Back Handler](https://insality.github.io/druid/modules/BackHandler.html)** | Call callback on user "Back" action. It's a Android back button or keyboard backspace key | ❌ | |
+| **[Blocker](https://insality.github.io/druid/modules/Blocker.html)** | Logic over GUI Node. Don't pass any user input below node area size. | [Blocker Example](https://insality.github.io/druid/druid/?example=timer) | <img src="media/preview/blocker.gif" width="200" height="100"> |
+| **[Back Handler](https://insality.github.io/druid/modules/BackHandler.html)** | Call callback on user "Back" action. It's a Android back button or keyboard backspace key | [Back Handler Example](https://insality.github.io/druid/druid/?example=timer) | <img src="media/preview/back_handler.gif" width="200" height="100"> |
 | **[Static Grid](https://insality.github.io/druid/modules/StaticGrid.html)** | Logic over GUI Node. Component to manage node positions with all equal node sizes. | [Static Gid Example](https://insality.github.io/druid/druid/?example=general_grid) | <img src="media/preview/static_grid.gif" width="200" height="100"> |
-| **[Hover](https://insality.github.io/druid/modules/Hover.html)** | Logic over GUI Node. Handle hover action over node. For both: mobile touch and mouse cursor. | ❌ | <img src="media/preview/hover.gif" width="200" height="100"> |
+| **[Hover](https://insality.github.io/druid/modules/Hover.html)** | Logic over GUI Node. Handle hover action over node. For both: mobile touch and mouse cursor. | [Hover Example](https://insality.github.io/druid/druid/?example=timer) | <img src="media/preview/hover.gif" width="200" height="100"> |
 | **[Swipe](https://insality.github.io/druid/modules/Swipe.html)** | Logic over GUI Node. Handle swipe gestures over node. | [Swipe Example](https://insality.github.io/druid/druid/?example=general_swipe) | <img src="media/preview/swipe.gif" width="200" height="100"> |
 | **[Drag](https://insality.github.io/druid/modules/Drag.html)** | Logic over GUI Node. Handle drag input actions. Can be useful to make on screen controlls. | [Drag Example](https://insality.github.io/druid/druid/?example=general_drag) | <img src="media/preview/drag.gif" width="200" height="100"> |
 
@@ -137,18 +141,16 @@ druid.register("data_list", data_list)
 
 | Name | Description | Example | <div style="width:200px">Preview</div> |
 |------|-------------|---------|---------|
-| **[Checkbox](https://insality.github.io/druid/modules/Checkbox.html)** | Switch node state on click event. | [Checkbox Example](https://insality.github.io/druid/druid/?example=general_checkboxes) | <img src="media/preview/checkbox.gif" width="200" height="100"> |
-| **[Checkbox group](https://insality.github.io/druid/modules/CheckboxGroup.html)** | Group of checkbox components. | [Checkbox group Example](https://insality.github.io/druid/druid/?example=general_checkboxes) | <img src="media/preview/checkbox_group.gif" width="200" height="100"> |
-| **[Radio group](https://insality.github.io/druid/modules/RadioGroup.html)** | Like checkbox group but with single choise only. | [Radio Group Example](https://insality.github.io/druid/druid/?example=general_checkboxes) | <img src="media/preview/radio_group.gif" width="200" height="100"> |
-| **[Dynamic Grid](https://insality.github.io/druid/modules/DynamicGrid.html)** | Logic over GUI Node. Component to manage node positions with all different node sizes. Only one direction: horizontal or vertical. | [Dynamic Grid Example](https://insality.github.io/druid/druid/?example=general_grid) | <img src="media/preview/dynamic_grid.gif" width="200" height="100"> |
 | **[Data List](https://insality.github.io/druid/modules/DataList.html)** | Logic over Scroll and Grid components. Create only visible GUI nodes or components to make "infinity" scroll befaviour | [Data List Example](https://insality.github.io/druid/druid/?example=general_data_list) | <img src="media/preview/data_list.gif" width="200" height="100"> |
 | **[Input](https://insality.github.io/druid/modules/Input.html)** | Logic over GUI Node and GUI Text (or Text component). Provides basic user text input. | [Input Example](https://insality.github.io/druid/druid/?example=general_input) | <img src="media/preview/input.gif" width="200" height="100"> |
-| **[Lang text](https://insality.github.io/druid/modules/LangText.html)** | Logic over Text component to handle localization. Can be translated in real-time with `druid.on_language_change` | ❌ | <img src="media/preview/lang_text.gif" width="200" height="100"> |
+| **[Lang text](https://insality.github.io/druid/modules/LangText.html)** | Logic over Text component to handle localization. Can be translated in real-time with `druid.on_language_change` | [Lang Text Example](https://insality.github.io/druid/druid/?example=timer) | <img src="media/preview/lang_text.gif" width="200" height="100"> |
 | **[Progress](https://insality.github.io/druid/modules/Progress.html)** | Logic over GUI Node. Handle node size and scale to handle progress node size. | [Progress Example](https://insality.github.io/druid/druid/?example=general_progress_bar) | <img src="media/preview/progress.gif" width="200" height="100"> |
 | **[Slider](https://insality.github.io/druid/modules/Slider.html)** | Logic over GUI Node. Handle draggable node with position restrictions. | [Slider Example](https://insality.github.io/druid/druid/?example=general_sliders) | <img src="media/preview/slider.gif" width="200" height="100"> |
-| **[Timer](https://insality.github.io/druid/modules/Timer.html)** | Logic over GUI Text. Handle basic timer functions. | ❌ | <img src="media/preview/timer.gif" width="200" height="100"> |
+| **[Timer](https://insality.github.io/druid/modules/Timer.html)** | Logic over GUI Text. Handle basic timer functions. | [Timer Example](https://insality.github.io/druid/druid/?example=timer) | <img src="media/preview/timer.gif" width="200" height="100"> |
 | **[Hotkey](https://insality.github.io/druid/modules/Hotkey.html)** | Allow to set callbacks for keyboard hotkeys with key modificators. | [Hotkey Example](https://insality.github.io/druid/druid/?example=general_hotkey) | <img src="media/preview/hotkey.gif" width="200" height="100"> |
 | **[Layout](https://insality.github.io/druid/modules/Layout.html)** | Logic over GUI Node. Arrange nodes inside layout node with margin/paddings settings. | [Layout Example](https://insality.github.io/druid/druid/?example=general_layout) | <img src="media/preview/layout.gif" width="200" height="100"> |
+| **[Rich Input](https://insality.github.io/druid/modules/RichInput.html)** | Logic over GUI Node and GUI Text (or Text component). Provides rich text input with different styles and text formatting. | [Rich Input Example](https://insality.github.io/druid/druid/?example=general_rich_input) | <img src="media/preview/rich_input.gif" width="200" height="100"> |
+| **[Rich Text](https://insality.github.io/druid/modules/RichText.html)** | Logic over GUI Text. Provides rich text formatting with different styles and text formatting. | [Rich Text Example](https://insality.github.io/druid/druid/?example=general_rich_text) | <img src="media/preview/rich_text.gif" width="200" height="100"> |
 
 For a complete overview, see: **_[components.md](docs_md/01-components.md)_**.
 

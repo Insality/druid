@@ -192,49 +192,6 @@ Create input component with druid: `input = druid:new_input(button_node_name, te
 - To make work different keyboard type, make sure value in game.project Android:InputMethod set to HidderInputField (https://defold.com/manuals/project-settings/#input-method)
 
 
-## Checkbox
-[Checkbox API here](https://insality.github.io/druid/modules/Checkbox.html)
-
-### Overview
-Basic Druid checkbox component.
-
-### Setup
-Create checkbox component with druid: `checkbox = druid:new_checkbox(node, callback)`
-
-### Notes
-- Checkbox uses button to handle click
-- You can setup another node to handle input with click_node arg in component init: `druid:new_checkbox(node, callback, [click_node])`
-
-
-## Checkbox group
-[Checkbox group API here](https://insality.github.io/druid/modules/CheckboxGroup.html)
-
-### Overview
-Several checkboxes in one group
-
-### Setup
-Create checkbox_group component with druid: `group = druid:new_checkbox_group(nodes[], callback)`
-
-### Notes
-- Callback arguments: `function(self, checkbox_index)`. Index is equals in _nodes[]_ array in component constructor
-- You can get/set checkbox_group state with `group:set_state()` and `group:get_state()`
-
-
-## Radio group
-[Radio group API here](https://insality.github.io/druid/modules/RadioGroup.html)
-
-### Overview
-Several checkboxes in one group with single choice
-
-### Setup
-Create radio_group component with druid: `group = druid:new_radio_group(nodes[], callback)`
-
-### Notes
-- Callback arguments: `function(self, checkbox_index)`. Index is equals in _nodes[]_ array in component constructor
-- You can get/set radio_group state with `group:set_state()` and `group:get_state()`
-- Only different from checkbox_group: on click another checkboxes in this group will be unchecked
-
-
 ## Timer
 [Timer API here](https://insality.github.io/druid/modules/Timer.html)
 
@@ -419,7 +376,7 @@ Create hotkey component with druid: `hotkey = druid:new_hotkey(keys_array, callb
 [Layout API here](https://insality.github.io/druid/modules/Layout.html)
 
 ### Overview
-Component to handle node size depends on layout mode. Unlike from Defold Adjust modes, you able to select node stretch by one size or zoom by minimum or maximum side
+Component to arrange nodes inside layout node with margin/paddings settings. Works with different node sizes and pivots. Works in the same way as Figma AutoLayout
 
 ### Setup
 This is extended component. Before use it, you should register it:
@@ -428,17 +385,15 @@ local druid =  require("druid.druid")
 local layout =  require("druid.extended.layout")
 druid.register("layout", layout)
 ```
-Create layout component with druid: `layout = druid:new_layout(node, layout_mode, on_size_change_callback)`
+Create layout component with druid: `layout = druid:new_layout(node, layout_mode)`
 
 
 ### Notes
 - Layout mode can be next:
-	- `const.LAYOUT_MODE.STRETCH_X` - Stretch node only by X
-	- `const.LAYOUT_MODE.STRETCH_Y` - Stretch node only by Y
-	- `const.LAYOUT_MODE.ZOOM_MIN` - Zoom node by minimal stretch multiplier
-	- `const.LAYOUT_MODE.ZOOM_MAX` - Zoom node by maximum stretch multiplier
-	- `const.LAYOUT_MODE.FIT` - Usual Defold Fit mode
-	- `const.LAYOUT_MODE.STRETCH` - Usual Defold Stretch Mode
-- The Layout component will change the node size property. So it's able to increase size of 9patch nodes without scaling issue
-- The Layout works even inside parent node with Fit adjust mode
+	- `horizontal` - arrange nodes in horizontal line
+	- `vertical` - arrange nodes in vertical line
+	- `horizontal_wrap` - arrange nodes in horizontal line with wrap to next line
+- You can setup margin and padding for layout nodes
+- You can set "justify" alignment to place nodes with the same margin between layout node borders
+- You can set "hug" by content. This option will set layout node size by content size. Can be setup separately for width and height
 

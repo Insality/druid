@@ -503,25 +503,88 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 
 
-### Druid 0.12.0
+### Druid 1.0
 
-**Changelog 0.12.0**
-- New Logo!
-- [Example] New Example Page with 40+ examples
-- [Data List] Rework Data List. Now only works with Static Grid only. Now the Data List more stable with extended API.
-	- Add Cached Data List option. This used less memory (it's really much optimized) but requires uses the `on_add_element` and `on_remove_element` events to setup your nodes. All components should be the same class.
-- [Rich Text] The Rich Text now applied to the text node instead of Rich Text Template (contained 3 nodes before - root, text and image prefabs)
-- [Rich Input] Updated Rich Input. Now it goes with selection and cursor navigation. Added new input keys for setup in Druid (arrows keys, ctrl, shift)
-- [System] Updated and fixed annotations
-- [System] Removed `middleclass.lua`
-- [System] Add `self:get_druid(template, nodes)` to escape the `self:set_template(template)` and `self:set_nodes(nodes)` calls in custom components
-- [Input] Now user can tap from one text input area to another with one click. Before first tap is closed the focus on selected input.
-- [Layout] Removed Layout component. Add new Layout component what do a some different things. It's like Dynamic Grid but with more control and settings.
-- [Dynamic Grid] Deprecated Dynamic Grid. Layout will be instead of it.
-- [Drag] Add touch param to Drag callbacks, it's much easier to add custom logic with knowledge of input action data.
-- [Scroll] Add `scroll.view_size`, `scroll:set_view_size(size)` and `scroll:update_view_size()` functions to manage with current scroll input area and scroll visible part
-- [Static Grid] Add `grid:set_item_size(size)`, `grid:sort_nodes(comparator)` functions
-- [Text] Seems adjust by height for multiline text is workings good now
-- [Rich Input] Extended Rich Input API
-- [Progress Bar] More accurate scaling for progress bars fow images with slice9 params
-- [Slider] Fix several slider issues in slider setup
+**Description**
+
+Hello! The long-awaited update for Druid is finally here!
+
+I'm releasing this version as 1.0, since Druid is pretty stable and packed with features.
+
+This update brings a lot of improvements, so let's dive in:
+
+**New Example Page**
+I’ve updated Druid's main examples page. Since Druid has become quite popular, I wanted to ensure the examples meet high standards of quality and aesthetics. The examples are now clearer and provide more information. I’ve also added many new examples. Check them out!
+
+**Component Reworking**
+Several components have been reworked. While I generally avoid introducing breaking changes, sometimes they are necessary for progress.
+
+- Rich Text is now applied directly to the text node, rather than using a Rich Text Template. This makes setup and usage much easier! I’m still working on figuring out how to apply this approach to Rich Input.
+
+- The Layout component has been completely replaced. It now functions similarly to Dynamic Grid but is responsible for adjusting nodes in the GUI. It’s easier to use and offers more configuration options.
+
+- Dynamic Grid will be deprecated in the future, with the new Layout component serving as its replacement.
+
+- Data List now works exclusively with Static Grid, making it more stable and optimized. Additionally, a new "cached" version is available, which optimizes node reuse. However, the cached version requires using `on_add_element` and `on_remove_element` events to properly set up nodes.
+
+**Code Cleanup**
+I’ve finally removed "middleclass" from Druid. If you were using it for some reason, you’ll need to copy the "middleclass" code into your project.
+
+**Annotations**
+Druid’s annotations were originally created when there were no Lua language servers. These annotations are of the older LDoc type and not EmmyLua. In the future, I aim to eliminate annotations altogether and rely on annotated code, which is easier to read, maintain, and feature-rich. The Defold will support the LLS (Lua Language Server) as well as VSCode with amazing Defold-Kit extension.
+
+---
+
+**Milestone**: https://github.com/Insality/druid/milestone/12
+
+**Changelog 1.0.0**
+
+- New Druid logo!
+- **[Example]** New Example Page with 40+ examples.
+- **[Data List]** Reworked Data List to work only with **Static Grid**. It’s now more stable and has an extended API.
+    - Added a **Cached Data List** option, which uses less memory (highly optimized) but requires `on_add_element` and `on_remove_element` events for node setup. All components must be of the same class in this case.
+- **[Rich Text]** Now applied directly to the text node instead of using a Rich Text Template (which previously contained three nodes: root, text, and image prefabs). This simplifies usage in the GUI.
+- **[Rich Input]** Updated with new features such as selection and cursor navigation. New input keys can be configured in Druid (arrows, ctrl, shift).
+- **[Input]** Users can now switch between text input areas with a single click, instead of needing to tap twice (once to close the focus and once to open the new input).
+- **[Layout]** Reworked the Layout component. The new version allows arranging nodes in various modes (vertical, horizontal, horizontal wrap) and includes more settings (margins, padding, justification, pivots, and content hugging options). This will replace Dynamic Grid in the future.
+- **[Dynamic Grid]** Deprecated in favor of the new Layout component.
+- **[Drag]** Added a touch parameter to Drag callbacks, making it easier to add custom logic with input action data.
+- **[Scroll]** Added `scroll.view_size`, `scroll:set_view_size(size)`, and `scroll:update_view_size()` functions for better management of the scroll input area and visible part.
+- **[Static Grid]** Added `grid:set_item_size(size)` and `grid:sort_nodes(comparator)` functions.
+- **[Text]** Adjustments for multiline text height seem to be working correctly now.
+- **[Progress Bar]** Improved accuracy when scaling progress bars for images with slice9 parameters.
+- **[Slider]** Fixed several slider setup issues.
+- **[System]** Updated and fixed annotations.
+- **[System]** Removed `middleclass.lua`.
+- **[System]** Removed: `checkbox`, `checkbox_group`, and `radio_button` components. These components can be easily created using the Button component. Check the examples for implementation.
+- **[System]** Removed: `pin_knob` custom component. It mostly was created as an example and now is not needed.
+- **[System]** Added `self:get_druid(template, nodes)` to replace `self:set_template(template)` and `self:set_nodes(nodes)` calls in custom components.
+- Various improvements and fixes.
+
+
+A big thanks to the my Github supporters:
+- [Defold Foundation](https://defold.com)
+- [Ragetto](https://forum.defold.com/u/ragetto)
+- [Pawel](https://forum.defold.com/u/pawel/summary)
+
+And all my other supporters! Very appreciated!
+
+❤️ Support ❤️
+
+Please support me if you like this project! It will help me keep engaged to update **Druid** and make it even better!
+
+[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
+
+
+---
+
+**Postmortem**
+
+Thoughts, wrong decisions, future plans, and how to update correctly:
+
+- No styles should exist.
+- Annotations should be updated or removed.
+- Non-explicit event parameters can cause confusion, particularly with `self` parameters.
+- There is room for performance optimization. Memory usage is not optimized, though it can still handle heavy-load GUIs like Panthera.
+- Creating custom components could be made easier.
+- There can be a much less code bindings between elements. Like bind_grid, update_size after some changes etc.
