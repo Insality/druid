@@ -35,9 +35,6 @@
 --- On input field text change to empty string callback(self, input_text)
 -- @tfield vector3 text_position
 
---- On input field text change to max length string callback(self, input_text)
--- @tfield druid.text placeholder @{Text}
-
 ---
 
 local component = require("druid.component")

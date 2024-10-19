@@ -844,7 +844,6 @@ local druid__progress__style = {}
 ---@field druid druid_instance The component druid instance
 ---@field input druid.input On input field text change callback(self, input_text)
 ---@field input_text druid.text On input field text change to empty string callback(self, input_text)
----@field placeholder druid.text On input field text change to max length string callback(self, input_text)
 ---@field placeholder druid.text On input field text change to empty string callback(self, input_text)
 ---@field root node Root node
 ---@field text_position vector3 On input field text change to empty string callback(self, input_text)
