@@ -252,64 +252,6 @@ function druid__button.set_web_user_interaction(self, is_web_mode) end
 local druid__button__style = {}
 
 
----@class druid.checkbox : druid.base_component
----@field button druid.button Button component from click_node
----@field click_node node|nil Button trigger node
----@field node node Visual node
----@field on_change_state druid.event On change state callback(self, state)
----@field style druid.checkbox.style Component style params.
-local druid__checkbox = {}
-
---- Return checkbox state
----@param self druid.checkbox @{Checkbox}
----@return boolean Checkbox state
-function druid__checkbox.get_state(self) end
-
---- The @{Checkbox} constructor
----@param self druid.checkbox @{Checkbox}
----@param node node Gui node
----@param callback function Checkbox callback
----@param click_node node|nil Trigger node, by default equals to node. Default: node
----@param initial_state boolean|nil The initial state of checkbox, default - false
-function druid__checkbox.init(self, node, callback, click_node, initial_state) end
-
---- Set checkbox state
----@param self druid.checkbox @{Checkbox}
----@param state boolean|nil Checkbox state
----@param is_silent boolean|nil Don't trigger on_change_state if true
----@param is_instant boolean|nil If instant checkbox change
-function druid__checkbox.set_state(self, state, is_silent, is_instant) end
-
-
----@class druid.checkbox.style
----@field on_change_state function (self, node, state)
-local druid__checkbox__style = {}
-
-
----@class druid.checkbox_group : druid.base_component
----@field checkboxes table Array of checkbox components
----@field on_checkbox_click druid.event On any checkbox click callback(self, index)
-local druid__checkbox_group = {}
-
---- Return checkbox group state
----@param self druid.checkbox_group @{CheckboxGroup}
----@return boolean[] Array if checkboxes state
-function druid__checkbox_group.get_state(self) end
-
---- The @{CheckboxGroup} constructor
----@param self druid.checkbox_group @{CheckboxGroup}
----@param nodes node[] Array of gui node
----@param callback function Checkbox callback
----@param click_nodes node[]|nil Array of trigger nodes, by default equals to nodes
-function druid__checkbox_group.init(self, nodes, callback, click_nodes) end
-
---- Set checkbox group state
----@param self druid.checkbox_group @{CheckboxGroup}
----@param indexes boolean[] Array of checkbox state
----@param is_instant boolean|nil If instant state change
-function druid__checkbox_group.set_state(self, indexes, is_instant) end
-
-
 ---@class druid.data_list : druid.base_component
 ---@field grid druid.static_grid The Druid Grid component
 ---@field last_index number The current last index of visual elements
@@ -894,30 +836,6 @@ function druid__progress.to(self, to, callback) end
 local druid__progress__style = {}
 
 
----@class druid.radio_group : druid.base_component
----@field checkboxes druid.checkbox[] Array of checkbox components
----@field on_radio_click druid.event On any checkbox click
-local druid__radio_group = {}
-
---- Return radio group state
----@param self druid.radio_group @{RadioGroup}
----@return number Index in radio group
-function druid__radio_group.get_state(self) end
-
---- The @{RadioGroup} constructor
----@param self druid.radio_group @{RadioGroup}
----@param nodes node[] Array of gui node
----@param callback function Radio callback
----@param click_nodes node[]|nil Array of trigger nodes, by default equals to nodes. Default - nodes
-function druid__radio_group.init(self, nodes, callback, click_nodes) end
-
---- Set radio group state
----@param self druid.radio_group @{RadioGroup}
----@param index number Index in radio group
----@param is_instant boolean|nil If is instant state change
-function druid__radio_group.set_state(self, index, is_instant) end
-
-
 ---@class druid.rich_input
 ---@field cursor node On input field text change to empty string callback(self, input_text)
 ---@field cursor_position vector3 On input field text change to empty string callback(self, input_text)
@@ -1299,6 +1217,10 @@ function druid__static_grid.get_size(self) end
 ---@param in_row number|nil How many nodes in row can be placed. By default 1
 function druid__static_grid.init(self, parent, element, in_row) end
 
+--- Update grid content
+---@param self druid.static_grid @{StaticGrid}
+function druid__static_grid.refresh(self) end
+
 --- Remove the item from the grid.
 --- Note that gui node will be not deleted
 ---@param self druid.static_grid @{StaticGrid}
@@ -1552,23 +1474,6 @@ function druid_instance.new_blocker(self, node) end
 ---@return druid.button @{Button} component
 function druid_instance.new_button(self, node, callback, params, anim_node) end
 
---- Create @{Checkbox} component
----@param self druid_instance
----@param node string|node The_node id or gui.get_node(node_id).
----@param callback function|nil Checkbox callback
----@param click_node node|nil Trigger node, Default: node
----@param initial_state boolean|nil The initial state of checkbox, Default: false
----@return druid.checkbox @{Checkbox} component
-function druid_instance.new_checkbox(self, node, callback, click_node, initial_state) end
-
---- Create @{CheckboxGroup} component
----@param self druid_instance
----@param nodes (node|string)[] Array of gui node
----@param callback function Checkbox callback
----@param click_nodes (node|string)[]|nil Array of trigger nodes, by default equals to nodes
----@return druid.checkbox_group @{CheckboxGroup} component
-function druid_instance.new_checkbox_group(self, nodes, callback, click_nodes) end
-
 --- Create @{DataList} component
 ---@param self druid_instance
 ---@param druid_scroll druid.scroll The Scroll instance for Data List component
@@ -1584,7 +1489,7 @@ function druid_instance.new_data_list(self, druid_scroll, druid_grid, create_fun
 ---@return druid.drag @{Drag} component
 function druid_instance.new_drag(self, node, on_drag_callback) end
 
---- Create @{DynamicGrid} component
+--- Create @{DynamicGrid} component  Deprecated
 ---@param self druid_instance
 ---@param parent_node string|node The node_id or gui.get_node(node_id). Parent of all Grid items.
 ---@return druid.dynamic_grid @{DynamicGrid} component
@@ -1637,21 +1542,20 @@ function druid_instance.new_layout(self, node, mode) end
 ---@return druid.progress @{Progress} component
 function druid_instance.new_progress(self, node, key, init_value) end
 
---- Create @{RadioGroup} component
+--- Create @{RichInput} component.
+--- As a template please check rich_input.gui layout.
 ---@param self druid_instance
----@param nodes (node|string)[] Array of gui node
----@param callback function Radio callback
----@param click_nodes (node|string)[]|nil Array of trigger nodes, by default equals to nodes
----@return druid.radio_group @{RadioGroup} component
-function druid_instance.new_radio_group(self, nodes, callback, click_nodes) end
+---@param template string The template string name
+---@param nodes table Nodes table from gui.clone_tree
+---@return druid.rich_input @{RichInput} component
+function druid_instance.new_rich_input(self, template, nodes) end
 
 --- Create @{RichText} component.
---- As a template please check rich_text.gui layout.
 ---@param self druid_instance
----@param template string|nil Template name if used
----@param nodes table|nil Nodes table from gui.clone_tree
+---@param text_node string|node The text node to make Rich Text
+---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
 ---@return druid.rich_text @{RichText} component
-function druid_instance.new_rich_text(self, template, nodes) end
+function druid_instance.new_rich_text(self, text_node, value) end
 
 --- Create @{Scroll} component
 ---@param self druid_instance

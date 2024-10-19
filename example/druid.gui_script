@@ -142,6 +142,8 @@ local function select_start_example(self)
 	local last_selected_example_name = storage.get_string("last_selected_example", "")
 	if last_selected_example_name ~= "" then
 		self.examples_list_view:select_example_by_name_id(last_selected_example_name)
+	else
+		self.examples_list_view:select_example_by_name_id("ui_example_intro")
 	end
 end
 

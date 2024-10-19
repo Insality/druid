@@ -35,7 +35,7 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 | Platform         | Library Size  |
 | ---------------- | ------------- |
 | HTML5            | **38.00 KB**  |
-| Desktop / Mobile | **65.97 KB**  |
+| Desktop / Mobile | **65.74 KB**  |
 
 
 ### Input Bindings

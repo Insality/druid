@@ -42,8 +42,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -57,7 +55,6 @@
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -91,8 +88,6 @@
          <li><a href="../modules/BackHandler.html#">BackHandler</a></li>
          <li><a href="../modules/Blocker.html#">Blocker</a></li>
          <li><a href="../modules/Button.html#">Button</a></li>
-         <li><a href="../modules/Checkbox.html#">Checkbox</a></li>
-         <li><a href="../modules/CheckboxGroup.html#">CheckboxGroup</a></li>
          <li><a href="../modules/DataList.html#">DataList</a></li>
          <li><a href="../modules/Drag.html#">Drag</a></li>
          <li><a href="../modules/DynamicGrid.html#">DynamicGrid</a></li>
@@ -102,7 +97,6 @@
          <li><a href="../modules/LangText.html#">LangText</a></li>
          <li><a href="../modules/Layout.html#">Layout</a></li>
          <li><a href="../modules/Progress.html#">Progress</a></li>
-         <li><a href="../modules/RadioGroup.html#">RadioGroup</a></li>
          <li><a href="../modules/RichInput.html#">RichInput</a></li>
          <li><a href="../modules/RichText.html#">RichText</a></li>
          <li><a href="../modules/Scroll.html#">Scroll</a></li>
@@ -153,14 +147,6 @@ end
 	<td class="summary">Create <a href="../modules/Button.html#">Button</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_checkbox">new_checkbox(self, node, callback, click_node, initial_state)</a></td>
-	<td class="summary">Create <a href="../modules/Checkbox.html#">Checkbox</a> component</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#new_checkbox_group">new_checkbox_group(self, nodes, callback, click_nodes)</a></td>
-	<td class="summary">Create <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> component</td>
-	</tr>
-	<tr>
 	<td class="name" nowrap><a href="#new_data_list">new_data_list(self, druid_scroll, druid_grid, create_function)</a></td>
 	<td class="summary">Create <a href="../modules/DataList.html#">DataList</a> component</td>
 	</tr>
@@ -170,7 +156,8 @@ end
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#new_dynamic_grid">new_dynamic_grid(self, parent_node)</a></td>
-	<td class="summary">Create <a href="../modules/DynamicGrid.html#">DynamicGrid</a> component</td>
+	<td class="summary">Create <a href="../modules/DynamicGrid.html#">DynamicGrid</a> component
+ Deprecated</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#new_hotkey">new_hotkey(self, keys_array, callback, callback_argument)</a></td>
@@ -197,11 +184,11 @@ end
 	<td class="summary">Create <a href="../modules/Progress.html#">Progress</a> component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_radio_group">new_radio_group(self, nodes, callback, click_nodes)</a></td>
-	<td class="summary">Create <a href="../modules/RadioGroup.html#">RadioGroup</a> component</td>
+	<td class="name" nowrap><a href="#new_rich_input">new_rich_input(self, template, nodes)</a></td>
+	<td class="summary">Create <a href="../modules/RichInput.html#">RichInput</a> component.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#new_rich_text">new_rich_text(self, template, nodes)</a></td>
+	<td class="name" nowrap><a href="#new_rich_text">new_rich_text(self, text_node, value)</a></td>
 	<td class="summary">Create <a href="../modules/RichText.html#">RichText</a> component.</td>
 	</tr>
 	<tr>
@@ -392,88 +379,6 @@ end
 
 </dd>
     <dt>
-    <a name = "new_checkbox"></a>
-    <strong>new_checkbox(self, node, callback, click_node, initial_state)</strong>
-    </dt>
-    <dd>
-    Create <a href="../modules/Checkbox.html#">Checkbox</a> component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DruidInstance</span></span>
-
-        </li>
-        <li><span class="parameter">node</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
-         The_node id or gui.get_node(node_id).
-        </li>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
-         Checkbox callback
-        </li>
-        <li><span class="parameter">click_node</span>
-            <span class="types"><span class="type">node</span> or <span class="type">nil</span></span>
-         Trigger node, Default: node
-        </li>
-        <li><span class="parameter">initial_state</span>
-            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
-         The initial state of checkbox, Default: false
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">Checkbox</span></span>
-        <a href="../modules/Checkbox.html#">Checkbox</a> component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "new_checkbox_group"></a>
-    <strong>new_checkbox_group(self, nodes, callback, click_nodes)</strong>
-    </dt>
-    <dd>
-    Create <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DruidInstance</span></span>
-
-        </li>
-        <li><span class="parameter">nodes</span>
-            <span class="types"><span class="type">(node</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string)[]</a></span>
-         Array of gui node
-        </li>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
-         Checkbox callback
-        </li>
-        <li><span class="parameter">click_nodes</span>
-            <span class="types"><span class="type">(node</span>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string)[]</a> or <span class="type">nil</span></span>
-         Array of trigger nodes, by default equals to nodes
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">CheckboxGroup</span></span>
-        <a href="../modules/CheckboxGroup.html#">CheckboxGroup</a> component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
     <a name = "new_data_list"></a>
     <strong>new_data_list(self, druid_scroll, druid_grid, create_function)</strong>
     </dt>
@@ -553,6 +458,7 @@ end
     </dt>
     <dd>
     Create <a href="../modules/DynamicGrid.html#">DynamicGrid</a> component
+ Deprecated
 
 
     <h3>Parameters:</h3>
@@ -809,51 +715,12 @@ end
 
 </dd>
     <dt>
-    <a name = "new_radio_group"></a>
-    <strong>new_radio_group(self, nodes, callback, click_nodes)</strong>
+    <a name = "new_rich_input"></a>
+    <strong>new_rich_input(self, template, nodes)</strong>
     </dt>
     <dd>
-    Create <a href="../modules/RadioGroup.html#">RadioGroup</a> component
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">DruidInstance</span></span>
-
-        </li>
-        <li><span class="parameter">nodes</span>
-            <span class="types"><span class="type">(node</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string)[]</a></span>
-         Array of gui node
-        </li>
-        <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
-         Radio callback
-        </li>
-        <li><span class="parameter">click_nodes</span>
-            <span class="types"><span class="type">(node</span>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string)[]</a> or <span class="type">nil</span></span>
-         Array of trigger nodes, by default equals to nodes
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">RadioGroup</span></span>
-        <a href="../modules/RadioGroup.html#">RadioGroup</a> component
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "new_rich_text"></a>
-    <strong>new_rich_text(self, template, nodes)</strong>
-    </dt>
-    <dd>
-    Create <a href="../modules/RichText.html#">RichText</a> component.
- As a template please check rich_text.gui layout.
+    Create <a href="../modules/RichInput.html#">RichInput</a> component.
+ As a template please check rich_input.gui layout.
 
 
     <h3>Parameters:</h3>
@@ -863,12 +730,47 @@ end
 
         </li>
         <li><span class="parameter">template</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
-         Template name if used
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The template string name
         </li>
         <li><span class="parameter">nodes</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">nil</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
          Nodes table from gui.clone_tree
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">RichInput</span></span>
+        <a href="../modules/RichInput.html#">RichInput</a> component
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "new_rich_text"></a>
+    <strong>new_rich_text(self, text_node, value)</strong>
+    </dt>
+    <dd>
+    Create <a href="../modules/RichText.html#">RichText</a> component.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+
+        </li>
+        <li><span class="parameter">text_node</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
+         The text node to make Rich Text
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         The initial text value. Default will be gui.get_text(text_node)
         </li>
     </ul>
 
