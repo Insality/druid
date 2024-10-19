@@ -114,7 +114,7 @@
 -- @tfield DruidEvent on_pressed @{DruidEvent}
 
 --- Button trigger node
--- @tfield Node node
+-- @tfield node node
 
 ---The GUI node id from button node
 -- @tfield hash node_id
@@ -123,7 +123,7 @@
 -- In default case equals to clickable node.
 --
 -- Usecase: You have the big clickable panel, but want to animate only one small icon on it.
--- @tfield[opt=node] node anim_node
+-- @tfield node|nil anim_node Default node
 
 ---Custom args for any Button event. Setup in Button constructor
 -- @tfield any params
@@ -131,8 +131,8 @@
 --- The @{Hover}: Button Hover component
 -- @tfield Hover hover @{Hover}
 
---- Additional button click area, defined by another GUI Node
--- @tfield[opt] node click_zone
+--- Additional button click area, defined by another GUI node
+-- @tfield node|nil click_zone
 
 ---
 
@@ -240,7 +240,12 @@ local function on_button_release(self)
 			is_double_click = is_double_click and self.on_double_click:is_exist()
 
 			if is_long_click then
-				on_button_long_click(self)
+				local is_hold_complete = (time - self.last_pressed_time) >= self.style.AUTOHOLD_TRIGGER
+				if is_hold_complete then
+					on_button_long_click(self)
+				else
+					self.on_click_outside:trigger(self:get_context(), self.params, self)
+				end
 			elseif is_double_click then
 				on_button_double_click(self)
 			else
@@ -258,14 +263,14 @@ end
 -- You can override this component styles params in Druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=0.4] number LONGTAP_TIME Minimum time to trigger on_hold_callback
--- @tfield[opt=0.8] number AUTOHOLD_TRIGGER Maximum hold time to trigger button release while holding
--- @tfield[opt=0.4] number DOUBLETAP_TIME Time between double taps
--- @tfield function on_click (self, node)
--- @tfield function on_click_disabled (self, node)
--- @tfield function on_hover (self, node, hover_state)
--- @tfield function on_mouse_hover (self, node, hover_state)
--- @tfield function on_set_enabled (self, node, enabled_state)
+-- @tfield number|nil LONGTAP_TIME Minimum time to trigger on_hold_callback. Default: 0.4
+-- @tfield number|nil AUTOHOLD_TRIGGER Maximum hold time to trigger button release while holding. Default: 0.8
+-- @tfield number|nil DOUBLETAP_TIME Time between double taps. Default: 0.4
+-- @tfield function on_click function(self, node)
+-- @tfield function on_click_disabled function(self, node)
+-- @tfield function on_hover function(self, node, hover_state)
+-- @tfield function on_mouse_hover function(self, node, hover_state)
+-- @tfield function on_set_enabled function(self, node, enabled_state)
 function Button.on_style_change(self, style)
 	self.style = {}
 	self.style.LONGTAP_TIME = style.LONGTAP_TIME or 0.4
@@ -282,10 +287,10 @@ end
 
 --- The @{Button} constructor
 -- @tparam Button self @{Button}
--- @tparam string|Node node Node name or GUI Node itself
+-- @tparam string|node node The node_id or gui.get_node(node_id)
 -- @tparam function callback On click button callback
--- @tparam[opt] any custom_args Button events custom arguments
--- @tparam[opt] string|Node anim_node Node to animate instead of trigger node.
+-- @tparam any|nil custom_args Button events custom arguments
+-- @tparam string|node|nil anim_node Node to animate instead of trigger node.
 function Button.init(self, node, callback, custom_args, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node)
@@ -339,10 +344,7 @@ function Button.on_input(self, action_id, action)
 		return false
 	end
 
-	if not self:is_enabled() then
-		return false
-	end
-
+	local is_consume = true
 	local is_pick = true
 	local is_key_trigger = (action_id == self.key_trigger)
 	if not is_key_trigger then
@@ -365,6 +367,7 @@ function Button.on_input(self, action_id, action)
 
 	if is_key_trigger then
 		self.hover:set_hover(not action.released)
+		is_consume = false
 	end
 
 	if action.pressed then
@@ -380,19 +383,19 @@ function Button.on_input(self, action_id, action)
 				on_button_click(self)
 			end)
 		end
-		return true
+		return is_consume
 	end
 
 	-- While hold button, repeat rate pick from input.repeat_interval
 	if action.repeated then
 		if self.on_repeated_click:is_exist() and self.can_action then
 			on_button_repeated_click(self)
-			return true
+			return is_consume
 		end
 	end
 
 	if action.released then
-		return on_button_release(self)
+		return on_button_release(self) and is_consume
 	end
 
 	if self.can_action and self.on_long_click:is_exist() then
@@ -400,21 +403,23 @@ function Button.on_input(self, action_id, action)
 
 		if self.style.AUTOHOLD_TRIGGER <= press_time then
 			on_button_release(self)
-			return true
+			return is_consume
 		end
 
 		if press_time >= self.style.LONGTAP_TIME then
 			on_button_hold(self, press_time)
-			return true
+			return is_consume
 		end
 	end
 
-	return not self.disabled
+	return not self.disabled and is_consume
 end
 
 
 function Button.on_input_interrupt(self)
 	self.can_action = false
+	self.hover:set_hover(false)
+	self.hover:set_mouse_hover(false)
 end
 
 
@@ -447,7 +452,7 @@ end
 -- The style.on_set_enabled will be triggered.
 -- Disabled button is not clickable.
 -- @tparam Button self @{Button}
--- @tparam bool state Enabled state
+-- @tparam boolean|nil state Enabled state
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_enabled(false)
@@ -465,7 +470,7 @@ end
 --
 -- By default all Buttons is enabled on creating.
 -- @tparam Button self @{Button}
--- @treturn bool True, if button is enabled now, False overwise
+-- @treturn boolean @True, if button is enabled now, False overwise
 -- @usage
 -- local is_enabled = button:is_enabled()
 function Button.is_enabled(self)
@@ -478,7 +483,7 @@ end
 --
 -- This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
 -- @tparam Button self @{Button}
--- @tparam node zone Gui node
+-- @tparam node|string|nil zone Gui node
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_click_zone("stencil_node")
@@ -492,7 +497,7 @@ end
 
 --- Set key name to trigger this button by keyboard.
 -- @tparam Button self @{Button}
--- @tparam hash key The action_id of the input key
+-- @tparam hash|string key The action_id of the input key
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_key_trigger("key_space")
@@ -515,8 +520,8 @@ end
 
 --- Set function for additional check for button click availability
 -- @tparam Button self
--- @tparam[opt] function check_function Should return true or false. If true - button can be pressed.
--- @tparam[opt] function failure_callback Function will be called on button click, if check function return false
+-- @tparam function|nil check_function Should return true or false. If true - button can be pressed.
+-- @tparam function|nil failure_callback Function will be called on button click, if check function return false
 -- @treturn Button Current button instance
 function Button.set_check_function(self, check_function, failure_callback)
 	self._check_function = check_function
@@ -531,7 +536,7 @@ end
 --
 -- If the game is not HTML, html mode will be not enabled
 -- @tparam Button self
--- @tparam[opt] boolean is_web_mode If true - button will be called inside html5 callback
+-- @tparam boolean|nil is_web_mode If true - button will be called inside html5 callback
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_web_user_interaction(true)

@@ -1,0 +1,44 @@
+local lang = require("lang.lang")
+local druid = require("druid.druid")
+
+local window_confirmation = require("example.examples.windows.window_confirmation.window_confirmation")
+
+
+local function debug_stub(self)
+	if msg.url().socket ~= hash("window_confirmation") then
+		return
+	end
+
+	lang.init()
+	druid.set_text_function(lang.txp)
+end
+
+
+function init(self)
+	debug_stub(self)
+
+	-- Using component instead put all inside gui_script to
+	-- allow use it as example and as separate collection
+	self.druid = druid.new(self)
+	self.druid:new(window_confirmation)
+end
+
+
+function final(self)
+	self.druid:final()
+end
+
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end

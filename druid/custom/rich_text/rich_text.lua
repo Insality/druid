@@ -6,31 +6,7 @@
 -- This custom component is inspired by <a href="https://github.com/britzl/defold-richtext" target="_blank">defold-richtext</a> by britzl.
 -- It uses a similar syntax for tags but currently supports fewer tags.
 --
--- All parameters for the Rich Text component are adjusted in the GUI scene.
---
--- This component uses GUI component template. (/druid/custom/rich_text/rich_text.gui).
---
--- You able to customize it or make your own with the next node scructure:
---
--- root
---
---   - text_prefab
---
---   - icon_prefab
---
--- <b># Rich Text Setup #</b>
---
--- • Root node size: Set the maximum width and height of the text.
---
--- • Root anchor: Define the alignment of the Rich Text inside the root node size area.
---
--- • Text prefab: Configure all default text parameters for the text node.
---
--- • Text prefab anchor: Set the anchor for each text node (adjust this only if animating text).
---
--- • Icon prefab: Configure all default node parameters for the icon node.
---
--- • Icon prefab anchor: Set the anchor for each icon node (adjust this only if animating the icon).
+-- Create Rich Text on your GUI Text Node. All properties of the text node will be used as default for the text.
 --
 -- <b># Notes #</b>
 --
@@ -58,7 +34,6 @@
 --   outline: vector4,
 --   font: string,
 --   image: druid.rich_text.image,
---   default_animation: string,
 --   br: boolean,
 --   nobr: boolean,
 -- }
@@ -90,37 +65,43 @@
 --- The component druid instance
 -- @tfield DruidInstance druid @{DruidInstance}
 
+--- The root node of the Rich Text
+-- @tfield node root
+
+--- The text prefab node
+-- @tfield node text_prefab
+
+--
 
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
 
 local RichText = component.create("rich_text")
 
-local SCHEME = {
-	ROOT = "root",
-	TEXT_PREFAB = "text_prefab",
-	ICON_PREFAB = "icon_prefab"
-}
 
-
---- Rich Text component constructor
+--- The @{RichText} constructor
 -- @tparam RichText self @{RichText}
--- @tparam string template The Rich Text template name
--- @tparam table nodes The node table, if prefab was copied by gui.clone_tree()
-function RichText.init(self, template, nodes)
-	self:set_template(template)
-	self:set_nodes(nodes)
+-- @tparam node|string text_node The text node to make Rich Text
+-- @tparam string|nil value The initial text value. Default will be gui.get_text(text_node)
+function RichText.init(self, text_node, value)
+	self.root = self:get_node(text_node)
+	self.text_prefab = self.root
 
-	self.root = self:get_node(SCHEME.ROOT)
-	self.druid = self:get_druid()
-
-	self.text_prefab = self:get_node(SCHEME.TEXT_PREFAB)
-	self.icon_prefab = self:get_node(SCHEME.ICON_PREFAB)
-
-	gui.set_enabled(self.text_prefab, false)
-	gui.set_enabled(self.icon_prefab, false)
-
+	self._last_value = value or gui.get_text(self.text_prefab)
 	self._settings = self:_create_settings()
+
+	gui.set_text(self.root, "")
+
+	if value then
+		self:set_text(value)
+	end
+end
+
+
+function RichText.on_layout_change(self)
+	if self._last_value then
+		self:set_text(self._last_value)
+	end
 end
 
 
@@ -128,9 +109,9 @@ end
 -- You can override this component styles params in Druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt={}] table COLORS Rich Text color aliases
--- @tfield[opt=20] number ADJUST_STEPS Amount steps of attemps text adjust by height
--- @tfield[opt=0.02] number ADJUST_SCALE_DELTA Scale step on each height adjust step
+-- @tfield table|nil COLORS Rich Text color aliases. Default: {}
+-- @tfield number|nil ADJUST_STEPS Amount steps of attemps text adjust by height. Default: 20
+-- @tfield number|nil ADJUST_SCALE_DELTA Scale step on each height adjust step. Default: 0.02
 function RichText.on_style_change(self, style)
 	self.style = {}
 	self.style.COLORS = style.COLORS or {}
@@ -141,7 +122,7 @@ end
 
 --- Set text for Rich Text
 -- @tparam RichText self @{RichText}
--- @tparam string text The text to set
+-- @tparam string|nil text The text to set
 -- @treturn druid.rich_text.word[] words
 -- @treturn druid.rich_text.lines_metrics line_metrics
 -- @usage
@@ -188,7 +169,9 @@ end
 -- <img=texture:image,size/>
 -- <img=texture:image,width,height/>
 function RichText.set_text(self, text)
+	text = text or ""
 	self:clear()
+	self._last_value = text
 
 	local words, settings, line_metrics = rich_text.create(text, self._settings, self.style)
 	line_metrics = rich_text.adjust_to_area(words, settings, line_metrics, self.style)
@@ -200,7 +183,17 @@ function RichText.set_text(self, text)
 end
 
 
+--- Get current text
+-- @tparam RichText self @{RichText}
+-- @treturn string text
+function RichText.get_text(self)
+	return self._last_value
+end
+
+
 function RichText:on_remove()
+	gui.set_scale(self.root, self._default_scale)
+	gui.set_size(self.root, self._default_size)
 	self:clear()
 end
 
@@ -211,18 +204,29 @@ function RichText:clear()
 		rich_text.remove(self._words)
 		self._words = nil
 	end
+	self._last_value = nil
 end
 
 
 --- Get all words, which has a passed tag.
+-- @tparam RichText self @{RichText}
 -- @tparam string tag
 -- @treturn druid.rich_text.word[] words
-function RichText:tagged(tag)
+function RichText.tagged(self, tag)
 	if not self._words then
 		return
 	end
 
 	return rich_text.tagged(self._words, tag)
+end
+
+
+---Split a word into it's characters
+-- @tparam RichText self @{RichText}
+-- @tparam druid.rich_text.word word
+-- @treturn druid.rich_text.word[] characters
+function RichText.characters(self, word)
+	return rich_text.characters(word)
 end
 
 
@@ -242,29 +246,36 @@ end
 
 function RichText:_create_settings()
 	local root_size = gui.get_size(self.root)
+	local scale = gui.get_scale(self.root)
+
+	self._default_size = root_size
+	self._default_scale = scale
+
+	root_size.x = root_size.x * scale.x
+	root_size.y = root_size.y * scale.y
+	gui.set_size(self.root, root_size)
+	gui.set_scale(self.root, vmath.vector3(1))
+
 	return {
 		-- General settings
 		-- Adjust scale using to fit the text to the root node area
 		adjust_scale = 1,
 		parent = self.root,
+		scale = scale,
 		width = root_size.x,
 		height = root_size.y,
 		combine_words = false, -- disabled now
 		text_prefab = self.text_prefab,
-		node_prefab = self.icon_prefab,
+		pivot = gui.get_pivot(self.root),
 
 		-- Text Settings
-		shadow = gui.get_shadow(self.text_prefab),
-		outline = gui.get_outline(self.text_prefab),
-		text_scale = gui.get_scale(self.text_prefab),
-		text_leading = gui.get_leading(self.text_prefab),
-		is_multiline = gui.get_line_break(self.text_prefab),
+		shadow = gui.get_shadow(self.root),
+		outline = gui.get_outline(self.root),
+		text_leading = gui.get_leading(self.root),
+		is_multiline = gui.get_line_break(self.root),
 
 		-- Image settings
 		image_pixel_grid_snap = false, -- disabled now
-		node_scale = gui.get_scale(self.icon_prefab),
-		image_scale = gui.get_scale(self.icon_prefab),
-		default_animation = gui.get_flipbook(self.icon_prefab),
 	}
 end
 

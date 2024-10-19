@@ -44,8 +44,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -58,9 +56,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -102,7 +98,7 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#add">add(self, item[, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]]])</a></td>
+	<td class="name" nowrap><a href="#add">add(self, item, index, shift_policy, is_instant)</a></td>
 	<td class="summary">Add new item to the grid</td>
 	</tr>
 	<tr>
@@ -138,11 +134,15 @@
 	<td class="summary">Return grid content size</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, parent, element[, in_row=1])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, parent, element, in_row)</a></td>
 	<td class="summary">The <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#remove">remove(self, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</a></td>
+	<td class="name" nowrap><a href="#refresh">refresh(self)</a></td>
+	<td class="summary">Update grid content</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#remove">remove(self, index, shift_policy, is_instant)</a></td>
 	<td class="summary">Remove the item from the grid.</td>
 	</tr>
 	<tr>
@@ -154,8 +154,20 @@
 	<td class="summary">Set new in_row elements for grid</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#set_item_size">set_item_size(self[, width[, height]])</a></td>
+	<td class="summary">Set new node size for grid</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_items">set_items(self, nodes[, is_instant=false])</a></td>
+	<td class="summary">Set new items to the grid.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#set_position_function">set_position_function(self, callback)</a></td>
 	<td class="summary">Change set position function for grid nodes.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#sort_nodes">sort_nodes(self, comparator)</a></td>
+	<td class="summary">Sort grid nodes by custom comparator function</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
@@ -230,7 +242,7 @@
     <dl class="function">
     <dt>
     <a name = "add"></a>
-    <strong>add(self, item[, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]]])</strong>
+    <strong>add(self, item, index, shift_policy, is_instant)</strong>
     </dt>
     <dd>
     Add new item to the grid
@@ -244,22 +256,19 @@
         </li>
         <li><span class="parameter">item</span>
             <span class="types"><span class="type">node</span></span>
-         Gui node
+         GUI node
         </li>
         <li><span class="parameter">index</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          The item position. By default add as last item
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">shift_policy</span>
-            <span class="types"><span class="type">number</span></span>
-         How shift nodes, if required. See const.SHIFT
-         (<em>default</em> SHIFT.RIGHT)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         How shift nodes, if required. Default: const.SHIFT.RIGHT
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          If true, update node positions instantly
-         (<em>default</em> false)
         </li>
     </ul>
 
@@ -463,7 +472,7 @@
     <ol>
 
            <span class="types"><span class="type">vector3</span></span>
-        Node position
+        @Node position
     </ol>
 
 
@@ -499,7 +508,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, parent, element[, in_row=1])</strong>
+    <strong>init(self, parent, element, in_row)</strong>
     </dt>
     <dd>
     The <a href="../modules/StaticGrid.html#">StaticGrid</a> constructor
@@ -512,7 +521,7 @@
          <a href="../modules/StaticGrid.html#">StaticGrid</a>
         </li>
         <li><span class="parameter">parent</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">Node</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
          The GUI Node container, where grid's items will be placed
         </li>
         <li><span class="parameter">element</span>
@@ -520,9 +529,29 @@
          Element prefab. Need to get it size
         </li>
         <li><span class="parameter">in_row</span>
-            <span class="types"><span class="type">number</span></span>
-         How many nodes in row can be placed
-         (<em>default</em> 1)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         How many nodes in row can be placed. By default 1
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "refresh"></a>
+    <strong>refresh(self)</strong>
+    </dt>
+    <dd>
+    Update grid content
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">StaticGrid</span></span>
+         <a href="../modules/StaticGrid.html#">StaticGrid</a>
         </li>
     </ul>
 
@@ -533,7 +562,7 @@
 </dd>
     <dt>
     <a name = "remove"></a>
-    <strong>remove(self, index[, shift_policy=SHIFT.RIGHT[, is_instant=false]])</strong>
+    <strong>remove(self, index, shift_policy, is_instant)</strong>
     </dt>
     <dd>
     Remove the item from the grid.  Note that gui node will be not deleted
@@ -550,21 +579,19 @@
          The grid node index to remove
         </li>
         <li><span class="parameter">shift_policy</span>
-            <span class="types"><span class="type">number</span></span>
-         How shift nodes, if required. See const.SHIFT
-         (<em>default</em> SHIFT.RIGHT)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         How shift nodes, if required. Default: const.SHIFT.RIGHT
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          If true, update node positions instantly
-         (<em>default</em> false)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">Node</span></span>
+           <span class="types"><span class="type">node</span></span>
         The deleted gui node from grid
     </ol>
 
@@ -629,6 +656,73 @@
 
 </dd>
     <dt>
+    <a name = "set_item_size"></a>
+    <strong>set_item_size(self[, width[, height]])</strong>
+    </dt>
+    <dd>
+    Set new node size for grid
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">StaticGrid</span></span>
+         <a href="../modules/StaticGrid.html#">StaticGrid</a>
+        </li>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">number</span></span>
+         The new node width
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">height</span>
+            <span class="types"><span class="type">number</span></span>
+         The new node height
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.static_grid</span></span>
+        Current grid instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_items"></a>
+    <strong>set_items(self, nodes[, is_instant=false])</strong>
+    </dt>
+    <dd>
+    Set new items to the grid.  All previous items will be removed
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">StaticGrid</span></span>
+         <a href="../modules/StaticGrid.html#">StaticGrid</a>
+        </li>
+        <li><span class="parameter">nodes</span>
+            <span class="types"><span class="type">node[]</span></span>
+         The new grid nodes
+        </li>
+        <li><span class="parameter">is_instant</span>
+            <span class="types"><span class="type">boolean</span></span>
+         If true, update node positions instantly
+         (<em>default</em> false)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "set_position_function"></a>
     <strong>set_position_function(self, callback)</strong>
     </dt>
@@ -660,6 +754,37 @@
 
 
 </dd>
+    <dt>
+    <a name = "sort_nodes"></a>
+    <strong>sort_nodes(self, comparator)</strong>
+    </dt>
+    <dd>
+    Sort grid nodes by custom comparator function
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">StaticGrid</span></span>
+         <a href="../modules/StaticGrid.html#">StaticGrid</a>
+        </li>
+        <li><span class="parameter">comparator</span>
+            <span class="types"><span class="type">function</span></span>
+         The comparator function. (a, b) -> boolean
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.static_grid</span></span>
+        Current grid instance
+    </ol>
+
+
+
+
+</dd>
 </dl>
     <h2 class="section-header "><a name="Tables"></a>Tables</h2>
 
@@ -677,14 +802,12 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">IS_DYNAMIC_NODE_POSES</span>
-            <span class="types"><span class="type">bool</span></span>
-         If true, always center grid content as grid pivot sets
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, always center grid content as grid pivot sets. Default: false
         </li>
         <li><span class="parameter">IS_ALIGN_LAST_ROW</span>
-            <span class="types"><span class="type">bool</span></span>
-         If true, always align last row of the grid as grid pivot sets
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, always align last row of the grid as grid pivot sets. Default: false
         </li>
     </ul>
 

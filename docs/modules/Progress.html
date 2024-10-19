@@ -44,8 +44,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -58,9 +56,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><strong>Progress</strong></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -103,8 +99,8 @@
 	<td class="summary">Return current progress bar value</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, key[, init_value=1])</a></td>
-	<td class="summary"><a href="../modules/Progress.html#">Progress</a> constructor</td>
+	<td class="name" nowrap><a href="#init">init(self, node, key, init_value)</a></td>
+	<td class="summary">The <a href="../modules/Progress.html#">Progress</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_max_size">set_max_size(self, max_size)</a></td>
@@ -119,7 +115,7 @@
 	<td class="summary">Instant fill progress bar to value</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#to">to(self, to[, callback])</a></td>
+	<td class="name" nowrap><a href="#to">to(self, to, callback)</a></td>
 	<td class="summary">Start animation of a progress bar</td>
 	</tr>
 </table>
@@ -234,10 +230,10 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, key[, init_value=1])</strong>
+    <strong>init(self, node, key, init_value)</strong>
     </dt>
     <dd>
-    <a href="../modules/Progress.html#">Progress</a> constructor
+    The <a href="../modules/Progress.html#">Progress</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -255,9 +251,8 @@
          Progress bar direction: const.SIDE.X or const.SIDE.Y
         </li>
         <li><span class="parameter">init_value</span>
-            <span class="types"><span class="type">number</span></span>
-         Initial value of progress bar
-         (<em>default</em> 1)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Initial value of progress bar. Default: 1
         </li>
     </ul>
 
@@ -357,7 +352,7 @@
 </dd>
     <dt>
     <a name = "to"></a>
-    <strong>to(self, to[, callback])</strong>
+    <strong>to(self, to, callback)</strong>
     </dt>
     <dd>
     Start animation of a progress bar
@@ -374,9 +369,8 @@
          value between 0..1
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Callback on animation ends
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -402,14 +396,12 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">SPEED</span>
-            <span class="types"><span class="type">number</span></span>
-         Progress bas fill rate. More -> faster
-         (<em>default</em> 5)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Progress bas fill rate. More -> faster. Default: 5
         </li>
         <li><span class="parameter">MIN_DELTA</span>
-            <span class="types"><span class="type">number</span></span>
-         Minimum step to fill progress bar
-         (<em>default</em> 0.005)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Minimum step to fill progress bar. Default: 0.005
         </li>
     </ul>
 

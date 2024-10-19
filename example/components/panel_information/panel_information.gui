@@ -1,0 +1,259 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+fonts {
+  name: "text_regular"
+  font: "/example/assets/fonts/text_regular.font"
+}
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+nodes {
+  size {
+    x: 440.0
+    y: 450.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid/pixel"
+  id: "root"
+  adjust_mode: ADJUST_MODE_STRETCH
+  layer: "druid"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -210.0
+    y: 215.0
+  }
+  scale {
+    x: 0.9
+    y: 0.9
+  }
+  size {
+    x: 245.0
+    y: 50.0
+  }
+  color {
+    x: 0.463
+    y: 0.475
+    z: 0.49
+  }
+  type: TYPE_TEXT
+  text: "Information"
+  font: "text_regular"
+  id: "text_header"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "root"
+  layer: "text_regular"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    y: -225.0
+  }
+  size {
+    x: 16.0
+    y: 16.0
+  }
+  type: TYPE_BOX
+  id: "S_Anchor"
+  pivot: PIVOT_S
+  parent: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    y: 60.0
+  }
+  type: TYPE_TEMPLATE
+  id: "button_view_code"
+  parent: "S_Anchor"
+  inherit_alpha: true
+  template: "/example/templates/button_text_blue.gui"
+}
+nodes {
+  size {
+    x: 240.0
+    y: 80.0
+  }
+  type: TYPE_BOX
+  id: "button_view_code/root"
+  parent: "button_view_code"
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  scale {
+    x: 0.75
+    y: 0.75
+  }
+  type: TYPE_TEXT
+  text: "View code"
+  id: "button_view_code/text"
+  parent: "button_view_code/root"
+  overridden_fields: 3
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 220.0
+    y: 225.0
+  }
+  size {
+    x: 16.0
+    y: 16.0
+  }
+  type: TYPE_BOX
+  id: "NE_Anchor"
+  pivot: PIVOT_NE
+  parent: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: -85.0
+    y: -32.5
+  }
+  type: TYPE_TEMPLATE
+  id: "button_profiler"
+  parent: "NE_Anchor"
+  inherit_alpha: true
+  template: "/example/templates/button_text_yellow.gui"
+}
+nodes {
+  size {
+    x: 130.0
+    y: 35.0
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_8"
+  id: "button_profiler/root"
+  parent: "button_profiler"
+  slice9 {
+    x: 4.0
+    y: 4.0
+    z: 4.0
+    w: 4.0
+  }
+  overridden_fields: 4
+  overridden_fields: 9
+  overridden_fields: 22
+  template_node_child: true
+}
+nodes {
+  scale {
+    x: 0.6
+    y: 0.6
+  }
+  size {
+    x: 190.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Profiler"
+  id: "button_profiler/text"
+  parent: "button_profiler/root"
+  overridden_fields: 3
+  overridden_fields: 4
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -200.0
+    y: 150.0
+  }
+  size {
+    x: 400.0
+    y: 250.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "scroll_view"
+  pivot: PIVOT_NW
+  parent: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  size {
+    x: 400.0
+    y: 250.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "scroll_content"
+  pivot: PIVOT_NW
+  parent: "scroll_view"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  scale {
+    x: 0.75
+    y: 0.75
+  }
+  size {
+    x: 535.0
+    y: 270.0
+  }
+  color {
+    x: 0.463
+    y: 0.475
+    z: 0.49
+  }
+  type: TYPE_TEXT
+  text: "The default example how to use the button and bind the callbacks on them"
+  font: "text_regular"
+  id: "text_description"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  parent: "scroll_content"
+  layer: "text_bold"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+layers {
+  name: "druid"
+}
+layers {
+  name: "text_bold"
+}
+layers {
+  name: "text_regular"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

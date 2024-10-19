@@ -43,8 +43,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -57,9 +55,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><strong>RichInput</strong></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -83,18 +79,50 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#get_text">get_text(self)</a></td>
+	<td class="summary">Set input field text</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#init">init(self, template, nodes)</a></td>
-	<td class="summary">Component init function</td>
+	<td class="summary">The <a href="../modules/RichInput.html#">RichInput</a> constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#select">select(self)</a></td>
+	<td class="summary">Select input field</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_allowed_characters">set_allowed_characters(self, characters)</a></td>
+	<td class="summary">Set allowed charaters for input field.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_font">set_font(self, font)</a></td>
+	<td class="summary">Set input field font</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_placeholder">set_placeholder(self, placeholder_text)</a></td>
 	<td class="summary">Set placeholder text</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_text">set_text(self, text)</a></td>
+	<td class="summary">Set input field text</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#cursor">cursor</a></td>
+	<td class="summary">On input field text change to empty string callback(self, input_text)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#cursor_position">cursor_position</a></td>
+	<td class="summary">On input field text change to empty string callback(self, input_text)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#cursor_text">cursor_text</a></td>
+	<td class="summary">On input field text change to empty string callback(self, input_text)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#drag">drag</a></td>
 	<td class="summary">On input field text change to empty string callback(self, input_text)</td>
 	</tr>
 	<tr>
@@ -106,8 +134,20 @@
 	<td class="summary">On input field text change callback(self, input_text)</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#input_text">input_text</a></td>
+	<td class="summary">On input field text change to empty string callback(self, input_text)</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#placeholder">placeholder</a></td>
-	<td class="summary">On input field text change to max length string callback(self, input_text)</td>
+	<td class="summary">On input field text change to empty string callback(self, input_text)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#root">root</a></td>
+	<td class="summary">Root node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#text_position">text_position</a></td>
+	<td class="summary">On input field text change to empty string callback(self, input_text)</td>
 	</tr>
 </table>
 
@@ -119,11 +159,32 @@
 
     <dl class="function">
     <dt>
+    <a name = "get_text"></a>
+    <strong>get_text(self)</strong>
+    </dt>
+    <dd>
+    Set input field text
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichInput</span></span>
+         <a href="../modules/RichInput.html#">RichInput</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "init"></a>
     <strong>init(self, template, nodes)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/RichInput.html#">RichInput</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -142,6 +203,91 @@
         </li>
     </ul>
 
+
+
+
+
+</dd>
+    <dt>
+    <a name = "select"></a>
+    <strong>select(self)</strong>
+    </dt>
+    <dd>
+    Select input field
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichInput</span></span>
+         <a href="../modules/RichInput.html#">RichInput</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_allowed_characters"></a>
+    <strong>set_allowed_characters(self, characters)</strong>
+    </dt>
+    <dd>
+    Set allowed charaters for input field.
+ See: https://defold.com/ref/stable/string/
+ ex: [%a%d] for alpha and numeric
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichInput</span></span>
+         <a href="../modules/RichInput.html#">RichInput</a>
+        </li>
+        <li><span class="parameter">characters</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Regulax exp. for validate user input
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">RichInput</span></span>
+        Current instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_font"></a>
+    <strong>set_font(self, font)</strong>
+    </dt>
+    <dd>
+    Set input field font
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichInput</span></span>
+         <a href="../modules/RichInput.html#">RichInput</a>
+        </li>
+        <li><span class="parameter">font</span>
+            <span class="types"><span class="type">hash</span></span>
+         The font hash
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.input</span></span>
+        Current input instance
+    </ol>
 
 
 
@@ -172,6 +318,37 @@
 
 
 </dd>
+    <dt>
+    <a name = "set_text"></a>
+    <strong>set_text(self, text)</strong>
+    </dt>
+    <dd>
+    Set input field text
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichInput</span></span>
+         <a href="../modules/RichInput.html#">RichInput</a>
+        </li>
+        <li><span class="parameter">text</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The input text
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.input</span></span>
+        Current input instance
+    </ol>
+
+
+
+
+</dd>
 </dl>
     <h2 class="section-header "><a name="Fields"></a>Fields</h2>
 
@@ -187,6 +364,66 @@
     <ul>
         <li><span class="parameter">cursor</span>
             <span class="types"><span class="type">node</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "cursor_position"></a>
+    <strong>cursor_position</strong>
+    </dt>
+    <dd>
+    On input field text change to empty string callback(self, input_text)
+
+
+    <ul>
+        <li><span class="parameter">cursor_position</span>
+            <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "cursor_text"></a>
+    <strong>cursor_text</strong>
+    </dt>
+    <dd>
+    On input field text change to empty string callback(self, input_text)
+
+
+    <ul>
+        <li><span class="parameter">cursor_text</span>
+            <span class="types"><span class="type">node</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "drag"></a>
+    <strong>drag</strong>
+    </dt>
+    <dd>
+    On input field text change to empty string callback(self, input_text)
+
+
+    <ul>
+        <li><span class="parameter">drag</span>
+            <span class="types"><span class="type">druid.drag</span></span>
 
         </li>
     </ul>
@@ -237,17 +474,77 @@
 
 </dd>
     <dt>
+    <a name = "input_text"></a>
+    <strong>input_text</strong>
+    </dt>
+    <dd>
+    On input field text change to empty string callback(self, input_text)
+
+
+    <ul>
+        <li><span class="parameter">input_text</span>
+            <span class="types"><span class="type">druid.text</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "placeholder"></a>
     <strong>placeholder</strong>
     </dt>
     <dd>
-    On input field text change to max length string callback(self, input_text)
+    On input field text change to empty string callback(self, input_text)
 
 
     <ul>
         <li><span class="parameter">placeholder</span>
             <span class="types"><span class="type">druid.text</span></span>
-         <a href="../modules/Text.html#">Text</a>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "root"></a>
+    <strong>root</strong>
+    </dt>
+    <dd>
+    Root node
+
+
+    <ul>
+        <li><span class="parameter">root</span>
+            <span class="types"><span class="type">node</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "text_position"></a>
+    <strong>text_position</strong>
+    </dt>
+    <dd>
+    On input field text change to empty string callback(self, input_text)
+
+
+    <ul>
+        <li><span class="parameter">text_position</span>
+            <span class="types"><span class="type">vector3</span></span>
+
         </li>
     </ul>
 

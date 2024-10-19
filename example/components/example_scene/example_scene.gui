@@ -1,0 +1,106 @@
+fonts {
+  name: "text_regular"
+  font: "/example/assets/fonts/text_regular.font"
+}
+nodes {
+  size {
+    x: 1080.0
+    y: 1030.0
+  }
+  color {
+    x: 0.129
+    y: 0.141
+    z: 0.157
+  }
+  type: TYPE_BOX
+  id: "root"
+  adjust_mode: ADJUST_MODE_STRETCH
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -530.0
+    y: 505.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
+  size {
+    x: 800.0
+    y: 520.0
+  }
+  color {
+    x: 0.463
+    y: 0.475
+    z: 0.49
+  }
+  type: TYPE_TEXT
+  text: "Entities: 8\n"
+  "Top Index: 1\n"
+  "Bottom Index: 10\n"
+  "Scroll Size: 200x400\n"
+  "Grid Size: 400x800"
+  font: "text_regular"
+  id: "text_debug_info"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "root"
+  layer: "text_regular"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: 530.0
+    y: 505.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
+  size {
+    x: 1400.0
+    y: 100.0
+  }
+  color {
+    x: 0.463
+    y: 0.475
+    z: 0.49
+  }
+  type: TYPE_TEXT
+  text: "GUI: /path/some/file.gui"
+  font: "text_regular"
+  id: "text_gui_path"
+  pivot: PIVOT_NE
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "root"
+  layer: "text_regular"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+layers {
+  name: "text_regular"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

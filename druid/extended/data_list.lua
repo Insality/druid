@@ -13,16 +13,16 @@
 -- @tfield Scroll scroll @{Scroll}
 
 --- The Druid Grid component
--- @tfield StaticGrid|DynamicGrid grid @{StaticGrid}, @{DynamicGrid}
-
---- The current visual top data index
--- @tfield number top_index
-
---- The current visual last data index
--- @tfield number last_index
+-- @tfield StaticGrid grid @{StaticGrid}, @{DynamicGrid}
 
 --- The current progress of scroll posititon
 -- @tfield number scroll_progress
+
+--- The current top index of visual elements
+-- @tfield number top_index
+
+--- The current last index of visual elements
+-- @tfield number last_index
 
 --- Event triggered when scroll progress is changed; event(self, progress_value)
 -- @tfield DruidEvent on_scroll_progress_change @{DruidEvent}
@@ -43,19 +43,17 @@ local Event = require("druid.event")
 local DataList = component.create("data_list")
 
 
---- Data list constructor
+--- The @{DataList} constructor
 -- @tparam DataList self @{DataList}
 -- @tparam Scroll scroll The @{Scroll} instance for Data List component
--- @tparam StaticGrid|DynamicGrid grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
+-- @tparam StaticGrid grid The @{StaticGrid} or @{DynamicGrid} instance for Data List component
 -- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
 function DataList.init(self, scroll, grid, create_function)
-	self.druid = self:get_druid()
 	self.scroll = scroll
 	self.grid = grid
 	if self.grid.style then
 		self.grid.style.IS_DYNAMIC_NODE_POSES = false
 	end
-	self.scroll:bind_grid(grid)
 
 	-- Current visual elements indexes
 	self.top_index = 1
@@ -63,26 +61,34 @@ function DataList.init(self, scroll, grid, create_function)
 	self.scroll_progress = 0
 
 	self._create_function = create_function
+	self._is_use_cache = false
+	self._cache = {}
 	self._data = {}
-	self._data_first_index = false
-	self._data_last_index = false
-	self._data_length = 0
 	self._data_visual = {}
 
-	self.scroll.on_scroll:subscribe(self._check_elements, self)
+	self.scroll.on_scroll:subscribe(self._refresh, self)
 
 	self.on_scroll_progress_change = Event()
 	self.on_element_add = Event()
 	self.on_element_remove = Event()
-
-	self:set_data()
 end
 
 
 --- Druid System on_remove function
 -- @tparam DataList self @{DataList}
 function DataList.on_remove(self)
-	self.scroll.on_scroll:unsubscribe(self._check_elements, self)
+	self:clear()
+	self.scroll.on_scroll:unsubscribe(self._refresh, self)
+end
+
+
+--- Set refresh function for DataList component
+-- @tparam DataList self @{DataList}
+-- @tparam boolean is_use_cache Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
+-- @treturn druid.data_list Current DataList instance
+function DataList.set_use_cache(self, is_use_cache)
+	self._is_use_cache = is_use_cache
+	return self
 end
 
 
@@ -92,7 +98,6 @@ end
 -- @treturn druid.data_list Current DataList instance
 function DataList.set_data(self, data)
 	self._data = data or {}
-	self:_update_data_info()
 	self:_refresh()
 
 	return self
@@ -110,42 +115,35 @@ end
 --- Add element to DataList. Currenly untested
 -- @tparam DataList self @{DataList}
 -- @tparam table data
--- @tparam number index
--- @tparam number shift_policy The constant from const.SHIFT.*
--- @local
+-- @tparam number|nil index
+-- @tparam number|nil shift_policy The constant from const.SHIFT.*
 function DataList.add(self, data, index, shift_policy)
-	index = index or self._data_last_index + 1
+	index = index or #self._data + 1
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
 	helper.insert_with_shift(self._data, data, index, shift_policy)
-	self:_update_data_info()
-	self:_check_elements()
+	self:_refresh()
 end
 
 
 --- Remove element from DataList. Currenly untested
 -- @tparam DataList self @{DataList}
--- @tparam number index
--- @tparam number shift_policy The constant from const.SHIFT.*
--- @local
+-- @tparam number|nil index
+-- @tparam number|nil shift_policy The constant from const.SHIFT.*
 function DataList.remove(self, index, shift_policy)
-	--self:_refresh()
-
 	helper.remove_with_shift(self._data, index, shift_policy)
-	self:_update_data_info()
+	self:_refresh()
 end
 
 
 --- Remove element from DataList by data value. Currenly untested
 -- @tparam DataList self @{DataList}
--- @tparam tabe data
--- @tparam number shift_policy The constant from const.SHIFT.*
--- @local
+-- @tparam table data
+-- @tparam number|nil shift_policy The constant from const.SHIFT.*
 function DataList.remove_by_data(self, data, shift_policy)
 	local index = helper.contains(self._data, data)
 	if index then
 		helper.remove_with_shift(self._data, index, shift_policy)
-		self:_update_data_info()
 		self:_refresh()
 	end
 end
@@ -155,29 +153,7 @@ end
 -- @tparam DataList self @{DataList}
 function DataList.clear(self)
 	self._data = {}
-	self:_update_data_info()
 	self:_refresh()
-end
-
-
---- Return first index from data. It not always equals to 1
--- @tparam DataList self @{DataList}
-function DataList.get_first_index(self)
-	return self._data_first_index
-end
-
-
---- Return last index from data
--- @tparam DataList self @{DataList}
-function DataList.get_last_index(self)
-	return self._data_last_index
-end
-
-
---- Return amount of data
--- @tparam DataList self @{DataList}
-function DataList.get_length(self)
-	return self._data_length
 end
 
 
@@ -197,7 +173,7 @@ end
 
 --- Return all currenly created nodes in DataList
 -- @tparam DataList self @{DataList}
--- @treturn Node[] List of created nodes
+-- @treturn node[] List of created nodes
 function DataList.get_created_nodes(self)
 	local nodes = {}
 
@@ -227,17 +203,12 @@ end
 -- @tparam DataList self @{DataList}
 -- @tparam number index
 function DataList.scroll_to_index(self, index)
-	local target = helper.clamp(index, self:get_first_index(), self:get_last_index())
-	self.top_index = target
-	self:_refresh()
-
-	if self._data_visual[target] then
-		self.scroll:scroll_to(gui.get_position(self._data_visual[target].node), true)
-	end
+	local pos = self.grid:get_pos(index)
+	self.scroll:scroll_to(pos)
 end
 
 
---- Add element at passed index
+--- Add element at passed index using cache or create new
 -- @tparam DataList self @{DataList}
 -- @tparam number index
 -- @local
@@ -246,137 +217,98 @@ function DataList._add_at(self, index)
 		self:_remove_at(index)
 	end
 
-	local node, instance = self._create_function(self:get_context(), self._data[index], index, self)
-	self.grid:add(node, index, const.SHIFT.NO_SHIFT)
-	self._data_visual[index] = {
-		node = node,
-		component = instance
-	}
+	local data = self._data[index]
+	local node, instance
 
-	self.on_element_add:trigger(self:get_context(), index, node, instance)
+	-- Use cache if available and is_use_cache is set
+	if #self._cache > 0 and self._is_use_cache then
+		local cached = table.remove(self._cache)
+		node = cached.node
+		instance = cached.component
+		gui.set_enabled(node, true)
+	else
+		-- Create a new element if no cache or refresh function is not set
+		node, instance = self._create_function(self:get_context(), data, index, self)
+	end
+
+	self._data_visual[index] = {
+		data = data,
+		node = node,
+		component = instance,
+	}
+	self.grid:add(node, index, const.SHIFT.NO_SHIFT)
+
+	self.on_element_add:trigger(self:get_context(), index, node, instance, data)
 end
 
 
---- Remove element from passed index
+--- Remove element from passed index and add it to cache if applicable
 -- @tparam DataList self @{DataList}
 -- @tparam number index
 -- @local
 function DataList._remove_at(self, index)
 	self.grid:remove(index, const.SHIFT.NO_SHIFT)
 
-	local node = self._data_visual[index].node
-	gui.delete_node(node)
+	local visual_data = self._data_visual[index]
+	local node = visual_data.node
+	local instance = visual_data.component
+	local data = visual_data.data
 
-	local instance = self._data_visual[index].component
-	if instance then
-		self.druid:remove(instance)
+	self.on_element_remove:trigger(self:get_context(), index, node, instance, data)
+
+	if self._is_use_cache then
+		-- Disable the node and add it to the cache instead of deleting it
+		gui.set_enabled(node, false)
+		table.insert(self._cache, visual_data)  -- Cache the removed element
+	else
+		-- If no refresh function, delete the node and component as usual
+		gui.delete_node(node)
+		if instance then
+			instance._meta.druid:remove(instance)
+		end
 	end
-	self._data_visual[index] = nil
 
-	self.on_element_remove:trigger(self:get_context(), index)
+	self._data_visual[index] = nil
 end
+
 
 
 --- Refresh all elements in DataList
 -- @tparam DataList self @{DataList}
 -- @local
 function DataList._refresh(self)
-	for index, _ in pairs(self._data_visual) do
-		self:_remove_at(index)
-	end
-	self:_check_elements()
-end
+	self.scroll:set_size(self.grid:get_size_for(#self._data))
 
+	local start_pos = -self.scroll.position --[[@as vector3]]
+	local start_index = self.grid:get_index(start_pos)
+	start_index = math.max(1, start_index)
 
---- Check elements which should be created
--- @tparam DataList self @{DataList}
--- @local
-function DataList._check_elements(self)
+	local pivot = helper.get_pivot_offset(gui.get_pivot(self.scroll.view_node))
+	local offset_x = self.scroll.view_size.x * (0.5 - pivot.x)
+	local offset_y = self.scroll.view_size.y * (0.5 + pivot.y)
+	local end_pos = vmath.vector3(start_pos.x + offset_x, start_pos.y - offset_y, 0)
+	local end_index = self.grid:get_index(end_pos)
+	end_index = math.min(#self._data, end_index)
+
+	self.top_index = start_index
+	self.last_index = end_index
+
+	-- Clear from non range elements
 	for index, data in pairs(self._data_visual) do
-		if self.scroll:is_node_in_view(data.node) then
-			self.top_index = index
-			self.last_index = index
+		if index < start_index or index > end_index then
+			self:_remove_at(index)
+		elseif self._data[index] ~= data.data then
+			-- TODO We want to find currently created data instances and move them to new positions
+			-- Now it will re-create them
+			self:_remove_at(index)
 		end
 	end
 
-	self:_check_elements_from(self.top_index, -1)
-	self:_check_elements_from(self.top_index + 1, 1)
-
-	for index, data in pairs(self._data_visual) do
-		self.top_index = math.min(self.top_index or index, index)
-		self.last_index = math.max(self.last_index or index, index)
-	end
-
-	-- Progress report
-	local middle_index = (self.last_index + self.top_index) / 2
-	local progress = (middle_index - self._data_first_index) / (self._data_last_index - self._data_first_index)
-	progress = helper.clamp(progress, 0, 1)
-	if self.last_index == self:get_last_index() then
-		progress = 1
-	end
-	if self.top_index == self:get_first_index() then
-		progress = 0
-	end
-
-	if self.scroll_progress ~= progress then
-		self.scroll_progress = progress
-		self.on_scroll_progress_change:trigger(self:get_context(), progress)
-	end
-end
-
-
---- Check elements which should be created.
--- Start from index with step until element is outside of scroll view
--- @tparam DataList self @{DataList}
--- @tparam number index
--- @tparam number step
--- @local
-function DataList._check_elements_from(self, index, step)
-	local is_outside = false
-	while not is_outside do
-		if not self._data[index] then
-			break
-		end
-
-		if not self._data_visual[index] then
+	-- Add new elements
+	for index = start_index, end_index do
+		if not self._data_visual[index] and self._data[index] then
 			self:_add_at(index)
 		end
-
-		if not self.scroll:is_node_in_view(self._data_visual[index].node) then
-			is_outside = true
-
-			-- remove nexts:
-			-- We add one more element, which is not in view to
-			-- check what it's always outside to stop spawning
-			local remove_index = index + step
-			while self._data_visual[remove_index] do
-				self:_remove_at(remove_index)
-				remove_index = remove_index + step
-			end
-		end
-
-		index = index + step
-	end
-end
-
-
---- Update actual data params
--- @tparam DataList self @{DataList}
--- @local
-function DataList._update_data_info(self)
-	self._data_first_index = false
-	self._data_last_index = false
-	self._data_length = 0
-
-	for index, data in pairs(self._data) do
-		self._data_first_index = math.min(self._data_first_index or index, index)
-		self._data_last_index = math.max(self._data_last_index or index, index)
-		self._data_length = self._data_length + 1
-	end
-
-	if self._data_length == 0 then
-		self._data_first_index = 0
-		self._data_last_index = 0
 	end
 end
 

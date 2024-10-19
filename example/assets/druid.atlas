@@ -1,0 +1,40 @@
+images {
+  image: "/example/assets/images/empty.png"
+}
+images {
+  image: "/example/assets/images/icon_cross.png"
+}
+images {
+  image: "/example/assets/images/pixel.png"
+}
+images {
+  image: "/example/assets/images/ui_circle_8.png"
+}
+images {
+  image: "/example/assets/images/ui_circle_16.png"
+}
+images {
+  image: "/example/assets/images/ui_circle_32.png"
+}
+images {
+  image: "/example/assets/images/ui_circle_64.png"
+}
+images {
+  image: "/example/assets/images/ui_rounded_top_32.png"
+}
+images {
+  image: "/example/assets/images/icon_arrow.png"
+}
+images {
+  image: "/example/assets/images/icon_check.png"
+}
+images {
+  image: "/example/assets/images/rect_round2_width1.png"
+}
+images {
+  image: "/example/assets/images/ui_circle_64_blur_8.png"
+}
+images {
+  image: "/example/assets/images/icon_heart.png"
+}
+extrude_borders: 2

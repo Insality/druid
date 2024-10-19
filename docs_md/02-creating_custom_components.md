@@ -14,26 +14,39 @@ A basic custom component template looks like this (you can copy it from `/druid/
 ```lua
 local component = require("druid.component")
 
----@class component_name : druid.base_component
-local Component = component.create("component_name")
+---@class component_name: druid.base_component
+local M = component.create("component_name")
 
-local SCHEME = {
-    ROOT = "root",
-    BUTTON = "button",
-}
+function M:init(template, nodes)
+    self.druid = self:get_druid(template, nodes)
+    self.root = self:get_node("root")
 
-function Component:init(template, nodes)
-    self:set_template(template)
-    self:set_nodes(nodes)
-    self.root = self:get_node(SCHEME.ROOT)
-    self.druid = self:get_druid()
-
-    self.button = self.druid:new_button(SCHEME.BUTTON, function() end)
+    self.button = self.druid:new_button("button", function() end)
 end
 
-function Component:on_remove() end
+function M:hello()
+    print("Hello from custom component")
+end
 
-return Component
+return M
+```
+
+Then you can create your custom component with Druid:
+```lua
+local druid = require("druid.druid")
+
+local my_component = require("my.amazing.component")
+
+function init(self)
+    self.druid = druid.new(self)
+
+    -- We pass a GUI template "template_name" and skip nodes due it already on the scene
+    self.my_component = self.druid:new(my_component, "template_name")
+    self.my_component:hello() -- Hello from custom component
+
+
+end
+
 ```
 
 ### Full Component Template
@@ -43,43 +56,37 @@ A full custom component template looks like this (you can copy it from `/druid/t
 ```lua
 local component =  require("druid.component")
 
----@class component_name : druid.base_component
-local Component = component.create("component_name")
-local SCHEME = {
-    ROOT = "root",
-    BUTTON = "button",
-}
+---@class component_name: druid.base_component
+local M = component.create("component_name")
 
-function Component:init(template, nodes)
-    self:set_template(template)
-    self:set_nodes(nodes)
-    self.root = self:get_node(SCHEME.ROOT)
-    self.druid = self:get_druid()
+function M:init(template, nodes)
+    self.druid = self:get_druid(template, nodes)
+    self.root = self:get_node("root")
 end
 
-function Component:update(dt) end
+function M:update(dt) end
 
-function Component:on_input(action_id, action) return false end
+function M:on_input(action_id, action) return false end
 
-function Component:on_style_change(style) end
+function M:on_style_change(style) end
 
-function Component:on_message(message_id, message, sender) end
+function M:on_message(message_id, message, sender) end
 
-function Component:on_language_change() end
+function M:on_language_change() end
 
-function Component:on_layout_change() end
+function M:on_layout_change() end
 
-function Component:on_window_resized() end
+function M:on_window_resized() end
 
-function Component:on_input_interrupt() end
+function M:on_input_interrupt() end
 
-function Component:on_focus_lost() end
+function M:on_focus_lost() end
 
-function Component:on_focus_gained() end
+function M:on_focus_gained() end
 
-function Component:on_remove() end
+function M:on_remove() end
 
-return Component
+return M
 ```
 
 ### Spawning a Custom Component
@@ -92,7 +99,7 @@ local my_component = require("my.amazing.component")
 
 function init(self)
     self.druid = druid.new(self)
-    self.druid:new(my_component, "template_name", nodes)
+    self.druid:new(my_component, "template_name")
 end
 ```
 
@@ -107,6 +114,7 @@ local druid = require("druid.druid")
 local my_component = require("my.amazing.component")
 
 function init(self)
+    -- Register makes a "druid:new_{component_name}" function available
     druid.register("my_component", my_component)
 end
 ```
@@ -129,7 +137,7 @@ Druid provides an editor script to assist you in creating Lua files for your GUI
 
 The script analyzes the current GUI scene and generates a Lua file with stubs for all Druid components found. The output file is named after the current GUI scene and placed in the same directory. Note that the script does not override any existing *.lua files. If you want to regenerate a file, delete the previous version first.
 
-The script requires `python3` with `deftree` installed. If `deftree` is not installed, the instructions will be displayed in the console.
+The script requires `python` with `deftree` installed. If `deftree` is not installed, the instructions will be displayed in the console.
 
 ### Auto-Layout Components
 
@@ -145,36 +153,7 @@ Available keywords:
 - `blocker`: Adds a [Druid Blocker](01-components.md#blocker) component.
 - `slider`: Adds a [Druid Slider](01-components.md#slider) component. You should adjust the end position of the Slider after generating the file.
 - `progress`: Adds a [Druid Progress](01-components.md#progress) component.
-- `timer`: Adds a [Dr
-
-uid Timer](01-components.md#timer) component.
-
-## Best Practices for Custom Components
-
-When working with each component, it's recommended to describe the component scheme in the following way:
-
-```lua
--- Component module
-local component = require("druid.component")
-
-local M = component.create("your_component")
-
-local SCHEME = {
-    ROOT = "root",
-    ITEM = "item",
-    TITLE = "title"
-}
-
-function M.init(self, template_name, node_table)
-    self:set_template(template_name)
-    self:set_nodes(node_table)
-
-    local root = self:get_node(SCHEME.ROOT)
-    local druid = self:get_druid()
-
-    -- Create components inside this component using the inner druid instance
-end
-```
+- `timer`: Adds a [Druid Timer](01-components.md#timer) component.
 
 ## The Power of Using Templates
 

@@ -1,0 +1,4054 @@
+script: "/example/druid.gui_script"
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+fonts {
+  name: "text_regular"
+  font: "/example/assets/fonts/text_regular.font"
+}
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+textures {
+  name: "druid_logo"
+  texture: "/example/assets/druid_logo.atlas"
+}
+nodes {
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  size {
+    x: 1920.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  adjust_mode: ADJUST_MODE_STRETCH
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: -960.0
+  }
+  size {
+    x: 400.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_left"
+  pivot: PIVOT_W
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    y: 540.0
+  }
+  size {
+    x: 400.0
+    y: 170.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_logo"
+  pivot: PIVOT_NW
+  parent: "container_left"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: 200.0
+    y: -85.0
+  }
+  type: TYPE_TEMPLATE
+  id: "druid_logo"
+  parent: "container_logo"
+  inherit_alpha: true
+  template: "/example/components/druid_logo/druid_logo.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "druid_logo/root"
+  parent: "druid_logo"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "druid_logo/E_Anchor"
+  parent: "druid_logo/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "druid_logo/icon_druid_right"
+  parent: "druid_logo/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "druid_logo/W_Anchor"
+  parent: "druid_logo/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "druid_logo/icon_druid_left"
+  parent: "druid_logo/W_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "druid_logo/icon_logo"
+  parent: "druid_logo/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "druid_logo/text_description"
+  parent: "druid_logo/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    y: 370.0
+  }
+  size {
+    x: 400.0
+    y: 910.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_examples"
+  pivot: PIVOT_NW
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "container_left"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: 200.0
+    y: -455.0
+  }
+  type: TYPE_TEMPLATE
+  id: "examples_list_view"
+  parent: "container_examples"
+  inherit_alpha: true
+  template: "/example/components/examples_list_view/examples_list_view.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view/root"
+  parent: "examples_list_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "examples_list_view/text_header"
+  parent: "examples_list_view/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view/scroll_view"
+  parent: "examples_list_view/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view/scroll_content"
+  parent: "examples_list_view/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "examples_list_view/examples_list_view_item"
+  parent: "examples_list_view/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view/examples_list_view_item/root"
+  parent: "examples_list_view/examples_list_view_item"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view/examples_list_view_item/panel_highlight"
+  parent: "examples_list_view/examples_list_view_item/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view/examples_list_view_item/panel_selected"
+  parent: "examples_list_view/examples_list_view_item/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view/examples_list_view_item/icon"
+  parent: "examples_list_view/examples_list_view_item/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "examples_list_view/examples_list_view_item/text"
+  parent: "examples_list_view/examples_list_view_item/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 960.0
+  }
+  size {
+    x: 440.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_right"
+  pivot: PIVOT_E
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    y: 540.0
+  }
+  size {
+    x: 440.0
+    y: 450.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_info"
+  pivot: PIVOT_NE
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "container_right"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: -220.0
+    y: -225.0
+  }
+  type: TYPE_TEMPLATE
+  id: "panel_information"
+  parent: "container_info"
+  inherit_alpha: true
+  template: "/example/components/panel_information/panel_information.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_information/root"
+  parent: "panel_information"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_information/text_header"
+  parent: "panel_information/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_information/S_Anchor"
+  parent: "panel_information/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "panel_information/button_view_code"
+  parent: "panel_information/S_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_information/button_view_code/root"
+  parent: "panel_information/button_view_code"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_information/button_view_code/text"
+  parent: "panel_information/button_view_code/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_information/NE_Anchor"
+  parent: "panel_information/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "panel_information/button_profiler"
+  parent: "panel_information/NE_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_information/button_profiler/root"
+  parent: "panel_information/button_profiler"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_information/button_profiler/text"
+  parent: "panel_information/button_profiler/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_information/scroll_view"
+  parent: "panel_information/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_information/scroll_content"
+  parent: "panel_information/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_information/text_description"
+  parent: "panel_information/scroll_content"
+  template_node_child: true
+}
+nodes {
+  position {
+    y: -540.0
+  }
+  size {
+    x: 440.0
+    y: 630.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_group_settings_output"
+  pivot: PIVOT_SE
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "container_right"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    y: 630.0
+  }
+  size {
+    x: 440.0
+    y: 350.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_settings"
+  pivot: PIVOT_NE
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "container_group_settings_output"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: -220.0
+    y: -175.0
+  }
+  type: TYPE_TEMPLATE
+  id: "properties_panel"
+  parent: "container_settings"
+  inherit_alpha: true
+  template: "/example/components/properties_panel/properties_panel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/root"
+  parent: "properties_panel"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/text_header"
+  parent: "properties_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/scroll_view"
+  parent: "properties_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/scroll_content"
+  parent: "properties_panel/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/item_size"
+  parent: "properties_panel/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/separator"
+  parent: "properties_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/propeties"
+  parent: "properties_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_slider"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/root"
+  parent: "properties_panel/property_slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_slider/text_name"
+  parent: "properties_panel/property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/E_Anchor"
+  parent: "properties_panel/property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/button"
+  parent: "properties_panel/property_slider/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/selected"
+  parent: "properties_panel/property_slider/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_slider/text_value"
+  parent: "properties_panel/property_slider/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/slider"
+  parent: "properties_panel/property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/slider_back"
+  parent: "properties_panel/property_slider/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/slider_pin"
+  parent: "properties_panel/property_slider/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_checkbox"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_checkbox/root"
+  parent: "properties_panel/property_checkbox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_checkbox/text_name"
+  parent: "properties_panel/property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_checkbox/button"
+  parent: "properties_panel/property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_checkbox/icon"
+  parent: "properties_panel/property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_checkbox/selected"
+  parent: "properties_panel/property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_button"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button/root"
+  parent: "properties_panel/property_button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_button/text_name"
+  parent: "properties_panel/property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button/button"
+  parent: "properties_panel/property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button/selected"
+  parent: "properties_panel/property_button/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_button/text_button"
+  parent: "properties_panel/property_button/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/text_no_properties"
+  parent: "properties_panel/root"
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 440.0
+    y: 280.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_output"
+  pivot: PIVOT_SE
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "container_group_settings_output"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: -220.0
+    y: 140.0
+  }
+  type: TYPE_TEMPLATE
+  id: "output_list"
+  parent: "container_output"
+  inherit_alpha: true
+  template: "/example/components/output_list/output_list.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "output_list/root"
+  parent: "output_list"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "output_list/text_header"
+  parent: "output_list/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "output_list/scroll_view"
+  parent: "output_list/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "output_list/scroll_content"
+  parent: "output_list/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "output_list/text"
+  parent: "output_list/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "output_list/separator"
+  parent: "output_list/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "output_list/text_version_defold"
+  parent: "output_list/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "output_list/text_version_druid"
+  parent: "output_list/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -20.0
+    y: 25.0
+  }
+  size {
+    x: 1080.0
+    y: 1030.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_center"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_BOTTOM
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root"
+  inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "example_scene"
+  parent: "container_center"
+  inherit_alpha: true
+  template: "/example/components/example_scene/example_scene.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_scene/root"
+  parent: "example_scene"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "example_scene/text_debug_info"
+  parent: "example_scene/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "example_scene/text_gui_path"
+  parent: "example_scene/root"
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "examples"
+  parent: "container_center"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "intro_examples"
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "intro"
+  parent: "intro_examples"
+  inherit_alpha: true
+  template: "/example/examples/intro/intro/intro.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/root"
+  parent: "intro"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/icon_druid_left"
+  parent: "intro/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/icon_druid_right"
+  parent: "intro/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "intro/text_hello"
+  parent: "intro/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "intro/text_description"
+  parent: "intro/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "intro/text_support"
+  parent: "intro/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/icon_heart1"
+  parent: "intro/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/icon_heart2"
+  parent: "intro/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/icon_heart3"
+  parent: "intro/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/sponsor"
+  parent: "intro/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/sponsor_github"
+  parent: "intro/sponsor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/sponsor_coffee"
+  parent: "intro/sponsor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "intro/sponsor_kofi"
+  parent: "intro/sponsor"
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "basic"
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_button"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/button/basic_button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_button/root"
+  parent: "basic_button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_button/button"
+  parent: "basic_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_button/button/root"
+  parent: "basic_button/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_button/button/text"
+  parent: "basic_button/button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_text"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/text/basic_text.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_text/root"
+  parent: "basic_text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_text/text_area"
+  parent: "basic_text/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_text/text"
+  parent: "basic_text/text_area"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "multiline_text"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/text/multiline_text.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "multiline_text/root"
+  parent: "multiline_text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "multiline_text/text_area"
+  parent: "multiline_text/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "multiline_text/text"
+  parent: "multiline_text/text_area"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/scroll/scroll.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll/root"
+  parent: "scroll"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll/scroll_view"
+  parent: "scroll/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll/scroll_content"
+  parent: "scroll/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll/button_tutorial"
+  parent: "scroll/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll/button_tutorial/root"
+  parent: "scroll/button_tutorial"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll/button_tutorial/text"
+  parent: "scroll/button_tutorial/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll/ui_scroll_text_1"
+  parent: "scroll/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll/ui_scroll_text_2"
+  parent: "scroll/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll/ui_scroll_text_3"
+  parent: "scroll/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll/ui_scroll_text_4"
+  parent: "scroll/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll/ui_scroll_text_5"
+  parent: "scroll/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll/button_stencil"
+  parent: "scroll/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll/button_stencil/root"
+  parent: "scroll/button_stencil"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll/button_stencil/text"
+  parent: "scroll/button_stencil/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll/ui_scroll_text_fill"
+  parent: "scroll/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "grid"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/grid/grid.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "grid/root"
+  parent: "grid"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "grid/grid"
+  parent: "grid/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "grid/prefab"
+  parent: "grid/grid"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "grid/panel"
+  parent: "grid/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "grid/text"
+  parent: "grid/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_grid"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/scroll_bind_grid/scroll_bind_grid.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid/root"
+  parent: "scroll_bind_grid"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid/view"
+  parent: "scroll_bind_grid/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid/content"
+  parent: "scroll_bind_grid/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid/prefab"
+  parent: "scroll_bind_grid/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid/panel"
+  parent: "scroll_bind_grid/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_grid/text"
+  parent: "scroll_bind_grid/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_grid_horizontal"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/scroll_bind_grid/scroll_bind_grid_horizontal.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_horizontal/root"
+  parent: "scroll_bind_grid_horizontal"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_horizontal/view"
+  parent: "scroll_bind_grid_horizontal/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_horizontal/content"
+  parent: "scroll_bind_grid_horizontal/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_horizontal/prefab"
+  parent: "scroll_bind_grid_horizontal/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_horizontal/panel"
+  parent: "scroll_bind_grid_horizontal/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_grid_horizontal/text"
+  parent: "scroll_bind_grid_horizontal/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "hover"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/hover/hover.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover/root"
+  parent: "hover"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "hover/button_mouse_hover"
+  parent: "hover/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover/button_mouse_hover/root"
+  parent: "hover/button_mouse_hover"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "hover/button_mouse_hover/text"
+  parent: "hover/button_mouse_hover/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "hover/button_mobile_hover"
+  parent: "hover/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover/button_mobile_hover/root"
+  parent: "hover/button_mobile_hover"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "hover/button_mobile_hover/text"
+  parent: "hover/button_mobile_hover/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "drag"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/drag/drag.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "drag/root"
+  parent: "drag"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "drag/drag"
+  parent: "drag/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "drag/drag/root"
+  parent: "drag/drag"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "drag/drag/text"
+  parent: "drag/drag/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_input"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/input/basic_input.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_input/root"
+  parent: "basic_input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_input/input"
+  parent: "basic_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_input/input/root"
+  parent: "basic_input/input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_input/input/text"
+  parent: "basic_input/input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_input/input_2"
+  parent: "basic_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_input/input_2/root"
+  parent: "basic_input/input_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_input/input_2/text"
+  parent: "basic_input/input_2/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_rich_input"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/input/rich_input.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_rich_input/root"
+  parent: "basic_rich_input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_rich_input/rich_input"
+  parent: "basic_rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_rich_input/rich_input/root"
+  parent: "basic_rich_input/rich_input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_rich_input/rich_input/button"
+  parent: "basic_rich_input/rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_rich_input/rich_input/placeholder_text"
+  parent: "basic_rich_input/rich_input/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_rich_input/rich_input/input_text"
+  parent: "basic_rich_input/rich_input/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_rich_input/rich_input/cursor_node"
+  parent: "basic_rich_input/rich_input/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_rich_input/rich_input/cursor_text"
+  parent: "basic_rich_input/rich_input/cursor_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_rich_input/rich_input_2"
+  parent: "basic_rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_rich_input/rich_input_2/root"
+  parent: "basic_rich_input/rich_input_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_rich_input/rich_input_2/button"
+  parent: "basic_rich_input/rich_input_2/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_rich_input/rich_input_2/placeholder_text"
+  parent: "basic_rich_input/rich_input_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_rich_input/rich_input_2/input_text"
+  parent: "basic_rich_input/rich_input_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_rich_input/rich_input_2/cursor_node"
+  parent: "basic_rich_input/rich_input_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_rich_input/rich_input_2/cursor_text"
+  parent: "basic_rich_input/rich_input_2/cursor_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_rich_text"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/rich_text/basic_rich_text.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_rich_text/root"
+  parent: "basic_rich_text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_rich_text/text"
+  parent: "basic_rich_text/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_slider"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/slider/basic_slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider/root"
+  parent: "basic_slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_slider/slider"
+  parent: "basic_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider/slider/root"
+  parent: "basic_slider/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider/slider/slider_back"
+  parent: "basic_slider/slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider/slider/slider_pin"
+  parent: "basic_slider/slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_slider/slider_value"
+  parent: "basic_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_progress_bar"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/progress_bar/basic_progress_bar.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_progress_bar/root"
+  parent: "basic_progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_progress_bar/progress_bar_back"
+  parent: "basic_progress_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_progress_bar/progress_bar_fill"
+  parent: "basic_progress_bar/progress_bar_back"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_progress_bar/progress_value"
+  parent: "basic_progress_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/scroll_slider/scroll_slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/root"
+  parent: "scroll_slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/scroll_view"
+  parent: "scroll_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/scroll_content"
+  parent: "scroll_slider/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button1"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button1/root"
+  parent: "scroll_slider/button1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button1/text"
+  parent: "scroll_slider/button1/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button2"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button2/root"
+  parent: "scroll_slider/button2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button2/text"
+  parent: "scroll_slider/button2/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button3"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button3/root"
+  parent: "scroll_slider/button3"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button3/text"
+  parent: "scroll_slider/button3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button4"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button4/root"
+  parent: "scroll_slider/button4"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button4/text"
+  parent: "scroll_slider/button4/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button5"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button5/root"
+  parent: "scroll_slider/button5"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button5/text"
+  parent: "scroll_slider/button5/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button6"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button6/root"
+  parent: "scroll_slider/button6"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button6/text"
+  parent: "scroll_slider/button6/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button7"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button7/root"
+  parent: "scroll_slider/button7"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button7/text"
+  parent: "scroll_slider/button7/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button8"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button8/root"
+  parent: "scroll_slider/button8"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button8/text"
+  parent: "scroll_slider/button8/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button9"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button9/root"
+  parent: "scroll_slider/button9"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button9/text"
+  parent: "scroll_slider/button9/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button10"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button10/root"
+  parent: "scroll_slider/button10"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button10/text"
+  parent: "scroll_slider/button10/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button11"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button11/root"
+  parent: "scroll_slider/button11"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button11/text"
+  parent: "scroll_slider/button11/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button12"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button12/root"
+  parent: "scroll_slider/button12"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button12/text"
+  parent: "scroll_slider/button12/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_slider/button13"
+  parent: "scroll_slider/scroll_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/button13/root"
+  parent: "scroll_slider/button13"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_slider/button13/text"
+  parent: "scroll_slider/button13/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/slider_back"
+  parent: "scroll_slider/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_slider/slider_pin"
+  parent: "scroll_slider/slider_back"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_slider_stepped"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/slider/basic_slider_stepped.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider_stepped/root"
+  parent: "basic_slider_stepped"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_slider_stepped/slider"
+  parent: "basic_slider_stepped/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider_stepped/slider/root"
+  parent: "basic_slider_stepped/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider_stepped/slider/slider_back"
+  parent: "basic_slider_stepped/slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider_stepped/slider/slider_pin"
+  parent: "basic_slider_stepped/slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_slider_stepped/slider_value"
+  parent: "basic_slider_stepped/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_swipe"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/swipe/basic_swipe.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_swipe/root"
+  parent: "basic_swipe"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_swipe/swipe_hint"
+  parent: "basic_swipe/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "rich_text_tags"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/rich_text/rich_text_tags.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_text_tags/root"
+  parent: "rich_text_tags"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_text_tags/background"
+  parent: "rich_text_tags/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_tags/rich_text_color"
+  parent: "rich_text_tags/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_tags/rich_text_breaks"
+  parent: "rich_text_tags/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_tags/rich_text_size"
+  parent: "rich_text_tags/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_tags/rich_text_font"
+  parent: "rich_text_tags/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_tags/rich_text_image"
+  parent: "rich_text_tags/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "rich_text_tags_custom"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/rich_text/rich_text_tags_custom.gui"
+  enabled: false
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_text_tags_custom/root"
+  parent: "rich_text_tags_custom"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_tags_custom/rich_text_link"
+  parent: "rich_text_tags_custom/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_tags_custom/rich_text_characters"
+  parent: "rich_text_tags_custom/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_tags_custom/rich_text_custom"
+  parent: "rich_text_tags_custom/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_progress_bar_slice9"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/progress_bar/basic_progress_bar_slice9.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_progress_bar_slice9/root"
+  parent: "basic_progress_bar_slice9"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_progress_bar_slice9/progress_bar_back"
+  parent: "basic_progress_bar_slice9/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_progress_bar_slice9/progress_bar_fill"
+  parent: "basic_progress_bar_slice9/progress_bar_back"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_progress_bar_slice9/progress_value"
+  parent: "basic_progress_bar_slice9/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_timer"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/timer/basic_timer.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_timer/root"
+  parent: "basic_timer"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_timer/text"
+  parent: "basic_timer/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_hotkey"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/hotkey/basic_hotkey.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_hotkey/root"
+  parent: "basic_hotkey"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_hotkey/text"
+  parent: "basic_hotkey/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_button_double_click"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/button/basic_button_double_click.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_button_double_click/root"
+  parent: "basic_button_double_click"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_button_double_click/button"
+  parent: "basic_button_double_click/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_button_double_click/button/root"
+  parent: "basic_button_double_click/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_button_double_click/button/text"
+  parent: "basic_button_double_click/button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_button_hold"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/button/basic_button_hold.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_button_hold/root"
+  parent: "basic_button_hold"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_button_hold/button"
+  parent: "basic_button_hold/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_PIE
+  id: "basic_button_hold/mask"
+  parent: "basic_button_hold/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_button_hold/button_image"
+  parent: "basic_button_hold/mask"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_button_hold/text"
+  parent: "basic_button_hold/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "input_password"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/input/input_password.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "input_password/root"
+  parent: "input_password"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "input_password/input"
+  parent: "input_password/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "input_password/input/root"
+  parent: "input_password/input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "input_password/input/text"
+  parent: "input_password/input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "drag_to_node"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/drag/drag_to_node.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "drag_to_node/root"
+  parent: "drag_to_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "drag_to_node/drag"
+  parent: "drag_to_node/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "drag_to_node/drag/root"
+  parent: "drag_to_node/drag"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "drag_to_node/drag/text"
+  parent: "drag_to_node/drag/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "drag_to_node/zone"
+  parent: "drag_to_node/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "drag_to_node/text_hint"
+  parent: "drag_to_node/zone"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "drag_to_node/text_counter"
+  parent: "drag_to_node/zone"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_slider_vertical"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/slider/basic_slider_vertical.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider_vertical/root"
+  parent: "basic_slider_vertical"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_slider_vertical/slider"
+  parent: "basic_slider_vertical/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider_vertical/slider/root"
+  parent: "basic_slider_vertical/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider_vertical/slider/slider_back"
+  parent: "basic_slider_vertical/slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_slider_vertical/slider/slider_pin"
+  parent: "basic_slider_vertical/slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_slider_vertical/slider_value"
+  parent: "basic_slider_vertical/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_grid_points"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/scroll_bind_grid/scroll_bind_grid_points.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_points/root"
+  parent: "scroll_bind_grid_points"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_points/view"
+  parent: "scroll_bind_grid_points/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_points/content"
+  parent: "scroll_bind_grid_points/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_points/prefab"
+  parent: "scroll_bind_grid_points/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_points/panel"
+  parent: "scroll_bind_grid_points/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_grid_points/text"
+  parent: "scroll_bind_grid_points/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_blocker"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/blocker/basic_blocker.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_blocker/root"
+  parent: "basic_blocker"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_blocker/blocker"
+  parent: "basic_blocker/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_blocker/button"
+  parent: "basic_blocker/blocker"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_blocker/button/root"
+  parent: "basic_blocker/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_blocker/button/text"
+  parent: "basic_blocker/button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_blocker/text"
+  parent: "basic_blocker/blocker"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_back_handler"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/back_handler/basic_back_handler.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_back_handler/root"
+  parent: "basic_back_handler"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_back_handler/text"
+  parent: "basic_back_handler/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/checkbox/checkbox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox/root"
+  parent: "checkbox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox/button"
+  parent: "checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox/icon"
+  parent: "checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox/selected"
+  parent: "checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "radio_group"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/radio_group/radio_group.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/root"
+  parent: "radio_group"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "radio_group/checkbox_1"
+  parent: "radio_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_1/root"
+  parent: "radio_group/checkbox_1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_1/button"
+  parent: "radio_group/checkbox_1/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_1/icon"
+  parent: "radio_group/checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_1/selected"
+  parent: "radio_group/checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "radio_group/checkbox_2"
+  parent: "radio_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_2/root"
+  parent: "radio_group/checkbox_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_2/button"
+  parent: "radio_group/checkbox_2/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_2/icon"
+  parent: "radio_group/checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_2/selected"
+  parent: "radio_group/checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "radio_group/checkbox_3"
+  parent: "radio_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_3/root"
+  parent: "radio_group/checkbox_3"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_3/button"
+  parent: "radio_group/checkbox_3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_3/icon"
+  parent: "radio_group/checkbox_3/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "radio_group/checkbox_3/selected"
+  parent: "radio_group/checkbox_3/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox_group"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/checkbox_group/checkbox_group.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/root"
+  parent: "checkbox_group"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox_group/checkbox_1"
+  parent: "checkbox_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_1/root"
+  parent: "checkbox_group/checkbox_1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_1/button"
+  parent: "checkbox_group/checkbox_1/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_1/icon"
+  parent: "checkbox_group/checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_1/selected"
+  parent: "checkbox_group/checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox_group/checkbox_2"
+  parent: "checkbox_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_2/root"
+  parent: "checkbox_group/checkbox_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_2/button"
+  parent: "checkbox_group/checkbox_2/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_2/icon"
+  parent: "checkbox_group/checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_2/selected"
+  parent: "checkbox_group/checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox_group/checkbox_3"
+  parent: "checkbox_group/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_3/root"
+  parent: "checkbox_group/checkbox_3"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_3/button"
+  parent: "checkbox_group/checkbox_3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_3/icon"
+  parent: "checkbox_group/checkbox_3/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_group/checkbox_3/selected"
+  parent: "checkbox_group/checkbox_3/button"
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "windows"
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "window_language"
+  parent: "windows"
+  inherit_alpha: true
+  template: "/example/examples/windows/window_language/window_language.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_language/root"
+  parent: "window_language"
+  overridden_fields: 1
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_language/window"
+  parent: "window_language/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_language/panel_header"
+  parent: "window_language/window"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "window_language/text_header"
+  parent: "window_language/panel_header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_language/button_close"
+  parent: "window_language/panel_header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_language/icon_close"
+  parent: "window_language/button_close"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_language/content"
+  parent: "window_language/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_language/button_prefab"
+  parent: "window_language/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "window_language/button"
+  parent: "window_language/button_prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_language/button/root"
+  parent: "window_language/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "window_language/button/text"
+  parent: "window_language/button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "window_confirmation"
+  parent: "windows"
+  inherit_alpha: true
+  template: "/example/examples/windows/window_confirmation/window_confirmation.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_confirmation/root"
+  parent: "window_confirmation"
+  overridden_fields: 1
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_confirmation/window"
+  parent: "window_confirmation/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_confirmation/panel_header"
+  parent: "window_confirmation/window"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "window_confirmation/text_header"
+  parent: "window_confirmation/panel_header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_confirmation/button_close"
+  parent: "window_confirmation/panel_header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_confirmation/icon_close"
+  parent: "window_confirmation/button_close"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_confirmation/content"
+  parent: "window_confirmation/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "window_confirmation/text"
+  parent: "window_confirmation/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "window_confirmation/button_accept"
+  parent: "window_confirmation/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_confirmation/button_accept/root"
+  parent: "window_confirmation/button_accept"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "window_confirmation/button_accept/text"
+  parent: "window_confirmation/button_accept/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "window_confirmation/button_decline"
+  parent: "window_confirmation/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_confirmation/button_decline/root"
+  parent: "window_confirmation/button_decline"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "window_confirmation/button_decline/text"
+  parent: "window_confirmation/button_decline/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "window_info"
+  parent: "windows"
+  inherit_alpha: true
+  template: "/example/examples/windows/window_info/window_info.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_info/root"
+  parent: "window_info"
+  overridden_fields: 1
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_info/window"
+  parent: "window_info/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_info/panel_header"
+  parent: "window_info/window"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "window_info/text_header"
+  parent: "window_info/panel_header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_info/button_close"
+  parent: "window_info/panel_header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_info/icon_close"
+  parent: "window_info/button_close"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_info/content"
+  parent: "window_info/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "window_info/text"
+  parent: "window_info/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "window_info/button_accept"
+  parent: "window_info/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "window_info/button_accept/root"
+  parent: "window_info/button_accept"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "window_info/button_accept/text"
+  parent: "window_info/button_accept/root"
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "data_list"
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "data_list_basic"
+  parent: "data_list"
+  inherit_alpha: true
+  template: "/example/examples/data_list/basic/data_list_basic.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_basic/root"
+  parent: "data_list_basic"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_basic/view"
+  parent: "data_list_basic/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_basic/content"
+  parent: "data_list_basic/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_basic/prefab"
+  parent: "data_list_basic/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_basic/panel"
+  parent: "data_list_basic/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "data_list_basic/text"
+  parent: "data_list_basic/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "data_list_horizontal_basic"
+  parent: "data_list"
+  inherit_alpha: true
+  template: "/example/examples/data_list/basic/data_list_horizontal_basic.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_horizontal_basic/root"
+  parent: "data_list_horizontal_basic"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_horizontal_basic/view"
+  parent: "data_list_horizontal_basic/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_horizontal_basic/content"
+  parent: "data_list_horizontal_basic/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_horizontal_basic/prefab"
+  parent: "data_list_horizontal_basic/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_horizontal_basic/panel"
+  parent: "data_list_horizontal_basic/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "data_list_horizontal_basic/text"
+  parent: "data_list_horizontal_basic/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "data_list_add_remove_clear"
+  parent: "data_list"
+  inherit_alpha: true
+  template: "/example/examples/data_list/add_remove_clear/data_list_add_remove_clear.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_add_remove_clear/root"
+  parent: "data_list_add_remove_clear"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_add_remove_clear/view"
+  parent: "data_list_add_remove_clear/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_add_remove_clear/content"
+  parent: "data_list_add_remove_clear/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_add_remove_clear/prefab"
+  parent: "data_list_add_remove_clear/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_add_remove_clear/panel"
+  parent: "data_list_add_remove_clear/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "data_list_add_remove_clear/text"
+  parent: "data_list_add_remove_clear/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "data_list_cache_with_component"
+  parent: "data_list"
+  inherit_alpha: true
+  template: "/example/examples/data_list/cache_with_component/cache_with_component.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_cache_with_component/root"
+  parent: "data_list_cache_with_component"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_cache_with_component/view"
+  parent: "data_list_cache_with_component/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_cache_with_component/content"
+  parent: "data_list_cache_with_component/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "data_list_cache_with_component/button_component"
+  parent: "data_list_cache_with_component/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_cache_with_component/button_component/root"
+  parent: "data_list_cache_with_component/button_component"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_cache_with_component/button_component/panel"
+  parent: "data_list_cache_with_component/button_component/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "data_list_cache_with_component/button_component/text"
+  parent: "data_list_cache_with_component/button_component/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "gamepad"
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester"
+  parent: "gamepad"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/gamepad_tester/gamepad_tester.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/root"
+  parent: "gamepad_tester"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/gamepad"
+  parent: "gamepad_tester/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/stick_left"
+  parent: "gamepad_tester/gamepad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_left/root"
+  parent: "gamepad_tester/stick_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_PIE
+  id: "gamepad_tester/stick_left/background_mask"
+  parent: "gamepad_tester/stick_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_left/background"
+  parent: "gamepad_tester/stick_left/background_mask"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_left/stick_root"
+  parent: "gamepad_tester/stick_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_left/stick_shadow"
+  parent: "gamepad_tester/stick_left/stick_root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_left/stick"
+  parent: "gamepad_tester/stick_left/stick_root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_left/dot_1"
+  parent: "gamepad_tester/stick_left/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_left/dot_2"
+  parent: "gamepad_tester/stick_left/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_left/dot_3"
+  parent: "gamepad_tester/stick_left/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_left/dot_4"
+  parent: "gamepad_tester/stick_left/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/stick_right"
+  parent: "gamepad_tester/gamepad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_right/root"
+  parent: "gamepad_tester/stick_right"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_PIE
+  id: "gamepad_tester/stick_right/background_mask"
+  parent: "gamepad_tester/stick_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_right/background"
+  parent: "gamepad_tester/stick_right/background_mask"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_right/stick_root"
+  parent: "gamepad_tester/stick_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_right/stick_shadow"
+  parent: "gamepad_tester/stick_right/stick_root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_right/stick"
+  parent: "gamepad_tester/stick_right/stick_root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_right/dot_1"
+  parent: "gamepad_tester/stick_right/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_right/dot_2"
+  parent: "gamepad_tester/stick_right/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_right/dot_3"
+  parent: "gamepad_tester/stick_right/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/stick_right/dot_4"
+  parent: "gamepad_tester/stick_right/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/dpad"
+  parent: "gamepad_tester/gamepad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_left"
+  parent: "gamepad_tester/dpad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_left/button"
+  parent: "gamepad_tester/button_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_left/text"
+  parent: "gamepad_tester/button_left/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_left/icon"
+  parent: "gamepad_tester/button_left/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_up"
+  parent: "gamepad_tester/dpad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_up/button"
+  parent: "gamepad_tester/button_up"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_up/text"
+  parent: "gamepad_tester/button_up/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_up/icon"
+  parent: "gamepad_tester/button_up/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_right"
+  parent: "gamepad_tester/dpad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_right/button"
+  parent: "gamepad_tester/button_right"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_right/text"
+  parent: "gamepad_tester/button_right/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_right/icon"
+  parent: "gamepad_tester/button_right/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_down"
+  parent: "gamepad_tester/dpad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_down/button"
+  parent: "gamepad_tester/button_down"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_down/text"
+  parent: "gamepad_tester/button_down/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_down/icon"
+  parent: "gamepad_tester/button_down/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/buttons"
+  parent: "gamepad_tester/gamepad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_x"
+  parent: "gamepad_tester/buttons"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_x/button"
+  parent: "gamepad_tester/button_x"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_x/text"
+  parent: "gamepad_tester/button_x/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_x/icon"
+  parent: "gamepad_tester/button_x/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_y"
+  parent: "gamepad_tester/buttons"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_y/button"
+  parent: "gamepad_tester/button_y"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_y/text"
+  parent: "gamepad_tester/button_y/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_y/icon"
+  parent: "gamepad_tester/button_y/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_b"
+  parent: "gamepad_tester/buttons"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_b/button"
+  parent: "gamepad_tester/button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_b/text"
+  parent: "gamepad_tester/button_b/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_b/icon"
+  parent: "gamepad_tester/button_b/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_a"
+  parent: "gamepad_tester/buttons"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_a/button"
+  parent: "gamepad_tester/button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_a/text"
+  parent: "gamepad_tester/button_a/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_a/icon"
+  parent: "gamepad_tester/button_a/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/buttons_system"
+  parent: "gamepad_tester/gamepad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_back"
+  parent: "gamepad_tester/buttons_system"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_back/button"
+  parent: "gamepad_tester/button_back"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_back/text"
+  parent: "gamepad_tester/button_back/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_back/icon"
+  parent: "gamepad_tester/button_back/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_start"
+  parent: "gamepad_tester/buttons_system"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_start/button"
+  parent: "gamepad_tester/button_start"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_start/text"
+  parent: "gamepad_tester/button_start/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_start/icon"
+  parent: "gamepad_tester/button_start/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_left_bump"
+  parent: "gamepad_tester/gamepad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_l1"
+  parent: "gamepad_tester/button_left_bump"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_l1/button"
+  parent: "gamepad_tester/button_l1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_l1/text"
+  parent: "gamepad_tester/button_l1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_l1/icon"
+  parent: "gamepad_tester/button_l1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_l2"
+  parent: "gamepad_tester/button_left_bump"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_l2/button"
+  parent: "gamepad_tester/button_l2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_l2/fill"
+  parent: "gamepad_tester/button_l2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_l2/text"
+  parent: "gamepad_tester/button_l2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_right_bump"
+  parent: "gamepad_tester/gamepad"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_r1"
+  parent: "gamepad_tester/button_right_bump"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_r1/button"
+  parent: "gamepad_tester/button_r1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_r1/text"
+  parent: "gamepad_tester/button_r1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_r1/icon"
+  parent: "gamepad_tester/button_r1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "gamepad_tester/button_r2"
+  parent: "gamepad_tester/button_right_bump"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_r2/button"
+  parent: "gamepad_tester/button_r2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "gamepad_tester/button_r2/fill"
+  parent: "gamepad_tester/button_r2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "gamepad_tester/button_r2/text"
+  parent: "gamepad_tester/button_r2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "on_screen_control"
+  parent: "gamepad"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/on_screen_control/on_screen_control.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/root"
+  parent: "on_screen_control"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/character"
+  parent: "on_screen_control/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/eye_left"
+  parent: "on_screen_control/character"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/eye_left_blick"
+  parent: "on_screen_control/eye_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/eye_right"
+  parent: "on_screen_control/character"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/eye_right_blick"
+  parent: "on_screen_control/eye_right"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "on_screen_control/on_screen_input"
+  parent: "on_screen_control/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/root"
+  parent: "on_screen_control/on_screen_input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "on_screen_control/on_screen_input/on_screen_stick"
+  parent: "on_screen_control/on_screen_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_stick/root"
+  parent: "on_screen_control/on_screen_input/on_screen_stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_PIE
+  id: "on_screen_control/on_screen_input/on_screen_stick/background_mask"
+  parent: "on_screen_control/on_screen_input/on_screen_stick/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_stick/background"
+  parent: "on_screen_control/on_screen_input/on_screen_stick/background_mask"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_stick/stick_root"
+  parent: "on_screen_control/on_screen_input/on_screen_stick/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_stick/stick_shadow"
+  parent: "on_screen_control/on_screen_input/on_screen_stick/stick_root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_stick/stick"
+  parent: "on_screen_control/on_screen_input/on_screen_stick/stick_root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_stick/dot_1"
+  parent: "on_screen_control/on_screen_input/on_screen_stick/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_stick/dot_2"
+  parent: "on_screen_control/on_screen_input/on_screen_stick/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_stick/dot_3"
+  parent: "on_screen_control/on_screen_input/on_screen_stick/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_stick/dot_4"
+  parent: "on_screen_control/on_screen_input/on_screen_stick/stick"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/on_screen_button"
+  parent: "on_screen_control/on_screen_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "on_screen_control/on_screen_input/button_action"
+  parent: "on_screen_control/on_screen_input/on_screen_button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/button_action/button"
+  parent: "on_screen_control/on_screen_input/button_action"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "on_screen_control/on_screen_input/button_action/text"
+  parent: "on_screen_control/on_screen_input/button_action/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "on_screen_control/on_screen_input/button_action/icon"
+  parent: "on_screen_control/on_screen_input/button_action/button"
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "panthera"
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "animation_blend"
+  parent: "panthera"
+  inherit_alpha: true
+  template: "/example/examples/panthera/animation_blend/animation_blend.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/root"
+  parent: "animation_blend"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/character"
+  parent: "animation_blend/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/body"
+  parent: "animation_blend/character"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/eyes"
+  parent: "animation_blend/body"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/eye_left"
+  parent: "animation_blend/eyes"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/brow_left"
+  parent: "animation_blend/eye_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/eye_right"
+  parent: "animation_blend/eyes"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/brow_right"
+  parent: "animation_blend/eye_right"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/mouth"
+  parent: "animation_blend/body"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/hand_left"
+  parent: "animation_blend/body"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "animation_blend/hand_right"
+  parent: "animation_blend/body"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "animation_blend/text_hint"
+  parent: "animation_blend/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "animation_blend/rich_text_kenney"
+  parent: "animation_blend/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_animation"
+  parent: "panthera"
+  inherit_alpha: true
+  template: "/example/examples/panthera/basic_animation/basic_animation.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_animation/root"
+  parent: "basic_animation"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_animation/button"
+  parent: "basic_animation/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_animation/button/root"
+  parent: "basic_animation/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "basic_animation/button/text"
+  parent: "basic_animation/button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "layout"
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "basic_layout"
+  parent: "layout"
+  inherit_alpha: true
+  template: "/example/examples/layout/basic/basic_layout.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_layout/root"
+  parent: "basic_layout"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_layout/layout"
+  parent: "basic_layout/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "basic_layout/prefab"
+  parent: "basic_layout/layout"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "widgets"
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "hover_hint_example"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/examples/widgets/hover_hint/hover_hint_example.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/root"
+  parent: "hover_hint_example"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "hover_hint_example/hover_hint"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/hover_hint/root"
+  parent: "hover_hint_example/hover_hint"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/hover_hint/panel_hint"
+  parent: "hover_hint_example/hover_hint/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "hover_hint_example/hover_hint/text_hint"
+  parent: "hover_hint_example/hover_hint/panel_hint"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/node_yellow"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/node_red"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/node_blue"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint_example/node_green"
+  parent: "hover_hint_example/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -200.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_button"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/components/properties_panel/properties/property_button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/root"
+  parent: "property_button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_button/text_name"
+  parent: "property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/button"
+  parent: "property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/selected"
+  parent: "property_button/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_button/text_button"
+  parent: "property_button/button"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -200.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_checkbox"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/components/properties_panel/properties/property_checkbox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/root"
+  parent: "property_checkbox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_checkbox/text_name"
+  parent: "property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/button"
+  parent: "property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/icon"
+  parent: "property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/selected"
+  parent: "property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -200.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_slider"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/components/properties_panel/properties/property_slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/root"
+  parent: "property_slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_slider/text_name"
+  parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/E_Anchor"
+  parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/button"
+  parent: "property_slider/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/selected"
+  parent: "property_slider/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_slider/text_value"
+  parent: "property_slider/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider"
+  parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider_back"
+  parent: "property_slider/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider_pin"
+  parent: "property_slider/slider"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -20.0
+    y: -540.0
+  }
+  size {
+    x: 1080.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "container_status"
+  xanchor: XANCHOR_LEFT
+  pivot: PIVOT_S
+  parent: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    y: 25.0
+  }
+  type: TYPE_TEMPLATE
+  id: "panel_druid_profiler"
+  parent: "container_status"
+  inherit_alpha: true
+  template: "/example/components/panel_druid_profiler/panel_druid_profiler.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_druid_profiler/root"
+  parent: "panel_druid_profiler"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_druid_profiler/group_memory"
+  parent: "panel_druid_profiler/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_memory"
+  parent: "panel_druid_profiler/group_memory"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_memory_amount"
+  parent: "panel_druid_profiler/group_memory"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_memory_kb"
+  parent: "panel_druid_profiler/group_memory"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_druid_profiler/group_fps"
+  parent: "panel_druid_profiler/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_fps"
+  parent: "panel_druid_profiler/group_fps"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_fps_amount"
+  parent: "panel_druid_profiler/group_fps"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_fps_min"
+  parent: "panel_druid_profiler/group_fps"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_druid_profiler/group_components"
+  parent: "panel_druid_profiler/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_components"
+  parent: "panel_druid_profiler/group_components"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_components_amount"
+  parent: "panel_druid_profiler/group_components"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_druid_profiler/group_events"
+  parent: "panel_druid_profiler/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_events"
+  parent: "panel_druid_profiler/group_events"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_druid_profiler/text_events_amount"
+  parent: "panel_druid_profiler/group_events"
+  template_node_child: true
+}
+layers {
+  name: "druid"
+}
+layers {
+  name: "druid_logo"
+}
+layers {
+  name: "text_regular"
+}
+layers {
+  name: "text_bold"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
+max_nodes: 2048

@@ -53,6 +53,9 @@
 --- Current text position
 -- @tfield vector3 pos
 
+--- The last text value
+-- @tfield string last_value
+
 --- Initial text node scale
 -- @tfield vector3 start_scale
 
@@ -78,12 +81,18 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local utf8_lua = require("druid.system.utf8")
 local component = require("druid.component")
-local utf8 = utf8 or utf8_lua
+local utf8 = utf8 or utf8_lua --[[@as utf8]]
 
 local Text = component.create("text")
 
-
 local function update_text_size(self)
+	if self.scale.x == 0 or self.scale.y == 0 then
+		return
+	end
+	if self.start_scale.x == 0 or self.start_scale.y == 0 then
+		return
+	end
+
 	local size = vmath.vector3(
 		self.start_size.x * (self.start_scale.x / self.scale.x),
 		self.start_size.y * (self.start_scale.y / self.scale.y),
@@ -95,8 +104,17 @@ end
 
 --- Reset initial scale for text
 local function reset_default_scale(self)
+	self.scale.x = self.start_scale.x
+	self.scale.y = self.start_scale.y
+	self.scale.z = self.start_scale.z
 	gui.set_scale(self.node, self.start_scale)
 	gui.set_size(self.node, self.start_size)
+end
+
+
+local function is_fit_info_area(self, metrics)
+	return metrics.width * self.scale.x <= self.text_area.x and
+		   metrics.height * self.scale.y <= self.text_area.y
 end
 
 
@@ -104,20 +122,64 @@ end
 local function update_text_area_size(self)
 	reset_default_scale(self)
 
-	local max_width = self.text_area.x
-	local max_height = self.text_area.y
-
 	local metrics = helper.get_text_metrics_from_node(self.node)
 
-	local scale_modifier = max_width / metrics.width
-	scale_modifier = math.min(scale_modifier, self.start_scale.x)
+	if metrics.width == 0 then
+		reset_default_scale(self)
+		self.on_update_text_scale:trigger(self:get_context(), self.start_scale, metrics)
+		return
+	end
 
+	local text_area_width = self.text_area.x
+	local text_area_height = self.text_area.y
+
+	-- Adjust by width
+	local scale_modifier = text_area_width / metrics.width
+
+	-- Adjust by height
 	if self:is_multiline() then
-		local scale_modifier_by_height = math.sqrt(max_height / metrics.height)
-		scale_modifier = math.min(self.start_scale.y, scale_modifier_by_height)
+		-- Approximate scale by height to start adjust scale
+		scale_modifier = math.sqrt(text_area_height / metrics.height)
+		if metrics.width * scale_modifier > text_area_width then
+			scale_modifier = text_area_width / metrics.width
+		end
 
-		if metrics.width * scale_modifier > max_width then
-			scale_modifier = math.min(max_width / metrics.width, self.start_scale.x)
+		-- #RMME
+		if self._minimal_scale then
+			scale_modifier = math.max(scale_modifier, self._minimal_scale)
+		end
+		-- Limit max scale by initial scale
+		scale_modifier = math.min(scale_modifier, self.start_scale.x)
+		-- #RMME
+
+		local is_fit = is_fit_info_area(self, metrics)
+		local step = is_fit and self.style.ADJUST_SCALE_DELTA or -self.style.ADJUST_SCALE_DELTA
+
+		for i = 1, self.style.ADJUST_STEPS do
+			-- Grow down to check if we fit
+			if step < 0 and is_fit then
+				break
+			end
+			-- Grow up to check if we still fit
+			if step > 0 and not is_fit then
+				break
+			end
+
+			scale_modifier = scale_modifier + step
+
+			if self._minimal_scale then
+				scale_modifier = math.max(scale_modifier, self._minimal_scale)
+			end
+			-- Limit max scale by initial scale
+			scale_modifier = math.min(scale_modifier, self.start_scale.x)
+
+			self.scale.x = scale_modifier
+			self.scale.y = scale_modifier
+			self.scale.z = self.start_scale.z
+			gui.set_scale(self.node, self.scale)
+			update_text_size(self)
+			metrics = helper.get_text_metrics_from_node(self.node)
+			is_fit = is_fit_info_area(self, metrics)
 		end
 	end
 
@@ -125,13 +187,16 @@ local function update_text_area_size(self)
 		scale_modifier = math.max(scale_modifier, self._minimal_scale)
 	end
 
-	local new_scale = vmath.vector3(scale_modifier, scale_modifier, self.start_scale.z)
-	gui.set_scale(self.node, new_scale)
-	self.scale = new_scale
+	-- Limit max scale by initial scale
+	scale_modifier = math.min(scale_modifier, self.start_scale.x)
 
+	self.scale.x = scale_modifier
+	self.scale.y = scale_modifier
+	self.scale.z = self.start_scale.z
+	gui.set_scale(self.node, self.scale)
 	update_text_size(self)
 
-	self.on_update_text_scale:trigger(self:get_context(), new_scale, metrics)
+	self.on_update_text_scale:trigger(self:get_context(), self.scale, metrics)
 end
 
 
@@ -146,9 +211,14 @@ local function update_text_with_trim(self, trim_postfix)
 			text_length = text_length - 1
 			new_text = utf8.sub(self.last_value, 1, text_length)
 			text_width = self:get_text_size(new_text .. trim_postfix)
+			if text_length == 0 then
+				break
+			end
 		end
 
 		gui.set_text(self.node, new_text .. trim_postfix)
+	else
+		gui.set_text(self.node, self.last_value)
 	end
 end
 
@@ -159,18 +229,6 @@ local function update_text_with_anchor_shift(self)
 	else
 		self:set_pivot(self.start_pivot)
 	end
-end
-
-
--- calculate space width with font
-local function get_space_width(self, font)
-	if not self._space_width[font] then
-		local no_space = resource.get_text_metrics(font, "1").width
-		local with_space = resource.get_text_metrics(font, " 1").width
-		self._space_width[font] = with_space - no_space
-	end
-
-	return self._space_width[font]
 end
 
 
@@ -207,20 +265,24 @@ end
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
--- @tfield[opt=...] string TRIM_POSTFIX The postfix for TRIM adjust type
--- @tfield[opt=DOWNSCALE] string DEFAULT_ADJUST The default adjust type for any text component
+-- @tfield string|nil TRIM_POSTFIX The postfix for TRIM adjust type. Default: ...
+-- @tfield string|nil DEFAULT_ADJUST The default adjust type for any text component. Default: DOWNSCALE
+-- @tfield string|nil ADJUST_STEPS Amount of iterations for text adjust by height. Default: 20
+-- @tfield string|nil ADJUST_SCALE_DELTA Scale step on each height adjust step. Default: 0.02
 function Text.on_style_change(self, style)
 	self.style = {}
 	self.style.TRIM_POSTFIX = style.TRIM_POSTFIX or "..."
 	self.style.DEFAULT_ADJUST = style.DEFAULT_ADJUST or const.TEXT_ADJUST.DOWNSCALE
+	self.style.ADJUST_STEPS = style.ADJUST_STEPS or 20
+	self.style.ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02
 end
 
 
---- @{Text} constructor
+--- The @{Text} constructor
 -- @tparam Text self @{Text}
 -- @tparam string|node node Node name or GUI Text Node itself
--- @tparam[opt] string value Initial text. Default value is node text from GUI scene.
--- @tparam[opt=downscale] string adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+-- @tparam string|nil value Initial text. Default value is node text from GUI scene. Default: nil
+-- @tparam string|nil adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
 function Text.init(self, node, value, adjust_type)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)
@@ -241,8 +303,6 @@ function Text.init(self, node, value, adjust_type)
 	self.on_set_text = Event()
 	self.on_set_pivot = Event()
 	self.on_update_text_scale = Event()
-
-	self._space_width = {}
 
 	self:set_to(value or gui.get_text(self.node))
 	return self
@@ -267,32 +327,60 @@ end
 
 --- Calculate text width with font with respect to trailing space
 -- @tparam Text self @{Text}
--- @tparam[opt] string text
+-- @tparam string text|nil
 -- @treturn number Width
 -- @treturn number Height
 function Text.get_text_size(self, text)
 	text = text or self.last_value
 	local font_name = gui.get_font(self.node)
 	local font = gui.get_font_resource(font_name)
-	local scale = gui.get_scale(self.node)
+	local scale = self.last_scale or gui.get_scale(self.node)
 	local linebreak = gui.get_line_break(self.node)
-	local metrics = resource.get_text_metrics(font, text, {
+	local dot_width = resource.get_text_metrics(font, ".").width
+
+	local metrics = resource.get_text_metrics(font, text .. ".", {
 		line_break = linebreak,
 		leading = 1,
 		tracking = 0,
 		width = self.start_size.x
 	})
-	local width = metrics.width
-	for i = #text, 1, -1 do
-		local c = string.sub(text, i, i)
-		if c ~= ' ' then
+
+	local width = metrics.width - dot_width
+	return width * scale.x, metrics.height * scale.y
+end
+
+
+--- Get chars count by width
+-- @tparam Text self @{Text}
+-- @tparam number width
+-- @treturn number Chars count
+function Text.get_text_index_by_width(self, width)
+	local text = self.last_value
+	local font_name = gui.get_font(self.node)
+	local font = gui.get_font_resource(font_name)
+	local scale = self.last_scale or gui.get_scale(self.node)
+
+	local text_index = 0
+	local text_width = 0
+	local text_length = utf8.len(text)
+	local dot_width = resource.get_text_metrics(font, ".").width
+	local previous_width = 0
+	for i = 1, text_length do
+		local subtext = utf8.sub(text, 1, i) .. "."
+		local subtext_width = resource.get_text_metrics(font, subtext).width
+		subtext_width = subtext_width - dot_width
+		text_width = subtext_width * scale.x
+		local width_delta = text_width - previous_width
+		previous_width = text_width
+
+		if (text_width - width_delta/2) < width then
+			text_index = i
+		else
 			break
 		end
-
-		width = width + get_space_width(self, font)
 	end
 
-	return width * scale.x, metrics.height * scale.y
+	return text_index
 end
 
 
@@ -311,6 +399,19 @@ function Text.set_to(self, set_to)
 	update_adjust(self)
 
 	return self
+end
+
+
+--- Set text area size
+-- @tparam Text self @{Text}
+-- @tparam vector3 size The new text area size
+-- @treturn Text Current text instance
+function Text.set_size(self, size)
+	self.start_size = size
+	self.text_area = vmath.vector3(size)
+	self.text_area.x = self.text_area.x * self.start_scale.x
+	self.text_area.y = self.text_area.y * self.start_scale.y
+	update_adjust(self)
 end
 
 
@@ -352,7 +453,7 @@ end
 
 --- Set text pivot. Text will re-anchor inside text area
 -- @tparam Text self @{Text}
--- @tparam gui.pivot pivot Gui pivot constant
+-- @tparam number pivot The gui.PIVOT_* constant
 -- @treturn Text Current text instance
 function Text.set_pivot(self, pivot)
 	local prev_pivot = gui.get_pivot(self.node)
@@ -378,7 +479,7 @@ end
 
 --- Return true, if text with line break
 -- @tparam Text self @{Text}
--- @treturn bool Is text node with line break
+-- @treturn boolean Is text node with line break
 function Text.is_multiline(self)
 	return gui.get_line_break(self.node)
 end
@@ -386,8 +487,8 @@ end
 
 --- Set text adjust, refresh the current text visuals, if needed
 -- @tparam Text self @{Text}
--- @tparam[opt] number adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
--- @tparam[opt] number minimal_scale If pass nil - not use minimal scale
+-- @tparam string|nil adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
+-- @tparam number|nil minimal_scale If pass nil - not use minimal scale
 -- @treturn Text Current text instance
 function Text.set_text_adjust(self, adjust_type, minimal_scale)
 	self.adjust_type = adjust_type

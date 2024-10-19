@@ -1,0 +1,209 @@
+{
+	"additional_characters": " 1234567890!@#$%^&*()_+-=`[]{}|;':\",.<>/?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯÀàÂâÆæÇçÈèÉéÊêËëÎîÏïÔôŒœÙùÛûÜüŸÿ",
+	"ui_examples": "Examples",
+	"ui_properties_panel": "Properties",
+	"ui_output": "Output",
+	"ui_view_code": "View code",
+	"ui_profiler": "Profiler",
+	"ui_profiler_memory": "Memory",
+	"ui_profiler_fps": "FPS",
+	"ui_profiler_components": "Components",
+	"ui_profiler_events": "Events",
+	"ui_confirm": "Confirm",
+	"ui_cancel": "Cancel",
+	"ui_value": "Value",
+	"ui_scroll": "Scroll",
+	"ui_clipping": "Clipping",
+	"ui_no_properties": "No properties for this example",
+	"ui_padding": "Padding",
+	"ui_margin_x": "Margin X",
+	"ui_margin_y": "Margin Y",
+	"ui_justify": "Justify",
+	"ui_pivot_next": "Next Pivot",
+	"ui_type_next": "Next Type",
+	"ui_adjust_next": "Next Adjust",
+	"ui_enabled": "Enabled",
+
+	"ui_examples_basic": "Basic",
+	"ui_examples_data_list": "Data List",
+	"ui_examples_gamepad": "Gamepad",
+	"ui_examples_window": "Windows",
+	"ui_examples_panthera": "Panthera",
+
+	"ui_example_intro": "Introduction",
+	"ui_example_intro_description": "Here will be a brief description of the selected example.",
+
+	"ui_example_basic_button": "Button",
+	"ui_example_basic_button_description": "Basic Druid button example",
+
+	"ui_example_basic_button_double_click": "Button Double Click",
+	"ui_example_basic_button_double_click_description": "How to add double click functionality to the button.",
+
+	"ui_example_basic_button_hold": "Button Hold",
+	"ui_example_basic_button_hold_description": "How to make hold and trigger functionality for the button.",
+
+	"ui_example_basic_text": "Text",
+	"ui_example_basic_text_description": "Check how text is adjusted with different properties.",
+
+	"ui_example_basic_multiline_text": "Multiline Text",
+	"ui_example_basic_multiline_text_description": "Check how multiline text is adjusted with different properties.",
+
+	"ui_example_basic_hover": "Hover",
+	"ui_example_basic_hover_description": "Hover have two hover events. One for mouse and one for touch. Use mouse_callback for mouse events",
+
+	"ui_example_basic_drag": "Drag",
+	"ui_example_basic_drag_description": "How to make simple drag node",
+
+	"ui_example_basic_drag_to_node": "Drag To Node",
+	"ui_example_basic_drag_to_node_description": "How to make drag node to another node and get callbacks",
+
+	"ui_example_basic_slider": "Slider",
+	"ui_example_basic_slider_description": "How to make simple slider",
+
+	"ui_example_basic_slider_vertical": "Slider Vertical",
+	"ui_example_basic_slider_vertical_description": "How to make simple vertical slider",
+
+	"ui_example_basic_slider_stepped": "Slider Steps",
+	"ui_example_basic_slider_stepped_description": "Sliders can have a \"steps\" property to make it stepped",
+
+	"ui_example_basic_progress_bar": "Progress Bar",
+	"ui_example_basic_progress_bar_description": "How to make simple progress bar",
+
+	"ui_example_basic_progress_bar_slice9": "Progress Bar Slice9",
+	"ui_example_basic_progress_bar_slice9_description": "The progress component can handle slice9 property to make it scalable at the beginning",
+
+	"ui_example_basic_blocker": "Blocker",
+	"ui_example_basic_blocker_description": "How to make a blocker from a node to interrupt the input",
+
+	"ui_example_basic_back_handler": "Back Handler",
+	"ui_example_basic_back_handler_description": "How to create back handler. Is used to shorthand for back button or backspace to call a callback",
+
+	"ui_example_basic_timer": "Timer",
+	"ui_example_basic_timer_description": "The Timer component is used to display a second timer with a callback",
+
+	"ui_example_basic_hotkey": "Hotkey",
+	"ui_example_basic_hotkey_description": "How to create a hotkey for a callback",
+
+	"ui_example_basic_scroll": "Scroll",
+	"ui_example_basic_scroll_description": "How to make a simple scroll",
+	"ui_elastic_scroll": "Elastic Scroll",
+	"ui_slider_friction": "Scroll Friction",
+	"ui_slider_speed": "Scroll Speed",
+	"ui_slider_wheel_speed": "Wheel Speed",
+	"ui_wheel_by_inertion": "Wheel By Inertion",
+
+	"ui_example_basic_scroll_slider": "Scroll with Slider",
+	"ui_example_basic_scroll_slider_description": "How to add a slider control to the scroll and use them",
+
+	"ui_example_basic_grid": "Static Grid",
+	"ui_example_basic_grid_description": "How to place nodes in a grid",
+	"ui_grid_in_row": "Elements In Row",
+	"ui_add_element": "Add Element",
+	"ui_remove_element": "Remove Element",
+	"ui_clear_elements": "Clear Elements",
+	"ui_dynamic_pos": "Dynamic Position",
+	"ui_align_last_row": "Align Last Row",
+
+	"ui_example_basic_scroll_bind_grid": "Scroll Grid",
+	"ui_example_basic_scroll_bind_grid_description": "Scroll works good with grids and predefined sizes, this is an example of scroll bind grid.",
+
+	"ui_example_basic_scroll_bind_grid_horizontal": "Scroll Grid Horizontal",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "Scroll works good with grids and predefined sizes, this is an example of scroll bind grid horizontal.",
+
+	"ui_example_basic_scroll_bind_grid_points": "Scroll Grid Points",
+	"ui_example_basic_scroll_bind_grid_points_description": "Scrolls with points of interest to snap to",
+
+	"ui_example_basic_input": "Input",
+	"ui_example_basic_input_description": "How to make most simple input in Druid",
+
+	"ui_example_input_password": "Input Password",
+	"ui_example_input_password_description": "How the password input works",
+
+	"ui_example_basic_rich_input": "Rich Input",
+	"ui_example_basic_rich_input_description": "How to make a rich input in Druid",
+
+	"ui_example_basic_rich_text": "Rich Text",
+	"ui_example_basic_rich_text_description": "How to create a rich text in Druid",
+
+	"ui_example_rich_text_tags": "Rich Text Tags",
+	"ui_example_rich_text_tags_description": "Here is a example of rich text with tags\n - <color=A1D7F5>color</color>\n - font\n - size\n - br\n - img",
+
+	"ui_example_basic_swipe": "Swipe",
+	"ui_example_basic_swipe_description": "How to add callbacks on swipe events",
+
+	"ui_example_checkbox": "Checkbox",
+	"ui_example_checkbox_description": "How to make a checkbox using Druid Button",
+
+	"ui_example_checkbox_group": "Checkbox Group",
+	"ui_example_checkbox_group_description": "How to make a checkbox group using Druid Buttons",
+
+	"ui_example_radio_group": "Radio Group",
+	"ui_example_radio_group_description": "How to make a radio group using Druid Buttons",
+
+	"ui_example_data_list_basic": "Data List Basic",
+	"ui_example_data_list_basic_description": "How to make a data list",
+
+	"ui_example_data_list_horizontal_basic": "Data List Horizontal Basic",
+	"ui_example_data_list_horizontal_basic_description": "How to make a horizontal data list",
+
+	"ui_example_data_list_add_remove_clear": "Data List Add Remove Clear",
+	"ui_example_data_list_add_remove_clear_description": "How the add, remove and clear functions work in the data list",
+
+	"ui_example_data_list_cache_with_component": "Data List Cached Version",
+	"ui_example_data_list_cache_with_component_description": "Cached version requires more setup for add/remove callbacks, but it's more memory performant",
+
+	"ui_language": "Language",
+	"ui_example_window_language": "Window Language",
+	"ui_example_window_language_description": "Here is a example of window with language selection.",
+
+	"ui_confirmation": "Confirmation",
+	"ui_example_window_confirmation": "Window Confirmation",
+	"ui_confirmation_description": "Confirm buy the one million dollar car?",
+
+	"ui_information": "Information",
+	"ui_example_window_information": "Window Information",
+	"ui_example_window_information_text": "You are the best of the best!",
+	"ui_example_window_information_description": "Here is a example of window with information message.",
+
+	"ui_example_widget_hover_hint": "Hint on Hover",
+	"ui_example_widget_hover_hint_description": "Here is a example of show hint on mouse hover",
+
+	"ui_example_widget_property_button": "Property Button",
+	"ui_example_widget_property_button_description": "Here is a widget used in Properties panel",
+
+	"ui_example_widget_property_slider": "Property Slider",
+	"ui_example_widget_property_slider_description": "Here is a widget used in Properties panel",
+
+	"ui_example_widget_property_checkbox": "Property Checkbox",
+	"ui_example_widget_property_checkbox_description": "Here is a widget used in Properties panel",
+
+	"ui_example_gamepad_tester": "Gamepad Tester",
+	"ui_example_gamepad_tester_description": "Test your gamepad here to bind buttons and axes",
+
+	"ui_example_on_screen_control": "On Screen Control",
+	"ui_example_on_screen_control_description": "Here is a example of on screen control. The on_screen_input here is a joystick with a callback as Druid component",
+
+	"ui_example_layout_basic": "Layout",
+	"ui_example_layout_basic_description": "This layout can be adjusted to be the same as in Figma",
+
+	"ui_example_panthera_basic_animation": "Panthera Basic Animation",
+	"ui_example_panthera_basic_animation_description": "Here is a example of Panthera Basic Animation.",
+
+	"ui_example_panthera_animation_blend": "Panthera Animation Blend",
+	"ui_example_panthera_animation_blend_description": "Here is a example of Panthera Animation Blend.",
+	"ui_example_panthera_animation_blend_hint": "Hover mouse over this area",
+
+	"ui_animation_vertical": "Vertical",
+	"ui_animation_horizontal": "Horizontal",
+
+	"ui_language_en": "English",
+	"ui_language_ru": "Русский",
+	"ui_language_es": "Español",
+	"ui_language_de": "Deutsch",
+	"ui_language_fr": "Français",
+	"ui_language_ja": "日本語",
+	"ui_language_pt": "Português",
+	"ui_language_it": "Italiano",
+	"ui_language_kr": "한국어",
+	"ui_language_zh": "中文"
+}

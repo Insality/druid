@@ -1,0 +1,155 @@
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+nodes {
+  size {
+    x: 1000.0
+    y: 1000.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_64"
+  id: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 32.0
+    y: 32.0
+    z: 32.0
+    w: 32.0
+  }
+}
+nodes {
+  position {
+    y: 270.0
+  }
+  type: TYPE_TEMPLATE
+  id: "hover_hint"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/examples/widgets/hover_hint/hover_hint.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint/root"
+  parent: "hover_hint"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint/panel_hint"
+  parent: "hover_hint/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "hover_hint/text_hint"
+  parent: "hover_hint/panel_hint"
+  template_node_child: true
+}
+nodes {
+  position {
+    y: 100.0
+  }
+  size {
+    x: 140.0
+    y: 140.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "node_yellow"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: 200.0
+  }
+  size {
+    x: 140.0
+    y: 140.0
+  }
+  color {
+    x: 0.957
+    y: 0.608
+    z: 0.608
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "node_red"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: -200.0
+  }
+  size {
+    x: 140.0
+    y: 140.0
+  }
+  color {
+    x: 0.631
+    y: 0.843
+    z: 0.961
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "node_blue"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    y: -100.0
+  }
+  size {
+    x: 140.0
+    y: 140.0
+  }
+  color {
+    x: 0.557
+    y: 0.835
+    z: 0.62
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "node_green"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

@@ -43,8 +43,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -57,9 +55,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -84,8 +80,8 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, seconds_from[, seconds_to=0[, callback]])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#init">init(self, node, seconds_from, seconds_to, callback)</a></td>
+	<td class="summary">The <a href="../modules/Timer.html#">Timer</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_interval">set_interval(self, from, to)</a></td>
@@ -141,10 +137,10 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, seconds_from[, seconds_to=0[, callback]])</strong>
+    <strong>init(self, node, seconds_from, seconds_to, callback)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/Timer.html#">Timer</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -158,18 +154,16 @@
          Gui text node
         </li>
         <li><span class="parameter">seconds_from</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Start timer value in seconds
         </li>
         <li><span class="parameter">seconds_to</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          End timer value in seconds
-         (<em>default</em> 0)
         </li>
         <li><span class="parameter">callback</span>
-            <span class="types"><span class="type">function</span></span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
          Function on timer end
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -222,7 +216,7 @@
          <a href="../modules/Timer.html#">Timer</a>
         </li>
         <li><span class="parameter">is_on</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Timer enable state
         </li>
     </ul>

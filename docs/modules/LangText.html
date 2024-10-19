@@ -43,8 +43,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -57,9 +55,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><strong>LangText</strong></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -89,11 +85,11 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#format">format(self[, a[, b[, c[, d[, e[, f[, g]]]]]]])</a></td>
+	<td class="name" nowrap><a href="#format">format(self, a, b, c, d, e, f, g)</a></td>
 	<td class="summary">Format string with new text params on localized text</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, locale_id[, adjust_type=downscale])</a></td>
+	<td class="name" nowrap><a href="#init">init(self, node, locale_id, adjust_type)</a></td>
 	<td class="summary">The <a href="../modules/LangText.html#">LangText</a> constructor</td>
 	</tr>
 	<tr>
@@ -101,12 +97,16 @@
 	<td class="summary">Setup raw text to lang_text component</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#translate">translate(self, locale_id[, a[, b[, c[, d[, e[, f[, g]]]]]]])</a></td>
+	<td class="name" nowrap><a href="#translate">translate(self, locale_id, a, b, c, d, e, f, g)</a></td>
 	<td class="summary">Translate the text by locale_id</td>
 	</tr>
 </table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Text node</td>
+	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_change">on_change</a></td>
 	<td class="summary">On change text callback</td>
@@ -126,7 +126,7 @@
     <dl class="function">
     <dt>
     <a name = "format"></a>
-    <strong>format(self[, a[, b[, c[, d[, e[, f[, g]]]]]]])</strong>
+    <strong>format(self, a, b, c, d, e, f, g)</strong>
     </dt>
     <dd>
     Format string with new text params on localized text
@@ -139,39 +139,32 @@
          <a href="../modules/LangText.html#">LangText</a>
         </li>
         <li><span class="parameter">a</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">b</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">c</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">d</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">e</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">f</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">g</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -188,7 +181,7 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, locale_id[, adjust_type=downscale])</strong>
+    <strong>init(self, node, locale_id, adjust_type)</strong>
     </dt>
     <dd>
     The <a href="../modules/LangText.html#">LangText</a> constructor
@@ -201,17 +194,16 @@
          <a href="../modules/LangText.html#">LangText</a>
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">node</span></span>
-         Node name or GUI Text Node itself
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <a class="type" href="../modules/LangText.html#node">node</a></span>
+         The node_id or gui.get_node(node_id)
         </li>
         <li><span class="parameter">locale_id</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Default locale id or text from node as default
         </li>
         <li><span class="parameter">adjust_type</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
-         (<em>default</em> downscale)
         </li>
     </ul>
 
@@ -253,7 +245,7 @@
 </dd>
     <dt>
     <a name = "translate"></a>
-    <strong>translate(self, locale_id[, a[, b[, c[, d[, e[, f[, g]]]]]]])</strong>
+    <strong>translate(self, locale_id, a, b, c, d, e, f, g)</strong>
     </dt>
     <dd>
     Translate the text by locale_id
@@ -270,39 +262,32 @@
          Locale id
         </li>
         <li><span class="parameter">a</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">b</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">c</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">d</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">e</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">f</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">g</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Optional param to string.format
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -321,6 +306,26 @@
     <h2 class="section-header "><a name="Fields"></a>Fields</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Text node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/LangText.html#node">node</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "on_change"></a>
     <strong>on_change</strong>

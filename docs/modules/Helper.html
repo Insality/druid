@@ -42,8 +42,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -56,9 +54,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -87,11 +83,11 @@ helper.centrate_nodes(0, node_1, node_2)
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#helper.add_array">helper.add_array(target[, source])</a></td>
+	<td class="name" nowrap><a href="#helper.add_array">helper.add_array(target, source)</a></td>
 	<td class="summary">Add all elements from source array to the target array</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#helper.centrate_nodes">helper.centrate_nodes([margin=0], ...)</a></td>
+	<td class="name" nowrap><a href="#helper.centrate_nodes">helper.centrate_nodes(margin, ...)</a></td>
 	<td class="summary">Centerate nodes by x position with margin.</td>
 	</tr>
 	<tr>
@@ -111,7 +107,7 @@ helper.centrate_nodes(0, node_1, node_2)
 	<td class="summary">Calculate distance between two points</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#helper.get_border">helper.get_border(node[, offset])</a></td>
+	<td class="name" nowrap><a href="#helper.get_border">helper.get_border(node, offset)</a></td>
 	<td class="summary">Distance from node position to his borders</td>
 	</tr>
 	<tr>
@@ -143,7 +139,7 @@ helper.centrate_nodes(0, node_1, node_2)
 	<td class="summary">Get text metric from GUI node.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#helper.insert_with_shift">helper.insert_with_shift(array, item[, index[, shift_policy]])</a></td>
+	<td class="name" nowrap><a href="#helper.insert_with_shift">helper.insert_with_shift(array, any, index, shift_policy)</a></td>
 	<td class="summary">Add value to array with shift policy</td>
 	</tr>
 	<tr>
@@ -151,19 +147,27 @@ helper.centrate_nodes(0, node_1, node_2)
 	<td class="summary">Check if device is native mobile (Android or iOS)</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#helper.is_multitouch_supported">helper.is_multitouch_supported()</a></td>
+	<td class="summary">Check if device is mobile and can support multitouch</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#helper.is_web">helper.is_web()</a></td>
 	<td class="summary">Check if device is HTML5</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#helper.is_web_mobile">helper.is_web_mobile()</a></td>
+	<td class="summary">Check if device is HTML5 mobile</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#helper.lerp">helper.lerp(a, b, t)</a></td>
 	<td class="summary">Lerp between two values</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#helper.remove_with_shift">helper.remove_with_shift(array[, index[, shift_policy]])</a></td>
+	<td class="name" nowrap><a href="#helper.remove_with_shift">helper.remove_with_shift(array, index, shift_policy)</a></td>
 	<td class="summary">Remove value from array with shift policy</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#helper.round">helper.round(num[, num_decimal_places=0])</a></td>
+	<td class="name" nowrap><a href="#helper.round">helper.round(num, num_decimal_places)</a></td>
 	<td class="summary">Round number to specified decimal places</td>
 	</tr>
 	<tr>
@@ -189,7 +193,7 @@ helper.centrate_nodes(0, node_1, node_2)
     <dl class="function">
     <dt>
     <a name = "helper.add_array"></a>
-    <strong>helper.add_array(target[, source])</strong>
+    <strong>helper.add_array(target, source)</strong>
     </dt>
     <dd>
     Add all elements from source array to the target array
@@ -198,20 +202,19 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">target</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+            <span class="types"><span class="type">any[]</span></span>
          Array to put elements from source
         </li>
         <li><span class="parameter">source</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+            <span class="types"><span class="type">any[]</span> or <span class="type">nil</span></span>
          The source array to get elements from
-         (<em>optional</em>)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">array</span></span>
+           <span class="types"><span class="type">any[]</span></span>
         The target array
     </ol>
 
@@ -221,7 +224,7 @@ helper.centrate_nodes(0, node_1, node_2)
 </dd>
     <dt>
     <a name = "helper.centrate_nodes"></a>
-    <strong>helper.centrate_nodes([margin=0], ...)</strong>
+    <strong>helper.centrate_nodes(margin, ...)</strong>
     </dt>
     <dd>
     Centerate nodes by x position with margin.
@@ -232,9 +235,8 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">margin</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Offset between nodes
-         (<em>default</em> 0)
         </li>
         <li><span class="parameter">...</span>
          Gui nodes
@@ -379,7 +381,7 @@ helper.centrate_nodes(0, node_1, node_2)
 </dd>
     <dt>
     <a name = "helper.get_border"></a>
-    <strong>helper.get_border(node[, offset])</strong>
+    <strong>helper.get_border(node, offset)</strong>
     </dt>
     <dd>
     Distance from node position to his borders
@@ -392,9 +394,8 @@ helper.centrate_nodes(0, node_1, node_2)
          GUI node
         </li>
         <li><span class="parameter">offset</span>
-            <span class="types"><span class="type">vector3</span></span>
+            <span class="types"><span class="type">vector3</span> or <span class="type">nil</span></span>
          Offset from node position. Pass current node position to get non relative border values
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -471,8 +472,8 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">pivot</span>
-            <span class="types"><span class="type">gui.pivot</span></span>
-         The node pivot
+            <span class="types"><span class="type">number</span></span>
+         The gui.PIVOT_* constant
         </li>
     </ul>
 
@@ -529,7 +530,7 @@ helper.centrate_nodes(0, node_1, node_2)
          Gui node
         </li>
         <li><span class="parameter">include_passed_node_scale</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          True if add current node scale to result
         </li>
     </ul>
@@ -579,7 +580,7 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">text_node</span>
-            <span class="types"><span class="type">Node</span></span>
+            <span class="types"><span class="type">node</span></span>
 
         </li>
     </ul>
@@ -606,7 +607,7 @@ helper.centrate_nodes(0, node_1, node_2)
 </dd>
     <dt>
     <a name = "helper.insert_with_shift"></a>
-    <strong>helper.insert_with_shift(array, item[, index[, shift_policy]])</strong>
+    <strong>helper.insert_with_shift(array, any, index, shift_policy)</strong>
     </dt>
     <dd>
     Add value to array with shift policy  Shift policy can be: left, right, no_shift
@@ -618,25 +619,23 @@ helper.centrate_nodes(0, node_1, node_2)
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
          Array
         </li>
-        <li><span class="parameter">item</span>
+        <li><span class="parameter">any</span>
          Item to insert
         </li>
         <li><span class="parameter">index</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Index to insert. If nil, item will be inserted at the end of array
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">shift_policy</span>
-            <span class="types"><span class="type">const.SHIFT</span></span>
-         Shift policy
-         (<em>optional</em>)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         The druid_const.SHIFT.* constant
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">item</span></span>
+           <span class="types"><span class="type">any</span></span>
         Inserted item
     </ol>
 
@@ -656,8 +655,28 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         Is mobile
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.is_multitouch_supported"></a>
+    <strong>helper.is_multitouch_supported()</strong>
+    </dt>
+    <dd>
+    Check if device is mobile and can support multitouch
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Is multitouch supported
     </ol>
 
 
@@ -676,8 +695,28 @@ helper.centrate_nodes(0, node_1, node_2)
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         Is web
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "helper.is_web_mobile"></a>
+    <strong>helper.is_web_mobile()</strong>
+    </dt>
+    <dd>
+    Check if device is HTML5 mobile
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        Is web mobile
     </ol>
 
 
@@ -721,7 +760,7 @@ helper.centrate_nodes(0, node_1, node_2)
 </dd>
     <dt>
     <a name = "helper.remove_with_shift"></a>
-    <strong>helper.remove_with_shift(array[, index[, shift_policy]])</strong>
+    <strong>helper.remove_with_shift(array, index, shift_policy)</strong>
     </dt>
     <dd>
     Remove value from array with shift policy  Shift policy can be: left, right, no_shift
@@ -734,21 +773,19 @@ helper.centrate_nodes(0, node_1, node_2)
          Array
         </li>
         <li><span class="parameter">index</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Index to remove. If nil, item will be removed from the end of array
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">shift_policy</span>
-            <span class="types"><span class="type">const.SHIFT</span></span>
-         Shift policy
-         (<em>optional</em>)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         The druid_const.SHIFT.* constant
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">item</span></span>
+           <span class="types"><span class="type">any</span></span>
         Removed item
     </ol>
 
@@ -758,7 +795,7 @@ helper.centrate_nodes(0, node_1, node_2)
 </dd>
     <dt>
     <a name = "helper.round"></a>
-    <strong>helper.round(num[, num_decimal_places=0])</strong>
+    <strong>helper.round(num, num_decimal_places)</strong>
     </dt>
     <dd>
     Round number to specified decimal places
@@ -771,9 +808,8 @@ helper.centrate_nodes(0, node_1, node_2)
          Number
         </li>
         <li><span class="parameter">num_decimal_places</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          Decimal places
-         (<em>default</em> 0)
         </li>
     </ul>
 

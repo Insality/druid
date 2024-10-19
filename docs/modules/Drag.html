@@ -44,8 +44,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><strong>Drag</strong></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -58,9 +56,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -88,7 +84,7 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, node, on_drag_callback)</a></td>
-	<td class="summary">Drag component constructor</td>
+	<td class="summary">The <a href="../modules/Drag.html#">Drag</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_enabled">is_enabled(self)</a></td>
@@ -129,16 +125,20 @@
 	<td class="summary">Is component now touching</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Drag node</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#on_drag">on_drag</a></td>
-	<td class="summary">on drag progress callback(self, dx, dy, total_x, total_y)</td>
+	<td class="summary">on drag progress callback(self, dx, dy, total_x, total_y, touch)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_drag_end">on_drag_end</a></td>
-	<td class="summary">Event on drag end callback(self, total_x, total_y)</td>
+	<td class="summary">Event on drag end callback(self, total_x, total_y, touch)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_drag_start">on_drag_start</a></td>
-	<td class="summary">Event on drag start callback(self)</td>
+	<td class="summary">Event on drag start callback(self, touch)</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_touch_end">on_touch_end</a></td>
@@ -147,6 +147,14 @@
 	<tr>
 	<td class="name" nowrap><a href="#on_touch_start">on_touch_start</a></td>
 	<td class="summary">Event on touch start callback(self)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#screen_x">screen_x</a></td>
+	<td class="summary">Current touch x screen position</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#screen_y">screen_y</a></td>
+	<td class="summary">Current touch y screen position</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#touch_start_pos">touch_start_pos</a></td>
@@ -174,7 +182,7 @@
     <strong>init(self, node, on_drag_callback)</strong>
     </dt>
     <dd>
-    Drag component constructor
+    The <a href="../modules/Drag.html#">Drag</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -184,7 +192,7 @@
          <a href="../modules/Drag.html#">Drag</a>
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="../modules/Drag.html#node">node</a></span>
          GUI node to detect dragging
         </li>
         <li><span class="parameter">on_drag_callback</span>
@@ -217,7 +225,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
 
     </ol>
 
@@ -241,7 +249,7 @@
          <a href="../modules/Drag.html#">Drag</a>
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="../modules/Drag.html#node">node</a>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Gui node
         </li>
     </ul>
@@ -266,7 +274,7 @@
          <a href="../modules/Drag.html#">Drag</a>
         </li>
         <li><span class="parameter">is_enabled</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
 
         </li>
     </ul>
@@ -293,14 +301,12 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">DRAG_DEADZONE</span>
-            <span class="types"><span class="type">number</span></span>
-         Distance in pixels to start dragging
-         (<em>default</em> 10)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Distance in pixels to start dragging. Default: 10
         </li>
         <li><span class="parameter">NO_USE_SCREEN_KOEF</span>
-            <span class="types"><span class="type">boolean</span></span>
-         If screen aspect ratio affects on drag values
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If screen aspect ratio affects on drag values. Default: false
         </li>
     </ul>
 
@@ -323,7 +329,7 @@
 
     <ul>
         <li><span class="parameter">can_x</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
 
         </li>
     </ul>
@@ -343,7 +349,7 @@
 
     <ul>
         <li><span class="parameter">can_y</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
 
         </li>
     </ul>
@@ -363,7 +369,7 @@
 
     <ul>
         <li><span class="parameter">is_drag</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
 
         </li>
     </ul>
@@ -383,7 +389,27 @@
 
     <ul>
         <li><span class="parameter">is_touch</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Drag node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Drag.html#node">node</a></span>
 
         </li>
     </ul>
@@ -398,7 +424,7 @@
     <strong>on_drag</strong>
     </dt>
     <dd>
-    on drag progress callback(self, dx, dy, total_x, total_y)
+    on drag progress callback(self, dx, dy, total_x, total_y, touch)
 
 
     <ul>
@@ -418,7 +444,7 @@
     <strong>on_drag_end</strong>
     </dt>
     <dd>
-    Event on drag end callback(self, total_x, total_y)
+    Event on drag end callback(self, total_x, total_y, touch)
 
 
     <ul>
@@ -438,7 +464,7 @@
     <strong>on_drag_start</strong>
     </dt>
     <dd>
-    Event on drag start callback(self)
+    Event on drag start callback(self, touch)
 
 
     <ul>
@@ -485,6 +511,46 @@
         <li><span class="parameter">on_touch_start</span>
             <span class="types"><span class="type">DruidEvent</span></span>
          <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "screen_x"></a>
+    <strong>screen_x</strong>
+    </dt>
+    <dd>
+    Current touch x screen position
+
+
+    <ul>
+        <li><span class="parameter">screen_x</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "screen_y"></a>
+    <strong>screen_y</strong>
+    </dt>
+    <dd>
+    Current touch y screen position
+
+
+    <ul>
+        <li><span class="parameter">screen_y</span>
+            <span class="types"><span class="type">number</span></span>
+
         </li>
     </ul>
 

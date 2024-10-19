@@ -1,0 +1,396 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  size {
+    x: 400.0
+    y: 1000.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "scroll_view"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+  clipping_mode: CLIPPING_MODE_STENCIL
+}
+nodes {
+  position {
+    y: 500.0
+  }
+  size {
+    x: 400.0
+    y: 2700.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "scroll_content"
+  pivot: PIVOT_N
+  parent: "scroll_view"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+  visible: false
+}
+nodes {
+  position {
+    y: -946.0
+  }
+  type: TYPE_TEMPLATE
+  id: "button_tutorial"
+  parent: "scroll_content"
+  inherit_alpha: true
+  template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_tutorial/root"
+  parent: "button_tutorial"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "I do nothing!"
+  id: "button_tutorial/text"
+  parent: "button_tutorial/root"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -185.0
+  }
+  scale {
+    x: 0.75
+    y: 0.75
+  }
+  size {
+    x: 500.0
+    y: 900.0
+  }
+  color {
+    x: 0.722
+    y: 0.741
+    z: 0.761
+  }
+  type: TYPE_TEXT
+  text: "To setup scroll in your scene\n"
+  "\n"
+  "- Place \"View\" box node\n"
+  "\n"
+  "- Put \"Content\" node inside \"Scroll View\"\n"
+  "\n"
+  "- Init scroll with `druid:new_scroll(\"view\", \"content\")"
+  font: "text_bold"
+  id: "ui_scroll_text_1"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  parent: "scroll_content"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -185.0
+    y: -482.0
+  }
+  scale {
+    x: 0.75
+    y: 0.75
+  }
+  size {
+    x: 500.0
+    y: 400.0
+  }
+  color {
+    x: 0.722
+    y: 0.741
+    z: 0.761
+  }
+  type: TYPE_TEXT
+  text: "Now your content node can be scrollable in View node borders. In this example the content node contains this tutorial text"
+  font: "text_bold"
+  id: "ui_scroll_text_2"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  parent: "scroll_content"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -185.0
+    y: -713.0
+  }
+  scale {
+    x: 0.75
+    y: 0.75
+  }
+  size {
+    x: 500.0
+    y: 400.0
+  }
+  color {
+    x: 0.722
+    y: 0.741
+    z: 0.761
+  }
+  type: TYPE_TEXT
+  text: "All other components are placed as usual.\n"
+  "\n"
+  "For example, button:"
+  font: "text_bold"
+  id: "ui_scroll_text_3"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  parent: "scroll_content"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -185.0
+    y: -1042.0
+  }
+  scale {
+    x: 0.75
+    y: 0.75
+  }
+  size {
+    x: 500.0
+    y: 400.0
+  }
+  color {
+    x: 0.722
+    y: 0.741
+    z: 0.761
+  }
+  type: TYPE_TEXT
+  text: "You probably wish to add \"stencil\" to your view node to clip all content what outside scroll"
+  font: "text_bold"
+  id: "ui_scroll_text_4"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  parent: "scroll_content"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -185.0
+    y: -1257.0
+  }
+  scale {
+    x: 0.75
+    y: 0.75
+  }
+  size {
+    x: 500.0
+    y: 400.0
+  }
+  color {
+    x: 0.722
+    y: 0.741
+    z: 0.761
+  }
+  type: TYPE_TEXT
+  text: "Druid automatically checks the stencil nodes to add a \"click zone\" for input elements like buttons to prevent the input if they are outside of stencil nodes"
+  font: "text_bold"
+  id: "ui_scroll_text_5"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  parent: "scroll_content"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    y: -1605.0
+  }
+  type: TYPE_TEMPLATE
+  id: "button_stencil"
+  parent: "scroll_content"
+  inherit_alpha: true
+  template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_stencil/root"
+  parent: "button_stencil"
+  template_node_child: true
+}
+nodes {
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 300.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Click outside stencil node"
+  id: "button_stencil/text"
+  line_break: true
+  parent: "button_stencil/root"
+  overridden_fields: 3
+  overridden_fields: 4
+  overridden_fields: 8
+  overridden_fields: 18
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -185.0
+    y: -1751.0
+  }
+  scale {
+    x: 0.75
+    y: 0.75
+  }
+  size {
+    x: 500.0
+    y: 400.0
+  }
+  color {
+    x: 0.722
+    y: 0.741
+    z: 0.761
+  }
+  type: TYPE_TEXT
+  text: "--------\n"
+  "\n"
+  "--------\n"
+  "--------\n"
+  "\n"
+  "--------\n"
+  "--------\n"
+  "\n"
+  "--------\n"
+  "--------\n"
+  "\n"
+  "--------\n"
+  "\n"
+  "--------\n"
+  "\n"
+  "--------\n"
+  "--------\n"
+  "\n"
+  "--------\n"
+  "--------\n"
+  "\n"
+  "--------\n"
+  "--------\n"
+  "\n"
+  "--------\n"
+  ""
+  font: "text_bold"
+  id: "ui_scroll_text_fill"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  parent: "scroll_content"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

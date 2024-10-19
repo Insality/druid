@@ -44,8 +44,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -58,9 +56,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -87,7 +83,7 @@
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#init">init(self, node, on_swipe_callback)</a></td>
-	<td class="summary">Component init function</td>
+	<td class="summary">The <a href="../modules/Swipe.html#">Swipe</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, zone)</a></td>
@@ -129,7 +125,7 @@
     <strong>init(self, node, on_swipe_callback)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/Swipe.html#">Swipe</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -169,7 +165,7 @@
          <a href="../modules/Swipe.html#">Swipe</a>
         </li>
         <li><span class="parameter">zone</span>
-            <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a></span>
+            <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Gui node
         </li>
     </ul>
@@ -196,19 +192,16 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">SWIPE_TIME</span>
-            <span class="types"><span class="type">number</span></span>
-         Maximum time for swipe trigger
-         (<em>default</em> 0.4)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Maximum time for swipe trigger. Default: 0.4
         </li>
         <li><span class="parameter">SWIPE_THRESHOLD</span>
-            <span class="types"><span class="type">number</span></span>
-         Minimum distance for swipe trigger
-         (<em>default</em> 50)
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Minimum distance for swipe trigger. Default: 50
         </li>
         <li><span class="parameter">SWIPE_TRIGGER_ON_MOVE</span>
-            <span class="types"><span class="type">bool</span></span>
-         If true, trigger on swipe moving, not only release action
-         (<em>default</em> false)
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         If true, trigger on swipe moving, not only release action. Default: false
         </li>
     </ul>
 
@@ -231,9 +224,8 @@
 
     <ul>
         <li><span class="parameter">click_zone</span>
-            <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a></span>
+            <span class="types"><a class="type" href="../modules/Swipe.html#node">node</a> or <span class="type">nil</span></span>
 
-         (<em>optional</em>)
         </li>
     </ul>
 

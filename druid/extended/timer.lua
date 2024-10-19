@@ -44,27 +44,29 @@ local function second_string_min(sec)
 end
 
 
---- Component init function
+--- The @{Timer} constructor
 -- @tparam Timer self @{Timer}
 -- @tparam node node Gui text node
--- @tparam number seconds_from Start timer value in seconds
--- @tparam[opt=0] number seconds_to End timer value in seconds
--- @tparam[opt] function callback Function on timer end
+-- @tparam number|nil seconds_from Start timer value in seconds
+-- @tparam number|nil seconds_to End timer value in seconds
+-- @tparam function|nil callback Function on timer end
 function Timer.init(self, node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
-	seconds_from = math.max(seconds_from, 0)
 	seconds_to = math.max(seconds_to or 0, 0)
 
 	self.on_tick = Event()
 	self.on_set_enabled = Event()
 	self.on_timer_end = Event(callback)
 
-	self:set_to(seconds_from)
-	self:set_interval(seconds_from, seconds_to)
+	if seconds_from then
+		seconds_from = math.max(seconds_from, 0)
+		self:set_to(seconds_from)
+		self:set_interval(seconds_from, seconds_to)
 
-	if seconds_to - seconds_from == 0 then
-		self:set_state(false)
-		self.on_timer_end:trigger(self:get_context(), self)
+		if seconds_to - seconds_from == 0 then
+			self:set_state(false)
+			self.on_timer_end:trigger(self:get_context(), self)
+		end
 	end
 
 	return self
@@ -110,7 +112,7 @@ end
 
 --- Called when update
 -- @tparam Timer self @{Timer}
--- @tparam bool is_on Timer enable state
+-- @tparam boolean|nil is_on Timer enable state
 function Timer.set_state(self, is_on)
 	self.is_on = is_on
 

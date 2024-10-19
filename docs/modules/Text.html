@@ -44,8 +44,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -58,9 +56,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -105,12 +101,16 @@
 	<td class="summary">Return current text adjust type</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#get_text_size">get_text_size(self[, text])</a></td>
+	<td class="name" nowrap><a href="#get_text_index_by_width">get_text_index_by_width(self, width)</a></td>
+	<td class="summary">Get chars count by width</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_text_size">get_text_size(self, text)</a></td>
 	<td class="summary">Calculate text width with font with respect to trailing space</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node[, value[, adjust_type=downscale]])</a></td>
-	<td class="summary"><a href="../modules/Text.html#">Text</a> constructor</td>
+	<td class="name" nowrap><a href="#init">init(self, node, value, adjust_type)</a></td>
+	<td class="summary">The <a href="../modules/Text.html#">Text</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_multiline">is_multiline(self)</a></td>
@@ -137,7 +137,11 @@
 	<td class="summary">Set scale</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#set_text_adjust">set_text_adjust(self[, adjust_type[, minimal_scale]])</a></td>
+	<td class="name" nowrap><a href="#set_size">set_size(self, size)</a></td>
+	<td class="summary">Set text area size</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_text_adjust">set_text_adjust(self, adjust_type, minimal_scale)</a></td>
 	<td class="summary">Set text adjust, refresh the current text visuals, if needed</td>
 	</tr>
 	<tr>
@@ -161,6 +165,10 @@
 	<tr>
 	<td class="name" nowrap><a href="#color">color</a></td>
 	<td class="summary">Current text color</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#last_value">last_value</a></td>
+	<td class="summary">The last text value</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#node">node</a></td>
@@ -241,8 +249,39 @@
 
 </dd>
     <dt>
+    <a name = "get_text_index_by_width"></a>
+    <strong>get_text_index_by_width(self, width)</strong>
+    </dt>
+    <dd>
+    Get chars count by width
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Text</span></span>
+         <a href="../modules/Text.html#">Text</a>
+        </li>
+        <li><span class="parameter">width</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        Chars count
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "get_text_size"></a>
-    <strong>get_text_size(self[, text])</strong>
+    <strong>get_text_size(self, text)</strong>
     </dt>
     <dd>
     Calculate text width with font with respect to trailing space
@@ -256,8 +295,7 @@
         </li>
         <li><span class="parameter">text</span>
             <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-
-         (<em>optional</em>)
+        |nil
         </li>
     </ul>
 
@@ -277,10 +315,10 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node[, value[, adjust_type=downscale]])</strong>
+    <strong>init(self, node, value, adjust_type)</strong>
     </dt>
     <dd>
-    <a href="../modules/Text.html#">Text</a> constructor
+    The <a href="../modules/Text.html#">Text</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -294,14 +332,12 @@
          Node name or GUI Text Node itself
         </li>
         <li><span class="parameter">value</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Initial text. Default value is node text from GUI scene.
-         (<em>optional</em>)
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         Initial text. Default value is node text from GUI scene. Default: nil
         </li>
         <li><span class="parameter">adjust_type</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
-         (<em>default</em> downscale)
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
         </li>
     </ul>
 
@@ -329,7 +365,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         Is text node with line break
     </ol>
 
@@ -445,8 +481,8 @@
          <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">pivot</span>
-            <span class="types"><span class="type">gui.pivot</span></span>
-         Gui pivot constant
+            <span class="types"><span class="type">number</span></span>
+         The gui.PIVOT_* constant
         </li>
     </ul>
 
@@ -493,8 +529,39 @@
 
 </dd>
     <dt>
+    <a name = "set_size"></a>
+    <strong>set_size(self, size)</strong>
+    </dt>
+    <dd>
+    Set text area size
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Text</span></span>
+         <a href="../modules/Text.html#">Text</a>
+        </li>
+        <li><span class="parameter">size</span>
+            <span class="types"><span class="type">vector3</span></span>
+         The new text area size
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Text</span></span>
+        Current text instance
+    </ol>
+
+
+
+
+</dd>
+    <dt>
     <a name = "set_text_adjust"></a>
-    <strong>set_text_adjust(self[, adjust_type[, minimal_scale]])</strong>
+    <strong>set_text_adjust(self, adjust_type, minimal_scale)</strong>
     </dt>
     <dd>
     Set text adjust, refresh the current text visuals, if needed
@@ -507,14 +574,12 @@
          <a href="../modules/Text.html#">Text</a>
         </li>
         <li><span class="parameter">adjust_type</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          See const.TEXT_ADJUST. If pass nil - use current adjust type
-         (<em>optional</em>)
         </li>
         <li><span class="parameter">minimal_scale</span>
-            <span class="types"><span class="type">number</span></span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
          If pass nil - not use minimal scale
-         (<em>optional</em>)
         </li>
     </ul>
 
@@ -577,14 +642,20 @@
     <h3>Fields:</h3>
     <ul>
         <li><span class="parameter">TRIM_POSTFIX</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         The postfix for TRIM adjust type
-         (<em>default</em> ...)
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         The postfix for TRIM adjust type. Default: ...
         </li>
         <li><span class="parameter">DEFAULT_ADJUST</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         The default adjust type for any text component
-         (<em>default</em> DOWNSCALE)
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         The default adjust type for any text component. Default: DOWNSCALE
+        </li>
+        <li><span class="parameter">ADJUST_STEPS</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         Amount of iterations for text adjust by height. Default: 20
+        </li>
+        <li><span class="parameter">ADJUST_SCALE_DELTA</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         Scale step on each height adjust step. Default: 0.02
         </li>
     </ul>
 
@@ -628,6 +699,26 @@
     <ul>
         <li><span class="parameter">color</span>
             <span class="types"><span class="type">vector3</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "last_value"></a>
+    <strong>last_value</strong>
+    </dt>
+    <dd>
+    The last text value
+
+
+    <ul>
+        <li><span class="parameter">last_value</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
 
         </li>
     </ul>

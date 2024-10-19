@@ -33,6 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
 <li><a href="#Fields">Fields</a></li>
 </ul>
 
@@ -43,8 +44,6 @@
   <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
   <li><a href="../modules/Blocker.html">Blocker</a></li>
   <li><a href="../modules/Button.html">Button</a></li>
-  <li><a href="../modules/Checkbox.html">Checkbox</a></li>
-  <li><a href="../modules/CheckboxGroup.html">CheckboxGroup</a></li>
   <li><a href="../modules/DataList.html">DataList</a></li>
   <li><a href="../modules/Drag.html">Drag</a></li>
   <li><a href="../modules/Druid.html">Druid</a></li>
@@ -57,9 +56,7 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
-  <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
   <li><a href="../modules/RichText.html">RichText</a></li>
   <li><a href="../modules/Scroll.html">Scroll</a></li>
@@ -82,8 +79,8 @@
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, on_hover_callback)</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#init">init(self, node, on_hover_callback, on_mouse_hover)</a></td>
+	<td class="summary">The <a href="../modules/Hover.html#">Hover</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#is_enabled">is_enabled(self)</a></td>
@@ -114,8 +111,19 @@
 	<td class="summary">Set mouse hover state</td>
 	</tr>
 </table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#style">style</a></td>
+	<td class="summary">Component style params.</td>
+	</tr>
+</table>
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Hover node</td>
+	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#on_hover">on_hover</a></td>
 	<td class="summary">On hover callback(self, state, hover_instance)</td>
@@ -135,10 +143,10 @@
     <dl class="function">
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, on_hover_callback)</strong>
+    <strong>init(self, node, on_hover_callback, on_mouse_hover)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/Hover.html#">Hover</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -148,12 +156,16 @@
          <a href="../modules/Hover.html#">Hover</a>
         </li>
         <li><span class="parameter">node</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="../modules/Hover.html#node">node</a></span>
          Gui node
         </li>
         <li><span class="parameter">on_hover_callback</span>
             <span class="types"><span class="type">function</span></span>
          Hover callback
+        </li>
+        <li><span class="parameter">on_mouse_hover</span>
+            <span class="types"><span class="type">function</span></span>
+         On mouse hover callback
         </li>
     </ul>
 
@@ -181,7 +193,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         The hover enabled state
     </ol>
 
@@ -208,7 +220,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         The current hovered state
     </ol>
 
@@ -235,7 +247,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         The current hovered state
     </ol>
 
@@ -259,7 +271,7 @@
          <a href="../modules/Hover.html#">Hover</a>
         </li>
         <li><span class="parameter">zone</span>
-            <span class="types"><span class="type">node</span></span>
+            <span class="types"><a class="type" href="../modules/Hover.html#node">node</a>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
          Gui node
         </li>
     </ul>
@@ -286,7 +298,7 @@
          <a href="../modules/Hover.html#">Hover</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          The hover enabled state
         </li>
     </ul>
@@ -311,7 +323,7 @@
          <a href="../modules/Hover.html#">Hover</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          The hover state
         </li>
     </ul>
@@ -336,8 +348,41 @@
          <a href="../modules/Hover.html#">Hover</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          The mouse hover state
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "style"></a>
+    <strong>style</strong>
+    </dt>
+    <dd>
+    Component style params.
+ You can override this component styles params in druid styles table
+ or create your own style
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">ON_HOVER_CURSOR</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Mouse hover style on node hover
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">ON_MOUSE_HOVER_CURSOR</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Mouse hover style on node mouse hover
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -350,6 +395,26 @@
     <h2 class="section-header "><a name="Fields"></a>Fields</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Hover node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Hover.html#node">node</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "on_hover"></a>
     <strong>on_hover</strong>

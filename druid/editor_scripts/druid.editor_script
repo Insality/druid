@@ -26,36 +26,7 @@ end
 function M.get_commands()
 	return {
 		{
-			label = "Print gui scheme",
-
-			locations = { "Outline" },
-
-			query = {
-				selection = {type = "outline", cardinality = "many"}
-			},
-
-			active = function(opts)
-				return true
-			end,
-
-			run = function(opts)
-				print("local SCHEME = {")
-
-				for i = 1, #opts.selection do
-					local file = opts.selection[i]
-					if editor.can_get(file, "id") then
-						local id = editor.get(file, "id")
-						print("\t" .. string.upper(id) .. " = \"" .. id .. "\",")
-					end
-				end
-
-				print("}")
-				print("")
-			end
-		},
-
-		{
-			label = "Assign layers",
+			label = "Assign Layers",
 
 			locations = {"Edit"},
 

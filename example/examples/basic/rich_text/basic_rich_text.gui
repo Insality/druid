@@ -1,0 +1,42 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+fonts {
+  name: "text_regular"
+  font: "/example/assets/fonts/text_regular.font"
+}
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+nodes {
+  size {
+    x: 1000.0
+    y: 1000.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  size {
+    x: 400.0
+    y: 100.0
+  }
+  color {
+    x: 0.941
+    y: 0.984
+  }
+  type: TYPE_TEXT
+  text: "Hello I\'m a Rich Text!"
+  font: "text_regular"
+  id: "text"
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

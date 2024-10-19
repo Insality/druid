@@ -1,0 +1,42 @@
+{
+	"Lua.diagnostics.globals": [
+		"init",
+		"final",
+		"update",
+		"on_message",
+		"on_input",
+		"describe",
+		"before",
+		"after",
+		"it",
+		"utf8",
+		"defos",
+		"clipboard",
+		"editor"
+	],
+	"Lua.workspace.checkThirdParty": false,
+	"Lua.diagnostics.neededFileStatus": {
+		"undefined-field": "Any",
+		"assign-type-mismatch": "Any",
+		"missing-return": "Any",
+		"missing-fields": "Any",
+		"return-type-mismatch": "Any",
+		"lowercase-global": "Any"
+	},
+	"Lua.workspace.ignoreDir": [
+		".vscode",
+		"test/tests/*.lua",
+		"utils/annotations_manual.lua"
+	],
+	"Lua.runtime.pathStrict": true,
+	"Lua.diagnostics.libraryFiles": "Enable",
+	"Lua.runtime.version": "Lua 5.1",
+	"Lua.workspace.library": [
+		"~/Library/Application Support/Code/User/globalStorage/astronachos.defold",
+		"~/Library/Application Support/Code/User/workspaceStorage/72e25b7e0fdc873ee6f7baa61edbd6b1/astronachos.defold",
+		"~/Library/Application Support/Code/User/workspaceStorage/1446075a23c89451a63f0e82b2291def/astronachos.defold"
+	],
+	"files.exclude": {
+		"**/*.gui": true
+	}
+}

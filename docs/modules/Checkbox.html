@@ -58,7 +58,6 @@
   <li><a href="../modules/Input.html">Input</a></li>
   <li><a href="../modules/LangText.html">LangText</a></li>
   <li><a href="../modules/Layout.html">Layout</a></li>
-  <li><a href="../modules/PinKnob.html">PinKnob</a></li>
   <li><a href="../modules/Progress.html">Progress</a></li>
   <li><a href="../modules/RadioGroup.html">RadioGroup</a></li>
   <li><a href="../modules/RichInput.html">RichInput</a></li>
@@ -87,8 +86,8 @@
 	<td class="summary">Return checkbox state</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#init">init(self, node, callback[, click_node=node[, initial_state=false]])</a></td>
-	<td class="summary">Component init function</td>
+	<td class="name" nowrap><a href="#init">init(self, node, callback, click_node, initial_state)</a></td>
+	<td class="summary">The <a href="../modules/Checkbox.html#">Checkbox</a> constructor</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#set_state">set_state(self, state, is_silent, is_instant)</a></td>
@@ -148,7 +147,7 @@
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">bool</span></span>
+           <span class="types"><span class="type">boolean</span></span>
         Checkbox state
     </ol>
 
@@ -158,10 +157,10 @@
 </dd>
     <dt>
     <a name = "init"></a>
-    <strong>init(self, node, callback[, click_node=node[, initial_state=false]])</strong>
+    <strong>init(self, node, callback, click_node, initial_state)</strong>
     </dt>
     <dd>
-    Component init function
+    The <a href="../modules/Checkbox.html#">Checkbox</a> constructor
 
 
     <h3>Parameters:</h3>
@@ -179,14 +178,12 @@
          Checkbox callback
         </li>
         <li><span class="parameter">click_node</span>
-            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a></span>
-         Trigger node, by default equals to node
-         (<em>default</em> node)
+            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a> or <span class="type">nil</span></span>
+         Trigger node, by default equals to node. Default: node
         </li>
         <li><span class="parameter">initial_state</span>
-            <span class="types"><span class="type">boolean</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          The initial state of checkbox, default - false
-         (<em>default</em> false)
         </li>
     </ul>
 
@@ -210,15 +207,15 @@
          <a href="../modules/Checkbox.html#">Checkbox</a>
         </li>
         <li><span class="parameter">state</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Checkbox state
         </li>
         <li><span class="parameter">is_silent</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          Don't trigger on_change_state if true
         </li>
         <li><span class="parameter">is_instant</span>
-            <span class="types"><span class="type">bool</span></span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
          If instant checkbox change
         </li>
     </ul>
@@ -289,9 +286,8 @@
 
     <ul>
         <li><span class="parameter">click_node</span>
-            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a></span>
+            <span class="types"><a class="type" href="../modules/Checkbox.html#node">node</a> or <span class="type">nil</span></span>
 
-         (<em>default</em> node)
         </li>
     </ul>
 

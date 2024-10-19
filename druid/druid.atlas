@@ -1,0 +1,22 @@
+images {
+  image: "/druid/images/empty.png"
+}
+images {
+  image: "/druid/images/panels/rect_round2_width1.png"
+}
+images {
+  image: "/druid/images/panels/ui_circle_8.png"
+}
+images {
+  image: "/druid/images/panels/ui_circle_16.png"
+}
+images {
+  image: "/druid/images/panels/ui_circle_32.png"
+}
+images {
+  image: "/druid/images/panels/ui_circle_64.png"
+}
+images {
+  image: "/druid/images/pixel.png"
+}
+extrude_borders: 2

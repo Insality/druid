@@ -8,31 +8,62 @@
 -- @module DruidEvent
 -- @alias druid.event
 
-local class = require("druid.system.middleclass")
+local M = {}
+M.COUNTER = 0
 
-local DruidEvent = class("druid.event")
+-- Forward declaration
+local EVENT_METATABLE
 
+-- Local versions
+local pcall = pcall
+local tinsert = table.insert
+local tremove = table.remove
 
 --- DruidEvent constructor
--- @tparam DruidEvent self @{DruidEvent}
--- @tparam[opt] function initial_callback Subscribe the callback on new event, if callback exist
+-- @tparam function|nil callback Subscribe the callback on new event, if callback exist
+-- @tparam any|nil callback_context Additional context as first param to callback call
 -- @usage
 -- local Event = require("druid.event")
 -- ...
--- local event = Event(initial_callback)
-function DruidEvent.initialize(self, initial_callback)
-	self._callbacks = nil -- initialize later
+-- local event = Event(callback)
+function M.create(callback, callback_context)
+	local instance = setmetatable({}, EVENT_METATABLE)
 
-	if initial_callback then
-		self:subscribe(initial_callback)
+	if callback then
+		instance:subscribe(callback, callback_context)
 	end
+
+	M.COUNTER = M.COUNTER + 1
+	return instance
+end
+
+
+--- Check is event subscribed.
+-- @tparam DruidEvent self @{DruidEvent}
+-- @tparam function callback Callback itself
+-- @tparam any|nil callback_context Additional context as first param to callback call
+-- @treturn boolean, number|nil @Is event subscribed, return index of callback in event as second param
+function M.is_subscribed(self, callback, callback_context)
+	if #self == 0 then
+		return false, nil
+	end
+
+	for index = 1, #self do
+		local cb = self[index]
+		if cb[1] == callback and cb[2] == callback_context then
+			return true, index
+		end
+	end
+
+	return false, nil
 end
 
 
 --- Subscribe callback on event
 -- @tparam DruidEvent self @{DruidEvent}
 -- @tparam function callback Callback itself
--- @tparam[opt] Any context Additional context as first param to callback call, usually it's self
+-- @tparam any|nil callback_context Additional context as first param to callback call, usually it's self
+-- @treturn boolean True if callback was subscribed
 -- @usage
 -- local function on_long_callback(self)
 --     print("Long click!")
@@ -40,54 +71,59 @@ end
 -- ...
 -- local button = self.druid:new_button("button", callback)
 -- button.on_long_click:subscribe(on_long_callback, self)
-function DruidEvent.subscribe(self, callback, context)
+function M.subscribe(self, callback, callback_context)
 	assert(type(self) == "table", "You should subscribe to event with : syntax")
-	assert(type(callback) == "function", "Callback should be function")
+	assert(callback, "A function must be passed to subscribe to an event")
 
-	self._callbacks = self._callbacks or {}
-	table.insert(self._callbacks, {
-		callback = callback,
-		context = context
-	})
+	if self:is_subscribed(callback, callback_context) then
+		return false
+	end
 
-	return callback
+	tinsert(self, { callback, callback_context })
+	return true
 end
 
 
 --- Unsubscribe callback on event
 -- @tparam DruidEvent self @{DruidEvent}
 -- @tparam function callback Callback itself
--- @tparam[opt] Any context Additional context as first param to callback call
+-- @tparam any|nil callback_context Additional context as first param to callback call
 -- @usage
 -- local function on_long_callback(self)
 --     print("Long click!")
 -- end
 -- ...
 -- button.on_long_click:unsubscribe(on_long_callback, self)
-function DruidEvent.unsubscribe(self, callback, context)
-	if not self._callbacks then
-		return
+function M.unsubscribe(self, callback, callback_context)
+	assert(callback, "A function must be passed to subscribe to an event")
+
+	local _, event_index = self:is_subscribed(callback, callback_context)
+	if not event_index then
+		return false
 	end
 
-	for index, callback_info in ipairs(self._callbacks) do
-		if callback_info.callback == callback and callback_info.context == context then
-			table.remove(self._callbacks, index)
-			return
-		end
-	end
+	tremove(self, event_index)
+	return true
 end
 
 
 --- Return true, if event have at lease one handler
 -- @tparam DruidEvent self @{DruidEvent}
--- @treturn bool True if event have handlers
+-- @treturn boolean True if event have handlers
 -- @usage
 -- local is_long_click_handler_exists = button.on_long_click:is_exist()
-function DruidEvent.is_exist(self)
-	if not self._callbacks then
-		return false
-	end
-	return #self._callbacks > 0
+function M.is_exist(self)
+	return #self > 0
+end
+
+
+--- Return true, if event not have handler
+--- @tparam DruidEvent self @{DruidEvent}
+--- @treturn boolean True if event not have handlers
+--- @usage
+--- local is_long_click_handler_not_exists = button.on_long_click:is_empty()
+function M:is_empty()
+	return #self == 0
 end
 
 
@@ -95,32 +131,75 @@ end
 -- @tparam DruidEvent self @{DruidEvent}
 -- @usage
 -- button.on_long_click:clear()
-function DruidEvent.clear(self)
-	self._callbacks = nil
+function M.clear(self)
+	for index = #self, 1, -1 do
+		self[index] = nil
+	end
 end
 
 
 --- Trigger the event and call all subscribed callbacks
 -- @tparam DruidEvent self @{DruidEvent}
--- @tparam Any ... All event params
+-- @tparam any ... All event params
 -- @usage
 -- local Event = require("druid.event")
 -- ...
 -- local event = Event()
 -- event:trigger("Param1", "Param2")
-function DruidEvent.trigger(self, ...)
-	if not self._callbacks then
-		return false
+function M.trigger(self, ...)
+	if #self == 0 then
+		return
 	end
 
-	for _, callback_info in ipairs(self._callbacks) do
-		if callback_info.context then
-			callback_info.callback(callback_info.context, ...)
-		else
-			callback_info.callback(...)
-		end
+	local result = nil
+
+	local call_callback = self.call_callback
+	for index = 1, #self do
+		result = call_callback(self, self[index], ...)
 	end
+
+	return result
 end
 
 
-return DruidEvent
+-- @tparam table callback Callback data {function, context}
+-- @tparam any ... All event params
+-- @treturn any Result of the callback
+-- @local
+function M:call_callback(callback, ...)
+	local event_callback = callback[1]
+	local event_callback_context = callback[2]
+
+	-- Call callback
+	local ok, result_or_error
+	if event_callback_context then
+		ok, result_or_error = pcall(event_callback, event_callback_context, ...)
+	else
+		ok, result_or_error = pcall(event_callback, ...)
+	end
+
+	-- Handle errors
+	if not ok then
+		local caller_info = debug.getinfo(2)
+		pprint("An error occurred during event processing", {
+			trigger = caller_info.short_src .. ":" .. caller_info.currentline,
+			error = result_or_error,
+		})
+		pprint("Traceback", debug.traceback())
+		return nil
+	end
+
+	return result_or_error
+end
+
+-- Construct event metatable
+EVENT_METATABLE = {
+	__index = M,
+	__call = M.trigger,
+}
+
+return setmetatable(M, {
+	__call = function(_, callback)
+		return M.create(callback)
+	end,
+})
