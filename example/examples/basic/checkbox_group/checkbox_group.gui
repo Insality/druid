@@ -1,0 +1,120 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid"
+  texture: "/example/assets/druid.atlas"
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -100.0
+  }
+  type: TYPE_TEMPLATE
+  id: "checkbox_1"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/examples/basic/checkbox/checkbox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_1/root"
+  parent: "checkbox_1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_1/button"
+  parent: "checkbox_1/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_1/icon"
+  parent: "checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_1/selected"
+  parent: "checkbox_1/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "checkbox_2"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/examples/basic/checkbox/checkbox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_2/root"
+  parent: "checkbox_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_2/button"
+  parent: "checkbox_2/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_2/icon"
+  parent: "checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_2/selected"
+  parent: "checkbox_2/button"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 100.0
+  }
+  type: TYPE_TEMPLATE
+  id: "checkbox_3"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/examples/basic/checkbox/checkbox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_3/root"
+  parent: "checkbox_3"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_3/button"
+  parent: "checkbox_3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_3/icon"
+  parent: "checkbox_3/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "checkbox_3/selected"
+  parent: "checkbox_3/button"
+  template_node_child: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
