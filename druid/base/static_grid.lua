@@ -215,6 +215,44 @@ function StaticGrid.set_anchor(self, anchor)
 end
 
 
+--- Update grid content
+-- @tparam StaticGrid self @{StaticGrid}
+function StaticGrid.refresh(self)
+	self:_update(true)
+end
+
+
+function StaticGrid.set_pivot(self, pivot)
+	local prev_pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
+	self.pivot = helper.get_pivot_offset(pivot)
+
+	local width = gui.get(self.parent, "size.x")
+	local height = gui.get(self.parent, "size.y")
+	--local pos_offset = vmath.vector3(
+	--	width * (self.pivot.x - prev_pivot.x),
+	--	height * (self.pivot.y - prev_pivot.y),
+	--	0
+	--)
+
+	local position = gui.get_position(self.parent)
+	position.x = position.x + width * (self.pivot.x - prev_pivot.x)
+	position.y = position.y + height * (self.pivot.y - prev_pivot.y)
+	gui.set_position(self.parent, position)
+
+	gui.set_pivot(self.parent, pivot)
+
+	self.anchor = vmath.vector3(0.5 + self.pivot.x, 0.5 - self.pivot.y, 0)
+	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
+	self._zero_offset = vmath.vector3(
+		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._grid_horizonal_offset,
+		self.node_size.y * self.node_pivot.y - self.node_size.y * self.pivot.y,
+		0
+	)
+
+	self:_update(true)
+end
+
+
 --- Add new item to the grid
 -- @tparam StaticGrid self @{StaticGrid}
 -- @tparam node item GUI node
@@ -411,6 +449,12 @@ function StaticGrid.set_item_size(self, width, height)
 	if height then
 		self.node_size.y = height
 	end
+	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
+	self._zero_offset = vmath.vector3(
+		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._grid_horizonal_offset,
+		self.node_size.y * self.node_pivot.y - self.node_size.y * self.pivot.y,
+		0)
+
 	self:_update()
 	self.on_change_items:trigger(self:get_context())
 

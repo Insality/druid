@@ -95,7 +95,6 @@ function RichText.init(self, text_node, value)
 	if value then
 		self:set_text(value)
 	end
-
 end
 
 
@@ -193,6 +192,8 @@ end
 
 
 function RichText:on_remove()
+	gui.set_scale(self.root, self._default_scale)
+	gui.set_size(self.root, self._default_size)
 	self:clear()
 end
 
@@ -246,6 +247,9 @@ end
 function RichText:_create_settings()
 	local root_size = gui.get_size(self.root)
 	local scale = gui.get_scale(self.root)
+
+	self._default_size = root_size
+	self._default_scale = scale
 
 	root_size.x = root_size.x * scale.x
 	root_size.y = root_size.y * scale.y

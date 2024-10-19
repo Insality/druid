@@ -56,13 +56,18 @@ local M = {}
 
 local _instances = {}
 
-local function get_druid_instances()
+
+local function clean_deleted_druid_instances()
 	for i = #_instances, 1, -1 do
 		if _instances[i]._deleted then
 			table.remove(_instances, i)
 		end
 	end
+end
 
+
+local function get_druid_instances()
+	clean_deleted_druid_instances()
 	return _instances
 end
 
@@ -103,6 +108,8 @@ end
 --    self.druid = druid.new(self)
 -- end
 function M.new(context, style)
+	clean_deleted_druid_instances()
+
 	if settings.default_style == nil then
 		M.set_default_style(default_style)
 	end

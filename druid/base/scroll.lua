@@ -838,6 +838,7 @@ function Scroll._process_scroll_wheel(self, action_id, action)
 		end
 
 		self:_set_scroll_position(self.target_position.x, self.target_position.y)
+		self:_check_points()
 	end
 
 	return true

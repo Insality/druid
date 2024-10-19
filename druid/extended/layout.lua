@@ -406,6 +406,7 @@ function M.calculate_rows_data(self)
 	return rows_data
 end
 
+
 -- @tparam node node
 -- @tparam number x
 -- @tparam number y
@@ -419,5 +420,6 @@ function M:set_node_position(node, x, y)
 
 	return node
 end
+
 
 return M

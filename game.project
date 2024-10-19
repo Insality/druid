@@ -13,16 +13,15 @@ high_dpi = 1
 
 [project]
 title = druid
-version = 1.0.0
+version = 1.0
 publisher = Insality
 developer = Maksim Tuprikov
 custom_resources = /example/locales
-dependencies#0 = https://github.com/insalitygames/deftest/archive/master.zip
-dependencies#1 = https://github.com/britzl/monarch/archive/refs/tags/3.3.0.zip
-dependencies#2 = https://github.com/Insality/defold-saver/archive/refs/tags/1.zip
-dependencies#3 = https://github.com/Insality/defold-tweener/archive/refs/tags/3.zip
-dependencies#4 = https://github.com/Insality/panthera/archive/refs/heads/develop.zip
-dependencies#5 = https://github.com/Insality/defold-lang/archive/refs/tags/3.zip
+dependencies#0 = https://github.com/britzl/deftest/archive/refs/tags/2.8.0.zip
+dependencies#1 = https://github.com/Insality/defold-saver/archive/refs/tags/1.zip
+dependencies#2 = https://github.com/Insality/defold-tweener/archive/refs/tags/3.zip
+dependencies#3 = https://github.com/Insality/panthera/archive/refs/tags/runtime.4.zip
+dependencies#4 = https://github.com/Insality/defold-lang/archive/refs/tags/3.zip
 
 [library]
 include_dirs = druid

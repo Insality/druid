@@ -84,14 +84,10 @@ local back_handler = require("druid.base.back_handler")
 -- local input = require("druid.extended.input")
 -- local swipe = require("druid.extended.swipe")
 -- local slider = require("druid.extended.slider")
--- local checkbox = require("druid.extended.checkbox")
 -- local progress = require("druid.extended.progress")
 -- local data_list = require("druid.extended.data_list")
 -- local lang_text = require("druid.extended.lang_text")
 -- local timer_component = require("druid.extended.timer")
--- local radio_group = require("druid.extended.radio_group")
--- local dynamic_grid = require("druid.extended.dynamic_grid")
--- local checkbox_group = require("druid.extended.checkbox_group")
 
 local DruidInstance = {}
 
@@ -608,7 +604,6 @@ end
 
 
 --- Create @{StaticGrid} component
--- Deprecated
 -- @tparam DruidInstance self
 -- @tparam string|node parent_node The node_id or gui.get_node(node_id). Parent of all Grid items.
 -- @tparam node item Element prefab. Required to get grid's item size. Can be adjusted separately.
@@ -616,7 +611,6 @@ end
 -- @treturn StaticGrid @{StaticGrid} component
 -- @local
 function DruidInstance.new_grid(self, parent_node, item, in_row)
-	helper.deprecated("The druid:new_grid is deprecated. Please use druid:new_static_grid instead")
 	return DruidInstance.new(self, static_grid, parent_node, item, in_row)
 end
 
@@ -663,6 +657,7 @@ end
 
 
 --- Create @{DynamicGrid} component
+-- Deprecated
 -- @tparam DruidInstance self
 -- @tparam string|node parent_node The node_id or gui.get_node(node_id). Parent of all Grid items.
 -- @treturn DynamicGrid @{DynamicGrid} component
@@ -693,18 +688,6 @@ function DruidInstance.new_slider(self, pin_node, end_pos, callback)
 end
 
 
---- Create @{Checkbox} component
--- @tparam DruidInstance self
--- @tparam string|node node The_node id or gui.get_node(node_id).
--- @tparam function|nil callback Checkbox callback
--- @tparam node|nil click_node Trigger node, Default: node
--- @tparam boolean|nil initial_state The initial state of checkbox, Default: false
--- @treturn Checkbox @{Checkbox} component
-function DruidInstance.new_checkbox(self, node, callback, click_node, initial_state)
-	return helper.require_component_message("checkbox")
-end
-
-
 --- Create @{Input} component
 -- @tparam DruidInstance self
 -- @tparam string|node click_node Button node to enabled input component
@@ -716,17 +699,6 @@ function DruidInstance.new_input(self, click_node, text_node, keyboard_type)
 end
 
 
---- Create @{CheckboxGroup} component
--- @tparam DruidInstance self
--- @tparam (node|string)[] nodes Array of gui node
--- @tparam function callback Checkbox callback
--- @tparam (node|string)[]|nil click_nodes Array of trigger nodes, by default equals to nodes
--- @treturn CheckboxGroup @{CheckboxGroup} component
-function DruidInstance.new_checkbox_group(self, nodes, callback, click_nodes)
-	return helper.require_component_message("checkbox_group")
-end
-
-
 --- Create @{DataList} component
 -- @tparam DruidInstance self
 -- @tparam Scroll druid_scroll The Scroll instance for Data List component
@@ -735,17 +707,6 @@ end
 -- @treturn DataList @{DataList} component
 function DruidInstance.new_data_list(self, druid_scroll, druid_grid, create_function)
 	return helper.require_component_message("data_list")
-end
-
-
---- Create @{RadioGroup} component
--- @tparam DruidInstance self
--- @tparam (node|string)[] nodes Array of gui node
--- @tparam function callback Radio callback
--- @tparam (node|string)[]|nil click_nodes Array of trigger nodes, by default equals to nodes
--- @treturn RadioGroup @{RadioGroup} component
-function DruidInstance.new_radio_group(self, nodes, callback, click_nodes)
-	return helper.require_component_message("radio_group")
 end
 
 
@@ -794,13 +755,23 @@ end
 
 
 --- Create @{RichText} component.
--- As a template please check rich_text.gui layout.
 -- @tparam DruidInstance self
--- @tparam string|nil template Template name if used
--- @tparam table|nil nodes Nodes table from gui.clone_tree
+-- @tparam string|node text_node The text node to make Rich Text
+-- @tparam string|nil value The initial text value. Default will be gui.get_text(text_node)
 -- @treturn RichText @{RichText} component
-function DruidInstance.new_rich_text(self, template, nodes)
+function DruidInstance.new_rich_text(self, text_node, value)
 	return helper.require_component_message("rich_text", "custom")
+end
+
+
+--- Create @{RichInput} component.
+-- As a template please check rich_input.gui layout.
+-- @tparam DruidInstance self
+-- @tparam string template The template string name
+-- @tparam table nodes Nodes table from gui.clone_tree
+-- @treturn RichInput @{RichInput} component
+function DruidInstance.new_rich_input(self, template, nodes)
+	return helper.require_component_message("rich_input", "custom")
 end
 
 
