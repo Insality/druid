@@ -514,6 +514,8 @@ This update brings a lot of improvements, so let's dive in:
 **New Example Page**
 I’ve updated Druid's main examples page. Since Druid has become quite popular, I wanted to ensure the examples meet high standards of quality and aesthetics. The examples are now clearer and provide more information. I’ve also added many new examples. Check them out! Share your feedback and suggestions for new examples. Now it's much easier to learn Druid!
 
+Play right here - https://insality.github.io/druid/druid
+
 **Component Reworking**
 Several components have been reworked. While I generally avoid introducing breaking changes, sometimes they are necessary for progress.
 
