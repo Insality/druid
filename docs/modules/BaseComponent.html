@@ -145,18 +145,6 @@ return AwesomeComponent
 	<td class="name" nowrap><a href="#set_input_priority">set_input_priority(self, value, is_temporary)</a></td>
 	<td class="summary">Set component input priority</td>
 	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_nodes">set_nodes(self, nodes)</a></td>
-	<td class="summary">Set current component nodes.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_style">set_style(self, druid_style)</a></td>
-	<td class="summary">Set current component style table.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#set_template">set_template(self, template)</a></td>
-	<td class="summary">Set component template name.</td>
-	</tr>
 </table>
 
 <br/>
@@ -541,110 +529,6 @@ return AwesomeComponent
 
            <span class="types"><span class="type">number</span></span>
         The component input priority
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_nodes"></a>
-    <strong>set_nodes(self, nodes)</strong>
-    </dt>
-    <dd>
-    Set current component nodes.
- Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BaseComponent</span></span>
-         <a href="../modules/BaseComponent.html#">BaseComponent</a>
-        </li>
-        <li><span class="parameter">nodes</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         BaseComponent nodes table
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">BaseComponent</span></span>
-        <a href="../modules/BaseComponent.html#">BaseComponent</a>
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre class="example"><span class="keyword">local</span> nodes = gui.clone_tree(self.prefab)
-... In your component:
-self:set_nodes(nodes)</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "set_style"></a>
-    <strong>set_style(self, druid_style)</strong>
-    </dt>
-    <dd>
-    Set current component style table.
-<p> Invoke `on_style_change` on component, if exist. Component should handle
- their style changing and store all style params
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BaseComponent</span></span>
-         <a href="../modules/BaseComponent.html#">BaseComponent</a>
-        </li>
-        <li><span class="parameter">druid_style</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">nil</span></span>
-         Druid style module
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">BaseComponent</span></span>
-        <a href="../modules/BaseComponent.html#">BaseComponent</a>
-    </ol>
-
-
-
-
-</dd>
-    <dt>
-    <a name = "set_template"></a>
-    <strong>set_template(self, template)</strong>
-    </dt>
-    <dd>
-    Set component template name.
-<p> Use on all your custom components with GUI layouts used as templates.
- It will check parent template name to build full template name in self:get_node()
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">self</span>
-            <span class="types"><span class="type">BaseComponent</span></span>
-         <a href="../modules/BaseComponent.html#">BaseComponent</a>
-        </li>
-        <li><span class="parameter">template</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-         BaseComponent template name
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><span class="type">BaseComponent</span></span>
-        <a href="../modules/BaseComponent.html#">BaseComponent</a>
     </ol>
 
 

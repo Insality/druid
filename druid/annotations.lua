@@ -126,27 +126,6 @@ function druid__base_component.set_input_enabled(self, state) end
 ---@return number The component input priority
 function druid__base_component.set_input_priority(self, value, is_temporary) end
 
---- Set current component nodes.
---- Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
----@param self druid.base_component @{BaseComponent}
----@param nodes table BaseComponent nodes table
----@return druid.base_component @{BaseComponent}
-function druid__base_component.set_nodes(self, nodes) end
-
---- Set current component style table.
---- Invoke `on_style_change` on component, if exist. Component should handle  their style changing and store all style params
----@param self druid.base_component @{BaseComponent}
----@param druid_style table|nil Druid style module
----@return druid.base_component @{BaseComponent}
-function druid__base_component.set_style(self, druid_style) end
-
---- Set component template name.
---- Use on all your custom components with GUI layouts used as templates.  It will check parent template name to build full template name in self:get_node()
----@param self druid.base_component @{BaseComponent}
----@param template string BaseComponent template name
----@return druid.base_component @{BaseComponent}
-function druid__base_component.set_template(self, template) end
-
 
 ---@class druid.blocker : druid.base_component
 ---@field node node Blocker node
@@ -1897,3 +1876,27 @@ function helper.table_to_string(t) end
 ---@param ... any Other component params to pass it to component:init function
 ---@return T Component instance
 function druid_instance.new(self, component, ...) end
+
+--- Set current component style table.
+--- Invoke `on_style_change` on component, if exist. Component should handle  their style changing and store all style params
+---@generic T: druid.base_component
+---@param self T @{BaseComponent}
+---@param druid_style table|nil Druid style module
+---@return T @{BaseComponent}
+function druid__base_component.set_style(self, druid_style) end
+
+--- Set component template name.
+--- Use on all your custom components with GUI layouts used as templates.  It will check parent template name to build full template name in self:get_node()
+---@generic T: druid.base_component
+---@param self T @{BaseComponent}
+---@param template string BaseComponent template name
+---@return T @{BaseComponent}
+function druid__base_component.set_template(self, template) end
+
+--- Set current component nodes.
+--- Use if your component nodes was cloned with `gui.clone_tree` and you got the node tree.
+---@generic T: druid.base_component
+---@param self T @{BaseComponent}
+---@param nodes table BaseComponent nodes table
+---@return T @{BaseComponent}
+function druid__base_component.set_nodes(self, nodes) end

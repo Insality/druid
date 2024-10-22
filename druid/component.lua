@@ -76,6 +76,7 @@ end
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam table|nil druid_style Druid style module
 -- @treturn BaseComponent @{BaseComponent}
+-- @local
 function BaseComponent.set_style(self, druid_style)
 	self._meta.style = druid_style or {}
 	local component_style = self._meta.style[self._component.name] or {}
@@ -95,6 +96,7 @@ end
 -- @tparam BaseComponent self @{BaseComponent}
 -- @tparam string template BaseComponent template name
 -- @treturn BaseComponent @{BaseComponent}
+-- @local
 function BaseComponent.set_template(self, template)
 	template = template or ""
 
@@ -131,6 +133,7 @@ end
 -- local nodes = gui.clone_tree(self.prefab)
 -- ... In your component:
 -- self:set_nodes(nodes)
+-- @local
 function BaseComponent.set_nodes(self, nodes)
 	self._meta.nodes = nodes
 
