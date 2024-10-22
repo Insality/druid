@@ -131,7 +131,7 @@ local function select_start_example(self)
 		-- Try load example from URL
 		local example_name = html5.run("new URLSearchParams(window.location.search).get('example')")
 		if example_name then
-			local is_selected self.examples_list_view:select_example_by_name_id(example_name)
+			local is_selected = self.examples_list_view:select_example_by_name_id(example_name)
 			if is_selected then
 				return
 			end
