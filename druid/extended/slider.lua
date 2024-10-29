@@ -8,7 +8,7 @@
 -- @alias druid.slider
 
 --- On change value callback(self, value)
--- @tfield DruidEvent on_change_value @{DruidEvent}
+-- @tfield DruidEvent on_change_value DruidEvent
 
 --- Slider pin node
 -- @tfield node node
@@ -42,7 +42,19 @@ local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local Slider = component.create("slider", const.PRIORITY_INPUT_HIGH)
+---@class druid.slider: druid.base_component
+---@field node node
+---@field on_change_value druid.event
+---@field style table
+---@field private start_pos vector3
+---@field private pos vector3
+---@field private target_pos vector3
+---@field private end_pos vector3
+---@field private dist vector3
+---@field private is_drag boolean
+---@field private value number
+---@field private steps number[]
+local M = component.create("slider", const.PRIORITY_INPUT_HIGH)
 
 
 local function on_change_value(self)
@@ -56,12 +68,12 @@ local function set_position(self, value)
 end
 
 
---- The @{Slider} constructor
--- @tparam Slider self @{Slider}
+--- The Slider constructor
+-- @tparam Slider self Slider
 -- @tparam node node Gui pin node
 -- @tparam vector3 end_pos The end position of slider
 -- @tparam function|nil callback On slider change callback
-function Slider.init(self, node, end_pos, callback)
+function M:init(node, end_pos, callback)
 	self.node = self:get_node(node)
 
 	self.start_pos = gui.get_position(self.node)
@@ -81,18 +93,18 @@ function Slider.init(self, node, end_pos, callback)
 end
 
 
-function Slider.on_layout_change(self)
+function M:on_layout_change()
 	self:set(self.value)
 end
 
 
-function Slider.on_remove(self)
+function M:on_remove()
 	-- Return pin to start position
 	gui.set_position(self.node, self.start_pos)
 end
 
 
-function Slider.on_window_resized(self)
+function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self._x_koef = x_koef
 	self._y_koef = y_koef
@@ -100,7 +112,7 @@ function Slider.on_window_resized(self)
 end
 
 
-function Slider.on_input(self, action_id, action)
+function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false
 	end
@@ -185,10 +197,10 @@ end
 
 
 --- Set value for slider
--- @tparam Slider self @{Slider}
+-- @tparam Slider self Slider
 -- @tparam number value Value from 0 to 1
 -- @tparam boolean|nil is_silent Don't trigger event if true
-function Slider.set(self, value, is_silent)
+function M:set(value, is_silent)
 	value = helper.clamp(value, 0, 1)
 	set_position(self, value)
 	self.value = value
@@ -200,11 +212,11 @@ end
 
 --- Set slider steps. Pin node will
 -- apply closest step position
--- @tparam Slider self @{Slider}
+-- @tparam Slider self Slider
 -- @tparam number[] steps Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
--- @treturn Slider @{Slider}
-function Slider.set_steps(self, steps)
+-- @treturn Slider Slider
+function M:set_steps(steps)
 	self.steps = steps
 	return self
 end
@@ -214,29 +226,29 @@ end
 -- User can touch any place of node, pin instantly will
 -- move at this position and node drag will start.
 -- This function require the Defold version 1.3.0+
--- @tparam Slider self @{Slider}
+-- @tparam Slider self Slider
 -- @tparam node|string|nil input_node
--- @treturn Slider @{Slider}
-function Slider.set_input_node(self, input_node)
+-- @treturn Slider Slider
+function M:set_input_node(input_node)
 	self._input_node = self:get_node(input_node)
 	return self
 end
 
 
 --- Set Slider input enabled or disabled
--- @tparam Slider self @{Slider}
+-- @tparam Slider self Slider
 -- @tparam boolean is_enabled
-function Slider.set_enabled(self, is_enabled)
+function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
 end
 
 
 --- Check if Slider component is enabled
--- @tparam Slider self @{Slider}
+-- @tparam Slider self Slider
 -- @treturn boolean
-function Slider.is_enabled(self)
+function M:is_enabled()
 	return self._is_enabled
 end
 
 
-return Slider
+return M

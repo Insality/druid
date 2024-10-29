@@ -1,10 +1,4 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Druid constants
--- @local
--- @module DruidConst
--- @alias druid_const
-
+---@class druid.system.const
 local M = {}
 
 M.ACTION_TEXT = hash(sys.get_config_string("druid.input_text", "text"))
@@ -24,7 +18,6 @@ M.ACTION_LCTRL = hash(sys.get_config_string("druid.input_key_lctrl", "key_lctrl"
 M.ACTION_LCMD = hash(sys.get_config_string("druid.input_key_lsuper", "key_lsuper"))
 
 M.IS_STENCIL_CHECK = not (sys.get_config_int("druid.no_stencil_check", 0) == 1)
-
 
 M.ON_INPUT = "on_input"
 M.ON_UPDATE = "update"
@@ -121,10 +114,6 @@ M.SWIPE = {
 	DOWN = "down",
 	LEFT = "left",
 	RIGHT = "right",
-}
-
-M.ERRORS = {
-	GRID_DYNAMIC_ANCHOR = "The pivot of dynamic grid node should be West, East, South or North"
 }
 
 M.EMPTY_FUNCTION = function() end

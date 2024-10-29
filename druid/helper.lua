@@ -1,15 +1,13 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Helper module with various usefull GUI functions.
--- @usage
--- local helper = require("druid.helper")
--- helper.centrate_nodes(0, node_1, node_2)
--- @module Helper
--- @alias druid.helper
+--- Druid Helper module
 
 local const = require("druid.const")
 
+local gui_get_node = gui.get_node
+
+
+---@class druid.system.helper
 local M = {}
+
 local POSITION_X = hash("position.x")
 local SCALE_X = hash("scale.x")
 local SIZE_X = hash("size.x")
@@ -46,39 +44,35 @@ local function get_width(node)
 end
 
 
---- Center two nodes.
--- Nodes will be center around 0 x position
--- text_node will be first (at left side)
--- @function helper.centrate_text_with_icon
--- @tparam text|nil text_node Gui text node
--- @tparam box|nil icon_node Gui box node
--- @tparam number margin Offset between nodes
--- @local
+---Center two nodes.
+--Nodes will be center around 0 x position
+--text_node will be first (at left side)
+---@param text_node node|nil Gui text node
+---@param icon_node node|nil Gui box node
+---@param margin number Offset between nodes
+---@local
 function M.centrate_text_with_icon(text_node, icon_node, margin)
 	return M.centrate_nodes(margin, text_node, icon_node)
 end
 
-
---- Center two nodes.
--- Nodes will be center around 0 x position
--- icon_node will be first (at left side)
--- @function helper.centrate_icon_with_text
--- @tparam box|nil icon_node Gui box node
--- @tparam text|nil text_node Gui text node
--- @tparam number|nil margin Offset between nodes
--- @local
+---Center two nodes.
+--Nodes will be center around 0 x position
+--icon_node will be first (at left side)
+---@param icon_node node|nil Gui box node
+---@param text_node node|nil Gui text node
+---@param margin number|nil Offset between nodes
+---@local
 function M.centrate_icon_with_text(icon_node, text_node, margin)
 	return M.centrate_nodes(margin, icon_node, text_node)
 end
 
 
---- Centerate nodes by x position with margin.
---
--- This functions calculate total width of nodes and set position for each node.
--- The centrate will be around 0 x position.
--- @function helper.centrate_nodes
--- @tparam number|nil margin Offset between nodes
--- @param ... Gui nodes
+---Centerate nodes by x position with margin.
+---
+---This functions calculate total width of nodes and set position for each node.
+---The centrate will be around 0 x position.
+---@param margin number|nil Offset between nodes
+---@param ... node Nodes to centrate
 function M.centrate_nodes(margin, ...)
 	margin = margin or 0
 
@@ -113,10 +107,33 @@ function M.centrate_nodes(margin, ...)
 end
 
 
---- Get current screen stretch multiplier for each side
--- @function helper.get_screen_aspect_koef
--- @treturn number stretch_x
--- @treturn number stretch_y
+---@param node_id string|node
+---@param template string|nil @Full Path to the template
+---@param nodes table<hash, node>|nil @Nodes what created with gui.clone_tree
+---@return node
+function M.get_node(node_id, template, nodes)
+	if type(node_id) ~= "string" then
+		-- Assume it's already node from gui.get_node
+		return node_id
+	end
+
+	-- If template is set, then add it to the node_id
+	if template and #template > 0 then
+		node_id = template .. "/" .. node_id
+	end
+
+	-- If nodes is set, then try to find node in it
+	if nodes then
+		return nodes[node_id]
+	end
+
+	return gui_get_node(node_id)
+end
+
+
+---Get current screen stretch multiplier for each side
+---@return number stretch_x
+---@return number stretch_y
 function M.get_screen_aspect_koef()
 	local window_x, window_y = window.get_size()
 	local stretch_x = window_x / gui.get_width()
@@ -126,10 +143,8 @@ function M.get_screen_aspect_koef()
 end
 
 
---- Get current GUI scale for each side
--- @function helper.get_gui_scale
--- @treturn number scale_x
--- @treturn number scale_y
+---Get current GUI scale for each side
+---@return number scale_x
 function M.get_gui_scale()
 	local window_x, window_y = window.get_size()
 	return math.min(window_x / gui.get_width(),
@@ -137,12 +152,11 @@ function M.get_gui_scale()
 end
 
 
---- Move value from current to target value with step amount
--- @function helper.step
--- @tparam number current Current value
--- @tparam number target Target value
--- @tparam number step Step amount
--- @treturn number New value
+---Move value from current to target value with step amount
+---@param current number Current value
+---@param target number Target value
+---@param step number Step amount
+---@return number New value
 function M.step(current, target, step)
 	if current < target then
 		return math.min(current + step, target)
@@ -152,12 +166,11 @@ function M.step(current, target, step)
 end
 
 
---- Clamp value between min and max
--- @function helper.clamp
--- @tparam number a Value
--- @tparam number min Min value
--- @tparam number max Max value
--- @treturn number Clamped value
+---Clamp value between min and max
+---@param a number Value
+---@param min number Min value
+---@param max number Max value
+---@return number value Clamped value
 function M.clamp(a, min, max)
 	if min > max then
 		min, max = max, min
@@ -173,22 +186,20 @@ function M.clamp(a, min, max)
 end
 
 
---- Calculate distance between two points
--- @function helper.distance
--- @tparam number x1 First point x
--- @tparam number y1 First point y
--- @tparam number x2 Second point x
--- @tparam number y2 Second point y
--- @treturn number Distance
+---Calculate distance between two points
+---@param x1 number First point x
+---@param y1 number First point y
+---@param x2 number Second point x
+---@param y2 number Second point y
+---@return number Distance
 function M.distance(x1, y1, x2, y2)
 	return math.sqrt((x2 - x1) ^ 2 + (y2 - y1) ^ 2)
 end
 
 
---- Return sign of value (-1, 0, 1)
--- @function helper.sign
--- @tparam number val Value
--- @treturn number Sign
+---Return sign of value
+---@param val number Value
+---@return number sign Sign of value, -1, 0 or 1
 function M.sign(val)
 	if val == 0 then
 		return 0
@@ -198,47 +209,42 @@ function M.sign(val)
 end
 
 
---- Round number to specified decimal places
--- @function helper.round
--- @tparam number num Number
--- @tparam number|nil num_decimal_places Decimal places
--- @treturn number Rounded number
+---Round number to specified decimal places
+---@param num number Number
+---@param num_decimal_places number|nil Decimal places
+---@return number value Rounded number
 function M.round(num, num_decimal_places)
 	local mult = 10^(num_decimal_places or 0)
 	return math.floor(num * mult + 0.5) / mult
 end
 
 
---- Lerp between two values
--- @function helper.lerp
--- @tparam number a First value
--- @tparam number b Second value
--- @tparam number t Lerp amount
--- @treturn number Lerped value
+---Lerp between two values
+---@param a number First value
+---@param b number Second value
+---@param t number Lerp amount
+---@return number value Lerped value
 function M.lerp(a, b, t)
 	return a + (b - a) * t
 end
 
 
---- Check if value is in array and return index of it
--- @function helper.contains
--- @tparam table t Array
--- @param value Value
--- @treturn number|nil Index of value or nil
-function M.contains(t, value)
-	for i = 1, #t do
-		if t[i] == value then
-			return i
+---Check if value contains in array
+---@param array any[] Array to check
+---@param value any Value
+function M.contains(array, value)
+	for index = 1, #array do
+		if array[index] == value then
+			return index
 		end
 	end
 	return nil
 end
 
 
---- Make a copy table with all nested tables
--- @function helper.deepcopy
--- @tparam table orig_table Original table
--- @treturn table Copy of original table
+---Make a copy table with all nested tables
+---@param orig_table table Original table
+---@return table Copy of original table
 function M.deepcopy(orig_table)
 	local orig_type = type(orig_table)
 	local copy
@@ -254,11 +260,10 @@ function M.deepcopy(orig_table)
 end
 
 
---- Add all elements from source array to the target array
--- @function helper.add_array
--- @tparam any[] target Array to put elements from source
--- @tparam any[]|nil source The source array to get elements from
--- @treturn any[] The target array
+---Add all elements from source array to the target array
+---@param target any[] Array to put elements from source
+---@param source any[]|nil The source array to get elements from
+---@return any[] The target array
 function M.add_array(target, source)
 	assert(target)
 
@@ -274,13 +279,12 @@ function M.add_array(target, source)
 end
 
 
---- Make a check with gui.pick_node, but with additional node_click_area check.
--- @function helper.pick_node
--- @tparam node node
--- @tparam number x
--- @tparam number y
--- @tparam node|nil node_click_area
--- @local
+---Make a check with gui.pick_node, but with additional node_click_area check.
+---@param node node
+---@param x number
+---@param y number
+---@param node_click_area node|nil
+---@local
 function M.pick_node(node, x, y, node_click_area)
 	local is_pick = gui.pick_node(node, x, y)
 
@@ -291,20 +295,19 @@ function M.pick_node(node, x, y, node_click_area)
 	return is_pick
 end
 
---- Get node size adjusted by scale
--- @function helper.get_scaled_size
--- @tparam node node GUI node
--- @treturn vector3 Scaled size
+
+---Get size of node with scale multiplier
+---@param node node GUI node
+---@treturn vector3 Scaled size
 function M.get_scaled_size(node)
 	return vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
 end
 
 
---- Get cumulative parent's node scale
--- @function helper.get_scene_scale
--- @tparam node node Gui node
--- @tparam boolean|nil include_passed_node_scale True if add current node scale to result
--- @treturn vector3 The scene node scale
+---Get cumulative parent's node scale
+---@param node node Gui node
+---@param include_passed_node_scale boolean|nil True if add current node scale to result
+---@return vector3 The scene node scale
 function M.get_scene_scale(node, include_passed_node_scale)
 	local scale = include_passed_node_scale and gui.get_scale(node) or vmath.vector3(1)
 	local parent = gui.get_parent(node)
@@ -317,10 +320,9 @@ function M.get_scene_scale(node, include_passed_node_scale)
 end
 
 
---- Return closest non inverted clipping parent node for given node
--- @function helper.get_closest_stencil_node
--- @tparam node node GUI node
--- @treturn node|nil The closest stencil node or nil
+---Return closest non inverted clipping parent node for given node
+---@param node node GUI node
+---@return node|nil stencil_node The closest stencil node or nil
 function M.get_closest_stencil_node(node)
 	if not node then
 		return nil
@@ -348,8 +350,15 @@ end
 -- @function helper.get_pivot_offset
 -- @tparam number pivot The gui.PIVOT_* constant
 -- @treturn vector3 Vector offset with [-0.5..0.5] values
-function M.get_pivot_offset(pivot)
-	return const.PIVOTS[pivot]
+
+---Get pivot offset for given pivot or node
+---@param pivot_or_node number|node GUI pivot or node
+---@return vector3 offset The pivot offset
+function M.get_pivot_offset(pivot_or_node)
+	if type(pivot_or_node) == "number" then
+		return const.PIVOTS[pivot_or_node]
+	end
+	return const.PIVOTS[gui.get_pivot(pivot_or_node)]
 end
 
 

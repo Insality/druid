@@ -48,10 +48,6 @@ def process_component(node_name, component_name):
 		component_define += "\n--TODO: Replace prefab_name with grid element prefab"
 		component_define += "\n\tself.{0} = self.druid:new_static_grid(\"{1}\", \"prefab_name\", 1)".format(node_name, node_name)
 
-	if node_name.startswith("dynamic_grid"):
-		component_annotations += "\n---@field {0} druid.dynamic_grid".format(node_name)
-		component_define += "\n\tself.{0} = self.druid:new_dynamic_grid(\"{1}\")".format(node_name, node_name)
-
 	if node_name.startswith("scroll_view"):
 		field_name = node_name.replace("_view", "")
 		content_name = node_name.replace("_view", "_content")

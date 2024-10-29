@@ -13,7 +13,7 @@
 --
 -- • Each Druid instance maintains the self context from the constructor and passes it to each Druid callback.
 --
--- See next: @{DruidInstance}
+-- See next: DruidInstance
 --
 -- @usage
 -- local druid = require("druid.druid")
@@ -52,15 +52,15 @@ local druid_instance = require("druid.system.druid_instance")
 
 local default_style = require("druid.styles.default.style")
 
+---@class druid
 local M = {}
-
-local _instances = {}
+local druid_instances = {}
 
 
 local function clean_deleted_druid_instances()
-	for i = #_instances, 1, -1 do
-		if _instances[i]._deleted then
-			table.remove(_instances, i)
+	for i = #druid_instances, 1, -1 do
+		if druid_instances[i]._deleted then
+			table.remove(druid_instances, i)
 		end
 	end
 end
@@ -68,45 +68,27 @@ end
 
 local function get_druid_instances()
 	clean_deleted_druid_instances()
-	return _instances
+	return druid_instances
 end
 
 
---- Register a new external Druid component.
---
--- You can register your own components to make new alias: the druid:new_{name} function.
--- For example, if you want to register a component called "my_component", you can create it using druid:new_my_component(...).
--- This can be useful if you have your own "basic" components that you don't want to re-create each time.
--- @function druid.register
--- @tparam string name module name
--- @tparam table module lua table with component
--- @usage
--- local my_component = require("path.to.my.component")
--- druid.register("my_component", my_component)
--- ...
--- local druid = druid.new(self)
--- local component_instance = self.druid:new_my_component(...)
+---Register a new external Druid component.
+---You can register your own components to make new alias: the druid:new_{name} function.
+---For example, if you want to register a component called "my_component", you can create it using druid:new_my_component(...).
+---This can be useful if you have your own "basic" components that you don't want to re-create each time.
+---@param name string Module name
+---@param module table Lua table with component
 function M.register(name, module)
 	druid_instance["new_" .. name] = function(self, ...)
 		return druid_instance.new(self, module, ...)
 	end
-
-	return druid_instance["new_" .. name]
 end
 
 
---- Create a new Druid instance for creating GUI components.
---
--- @function druid.new
--- @tparam table context The Druid context. Usually, this is the self of the gui_script. It is passed into all Druid callbacks.
--- @tparam table|nil style The Druid style table to override style parameters for this Druid instance.
--- @treturn druid_instance The Druid instance @{DruidInstance}.
--- @usage
--- local druid = require("druid.druid")
---
--- function init(self)
---    self.druid = druid.new(self)
--- end
+---Create a new Druid instance for creating GUI components.
+---@param context table The Druid context. Usually, this is the self of the gui_script. It is passed into all Druid callbacks.
+---@param style table|nil The Druid style table to override style parameters for this Druid instance.
+---@return druid_instance druid_instance The new Druid instance
 function M.new(context, style)
 	clean_deleted_druid_instances()
 
@@ -117,65 +99,35 @@ function M.new(context, style)
 	local new_instance = setmetatable({}, { __index = druid_instance })
 	new_instance:initialize(context, style)
 
-	table.insert(_instances, new_instance)
+	table.insert(druid_instances, new_instance)
 	return new_instance
 end
 
 
---- Set your own default style for all Druid instances.
---
--- To create your own style file, copy the default style file and make changes to it.
--- Register the new style before creating your Druid instances.
--- @function druid.set_default_style
--- @tparam table style Druid style module
--- @usage
--- local my_style = require("path.to.my.style")
--- druid.set_default_style(my_style)
+---Set the default style for all Druid instances.
+---@param style table Default style
 function M.set_default_style(style)
 	settings.default_style = style or {}
 end
 
 
---- Set the text function for the LangText component.
---
--- The Druid locale component will call this function to get translated text.
--- After setting the text function, all existing locale components will be updated.
--- @function druid.set_text_function
--- @tparam function callback Get localized text function
--- @usage
--- druid.set_text_function(function(text_id)
---    return lang_data[text_id] -- Replace with your real function
--- end)
+---Set the text function for the LangText component.
+---@param callback fun(text_id: string): string Get localized text function
 function M.set_text_function(callback)
 	settings.get_text = callback or const.EMPTY_FUNCTION
 	M.on_language_change()
 end
 
 
---- Set the Druid sound function to play UI sounds if used.
---
--- Set a function to play a sound given a sound_id. This function is used for button clicks to play the "click" sound.
--- It can also be used to play sounds in your custom components (see the default Druid style file for an example).
--- @function druid.set_sound_function
--- @tparam function callback Sound play callback
--- @usage
--- druid.set_sound_function(function(sound_id)
---     sound.play(sound_id) -- Replace with your real function
--- end)
+---Set the sound function to able components to play sounds.
+---@param callback fun(sound_id: string) Sound play callback
 function M.set_sound_function(callback)
 	settings.play_sound = callback or const.EMPTY_FUNCTION
 end
 
 
---- Set the window callback to enable on_focus_gain and on_focus_lost functions.
---
--- This is used to trigger the on_focus_lost and on_focus_gain functions in Druid components.
--- @function druid.on_window_callback
--- @tparam string event Event param from window listener
--- @usage
--- window.set_listener(function(_, event)
---    druid.on_window_callback(event)
--- end)
+---Set the window callback to enable Druid window events.
+---@param event constant Event param from window listener
 function M.on_window_callback(event)
 	local instances = get_druid_instances()
 
@@ -195,12 +147,7 @@ function M.on_window_callback(event)
 end
 
 
---- Call this function when the game language changes.
---
--- This function will translate all current LangText components.
--- @function druid.on_language_change
--- @usage
--- druid.on_language_change()
+---Call this function when the game language changes.
 function M.on_language_change()
 	local instances = get_druid_instances()
 

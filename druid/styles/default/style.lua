@@ -1,5 +1,3 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
 local const = require("druid.const")
 local settings = require("druid.system.settings")
 

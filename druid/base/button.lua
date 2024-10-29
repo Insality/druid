@@ -35,16 +35,16 @@
 -- @alias druid.button
 
 
---- The @{DruidEvent}: Event on successful release action over button.
+--- The DruidEvent: Event on successful release action over button.
 -- @usage
 -- -- Custom args passed in Button constructor
 -- button.on_click:subscribe(function(self, custom_args, button_instance)
 --     print("On button click!")
 -- end)
--- @tfield DruidEvent on_click @{DruidEvent}
+-- @tfield DruidEvent on_click DruidEvent
 
 
---- The @{DruidEvent}: Event on repeated action over button.
+--- The DruidEvent: Event on repeated action over button.
 --
 -- This callback will be triggered if user hold the button. The repeat rate pick from `input.repeat_interval` in game.project
 -- @usage
@@ -52,10 +52,10 @@
 -- button.on_repeated_click:subscribe(function(self, custom_args, button_instance, click_count)
 --     print("On repeated Button click!")
 -- end)
--- @tfield DruidEvent on_repeated_click @{DruidEvent}
+-- @tfield DruidEvent on_repeated_click DruidEvent
 
 
---- The @{DruidEvent}: Event on long tap action over button.
+--- The DruidEvent: Event on long tap action over button.
 --
 -- This callback will be triggered if user pressed the button and hold the some amount of time.
 -- The amount of time picked from button style param: LONGTAP_TIME
@@ -64,10 +64,10 @@
 -- button.on_long_click:subscribe(function(self, custom_args, button_instance, hold_time)
 --     print("On long Button click!")
 -- end)
--- @tfield DruidEvent on_long_click @{DruidEvent}
+-- @tfield DruidEvent on_long_click DruidEvent
 
 
---- The @{DruidEvent}: Event on double tap action over button.
+--- The DruidEvent: Event on double tap action over button.
 --
 -- If secondary click was too fast after previous one, the double
 -- click will be called instead usual click (if on_double_click subscriber exists)
@@ -76,10 +76,10 @@
 -- button.on_double_click:subscribe(function(self, custom_args, button_instance, click_amount)
 --     print("On double Button click!")
 -- end)
--- @tfield DruidEvent on_double_click @{DruidEvent}
+-- @tfield DruidEvent on_double_click DruidEvent
 
 
---- The @{DruidEvent}: Event calls every frame before on_long_click event.
+--- The DruidEvent: Event calls every frame before on_long_click event.
 --
 -- If long_click subscriber exists, the on_hold_callback will be called before long_click trigger.
 --
@@ -89,10 +89,10 @@
 -- button.on_double_click:subscribe(function(self, custom_args, button_instance, time)
 --     print("On hold Button callback!")
 -- end)
--- @tfield DruidEvent on_hold_callback @{DruidEvent}
+-- @tfield DruidEvent on_hold_callback DruidEvent
 
 
---- The @{DruidEvent}: Event calls if click event was outside of button.
+--- The DruidEvent: Event calls if click event was outside of button.
 --
 -- This event will be triggered for each button what was not clicked on user click action
 --
@@ -102,16 +102,16 @@
 -- button.on_click_outside:subscribe(function(self, custom_args, button_instance)
 --     print("On click Button outside!")
 -- end)
--- @tfield DruidEvent on_click_outside @{DruidEvent}
+-- @tfield DruidEvent on_click_outside DruidEvent
 
 
---- The @{DruidEvent}: Event triggered if button was pressed by user.
+--- The DruidEvent: Event triggered if button was pressed by user.
 -- @usage
 -- -- Custom args passed in Button constructor
 -- button.on_pressed:subscribe(function(self, custom_args, button_instance)
 --     print("On Button pressed!")
 -- end)
--- @tfield DruidEvent on_pressed @{DruidEvent}
+-- @tfield DruidEvent on_pressed DruidEvent
 
 --- Button trigger node
 -- @tfield node node
@@ -128,8 +128,8 @@
 ---Custom args for any Button event. Setup in Button constructor
 -- @tfield any params
 
---- The @{Hover}: Button Hover component
--- @tfield Hover hover @{Hover}
+--- The Hover: Button Hover component
+-- @tfield Hover hover Hover
 
 --- Additional button click area, defined by another GUI node
 -- @tfield node|nil click_zone
@@ -141,7 +141,26 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Button = component.create("button")
+---@class druid.button: druid.base_component
+---@field on_click druid.event
+---@field on_pressed druid.event
+---@field on_repeated_click druid.event
+---@field on_long_click druid.event
+---@field on_double_click druid.event
+---@field on_hold_callback druid.event
+---@field on_click_outside druid.event
+---@field node node
+---@field node_id hash
+---@field anim_node node
+---@field params any
+---@field hover druid.hover
+---@field click_zone node
+---@field start_scale vector3
+---@field start_pos vector3
+---@field disabled boolean
+---@field key_trigger hash
+---@field style table
+local M = component.create("button")
 
 
 local function is_input_match(self, action_id)
@@ -271,7 +290,7 @@ end
 -- @tfield function on_hover function(self, node, hover_state)
 -- @tfield function on_mouse_hover function(self, node, hover_state)
 -- @tfield function on_set_enabled function(self, node, enabled_state)
-function Button.on_style_change(self, style)
+function M:on_style_change(style)
 	self.style = {}
 	self.style.LONGTAP_TIME = style.LONGTAP_TIME or 0.4
 	self.style.AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8
@@ -285,22 +304,21 @@ function Button.on_style_change(self, style)
 end
 
 
---- The @{Button} constructor
--- @tparam Button self @{Button}
--- @tparam string|node node The node_id or gui.get_node(node_id)
--- @tparam function callback On click button callback
--- @tparam any|nil custom_args Button events custom arguments
--- @tparam string|node|nil anim_node Node to animate instead of trigger node.
-function Button.init(self, node, callback, custom_args, anim_node)
+---Button constructor
+---@param node_or_node_id node|string Node name or GUI Node itself.
+---@param callback fun()|nil Callback on button click
+---@param custom_args any|nil Custom args for any Button event
+---@param anim_node node|string|nil Node to animate instead of trigger node.
+function M:init(node_or_node_id, callback, custom_args, anim_node)
 	self.druid = self:get_druid()
-	self.node = self:get_node(node)
+	self.node = self:get_node(node_or_node_id)
 	self.node_id = gui.get_id(self.node)
 
 	self.anim_node = anim_node and self:get_node(anim_node) or self.node
 	self.start_scale = gui.get_scale(self.anim_node)
 	self.start_pos = gui.get_position(self.anim_node)
 	self.params = custom_args
-	self.hover = self.druid:new_hover(node, on_button_hover)
+	self.hover = self.druid:new_hover(node_or_node_id, on_button_hover)
 	self.hover.on_mouse_hover:subscribe(on_button_mouse_hover)
 	self.click_zone = nil
 	self.is_repeated_started = false
@@ -325,7 +343,7 @@ function Button.init(self, node, callback, custom_args, anim_node)
 end
 
 
-function Button.on_late_init(self)
+function M:on_late_init()
 	if not self.click_zone and const.IS_STENCIL_CHECK then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
 		if stencil_node then
@@ -335,7 +353,7 @@ function Button.on_late_init(self)
 end
 
 
-function Button.on_input(self, action_id, action)
+function M:on_input(action_id, action)
 	if not is_input_match(self, action_id) then
 		return false
 	end
@@ -416,14 +434,14 @@ function Button.on_input(self, action_id, action)
 end
 
 
-function Button.on_input_interrupt(self)
+function M:on_input_interrupt()
 	self.can_action = false
 	self.hover:set_hover(false)
 	self.hover:set_mouse_hover(false)
 end
 
 
-function Button.on_message_input(self, node_id, message)
+function M:on_message_input(node_id, message)
 	if node_id ~= self.node_id or self.disabled or not gui.is_enabled(self.node) then
 		return false
 	end
@@ -451,13 +469,13 @@ end
 --- Set button enabled state.
 -- The style.on_set_enabled will be triggered.
 -- Disabled button is not clickable.
--- @tparam Button self @{Button}
+-- @tparam Button self Button
 -- @tparam boolean|nil state Enabled state
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_enabled(false)
 -- button:set_enabled(true)
-function Button.set_enabled(self, state)
+function M:set_enabled(state)
 	self.disabled = not state
 	self.hover:set_enabled(state)
 	self.style.on_set_enabled(self, self.node, state)
@@ -469,11 +487,11 @@ end
 --- Get button enabled state.
 --
 -- By default all Buttons is enabled on creating.
--- @tparam Button self @{Button}
+-- @tparam Button self Button
 -- @treturn boolean @True, if button is enabled now, False overwise
 -- @usage
 -- local is_enabled = button:is_enabled()
-function Button.is_enabled(self)
+function M:is_enabled()
 	return not self.disabled
 end
 
@@ -482,12 +500,12 @@ end
 -- Useful to restrict click outside out stencil node or scrollable content.
 --
 -- This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
--- @tparam Button self @{Button}
+-- @tparam Button self Button
 -- @tparam node|string|nil zone Gui node
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_click_zone("stencil_node")
-function Button.set_click_zone(self, zone)
+function M:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
 	self.hover:set_click_zone(zone)
 
@@ -496,12 +514,12 @@ end
 
 
 --- Set key name to trigger this button by keyboard.
--- @tparam Button self @{Button}
+-- @tparam Button self Button
 -- @tparam hash|string key The action_id of the input key
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_key_trigger("key_space")
-function Button.set_key_trigger(self, key)
+function M:set_key_trigger(key)
 	self.key_trigger = hash(key)
 
 	return self
@@ -513,7 +531,7 @@ end
 -- @treturn hash The action_id of the input key
 -- @usage
 -- local key_hash = button:get_key_trigger()
-function Button.get_key_trigger(self)
+function M:get_key_trigger()
 	return self.key_trigger
 end
 
@@ -523,7 +541,7 @@ end
 -- @tparam function|nil check_function Should return true or false. If true - button can be pressed.
 -- @tparam function|nil failure_callback Function will be called on button click, if check function return false
 -- @treturn Button Current button instance
-function Button.set_check_function(self, check_function, failure_callback)
+function M:set_check_function(check_function, failure_callback)
 	self._check_function = check_function
 	self._failure_callback = failure_callback
 end
@@ -540,10 +558,10 @@ end
 -- @treturn Button Current button instance
 -- @usage
 -- button:set_web_user_interaction(true)
-function Button.set_web_user_interaction(self, is_web_mode)
+function M:set_web_user_interaction(is_web_mode)
 	self._is_html5_mode = not not (is_web_mode and html5)
 	return self
 end
 
 
-return Button
+return M

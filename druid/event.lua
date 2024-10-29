@@ -8,6 +8,7 @@
 -- @module DruidEvent
 -- @alias druid.event
 
+---@class druid.event
 local M = {}
 M.COUNTER = 0
 
@@ -39,11 +40,11 @@ end
 
 
 --- Check is event subscribed.
--- @tparam DruidEvent self @{DruidEvent}
+-- @tparam DruidEvent self DruidEvent
 -- @tparam function callback Callback itself
 -- @tparam any|nil callback_context Additional context as first param to callback call
 -- @treturn boolean, number|nil @Is event subscribed, return index of callback in event as second param
-function M.is_subscribed(self, callback, callback_context)
+function M:is_subscribed(callback, callback_context)
 	if #self == 0 then
 		return false, nil
 	end
@@ -60,7 +61,7 @@ end
 
 
 --- Subscribe callback on event
--- @tparam DruidEvent self @{DruidEvent}
+-- @tparam DruidEvent self DruidEvent
 -- @tparam function callback Callback itself
 -- @tparam any|nil callback_context Additional context as first param to callback call, usually it's self
 -- @treturn boolean True if callback was subscribed
@@ -71,7 +72,7 @@ end
 -- ...
 -- local button = self.druid:new_button("button", callback)
 -- button.on_long_click:subscribe(on_long_callback, self)
-function M.subscribe(self, callback, callback_context)
+function M:subscribe(callback, callback_context)
 	assert(type(self) == "table", "You should subscribe to event with : syntax")
 	assert(callback, "A function must be passed to subscribe to an event")
 
@@ -85,7 +86,7 @@ end
 
 
 --- Unsubscribe callback on event
--- @tparam DruidEvent self @{DruidEvent}
+-- @tparam DruidEvent self DruidEvent
 -- @tparam function callback Callback itself
 -- @tparam any|nil callback_context Additional context as first param to callback call
 -- @usage
@@ -94,7 +95,7 @@ end
 -- end
 -- ...
 -- button.on_long_click:unsubscribe(on_long_callback, self)
-function M.unsubscribe(self, callback, callback_context)
+function M:unsubscribe(callback, callback_context)
 	assert(callback, "A function must be passed to subscribe to an event")
 
 	local _, event_index = self:is_subscribed(callback, callback_context)
@@ -108,17 +109,17 @@ end
 
 
 --- Return true, if event have at lease one handler
--- @tparam DruidEvent self @{DruidEvent}
+-- @tparam DruidEvent self DruidEvent
 -- @treturn boolean True if event have handlers
 -- @usage
 -- local is_long_click_handler_exists = button.on_long_click:is_exist()
-function M.is_exist(self)
+function M:is_exist()
 	return #self > 0
 end
 
 
 --- Return true, if event not have handler
---- @tparam DruidEvent self @{DruidEvent}
+--- @tparam DruidEvent self DruidEvent
 --- @treturn boolean True if event not have handlers
 --- @usage
 --- local is_long_click_handler_not_exists = button.on_long_click:is_empty()
@@ -128,10 +129,10 @@ end
 
 
 --- Clear the all event handlers
--- @tparam DruidEvent self @{DruidEvent}
+-- @tparam DruidEvent self DruidEvent
 -- @usage
 -- button.on_long_click:clear()
-function M.clear(self)
+function M:clear()
 	for index = #self, 1, -1 do
 		self[index] = nil
 	end
@@ -139,14 +140,14 @@ end
 
 
 --- Trigger the event and call all subscribed callbacks
--- @tparam DruidEvent self @{DruidEvent}
+-- @tparam DruidEvent self DruidEvent
 -- @tparam any ... All event params
 -- @usage
 -- local Event = require("druid.event")
 -- ...
 -- local event = Event()
 -- event:trigger("Param1", "Param2")
-function M.trigger(self, ...)
+function M:trigger(...)
 	if #self == 0 then
 		return
 	end

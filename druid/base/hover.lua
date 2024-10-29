@@ -9,10 +9,10 @@
 -- @tfield node node
 
 --- On hover callback(self, state, hover_instance)
--- @tfield DruidEvent on_hover @{DruidEvent}
+-- @tfield DruidEvent on_hover DruidEvent
 
 --- On mouse hover callback(self, state, hover_instance)
--- @tfield DruidEvent on_mouse_hover @{DruidEvent}
+-- @tfield DruidEvent on_mouse_hover DruidEvent
 
 ---
 
@@ -21,15 +21,25 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Hover = component.create("hover")
+---@class druid.hover: druid.base_component
+---@field node node
+---@field on_hover druid.event
+---@field on_mouse_hover druid.event
+---@field style table
+---@field click_zone node
+---@field private _is_hovered boolean
+---@field private _is_mouse_hovered boolean
+---@field private _is_enabled boolean
+---@field private _is_mobile boolean
+local M = component.create("hover")
 
 
---- The @{Hover} constructor
--- @tparam Hover self @{Hover}
+--- The Hover constructor
+-- @tparam Hover self Hover
 -- @tparam node node Gui node
 -- @tparam function on_hover_callback Hover callback
 -- @tparam function on_mouse_hover On mouse hover callback
-function Hover.init(self, node, on_hover_callback, on_mouse_hover)
+function M:init(node, on_hover_callback, on_mouse_hover)
 	self.node = self:get_node(node)
 
 	self._is_hovered = false
@@ -42,7 +52,7 @@ function Hover.init(self, node, on_hover_callback, on_mouse_hover)
 end
 
 
-function Hover.on_late_init(self)
+function M:on_late_init()
 	if not self.click_zone and const.IS_STENCIL_CHECK then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
 		if stencil_node then
@@ -58,14 +68,14 @@ end
 -- @table style
 -- @tfield[opt] string ON_HOVER_CURSOR Mouse hover style on node hover
 -- @tfield[opt] string ON_MOUSE_HOVER_CURSOR Mouse hover style on node mouse hover
-function Hover.on_style_change(self, style)
+function M:on_style_change(style)
 	self.style = {}
 	self.style.ON_HOVER_CURSOR = style.ON_HOVER_CURSOR or nil
 	self.style.ON_MOUSE_HOVER_CURSOR = style.ON_MOUSE_HOVER_CURSOR or nil
 end
 
 
-function Hover.on_input(self, action_id, action)
+function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= nil then
 		return false
 	end
@@ -99,15 +109,15 @@ function Hover.on_input(self, action_id, action)
 end
 
 
-function Hover.on_input_interrupt(self)
+function M:on_input_interrupt()
 	self:set_hover(false)
 end
 
 
 --- Set hover state
--- @tparam Hover self @{Hover}
+-- @tparam Hover self Hover
 -- @tparam boolean|nil state The hover state
-function Hover.set_hover(self, state)
+function M:set_hover(state)
 	if self._is_hovered == state then
 		return
 	end
@@ -122,17 +132,17 @@ end
 
 
 --- Return current hover state. True if touch action was on the node at current time
--- @tparam Hover self @{Hover}
+-- @tparam Hover self Hover
 -- @treturn boolean The current hovered state
-function Hover.is_hovered(self)
+function M:is_hovered()
 	return self._is_hovered
 end
 
 
 --- Set mouse hover state
--- @tparam Hover self @{Hover}
+-- @tparam Hover self Hover
 -- @tparam boolean|nil state The mouse hover state
-function Hover.set_mouse_hover(self, state)
+function M:set_mouse_hover(state)
 	if self._is_mouse_hovered == state then
 		return
 	end
@@ -147,18 +157,18 @@ end
 
 
 --- Return current hover state. True if nil action_id (usually desktop mouse) was on the node at current time
--- @tparam Hover self @{Hover}
+-- @tparam Hover self Hover
 -- @treturn boolean The current hovered state
-function Hover.is_mouse_hovered(self)
+function M:is_mouse_hovered()
 	return self._is_mouse_hovered
 end
 
 
 --- Strict hover click area. Useful for
 -- no click events outside stencil node
--- @tparam Hover self @{Hover}
+-- @tparam Hover self Hover
 -- @tparam node|string|nil zone Gui node
-function Hover.set_click_zone(self, zone)
+function M:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
 end
 
@@ -166,9 +176,9 @@ end
 --- Set enable state of hover component.
 -- If hover is not enabled, it will not generate
 -- any hover events
--- @tparam Hover self @{Hover}
+-- @tparam Hover self Hover
 -- @tparam boolean|nil state The hover enabled state
-function Hover.set_enabled(self, state)
+function M:set_enabled(state)
 	self._is_enabled = state
 
 	if not state then
@@ -183,16 +193,17 @@ end
 
 
 --- Return current hover enabled state
--- @tparam Hover self @{Hover}
+-- @tparam Hover self Hover
 -- @treturn boolean The hover enabled state
-function Hover.is_enabled(self)
+function M:is_enabled()
 	return self._is_enabled
 end
 
 
 -- Internal cursor stack
 local cursor_stack = {}
-function Hover:_set_cursor(priority, cursor)
+---@local
+function M:_set_cursor(priority, cursor)
 	if not defos then
 		return
 	end
@@ -217,4 +228,4 @@ function Hover:_set_cursor(priority, cursor)
 end
 
 
-return Hover
+return M

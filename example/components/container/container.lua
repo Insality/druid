@@ -134,7 +134,7 @@ end
 --- Set new size of layout node
 ---@param width number|nil
 ---@param height number|nil
----@return druid.container @{Container}
+---@return druid.container Container
 function M:set_size(width, height)
 	width = width or self.size.x
 	height = height or self.size.y
@@ -191,7 +191,7 @@ end
 
 --- Set size for layout node to fit inside it
 ---@param target_size vector3
----@return druid.container @{Container}
+---@return druid.container Container
 function M:fit_into_size(target_size)
 	self.fit_size = target_size
 	self:refresh()
@@ -200,7 +200,7 @@ end
 
 
 --- Set current size for layout node to fit inside it
----@return druid.container @{Container}
+---@return druid.container Container
 function M:fit_into_window()
 	return self:fit_into_size(vmath.vector3(gui.get_width(), gui.get_height(), 0))
 end
@@ -221,7 +221,7 @@ end
 ---@param node_or_container node|string|druid.container|table
 ---@param mode string|nil stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
 ---@param on_resize_callback fun(self: userdata, size: vector3)|nil
----@return druid.container @{Container} New created layout instance
+---@return druid.container Container New created layout instance
 function M:add_container(node_or_container, mode, on_resize_callback)
 	local container = nil
 	local node = node_or_container
@@ -422,7 +422,7 @@ function M:update_child_containers()
 end
 
 
----@return druid.container @{Container}
+---@return druid.container Container
 function M:create_draggable_corners()
 	self:clear_draggable_corners()
 
@@ -452,7 +452,7 @@ function M:create_draggable_corners()
 end
 
 
----@return druid.container @{Container}
+---@return druid.container Container
 function M:clear_draggable_corners()
 	for index = 1, #self._draggable_corners do
 		local drag_component = self._draggable_corners[index]
@@ -505,7 +505,7 @@ end
 
 --- Set node for layout node to fit inside it. Pass nil to reset
 ---@param node string|node The node_id or gui.get_node(node_id)
----@return druid.container @{Layout}
+---@return druid.container Layout
 function M:fit_into_node(node)
 	self._fit_node = self:get_node(node)
 	self:refresh_scale()

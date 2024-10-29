@@ -1,45 +1,41 @@
--- Copyright (c) 2024 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Layout management on node
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_layout" target="_blank"><b>Example Link</b></a>
--- @module Layout
--- @within BaseComponent
--- @alias druid.layout
-
---- Layout node
--- @tfield node node
-
---- Current layout mode
--- @tfield string mode
-
----
-
 local helper = require("druid.helper")
 local component = require("druid.component")
 
--- @class druid.layout.row_data
--- @tfield width number
--- @tfield height number
--- @tfield count number
+---@alias druid.layout.mode
+---| "horizontal" Elements are placed horizontally
+---| "vertical" Elements are placed vertically
+---| "horizontal_wrap" Elements are placed horizontally, but if the row width is greater than the parent width, the next row is created
 
--- @class druid.layout.rows_data
--- @tfield total_width number
--- @tfield total_height number
--- @tfield nodes_width table<node, number>
--- @tfield nodes_height table<node, number>
--- @tfield rows druid.layout.row_data[]>
+---@class druid.layout.row_data
+---@field width number
+---@field height number
+---@field count number
 
--- @class druid.layout: druid.base_component
+---@class druid.layout.rows_data
+---@field total_width number
+---@field total_height number
+---@field nodes_width table<node, number>
+---@field nodes_height table<node, number>
+---@field rows druid.layout.row_data[]>
+
+---@class druid.layout: druid.base_component
+---@field node node
+---@field is_dirty boolean
+---@field entities node[]
+---@field margin {x: number, y: number}
+---@field padding vector4
+---@field type string
+---@field is_resize_width boolean
+---@field is_resize_height boolean
+---@field is_justify boolean
 local M = component.create("layout")
 
--- The @{Layout} constructor
--- @tparam Layout self @{Layout}
--- @tparam node node Gui node
--- @tparam string layout_type The layout mode (from const.LAYOUT_MODE)
--- @tparam function|nil on_size_changed_callback The callback on window resize
-function M.init(self, node, layout_type)
-	self.node = self:get_node(node)
+---Layout component constructor
+---@local
+---@param node_or_node_id node|string
+---@param layout_type druid.layout.mode
+function M:init(node_or_node_id, layout_type)
+	self.node = self:get_node(node_or_node_id)
 
 	self.is_dirty = true
 	self.entities = {}
@@ -51,6 +47,8 @@ function M.init(self, node, layout_type)
 	self.is_justify = false
 end
 
+
+---@local
 function M:update()
 	if not self.is_dirty then
 		return
@@ -60,11 +58,10 @@ function M:update()
 end
 
 
--- @tparam Layout self @{Layout}
--- @tparam number|nil margin_x
--- @tparam number|nil margin_y
--- @treturn druid.layout @{Layout}
-function M.set_margin(self, margin_x, margin_y)
+---@param margin_x number|nil
+---@param margin_y number|nil
+---@return druid.layout
+function M:set_margin(margin_x, margin_y)
 	self.margin.x = margin_x or self.margin.x
 	self.margin.y = margin_y or self.margin.y
 	self.is_dirty = true
@@ -73,10 +70,9 @@ function M.set_margin(self, margin_x, margin_y)
 end
 
 
--- @tparam Layout self @{Layout}
--- @tparam vector4 padding The vector4 with padding values, where x - left, y - top, z - right, w - bottom
--- @treturn druid.layout @{Layout}
-function M.set_padding(self, padding)
+---@param padding vector4 The vector4 with padding values, where x - left, y - top, z - right, w - bottom
+---@return druid.layout
+function M:set_padding(padding)
 	self.padding = padding
 	self.is_dirty = true
 
@@ -84,19 +80,17 @@ function M.set_padding(self, padding)
 end
 
 
--- @tparam Layout self @{Layout}
--- @treturn druid.layout @{Layout}
-function M.set_dirty(self)
+---@return druid.layout
+function M:set_dirty()
 	self.is_dirty = true
 
 	return self
 end
 
 
--- @tparam Layout self @{Layout}
--- @tparam boolean is_justify
--- @treturn druid.layout @{Layout}
-function M.set_justify(self, is_justify)
+---@param is_justify boolean
+---@return druid.layout
+function M:set_justify(is_justify)
 	self.is_justify = is_justify
 	self.is_dirty = true
 
@@ -104,10 +98,9 @@ function M.set_justify(self, is_justify)
 end
 
 
--- @tparam Layout self @{Layout}
--- @tparam string type The layout type: "horizontal", "vertical", "horizontal_wrap"
--- @treturn druid.layout @{Layout}
-function M.set_type(self, type)
+---@param type string The layout type: "horizontal", "vertical", "horizontal_wrap"
+---@return druid.layout
+function M:set_type(type)
 	self.type = type
 	self.is_dirty = true
 
@@ -115,11 +108,10 @@ function M.set_type(self, type)
 end
 
 
--- @tparam Layout self @{Layout}
--- @tparam boolean is_hug_width
--- @tparam boolean is_hug_height
--- @treturn druid.layout @{Layout}
-function M.set_hug_content(self, is_hug_width, is_hug_height)
+---@param is_hug_width boolean
+---@param is_hug_height boolean
+---@return druid.layout
+function M:set_hug_content(is_hug_width, is_hug_height)
 	self.is_resize_width = is_hug_width or false
 	self.is_resize_height = is_hug_height or false
 	self.is_dirty = true
@@ -128,21 +120,20 @@ function M.set_hug_content(self, is_hug_width, is_hug_height)
 end
 
 
--- @tparam Layout self @{Layout}
--- @tparam string|node node_or_node_id
--- @treturn druid.layout @{Layout}
-function M.add(self, node_or_node_id)
+---@param node_or_node_id node|string node_or_node_id
+---@return druid.layout
+function M:add(node_or_node_id)
 	-- Acquire node from entity or by id
 	local node = node_or_node_id
 	if type(node_or_node_id) == "table" then
 		assert(node_or_node_id.node, "The entity should have a node")
 		node = node_or_node_id.node
 	else
-		-- @cast node_or_node_id string|node
+		---@cast node_or_node_id string|node
 		node = self:get_node(node_or_node_id)
 	end
 
-	-- @cast node node
+	---@cast node node
 	table.insert(self.entities, node)
 	gui.set_parent(node, self.node)
 
@@ -152,9 +143,8 @@ function M.add(self, node_or_node_id)
 end
 
 
--- @tparam Layout self @{Layout}
--- @treturn druid.layout @{Layout}
-function M.refresh_layout(self)
+---@return druid.layout
+function M:refresh_layout()
 	local layout_node = self.node
 
 	local entities = self.entities
@@ -289,9 +279,8 @@ function M.refresh_layout(self)
 end
 
 
--- @tparam Layout self @{Layout}
--- @treturn druid.layout @{Layout}
-function M.clear_layout(self)
+---@return druid.layout
+function M:clear_layout()
 	for index = #self.entities, 1, -1 do
 		self.entities[index] = nil
 	end
@@ -302,10 +291,9 @@ function M.clear_layout(self)
 end
 
 
--- @tparam node node
--- @treturn number, number
--- @local
-function M.get_node_size(node)
+---@param node node
+---@return number, number
+function M:get_node_size(node)
 	if not gui.is_enabled(node, false) then
 		return 0, 0
 	end
@@ -323,11 +311,10 @@ function M.get_node_size(node)
 end
 
 
--- @tparam Layout self @{Layout}
--- Calculate rows data for layout. Contains total width, height and rows info (width, height, count of elements in row)
--- @treturn druid.layout.rows_data
--- @local
-function M.calculate_rows_data(self)
+---Calculate rows data for layout. Contains total width, height and rows info (width, height, count of elements in row)
+---@local
+---@return druid.layout.rows_data
+function M:calculate_rows_data()
 	local entities = self.entities
 	local margin = self.margin
 	local type = self.type
@@ -353,7 +340,7 @@ function M.calculate_rows_data(self)
 
 		-- Get node size if it's not calculated yet
 		if not node_width or not node_height then
-			node_width, node_height = M.get_node_size(node)
+			node_width, node_height = self:get_node_size(node)
 			rows_data.nodes_width[node] = node_width
 			rows_data.nodes_height[node] = node_height
 		end
@@ -407,11 +394,10 @@ function M.calculate_rows_data(self)
 end
 
 
--- @tparam node node
--- @tparam number x
--- @tparam number y
--- @treturn node
--- @local
+---@param node node
+---@param x number
+---@param y number
+---@return node
 function M:set_node_position(node, x, y)
 	local position = gui.get_position(node)
 	position.x = x

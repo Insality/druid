@@ -121,7 +121,7 @@ window.set_listener(on_window_callback)
 ```
 
 
-## EmmyLua Annotations
+## Lua Annotations
 
 [EmmyLua](https://emmylua.github.io/annotation.html) is a Lua annotation library. It is a useful tool for enabling Lua code autocompletion in editors such as [VSCode](https://github.com/EmmyLua/VSCode-EmmyLua) and [IntelliJ IDEA](https://github.com/EmmyLua/IntelliJ-EmmyLua).
 

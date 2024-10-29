@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class basic_blocker: druid.component
+---@class basic_blocker: druid.base_component
 ---@field druid druid_instance
 ---@field root node
 ---@field blocker druid.blocker

@@ -8,10 +8,10 @@
 -- @alias druid.hotkey
 
 --- On hotkey released callback(self, argument)
--- @tfield DruidEvent on_hotkey_pressed @{DruidEvent}
+-- @tfield DruidEvent on_hotkey_pressed DruidEvent
 
 --- On hotkey released callback(self, argument)
--- @tfield DruidEvent on_hotkey_released @{DruidEvent}
+-- @tfield DruidEvent on_hotkey_released DruidEvent
 
 --- Visual node
 -- @tfield node node
@@ -20,7 +20,7 @@
 -- @tfield node|nil click_node
 
 --- Button component from click_node
--- @tfield Button button @{Button}
+-- @tfield Button button Button
 
 ---
 
@@ -28,15 +28,21 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local Event = require("druid.event")
 
-local Hotkey = component.create("hotkey")
+---@class druid.hotkey: druid.base_component
+---@field on_hotkey_pressed druid.event
+---@field on_hotkey_released druid.event
+---@field style table
+---@field private _hotkeys table
+---@field private _modificators table
+local M = component.create("hotkey")
 
 
---- The @{Hotkey} constructor
--- @tparam Hotkey self @{Hotkey}
+--- The Hotkey constructor
+-- @tparam Hotkey self Hotkey
 -- @tparam string[]|string keys The keys to be pressed for trigger callback. Should contains one key and any modificator keys
 -- @tparam function callback The callback function
 -- @tparam any|nil callback_argument The argument to pass into the callback function
-function Hotkey.init(self, keys, callback, callback_argument)
+function M:init(keys, callback, callback_argument)
 	self.druid = self:get_druid()
 
 	self._hotkeys = {}
@@ -56,7 +62,7 @@ end
 -- or create your own style
 -- @table style
 -- @tfield string[] MODIFICATORS The list of action_id as hotkey modificators
-function Hotkey.on_style_change(self, style)
+function M:on_style_change(style)
 	self.style = {}
 	self.style.MODIFICATORS = style.MODIFICATORS or {}
 
@@ -67,11 +73,11 @@ end
 
 
 --- Add hotkey for component callback
--- @tparam Hotkey self @{Hotkey}
+-- @tparam Hotkey self Hotkey
 -- @tparam string[]|hash[]|string|hash keys that have to be pressed before key pressed to activate
 -- @tparam any|nil callback_argument The argument to pass into the callback function
 -- @treturn Hotkey Current instance
-function Hotkey.add_hotkey(self, keys, callback_argument)
+function M:add_hotkey(keys, callback_argument)
 	keys = keys or {}
 	if type(keys) == "string" then
 		keys = { keys }
@@ -110,14 +116,14 @@ function Hotkey.add_hotkey(self, keys, callback_argument)
 end
 
 
-function Hotkey.on_focus_gained(self)
+function M:on_focus_gained()
 	for k, v in pairs(self._modificators) do
 		self._modificators[k] = false
 	end
 end
 
 
-function Hotkey.on_input(self, action_id, action)
+function M:on_input(action_id, action)
 	if not action_id or #self._hotkeys == 0 then
 		return false
 	end
@@ -168,13 +174,13 @@ end
 
 
 --- If true, the callback will be triggered on action.repeated
--- @tparam Hotkey self @{Hotkey}
+-- @tparam Hotkey self Hotkey
 -- @tparam bool is_enabled_repeated The flag value
 -- @treturn Hotkey
-function Hotkey.set_repeat(self, is_enabled_repeated)
+function M:set_repeat(is_enabled_repeated)
 	self._is_process_repeated = is_enabled_repeated
 	return self
 end
 
 
-return Hotkey
+return M

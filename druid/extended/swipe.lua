@@ -16,7 +16,7 @@
 -- @tparam node|nil click_zone
 
 --- Trigger on swipe event(self, swipe_side, dist, delta_time)
--- @tfield DruidEvent on_swipe) @{DruidEvent}
+-- @tfield DruidEvent on_swipe) DruidEvent
 
 ---
 
@@ -25,7 +25,17 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Swipe = component.create("swipe")
+---@class druid.swipe: druid.base_component
+---@field node node
+---@field on_swipe druid.event
+---@field style table
+---@field click_zone node
+---@field private _trigger_on_move boolean
+---@field private _swipe_start_time number
+---@field private _start_pos vector3
+---@field private _is_enabled boolean
+---@field private _is_mobile boolean
+local M = component.create("swipe")
 
 
 local function start_swipe(self, action)
@@ -36,7 +46,7 @@ end
 
 
 local function reset_swipe(self, action)
-	self._swipe_start_time = false
+	self._swipe_start_time = 0
 end
 
 
@@ -77,7 +87,7 @@ end
 -- @tfield number|nil SWIPE_TIME Maximum time for swipe trigger. Default: 0.4
 -- @tfield number|nil SWIPE_THRESHOLD Minimum distance for swipe trigger. Default: 50
 -- @tfield boolean|nil SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action. Default: false
-function Swipe.on_style_change(self, style)
+function M:on_style_change(style)
 	self.style = {}
 	self.style.SWIPE_TIME = style.SWIPE_TIME or 0.4
 	self.style.SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50
@@ -85,15 +95,19 @@ function Swipe.on_style_change(self, style)
 end
 
 
---- The @{Swipe} constructor
--- @tparam Swipe self @{Swipe}
+--- The Swipe constructor
+-- @tparam Swipe self Swipe
 -- @tparam node node Gui node
 -- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
-function Swipe.init(self, node, on_swipe_callback)
-	self._trigger_on_move = self.style.SWIPE_TRIGGER_ON_MOVE
-	self.node = self:get_node(node)
 
-	self._swipe_start_time = false
+---Swipe constructor
+---@param node_or_node_id node|string
+---@param on_swipe_callback function
+function M:init(node_or_node_id, on_swipe_callback)
+	self._trigger_on_move = self.style.SWIPE_TRIGGER_ON_MOVE
+	self.node = self:get_node(node_or_node_id)
+
+	self._swipe_start_time = 0
 	self._start_pos = vmath.vector3(0)
 
 	self.click_zone = nil
@@ -101,7 +115,7 @@ function Swipe.init(self, node, on_swipe_callback)
 end
 
 
-function Swipe.on_late_init(self)
+function M:on_late_init()
 	if not self.click_zone and const.IS_STENCIL_CHECK then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
 		if stencil_node then
@@ -111,7 +125,7 @@ function Swipe.on_late_init(self)
 end
 
 
-function Swipe.on_input(self, action_id, action)
+function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false
 	end
@@ -126,7 +140,7 @@ function Swipe.on_input(self, action_id, action)
 		return false
 	end
 
-	if self._swipe_start_time and (self._trigger_on_move or action.released) then
+	if self._swipe_start_time ~= 0 and (self._trigger_on_move or action.released) then
 		check_swipe(self, action)
 	end
 
@@ -142,18 +156,18 @@ function Swipe.on_input(self, action_id, action)
 end
 
 
-function Swipe.on_input_interrupt(self)
+function M:on_input_interrupt()
 	reset_swipe(self)
 end
 
 
 --- Strict swipe click area. Useful for
 -- restrict events outside stencil node
--- @tparam Swipe self @{Swipe}
+-- @tparam Swipe self Swipe
 -- @tparam node|string|nil zone Gui node
-function Swipe.set_click_zone(self, zone)
+function M:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
 end
 
 
-return Swipe
+return M

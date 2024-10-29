@@ -1,50 +1,22 @@
--- Copyright (c) 2023 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component to consume input in special zone defined by GUI node.
--- <b># Overview #</b>
---
--- <b># Notes #</b>
---
--- Blocker consume input if `gui.pick_node` works on it.
---
--- • Blocker inheritance @{BaseComponent}, you can use all of its methods in addition to those described here.
---
--- • Blocker initial enabled state is `gui.is_enabled(node, true)`
---
--- • The Blocker node should be enabled to capture the input
--- @usage
--- local node = gui.get_node("blocker_node")
--- local blocker = self.druid:new_blocker(node)
--- @module Blocker
--- @within BaseComponent
--- @alias druid.blocker
-
----Blocker node
--- @tfield node node
-
----
-
 local const = require("druid.const")
 local component = require("druid.component")
 
-local Blocker = component.create("blocker")
+---@class druid.blocker: druid.base_component
+---@field node node
+---@field private _is_enabled boolean
+local M = component.create("blocker")
 
 
---- The @{Blocker} constructor
--- @tparam Blocker self @{Blocker}
--- @tparam node node Gui node
-function Blocker.init(self, node)
+---@param node node
+function M:init(node)
 	self.node = self:get_node(node)
 	self._is_enabled = gui.is_enabled(self.node, true)
 end
 
 
---- Component input handler
--- @tparam Blocker self @{Blocker}
--- @tparam string action_id on_input action id
--- @tparam table action on_input action
--- @local
-function Blocker.on_input(self, action_id, action)
+---@param action_id string
+---@param action table
+function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and
 		action_id ~= const.ACTION_MULTITOUCH and
 		action_id ~= nil then
@@ -67,22 +39,21 @@ function Blocker.on_input(self, action_id, action)
 end
 
 
---- Set enabled blocker component state.
---
--- Don't change node enabled state itself.
--- @tparam Blocker self @{Blocker}
--- @tparam boolean|nil state Enabled state
-function Blocker.set_enabled(self, state)
+---Set blocker enabled state
+---@param state boolean
+---@return druid.blocker self
+function M:set_enabled(state)
 	self._is_enabled = state
+
+	return self
 end
 
 
---- Return blocker enabled state
--- @tparam Blocker self @{Blocker}
--- @treturn boolean @True, if blocker is enabled
-function Blocker.is_enabled(self)
+---Get blocker enabled state
+---@return boolean
+function M:is_enabled()
 	return self._is_enabled
 end
 
 
-return Blocker
+return M

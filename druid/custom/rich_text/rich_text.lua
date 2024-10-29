@@ -63,7 +63,7 @@
 -- @alias druid.rich_text
 
 --- The component druid instance
--- @tfield DruidInstance druid @{DruidInstance}
+-- @tfield DruidInstance druid DruidInstance
 
 --- The root node of the Rich Text
 -- @tfield node root
@@ -76,14 +76,19 @@
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
 
-local RichText = component.create("rich_text")
+---@class druid.rich_text: druid.base_component
+---@field root node
+---@field text_prefab node
+---@field private _last_value string
+---@field private _settings table
+local M = component.create("rich_text")
 
 
---- The @{RichText} constructor
--- @tparam RichText self @{RichText}
+--- The RichText constructor
+-- @tparam RichText self RichText
 -- @tparam node|string text_node The text node to make Rich Text
 -- @tparam string|nil value The initial text value. Default will be gui.get_text(text_node)
-function RichText.init(self, text_node, value)
+function M:init(text_node, value)
 	self.root = self:get_node(text_node)
 	self.text_prefab = self.root
 
@@ -98,7 +103,7 @@ function RichText.init(self, text_node, value)
 end
 
 
-function RichText.on_layout_change(self)
+function M:on_layout_change()
 	if self._last_value then
 		self:set_text(self._last_value)
 	end
@@ -112,7 +117,7 @@ end
 -- @tfield table|nil COLORS Rich Text color aliases. Default: {}
 -- @tfield number|nil ADJUST_STEPS Amount steps of attemps text adjust by height. Default: 20
 -- @tfield number|nil ADJUST_SCALE_DELTA Scale step on each height adjust step. Default: 0.02
-function RichText.on_style_change(self, style)
+function M:on_style_change(style)
 	self.style = {}
 	self.style.COLORS = style.COLORS or {}
 	self.style.ADJUST_STEPS = style.ADJUST_STEPS or 20
@@ -121,7 +126,7 @@ end
 
 
 --- Set text for Rich Text
--- @tparam RichText self @{RichText}
+-- @tparam RichText self RichText
 -- @tparam string|nil text The text to set
 -- @treturn druid.rich_text.word[] words
 -- @treturn druid.rich_text.lines_metrics line_metrics
@@ -168,7 +173,7 @@ end
 -- <img=texture:image/>
 -- <img=texture:image,size/>
 -- <img=texture:image,width,height/>
-function RichText.set_text(self, text)
+function M:set_text(text)
 	text = text or ""
 	self:clear()
 	self._last_value = text
@@ -184,14 +189,14 @@ end
 
 
 --- Get current text
--- @tparam RichText self @{RichText}
+-- @tparam RichText self RichText
 -- @treturn string text
-function RichText.get_text(self)
+function M:get_text()
 	return self._last_value
 end
 
 
-function RichText:on_remove()
+function M:on_remove()
 	gui.set_scale(self.root, self._default_scale)
 	gui.set_size(self.root, self._default_size)
 	self:clear()
@@ -199,7 +204,7 @@ end
 
 
 --- Clear all created words.
-function RichText:clear()
+function M:clear()
 	if self._words then
 		rich_text.remove(self._words)
 		self._words = nil
@@ -209,10 +214,10 @@ end
 
 
 --- Get all words, which has a passed tag.
--- @tparam RichText self @{RichText}
+-- @tparam RichText self RichText
 -- @tparam string tag
 -- @treturn druid.rich_text.word[] words
-function RichText.tagged(self, tag)
+function M:tagged(tag)
 	if not self._words then
 		return
 	end
@@ -222,29 +227,29 @@ end
 
 
 ---Split a word into it's characters
--- @tparam RichText self @{RichText}
+-- @tparam RichText self RichText
 -- @tparam druid.rich_text.word word
 -- @treturn druid.rich_text.word[] characters
-function RichText.characters(self, word)
+function M:characters(word)
 	return rich_text.characters(word)
 end
 
 
 --- Get all current words.
 -- @treturn table druid.rich_text.word[]
-function RichText:get_words()
+function M:get_words()
 	return self._words
 end
 
 
 --- Get current line metrics
 --- @treturn druid.rich_text.lines_metrics
-function RichText:get_line_metric()
+function M:get_line_metric()
 	return self._line_metrics
 end
 
 
-function RichText:_create_settings()
+function M:_create_settings()
 	local root_size = gui.get_size(self.root)
 	local scale = gui.get_scale(self.root)
 
@@ -280,4 +285,4 @@ function RichText:_create_settings()
 end
 
 
-return RichText
+return M

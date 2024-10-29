@@ -6,13 +6,13 @@
 -- @alias druid.rich_input
 
 --- The component druid instance
--- @tfield DruidInstance druid @{DruidInstance}
+-- @tfield DruidInstance druid DruidInstance
 
 --- Root node
 -- @tfield node root
 
 --- On input field text change callback(self, input_text)
--- @tfield Input input @{Input}
+-- @tfield Input input Input
 
 --- On input field text change to empty string callback(self, input_text)
 -- @tfield node cursor
@@ -44,16 +44,23 @@ local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
 local input = require("druid.extended.input")
-local RichInput = component.create("druid.rich_input")
 
-local SCHEME = {
-	ROOT = "root",
-	BUTTON = "button",
-	PLACEHOLDER = "placeholder_text",
-	INPUT = "input_text",
-	CURSOR = "cursor_node",
-	CURSOR_TEXT = "cursor_text",
-}
+---@class druid.rich_input: druid.base_component
+---@field root node
+---@field input druid.input
+---@field cursor node
+---@field cursor_text node
+---@field cursor_position vector3
+local M = component.create("druid.rich_input")
+
+--local SCHEME = {
+--	ROOT = "root",
+--	BUTTON = "button",
+--	PLACEHOLDER = "placeholder_text",
+--	INPUT = "input_text",
+--	CURSOR = "cursor_node",
+--	CURSOR_TEXT = "cursor_text",
+--}
 
 local DOUBLE_CLICK_TIME = 0.35
 
@@ -189,13 +196,11 @@ local function on_drag_callback(self, dx, dy, x, y, touch)
 end
 
 
---- The @{RichInput} constructor
--- @tparam RichInput self @{RichInput}
--- @tparam string template The template string name
--- @tparam table nodes Nodes table from gui.clone_tree
-function RichInput.init(self, template, nodes)
+---@param template string The template string name
+---@param nodes table Nodes table from gui.clone_tree
+function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
-	self.root = self:get_node(SCHEME.ROOT)
+	self.root = self:get_node("root")
 
 	self._last_touch_info = {
 		cursor_index = nil,
@@ -204,20 +209,20 @@ function RichInput.init(self, template, nodes)
 	self.is_lshift = false
 	self.is_lctrl = false
 
-	self.input = self.druid:new(input, self:get_node(SCHEME.BUTTON), self:get_node(SCHEME.INPUT))
+	self.input = self.druid:new(input, "button", "input_text")
 	self.is_button_input_enabled = gui.is_enabled(self.input.button.node)
 
-	self.cursor = self:get_node(SCHEME.CURSOR)
+	self.cursor = self:get_node("cursor_node")
 	self.cursor_position = gui.get_position(self.cursor)
-	self.cursor_text = self:get_node(SCHEME.CURSOR_TEXT)
+	self.cursor_text = self:get_node("cursor_text")
 
-	self.drag = self.druid:new_drag(self:get_node(SCHEME.BUTTON), on_drag_callback)
+	self.drag = self.druid:new_drag("button", on_drag_callback)
 	self.drag.on_touch_start:subscribe(on_touch_start_callback)
 	self.drag:set_input_priority(const.PRIORITY_INPUT_MAX + 1)
 	self.drag:set_enabled(false)
 
 	self.input:set_text("")
-	self.placeholder = self.druid:new_text(self:get_node(SCHEME.PLACEHOLDER))
+	self.placeholder = self.druid:new_text("placeholder_text")
 	self.text_position = gui.get_position(self.input.text.node)
 
 	self.input.on_input_text:subscribe(update_text)
@@ -230,7 +235,7 @@ function RichInput.init(self, template, nodes)
 end
 
 
-function RichInput.on_input(self, action_id, action)
+function M:on_input(action_id, action)
 	if action_id == const.ACTION_LSHIFT then
 		if action.pressed then
 			self.is_lshift = true
@@ -258,26 +263,26 @@ end
 
 
 --- Set placeholder text
--- @tparam RichInput self @{RichInput}
+-- @tparam RichInput self RichInput
 -- @tparam string placeholder_text The placeholder text
-function RichInput.set_placeholder(self, placeholder_text)
+function M:set_placeholder(placeholder_text)
 	self.placeholder:set_to(placeholder_text)
 	return self
 end
 
 
 --- Select input field
--- @tparam RichInput self @{RichInput}
-function RichInput.select(self)
+-- @tparam RichInput self RichInput
+function M:select()
 	self.input:select()
 end
 
 
 --- Set input field text
--- @tparam RichInput self @{RichInput}
+-- @tparam RichInput self RichInput
 -- @treturn druid.input Current input instance
 -- @tparam string text The input text
-function RichInput.set_text(self, text)
+function M:set_text(text)
 	self.input:set_text(text)
 	gui.set_enabled(self.placeholder.node, true and #self.input:get_text() == 0)
 
@@ -286,10 +291,10 @@ end
 
 
 --- Set input field font
--- @tparam RichInput self @{RichInput}
+-- @tparam RichInput self RichInput
 -- @tparam hash font The font hash
 -- @treturn druid.input Current input instance
-function RichInput.set_font(self, font)
+function M:set_font(font)
 	gui.set_font(self.input.text.node, font)
 	gui.set_font(self.placeholder.node, font)
 
@@ -298,8 +303,8 @@ end
 
 
 --- Set input field text
--- @tparam RichInput self @{RichInput}
-function RichInput.get_text(self)
+-- @tparam RichInput self RichInput
+function M:get_text()
 	return self.input:get_text()
 end
 
@@ -307,14 +312,14 @@ end
 --- Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
--- @tparam RichInput self @{RichInput}
+-- @tparam RichInput self RichInput
 -- @tparam string characters Regulax exp. for validate user input
 -- @treturn RichInput Current instance
-function RichInput.set_allowed_characters(self, characters)
+function M:set_allowed_characters(characters)
 	self.input:set_allowed_characters(characters)
 
 	return self
 end
 
 
-return RichInput
+return M
