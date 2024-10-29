@@ -89,10 +89,36 @@ end
 function on_input(self, action_id, action)
     return self.druid:on_input(action_id, action)
 end
-
 ```
 
 For all **Druid** instance functions, [see here](https://insality.github.io/druid/modules/DruidInstance.html).
+
+
+### Default GUI Script
+
+```lua
+local druid = require("druid.druid")
+
+function init(self)
+	self.druid = druid.new(self)
+end
+
+function final(self)
+	self.druid:final()
+end
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	self.druid:on_input(action_id, action)
+end
+```
 
 
 ### API Documentation

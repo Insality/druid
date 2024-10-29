@@ -39,8 +39,12 @@ function M:init(node_or_node_id, layout_type)
 
 	self.is_dirty = true
 	self.entities = {}
-	self.margin = { x = 0, y = 0 }
+
 	self.padding = gui.get_slice9(self.node)
+	self.margin = { x = self.padding.z, y = self.padding.w }
+	self.padding.z = self.padding.x
+	self.padding.w = self.padding.y
+
 	self.type = layout_type or "horizontal"
 	self.is_resize_width = false
 	self.is_resize_height = false
@@ -120,6 +124,7 @@ function M:set_hug_content(is_hug_width, is_hug_height)
 end
 
 
+---Add node to layout
 ---@param node_or_node_id node|string node_or_node_id
 ---@return druid.layout
 function M:add(node_or_node_id)
