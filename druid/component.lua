@@ -79,7 +79,6 @@ M.SPECIFIC_UI_MESSAGES = {
 
 
 local uid = 0
----@private
 function M.create_uid()
 	uid = uid + 1
 	return uid

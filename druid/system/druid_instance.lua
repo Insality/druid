@@ -67,6 +67,7 @@
 -- @see Text
 -- @see Timer
 
+local const = require("druid.const")
 local helper = require("druid.helper")
 local settings = require("druid.system.settings")
 local base_component = require("druid.component")
@@ -147,6 +148,51 @@ end
 local function create(self, instance_class)
 	local instance = instance_class()
 	instance:setup_component(self, self._context, self._style, instance_class)
+
+	table.insert(self.components_all, instance)
+
+	local register_to = instance:__get_interests()
+	for i = 1, #register_to do
+		local interest = register_to[i]
+		table.insert(self.components_interest[interest], instance)
+	end
+
+	return instance
+end
+
+
+local WIDGET_METATABLE = { __index = base_component }
+
+-- Create the Druid component instance
+local function create_widget(self, widget_class)
+	local instance = setmetatable({}, {
+		__index = setmetatable(widget_class, WIDGET_METATABLE)
+	})
+
+	local uid = base_component.create_uid()
+	instance._components = {
+		_uid = uid,
+		name = "Druid Widget #" .. uid,
+		input_priority = const.PRIORITY_INPUT,
+		default_input_priority = const.PRIORITY_INPUT,
+		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
+	}
+	instance._meta = {
+		template = "",
+		context = self._context,
+		nodes = nil,
+		style = nil,
+		druid = self,
+		input_enabled = true,
+		children = {},
+		parent = type(self._context) ~= "userdata" and self._context,
+		instance_class = widget_class
+	}
+
+	-- Register
+	if instance._meta.parent then
+		instance._meta.parent:__add_child(instance)
+	end
 
 	table.insert(self.components_all, instance)
 
@@ -255,10 +301,11 @@ function M:initialize(context, style)
 end
 
 
--- Create new component.
--- @tparam BaseComponent component Component module
--- @tparam any ... Other component params to pass it to component:init function
--- @treturn BaseComponent Component instance
+---Create new Druid component instance
+---@generic T: druid.base_component
+---@param component T
+---@vararg any
+---@return T
 function M:new(component, ...)
 	local instance = create(self, component)
 
@@ -521,6 +568,28 @@ function M:_clear_late_remove()
 		self:remove(self._late_remove[i])
 	end
 	self._late_remove = {}
+end
+
+
+---Create new Druid widget instance
+---@generic T: druid.base_component
+---@param widget T
+---@param template string|nil The template name used by widget
+---@param nodes table|nil The nodes table from gui.clone_tree
+---@vararg any
+---@return T
+function M:new_widget(widget, template, nodes, ...)
+	local instance = create_widget(self, widget)
+	instance.druid = instance:get_druid(template, nodes)
+
+	if instance.init then
+		instance:init(...)
+	end
+	if instance.on_late_init or (not self.input_inited and instance.on_input) then
+		schedule_late_init(self)
+	end
+
+	return instance
 end
 
 
