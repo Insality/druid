@@ -344,14 +344,8 @@ function M.get_closest_stencil_node(node)
 end
 
 
---- Get node offset for given GUI pivot.
---
--- Offset shown in [-0.5 .. 0.5] range, where -0.5 is left or bottom, 0.5 is right or top.
--- @function helper.get_pivot_offset
--- @tparam number pivot The gui.PIVOT_* constant
--- @treturn vector3 Vector offset with [-0.5..0.5] values
-
 ---Get pivot offset for given pivot or node
+---Offset shown in [-0.5 .. 0.5] range, where -0.5 is left or bottom, 0.5 is right or top.
 ---@param pivot_or_node number|node GUI pivot or node
 ---@return vector3 offset The pivot offset
 function M.get_pivot_offset(pivot_or_node)
@@ -362,26 +356,23 @@ function M.get_pivot_offset(pivot_or_node)
 end
 
 
---- Check if device is native mobile (Android or iOS)
--- @function helper.is_mobile
--- @treturn boolean Is mobile
+---Check if device is native mobile (Android or iOS)
+---@return boolean Is mobile
 function M.is_mobile()
-	return const.CURRENT_SYSTEM_NAME == const.OS.IOS or
-			 const.CURRENT_SYSTEM_NAME == const.OS.ANDROID
+	local sys_name = const.CURRENT_SYSTEM_NAME
+	return sys_name == const.OS.IOS or sys_name == const.OS.ANDROID
 end
 
 
---- Check if device is HTML5
--- @function helper.is_web
--- @treturn boolean Is web
+---Check if device is HTML5
+---@return boolean
 function M.is_web()
 	return const.CURRENT_SYSTEM_NAME == const.OS.BROWSER
 end
 
 
---- Check if device is HTML5 mobile
--- @function helper.is_web_mobile
--- @treturn boolean Is web mobile
+---Check if device is HTML5 mobile
+---@return boolean
 function M.is_web_mobile()
 	if html5 then
 		return html5.run("(typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1);") == "true"
@@ -390,18 +381,16 @@ function M.is_web_mobile()
 end
 
 
---- Check if device is mobile and can support multitouch
--- @function helper.is_multitouch_supported
--- @treturn boolean Is multitouch supported
+---Check if device is mobile and can support multitouch
+---@return boolean is_multitouch Is multitouch supported
 function M.is_multitouch_supported()
 	return M.is_mobile() or M.is_web_mobile()
 end
 
 
---- Simple table to one-line string converter
--- @function helper.table_to_string
--- @tparam table t
--- @treturn string
+---Simple table to one-line string converter
+---@param t table
+---@return string
 function M.table_to_string(t)
 	if not t then
 		return ""
@@ -420,11 +409,10 @@ function M.table_to_string(t)
 end
 
 
---- Distance from node position to his borders
--- @function helper.get_border
--- @tparam node node GUI node
--- @tparam vector3|nil offset Offset from node position. Pass current node position to get non relative border values
--- @treturn vector4 Vector4 with border values (left, top, right, down)
+---Distance from node position to his borders
+---@param node node GUI node
+---@param offset vector3|nil Offset from node position. Pass current node position to get non relative border values
+---@return vector4 border Vector4 with border values (left, top, right, down)
 function M.get_border(node, offset)
 	local pivot = gui.get_pivot(node)
 	local pivot_offset = M.get_pivot_offset(pivot)
@@ -447,17 +435,9 @@ function M.get_border(node, offset)
 end
 
 
---- Get text metric from GUI node.
--- @function helper.get_text_metrics_from_node
--- @tparam node text_node
--- @treturn GUITextMetrics
--- @usage
--- type GUITextMetrics = {
---   width: number,
---   height: number,
---   max_ascent: number,
---   max_descent: number
--- }
+---Get text metric from GUI node.
+---@param text_node node
+---@return GUITextMetrics
 function M.get_text_metrics_from_node(text_node)
 	local font_resource = gui.get_font_resource(gui.get_font(text_node))
 	local options = {
@@ -475,15 +455,13 @@ function M.get_text_metrics_from_node(text_node)
 end
 
 
---- Add value to array with shift policy
---
+---Add value to array with shift policy
 -- Shift policy can be: left, right, no_shift
--- @function helper.insert_with_shift
--- @tparam table array Array
--- @param any Item to insert
--- @tparam number|nil index Index to insert. If nil, item will be inserted at the end of array
--- @tparam number|nil shift_policy The druid_const.SHIFT.* constant
--- @treturn any Inserted item
+---@param array table Array
+---@param item any Item to insert
+---@param index number|nil Index to insert. If nil, item will be inserted at the end of array
+---@param shift_policy number|nil The druid_const.SHIFT.* constant
+---@return any Inserted item
 function M.insert_with_shift(array, item, index, shift_policy)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
@@ -507,14 +485,13 @@ function M.insert_with_shift(array, item, index, shift_policy)
 end
 
 
---- Remove value from array with shift policy
+---Remove value from array with shift policy
 --
 -- Shift policy can be: left, right, no_shift
--- @function helper.remove_with_shift
--- @tparam table array Array
--- @tparam number|nil index Index to remove. If nil, item will be removed from the end of array
--- @tparam number|nil shift_policy The druid_const.SHIFT.* constant
--- @treturn any Removed item
+---@param array any[] Array
+---@param index number|nil Index to remove. If nil, item will be removed from the end of array
+---@param shift_policy number|nil  The druid_const.SHIFT.* constant
+---@return any Removed item
 function M.remove_with_shift(array, index, shift_policy)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
@@ -539,11 +516,10 @@ function M.remove_with_shift(array, index, shift_policy)
 end
 
 
---- Show deprecated message. Once time per message
--- @function helper.deprecated
--- @tparam string message The deprecated message
--- @local
 local _deprecated_messages = {}
+
+---Show deprecated message. Once time per message
+---@param message string The deprecated message
 function M.deprecated(message)
 	if _deprecated_messages[message] then
 		return
@@ -554,8 +530,9 @@ function M.deprecated(message)
 end
 
 
---- Show message to require component
--- @local
+---Show message to require component
+---@param component_name string
+---@param component_type string
 function M.require_component_message(component_name, component_type)
 	component_type = component_type or "extended"
 

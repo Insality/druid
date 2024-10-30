@@ -163,7 +163,9 @@ end
 
 local WIDGET_METATABLE = { __index = base_component }
 
--- Create the Druid component instance
+---Create the Druid component instance
+---@param self druid_instance
+---@param widget_class druid.base_component
 local function create_widget(self, widget_class)
 	local instance = setmetatable({}, {
 		__index = setmetatable(widget_class, WIDGET_METATABLE)
@@ -206,7 +208,9 @@ local function create_widget(self, widget_class)
 end
 
 
--- Before processing any input check if we need to update input stack
+---Before processing any input check if we need to update input stack
+---@param self druid_instance
+---@param components table[]
 local function check_sort_input_stack(self, components)
 	if not components or #components == 0 then
 		return
