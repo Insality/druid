@@ -95,11 +95,6 @@ function M:on_style_change(style)
 end
 
 
---- The Swipe constructor
--- @tparam Swipe self Swipe
--- @tparam node node Gui node
--- @tparam function on_swipe_callback Swipe callback for on_swipe_end event
-
 ---Swipe constructor
 ---@param node_or_node_id node|string
 ---@param on_swipe_callback function
@@ -125,6 +120,8 @@ function M:on_late_init()
 end
 
 
+---@param action_id hash
+---@param action action
 function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false

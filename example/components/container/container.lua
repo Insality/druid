@@ -195,6 +195,7 @@ end
 function M:fit_into_size(target_size)
 	self.fit_size = target_size
 	self:refresh()
+
 	return self
 end
 

@@ -3,7 +3,8 @@
 local const = require("druid.const")
 
 local gui_get_node = gui.get_node
-
+local gui_get = gui.get
+local gui_pick_node = gui.pick_node
 
 ---@class druid.system.helper
 local M = {}
@@ -16,7 +17,7 @@ local SIZE_X = hash("size.x")
 local function get_text_width(text_node)
 	if text_node then
 		local text_metrics = M.get_text_metrics_from_node(text_node)
-		local text_scale = gui.get(text_node, SCALE_X)
+		local text_scale = gui_get(text_node, SCALE_X)
 		return text_metrics.width * text_scale
 	end
 
@@ -26,7 +27,7 @@ end
 
 local function get_icon_width(icon_node)
 	if icon_node then
-		return gui.get(icon_node, SIZE_X) * gui.get(icon_node, SCALE_X) -- icon width
+		return gui_get(icon_node, SIZE_X) * gui_get(icon_node, SCALE_X) -- icon width
 	end
 
 	return 0
@@ -54,6 +55,7 @@ end
 function M.centrate_text_with_icon(text_node, icon_node, margin)
 	return M.centrate_nodes(margin, text_node, icon_node)
 end
+
 
 ---Center two nodes.
 --Nodes will be center around 0 x position
@@ -286,10 +288,10 @@ end
 ---@param node_click_area node|nil
 ---@local
 function M.pick_node(node, x, y, node_click_area)
-	local is_pick = gui.pick_node(node, x, y)
+	local is_pick = gui_pick_node(node, x, y)
 
 	if node_click_area then
-		is_pick = is_pick and gui.pick_node(node_click_area, x, y)
+		is_pick = is_pick and gui_pick_node(node_click_area, x, y)
 	end
 
 	return is_pick

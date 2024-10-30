@@ -1,13 +1,4 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid Instance which you use for component creation.
---
--- # Component List #
---
--- For a list of all available components, please refer to the "See Also" section.
---
--- <b># Notes #</b>
---
 -- Please review the following API pages:
 --
 -- Helper - A useful set of functions for working with GUI nodes, such as centering nodes, get GUI scale ratio, etc
@@ -23,49 +14,6 @@
 -- • When using Druid components, provide the node name as a string argument directly. Avoid calling gui.get_node() before passing it to the component. Because Druid can get nodes from template and cloned gui nodes.
 --
 -- • All Druid and component methods are called using the colon operator (e.g., self.druid:new_button()).
--- @usage
--- local druid = require("druid.druid")
---
--- local function close_window(self)
---     print("Yeah! You closed the game!")
--- end
---
--- function init(self)
---     self.druid = druid.new(self)
---
---     -- Call all druid instance function with ":" syntax:
---     local text = self.druid:new_text("text_header", "Hello Druid!")
---     local button = self.druid:new_button("button_close", close_window)
---
---     -- You not need to save component reference if not need it
---     self.druid:new_back_handler(close_window)
--- end
---
--- @module DruidInstance
--- @alias druid_instance
--- @see BackHandler
--- @see Blocker
--- @see Button
--- @see Checkbox
--- @see CheckboxGroup
--- @see DataList
--- @see Drag
--- @see DynamicGrid
--- @see Hotkey
--- @see Hover
--- @see Input
--- @see LangText
--- @see Layout
--- @see Progress
--- @see RadioGroup
--- @see RichInput
--- @see RichText
--- @see Scroll
--- @see Slider
--- @see StaticGrid
--- @see Swipe
--- @see Text
--- @see Timer
 
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -283,8 +231,8 @@ end
 
 
 --- Druid class constructor
--- @tparam table context Druid context. Usually it is self of gui script
--- @tparam table style Druid style table
+---@param table context Druid context. Usually it is self of gui script
+---@param table style Druid style table
 -- @local
 function M:initialize(context, style)
 	self._context = context
@@ -343,8 +291,8 @@ end
 --- Remove created component from Druid instance.
 --
 -- Component `on_remove` function will be invoked, if exist.
--- @tparam BaseComponent component Component instance
--- @treturn boolean True if component was removed
+---@param BaseComponent component Component instance
+---@return boolean True if component was removed
 function M:remove(component)
 	if self._is_late_remove_enabled then
 		table.insert(self._late_remove, component)
@@ -412,7 +360,7 @@ end
 --- Call this in gui_script update function.
 --
 -- Used for: scroll, progress, timer components
--- @tparam number dt Delta time
+---@param dt number Delta time
 function M:update(dt)
 	self._is_late_remove_enabled = true
 
@@ -429,9 +377,9 @@ end
 --- Call this in gui_script on_input function.
 --
 -- Used for almost all components
--- @tparam hash action_id Action_id from on_input
--- @tparam table action Action from on_input
--- @treturn boolean The boolean value is input was consumed
+---@param action_id hash Action_id from on_input
+---@param action table Action from on_input
+---@return boolean The boolean value is input was consumed
 function M:on_input(action_id, action)
 	self._is_late_remove_enabled = true
 
@@ -449,9 +397,9 @@ end
 --- Call this in gui_script on_message function.
 --
 -- Used for special actions. See SPECIFIC_UI_MESSAGES table
--- @tparam hash message_id Message_id from on_message
--- @tparam table message Message from on_message
--- @tparam url sender Sender from on_message
+---@param message_id hash Message_id from on_message
+---@param message table Message from on_message
+---@param sender url Sender from on_message
 function M:on_message(message_id, message, sender)
 	local specific_ui_message = base_component.SPECIFIC_UI_MESSAGES[message_id]
 
@@ -520,11 +468,10 @@ end
 
 
 --- Set whitelist components for input processing.
---
 -- If whitelist is not empty and component not contains in this list,
 -- component will be not processed on input step
--- @tparam table|BaseComponent|nil whitelist_components The array of component to whitelist
--- @treturn self DruidInstance
+---@param whitelist_components table|druid.base_component[]|nil The array of component to whitelist
+---@return druid_instance
 function M:set_whitelist(whitelist_components)
 	if whitelist_components and whitelist_components._component then
 		whitelist_components = { whitelist_components }
@@ -541,11 +488,10 @@ end
 
 
 --- Set blacklist components for input processing.
---
 -- If blacklist is not empty and component contains in this list,
 -- component will be not processed on input step DruidInstance
--- @tparam table|BaseComponent|nil blacklist_components The array of component to blacklist
--- @treturn self DruidInstance
+---@param blacklist_components table|druid.base_component[]|nil The array of component to blacklist
+---@return druid_instance
 function M:set_blacklist(blacklist_components)
 	if blacklist_components and blacklist_components._component then
 		blacklist_components = { blacklist_components }
