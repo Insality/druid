@@ -1,10 +1,7 @@
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@alias druid.layout.mode
----| "horizontal" Elements are placed horizontally
----| "vertical" Elements are placed vertically
----| "horizontal_wrap" Elements are placed horizontally, but if the row width is greater than the parent width, the next row is created
+---@alias druid.layout.mode "horizontal"|"vertical"|"horizontal_wrap"
 
 ---@class druid.layout.row_data
 ---@field width number
