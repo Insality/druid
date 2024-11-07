@@ -18,7 +18,7 @@
 -- @alias druid.lang_text
 
 --- On change text callback
--- @tfield DruidEvent on_change DruidEvent
+-- @tfield druid.event on_change druid.event
 
 --- The text component
 -- @tfield Text text Text

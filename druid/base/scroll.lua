@@ -39,13 +39,13 @@
 
 
 --- On scroll move callback(self, position)
--- @tfield DruidEvent on_scroll DruidEvent
+-- @tfield druid.event on_scroll druid.event
 
 --- On scroll_to function callback(self, target, is_instant)
--- @tfield DruidEvent on_scroll_to DruidEvent
+-- @tfield druid.event on_scroll_to druid.event
 
 --- On scroll_to_index function callback(self, index, point)
--- @tfield DruidEvent on_point_scroll DruidEvent
+-- @tfield druid.event on_point_scroll druid.event
 
 --- Scroll view node
 -- @tfield node view_node
@@ -651,7 +651,7 @@ end
 --- Find closer point of interest
 -- if no inert, scroll to next point by scroll direction
 -- if inert, find next point by scroll director
--- @local
+---@private
 function M:_check_points()
 	if not self.points then
 		return

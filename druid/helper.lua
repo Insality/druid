@@ -13,7 +13,6 @@ local POSITION_X = hash("position.x")
 local SCALE_X = hash("scale.x")
 local SIZE_X = hash("size.x")
 
-
 local function get_text_width(text_node)
 	if text_node then
 		local text_metrics = M.get_text_metrics_from_node(text_node)
@@ -138,10 +137,15 @@ end
 ---@return number stretch_y
 function M.get_screen_aspect_koef()
 	local window_x, window_y = window.get_size()
+
 	local stretch_x = window_x / gui.get_width()
 	local stretch_y = window_y / gui.get_height()
-	return stretch_x / math.min(stretch_x, stretch_y),
-			stretch_y / math.min(stretch_x, stretch_y)
+	local stretch_koef = math.min(stretch_x, stretch_y)
+
+	local koef_x = window_x / (stretch_koef * sys.get_config_int("display.width"))
+	local koef_y = window_y / (stretch_koef * sys.get_config_int("display.height"))
+
+	return koef_x, koef_y
 end
 
 
@@ -534,7 +538,7 @@ end
 
 ---Show message to require component
 ---@param component_name string
----@param component_type string
+---@param component_type string|nil
 function M.require_component_message(component_name, component_type)
 	component_type = component_type or "extended"
 

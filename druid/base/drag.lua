@@ -14,19 +14,19 @@
 -- @tfield node node
 
 --- Event on touch start callback(self)
--- @tfield DruidEvent on_touch_start DruidEvent
+-- @tfield druid.event on_touch_start druid.event
 
 --- Event on touch end callback(self)
--- @tfield DruidEvent on_touch_end DruidEvent
+-- @tfield druid.event on_touch_end druid.event
 
 --- Event on drag start callback(self, touch)
--- @tfield DruidEvent on_drag_start DruidEvent
+-- @tfield druid.event on_drag_start druid.event
 
 --- on drag progress callback(self, dx, dy, total_x, total_y, touch)
--- @tfield DruidEvent on_drag Event DruidEvent
+-- @tfield druid.event on_drag Event druid.event
 
 --- Event on drag end callback(self, total_x, total_y, touch)
--- @tfield DruidEvent on_drag_end DruidEvent
+-- @tfield druid.event on_drag_end druid.event
 
 --- Is component now touching
 -- @tfield boolean is_touch

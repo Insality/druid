@@ -8,7 +8,7 @@
 -- @alias druid.slider
 
 --- On change value callback(self, value)
--- @tfield DruidEvent on_change_value DruidEvent
+-- @tfield druid.event on_change_value druid.event
 
 --- Slider pin node
 -- @tfield node node

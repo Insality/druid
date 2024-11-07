@@ -9,10 +9,10 @@
 -- @tfield node node
 
 --- On hover callback(self, state, hover_instance)
--- @tfield DruidEvent on_hover DruidEvent
+-- @tfield druid.event on_hover druid.event
 
 --- On mouse hover callback(self, state, hover_instance)
--- @tfield DruidEvent on_mouse_hover DruidEvent
+-- @tfield druid.event on_mouse_hover druid.event
 
 ---
 

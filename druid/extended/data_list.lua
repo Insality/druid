@@ -25,13 +25,13 @@
 -- @tfield number last_index
 
 --- Event triggered when scroll progress is changed; event(self, progress_value)
--- @tfield DruidEvent on_scroll_progress_change DruidEvent
+-- @tfield druid.event on_scroll_progress_change druid.event
 
 ---On DataList visual element created Event callback(self, index, node, instance)
--- @tfield DruidEvent on_element_add DruidEvent
+-- @tfield druid.event on_element_add druid.event
 
 ---On DataList visual element created Event callback(self, index)
--- @tfield DruidEvent on_element_remove DruidEvent
+-- @tfield druid.event on_element_remove druid.event
 
 ---
 
@@ -223,7 +223,7 @@ end
 --- Add element at passed index using cache or create new
 -- @tparam DataList self DataList
 -- @tparam number index
--- @local
+---@private
 function M:_add_at(index)
 	if self._data_visual[index] then
 		self:_remove_at(index)
@@ -257,7 +257,7 @@ end
 --- Remove element from passed index and add it to cache if applicable
 -- @tparam DataList self DataList
 -- @tparam number index
--- @local
+---@private
 function M:_remove_at(index)
 	self.grid:remove(index, const.SHIFT.NO_SHIFT)
 
@@ -287,7 +287,7 @@ end
 
 --- Refresh all elements in DataList
 -- @tparam DataList self DataList
--- @local
+---@private
 function M:_refresh()
 	self.scroll:set_size(self.grid:get_size_for(#self._data))
 

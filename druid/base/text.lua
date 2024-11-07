@@ -36,13 +36,13 @@
 -- @alias druid.text
 
 --- On set text callback(self, text)
--- @tfield DruidEvent on_set_text DruidEvent
+-- @tfield druid.event on_set_text druid.event
 
 --- On adjust text size callback(self, new_scale, text_metrics)
--- @tfield DruidEvent on_update_text_scale DruidEvent
+-- @tfield druid.event on_update_text_scale druid.event
 
 --- On change pivot callback(self, pivot)
--- @tfield DruidEvent on_set_pivot DruidEvent
+-- @tfield druid.event on_set_pivot druid.event
 
 --- Text node
 -- @tfield node node

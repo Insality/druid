@@ -185,7 +185,7 @@ For a complete overview, see: **_[components.md](docs_md/01-components.md)_**.
 
 ## Druid Events
 
-Any **Druid** components as callbacks use [Druid Events](https://insality.github.io/druid/modules/DruidEvent.html). In component API ([button example](https://insality.github.io/druid/modules/Button.html#on_click)) pointed list of component events. You can manually subscribe to these events with the following API:
+Any **Druid** components as callbacks use [Druid Events](https://insality.github.io/druid/modules/druid.event.html). In component API ([button example](https://insality.github.io/druid/modules/Button.html#on_click)) pointed list of component events. You can manually subscribe to these events with the following API:
 
 - **event:subscribe**(callback)
 

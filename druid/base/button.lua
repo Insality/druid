@@ -35,16 +35,16 @@
 -- @alias druid.button
 
 
---- The DruidEvent: Event on successful release action over button.
+--- The druid.event: Event on successful release action over button.
 -- @usage
 -- -- Custom args passed in Button constructor
 -- button.on_click:subscribe(function(self, custom_args, button_instance)
 --     print("On button click!")
 -- end)
--- @tfield DruidEvent on_click DruidEvent
+-- @tfield druid.event on_click druid.event
 
 
---- The DruidEvent: Event on repeated action over button.
+--- The druid.event: Event on repeated action over button.
 --
 -- This callback will be triggered if user hold the button. The repeat rate pick from `input.repeat_interval` in game.project
 -- @usage
@@ -52,10 +52,10 @@
 -- button.on_repeated_click:subscribe(function(self, custom_args, button_instance, click_count)
 --     print("On repeated Button click!")
 -- end)
--- @tfield DruidEvent on_repeated_click DruidEvent
+-- @tfield druid.event on_repeated_click druid.event
 
 
---- The DruidEvent: Event on long tap action over button.
+--- The druid.event: Event on long tap action over button.
 --
 -- This callback will be triggered if user pressed the button and hold the some amount of time.
 -- The amount of time picked from button style param: LONGTAP_TIME
@@ -64,10 +64,10 @@
 -- button.on_long_click:subscribe(function(self, custom_args, button_instance, hold_time)
 --     print("On long Button click!")
 -- end)
--- @tfield DruidEvent on_long_click DruidEvent
+-- @tfield druid.event on_long_click druid.event
 
 
---- The DruidEvent: Event on double tap action over button.
+--- The druid.event: Event on double tap action over button.
 --
 -- If secondary click was too fast after previous one, the double
 -- click will be called instead usual click (if on_double_click subscriber exists)
@@ -76,10 +76,10 @@
 -- button.on_double_click:subscribe(function(self, custom_args, button_instance, click_amount)
 --     print("On double Button click!")
 -- end)
--- @tfield DruidEvent on_double_click DruidEvent
+-- @tfield druid.event on_double_click druid.event
 
 
---- The DruidEvent: Event calls every frame before on_long_click event.
+--- The druid.event: Event calls every frame before on_long_click event.
 --
 -- If long_click subscriber exists, the on_hold_callback will be called before long_click trigger.
 --
@@ -89,10 +89,10 @@
 -- button.on_double_click:subscribe(function(self, custom_args, button_instance, time)
 --     print("On hold Button callback!")
 -- end)
--- @tfield DruidEvent on_hold_callback DruidEvent
+-- @tfield druid.event on_hold_callback druid.event
 
 
---- The DruidEvent: Event calls if click event was outside of button.
+--- The druid.event: Event calls if click event was outside of button.
 --
 -- This event will be triggered for each button what was not clicked on user click action
 --
@@ -102,16 +102,16 @@
 -- button.on_click_outside:subscribe(function(self, custom_args, button_instance)
 --     print("On click Button outside!")
 -- end)
--- @tfield DruidEvent on_click_outside DruidEvent
+-- @tfield druid.event on_click_outside druid.event
 
 
---- The DruidEvent: Event triggered if button was pressed by user.
+--- The druid.event: Event triggered if button was pressed by user.
 -- @usage
 -- -- Custom args passed in Button constructor
 -- button.on_pressed:subscribe(function(self, custom_args, button_instance)
 --     print("On Button pressed!")
 -- end)
--- @tfield DruidEvent on_pressed DruidEvent
+-- @tfield druid.event on_pressed druid.event
 
 --- Button trigger node
 -- @tfield node node
@@ -279,17 +279,19 @@ end
 
 
 --- Component style params.
--- You can override this component styles params in Druid styles table
--- or create your own style
--- @table style
--- @tfield number|nil LONGTAP_TIME Minimum time to trigger on_hold_callback. Default: 0.4
--- @tfield number|nil AUTOHOLD_TRIGGER Maximum hold time to trigger button release while holding. Default: 0.8
--- @tfield number|nil DOUBLETAP_TIME Time between double taps. Default: 0.4
--- @tfield function on_click function(self, node)
--- @tfield function on_click_disabled function(self, node)
--- @tfield function on_hover function(self, node, hover_state)
--- @tfield function on_mouse_hover function(self, node, hover_state)
--- @tfield function on_set_enabled function(self, node, enabled_state)
+---You can override this component styles params in Druid styles table
+---or create your own style
+---@class druid.button.style
+---@field LONGTAP_TIME number|nil Minimum time to trigger on_hold_callback. Default: 0.4
+---@field AUTOHOLD_TRIGGER number|nil Maximum hold time to trigger button release while holding. Default: 0.8
+---@field DOUBLETAP_TIME number|nil Time between double taps. Default: 0.4
+---@field on_click fun(self, node)|nil
+---@field on_click_disabled fun(self, node)|nil
+---@field on_hover fun(self, node, hover_state)|nil
+---@field on_mouse_hover fun(self, node, hover_state)|nil
+---@field on_set_enabled fun(self, node, enabled_state)|nil
+
+---@param style druid.button.style
 function M:on_style_change(style)
 	self.style = {}
 	self.style.LONGTAP_TIME = style.LONGTAP_TIME or 0.4
@@ -469,12 +471,8 @@ end
 --- Set button enabled state.
 -- The style.on_set_enabled will be triggered.
 -- Disabled button is not clickable.
--- @tparam Button self Button
 -- @tparam boolean|nil state Enabled state
--- @treturn Button Current button instance
--- @usage
--- button:set_enabled(false)
--- button:set_enabled(true)
+---@return druid.button self
 function M:set_enabled(state)
 	self.disabled = not state
 	self.hover:set_enabled(state)
@@ -487,10 +485,7 @@ end
 --- Get button enabled state.
 --
 -- By default all Buttons is enabled on creating.
--- @tparam Button self Button
--- @treturn boolean @True, if button is enabled now, False overwise
--- @usage
--- local is_enabled = button:is_enabled()
+---@return boolean @True, if button is enabled now, False overwise
 function M:is_enabled()
 	return not self.disabled
 end
@@ -500,11 +495,8 @@ end
 -- Useful to restrict click outside out stencil node or scrollable content.
 --
 -- This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
--- @tparam Button self Button
 -- @tparam node|string|nil zone Gui node
--- @treturn Button Current button instance
--- @usage
--- button:set_click_zone("stencil_node")
+---@return druid.button self
 function M:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
 	self.hover:set_click_zone(zone)
@@ -513,12 +505,9 @@ function M:set_click_zone(zone)
 end
 
 
---- Set key name to trigger this button by keyboard.
--- @tparam Button self Button
--- @tparam hash|string key The action_id of the input key
--- @treturn Button Current button instance
--- @usage
--- button:set_key_trigger("key_space")
+---Set key name to trigger this button by keyboard.
+---@param key hash|string The action_id of the input key. Example: "key_space"
+---@return druid.button self
 function M:set_key_trigger(key)
 	self.key_trigger = hash(key)
 
@@ -527,20 +516,16 @@ end
 
 
 --- Get current key name to trigger this button.
--- @tparam Button self
--- @treturn hash The action_id of the input key
--- @usage
--- local key_hash = button:get_key_trigger()
+---@return hash key_trigger The action_id of the input key
 function M:get_key_trigger()
 	return self.key_trigger
 end
 
 
 --- Set function for additional check for button click availability
--- @tparam Button self
 -- @tparam function|nil check_function Should return true or false. If true - button can be pressed.
 -- @tparam function|nil failure_callback Function will be called on button click, if check function return false
--- @treturn Button Current button instance
+---@return druid.button self
 function M:set_check_function(check_function, failure_callback)
 	self._check_function = check_function
 	self._failure_callback = failure_callback
@@ -553,11 +538,8 @@ end
 -- The HTML5 button's doesn't call any events except on_click event.
 --
 -- If the game is not HTML, html mode will be not enabled
--- @tparam Button self
 -- @tparam boolean|nil is_web_mode If true - button will be called inside html5 callback
--- @treturn Button Current button instance
--- @usage
--- button:set_web_user_interaction(true)
+---@return druid.button self
 function M:set_web_user_interaction(is_web_mode)
 	self._is_html5_mode = not not (is_web_mode and html5)
 	return self

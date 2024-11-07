@@ -3,7 +3,7 @@
 --
 -- Helper - A useful set of functions for working with GUI nodes, such as centering nodes, get GUI scale ratio, etc
 --
--- DruidEvent - The core event system in Druid. Learn how to subscribe to any event in every Druid component.
+-- druid.event - The core event system in Druid. Learn how to subscribe to any event in every Druid component.
 --
 -- BaseComponent - The parent class of all Druid components. You can find all default component methods there.
 --
@@ -49,7 +49,7 @@ local back_handler = require("druid.base.back_handler")
 ---@field private _late_remove druid.base_component[]
 ---@field private _input_blacklist druid.base_component[]|nil
 ---@field private _input_whitelist druid.base_component[]|nil
----@field private _input_inited boolean
+---@field private input_inited boolean
 ---@field private _late_init_timer_id number
 ---@field private _input_components druid.base_component[]
 local M = {}
@@ -69,7 +69,7 @@ end
 
 
 -- The a and b - two Druid components
--- @local
+---@private
 local function sort_input_comparator(a, b)
 	local a_priority = a:get_input_priority()
 	local b_priority = b:get_input_priority()
@@ -231,9 +231,9 @@ end
 
 
 --- Druid class constructor
----@param table context Druid context. Usually it is self of gui script
----@param table style Druid style table
--- @local
+---@param context table Druid context. Usually it is self of gui script
+---@param style table Druid style table
+---@private
 function M:initialize(context, style)
 	self._context = context
 	self._style = style or settings.default_style
@@ -291,7 +291,8 @@ end
 --- Remove created component from Druid instance.
 --
 -- Component `on_remove` function will be invoked, if exist.
----@param BaseComponent component Component instance
+---@generic T: druid.base_component
+---@param component T Component instance
 ---@return boolean True if component was removed
 function M:remove(component)
 	if self._is_late_remove_enabled then
@@ -342,7 +343,7 @@ end
 --- Druid late update function called after initialization and before the regular update step
 -- This function is used to check the GUI state and perform actions after all components and nodes have been created.
 -- An example use case is performing an auto stencil check in the GUI hierarchy for input components.
--- @local
+---@private
 function M:late_init()
 	local late_init_components = self.components_interest[base_component.ON_LATE_INIT]
 	while late_init_components[1] do
@@ -435,7 +436,7 @@ end
 
 --- Calls the on_focus_lost function in all related components
 -- This one called by on_window_callback by global window listener
--- @local
+---@private
 function M:on_focus_lost()
 	local components = self.components_interest[base_component.ON_FOCUS_LOST]
 	for i = 1, #components do
@@ -446,7 +447,7 @@ end
 
 --- Calls the on_focus_gained function in all related components
 -- This one called by on_window_callback by global window listener
--- @local
+---@private
 function M:on_focus_gained()
 	local components = self.components_interest[base_component.ON_FOCUS_GAINED]
 	for i = 1, #components do
@@ -458,7 +459,7 @@ end
 --- Calls the on_language_change function in all related components
 -- This one called by global druid.on_language_change, but can be
 -- call manualy to update all translations
--- @local
+---@private
 function M:on_language_change()
 	local components = self.components_interest[base_component.ON_LANGUAGE_CHANGE]
 	for i = 1, #components do
@@ -508,7 +509,7 @@ end
 
 
 --- Remove all components on late remove step DruidInstance
--- @local
+---@private
 function M:_clear_late_remove()
 	if #self._late_remove == 0 then
 		return
@@ -543,7 +544,7 @@ function M:new_widget(widget, template, nodes, ...)
 end
 
 
---- Create Button component
+---Create Button component
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param callback function|nil Button callback
 ---@param params any|nil Button callback params
@@ -554,7 +555,7 @@ function M:new_button(node, callback, params, anim_node)
 end
 
 
---- Create Blocker component
+---Create Blocker component
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@return druid.blocker Blocker component
 function M:new_blocker(node)
@@ -562,7 +563,7 @@ function M:new_blocker(node)
 end
 
 
---- Create BackHandler component
+---Create BackHandler component
 ---@param callback function|nil The callback(self, custom_args) to call on back event
 ---@param params any|nil Callback argument
 ---@return druid.back_handler BackHandler component
@@ -571,7 +572,7 @@ function M:new_back_handler(callback, params)
 end
 
 
---- Create Hover component
+---Create Hover component
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param on_hover_callback function|nil Hover callback
 ---@param on_mouse_hover_callback function|nil Mouse hover callback
@@ -581,7 +582,7 @@ function M:new_hover(node, on_hover_callback, on_mouse_hover_callback)
 end
 
 
---- Create Text component
+---Create Text component
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param value string|nil Initial text. Default value is node text from GUI scene.
 ---@param no_adjust boolean|nil If true, text will be not auto-adjust size
@@ -591,7 +592,7 @@ function M:new_text(node, value, no_adjust)
 end
 
 
---- Create StaticGrid component
+---Create StaticGrid component
 ---@param parent_node string|node The node_id or gui.get_node(node_id). Parent of all Grid items.
 ---@param item node Element prefab. Required to get grid's item size. Can be adjusted separately.
 ---@param in_row number|nil How many nodes in row can be placed
@@ -601,7 +602,7 @@ function M:new_grid(parent_node, item, in_row)
 end
 
 
---- Create StaticGrid component
+---Create StaticGrid component
 ---@param parent_node string|node The node_id or gui.get_node(node_id). Parent of all Grid items.
 ---@param item string|node Item prefab. Required to get grid's item size. Can be adjusted separately.
 ---@param in_row number|nil How many nodes in row can be placed
@@ -611,7 +612,7 @@ function M:new_static_grid(parent_node, item, in_row)
 end
 
 
---- Create Scroll component
+---Create Scroll component
 ---@param view_node string|node The node_id or gui.get_node(node_id). Will used as user input node.
 ---@param content_node string|node The node_id or gui.get_node(node_id). Will used as scrollable node inside view_node.
 ---@return druid.scroll Scroll component
@@ -620,7 +621,7 @@ function M:new_scroll(view_node, content_node)
 end
 
 
---- Create Drag component
+---Create Drag component
 ---@param node string|node The node_id or gui.get_node(node_id). Will used as user input node.
 ---@param on_drag_callback function|nil Callback for on_drag_event(self, dx, dy)
 ---@return druid.drag Drag component
@@ -629,7 +630,7 @@ function M:new_drag(node, on_drag_callback)
 end
 
 
---- Create Swipe component
+---Create Swipe component
 ---@param node string|node The node_id or gui.get_node(node_id). Will used as user input node.
 ---@param on_swipe_callback function|nil Swipe callback for on_swipe_end event
 ---@return druid.swipe Swipe component
@@ -638,7 +639,7 @@ function M:new_swipe(node, on_swipe_callback)
 end
 
 
---- Create LangText component
+---Create LangText component
 ---@param node string|node The_node id or gui.get_node(node_id)
 ---@param locale_id string|nil Default locale id or text from node as default
 ---@param adjust_type string|nil Adjust type for text node. Default: const.TEXT_ADJUST.DOWNSCALE
@@ -647,7 +648,8 @@ function M:new_lang_text(node, locale_id, adjust_type)
 	return helper.require_component_message("lang_text") --[[@as druid.lang_text]]
 end
 
---- Create Slider component
+
+---Create Slider component
 ---@param pin_node string|node The_node id or gui.get_node(node_id).
 ---@param end_pos vector3 The end position of slider
 ---@param callback function|nil On slider change callback
@@ -656,7 +658,7 @@ function M:new_slider(pin_node, end_pos, callback)
 	return helper.require_component_message("slider") --[[@as druid.slider]]
 end
 
---- Create Input component
+---Create Input component
 ---@param click_node string|node Button node to enabled input component
 ---@param text_node string|node|druid.text Text node what will be changed on user input
 ---@param keyboard_type number|nil Gui keyboard type for input field
@@ -665,7 +667,8 @@ function M:new_input(click_node, text_node, keyboard_type)
 	return helper.require_component_message("input") --[[@as druid.input]]
 end
 
---- Create DataList component
+
+---Create DataList component
 ---@param druid_scroll druid.scroll The Scroll instance for Data List component
 ---@param druid_grid druid.grid The StaticGrid} or @{DynamicGrid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
@@ -674,7 +677,8 @@ function M:new_data_list(druid_scroll, druid_grid, create_function)
 	return helper.require_component_message("data_list") --[[@as druid.data_list]]
 end
 
---- Create Timer component
+
+---Create Timer component
 ---@param node string|node Gui text node
 ---@param seconds_from number Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
@@ -684,7 +688,9 @@ function M:new_timer(node, seconds_from, seconds_to, callback)
 	return helper.require_component_message("timer") --[[@as druid.timer]]
 end
 
---- Create Progress component
+
+
+---Create Progress component
 ---@param node string|node Progress bar fill node or node name
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
 ---@param init_value number|nil Initial value of progress bar. Default: 1
@@ -693,7 +699,8 @@ function M:new_progress(node, key, init_value)
 	return helper.require_component_message("progress") --[[@as druid.progress]]
 end
 
---- Create Layout component
+
+---Create Layout component
 ---@param node string|node The_node id or gui.get_node(node_id).
 ---@param mode string The layout mode
 ---@return druid.layout Layout component
@@ -701,7 +708,8 @@ function M:new_layout(node, mode)
 	return helper.require_component_message("layout") --[[@as druid.layout]]
 end
 
---- Create Hotkey component
+
+---Create Hotkey component
 ---@param keys_array string|string[] Keys for trigger action. Should contains one action key and any amount of modificator keys
 ---@param callback function The callback function
 ---@param callback_argument any|nil The argument to pass into the callback function
@@ -710,7 +718,8 @@ function M:new_hotkey(keys_array, callback, callback_argument)
 	return helper.require_component_message("hotkey") --[[@as druid.hotkey]]
 end
 
---- Create RichText component.
+
+---Create RichText component.
 ---@param text_node string|node The text node to make Rich Text
 ---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
 ---@return druid.rich_text RichText component
@@ -718,7 +727,8 @@ function M:new_rich_text(text_node, value)
 	return helper.require_component_message("rich_text", "custom") --[[@as druid.rich_text]]
 end
 
---- Create RichInput component.
+
+---Create RichInput component.
 -- As a template please check rich_input.gui layout.
 ---@param template string The template string name
 ---@param nodes table Nodes table from gui.clone_tree
@@ -726,5 +736,6 @@ end
 function M:new_rich_input(template, nodes)
 	return helper.require_component_message("rich_input", "custom") --[[@as druid.rich_input]]
 end
+
 
 return M

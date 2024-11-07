@@ -37,19 +37,19 @@
 -- @alias druid.static_grid
 
 --- On item add callback(self, node, index)
--- @tfield DruidEvent on_add_item DruidEvent
+-- @tfield druid.event on_add_item druid.event
 
 --- On item remove callback(self, index)
--- @tfield DruidEvent on_remove_item DruidEvent
+-- @tfield druid.event on_remove_item druid.event
 
 --- On item add, remove or change in_row callback(self, index|nil)
--- @tfield DruidEvent on_change_items DruidEvent
+-- @tfield druid.event on_change_items druid.event
 
 --- On grid clear callback(self)
--- @tfield DruidEvent on_clear DruidEvent
+-- @tfield druid.event on_clear druid.event
 
 --- On update item positions callback(self)
--- @tfield DruidEvent on_update_positions DruidEvent
+-- @tfield druid.event on_update_positions druid.event
 
 --- Parent gui node
 -- @tfield node parent
@@ -491,7 +491,7 @@ end
 --- Update grid inner state
 -- @tparam StaticGrid self StaticGrid
 -- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
--- @local
+---@private
 function M:_update(is_instant)
 	self:_update_indexes()
 	self:_update_borders()
@@ -501,7 +501,7 @@ end
 
 --- Update first and last indexes of grid nodes
 -- @tparam StaticGrid self StaticGrid
--- @local
+---@private
 function M:_update_indexes()
 	self.first_index = nil
 	self.last_index = nil
@@ -517,7 +517,7 @@ end
 
 --- Update grid content borders, recalculate min and max values
 -- @tparam StaticGrid self StaticGrid
--- @local
+---@private
 function M:_update_borders()
 	if not self.first_index then
 		self.border = vmath.vector4(0)
@@ -537,7 +537,7 @@ end
 --- Update grid nodes position
 -- @tparam StaticGrid self StaticGrid
 -- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
--- @local
+---@private
 function M:_update_pos(is_instant)
 	local zero_offset = self:_get_zero_offset()
 
@@ -560,7 +560,7 @@ end
 --- Return elements offset for correct posing nodes. Correct posing at
 -- parent pivot node (0:0) with adjusting of node sizes and anchoring
 -- @treturn vector3 The offset vector
--- @local
+---@private
 function M:_get_zero_offset()
 	if not self.style.IS_DYNAMIC_NODE_POSES then
 		return const.VECTOR_ZERO
@@ -577,7 +577,7 @@ end
 
 --- Return offset x for last row in grid. Used to align this row accorting to grid's anchor
 -- @treturn number The offset x value
--- @local
+---@private
 function M:_get_zero_offset_x(row_index)
 	if not self.style.IS_DYNAMIC_NODE_POSES or not self.style.IS_ALIGN_LAST_ROW then
 		return self._zero_offset.x

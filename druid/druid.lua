@@ -29,6 +29,7 @@ end
 ---Register component just makes the druid:new_{name} function.
 ---For example, if you register a component called "my_component", you can create it using druid:new_my_component(...).
 ---This can be useful if you have your own "basic" components that you don't want to require in every file.
+---The default way to create component is `druid_instance:new(component_class, ...)`.
 ---@param name string Module name
 ---@param module table Lua table with component
 function M.register(name, module)
@@ -101,6 +102,7 @@ end
 
 
 ---Call this function when the game language changes.
+---It will notify all Druid instances to update the lang text components.
 function M.on_language_change()
 	local instances = get_druid_instances()
 

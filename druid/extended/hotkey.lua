@@ -8,10 +8,10 @@
 -- @alias druid.hotkey
 
 --- On hotkey released callback(self, argument)
--- @tfield DruidEvent on_hotkey_pressed DruidEvent
+-- @tfield druid.event on_hotkey_pressed druid.event
 
 --- On hotkey released callback(self, argument)
--- @tfield DruidEvent on_hotkey_released DruidEvent
+-- @tfield druid.event on_hotkey_released druid.event
 
 --- Visual node
 -- @tfield node node

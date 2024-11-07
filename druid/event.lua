@@ -1,3 +1,4 @@
+---Event system for Druid
 ---@class druid.event
 local M = {}
 
@@ -31,7 +32,7 @@ end
 --- Check is event subscribed.
 ---@param callback fun() Callback itself
 ---@param callback_context any|nil Additional context as first param to callback call
--- @treturn boolean, number|nil @Is event subscribed, return index of callback in event as second param
+---@return boolean, number|nil Is event subscribed, return index of callback in event as second param
 function M:is_subscribed(callback, callback_context)
 	if #self == 0 then
 		return false, nil

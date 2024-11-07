@@ -2,10 +2,6 @@
 -- Author: Britzl
 -- Modified by: Insality
 
---- RT
--- @module rich_text.rt
--- @local
-
 local helper = require("druid.helper")
 local parser = require("druid.custom.rich_text.module.rt_parse")
 local utf8_lua = require("druid.system.utf8")

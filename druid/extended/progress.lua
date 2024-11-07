@@ -20,7 +20,7 @@
 -- @alias druid.progress
 
 --- On progress bar change callback(self, new_value)
--- @tfield DruidEvent on_change DruidEvent
+-- @tfield druid.event on_change druid.event
 
 --- Progress bar fill node
 -- @tfield node node

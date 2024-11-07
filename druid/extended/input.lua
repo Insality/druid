@@ -10,25 +10,25 @@
 -- @alias druid.input
 
 --- On input field select callback(self, input_instance)
--- @tfield DruidEvent on_input_select DruidEvent
+-- @tfield druid.event on_input_select druid.event
 
 --- On input field unselect callback(self, input_text, input_instance)
--- @tfield DruidEvent on_input_unselect DruidEvent
+-- @tfield druid.event on_input_unselect druid.event
 
 --- On input field text change callback(self, input_text)
--- @tfield DruidEvent on_input_text DruidEvent
+-- @tfield druid.event on_input_text druid.event
 
 --- On input field text change to empty string callback(self, input_text)
--- @tfield DruidEvent on_input_empty DruidEvent
+-- @tfield druid.event on_input_empty druid.event
 
 --- On input field text change to max length string callback(self, input_text)
--- @tfield DruidEvent on_input_full DruidEvent
+-- @tfield druid.event on_input_full druid.event
 
 --- On trying user input with not allowed character callback(self, params, input_text)
--- @tfield DruidEvent on_input_wrong DruidEvent
+-- @tfield druid.event on_input_wrong druid.event
 
 --- On cursor position change callback(self, cursor_index, start_index, end_index)
--- @tfield DruidEvent on_select_cursor_change DruidEvent
+-- @tfield druid.event on_select_cursor_change druid.event
 
 --- The cursor index. The index of letter cursor after. Leftmost cursor - 0
 -- @tfield number cursor_index
