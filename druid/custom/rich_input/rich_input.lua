@@ -280,7 +280,7 @@ end
 
 --- Set input field text
 ---@param self RichInput RichInput
--- @treturn druid.input Current input instance
+---@return druid.input Current input instance
 ---@param text string The input text
 function M:set_text(text)
 	self.input:set_text(text)
@@ -293,7 +293,7 @@ end
 --- Set input field font
 ---@param self RichInput RichInput
 ---@param font hash The font hash
--- @treturn druid.input Current input instance
+---@return druid.input Current input instance
 function M:set_font(font)
 	gui.set_font(self.input.text.node, font)
 	gui.set_font(self.placeholder.node, font)
@@ -314,7 +314,7 @@ end
 -- ex: [%a%d] for alpha and numeric
 ---@param self RichInput RichInput
 ---@param characters string Regulax exp. for validate user input
--- @treturn RichInput Current instance
+---@return RichInput Current instance
 function M:set_allowed_characters(characters)
 	self.input:set_allowed_characters(characters)
 

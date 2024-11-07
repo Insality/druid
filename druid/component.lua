@@ -283,7 +283,7 @@ end
 ---@param context table Druid context. Usually it is self of script
 ---@param style table Druid style module
 ---@param instance_class table The component instance class
--- @treturn component BaseComponent itself
+---@return component BaseComponent itself
 ---@private
 function M:setup_component(druid_instance, context, style, instance_class)
 	self._meta = {
@@ -327,7 +327,7 @@ end
 
 --- Get current component interests
 ---@param self BaseComponent BaseComponent
--- @treturn table List of component interests
+---@return table List of component interests
 ---@private
 function M.__get_interests(self)
 	local instance_class = self._meta.instance_class
@@ -384,7 +384,7 @@ end
 
 --- Return all children components, recursive
 ---@param self BaseComponent BaseComponent
--- @treturn table Array of childrens if the Druid component instance
+---@return table Array of childrens if the Druid component instance
 function M.get_childrens(self)
 	local childrens = {}
 

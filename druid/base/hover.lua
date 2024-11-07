@@ -133,7 +133,7 @@ end
 
 --- Return current hover state. True if touch action was on the node at current time
 ---@param self Hover Hover
--- @treturn boolean The current hovered state
+---@return boolean The current hovered state
 function M:is_hovered()
 	return self._is_hovered
 end
@@ -158,7 +158,7 @@ end
 
 --- Return current hover state. True if nil action_id (usually desktop mouse) was on the node at current time
 ---@param self Hover Hover
--- @treturn boolean The current hovered state
+---@return boolean The current hovered state
 function M:is_mouse_hovered()
 	return self._is_mouse_hovered
 end
@@ -194,7 +194,7 @@ end
 
 --- Return current hover enabled state
 ---@param self Hover Hover
--- @treturn boolean The hover enabled state
+---@return boolean The hover enabled state
 function M:is_enabled()
 	return self._is_enabled
 end

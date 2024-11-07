@@ -128,8 +128,8 @@ end
 --- Set text for Rich Text
 ---@param self RichText RichText
 ---@param text string|nil The text to set
--- @treturn druid.rich_text.word[] words
--- @treturn druid.rich_text.lines_metrics line_metrics
+---@return druid.rich_text.word[] words
+---@return druid.rich_text.lines_metrics line_metrics
 -- @usage
 -- • color: Change text color
 --
@@ -190,7 +190,7 @@ end
 
 --- Get current text
 ---@param self RichText RichText
--- @treturn string text
+---@return string text
 function M:get_text()
 	return self._last_value
 end
@@ -216,7 +216,7 @@ end
 --- Get all words, which has a passed tag.
 ---@param self RichText RichText
 ---@param tag string
--- @treturn druid.rich_text.word[] words
+---@return druid.rich_text.word[] words
 function M:tagged(tag)
 	if not self._words then
 		return
@@ -229,21 +229,21 @@ end
 ---Split a word into it's characters
 ---@param self RichText RichText
 ---@param word druid.rich_text.word
--- @treturn druid.rich_text.word[] characters
+---@return druid.rich_text.word[] characters
 function M:characters(word)
 	return rich_text.characters(word)
 end
 
 
 --- Get all current words.
--- @treturn table druid.rich_text.word[]
+---@return table druid.rich_text.word[]
 function M:get_words()
 	return self._words
 end
 
 
 --- Get current line metrics
---- @treturn druid.rich_text.lines_metrics
+----@return druid.rich_text.lines_metrics
 function M:get_line_metric()
 	return self._line_metrics
 end

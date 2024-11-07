@@ -215,7 +215,7 @@ end
 ---@param self Slider Slider
 ---@param steps number[] Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
--- @treturn Slider Slider
+---@return Slider Slider
 function M:set_steps(steps)
 	self.steps = steps
 	return self
@@ -228,7 +228,7 @@ end
 -- This function require the Defold version 1.3.0+
 ---@param self Slider Slider
 ---@param input_node node|string|nil
--- @treturn Slider Slider
+---@return Slider Slider
 function M:set_input_node(input_node)
 	self._input_node = self:get_node(input_node)
 	return self
@@ -245,7 +245,7 @@ end
 
 --- Check if Slider component is enabled
 ---@param self Slider Slider
--- @treturn boolean
+---@return boolean
 function M:is_enabled()
 	return self._is_enabled
 end

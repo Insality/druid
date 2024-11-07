@@ -111,7 +111,7 @@ M.ALLOWED_ACTIONS = {
 --- Mask text by replacing every character with a mask character
 ---@param text string
 ---@param mask string
--- @treturn string Masked text
+---@return string Masked text
 local function mask_text(text, mask)
 	mask = mask or "*"
 	local masked_text = ""
@@ -330,7 +330,7 @@ end
 --- Replace selected text with new text
 ---@param self Input Input
 ---@param text string The text to replace selected text
--- @treturn string New input text
+---@return string New input text
 function M:get_text_selected_replaced(text)
 	local left_part = utf8.sub(self.value, 1, self.start_index)
 	local right_part = utf8.sub(self.value, self.end_index + 1, utf8.len(self.value))
@@ -440,7 +440,7 @@ end
 
 --- Return current input field text
 ---@param self Input Input
--- @treturn string The current input field text
+---@return string The current input field text
 function M:get_text()
 	if self.marked_value ~= "" then
 		return self.value .. self.marked_value
@@ -454,7 +454,7 @@ end
 -- Pass nil to make input field unliminted (by default)
 ---@param self Input Input
 ---@param max_length number Maximum length for input text field
--- @treturn druid.input Current input instance
+---@return druid.input Current input instance
 function M:set_max_length(max_length)
 	self.max_length = max_length
 	return self
@@ -466,7 +466,7 @@ end
 -- ex: [%a%d] for alpha and numeric
 ---@param self Input Input
 ---@param characters string Regulax exp. for validate user input
--- @treturn druid.input Current input instance
+---@return druid.input Current input instance
 function M:set_allowed_characters(characters)
 	self.allowed_characters = characters
 	return self
@@ -475,7 +475,7 @@ end
 
 --- Reset current input selection and return previous value
 ---@param self Input Input
--- @treturn druid.input Current input instance
+---@return druid.input Current input instance
 function M:reset_changes()
 	self:set_text(self.previous_value)
 	self:unselect()
@@ -488,7 +488,7 @@ end
 ---@param cursor_index number|nil Cursor index for cursor position, if nil - will be set to the end of the text
 ---@param start_index number|nil Start index for cursor position, if nil - will be set to the end of the text
 ---@param end_index number|nil End index for cursor position, if nil - will be set to the start_index
--- @treturn druid.input Current input instance
+---@return druid.input Current input instance
 function M:select_cursor(cursor_index, start_index, end_index)
 	local len = utf8.len(self.value)
 

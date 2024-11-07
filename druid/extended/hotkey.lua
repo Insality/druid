@@ -76,7 +76,7 @@ end
 ---@param self Hotkey Hotkey
 ---@param keys string[]|hash[]|string|hash that have to be pressed before key pressed to activate
 ---@param callback_argument any|nil The argument to pass into the callback function
--- @treturn Hotkey Current instance
+---@return Hotkey Current instance
 function M:add_hotkey(keys, callback_argument)
 	keys = keys or {}
 	if type(keys) == "string" then
@@ -176,7 +176,7 @@ end
 --- If true, the callback will be triggered on action.repeated
 ---@param self Hotkey Hotkey
 ---@param is_enabled_repeated bool The flag value
--- @treturn Hotkey
+---@return Hotkey
 function M:set_repeat(is_enabled_repeated)
 	self._is_process_repeated = is_enabled_repeated
 	return self

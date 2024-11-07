@@ -97,7 +97,7 @@ end
 --- Set refresh function for DataList component
 ---@param self DataList DataList
 ---@param is_use_cache boolean Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
--- @treturn druid.data_list Current DataList instance
+---@return druid.data_list Current DataList instance
 function M:set_use_cache(is_use_cache)
 	self._is_use_cache = is_use_cache
 	return self
@@ -107,7 +107,7 @@ end
 --- Set new data set for DataList component
 ---@param self DataList DataList
 ---@param data table The new data array
--- @treturn druid.data_list Current DataList instance
+---@return druid.data_list Current DataList instance
 function M:set_data(data)
 	self._data = data or {}
 	self:_refresh()
@@ -118,7 +118,7 @@ end
 
 --- Return current data from DataList component
 ---@param self DataList DataList
--- @treturn table The current data array
+---@return table The current data array
 function M:get_data()
 	return self._data
 end
@@ -185,7 +185,7 @@ end
 
 --- Return all currenly created nodes in DataList
 ---@param self DataList DataList
--- @treturn node[] List of created nodes
+---@return node[] List of created nodes
 function M:get_created_nodes()
 	local nodes = {}
 
@@ -199,7 +199,7 @@ end
 
 --- Return all currenly created components in DataList
 ---@param self DataList DataList
--- @treturn druid.base_component[] List of created nodes
+---@return druid.base_component[] List of created nodes
 function M:get_created_components()
 	local components = {}
 

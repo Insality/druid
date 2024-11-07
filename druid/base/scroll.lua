@@ -337,7 +337,7 @@ end
 --- Return current scroll progress status.
 -- Values will be in [0..1] interval
 ---@param self Scroll Scroll
--- @treturn vector3 New vector with scroll progress values
+---@return vector3 New vector with scroll progress values
 function M:get_percent()
 	local x_perc = 1 - inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
 	local y_perc = inverse_lerp(self.available_pos.w, self.available_pos.y, self.position.y)
@@ -351,7 +351,7 @@ end
 ---@param self Scroll Scroll
 ---@param size vector3 The new size for content node
 ---@param offset vector3|nil Offset value to set, where content is starts
--- @treturn druid.scroll Current scroll instance
+---@return druid.scroll Current scroll instance
 function M:set_size(size, offset)
 	if offset then
 		self._offset = offset
@@ -366,7 +366,7 @@ end
 --- Set new scroll view size in case the node size was changed.
 ---@param self Scroll Scroll
 ---@param size vector3 The new size for view node
--- @treturn druid.scroll Current scroll instance
+---@return druid.scroll Current scroll instance
 function M:set_view_size(size)
 	gui.set_size(self.view_node, size)
 	self.view_size = size
@@ -393,7 +393,7 @@ end
 -- If no points, just simple drag without inertion
 ---@param self Scroll Scroll
 ---@param state boolean|nil Inert scroll state
--- @treturn druid.scroll Current scroll instance
+---@return druid.scroll Current scroll instance
 function M:set_inert(state)
 	self._is_inert = state
 
@@ -403,7 +403,7 @@ end
 
 --- Return if scroll have inertion.
 ---@param self Scroll Scroll
--- @treturn boolean @If scroll have inertion
+---@return boolean @If scroll have inertion
 function M:is_inert()
 	return self._is_inert
 end
@@ -413,7 +413,7 @@ end
 -- Set 0 to disable stretching effect
 ---@param self Scroll Scroll
 ---@param stretch_size number|nil Size in pixels of additional scroll area
--- @treturn druid.scroll Current scroll instance
+---@return druid.scroll Current scroll instance
 function M:set_extra_stretch_size(stretch_size)
 	self.style.EXTRA_STRETCH_SIZE = stretch_size or 0
 	self:_update_size()
@@ -424,7 +424,7 @@ end
 
 --- Return vector of scroll size with width and height.
 ---@param self Scroll Scroll
--- @treturn vector3 Available scroll size
+---@return vector3 Available scroll size
 function M:get_scroll_size()
 	return self.available_size
 end
@@ -434,7 +434,7 @@ end
 -- Scroll will always centered on closer points
 ---@param self Scroll Scroll
 ---@param points table Array of vector3 points
--- @treturn druid.scroll Current scroll instance
+---@return druid.scroll Current scroll instance
 function M:set_points(points)
 	self.points = points
 
@@ -451,7 +451,7 @@ end
 --- Lock or unlock horizontal scroll
 ---@param self Scroll Scroll
 ---@param state boolean|nil True, if horizontal scroll is enabled
--- @treturn druid.scroll Current scroll instance
+---@return druid.scroll Current scroll instance
 function M:set_horizontal_scroll(state)
 	self._is_horizontal_scroll = state
 	self.drag.can_x = self.available_size.x > 0 and state
@@ -462,7 +462,7 @@ end
 --- Lock or unlock vertical scroll
 ---@param self Scroll Scroll
 ---@param state boolean|nil True, if vertical scroll is enabled
--- @treturn druid.scroll Current scroll instance
+---@return druid.scroll Current scroll instance
 function M:set_vertical_scroll(state)
 	self._is_vertical_scroll = state
 	self.drag.can_y = self.available_size.y > 0 and state
@@ -474,7 +474,7 @@ end
 -- Extra border is not affected. Return true for elements in extra scroll zone
 ---@param self Scroll Scroll
 ---@param node node The node to check
--- @treturn boolean True if node in visible scroll area
+---@return boolean True if node in visible scroll area
 function M:is_node_in_view(node)
 	local node_offset_for_view = gui.get_position(node)
 	local parent = gui.get_parent(node)
@@ -515,7 +515,7 @@ end
 -- scroll size on grid changes
 ---@param self Scroll Scroll
 ---@param grid StaticGrid Druid grid component
--- @treturn druid.scroll Current scroll instance
+---@return druid.scroll Current scroll instance
 function M:bind_grid(grid)
 	if self._grid_on_change then
 		self._grid_on_change:unsubscribe(self._grid_on_change_callback)

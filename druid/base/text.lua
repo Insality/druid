@@ -337,8 +337,8 @@ end
 --- Calculate text width with font with respect to trailing space
 ---@param self Text Text
 ---@param text|nil string
--- @treturn number Width
--- @treturn number Height
+---@return number Width
+---@return number Height
 function M:get_text_size(text)
 	text = text or self.last_value
 	local font_name = gui.get_font(self.node)
@@ -362,7 +362,7 @@ end
 --- Get chars count by width
 ---@param self Text Text
 ---@param width number
--- @treturn number Chars count
+---@return number Chars count
 function M:get_text_index_by_width(width)
 	local text = self.last_value
 	local font_name = gui.get_font(self.node)
@@ -396,7 +396,7 @@ end
 --- Set text to text field
 ---@param self Text Text
 ---@param set_to string Text for node
--- @treturn Text Current text instance
+---@return Text Current text instance
 function M:set_to(set_to)
 	set_to = set_to or ""
 
@@ -414,7 +414,7 @@ end
 --- Set text area size
 ---@param self Text Text
 ---@param size vector3 The new text area size
--- @treturn Text Current text instance
+---@return Text Current text instance
 function M:set_size(size)
 	self.start_size = size
 	self.text_area = vmath.vector3(size)
@@ -427,7 +427,7 @@ end
 --- Set color
 ---@param self Text Text
 ---@param color vector4 Color for node
--- @treturn Text Current text instance
+---@return Text Current text instance
 function M:set_color(color)
 	self.color = color
 	gui.set_color(self.node, color)
@@ -439,7 +439,7 @@ end
 --- Set alpha
 ---@param self Text Text
 ---@param alpha number Alpha for node
--- @treturn Text Current text instance
+---@return Text Current text instance
 function M:set_alpha(alpha)
 	self.color.w = alpha
 	gui.set_color(self.node, self.color)
@@ -451,7 +451,7 @@ end
 --- Set scale
 ---@param self Text Text
 ---@param scale vector3 Scale for node
--- @treturn Text Current text instance
+---@return Text Current text instance
 function M:set_scale(scale)
 	self.last_scale = scale
 	gui.set_scale(self.node, scale)
@@ -463,7 +463,7 @@ end
 --- Set text pivot. Text will re-anchor inside text area
 ---@param self Text Text
 ---@param pivot number The gui.PIVOT_* constant
--- @treturn Text Current text instance
+---@return Text Current text instance
 function M:set_pivot(pivot)
 	local prev_pivot = gui.get_pivot(self.node)
 	local prev_offset = const.PIVOTS[prev_pivot]
@@ -488,7 +488,7 @@ end
 
 --- Return true, if text with line break
 ---@param self Text Text
--- @treturn boolean Is text node with line break
+---@return boolean Is text node with line break
 function M:is_multiline()
 	return gui.get_line_break(self.node)
 end
@@ -498,7 +498,7 @@ end
 ---@param self Text Text
 ---@param adjust_type string|nil See const.TEXT_ADJUST. If pass nil - use current adjust type
 ---@param minimal_scale number|nil If pass nil - not use minimal scale
--- @treturn Text Current text instance
+---@return Text Current text instance
 function M:set_text_adjust(adjust_type, minimal_scale)
 	self.adjust_type = adjust_type
 	self._minimal_scale = minimal_scale
@@ -511,7 +511,7 @@ end
 --- Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
 ---@param self Text Text
 ---@param minimal_scale number If pass nil - not use minimal scale
--- @treturn Text Current text instance
+---@return Text Current text instance
 function M:set_minimal_scale(minimal_scale)
 	self._minimal_scale = minimal_scale
 
@@ -520,7 +520,7 @@ end
 
 
 --- Return current text adjust type
--- @treturn number The current text adjust type
+---@return number The current text adjust type
 function M:get_text_adjust(adjust_type)
 	return self.adjust_type
 end

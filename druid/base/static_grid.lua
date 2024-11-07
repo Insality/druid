@@ -167,7 +167,7 @@ local _temp_pos = vmath.vector3(0)
 --- Return pos for grid node index
 ---@param self StaticGrid StaticGrid
 ---@param index number The grid element index
--- @treturn vector3 @Node position
+---@return vector3 @Node position
 function M:get_pos(index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
@@ -185,7 +185,7 @@ end
 --- Return index for grid pos
 ---@param self StaticGrid StaticGrid
 ---@param pos vector3 The node position in the grid
--- @treturn number The node index
+---@return number The node index
 function M:get_index(pos)
 	-- Offset to left-top corner from node pivot
 	local node_offset_x = self.node_size.x * (-0.5 + self.node_pivot.x)
@@ -205,7 +205,7 @@ end
 --- Return grid index by node
 ---@param self StaticGrid StaticGrid
 ---@param node node The gui node in the grid
--- @treturn number The node index
+---@return number The node index
 function M:get_index_by_node(node)
 	for index, grid_node in pairs(self.nodes) do
 		if node == grid_node then
@@ -316,7 +316,7 @@ end
 ---@param index number The grid node index to remove
 ---@param shift_policy number|nil How shift nodes, if required. Default: const.SHIFT.RIGHT
 ---@param is_instant boolean|nil If true, update node positions instantly
--- @treturn node The deleted gui node from grid
+---@return node The deleted gui node from grid
 function M:remove(index, shift_policy, is_instant)
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
@@ -334,7 +334,7 @@ end
 
 --- Return grid content size
 ---@param self StaticGrid StaticGrid
--- @treturn vector3 The grid content size
+---@return vector3 The grid content size
 function M:get_size()
 	return vmath.vector3(
 		self.border.z - self.border.x,
@@ -367,7 +367,7 @@ end
 
 --- Return grid content borders
 ---@param self StaticGrid StaticGrid
--- @treturn vector3 The grid content borders
+---@return vector3 The grid content borders
 function M:get_borders()
 	return self.border
 end
@@ -375,7 +375,7 @@ end
 
 --- Return array of all node positions
 ---@param self StaticGrid StaticGrid
--- @treturn vector3[] All grid node positions
+---@return vector3[] All grid node positions
 function M:get_all_pos()
 	local result = {}
 	for i, node in pairs(self.nodes) do
@@ -390,7 +390,7 @@ end
 -- update poses on grid elements. Default: gui.set_position
 ---@param self StaticGrid StaticGrid
 ---@param callback function Function on node set position
--- @treturn druid.static_grid Current grid instance
+---@return druid.static_grid Current grid instance
 function M:set_position_function(callback)
 	self._set_position_function = callback or gui.set_position
 
@@ -401,7 +401,7 @@ end
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
 ---@param self StaticGrid StaticGrid
--- @treturn druid.static_grid Current grid instance
+---@return druid.static_grid Current grid instance
 function M:clear()
 	self.border.x = 0
 	self.border.y = 0
@@ -420,7 +420,7 @@ end
 
 --- Return StaticGrid offset, where StaticGrid content starts.
 ---@param self StaticGrid StaticGrid The StaticGrid instance
--- @treturn vector3 The StaticGrid offset
+---@return vector3 The StaticGrid offset
 function M:get_offset()
 	local borders = self:get_borders()
 	local size = self:get_size()
@@ -437,7 +437,7 @@ end
 --- Set new in_row elements for grid
 ---@param self StaticGrid StaticGrid
 ---@param in_row number The new in_row value
--- @treturn druid.static_grid Current grid instance
+---@return druid.static_grid Current grid instance
 function M:set_in_row(in_row)
 	self.in_row = in_row
 	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
@@ -457,7 +457,7 @@ end
 ---@param self StaticGrid StaticGrid
 -- @tparam[opt] number width The new node width
 -- @tparam[opt] number height The new node height
--- @treturn druid.static_grid Current grid instance
+---@return druid.static_grid Current grid instance
 function M:set_item_size(width, height)
 	if width then
 		self.node_size.x = width
@@ -481,7 +481,7 @@ end
 --- Sort grid nodes by custom comparator function
 ---@param self StaticGrid StaticGrid
 ---@param comparator function The comparator function. (a, b) -> boolean
--- @treturn druid.static_grid Current grid instance
+---@return druid.static_grid Current grid instance
 function M:sort_nodes(comparator)
 	table.sort(self.nodes, comparator)
 	self:_update(true)
@@ -559,7 +559,7 @@ end
 
 --- Return elements offset for correct posing nodes. Correct posing at
 -- parent pivot node (0:0) with adjusting of node sizes and anchoring
--- @treturn vector3 The offset vector
+---@return vector3 The offset vector
 ---@private
 function M:_get_zero_offset()
 	if not self.style.IS_DYNAMIC_NODE_POSES then
@@ -576,7 +576,7 @@ end
 
 
 --- Return offset x for last row in grid. Used to align this row accorting to grid's anchor
--- @treturn number The offset x value
+---@return number The offset x value
 ---@private
 function M:_get_zero_offset_x(row_index)
 	if not self.style.IS_DYNAMIC_NODE_POSES or not self.style.IS_ALIGN_LAST_ROW then
