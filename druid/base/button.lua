@@ -471,7 +471,7 @@ end
 --- Set button enabled state.
 -- The style.on_set_enabled will be triggered.
 -- Disabled button is not clickable.
--- @tparam boolean|nil state Enabled state
+---@param state boolean|nil Enabled state
 ---@return druid.button self
 function M:set_enabled(state)
 	self.disabled = not state
@@ -495,7 +495,7 @@ end
 -- Useful to restrict click outside out stencil node or scrollable content.
 --
 -- This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
--- @tparam node|string|nil zone Gui node
+---@param zone node|string|nil Gui node
 ---@return druid.button self
 function M:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
@@ -523,8 +523,8 @@ end
 
 
 --- Set function for additional check for button click availability
--- @tparam function|nil check_function Should return true or false. If true - button can be pressed.
--- @tparam function|nil failure_callback Function will be called on button click, if check function return false
+---@param check_function function|nil Should return true or false. If true - button can be pressed.
+---@param failure_callback function|nil Function will be called on button click, if check function return false
 ---@return druid.button self
 function M:set_check_function(check_function, failure_callback)
 	self._check_function = check_function
@@ -538,7 +538,7 @@ end
 -- The HTML5 button's doesn't call any events except on_click event.
 --
 -- If the game is not HTML, html mode will be not enabled
--- @tparam boolean|nil is_web_mode If true - button will be called inside html5 callback
+---@param is_web_mode boolean|nil If true - button will be called inside html5 callback
 ---@return druid.button self
 function M:set_web_user_interaction(is_web_mode)
 	self._is_html5_mode = not not (is_web_mode and html5)

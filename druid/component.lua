@@ -278,11 +278,11 @@ end
 
 
 --- Setup component context and his style table
--- @tparam BaseComponent self BaseComponent
--- @tparam table druid_instance The parent druid instance
--- @tparam table context Druid context. Usually it is self of script
--- @tparam table style Druid style module
--- @tparam table instance_class The component instance class
+---@param self BaseComponent BaseComponent
+---@param druid_instance table The parent druid instance
+---@param context table Druid context. Usually it is self of script
+---@param style table Druid style module
+---@param instance_class table The component instance class
 -- @treturn component BaseComponent itself
 ---@private
 function M:setup_component(druid_instance, context, style, instance_class)
@@ -310,7 +310,7 @@ end
 
 
 --- Return true, if input priority was changed
--- @tparam BaseComponent self BaseComponent
+---@param self BaseComponent BaseComponent
 ---@private
 function M._is_input_priority_changed(self)
 	return self._component._is_input_priority_changed
@@ -318,7 +318,7 @@ end
 
 
 --- Reset is_input_priority_changed field
--- @tparam BaseComponent self BaseComponent
+---@param self BaseComponent BaseComponent
 ---@private
 function M._reset_input_priority_changed(self)
 	self._component._is_input_priority_changed = false
@@ -326,7 +326,7 @@ end
 
 
 --- Get current component interests
--- @tparam BaseComponent self BaseComponent
+---@param self BaseComponent BaseComponent
 -- @treturn table List of component interests
 ---@private
 function M.__get_interests(self)
@@ -369,8 +369,8 @@ end
 
 
 --- Remove child from component children list
--- @tparam BaseComponent self BaseComponent
--- @tparam component child The druid component instance
+---@param self BaseComponent BaseComponent
+---@param child component The druid component instance
 ---@private
 function M.__remove_child(self, child)
 	for i = #self._meta.children, 1, -1 do
@@ -383,7 +383,7 @@ end
 
 
 --- Return all children components, recursive
--- @tparam BaseComponent self BaseComponent
+---@param self BaseComponent BaseComponent
 -- @treturn table Array of childrens if the Druid component instance
 function M.get_childrens(self)
 	local childrens = {}

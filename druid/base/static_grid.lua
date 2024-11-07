@@ -128,10 +128,10 @@ end
 
 
 --- The StaticGrid constructor
--- @tparam StaticGrid self StaticGrid
--- @tparam string|node parent The GUI Node container, where grid's items will be placed
--- @tparam node element Element prefab. Need to get it size
--- @tparam number|nil in_row How many nodes in row can be placed. By default 1
+---@param self StaticGrid StaticGrid
+---@param parent string|node The GUI Node container, where grid's items will be placed
+---@param element node Element prefab. Need to get it size
+---@param in_row number|nil How many nodes in row can be placed. By default 1
 function M:init(parent, element, in_row)
 	self.parent = self:get_node(parent)
 	self.nodes = {}
@@ -165,8 +165,8 @@ end
 
 local _temp_pos = vmath.vector3(0)
 --- Return pos for grid node index
--- @tparam StaticGrid self StaticGrid
--- @tparam number index The grid element index
+---@param self StaticGrid StaticGrid
+---@param index number The grid element index
 -- @treturn vector3 @Node position
 function M:get_pos(index)
 	local row = math.ceil(index / self.in_row) - 1
@@ -183,8 +183,8 @@ end
 
 
 --- Return index for grid pos
--- @tparam StaticGrid self StaticGrid
--- @tparam vector3 pos The node position in the grid
+---@param self StaticGrid StaticGrid
+---@param pos vector3 The node position in the grid
 -- @treturn number The node index
 function M:get_index(pos)
 	-- Offset to left-top corner from node pivot
@@ -203,8 +203,8 @@ end
 
 
 --- Return grid index by node
--- @tparam StaticGrid self StaticGrid
--- @tparam node node The gui node in the grid
+---@param self StaticGrid StaticGrid
+---@param node node The gui node in the grid
 -- @treturn number The node index
 function M:get_index_by_node(node)
 	for index, grid_node in pairs(self.nodes) do
@@ -223,8 +223,8 @@ end
 
 
 --- Set grid anchor. Default anchor is equal to anchor of grid parent node
--- @tparam StaticGrid self StaticGrid
--- @tparam vector3 anchor Anchor
+---@param self StaticGrid StaticGrid
+---@param anchor vector3 Anchor
 function M:set_anchor(anchor)
 	self.anchor = anchor
 	self:_update()
@@ -232,7 +232,7 @@ end
 
 
 --- Update grid content
--- @tparam StaticGrid self StaticGrid
+---@param self StaticGrid StaticGrid
 function M:refresh()
 	self:_update(true)
 end
@@ -270,11 +270,11 @@ end
 
 
 --- Add new item to the grid
--- @tparam StaticGrid self StaticGrid
--- @tparam node item GUI node
--- @tparam number|nil index The item position. By default add as last item
--- @tparam number|nil shift_policy How shift nodes, if required. Default: const.SHIFT.RIGHT
--- @tparam boolean|nil is_instant If true, update node positions instantly
+---@param self StaticGrid StaticGrid
+---@param item node GUI node
+---@param index number|nil The item position. By default add as last item
+---@param shift_policy number|nil How shift nodes, if required. Default: const.SHIFT.RIGHT
+---@param is_instant boolean|nil If true, update node positions instantly
 function M:add(item, index, shift_policy, is_instant)
 	index = index or ((self.last_index or 0) + 1)
 
@@ -295,8 +295,8 @@ end
 
 
 --- Set new items to the grid. All previous items will be removed
--- @tparam StaticGrid self StaticGrid
--- @tparam node[] nodes The new grid nodes
+---@param self StaticGrid StaticGrid
+---@param nodes node[] The new grid nodes
 -- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 function M:set_items(nodes, is_instant)
 	self.nodes = nodes
@@ -312,10 +312,10 @@ end
 
 
 --- Remove the item from the grid. Note that gui node will be not deleted
--- @tparam StaticGrid self StaticGrid
--- @tparam number index The grid node index to remove
--- @tparam number|nil shift_policy How shift nodes, if required. Default: const.SHIFT.RIGHT
--- @tparam boolean|nil is_instant If true, update node positions instantly
+---@param self StaticGrid StaticGrid
+---@param index number The grid node index to remove
+---@param shift_policy number|nil How shift nodes, if required. Default: const.SHIFT.RIGHT
+---@param is_instant boolean|nil If true, update node positions instantly
 -- @treturn node The deleted gui node from grid
 function M:remove(index, shift_policy, is_instant)
 	assert(self.nodes[index], "No grid item at given index " .. index)
@@ -333,7 +333,7 @@ end
 
 
 --- Return grid content size
--- @tparam StaticGrid self StaticGrid
+---@param self StaticGrid StaticGrid
 -- @treturn vector3 The grid content size
 function M:get_size()
 	return vmath.vector3(
@@ -366,7 +366,7 @@ end
 
 
 --- Return grid content borders
--- @tparam StaticGrid self StaticGrid
+---@param self StaticGrid StaticGrid
 -- @treturn vector3 The grid content borders
 function M:get_borders()
 	return self.border
@@ -374,7 +374,7 @@ end
 
 
 --- Return array of all node positions
--- @tparam StaticGrid self StaticGrid
+---@param self StaticGrid StaticGrid
 -- @treturn vector3[] All grid node positions
 function M:get_all_pos()
 	local result = {}
@@ -388,8 +388,8 @@ end
 
 --- Change set position function for grid nodes. It will call on
 -- update poses on grid elements. Default: gui.set_position
--- @tparam StaticGrid self StaticGrid
--- @tparam function callback Function on node set position
+---@param self StaticGrid StaticGrid
+---@param callback function Function on node set position
 -- @treturn druid.static_grid Current grid instance
 function M:set_position_function(callback)
 	self._set_position_function = callback or gui.set_position
@@ -400,7 +400,7 @@ end
 
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
--- @tparam StaticGrid self StaticGrid
+---@param self StaticGrid StaticGrid
 -- @treturn druid.static_grid Current grid instance
 function M:clear()
 	self.border.x = 0
@@ -419,7 +419,7 @@ end
 
 
 --- Return StaticGrid offset, where StaticGrid content starts.
--- @tparam StaticGrid self StaticGrid The StaticGrid instance
+---@param self StaticGrid StaticGrid The StaticGrid instance
 -- @treturn vector3 The StaticGrid offset
 function M:get_offset()
 	local borders = self:get_borders()
@@ -435,8 +435,8 @@ end
 
 
 --- Set new in_row elements for grid
--- @tparam StaticGrid self StaticGrid
--- @tparam number in_row The new in_row value
+---@param self StaticGrid StaticGrid
+---@param in_row number The new in_row value
 -- @treturn druid.static_grid Current grid instance
 function M:set_in_row(in_row)
 	self.in_row = in_row
@@ -454,7 +454,7 @@ end
 
 
 --- Set new node size for grid
--- @tparam StaticGrid self StaticGrid
+---@param self StaticGrid StaticGrid
 -- @tparam[opt] number width The new node width
 -- @tparam[opt] number height The new node height
 -- @treturn druid.static_grid Current grid instance
@@ -479,8 +479,8 @@ end
 
 
 --- Sort grid nodes by custom comparator function
--- @tparam StaticGrid self StaticGrid
--- @tparam function comparator The comparator function. (a, b) -> boolean
+---@param self StaticGrid StaticGrid
+---@param comparator function The comparator function. (a, b) -> boolean
 -- @treturn druid.static_grid Current grid instance
 function M:sort_nodes(comparator)
 	table.sort(self.nodes, comparator)
@@ -489,8 +489,8 @@ end
 
 
 --- Update grid inner state
--- @tparam StaticGrid self StaticGrid
--- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
+---@param self StaticGrid StaticGrid
+---@param is_instant boolean|nil If true, node position update instantly, otherwise with set_position_function callback
 ---@private
 function M:_update(is_instant)
 	self:_update_indexes()
@@ -500,7 +500,7 @@ end
 
 
 --- Update first and last indexes of grid nodes
--- @tparam StaticGrid self StaticGrid
+---@param self StaticGrid StaticGrid
 ---@private
 function M:_update_indexes()
 	self.first_index = nil
@@ -516,7 +516,7 @@ end
 
 
 --- Update grid content borders, recalculate min and max values
--- @tparam StaticGrid self StaticGrid
+---@param self StaticGrid StaticGrid
 ---@private
 function M:_update_borders()
 	if not self.first_index then
@@ -535,8 +535,8 @@ end
 
 
 --- Update grid nodes position
--- @tparam StaticGrid self StaticGrid
--- @tparam boolean|nil is_instant If true, node position update instantly, otherwise with set_position_function callback
+---@param self StaticGrid StaticGrid
+---@param is_instant boolean|nil If true, node position update instantly, otherwise with set_position_function callback
 ---@private
 function M:_update_pos(is_instant)
 	local zero_offset = self:_get_zero_offset()

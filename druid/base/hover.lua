@@ -35,10 +35,10 @@ local M = component.create("hover")
 
 
 --- The Hover constructor
--- @tparam Hover self Hover
--- @tparam node node Gui node
--- @tparam function on_hover_callback Hover callback
--- @tparam function on_mouse_hover On mouse hover callback
+---@param self Hover Hover
+---@param node node Gui node
+---@param on_hover_callback function Hover callback
+---@param on_mouse_hover function On mouse hover callback
 function M:init(node, on_hover_callback, on_mouse_hover)
 	self.node = self:get_node(node)
 
@@ -115,8 +115,8 @@ end
 
 
 --- Set hover state
--- @tparam Hover self Hover
--- @tparam boolean|nil state The hover state
+---@param self Hover Hover
+---@param state boolean|nil The hover state
 function M:set_hover(state)
 	if self._is_hovered == state then
 		return
@@ -132,7 +132,7 @@ end
 
 
 --- Return current hover state. True if touch action was on the node at current time
--- @tparam Hover self Hover
+---@param self Hover Hover
 -- @treturn boolean The current hovered state
 function M:is_hovered()
 	return self._is_hovered
@@ -140,8 +140,8 @@ end
 
 
 --- Set mouse hover state
--- @tparam Hover self Hover
--- @tparam boolean|nil state The mouse hover state
+---@param self Hover Hover
+---@param state boolean|nil The mouse hover state
 function M:set_mouse_hover(state)
 	if self._is_mouse_hovered == state then
 		return
@@ -157,7 +157,7 @@ end
 
 
 --- Return current hover state. True if nil action_id (usually desktop mouse) was on the node at current time
--- @tparam Hover self Hover
+---@param self Hover Hover
 -- @treturn boolean The current hovered state
 function M:is_mouse_hovered()
 	return self._is_mouse_hovered
@@ -166,8 +166,8 @@ end
 
 --- Strict hover click area. Useful for
 -- no click events outside stencil node
--- @tparam Hover self Hover
--- @tparam node|string|nil zone Gui node
+---@param self Hover Hover
+---@param zone node|string|nil Gui node
 function M:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
 end
@@ -176,8 +176,8 @@ end
 --- Set enable state of hover component.
 -- If hover is not enabled, it will not generate
 -- any hover events
--- @tparam Hover self Hover
--- @tparam boolean|nil state The hover enabled state
+---@param self Hover Hover
+---@param state boolean|nil The hover enabled state
 function M:set_enabled(state)
 	self._is_enabled = state
 
@@ -193,7 +193,7 @@ end
 
 
 --- Return current hover enabled state
--- @tparam Hover self Hover
+---@param self Hover Hover
 -- @treturn boolean The hover enabled state
 function M:is_enabled()
 	return self._is_enabled

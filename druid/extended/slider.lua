@@ -69,10 +69,10 @@ end
 
 
 --- The Slider constructor
--- @tparam Slider self Slider
--- @tparam node node Gui pin node
--- @tparam vector3 end_pos The end position of slider
--- @tparam function|nil callback On slider change callback
+---@param self Slider Slider
+---@param node node Gui pin node
+---@param end_pos vector3 The end position of slider
+---@param callback function|nil On slider change callback
 function M:init(node, end_pos, callback)
 	self.node = self:get_node(node)
 
@@ -197,9 +197,9 @@ end
 
 
 --- Set value for slider
--- @tparam Slider self Slider
--- @tparam number value Value from 0 to 1
--- @tparam boolean|nil is_silent Don't trigger event if true
+---@param self Slider Slider
+---@param value number Value from 0 to 1
+---@param is_silent boolean|nil Don't trigger event if true
 function M:set(value, is_silent)
 	value = helper.clamp(value, 0, 1)
 	set_position(self, value)
@@ -212,8 +212,8 @@ end
 
 --- Set slider steps. Pin node will
 -- apply closest step position
--- @tparam Slider self Slider
--- @tparam number[] steps Array of steps
+---@param self Slider Slider
+---@param steps number[] Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
 -- @treturn Slider Slider
 function M:set_steps(steps)
@@ -226,8 +226,8 @@ end
 -- User can touch any place of node, pin instantly will
 -- move at this position and node drag will start.
 -- This function require the Defold version 1.3.0+
--- @tparam Slider self Slider
--- @tparam node|string|nil input_node
+---@param self Slider Slider
+---@param input_node node|string|nil
 -- @treturn Slider Slider
 function M:set_input_node(input_node)
 	self._input_node = self:get_node(input_node)
@@ -236,15 +236,15 @@ end
 
 
 --- Set Slider input enabled or disabled
--- @tparam Slider self Slider
--- @tparam boolean is_enabled
+---@param self Slider Slider
+---@param is_enabled boolean
 function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
 end
 
 
 --- Check if Slider component is enabled
--- @tparam Slider self Slider
+---@param self Slider Slider
 -- @treturn boolean
 function M:is_enabled()
 	return self._is_enabled

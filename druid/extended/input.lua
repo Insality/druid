@@ -109,8 +109,8 @@ M.ALLOWED_ACTIONS = {
 }
 
 --- Mask text by replacing every character with a mask character
--- @tparam string text
--- @tparam string mask
+---@param text string
+---@param mask string
 -- @treturn string Masked text
 local function mask_text(text, mask)
 	mask = mask or "*"
@@ -156,10 +156,10 @@ end
 
 
 --- The Input constructor
--- @tparam Input self Input
--- @tparam node click_node Node to enabled input component
--- @tparam node|Text text_node Text node what will be changed on user input. You can pass text component instead of text node name Text
--- @tparam number|nil keyboard_type Gui keyboard type for input field
+---@param self Input Input
+---@param click_node node Node to enabled input component
+---@param text_node node|Text Text node what will be changed on user input. You can pass text component instead of text node name Text
+---@param keyboard_type number|nil Gui keyboard type for input field
 function M:init(click_node, text_node, keyboard_type)
 	self.druid = self:get_druid()
 
@@ -328,8 +328,8 @@ function M:get_text_selected()
 end
 
 --- Replace selected text with new text
--- @tparam Input self Input
--- @tparam string text The text to replace selected text
+---@param self Input Input
+---@param text string The text to replace selected text
 -- @treturn string New input text
 function M:get_text_selected_replaced(text)
 	local left_part = utf8.sub(self.value, 1, self.start_index)
@@ -346,8 +346,8 @@ end
 
 
 --- Set text for input field
--- @tparam Input self Input
--- @tparam string input_text The string to apply for input field
+---@param self Input Input
+---@param input_text string The string to apply for input field
 function M:set_text(input_text)
 	input_text = tostring(input_text or "")
 
@@ -395,7 +395,7 @@ end
 
 
 --- Select input field. It will show the keyboard and trigger on_select events
--- @tparam Input self Input
+---@param self Input Input
 function M:select()
 	gui.reset_keyboard()
 	self.marked_value = ""
@@ -420,7 +420,7 @@ end
 
 
 --- Remove selection from input. It will hide the keyboard and trigger on_unselect events
--- @tparam Input self Input
+---@param self Input Input
 function M:unselect()
 	gui.reset_keyboard()
 	self.marked_value = ""
@@ -439,7 +439,7 @@ end
 
 
 --- Return current input field text
--- @tparam Input self Input
+---@param self Input Input
 -- @treturn string The current input field text
 function M:get_text()
 	if self.marked_value ~= "" then
@@ -452,8 +452,8 @@ end
 
 --- Set maximum length for input field.
 -- Pass nil to make input field unliminted (by default)
--- @tparam Input self Input
--- @tparam number max_length Maximum length for input text field
+---@param self Input Input
+---@param max_length number Maximum length for input text field
 -- @treturn druid.input Current input instance
 function M:set_max_length(max_length)
 	self.max_length = max_length
@@ -464,8 +464,8 @@ end
 --- Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
--- @tparam Input self Input
--- @tparam string characters Regulax exp. for validate user input
+---@param self Input Input
+---@param characters string Regulax exp. for validate user input
 -- @treturn druid.input Current input instance
 function M:set_allowed_characters(characters)
 	self.allowed_characters = characters
@@ -474,7 +474,7 @@ end
 
 
 --- Reset current input selection and return previous value
--- @tparam Input self Input
+---@param self Input Input
 -- @treturn druid.input Current input instance
 function M:reset_changes()
 	self:set_text(self.previous_value)
@@ -484,10 +484,10 @@ end
 
 
 --- Set cursor position in input field
--- @tparam Input self Input
--- @tparam number|nil cursor_index Cursor index for cursor position, if nil - will be set to the end of the text
--- @tparam number|nil start_index Start index for cursor position, if nil - will be set to the end of the text
--- @tparam number|nil end_index End index for cursor position, if nil - will be set to the start_index
+---@param self Input Input
+---@param cursor_index number|nil Cursor index for cursor position, if nil - will be set to the end of the text
+---@param start_index number|nil Start index for cursor position, if nil - will be set to the end of the text
+---@param end_index number|nil End index for cursor position, if nil - will be set to the start_index
 -- @treturn druid.input Current input instance
 function M:select_cursor(cursor_index, start_index, end_index)
 	local len = utf8.len(self.value)
@@ -507,10 +507,10 @@ end
 
 
 --- Change cursor position by delta
--- @tparam Input self Input
--- @tparam number delta side for cursor position, -1 for left, 1 for right
--- @tparam boolean is_add_to_selection (Shift key)
--- @tparam boolean is_move_to_end (Ctrl key)
+---@param self Input Input
+---@param delta number side for cursor position, -1 for left, 1 for right
+---@param is_add_to_selection boolean (Shift key)
+---@param is_move_to_end boolean (Ctrl key)
 function M:move_selection(delta, is_add_to_selection, is_move_to_end)
 	local len = utf8.len(self.value)
 	local cursor_index = self.cursor_index

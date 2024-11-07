@@ -288,10 +288,10 @@ end
 
 
 --- The Text constructor
--- @tparam Text self Text
--- @tparam string|node node Node name or GUI Text Node itself
--- @tparam string|nil value Initial text. Default value is node text from GUI scene. Default: nil
--- @tparam string|nil adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
+---@param self Text Text
+---@param node string|node Node name or GUI Text Node itself
+---@param value string|nil Initial text. Default value is node text from GUI scene. Default: nil
+---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
 function M:init(node, value, adjust_type)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)
@@ -335,8 +335,8 @@ end
 
 
 --- Calculate text width with font with respect to trailing space
--- @tparam Text self Text
--- @tparam string text|nil
+---@param self Text Text
+---@param text|nil string
 -- @treturn number Width
 -- @treturn number Height
 function M:get_text_size(text)
@@ -360,8 +360,8 @@ end
 
 
 --- Get chars count by width
--- @tparam Text self Text
--- @tparam number width
+---@param self Text Text
+---@param width number
 -- @treturn number Chars count
 function M:get_text_index_by_width(width)
 	local text = self.last_value
@@ -394,8 +394,8 @@ end
 
 
 --- Set text to text field
--- @tparam Text self Text
--- @tparam string set_to Text for node
+---@param self Text Text
+---@param set_to string Text for node
 -- @treturn Text Current text instance
 function M:set_to(set_to)
 	set_to = set_to or ""
@@ -412,8 +412,8 @@ end
 
 
 --- Set text area size
--- @tparam Text self Text
--- @tparam vector3 size The new text area size
+---@param self Text Text
+---@param size vector3 The new text area size
 -- @treturn Text Current text instance
 function M:set_size(size)
 	self.start_size = size
@@ -425,8 +425,8 @@ end
 
 
 --- Set color
--- @tparam Text self Text
--- @tparam vector4 color Color for node
+---@param self Text Text
+---@param color vector4 Color for node
 -- @treturn Text Current text instance
 function M:set_color(color)
 	self.color = color
@@ -437,8 +437,8 @@ end
 
 
 --- Set alpha
--- @tparam Text self Text
--- @tparam number alpha Alpha for node
+---@param self Text Text
+---@param alpha number Alpha for node
 -- @treturn Text Current text instance
 function M:set_alpha(alpha)
 	self.color.w = alpha
@@ -449,8 +449,8 @@ end
 
 
 --- Set scale
--- @tparam Text self Text
--- @tparam vector3 scale Scale for node
+---@param self Text Text
+---@param scale vector3 Scale for node
 -- @treturn Text Current text instance
 function M:set_scale(scale)
 	self.last_scale = scale
@@ -461,8 +461,8 @@ end
 
 
 --- Set text pivot. Text will re-anchor inside text area
--- @tparam Text self Text
--- @tparam number pivot The gui.PIVOT_* constant
+---@param self Text Text
+---@param pivot number The gui.PIVOT_* constant
 -- @treturn Text Current text instance
 function M:set_pivot(pivot)
 	local prev_pivot = gui.get_pivot(self.node)
@@ -487,7 +487,7 @@ end
 
 
 --- Return true, if text with line break
--- @tparam Text self Text
+---@param self Text Text
 -- @treturn boolean Is text node with line break
 function M:is_multiline()
 	return gui.get_line_break(self.node)
@@ -495,9 +495,9 @@ end
 
 
 --- Set text adjust, refresh the current text visuals, if needed
--- @tparam Text self Text
--- @tparam string|nil adjust_type See const.TEXT_ADJUST. If pass nil - use current adjust type
--- @tparam number|nil minimal_scale If pass nil - not use minimal scale
+---@param self Text Text
+---@param adjust_type string|nil See const.TEXT_ADJUST. If pass nil - use current adjust type
+---@param minimal_scale number|nil If pass nil - not use minimal scale
 -- @treturn Text Current text instance
 function M:set_text_adjust(adjust_type, minimal_scale)
 	self.adjust_type = adjust_type
@@ -509,8 +509,8 @@ end
 
 
 --- Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
--- @tparam Text self Text
--- @tparam number minimal_scale If pass nil - not use minimal scale
+---@param self Text Text
+---@param minimal_scale number If pass nil - not use minimal scale
 -- @treturn Text Current text instance
 function M:set_minimal_scale(minimal_scale)
 	self._minimal_scale = minimal_scale

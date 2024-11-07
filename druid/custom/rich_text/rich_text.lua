@@ -85,9 +85,9 @@ local M = component.create("rich_text")
 
 
 --- The RichText constructor
--- @tparam RichText self RichText
--- @tparam node|string text_node The text node to make Rich Text
--- @tparam string|nil value The initial text value. Default will be gui.get_text(text_node)
+---@param self RichText RichText
+---@param text_node node|string The text node to make Rich Text
+---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
 function M:init(text_node, value)
 	self.root = self:get_node(text_node)
 	self.text_prefab = self.root
@@ -126,8 +126,8 @@ end
 
 
 --- Set text for Rich Text
--- @tparam RichText self RichText
--- @tparam string|nil text The text to set
+---@param self RichText RichText
+---@param text string|nil The text to set
 -- @treturn druid.rich_text.word[] words
 -- @treturn druid.rich_text.lines_metrics line_metrics
 -- @usage
@@ -189,7 +189,7 @@ end
 
 
 --- Get current text
--- @tparam RichText self RichText
+---@param self RichText RichText
 -- @treturn string text
 function M:get_text()
 	return self._last_value
@@ -214,8 +214,8 @@ end
 
 
 --- Get all words, which has a passed tag.
--- @tparam RichText self RichText
--- @tparam string tag
+---@param self RichText RichText
+---@param tag string
 -- @treturn druid.rich_text.word[] words
 function M:tagged(tag)
 	if not self._words then
@@ -227,8 +227,8 @@ end
 
 
 ---Split a word into it's characters
--- @tparam RichText self RichText
--- @tparam druid.rich_text.word word
+---@param self RichText RichText
+---@param word druid.rich_text.word
 -- @treturn druid.rich_text.word[] characters
 function M:characters(word)
 	return rich_text.characters(word)

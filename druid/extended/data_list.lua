@@ -56,10 +56,10 @@ local M = component.create("data_list")
 
 
 --- The DataList constructor
--- @tparam DataList self DataList
--- @tparam Scroll scroll The Scroll instance for Data List component
--- @tparam StaticGrid grid The StaticGrid} or @{DynamicGrid instance for Data List component
--- @tparam function create_function The create function callback(self, data, index, data_list). Function should return (node, [component])
+---@param self DataList DataList
+---@param scroll Scroll The Scroll instance for Data List component
+---@param grid StaticGrid The StaticGrid} or @{DynamicGrid instance for Data List component
+---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
 function M:init(scroll, grid, create_function)
 	self.scroll = scroll
 	self.grid = grid
@@ -87,7 +87,7 @@ end
 
 
 --- Druid System on_remove function
--- @tparam DataList self DataList
+---@param self DataList DataList
 function M:on_remove()
 	self:clear()
 	self.scroll.on_scroll:unsubscribe(self._refresh, self)
@@ -95,8 +95,8 @@ end
 
 
 --- Set refresh function for DataList component
--- @tparam DataList self DataList
--- @tparam boolean is_use_cache Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
+---@param self DataList DataList
+---@param is_use_cache boolean Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
 -- @treturn druid.data_list Current DataList instance
 function M:set_use_cache(is_use_cache)
 	self._is_use_cache = is_use_cache
@@ -105,8 +105,8 @@ end
 
 
 --- Set new data set for DataList component
--- @tparam DataList self DataList
--- @tparam table data The new data array
+---@param self DataList DataList
+---@param data table The new data array
 -- @treturn druid.data_list Current DataList instance
 function M:set_data(data)
 	self._data = data or {}
@@ -117,7 +117,7 @@ end
 
 
 --- Return current data from DataList component
--- @tparam DataList self DataList
+---@param self DataList DataList
 -- @treturn table The current data array
 function M:get_data()
 	return self._data
@@ -125,10 +125,10 @@ end
 
 
 --- Add element to DataList. Currenly untested
--- @tparam DataList self DataList
--- @tparam table data
--- @tparam number|nil index
--- @tparam number|nil shift_policy The constant from const.SHIFT.*
+---@param self DataList DataList
+---@param data table
+---@param index number|nil
+---@param shift_policy number|nil The constant from const.SHIFT.*
 function M:add(data, index, shift_policy)
 	index = index or #self._data + 1
 	shift_policy = shift_policy or const.SHIFT.RIGHT
@@ -139,9 +139,9 @@ end
 
 
 --- Remove element from DataList. Currenly untested
--- @tparam DataList self DataList
--- @tparam number|nil index
--- @tparam number|nil shift_policy The constant from const.SHIFT.*
+---@param self DataList DataList
+---@param index number|nil
+---@param shift_policy number|nil The constant from const.SHIFT.*
 function M:remove(index, shift_policy)
 	helper.remove_with_shift(self._data, index, shift_policy)
 	self:_refresh()
@@ -149,9 +149,9 @@ end
 
 
 --- Remove element from DataList by data value. Currenly untested
--- @tparam DataList self DataList
--- @tparam table data
--- @tparam number|nil shift_policy The constant from const.SHIFT.*
+---@param self DataList DataList
+---@param data table
+---@param shift_policy number|nil The constant from const.SHIFT.*
 function M:remove_by_data(data, shift_policy)
 	local index = helper.contains(self._data, data)
 	if index then
@@ -162,7 +162,7 @@ end
 
 
 --- Clear the DataList and refresh visuals
--- @tparam DataList self DataList
+---@param self DataList DataList
 function M:clear()
 	self._data = {}
 	self:_refresh()
@@ -170,8 +170,8 @@ end
 
 
 --- Return index for data value
--- @tparam DataList self DataList
--- @tparam table data
+---@param self DataList DataList
+---@param data table
 function M:get_index(data)
 	for index, value in pairs(self._data) do
 		if value == data then
@@ -184,7 +184,7 @@ end
 
 
 --- Return all currenly created nodes in DataList
--- @tparam DataList self DataList
+---@param self DataList DataList
 -- @treturn node[] List of created nodes
 function M:get_created_nodes()
 	local nodes = {}
@@ -198,7 +198,7 @@ end
 
 
 --- Return all currenly created components in DataList
--- @tparam DataList self DataList
+---@param self DataList DataList
 -- @treturn druid.base_component[] List of created nodes
 function M:get_created_components()
 	local components = {}
@@ -212,8 +212,8 @@ end
 
 
 --- Instant scroll to element with passed index
--- @tparam DataList self DataList
--- @tparam number index
+---@param self DataList DataList
+---@param index number
 function M:scroll_to_index(index)
 	local pos = self.grid:get_pos(index)
 	self.scroll:scroll_to(pos)
@@ -221,8 +221,8 @@ end
 
 
 --- Add element at passed index using cache or create new
--- @tparam DataList self DataList
--- @tparam number index
+---@param self DataList DataList
+---@param index number
 ---@private
 function M:_add_at(index)
 	if self._data_visual[index] then
@@ -255,8 +255,8 @@ end
 
 
 --- Remove element from passed index and add it to cache if applicable
--- @tparam DataList self DataList
--- @tparam number index
+---@param self DataList DataList
+---@param index number
 ---@private
 function M:_remove_at(index)
 	self.grid:remove(index, const.SHIFT.NO_SHIFT)
@@ -286,7 +286,7 @@ end
 
 
 --- Refresh all elements in DataList
--- @tparam DataList self DataList
+---@param self DataList DataList
 ---@private
 function M:_refresh()
 	self.scroll:set_size(self.grid:get_size_for(#self._data))

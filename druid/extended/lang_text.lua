@@ -42,10 +42,10 @@ local M = component.create("lang_text")
 
 
 --- The LangText constructor
--- @tparam LangText self LangText
--- @tparam string|node node The node_id or gui.get_node(node_id)
--- @tparam string|nil locale_id Default locale id or text from node as default
--- @tparam string|nil adjust_type Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
+---@param self LangText LangText
+---@param node string|node The node_id or gui.get_node(node_id)
+---@param locale_id string|nil Default locale id or text from node as default
+---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 function M:init(node, locale_id, adjust_type)
 	self.druid = self:get_druid()
 	self.text = self.druid:new_text(node, locale_id, adjust_type)
@@ -69,8 +69,8 @@ end
 
 
 --- Setup raw text to lang_text component
--- @tparam LangText self LangText
--- @tparam string text Text for text node
+---@param self LangText LangText
+---@param text string Text for text node
 -- @treturn LangText Current instance
 function M:set_to(text)
 	self.last_locale = false
@@ -82,15 +82,15 @@ end
 
 
 --- Translate the text by locale_id
--- @tparam LangText self LangText
--- @tparam string locale_id Locale id
--- @tparam string|nil a Optional param to string.format
--- @tparam string|nil b Optional param to string.format
--- @tparam string|nil c Optional param to string.format
--- @tparam string|nil d Optional param to string.format
--- @tparam string|nil e Optional param to string.format
--- @tparam string|nil f Optional param to string.format
--- @tparam string|nil g Optional param to string.format
+---@param self LangText LangText
+---@param locale_id string Locale id
+---@param a string|nil Optional param to string.format
+---@param b string|nil Optional param to string.format
+---@param c string|nil Optional param to string.format
+---@param d string|nil Optional param to string.format
+---@param e string|nil Optional param to string.format
+---@param f string|nil Optional param to string.format
+---@param g string|nil Optional param to string.format
 -- @treturn LangText Current instance
 function M:translate(locale_id, a, b, c, d, e, f, g)
 	self.last_locale_args = { a, b, c, d, e, f, g }
@@ -102,14 +102,14 @@ end
 
 
 --- Format string with new text params on localized text
--- @tparam LangText self LangText
--- @tparam string|nil a Optional param to string.format
--- @tparam string|nil b Optional param to string.format
--- @tparam string|nil c Optional param to string.format
--- @tparam string|nil d Optional param to string.format
--- @tparam string|nil e Optional param to string.format
--- @tparam string|nil f Optional param to string.format
--- @tparam string|nil g Optional param to string.format
+---@param self LangText LangText
+---@param a string|nil Optional param to string.format
+---@param b string|nil Optional param to string.format
+---@param c string|nil Optional param to string.format
+---@param d string|nil Optional param to string.format
+---@param e string|nil Optional param to string.format
+---@param f string|nil Optional param to string.format
+---@param g string|nil Optional param to string.format
 -- @treturn LangText Current instance
 function M:format(a, b, c, d, e, f, g)
 	self.last_locale_args = { a, b, c, d, e, f, g }

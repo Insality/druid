@@ -10,10 +10,10 @@
 -- @alias druid.swipe
 
 --- Swipe node
--- @tparam node node
+---@param node node
 
 --- Restriction zone
--- @tparam node|nil click_zone
+---@param click_zone node|nil
 
 --- Trigger on swipe event(self, swipe_side, dist, delta_time)
 -- @tfield druid.event on_swipe) druid.event
@@ -160,8 +160,8 @@ end
 
 --- Strict swipe click area. Useful for
 -- restrict events outside stencil node
--- @tparam Swipe self Swipe
--- @tparam node|string|nil zone Gui node
+---@param self Swipe Swipe
+---@param zone node|string|nil Gui node
 function M:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)
 end

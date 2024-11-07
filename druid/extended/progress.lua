@@ -131,10 +131,10 @@ end
 
 
 --- The Progress constructor
--- @tparam Progress self Progress
--- @tparam string|node node Node name or GUI Node itself.
--- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
--- @tparam number|nil init_value Initial value of progress bar. Default: 1
+---@param self Progress Progress
+---@param node string|node Node name or GUI Node itself.
+---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
+---@param init_value number|nil Initial value of progress bar. Default: 1
 function M:init(node, key, init_value)
 	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
@@ -193,22 +193,22 @@ end
 
 
 --- Fill a progress bar and stop progress animation
--- @tparam Progress self Progress
+---@param self Progress Progress
 function M:fill()
 	set_bar_to(self, 1, true)
 end
 
 
 --- Empty a progress bar
--- @tparam Progress self Progress
+---@param self Progress Progress
 function M:empty()
 	set_bar_to(self, 0, true)
 end
 
 
 --- Instant fill progress bar to value
--- @tparam Progress self Progress
--- @tparam number to Progress bar value, from 0 to 1
+---@param self Progress Progress
+---@param to number Progress bar value, from 0 to 1
 function M:set_to(to)
 	to = helper.clamp(to, 0, 1)
 	set_bar_to(self, to)
@@ -216,16 +216,16 @@ end
 
 
 --- Return current progress bar value
--- @tparam Progress self Progress
+---@param self Progress Progress
 function M:get()
 	return self.last_value
 end
 
 
 --- Set points on progress bar to fire the callback
--- @tparam Progress self Progress
--- @tparam number[] steps Array of progress bar values
--- @tparam function callback Callback on intersect step value
+---@param self Progress Progress
+---@param steps number[] Array of progress bar values
+---@param callback function Callback on intersect step value
 -- @usage progress:set_steps({0, 0.3, 0.6, 1}, function(self, step) end)
 function M:set_steps(steps, callback)
 	self.steps = steps
@@ -234,9 +234,9 @@ end
 
 
 --- Start animation of a progress bar
--- @tparam Progress self Progress
--- @tparam number to value between 0..1
--- @tparam function|nil callback Callback on animation ends
+---@param self Progress Progress
+---@param to number value between 0..1
+---@param callback function|nil Callback on animation ends
 function M:to(to, callback)
 	to = helper.clamp(to, 0, 1)
 	-- cause of float error
@@ -253,8 +253,8 @@ end
 
 
 --- Set progress bar max node size
--- @tparam Progress self Progress
--- @tparam vector3 max_size The new node maximum (full) size
+---@param self Progress Progress
+---@param max_size vector3 The new node maximum (full) size
 -- @treturn Progress Progress
 function M:set_max_size(max_size)
 	self.max_size[self.key] = max_size[self.key]

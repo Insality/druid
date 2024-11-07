@@ -263,8 +263,8 @@ end
 
 
 --- Set placeholder text
--- @tparam RichInput self RichInput
--- @tparam string placeholder_text The placeholder text
+---@param self RichInput RichInput
+---@param placeholder_text string The placeholder text
 function M:set_placeholder(placeholder_text)
 	self.placeholder:set_to(placeholder_text)
 	return self
@@ -272,16 +272,16 @@ end
 
 
 --- Select input field
--- @tparam RichInput self RichInput
+---@param self RichInput RichInput
 function M:select()
 	self.input:select()
 end
 
 
 --- Set input field text
--- @tparam RichInput self RichInput
+---@param self RichInput RichInput
 -- @treturn druid.input Current input instance
--- @tparam string text The input text
+---@param text string The input text
 function M:set_text(text)
 	self.input:set_text(text)
 	gui.set_enabled(self.placeholder.node, true and #self.input:get_text() == 0)
@@ -291,8 +291,8 @@ end
 
 
 --- Set input field font
--- @tparam RichInput self RichInput
--- @tparam hash font The font hash
+---@param self RichInput RichInput
+---@param font hash The font hash
 -- @treturn druid.input Current input instance
 function M:set_font(font)
 	gui.set_font(self.input.text.node, font)
@@ -303,7 +303,7 @@ end
 
 
 --- Set input field text
--- @tparam RichInput self RichInput
+---@param self RichInput RichInput
 function M:get_text()
 	return self.input:get_text()
 end
@@ -312,8 +312,8 @@ end
 --- Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
--- @tparam RichInput self RichInput
--- @tparam string characters Regulax exp. for validate user input
+---@param self RichInput RichInput
+---@param characters string Regulax exp. for validate user input
 -- @treturn RichInput Current instance
 function M:set_allowed_characters(characters)
 	self.input:set_allowed_characters(characters)
