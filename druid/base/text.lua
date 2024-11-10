@@ -288,7 +288,6 @@ end
 
 
 --- The Text constructor
----@param self Text Text
 ---@param node string|node Node name or GUI Text Node itself
 ---@param value string|nil Initial text. Default value is node text from GUI scene. Default: nil
 ---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
@@ -335,7 +334,6 @@ end
 
 
 --- Calculate text width with font with respect to trailing space
----@param self Text Text
 ---@param text|nil string
 ---@return number Width
 ---@return number Height
@@ -360,7 +358,6 @@ end
 
 
 --- Get chars count by width
----@param self Text Text
 ---@param width number
 ---@return number Chars count
 function M:get_text_index_by_width(width)
@@ -394,7 +391,6 @@ end
 
 
 --- Set text to text field
----@param self Text Text
 ---@param set_to string Text for node
 ---@return Text Current text instance
 function M:set_to(set_to)
@@ -412,7 +408,6 @@ end
 
 
 --- Set text area size
----@param self Text Text
 ---@param size vector3 The new text area size
 ---@return Text Current text instance
 function M:set_size(size)
@@ -425,7 +420,6 @@ end
 
 
 --- Set color
----@param self Text Text
 ---@param color vector4 Color for node
 ---@return Text Current text instance
 function M:set_color(color)
@@ -437,7 +431,6 @@ end
 
 
 --- Set alpha
----@param self Text Text
 ---@param alpha number Alpha for node
 ---@return Text Current text instance
 function M:set_alpha(alpha)
@@ -449,7 +442,6 @@ end
 
 
 --- Set scale
----@param self Text Text
 ---@param scale vector3 Scale for node
 ---@return Text Current text instance
 function M:set_scale(scale)
@@ -461,7 +453,6 @@ end
 
 
 --- Set text pivot. Text will re-anchor inside text area
----@param self Text Text
 ---@param pivot number The gui.PIVOT_* constant
 ---@return Text Current text instance
 function M:set_pivot(pivot)
@@ -487,7 +478,6 @@ end
 
 
 --- Return true, if text with line break
----@param self Text Text
 ---@return boolean Is text node with line break
 function M:is_multiline()
 	return gui.get_line_break(self.node)
@@ -495,7 +485,6 @@ end
 
 
 --- Set text adjust, refresh the current text visuals, if needed
----@param self Text Text
 ---@param adjust_type string|nil See const.TEXT_ADJUST. If pass nil - use current adjust type
 ---@param minimal_scale number|nil If pass nil - not use minimal scale
 ---@return Text Current text instance
@@ -509,7 +498,6 @@ end
 
 
 --- Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
----@param self Text Text
 ---@param minimal_scale number If pass nil - not use minimal scale
 ---@return Text Current text instance
 function M:set_minimal_scale(minimal_scale)

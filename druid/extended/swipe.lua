@@ -160,7 +160,6 @@ end
 
 --- Strict swipe click area. Useful for
 -- restrict events outside stencil node
----@param self Swipe Swipe
 ---@param zone node|string|nil Gui node
 function M:set_click_zone(zone)
 	self.click_zone = self:get_node(zone)

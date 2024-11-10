@@ -56,7 +56,6 @@ local M = component.create("data_list")
 
 
 --- The DataList constructor
----@param self DataList DataList
 ---@param scroll Scroll The Scroll instance for Data List component
 ---@param grid StaticGrid The StaticGrid} or @{DynamicGrid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
@@ -87,7 +86,6 @@ end
 
 
 --- Druid System on_remove function
----@param self DataList DataList
 function M:on_remove()
 	self:clear()
 	self.scroll.on_scroll:unsubscribe(self._refresh, self)
@@ -95,7 +93,6 @@ end
 
 
 --- Set refresh function for DataList component
----@param self DataList DataList
 ---@param is_use_cache boolean Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
 ---@return druid.data_list Current DataList instance
 function M:set_use_cache(is_use_cache)
@@ -105,7 +102,6 @@ end
 
 
 --- Set new data set for DataList component
----@param self DataList DataList
 ---@param data table The new data array
 ---@return druid.data_list Current DataList instance
 function M:set_data(data)
@@ -117,7 +113,6 @@ end
 
 
 --- Return current data from DataList component
----@param self DataList DataList
 ---@return table The current data array
 function M:get_data()
 	return self._data
@@ -125,7 +120,6 @@ end
 
 
 --- Add element to DataList. Currenly untested
----@param self DataList DataList
 ---@param data table
 ---@param index number|nil
 ---@param shift_policy number|nil The constant from const.SHIFT.*
@@ -139,7 +133,6 @@ end
 
 
 --- Remove element from DataList. Currenly untested
----@param self DataList DataList
 ---@param index number|nil
 ---@param shift_policy number|nil The constant from const.SHIFT.*
 function M:remove(index, shift_policy)
@@ -149,7 +142,6 @@ end
 
 
 --- Remove element from DataList by data value. Currenly untested
----@param self DataList DataList
 ---@param data table
 ---@param shift_policy number|nil The constant from const.SHIFT.*
 function M:remove_by_data(data, shift_policy)
@@ -162,7 +154,6 @@ end
 
 
 --- Clear the DataList and refresh visuals
----@param self DataList DataList
 function M:clear()
 	self._data = {}
 	self:_refresh()
@@ -170,7 +161,6 @@ end
 
 
 --- Return index for data value
----@param self DataList DataList
 ---@param data table
 function M:get_index(data)
 	for index, value in pairs(self._data) do
@@ -184,7 +174,6 @@ end
 
 
 --- Return all currenly created nodes in DataList
----@param self DataList DataList
 ---@return node[] List of created nodes
 function M:get_created_nodes()
 	local nodes = {}
@@ -198,7 +187,6 @@ end
 
 
 --- Return all currenly created components in DataList
----@param self DataList DataList
 ---@return druid.base_component[] List of created nodes
 function M:get_created_components()
 	local components = {}
@@ -212,7 +200,6 @@ end
 
 
 --- Instant scroll to element with passed index
----@param self DataList DataList
 ---@param index number
 function M:scroll_to_index(index)
 	local pos = self.grid:get_pos(index)
@@ -221,7 +208,6 @@ end
 
 
 --- Add element at passed index using cache or create new
----@param self DataList DataList
 ---@param index number
 ---@private
 function M:_add_at(index)
@@ -255,7 +241,6 @@ end
 
 
 --- Remove element from passed index and add it to cache if applicable
----@param self DataList DataList
 ---@param index number
 ---@private
 function M:_remove_at(index)
@@ -286,7 +271,6 @@ end
 
 
 --- Refresh all elements in DataList
----@param self DataList DataList
 ---@private
 function M:_refresh()
 	self.scroll:set_size(self.grid:get_size_for(#self._data))

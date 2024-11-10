@@ -131,7 +131,6 @@ end
 
 
 --- The Progress constructor
----@param self Progress Progress
 ---@param node string|node Node name or GUI Node itself.
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
 ---@param init_value number|nil Initial value of progress bar. Default: 1
@@ -193,21 +192,18 @@ end
 
 
 --- Fill a progress bar and stop progress animation
----@param self Progress Progress
 function M:fill()
 	set_bar_to(self, 1, true)
 end
 
 
 --- Empty a progress bar
----@param self Progress Progress
 function M:empty()
 	set_bar_to(self, 0, true)
 end
 
 
 --- Instant fill progress bar to value
----@param self Progress Progress
 ---@param to number Progress bar value, from 0 to 1
 function M:set_to(to)
 	to = helper.clamp(to, 0, 1)
@@ -216,14 +212,12 @@ end
 
 
 --- Return current progress bar value
----@param self Progress Progress
 function M:get()
 	return self.last_value
 end
 
 
 --- Set points on progress bar to fire the callback
----@param self Progress Progress
 ---@param steps number[] Array of progress bar values
 ---@param callback function Callback on intersect step value
 -- @usage progress:set_steps({0, 0.3, 0.6, 1}, function(self, step) end)
@@ -234,7 +228,6 @@ end
 
 
 --- Start animation of a progress bar
----@param self Progress Progress
 ---@param to number value between 0..1
 ---@param callback function|nil Callback on animation ends
 function M:to(to, callback)
@@ -253,7 +246,6 @@ end
 
 
 --- Set progress bar max node size
----@param self Progress Progress
 ---@param max_size vector3 The new node maximum (full) size
 ---@return Progress Progress
 function M:set_max_size(max_size)

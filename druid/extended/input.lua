@@ -156,7 +156,6 @@ end
 
 
 --- The Input constructor
----@param self Input Input
 ---@param click_node node Node to enabled input component
 ---@param text_node node|Text Text node what will be changed on user input. You can pass text component instead of text node name Text
 ---@param keyboard_type number|nil Gui keyboard type for input field
@@ -328,7 +327,6 @@ function M:get_text_selected()
 end
 
 --- Replace selected text with new text
----@param self Input Input
 ---@param text string The text to replace selected text
 ---@return string New input text
 function M:get_text_selected_replaced(text)
@@ -346,7 +344,6 @@ end
 
 
 --- Set text for input field
----@param self Input Input
 ---@param input_text string The string to apply for input field
 function M:set_text(input_text)
 	input_text = tostring(input_text or "")
@@ -395,7 +392,6 @@ end
 
 
 --- Select input field. It will show the keyboard and trigger on_select events
----@param self Input Input
 function M:select()
 	gui.reset_keyboard()
 	self.marked_value = ""
@@ -420,7 +416,6 @@ end
 
 
 --- Remove selection from input. It will hide the keyboard and trigger on_unselect events
----@param self Input Input
 function M:unselect()
 	gui.reset_keyboard()
 	self.marked_value = ""
@@ -439,7 +434,6 @@ end
 
 
 --- Return current input field text
----@param self Input Input
 ---@return string The current input field text
 function M:get_text()
 	if self.marked_value ~= "" then
@@ -452,7 +446,6 @@ end
 
 --- Set maximum length for input field.
 -- Pass nil to make input field unliminted (by default)
----@param self Input Input
 ---@param max_length number Maximum length for input text field
 ---@return druid.input Current input instance
 function M:set_max_length(max_length)
@@ -464,7 +457,6 @@ end
 --- Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
----@param self Input Input
 ---@param characters string Regulax exp. for validate user input
 ---@return druid.input Current input instance
 function M:set_allowed_characters(characters)
@@ -474,7 +466,6 @@ end
 
 
 --- Reset current input selection and return previous value
----@param self Input Input
 ---@return druid.input Current input instance
 function M:reset_changes()
 	self:set_text(self.previous_value)
@@ -484,7 +475,6 @@ end
 
 
 --- Set cursor position in input field
----@param self Input Input
 ---@param cursor_index number|nil Cursor index for cursor position, if nil - will be set to the end of the text
 ---@param start_index number|nil Start index for cursor position, if nil - will be set to the end of the text
 ---@param end_index number|nil End index for cursor position, if nil - will be set to the start_index
@@ -507,7 +497,6 @@ end
 
 
 --- Change cursor position by delta
----@param self Input Input
 ---@param delta number side for cursor position, -1 for left, 1 for right
 ---@param is_add_to_selection boolean (Shift key)
 ---@param is_move_to_end boolean (Ctrl key)

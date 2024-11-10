@@ -207,7 +207,6 @@ function M:fit_into_window()
 end
 
 
----@param self druid.container
 function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self.x_koef = x_koef

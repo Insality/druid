@@ -42,7 +42,6 @@ local M = component.create("lang_text")
 
 
 --- The LangText constructor
----@param self LangText LangText
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param locale_id string|nil Default locale id or text from node as default
 ---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
@@ -69,7 +68,6 @@ end
 
 
 --- Setup raw text to lang_text component
----@param self LangText LangText
 ---@param text string Text for text node
 ---@return LangText Current instance
 function M:set_to(text)
@@ -82,7 +80,6 @@ end
 
 
 --- Translate the text by locale_id
----@param self LangText LangText
 ---@param locale_id string Locale id
 ---@param a string|nil Optional param to string.format
 ---@param b string|nil Optional param to string.format
@@ -102,7 +99,6 @@ end
 
 
 --- Format string with new text params on localized text
----@param self LangText LangText
 ---@param a string|nil Optional param to string.format
 ---@param b string|nil Optional param to string.format
 ---@param c string|nil Optional param to string.format

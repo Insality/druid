@@ -69,7 +69,6 @@ end
 
 
 --- The Slider constructor
----@param self Slider Slider
 ---@param node node Gui pin node
 ---@param end_pos vector3 The end position of slider
 ---@param callback function|nil On slider change callback
@@ -197,7 +196,6 @@ end
 
 
 --- Set value for slider
----@param self Slider Slider
 ---@param value number Value from 0 to 1
 ---@param is_silent boolean|nil Don't trigger event if true
 function M:set(value, is_silent)
@@ -212,7 +210,6 @@ end
 
 --- Set slider steps. Pin node will
 -- apply closest step position
----@param self Slider Slider
 ---@param steps number[] Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
 ---@return Slider Slider
@@ -226,7 +223,6 @@ end
 -- User can touch any place of node, pin instantly will
 -- move at this position and node drag will start.
 -- This function require the Defold version 1.3.0+
----@param self Slider Slider
 ---@param input_node node|string|nil
 ---@return Slider Slider
 function M:set_input_node(input_node)
@@ -236,7 +232,6 @@ end
 
 
 --- Set Slider input enabled or disabled
----@param self Slider Slider
 ---@param is_enabled boolean
 function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
@@ -244,7 +239,6 @@ end
 
 
 --- Check if Slider component is enabled
----@param self Slider Slider
 ---@return boolean
 function M:is_enabled()
 	return self._is_enabled

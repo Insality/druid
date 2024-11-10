@@ -128,7 +128,6 @@ end
 
 
 --- The StaticGrid constructor
----@param self StaticGrid StaticGrid
 ---@param parent string|node The GUI Node container, where grid's items will be placed
 ---@param element node Element prefab. Need to get it size
 ---@param in_row number|nil How many nodes in row can be placed. By default 1
@@ -165,7 +164,6 @@ end
 
 local _temp_pos = vmath.vector3(0)
 --- Return pos for grid node index
----@param self StaticGrid StaticGrid
 ---@param index number The grid element index
 ---@return vector3 @Node position
 function M:get_pos(index)
@@ -183,7 +181,6 @@ end
 
 
 --- Return index for grid pos
----@param self StaticGrid StaticGrid
 ---@param pos vector3 The node position in the grid
 ---@return number The node index
 function M:get_index(pos)
@@ -203,7 +200,6 @@ end
 
 
 --- Return grid index by node
----@param self StaticGrid StaticGrid
 ---@param node node The gui node in the grid
 ---@return number The node index
 function M:get_index_by_node(node)
@@ -223,7 +219,6 @@ end
 
 
 --- Set grid anchor. Default anchor is equal to anchor of grid parent node
----@param self StaticGrid StaticGrid
 ---@param anchor vector3 Anchor
 function M:set_anchor(anchor)
 	self.anchor = anchor
@@ -232,7 +227,6 @@ end
 
 
 --- Update grid content
----@param self StaticGrid StaticGrid
 function M:refresh()
 	self:_update(true)
 end
@@ -270,7 +264,6 @@ end
 
 
 --- Add new item to the grid
----@param self StaticGrid StaticGrid
 ---@param item node GUI node
 ---@param index number|nil The item position. By default add as last item
 ---@param shift_policy number|nil How shift nodes, if required. Default: const.SHIFT.RIGHT
@@ -295,7 +288,6 @@ end
 
 
 --- Set new items to the grid. All previous items will be removed
----@param self StaticGrid StaticGrid
 ---@param nodes node[] The new grid nodes
 -- @tparam[opt=false] boolean is_instant If true, update node positions instantly
 function M:set_items(nodes, is_instant)
@@ -312,7 +304,6 @@ end
 
 
 --- Remove the item from the grid. Note that gui node will be not deleted
----@param self StaticGrid StaticGrid
 ---@param index number The grid node index to remove
 ---@param shift_policy number|nil How shift nodes, if required. Default: const.SHIFT.RIGHT
 ---@param is_instant boolean|nil If true, update node positions instantly
@@ -333,7 +324,6 @@ end
 
 
 --- Return grid content size
----@param self StaticGrid StaticGrid
 ---@return vector3 The grid content size
 function M:get_size()
 	return vmath.vector3(
@@ -366,7 +356,6 @@ end
 
 
 --- Return grid content borders
----@param self StaticGrid StaticGrid
 ---@return vector3 The grid content borders
 function M:get_borders()
 	return self.border
@@ -374,7 +363,6 @@ end
 
 
 --- Return array of all node positions
----@param self StaticGrid StaticGrid
 ---@return vector3[] All grid node positions
 function M:get_all_pos()
 	local result = {}
@@ -388,7 +376,6 @@ end
 
 --- Change set position function for grid nodes. It will call on
 -- update poses on grid elements. Default: gui.set_position
----@param self StaticGrid StaticGrid
 ---@param callback function Function on node set position
 ---@return druid.static_grid Current grid instance
 function M:set_position_function(callback)
@@ -400,7 +387,6 @@ end
 
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
----@param self StaticGrid StaticGrid
 ---@return druid.static_grid Current grid instance
 function M:clear()
 	self.border.x = 0
@@ -419,7 +405,6 @@ end
 
 
 --- Return StaticGrid offset, where StaticGrid content starts.
----@param self StaticGrid StaticGrid The StaticGrid instance
 ---@return vector3 The StaticGrid offset
 function M:get_offset()
 	local borders = self:get_borders()
@@ -435,7 +420,6 @@ end
 
 
 --- Set new in_row elements for grid
----@param self StaticGrid StaticGrid
 ---@param in_row number The new in_row value
 ---@return druid.static_grid Current grid instance
 function M:set_in_row(in_row)
@@ -454,7 +438,6 @@ end
 
 
 --- Set new node size for grid
----@param self StaticGrid StaticGrid
 -- @tparam[opt] number width The new node width
 -- @tparam[opt] number height The new node height
 ---@return druid.static_grid Current grid instance
@@ -479,7 +462,6 @@ end
 
 
 --- Sort grid nodes by custom comparator function
----@param self StaticGrid StaticGrid
 ---@param comparator function The comparator function. (a, b) -> boolean
 ---@return druid.static_grid Current grid instance
 function M:sort_nodes(comparator)
@@ -489,7 +471,6 @@ end
 
 
 --- Update grid inner state
----@param self StaticGrid StaticGrid
 ---@param is_instant boolean|nil If true, node position update instantly, otherwise with set_position_function callback
 ---@private
 function M:_update(is_instant)
@@ -500,7 +481,6 @@ end
 
 
 --- Update first and last indexes of grid nodes
----@param self StaticGrid StaticGrid
 ---@private
 function M:_update_indexes()
 	self.first_index = nil
@@ -516,7 +496,6 @@ end
 
 
 --- Update grid content borders, recalculate min and max values
----@param self StaticGrid StaticGrid
 ---@private
 function M:_update_borders()
 	if not self.first_index then
@@ -535,7 +514,6 @@ end
 
 
 --- Update grid nodes position
----@param self StaticGrid StaticGrid
 ---@param is_instant boolean|nil If true, node position update instantly, otherwise with set_position_function callback
 ---@private
 function M:_update_pos(is_instant)

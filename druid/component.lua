@@ -90,7 +90,7 @@ end
 ---@param self T
 ---@param druid_style table|nil
 ---@return T self The component itself for chaining
-function M.set_style(self, druid_style)
+function M:set_style(druid_style)
 	---@cast self druid.base_component
 
 	self._meta.style = druid_style or {}
@@ -111,7 +111,7 @@ end
 ---@param self T
 ---@param template string|nil
 ---@return T self The component itself for chaining
-function M.set_template(self, template)
+function M:set_template(template)
 	---@cast self druid.base_component
 
 	template = template or ""
@@ -142,7 +142,7 @@ end
 ---Set current component nodes, returned from `gui.clone_tree` function.
 ---@param nodes table<hash, node>
 ---@return druid.base_component
-function M.set_nodes(self, nodes)
+function M:set_nodes(nodes)
 	self._meta.nodes = nodes
 	return self
 end
@@ -150,7 +150,7 @@ end
 
 ---Return current component context
 ---@return any context Usually it's self of script but can be any other Druid component
-function M.get_context(self)
+function M:get_context()
 	return self._meta.context
 end
 
@@ -158,15 +158,8 @@ end
 ---Get component node by node_id. Respect to current template and nodes.
 ---@param node_id string|node
 ---@return node
-function M.get_node(self, node_id)
-	if type(node_id) ~= "string" then
-		-- Assume it's already node from gui.get_node
-		return node_id
-	end
-
-	local template_name = self:get_template()
-	local nodes = self:get_nodes()
-	return helper.get_node(node_id, template_name, nodes)
+function M:get_node(node_id)
+	return helper.get_node(node_id, self:get_template(), self:get_nodes())
 end
 
 
@@ -192,14 +185,14 @@ end
 
 ---Get component name
 ---@return string name The component name + uid
-function M.get_name(self)
+function M:get_name()
 	return self._component.name .. M.create_uid()
 end
 
 
 ---Get parent component name
 ---@return string|nil parent_name The parent component name if exist or nil
-function M.get_parent_name(self)
+function M:get_parent_name()
 	local parent = self:get_parent_component()
 	return parent and parent:get_name()
 end
@@ -207,7 +200,7 @@ end
 
 ---Get component input priority, the bigger number processed first. Default value: 10
 ---@return number
-function M.get_input_priority(self)
+function M:get_input_priority()
 	return self._component.input_priority
 end
 
@@ -216,7 +209,7 @@ end
 ---@param value number
 ---@param is_temporary boolean|nil If true, the reset input priority will return to previous value
 ---@return druid.base_component self The component itself for chaining
-function M.set_input_priority(self, value, is_temporary)
+function M:set_input_priority(value, is_temporary)
 	assert(value)
 
 	if self._component.input_priority == value then
@@ -241,7 +234,7 @@ end
 
 ---Reset component input priority to it's default value, that was set in `create` function or `set_input_priority`
 ---@return druid.base_component self The component itself for chaining
-function M.reset_input_priority(self)
+function M:reset_input_priority()
 	self:set_input_priority(self._component.default_input_priority)
 	return self
 end
@@ -249,7 +242,7 @@ end
 
 ---Get component UID, unique identifier created in component creation order.
 ---@return number uid The component uid
-function M.get_uid(self)
+function M:get_uid()
 	return self._component._uid
 end
 
@@ -259,7 +252,7 @@ end
 ---Recursive for all children components.
 ---@param state boolean
 ---@return druid.base_component self The component itself for chaining
-function M.set_input_enabled(self, state)
+function M:set_input_enabled(state)
 	self._meta.input_enabled = state
 
 	for index = 1, #self._meta.children do
@@ -272,13 +265,12 @@ end
 
 ---Get parent component
 ---@return druid.base_component|nil parent The parent component if exist or nil
-function M.get_parent_component(self)
+function M:get_parent_component()
 	return self._meta.parent
 end
 
 
 --- Setup component context and his style table
----@param self BaseComponent BaseComponent
 ---@param druid_instance table The parent druid instance
 ---@param context table Druid context. Usually it is self of script
 ---@param style table Druid style module
@@ -310,26 +302,23 @@ end
 
 
 --- Return true, if input priority was changed
----@param self BaseComponent BaseComponent
 ---@private
-function M._is_input_priority_changed(self)
+function M:_is_input_priority_changed()
 	return self._component._is_input_priority_changed
 end
 
 
 --- Reset is_input_priority_changed field
----@param self BaseComponent BaseComponent
 ---@private
-function M._reset_input_priority_changed(self)
+function M:_reset_input_priority_changed()
 	self._component._is_input_priority_changed = false
 end
 
 
 --- Get current component interests
----@param self BaseComponent BaseComponent
 ---@return table List of component interests
 ---@private
-function M.__get_interests(self)
+function M:__get_interests()
 	local instance_class = self._meta.instance_class
 	if INTERESTS[instance_class] then
 		return INTERESTS[instance_class]
@@ -350,7 +339,7 @@ end
 
 ---Get current component nodes
 ---@return table<hash, node>
-function M.get_nodes(self)
+function M:get_nodes()
 	local nodes = self._meta.nodes
 	local parent = self:get_parent_component()
 	if parent then
@@ -369,10 +358,9 @@ end
 
 
 --- Remove child from component children list
----@param self BaseComponent BaseComponent
 ---@param child component The druid component instance
 ---@private
-function M.__remove_child(self, child)
+function M:__remove_child(child)
 	for i = #self._meta.children, 1, -1 do
 		if self._meta.children[i] == child then
 			table.remove(self._meta.children, i)
@@ -383,9 +371,8 @@ end
 
 
 --- Return all children components, recursive
----@param self BaseComponent BaseComponent
 ---@return table Array of childrens if the Druid component instance
-function M.get_childrens(self)
+function M:get_childrens()
 	local childrens = {}
 
 	for i = 1, #self._meta.children do

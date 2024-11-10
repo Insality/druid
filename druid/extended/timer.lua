@@ -78,7 +78,6 @@ function M:on_layout_change()
 end
 
 
----@param self druid.timer
 ---@param set_to number Value in seconds
 ---@return druid.timer self
 function M:set_to(set_to)
@@ -89,7 +88,6 @@ function M:set_to(set_to)
 end
 
 
----@param self druid.timer
 ---@param is_on boolean|nil Timer enable state
 ---@return druid.timer self
 function M:set_state(is_on)
@@ -100,7 +98,6 @@ function M:set_state(is_on)
 end
 
 
----@param self druid.timer
 ---@param from number Start time in seconds
 ---@param to number Target time in seconds
 ---@return druid.timer self

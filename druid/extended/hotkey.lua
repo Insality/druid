@@ -38,7 +38,6 @@ local M = component.create("hotkey")
 
 
 --- The Hotkey constructor
----@param self Hotkey Hotkey
 ---@param keys string[]|string The keys to be pressed for trigger callback. Should contains one key and any modificator keys
 ---@param callback function The callback function
 ---@param callback_argument any|nil The argument to pass into the callback function
@@ -73,7 +72,6 @@ end
 
 
 --- Add hotkey for component callback
----@param self Hotkey Hotkey
 ---@param keys string[]|hash[]|string|hash that have to be pressed before key pressed to activate
 ---@param callback_argument any|nil The argument to pass into the callback function
 ---@return Hotkey Current instance
@@ -174,7 +172,6 @@ end
 
 
 --- If true, the callback will be triggered on action.repeated
----@param self Hotkey Hotkey
 ---@param is_enabled_repeated bool The flag value
 ---@return Hotkey
 function M:set_repeat(is_enabled_repeated)
