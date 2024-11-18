@@ -1,15 +1,10 @@
-local component = require("druid.component")
-local container = require("example.components.container.container")
-local lang_text = require("druid.extended.lang_text")
-local slider = require("druid.extended.slider")
-
----@class property_slider: druid.base_component
+---@class property_slider: druid.widget
 ---@field druid druid_instance
 ---@field root druid.container
 ---@field text_name druid.lang_text
 ---@field text_value druid.text
 ---@field slider druid.slider
-local M = component.create("property_slider")
+local M = {}
 
 
 ---@param template string
@@ -17,14 +12,14 @@ local M = component.create("property_slider")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
 	self._value = 0
 
-	self.text_name = self.druid:new(lang_text, "text_name") --[[@as druid.lang_text]]
+	self.text_name = self.druid:new_lang_text("text_name") --[[@as druid.lang_text]]
 	self.text_value = self.druid:new_text("text_value")
-	self.slider = self.druid:new(slider, "slider_pin", vmath.vector3(68, 0, 0), self._on_slider_change_by_user) --[[@as druid.slider]]
+	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(68, 0, 0), self._on_slider_change_by_user) --[[@as druid.slider]]
 	self.slider:set_input_node("slider")
 
 	self:set_text_function(function(value)

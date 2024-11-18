@@ -20,7 +20,6 @@ nodes {
   texture: "druid/pixel"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
-  layer: "druid"
   inherit_alpha: true
 }
 nodes {
@@ -57,7 +56,6 @@ nodes {
     z: 1.0
   }
   parent: "root"
-  layer: "text_regular"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
@@ -78,7 +76,6 @@ nodes {
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "root"
-  layer: "druid"
   inherit_alpha: true
   clipping_mode: CLIPPING_MODE_STENCIL
 }
@@ -93,7 +90,6 @@ nodes {
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "scroll_view"
-  layer: "druid"
   inherit_alpha: true
   visible: false
 }
@@ -131,7 +127,6 @@ nodes {
     z: 1.0
   }
   parent: "root"
-  layer: "text_regular"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
@@ -284,12 +279,6 @@ nodes {
   id: "property_button/text_button"
   parent: "property_button/button"
   template_node_child: true
-}
-layers {
-  name: "druid"
-}
-layers {
-  name: "text_regular"
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
