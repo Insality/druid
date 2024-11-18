@@ -1,0 +1,295 @@
+fonts {
+  name: "text_regular"
+  font: "/druid/fonts/text_regular.font"
+}
+textures {
+  name: "druid"
+  texture: "/druid/druid.atlas"
+}
+nodes {
+  size {
+    x: 440.0
+    y: 350.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid/pixel"
+  id: "root"
+  adjust_mode: ADJUST_MODE_STRETCH
+  layer: "druid"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: -210.0
+    y: 165.0
+  }
+  scale {
+    x: 0.9
+    y: 0.9
+  }
+  size {
+    x: 245.0
+    y: 50.0
+  }
+  color {
+    x: 0.463
+    y: 0.475
+    z: 0.49
+  }
+  type: TYPE_TEXT
+  text: "Properties"
+  font: "text_regular"
+  id: "text_header"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "root"
+  layer: "text_regular"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -200.0
+    y: 115.0
+  }
+  size {
+    x: 400.0
+    y: 290.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "scroll_view"
+  xanchor: XANCHOR_LEFT
+  pivot: PIVOT_NW
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root"
+  layer: "druid"
+  inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
+}
+nodes {
+  size {
+    x: 400.0
+    y: 290.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "scroll_content"
+  pivot: PIVOT_NW
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "scroll_view"
+  layer: "druid"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: -200.0
+    y: 115.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
+  }
+  size {
+    x: 570.0
+    y: 50.0
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_TEXT
+  text: "No properties for this example"
+  font: "text_regular"
+  id: "text_no_properties"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "root"
+  layer: "text_regular"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+  enabled: false
+}
+nodes {
+  position {
+    x: -200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "propeties"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "property_slider"
+  parent: "propeties"
+  inherit_alpha: true
+  template: "/druid/widget/properties_panel/properties/property_slider.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/root"
+  parent: "property_slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_slider/text_name"
+  parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider"
+  parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider_back"
+  parent: "property_slider/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider_pin"
+  parent: "property_slider/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/button"
+  parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/selected"
+  parent: "property_slider/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_slider/text_value"
+  parent: "property_slider/button"
+  template_node_child: true
+}
+nodes {
+  position {
+    y: -50.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_checkbox"
+  parent: "propeties"
+  inherit_alpha: true
+  template: "/druid/widget/properties_panel/properties/property_checkbox.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/root"
+  parent: "property_checkbox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_checkbox/text_name"
+  parent: "property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/button"
+  parent: "property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/icon"
+  parent: "property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/selected"
+  parent: "property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  position {
+    y: -100.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_button"
+  parent: "propeties"
+  inherit_alpha: true
+  template: "/druid/widget/properties_panel/properties/property_button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/root"
+  parent: "property_button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_button/text_name"
+  parent: "property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/button"
+  parent: "property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/selected"
+  parent: "property_button/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_button/text_button"
+  parent: "property_button/button"
+  template_node_child: true
+}
+layers {
+  name: "druid"
+}
+layers {
+  name: "text_regular"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

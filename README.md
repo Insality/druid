@@ -96,6 +96,8 @@ For all **Druid** instance functions, [see here](https://insality.github.io/drui
 
 ### Default GUI Script
 
+Put the following code in your GUI script to start using **Druid**.
+
 ```lua
 local druid = require("druid.druid")
 
@@ -116,8 +118,24 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	self.druid:on_input(action_id, action)
+	return self.druid:on_input(action_id, action)
 end
+```
+
+
+### Default Widget Template
+
+Create a new lua file to create a new widget class. This widget can be created with `self.druid:new_widget(widget_class, [template], [nodes])`
+
+```lua
+local M = {}
+
+function M:init()
+	self.druid = self:get_druid()
+	self.root = self:get_node("root")
+end
+
+return M
 ```
 
 
