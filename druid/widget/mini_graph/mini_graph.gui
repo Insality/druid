@@ -1,0 +1,171 @@
+fonts {
+  name: "text_regular"
+  font: "/druid/fonts/text_regular.font"
+}
+fonts {
+  name: "text_bold"
+  font: "/druid/fonts/text_bold.font"
+}
+textures {
+  name: "druid"
+  texture: "/druid/druid.atlas"
+}
+nodes {
+  size {
+    x: 200.0
+    y: 140.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_16"
+  id: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 8.0
+    y: 8.0
+    z: 8.0
+    w: 8.0
+  }
+}
+nodes {
+  position {
+    x: -92.0
+    y: 63.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
+  size {
+    x: 260.0
+    y: 50.0
+  }
+  color {
+    x: 0.463
+    y: 0.475
+    z: 0.49
+  }
+  type: TYPE_TEXT
+  text: "Mini Graph"
+  font: "text_regular"
+  id: "text_header"
+  pivot: PIVOT_NW
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: 92.0
+    y: 67.0
+  }
+  color {
+    x: 0.129
+    y: 0.141
+    z: 0.157
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "icon_drag"
+  pivot: PIVOT_NE
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: -70.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.129
+    y: 0.141
+    z: 0.157
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_16"
+  id: "panel_diagram"
+  pivot: PIVOT_S
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 8.0
+    y: 8.0
+    z: 8.0
+    w: 8.0
+  }
+  clipping_mode: CLIPPING_MODE_STENCIL
+}
+nodes {
+  size {
+    x: 8.0
+    y: 70.0
+  }
+  color {
+    x: 0.957
+    y: 0.608
+    z: 0.608
+  }
+  type: TYPE_BOX
+  texture: "druid/pixel"
+  id: "prefab_line"
+  pivot: PIVOT_S
+  parent: "panel_diagram"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 12.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
+  }
+  size {
+    x: 260.0
+    y: 40.0
+  }
+  color {
+    x: 0.463
+    y: 0.475
+    z: 0.49
+  }
+  type: TYPE_TEXT
+  text: "120.23 KB"
+  font: "text_bold"
+  id: "text_value"
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

@@ -80,10 +80,16 @@ function M:set_margin(margin_x, margin_y)
 end
 
 
----@param padding vector4 The vector4 with padding values, where x - left, y - top, z - right, w - bottom
+---@param padding_x number|nil
+---@param padding_y number|nil
+---@param padding_z number|nil
+---@param padding_w number|nil
 ---@return druid.layout
-function M:set_padding(padding)
-	self.padding = padding
+function M:set_padding(padding_x, padding_y, padding_z, padding_w)
+	self.padding.x = padding_x or self.padding.x
+	self.padding.y = padding_y or self.padding.y
+	self.padding.z = padding_z or padding_x or self.padding.z
+	self.padding.w = padding_w or padding_y or self.padding.w
 	self.is_dirty = true
 
 	return self

@@ -1,0 +1,58 @@
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "mini_graph"
+  parent: "root"
+  inherit_alpha: true
+  template: "/druid/widget/mini_graph/mini_graph.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "mini_graph/root"
+  parent: "mini_graph"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Memory Panel"
+  id: "mini_graph/text_header"
+  parent: "mini_graph/root"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "mini_graph/icon_drag"
+  parent: "mini_graph/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "mini_graph/panel_diagram"
+  parent: "mini_graph/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "mini_graph/prefab_line"
+  parent: "mini_graph/panel_diagram"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "mini_graph/text_value"
+  parent: "mini_graph/root"
+  template_node_child: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
