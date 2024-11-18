@@ -522,31 +522,4 @@ function M.remove_with_shift(array, index, shift_policy)
 end
 
 
-local _deprecated_messages = {}
-
----Show deprecated message. Once time per message
----@param message string The deprecated message
-function M.deprecated(message)
-	if _deprecated_messages[message] then
-		return
-	end
-
-	print("[Druid]: " .. message)
-	_deprecated_messages[message] = true
-end
-
-
----Show message to require component
----@param component_name string
----@param component_type string|nil
-function M.require_component_message(component_name, component_type)
-	component_type = component_type or "extended"
-
-	print(string.format("[Druid]: The component %s is %s component. You have to register it via druid.register to use it", component_name, component_type))
-	print("[Druid]: Use next code:")
-	print(string.format('local %s = require("druid.%s.%s")', component_name, component_type, component_name))
-	print(string.format('druid.register("%s", %s)', component_name, component_name))
-end
-
-
 return M

@@ -29,14 +29,17 @@ local blocker = require("druid.base.blocker")
 local static_grid = require("druid.base.static_grid")
 local back_handler = require("druid.base.back_handler")
 
--- To use this components, you should register them first
--- local input = require("druid.extended.input")
--- local swipe = require("druid.extended.swipe")
--- local slider = require("druid.extended.slider")
--- local progress = require("druid.extended.progress")
--- local data_list = require("druid.extended.data_list")
--- local lang_text = require("druid.extended.lang_text")
--- local timer_component = require("druid.extended.timer")
+ local input = require("druid.extended.input")
+ local swipe = require("druid.extended.swipe")
+ local slider = require("druid.extended.slider")
+ local progress = require("druid.extended.progress")
+ local data_list = require("druid.extended.data_list")
+ local lang_text = require("druid.extended.lang_text")
+ local timer_component = require("druid.extended.timer")
+ local layout = require("druid.extended.layout")
+ local hotkey = require("druid.extended.hotkey")
+ local rich_input = require("druid.extended.rich_input")
+ local rich_text = require("druid.extended.rich_text")
 
 ---@class druid_instance
 ---@field components_all druid.base_component[] All created components
@@ -592,22 +595,12 @@ function M:new_text(node, value, no_adjust)
 end
 
 
----Create StaticGrid component
----@param parent_node string|node The node_id or gui.get_node(node_id). Parent of all Grid items.
----@param item node Element prefab. Required to get grid's item size. Can be adjusted separately.
----@param in_row number|nil How many nodes in row can be placed
----@return druid.grid StaticGrid component
-function M:new_grid(parent_node, item, in_row)
-	return self:new(static_grid, parent_node, item, in_row)
-end
-
-
----Create StaticGrid component
+---Create Grid component
 ---@param parent_node string|node The node_id or gui.get_node(node_id). Parent of all Grid items.
 ---@param item string|node Item prefab. Required to get grid's item size. Can be adjusted separately.
 ---@param in_row number|nil How many nodes in row can be placed
----@return druid.grid StaticGrid component
-function M:new_static_grid(parent_node, item, in_row)
+---@return druid.grid grid component
+function M:new_grid(parent_node, item, in_row)
 	return self:new(static_grid, parent_node, item, in_row)
 end
 
@@ -635,7 +628,7 @@ end
 ---@param on_swipe_callback function|nil Swipe callback for on_swipe_end event
 ---@return druid.swipe Swipe component
 function M:new_swipe(node, on_swipe_callback)
-	return helper.require_component_message("swipe") --[[@as druid.swipe]]
+	return self:new(swipe, node, on_swipe_callback)
 end
 
 
@@ -645,7 +638,7 @@ end
 ---@param adjust_type string|nil Adjust type for text node. Default: const.TEXT_ADJUST.DOWNSCALE
 ---@return druid.lang_text LangText component
 function M:new_lang_text(node, locale_id, adjust_type)
-	return helper.require_component_message("lang_text") --[[@as druid.lang_text]]
+	return self:new(lang_text, node, locale_id, adjust_type)
 end
 
 
@@ -655,7 +648,7 @@ end
 ---@param callback function|nil On slider change callback
 ---@return druid.slider Slider component
 function M:new_slider(pin_node, end_pos, callback)
-	return helper.require_component_message("slider") --[[@as druid.slider]]
+	return self:new(slider, pin_node, end_pos, callback)
 end
 
 ---Create Input component
@@ -664,7 +657,7 @@ end
 ---@param keyboard_type number|nil Gui keyboard type for input field
 ---@return druid.input Input component
 function M:new_input(click_node, text_node, keyboard_type)
-	return helper.require_component_message("input") --[[@as druid.input]]
+	return self:new(input, click_node, text_node, keyboard_type)
 end
 
 
@@ -674,7 +667,7 @@ end
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
 ---@return druid.data_list DataList component
 function M:new_data_list(druid_scroll, druid_grid, create_function)
-	return helper.require_component_message("data_list") --[[@as druid.data_list]]
+	return self:new(data_list, druid_scroll, druid_grid, create_function)
 end
 
 
@@ -685,7 +678,7 @@ end
 ---@param callback function|nil Function on timer end
 ---@return druid.timer Timer component
 function M:new_timer(node, seconds_from, seconds_to, callback)
-	return helper.require_component_message("timer") --[[@as druid.timer]]
+	return self:new(timer_component, node, seconds_from, seconds_to, callback)
 end
 
 
@@ -696,7 +689,7 @@ end
 ---@param init_value number|nil Initial value of progress bar. Default: 1
 ---@return druid.progress Progress component
 function M:new_progress(node, key, init_value)
-	return helper.require_component_message("progress") --[[@as druid.progress]]
+	return self:new(progress, node, key, init_value)
 end
 
 
@@ -705,7 +698,7 @@ end
 ---@param mode string The layout mode
 ---@return druid.layout Layout component
 function M:new_layout(node, mode)
-	return helper.require_component_message("layout") --[[@as druid.layout]]
+	return self:new(layout, node, mode)
 end
 
 
@@ -715,7 +708,7 @@ end
 ---@param callback_argument any|nil The argument to pass into the callback function
 ---@return druid.hotkey Hotkey component
 function M:new_hotkey(keys_array, callback, callback_argument)
-	return helper.require_component_message("hotkey") --[[@as druid.hotkey]]
+	return self:new(hotkey, keys_array, callback, callback_argument)
 end
 
 
@@ -724,7 +717,7 @@ end
 ---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
 ---@return druid.rich_text RichText component
 function M:new_rich_text(text_node, value)
-	return helper.require_component_message("rich_text", "custom") --[[@as druid.rich_text]]
+	return self:new(rich_text, text_node, value)
 end
 
 
@@ -734,7 +727,7 @@ end
 ---@param nodes table Nodes table from gui.clone_tree
 ---@return druid.rich_input RichInput component
 function M:new_rich_input(template, nodes)
-	return helper.require_component_message("rich_input", "custom") --[[@as druid.rich_input]]
+	return self:new(rich_input, template, nodes)
 end
 
 
