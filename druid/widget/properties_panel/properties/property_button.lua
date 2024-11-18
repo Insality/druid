@@ -1,6 +1,6 @@
----@class property_button: druid.base_component
+---@class property_button: druid.widget
 ---@field root node
----@field text_name druid.lang_text
+---@field text_name druid.text
 ---@field button druid.button
 ---@field text_button druid.text
 ---@field druid druid_instance
@@ -12,7 +12,7 @@ function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
 	self.root = self:get_node("root")
-	self.text_name = self.druid:new_lang_text("text_name")
+	self.text_name = self.druid:new_text("text_name")
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
 

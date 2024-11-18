@@ -4,7 +4,7 @@ local property_button = require("druid.widget.properties_panel.properties.proper
 
 ---@class properties_panel: druid.widget
 ---@field root node
----@field text_no_properties druid.lang_text
+---@field text_no_properties node
 ---@field scroll druid.scroll
 ---@field druid druid_instance
 local M = {}
@@ -16,15 +16,18 @@ function M:init(template, nodes)
 
 	--self.root = self.druid:new_container("root")
 	self.root = self:get_node("root")
+	self.text_no_properties = self:get_node("text_no_properties")
 	--self.root:add_container("text_header")
 
 	self.properties = {}
 
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
-	--self.layout = self.druid:new_layout("scroll_content")
+	self.layout = self.druid:new_layout("scroll_content", "vertical")
+		:set_hug_content(false, true)
 
-	--self.grid = self.druid:new_grid("scroll_content", "item_size", 1)
-	--self.scroll:bind_grid(self.grid)
+	self.layout.on_size_changed:subscribe(self.on_size_changed, self)
+
+	self.drag_corner = self.druid:new_drag("icon_drag", self.on_drag_corner)
 
 	self.property_checkbox_prefab = self:get_node("property_checkbox/root")
 	gui.set_enabled(self.property_checkbox_prefab, false)
@@ -34,6 +37,18 @@ function M:init(template, nodes)
 
 	self.property_button_prefab = self:get_node("property_button/root")
 	gui.set_enabled(self.property_button_prefab, false)
+
+	self.container = self.druid:new_container(self.root)
+	self.container:add_container("text_header")
+	self.container:add_container("icon_drag")
+	local container_scroll_view = self.container:add_container("scroll_view")
+	container_scroll_view:add_container("scroll_content")
+end
+
+
+function M:on_drag_corner(dx, dy)
+	local position = self.container:get_position()
+	self.container:set_position(position.x + dx, position.y + dy)
 end
 
 
@@ -42,14 +57,15 @@ function M:clear()
 		self.druid:remove(self.properties[index])
 	end
 	self.properties = {}
+	gui.set_enabled(self.text_no_properties, true)
+end
 
-	--local nodes = self.grid.nodes
-	--for index = 1, #nodes do
-	--	gui.delete_node(nodes[index])
-	--end
-	--self.grid:clear()
 
-	gui.set_enabled(self.text_no_properties.text.node, true)
+function M:on_size_changed(new_size)
+	new_size.x = new_size.x + 8
+	new_size.y = new_size.y + 50 + 8
+
+	self.container:set_size(new_size.x, new_size.y, gui.PIVOT_N)
 end
 
 
@@ -59,17 +75,17 @@ end
 ---@return property_checkbox
 function M:add_checkbox(text_id, initial_value, on_change_callback)
 	local nodes = gui.clone_tree(self.property_checkbox_prefab)
-	local instance = self.druid:new(property_checkbox, "property_checkbox", nodes) --[[@as property_checkbox]]
-	instance.text_name:translate(text_id)
+	local instance = self.druid:new_widget(property_checkbox, "property_checkbox", nodes)
+	instance.text_name:set_to(text_id)
 	instance:set_value(initial_value, true)
 	instance.button.on_click:subscribe(function()
 		on_change_callback(instance:get_value())
 	end)
 
-	gui.set_enabled(instance.root.node, true)
-	--self.grid:add(instance.root.node)
+	gui.set_enabled(instance.root, true)
+	self.layout:add(instance.root)
 	table.insert(self.properties, instance)
-	gui.set_enabled(self.text_no_properties.text.node, false)
+	gui.set_enabled(self.text_no_properties, false)
 
 	return instance
 end
@@ -81,14 +97,14 @@ end
 ---@return property_slider
 function M:add_slider(text_id, initial_value, on_change_callback)
 	local nodes = gui.clone_tree(self.property_slider_prefab)
-	local instance = self.druid:new(property_slider, "property_slider", nodes) --[[@as property_slider]]
-	instance.text_name:translate(text_id)
+	local instance = self.druid:new_widget(property_slider, "property_slider", nodes)
+	instance.text_name:set_to(text_id)
 	instance:set_value(initial_value, true)
 
-	gui.set_enabled(instance.root.node, true)
-	--self.grid:add(instance.root.node)
+	gui.set_enabled(instance.root, true)
+	self.layout:add(instance.root)
 	table.insert(self.properties, instance)
-	gui.set_enabled(self.text_no_properties.text.node, false)
+	gui.set_enabled(self.text_no_properties, false)
 
 	instance.slider.on_change_value:subscribe(function(_, value)
 		on_change_callback(value)
@@ -99,20 +115,40 @@ end
 
 
 ---@param text_id string
----@param on_click_callback function
-function M:add_button(text_id, on_click_callback)
+---@param on_click_callback function|nil
+---@param callback_context any|nil
+function M:add_button(text_id, on_click_callback, callback_context)
 	local nodes = gui.clone_tree(self.property_button_prefab)
-	local instance = self.druid:new(property_button, "property_button", nodes) --[[@as property_button]]
-	instance.text_name:translate(text_id)
+	local instance = self.druid:new_widget(property_button, "property_button", nodes)
+	instance.text_name:set_to(text_id)
 
 	gui.set_enabled(instance.root, true)
-	--self.grid:add(instance.root)
+	self.layout:add(instance.root)
 	table.insert(self.properties, instance)
-	gui.set_enabled(self.text_no_properties.text.node, false)
+	gui.set_enabled(self.text_no_properties, false)
 
-	instance.button.on_click:subscribe(on_click_callback)
+	if on_click_callback then
+		instance.button.on_click:subscribe(on_click_callback, callback_context)
+	end
 
 	return instance
+end
+
+
+function M:remove(widget)
+	for index = 1, #self.properties do
+		if self.properties[index] == widget then
+			self.druid:remove(widget)
+			self.layout:remove(widget.root)
+			gui.delete_node(widget.root)
+			table.remove(self.properties, index)
+			break
+		end
+	end
+
+	if #self.properties == 0 then
+		gui.set_enabled(self.text_no_properties, true)
+	end
 end
 
 

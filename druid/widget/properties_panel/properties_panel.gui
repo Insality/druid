@@ -2,14 +2,18 @@ fonts {
   name: "text_regular"
   font: "/druid/fonts/text_regular.font"
 }
+fonts {
+  name: "text_bold"
+  font: "/druid/fonts/text_bold.font"
+}
 textures {
   name: "druid"
   texture: "/druid/druid.atlas"
 }
 nodes {
   size {
-    x: 440.0
-    y: 350.0
+    x: 400.0
+    y: 240.0
   }
   color {
     x: 0.173
@@ -17,19 +21,24 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid/ui_circle_16"
   id: "root"
-  adjust_mode: ADJUST_MODE_STRETCH
   inherit_alpha: true
+  slice9 {
+    x: 8.0
+    y: 8.0
+    z: 8.0
+    w: 8.0
+  }
 }
 nodes {
   position {
-    x: -210.0
-    y: 165.0
+    x: -196.0
+    y: 116.0
   }
   scale {
-    x: 0.9
-    y: 0.9
+    x: 0.8
+    y: 0.8
   }
   size {
     x: 245.0
@@ -62,12 +71,12 @@ nodes {
 }
 nodes {
   position {
-    x: -200.0
-    y: 115.0
+    x: -196.0
+    y: 70.0
   }
   size {
-    x: 400.0
-    y: 290.0
+    x: 392.0
+    y: 190.0
   }
   type: TYPE_BOX
   texture: "druid/empty"
@@ -81,16 +90,19 @@ nodes {
 }
 nodes {
   size {
-    x: 400.0
-    y: 290.0
+    x: 392.0
+    y: 186.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid/pixel"
   id: "scroll_content"
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "scroll_view"
   inherit_alpha: true
+  slice9 {
+    w: 6.0
+  }
   visible: false
 }
 nodes {
@@ -279,6 +291,24 @@ nodes {
   id: "property_button/text_button"
   parent: "property_button/button"
   template_node_child: true
+}
+nodes {
+  position {
+    x: 192.0
+    y: 112.0
+  }
+  color {
+    x: 0.129
+    y: 0.141
+    z: 0.157
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "icon_drag"
+  pivot: PIVOT_NE
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

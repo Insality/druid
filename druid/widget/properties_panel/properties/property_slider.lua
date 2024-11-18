@@ -1,6 +1,6 @@
 ---@class property_slider: druid.widget
+---@field root node
 ---@field druid druid_instance
----@field root druid.container
 ---@field text_name druid.lang_text
 ---@field text_value druid.text
 ---@field slider druid.slider
@@ -12,7 +12,7 @@ local M = {}
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new_container("root") --[[@as druid.container]]
+	self.root = self:get_node("root")
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
 	self._value = 0

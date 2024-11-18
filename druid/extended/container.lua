@@ -134,8 +134,9 @@ end
 --- Set new size of layout node
 ---@param width number|nil
 ---@param height number|nil
+---@param anchor_pivot constant|nil If set will keep the corner possition relative to the new size
 ---@return druid.container Container
-function M:set_size(width, height)
+function M:set_size(width, height, anchor_pivot)
 	width = width or self.size.x
 	height = height or self.size.y
 
@@ -149,16 +150,33 @@ function M:set_size(width, height)
 	if (width and width ~= self.size.x) or (height and height ~= self.size.y) then
 		self.center_offset.x = -width * self.pivot_offset.x
 		self.center_offset.y = -height * self.pivot_offset.y
+		local dx = self.size.x - width
+		local dy = self.size.y - height
 		self.size.x = width
 		self.size.y = height
 		self.size.z = 0
 		gui.set_size(self.node, self.size)
+
+		if anchor_pivot then
+			local pivot = gui.get_pivot(self.node)
+			local pivot_offset = helper.get_pivot_offset(pivot)
+			local new_pivot_offset = helper.get_pivot_offset(anchor_pivot)
+
+			local position_dx = dx * (pivot_offset.x - new_pivot_offset.x)
+			local position_dy = dy * (pivot_offset.y - new_pivot_offset.y)
+			self:set_position(self._position.x + position_dx, self._position.y - position_dy)
+		end
 
 		self:update_child_containers()
 		self.on_size_changed:trigger(self:get_context(), self.size)
 	end
 
 	return self
+end
+
+
+function M:get_position()
+	return self._position
 end
 
 

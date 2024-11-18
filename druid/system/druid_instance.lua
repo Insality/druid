@@ -690,7 +690,7 @@ end
 local layout = require("druid.extended.layout")
 ---Create Layout component
 ---@param node string|node The_node id or gui.get_node(node_id).
----@param mode string The layout mode
+---@param mode string vertical|horizontal|horizontal_wrap
 ---@return druid.layout Layout component
 function M:new_layout(node, mode)
 	return self:new(layout, node, mode)

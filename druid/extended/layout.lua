@@ -1,7 +1,11 @@
+local event = require("druid.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@alias druid.layout.mode "horizontal"|"vertical"|"horizontal_wrap"
+
+---@class druid.event.on_size_changed: druid.event
+---@field subscribe fun(_, callback: fun(new_size: vector3), context: any|nil)
 
 ---@class druid.layout.row_data
 ---@field width number
@@ -25,6 +29,7 @@ local component = require("druid.component")
 ---@field is_resize_width boolean
 ---@field is_resize_height boolean
 ---@field is_justify boolean
+---@field on_size_changed druid.event.on_size_changed
 local M = component.create("layout")
 
 ---Layout component constructor
@@ -46,6 +51,8 @@ function M:init(node_or_node_id, layout_type)
 	self.is_resize_width = false
 	self.is_resize_height = false
 	self.is_justify = false
+
+	self.on_size_changed = event.create()
 end
 
 
@@ -140,6 +147,21 @@ function M:add(node_or_node_id)
 	gui.set_parent(node, self.node)
 
 	self.is_dirty = true
+
+	return self
+end
+
+
+function M:remove(node_or_node_id)
+	local node = type(node_or_node_id) == "table" and node_or_node_id.node or self:get_node(node_or_node_id)
+
+	for index = #self.entities, 1, -1 do
+		if self.entities[index] == node then
+			table.remove(self.entities, index)
+			self.is_dirty = true
+			break
+		end
+	end
 
 	return self
 end
@@ -273,6 +295,8 @@ function M:refresh_layout()
 			size.y = rows_data.total_height + padding.y + padding.w
 		end
 		gui.set_size(layout_node, size)
+
+		self.on_size_changed(size)
 	end
 
 	self.is_dirty = false

@@ -1,6 +1,6 @@
 ---@class property_checkbox: druid.widget
+---@field root node
 ---@field druid druid_instance
----@field root druid.container
 ---@field text_name druid.lang_text
 ---@field button druid.button
 ---@field selected node
@@ -11,7 +11,7 @@ local M = {}
 ---@param nodes table<hash, node>
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
-	self.root = self.druid:new_container("root")
+	self.root = self:get_node("root")
 
 	self.icon = self:get_node("icon")
 	gui.set_enabled(self.icon, false)

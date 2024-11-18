@@ -80,6 +80,15 @@ function M.set_sound_function(callback)
 end
 
 
+---Subscribe Druid to the window listener. It will override your previous
+---window listener, so if you have one, you should call M.on_window_callback manually.
+function M.init_window_listener()
+	window.set_listener(function(_, window_event)
+		M.on_window_callback(window_event)
+	end)
+end
+
+
 ---Set the window callback to enable Druid window events.
 ---@param event constant Event param from window listener
 function M.on_window_callback(event)

@@ -13,7 +13,7 @@ local tinsert = table.insert
 local tremove = table.remove
 
 --- Return new event instance
----@param callback fun()|nil Subscribe the callback on new event, if callback exist
+---@param callback function|nil Subscribe the callback on new event, if callback exist
 ---@param callback_context any|nil Additional context as first param to callback call
 ---@return druid.event
 ---@nodiscard
@@ -30,7 +30,7 @@ end
 
 
 --- Check is event subscribed.
----@param callback fun() Callback itself
+---@param callback function Callback itself
 ---@param callback_context any|nil Additional context as first param to callback call
 ---@return boolean, number|nil Is event subscribed, return index of callback in event as second param
 function M:is_subscribed(callback, callback_context)
@@ -50,7 +50,7 @@ end
 
 
 ---Subscribe callback on event
----@param callback fun() Callback itself
+---@param callback function Callback itself
 ---@param callback_context any|nil Additional context as first param to callback call, usually it's self
 ---@return boolean
 function M:subscribe(callback, callback_context)
@@ -67,7 +67,7 @@ end
 
 
 ---Unsubscribe callback on event
----@param callback fun() Callback itself
+---@param callback function Callback itself
 ---@param callback_context any|nil Additional context as first param to callback call
 ---@return boolean
 function M:unsubscribe(callback, callback_context)
