@@ -17,7 +17,6 @@ function M:init(template, nodes)
 	--self.root = self.druid:new_container("root")
 	self.root = self:get_node("root")
 	self.text_no_properties = self:get_node("text_no_properties")
-	--self.root:add_container("text_header")
 
 	self.properties = {}
 
@@ -41,6 +40,7 @@ function M:init(template, nodes)
 	self.container = self.druid:new_container(self.root)
 	self.container:add_container("text_header")
 	self.container:add_container("icon_drag")
+	--self.container:create_draggable_corners()
 
 	self.container_scroll_view = self.container:add_container("scroll_view")
 	self.contaienr_scroll_content = self.container_scroll_view:add_container("scroll_content")
@@ -63,7 +63,12 @@ end
 
 
 function M:on_size_changed(new_size)
-	self.container:set_size(new_size.x + 8, new_size.y + 50 + 8, gui.PIVOT_N)
+	self.container:set_size(new_size.x, new_size.y + 50, gui.PIVOT_N)
+
+	local width = self.layout:get_size().x - self.layout.padding.x - self.layout.padding.z
+	for index = 1, #self.properties do
+		self.properties[index].container:set_size(width)
+	end
 end
 
 
@@ -83,7 +88,9 @@ function M:add_checkbox(text_id, initial_value, on_change_callback)
 	gui.set_enabled(instance.root, true)
 	self.layout:add(instance.root)
 	table.insert(self.properties, instance)
-	instance.container:set_size(self.layout:get_size().x)
+
+	local width = self.layout:get_size().x - self.layout.padding.x - self.layout.padding.z
+	instance.container:set_size(width)
 
 	gui.set_enabled(self.text_no_properties, false)
 
@@ -104,7 +111,9 @@ function M:add_slider(text_id, initial_value, on_change_callback)
 	gui.set_enabled(instance.root, true)
 	self.layout:add(instance.root)
 	table.insert(self.properties, instance)
-	instance.container:set_size(self.layout:get_size().x)
+
+	local width = self.layout:get_size().x - self.layout.padding.x - self.layout.padding.z
+	instance.container:set_size(width)
 
 	gui.set_enabled(self.text_no_properties, false)
 
@@ -127,7 +136,9 @@ function M:add_button(text_id, on_click_callback, callback_context)
 	gui.set_enabled(instance.root, true)
 	self.layout:add(instance.root)
 	table.insert(self.properties, instance)
-	instance.container:set_size(self.layout:get_size().x)
+
+	local width = self.layout:get_size().x - self.layout.padding.x - self.layout.padding.z
+	instance.container:set_size(width)
 
 	gui.set_enabled(self.text_no_properties, false)
 

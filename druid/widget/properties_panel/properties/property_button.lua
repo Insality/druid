@@ -22,7 +22,7 @@ function M:init(template, nodes)
 
 	self.container = self.druid:new_container(self.root)
 	self.container:add_container("text_name")
-	self.container:add_container("button")
+	self.container:add_container("E_Anchor")
 end
 
 

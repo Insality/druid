@@ -20,7 +20,7 @@ function M:init(template, nodes)
 
 	self.text_name = self.druid:new_lang_text("text_name") --[[@as druid.lang_text]]
 	self.text_value = self.druid:new_text("text_value")
-	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(183, 0, 0), self._on_slider_change_by_user) --[[@as druid.slider]]
+	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(55, 0, 0), self._on_slider_change_by_user) --[[@as druid.slider]]
 	self.slider:set_input_node("slider")
 
 	self:set_text_function(function(value)
@@ -29,8 +29,7 @@ function M:init(template, nodes)
 
 	self.container = self.druid:new_container(self.root)
 	self.container:add_container("text_name")
-	self.container:add_container("slider")
-	self.container:add_container("button")
+	self.container:add_container("E_Anchor")
 end
 
 

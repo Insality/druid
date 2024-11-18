@@ -57,7 +57,23 @@ nodes {
 }
 nodes {
   position {
-    x: -20.0
+    x: 200.0
+  }
+  size {
+    x: 200.0
+    y: 40.0
+  }
+  type: TYPE_BOX
+  id: "E_Anchor"
+  pivot: PIVOT_E
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -180.0
   }
   size {
     x: 40.0
@@ -69,15 +85,15 @@ nodes {
     z: 0.49
   }
   type: TYPE_BOX
-  texture: "druid/rect_round2_width1"
+  texture: "druid/rect_round2_width2"
   id: "button"
-  parent: "root"
+  parent: "E_Anchor"
   inherit_alpha: true
   slice9 {
-    x: 4.0
-    y: 4.0
-    z: 4.0
-    w: 4.0
+    x: 5.0
+    y: 5.0
+    z: 5.0
+    w: 5.0
   }
 }
 nodes {

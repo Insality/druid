@@ -21,6 +21,7 @@ local component = require("druid.component")
 
 ---@class druid.layout: druid.base_component
 ---@field node node
+---@field rows_data druid.layout.rows_data Last calculated rows data
 ---@field is_dirty boolean
 ---@field entities node[]
 ---@field margin {x: number, y: number}
@@ -175,6 +176,14 @@ end
 function M:get_size()
 	return self.size
 end
+
+
+---@return vector3
+function M:get_content_size()
+	local rows_data = self:calculate_rows_data()
+	return vmath.vector3(rows_data.total_width, rows_data.total_height, 0)
+end
+
 
 ---@return druid.layout
 function M:refresh_layout()

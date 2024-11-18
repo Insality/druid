@@ -57,10 +57,27 @@ nodes {
 }
 nodes {
   position {
-    x: 40.0
+    x: 200.0
   }
   size {
-    x: 190.0
+    x: 200.0
+    y: 40.0
+  }
+  type: TYPE_BOX
+  id: "E_Anchor"
+  pivot: PIVOT_E
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -133.0
+  }
+  size {
+    x: 134.0
     y: 40.0
   }
   color {
@@ -71,12 +88,12 @@ nodes {
   type: TYPE_BOX
   texture: "druid/empty"
   id: "slider"
-  parent: "root"
+  parent: "E_Anchor"
   inherit_alpha: true
 }
 nodes {
   size {
-    x: 166.0
+    x: 134.0
     y: 8.0
   }
   color {
@@ -98,7 +115,7 @@ nodes {
 }
 nodes {
   position {
-    x: -83.0
+    x: -55.0
   }
   size {
     x: 24.0
@@ -122,9 +139,6 @@ nodes {
   }
 }
 nodes {
-  position {
-    x: 200.0
-  }
   size {
     x: 60.0
     y: 40.0
@@ -138,7 +152,7 @@ nodes {
   texture: "druid/rect_round2_width1"
   id: "button"
   pivot: PIVOT_E
-  parent: "root"
+  parent: "E_Anchor"
   inherit_alpha: true
   slice9 {
     x: 4.0

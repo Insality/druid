@@ -60,7 +60,23 @@ nodes {
     x: 200.0
   }
   size {
-    x: 226.0
+    x: 200.0
+    y: 40.0
+  }
+  type: TYPE_BOX
+  id: "E_Anchor"
+  pivot: PIVOT_E
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -100.0
+  }
+  size {
+    x: 200.0
     y: 40.0
   }
   color {
@@ -71,8 +87,7 @@ nodes {
   type: TYPE_BOX
   texture: "druid/rect_round2_width2"
   id: "button"
-  pivot: PIVOT_E
-  parent: "root"
+  parent: "E_Anchor"
   inherit_alpha: true
   slice9 {
     x: 5.0
@@ -83,11 +98,10 @@ nodes {
 }
 nodes {
   position {
-    x: -113.0
     y: -20.0
   }
   size {
-    x: 226.0
+    x: 200.0
     y: 4.0
   }
   color {
@@ -104,9 +118,6 @@ nodes {
   inherit_alpha: true
 }
 nodes {
-  position {
-    x: -113.0
-  }
   scale {
     x: 0.65
     y: 0.65

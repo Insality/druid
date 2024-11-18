@@ -33,7 +33,7 @@ nodes {
 }
 nodes {
   position {
-    x: -196.0
+    x: -192.0
     y: 116.0
   }
   scale {
@@ -71,11 +71,11 @@ nodes {
 }
 nodes {
   position {
-    x: -196.0
+    x: -200.0
     y: 70.0
   }
   size {
-    x: 392.0
+    x: 400.0
     y: 190.0
   }
   type: TYPE_BOX
@@ -90,8 +90,8 @@ nodes {
 }
 nodes {
   size {
-    x: 392.0
-    y: 186.0
+    x: 400.0
+    y: 190.0
   }
   type: TYPE_BOX
   texture: "druid/pixel"
@@ -101,6 +101,8 @@ nodes {
   parent: "scroll_view"
   inherit_alpha: true
   slice9 {
+    x: 8.0
+    y: 8.0
     w: 6.0
   }
   visible: false
@@ -146,8 +148,7 @@ nodes {
 }
 nodes {
   position {
-    x: -200.0
-    y: 100.0
+    y: 50.0
   }
   type: TYPE_BOX
   texture: "druid/empty"
@@ -178,8 +179,14 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  id: "property_slider/slider"
+  id: "property_slider/E_Anchor"
   parent: "property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_slider/slider"
+  parent: "property_slider/E_Anchor"
   template_node_child: true
 }
 nodes {
@@ -197,7 +204,7 @@ nodes {
 nodes {
   type: TYPE_BOX
   id: "property_slider/button"
-  parent: "property_slider/root"
+  parent: "property_slider/E_Anchor"
   template_node_child: true
 }
 nodes {
@@ -236,8 +243,14 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  id: "property_checkbox/button"
+  id: "property_checkbox/E_Anchor"
   parent: "property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_checkbox/button"
+  parent: "property_checkbox/E_Anchor"
   template_node_child: true
 }
 nodes {
@@ -276,8 +289,14 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  id: "property_button/button"
+  id: "property_button/E_Anchor"
   parent: "property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button/button"
+  parent: "property_button/E_Anchor"
   template_node_child: true
 }
 nodes {
