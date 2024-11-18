@@ -14,14 +14,13 @@ nodes {
   type: TYPE_BOX
   texture: "druid/empty"
   id: "root"
-  pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
   inherit_alpha: true
   visible: false
 }
 nodes {
   position {
-    y: -20.0
+    x: -200.0
   }
   scale {
     x: 0.65
@@ -58,8 +57,7 @@ nodes {
 }
 nodes {
   position {
-    x: 174.0
-    y: -20.0
+    x: -20.0
   }
   size {
     x: 40.0

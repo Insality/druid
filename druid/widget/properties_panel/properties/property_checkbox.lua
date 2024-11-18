@@ -22,6 +22,10 @@ function M:init(template, nodes)
 	self.text_name = self.druid:new_lang_text("text_name")
 
 	self.button = self.druid:new_button("button", self.on_click)
+
+	self.container = self.druid:new_container(self.root)
+	self.container:add_container("text_name")
+	self.container:add_container("button")
 end
 
 

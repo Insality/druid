@@ -41,6 +41,7 @@ function M:init(node_or_node_id, layout_type)
 
 	self.is_dirty = true
 	self.entities = {}
+	self.size = gui.get_size(self.node)
 
 	self.padding = gui.get_slice9(self.node)
 	self.margin = { x = self.padding.z, y = self.padding.w }
@@ -52,7 +53,7 @@ function M:init(node_or_node_id, layout_type)
 	self.is_resize_height = false
 	self.is_justify = false
 
-	self.on_size_changed = event.create()
+	self.on_size_changed = event.create() --[[@as druid.event.on_size_changed]]
 end
 
 
@@ -152,6 +153,9 @@ function M:add(node_or_node_id)
 end
 
 
+---Remove node from layout
+---@param node_or_node_id node|string node_or_node_id
+---@return druid.layout self for chaining
 function M:remove(node_or_node_id)
 	local node = type(node_or_node_id) == "table" and node_or_node_id.node or self:get_node(node_or_node_id)
 
@@ -166,6 +170,11 @@ function M:remove(node_or_node_id)
 	return self
 end
 
+
+---@return vector3
+function M:get_size()
+	return self.size
+end
 
 ---@return druid.layout
 function M:refresh_layout()
@@ -295,6 +304,7 @@ function M:refresh_layout()
 			size.y = rows_data.total_height + padding.y + padding.w
 		end
 		gui.set_size(layout_node, size)
+		self.size = size
 
 		self.on_size_changed(size)
 	end

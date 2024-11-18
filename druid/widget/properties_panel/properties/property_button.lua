@@ -1,5 +1,6 @@
 ---@class property_button: druid.widget
 ---@field root node
+---@field container druid.container
 ---@field text_name druid.text
 ---@field button druid.button
 ---@field text_button druid.text
@@ -18,6 +19,10 @@ function M:init(template, nodes)
 
 	self.button = self.druid:new_button("button", self.on_click)
 	self.text_button = self.druid:new_text("text_button")
+
+	self.container = self.druid:new_container(self.root)
+	self.container:add_container("text_name")
+	self.container:add_container("button")
 end
 
 

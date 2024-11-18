@@ -1,5 +1,6 @@
 ---@class property_slider: druid.widget
 ---@field root node
+---@field container druid.container
 ---@field druid druid_instance
 ---@field text_name druid.lang_text
 ---@field text_value druid.text
@@ -19,12 +20,17 @@ function M:init(template, nodes)
 
 	self.text_name = self.druid:new_lang_text("text_name") --[[@as druid.lang_text]]
 	self.text_value = self.druid:new_text("text_value")
-	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(68, 0, 0), self._on_slider_change_by_user) --[[@as druid.slider]]
+	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(183, 0, 0), self._on_slider_change_by_user) --[[@as druid.slider]]
 	self.slider:set_input_node("slider")
 
 	self:set_text_function(function(value)
 		return math.floor(value * 100) .. "%"
 	end)
+
+	self.container = self.druid:new_container(self.root)
+	self.container:add_container("text_name")
+	self.container:add_container("slider")
+	self.container:add_container("button")
 end
 
 

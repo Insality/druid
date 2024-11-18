@@ -41,8 +41,9 @@ function M:init(template, nodes)
 	self.container = self.druid:new_container(self.root)
 	self.container:add_container("text_header")
 	self.container:add_container("icon_drag")
-	local container_scroll_view = self.container:add_container("scroll_view")
-	container_scroll_view:add_container("scroll_content")
+
+	self.container_scroll_view = self.container:add_container("scroll_view")
+	self.contaienr_scroll_content = self.container_scroll_view:add_container("scroll_content")
 end
 
 
@@ -62,10 +63,7 @@ end
 
 
 function M:on_size_changed(new_size)
-	new_size.x = new_size.x + 8
-	new_size.y = new_size.y + 50 + 8
-
-	self.container:set_size(new_size.x, new_size.y, gui.PIVOT_N)
+	self.container:set_size(new_size.x + 8, new_size.y + 50 + 8, gui.PIVOT_N)
 end
 
 
@@ -85,6 +83,8 @@ function M:add_checkbox(text_id, initial_value, on_change_callback)
 	gui.set_enabled(instance.root, true)
 	self.layout:add(instance.root)
 	table.insert(self.properties, instance)
+	instance.container:set_size(self.layout:get_size().x)
+
 	gui.set_enabled(self.text_no_properties, false)
 
 	return instance
@@ -104,6 +104,8 @@ function M:add_slider(text_id, initial_value, on_change_callback)
 	gui.set_enabled(instance.root, true)
 	self.layout:add(instance.root)
 	table.insert(self.properties, instance)
+	instance.container:set_size(self.layout:get_size().x)
+
 	gui.set_enabled(self.text_no_properties, false)
 
 	instance.slider.on_change_value:subscribe(function(_, value)
@@ -125,6 +127,8 @@ function M:add_button(text_id, on_click_callback, callback_context)
 	gui.set_enabled(instance.root, true)
 	self.layout:add(instance.root)
 	table.insert(self.properties, instance)
+	instance.container:set_size(self.layout:get_size().x)
+
 	gui.set_enabled(self.text_no_properties, false)
 
 	if on_click_callback then
