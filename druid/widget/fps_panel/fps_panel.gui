@@ -29,9 +29,15 @@ nodes {
   template: "/druid/widget/mini_graph/mini_graph.gui"
 }
 nodes {
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
   type: TYPE_BOX
   id: "mini_graph/root"
   parent: "mini_graph"
+  overridden_fields: 5
   template_node_child: true
 }
 nodes {
@@ -42,7 +48,7 @@ nodes {
 }
 nodes {
   type: TYPE_TEXT
-  text: "Memory"
+  text: "FPS"
   id: "mini_graph/text_header"
   parent: "mini_graph/header"
   overridden_fields: 8
@@ -61,15 +67,27 @@ nodes {
   template_node_child: true
 }
 nodes {
+  color {
+    x: 0.525
+    y: 0.525
+    z: 0.525
+  }
   type: TYPE_BOX
   id: "mini_graph/prefab_line"
   parent: "mini_graph/content"
+  overridden_fields: 5
   template_node_child: true
 }
 nodes {
+  color {
+    x: 0.957
+    y: 0.608
+    z: 0.608
+  }
   type: TYPE_BOX
   id: "mini_graph/color_low"
   parent: "mini_graph/content"
+  overridden_fields: 5
   template_node_child: true
 }
 nodes {
@@ -94,7 +112,7 @@ nodes {
     y: 0.3
   }
   size {
-    x: 200.0
+    x: 260.0
     y: 40.0
   }
   color {
@@ -103,9 +121,9 @@ nodes {
     z: 0.49
   }
   type: TYPE_TEXT
-  text: "120.23 KB"
+  text: "12 FPS"
   font: "text_regular"
-  id: "text_max_value"
+  id: "text_min_fps"
   pivot: PIVOT_W
   outline {
     x: 1.0
@@ -124,7 +142,6 @@ nodes {
 }
 nodes {
   position {
-    x: 96.0
     y: 12.0
   }
   scale {
@@ -132,7 +149,7 @@ nodes {
     y: 0.3
   }
   size {
-    x: 200.0
+    x: 260.0
     y: 40.0
   }
   color {
@@ -141,10 +158,9 @@ nodes {
     z: 0.49
   }
   type: TYPE_TEXT
-  text: "120 KB/s"
-  font: "text_regular"
-  id: "text_per_second"
-  pivot: PIVOT_E
+  text: "60 FPS"
+  font: "text_bold"
+  id: "text_fps"
   outline {
     x: 1.0
     y: 1.0
@@ -201,42 +217,6 @@ nodes {
   pivot: PIVOT_N
   parent: "content"
   inherit_alpha: true
-}
-nodes {
-  position {
-    y: 12.0
-  }
-  scale {
-    x: 0.3
-    y: 0.3
-  }
-  size {
-    x: 200.0
-    y: 40.0
-  }
-  color {
-    x: 0.463
-    y: 0.475
-    z: 0.49
-  }
-  type: TYPE_TEXT
-  text: "120 KB"
-  font: "text_bold"
-  id: "text_memory"
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-  parent: "content"
-  inherit_alpha: true
-  outline_alpha: 0.0
-  shadow_alpha: 0.0
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

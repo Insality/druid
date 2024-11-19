@@ -23,11 +23,11 @@ nodes {
     x: -200.0
   }
   scale {
-    x: 0.65
-    y: 0.65
+    x: 0.5
+    y: 0.5
   }
   size {
-    x: 200.0
+    x: 350.0
     y: 40.0
   }
   color {
@@ -50,6 +50,7 @@ nodes {
     y: 1.0
     z: 1.0
   }
+  adjust_mode: ADJUST_MODE_STRETCH
   parent: "root"
   inherit_alpha: true
   outline_alpha: 0.0
@@ -119,12 +120,12 @@ nodes {
 }
 nodes {
   scale {
-    x: 0.65
-    y: 0.65
+    x: 0.5
+    y: 0.5
   }
   size {
-    x: 250.0
-    y: 30.0
+    x: 380.0
+    y: 50.0
   }
   color {
     x: 0.722

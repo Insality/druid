@@ -88,8 +88,8 @@ end
 function M:set_padding(padding_x, padding_y, padding_z, padding_w)
 	self.padding.x = padding_x or self.padding.x
 	self.padding.y = padding_y or self.padding.y
-	self.padding.z = padding_z or padding_x or self.padding.z
-	self.padding.w = padding_w or padding_y or self.padding.w
+	self.padding.z = padding_z or self.padding.z
+	self.padding.w = padding_w or self.padding.w
 	self.is_dirty = true
 
 	return self
@@ -153,7 +153,6 @@ function M:add(node_or_node_id)
 	---@cast node node
 	table.insert(self.entities, node)
 	gui.set_parent(node, self.node)
-
 	self.is_dirty = true
 
 	return self
@@ -229,7 +228,7 @@ function M:refresh_layout()
 		local node_height = rows_data.nodes_height[node]
 		local pivot_offset = helper.get_pivot_offset(gui.get_pivot(node))
 
-		if node_width > 0 and node_height > 0 then
+		if node_width > 0 or node_height > 0 then
 			-- Calculate position for current node
 			local position_x, position_y
 
@@ -396,7 +395,7 @@ function M:calculate_rows_data()
 			rows_data.nodes_height[node] = node_height
 		end
 
-		if node_width > 0 and node_height > 0 then
+		if node_width > 0 or node_height > 0 then
 			if type == "horizontal" then
 				current_row.width = current_row.width + node_width + margin.x
 				current_row.height = math.max(current_row.height, node_height)

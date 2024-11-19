@@ -391,10 +391,11 @@ end
 
 
 --- Set text to text field
+---@deprecated
 ---@param set_to string Text for node
----@return Text Current text instance
+---@return druid.text Current text instance
 function M:set_to(set_to)
-	set_to = set_to or ""
+	set_to = tostring(set_to or "")
 
 	self.last_value = set_to
 	gui.set_text(self.node, set_to)
@@ -407,9 +408,20 @@ function M:set_to(set_to)
 end
 
 
+function M:set_text(new_text)
+---@diagnostic disable-next-line: deprecated
+	return self:set_to(new_text)
+end
+
+
+function M:get_text()
+	return self.last_value
+end
+
+
 --- Set text area size
 ---@param size vector3 The new text area size
----@return Text Current text instance
+---@return druid.text Current text instance
 function M:set_size(size)
 	self.start_size = size
 	self.text_area = vmath.vector3(size)
@@ -421,7 +433,7 @@ end
 
 --- Set color
 ---@param color vector4 Color for node
----@return Text Current text instance
+---@return druid.text Current text instance
 function M:set_color(color)
 	self.color = color
 	gui.set_color(self.node, color)
@@ -432,7 +444,7 @@ end
 
 --- Set alpha
 ---@param alpha number Alpha for node
----@return Text Current text instance
+---@return druid.text Current text instance
 function M:set_alpha(alpha)
 	self.color.w = alpha
 	gui.set_color(self.node, self.color)
@@ -443,7 +455,7 @@ end
 
 --- Set scale
 ---@param scale vector3 Scale for node
----@return Text Current text instance
+---@return druid.text Current text instance
 function M:set_scale(scale)
 	self.last_scale = scale
 	gui.set_scale(self.node, scale)
@@ -454,7 +466,7 @@ end
 
 --- Set text pivot. Text will re-anchor inside text area
 ---@param pivot number The gui.PIVOT_* constant
----@return Text Current text instance
+---@return druid.text Current text instance
 function M:set_pivot(pivot)
 	local prev_pivot = gui.get_pivot(self.node)
 	local prev_offset = const.PIVOTS[prev_pivot]
@@ -487,7 +499,7 @@ end
 --- Set text adjust, refresh the current text visuals, if needed
 ---@param adjust_type string|nil See const.TEXT_ADJUST. If pass nil - use current adjust type
 ---@param minimal_scale number|nil If pass nil - not use minimal scale
----@return Text Current text instance
+---@return druid.text Current text instance
 function M:set_text_adjust(adjust_type, minimal_scale)
 	self.adjust_type = adjust_type
 	self._minimal_scale = minimal_scale
@@ -499,7 +511,7 @@ end
 
 --- Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
 ---@param minimal_scale number If pass nil - not use minimal scale
----@return Text Current text instance
+---@return druid.text Current text instance
 function M:set_minimal_scale(minimal_scale)
 	self._minimal_scale = minimal_scale
 

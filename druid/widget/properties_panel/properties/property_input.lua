@@ -1,6 +1,4 @@
-local color = require("druid.color")
-
----@class property_button: druid.widget
+---@class property_input: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field text_name druid.text
@@ -15,13 +13,10 @@ function M:init()
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
 
-	self.button = self.druid:new_button("button", self.on_click)
-	self.text_button = self.druid:new_text("text_button")
+	self.rich_input = self.druid:new_rich_input("rich_input")
 
 	self.container = self.druid:new_container(self.root)
-	self.container:add_container("text_name", nil, function(_, size)
-		self.text_button:set_size(size)
-	end)
+	self.container:add_container("text_name")
 	self.container:add_container("E_Anchor")
 end
 
@@ -33,15 +28,10 @@ end
 
 
 ---@param text string
----@return property_button
+---@return property_input
 function M:set_text_button(text)
 	self.text_button:set_text(text)
 	return self
-end
-
-
-function M:set_color(color_value)
-	color.set_color(self:get_node("button"), color_value)
 end
 
 

@@ -1,0 +1,2 @@
+---@class druid.widget: druid.base_component
+---@field druid druid_instance

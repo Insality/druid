@@ -4,18 +4,72 @@ local mini_graph = require("druid.widget.mini_graph.mini_graph")
 ---@field root node
 local M = {}
 
-
 function M:init()
-	self.druid = self:get_druid()
+	self.delta_time = 0.1
+	self.samples_count = 30
+	self.memory_limit = 100
+
 	self.mini_graph = self.druid:new_widget(mini_graph, "mini_graph")
+	self.mini_graph:set_samples(self.samples_count)
+	gui.set_parent(self:get_node("content"), self.mini_graph.content, true)
 
-	--for index = 1, 32 do
-	--	self.mini_graph:set_line_value(index, 0)
-	--end
+	self.max_value = self.druid:new_text("text_max_value")
+	self.text_per_second = self.druid:new_text("text_per_second")
+	self.text_memory = self.druid:new_text("text_memory")
 
-	timer.delay(0.1, true, function()
-		self.mini_graph:push_line_value(math.random())
+	self.memory = collectgarbage("count")
+	self.memory_samples = {}
+
+	self:update_text_memory()
+
+	self.timer_id = timer.delay(self.delta_time, true, function()
+		self:push_next_value()
 	end)
+end
+
+
+function M:set_low_memory_limit(limit)
+	self.memory_limit = limit
+end
+
+
+function M:push_next_value()
+	local memory = collectgarbage("count")
+	local diff = math.max(0, memory - self.memory)
+	self.memory = memory
+	self:update_text_memory()
+
+	table.insert(self.memory_samples, diff)
+	if #self.memory_samples > self.samples_count then
+		table.remove(self.memory_samples, 1)
+	end
+
+	self.mini_graph:push_line_value(diff)
+
+	local max_value = math.max(unpack(self.memory_samples))
+	max_value = math.max(max_value, self.memory_limit) -- low limit to display
+	self.mini_graph:set_max_value(max_value)
+
+	local max_memory = math.ceil(self.mini_graph:get_highest_value())
+	self.max_value:set_to(max_memory .. " KB")
+
+	local last_second = 0
+	local last_second_samples = math.ceil(1 / self.delta_time)
+	for index = #self.memory_samples - last_second_samples + 1, #self.memory_samples do
+		last_second = last_second + (self.memory_samples[index] or 0)
+	end
+	self.text_per_second:set_to(math.ceil(last_second) .. " KB/s")
+end
+
+
+function M:update_text_memory()
+	local memory = math.ceil(collectgarbage("count")) -- in KB
+	if memory > 1024 then
+		memory = memory / 1024
+		self.text_memory:set_to(string.format("%.2f", memory) .. " MB")
+	else
+		self.text_memory:set_to(memory .. " KB")
+	end
 end
 
 

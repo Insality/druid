@@ -27,8 +27,8 @@ nodes {
     y: 0.5
   }
   size {
-    x: 360.0
-    y: 40.0
+    x: 350.0
+    y: 50.0
   }
   color {
     x: 0.463
@@ -36,7 +36,7 @@ nodes {
     z: 0.49
   }
   type: TYPE_TEXT
-  text: "Checkbox"
+  text: "Button"
   font: "text_bold"
   id: "text_name"
   pivot: PIVOT_W
@@ -73,48 +73,57 @@ nodes {
 }
 nodes {
   position {
-    x: -180.0
+    x: -100.0
   }
-  size {
-    x: 40.0
-    y: 40.0
-  }
-  color {
-    x: 0.463
-    y: 0.475
-    z: 0.49
-  }
-  type: TYPE_BOX
-  texture: "druid/rect_round2_width2"
-  id: "button"
+  type: TYPE_TEMPLATE
+  id: "rich_input"
   parent: "E_Anchor"
   inherit_alpha: true
-  slice9 {
-    x: 5.0
-    y: 5.0
-    z: 5.0
-    w: 5.0
-  }
+  template: "/druid/custom/rich_input/rich_input.gui"
 }
 nodes {
-  color {
-    x: 0.722
-    y: 0.741
-    z: 0.761
-  }
   type: TYPE_BOX
-  texture: "druid/ui_circle_16"
-  id: "icon"
-  parent: "button"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
+  id: "rich_input/root"
+  parent: "rich_input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_input/button"
+  parent: "rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_input/placeholder_text"
+  parent: "rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_input/input_text"
+  parent: "rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_input/cursor_node"
+  parent: "rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_input/cursor_text"
+  parent: "rich_input/cursor_node"
+  template_node_child: true
 }
 nodes {
   position {
+    x: -100.0
     y: -20.0
   }
   size {
-    x: 40.0
+    x: 200.0
     y: 4.0
   }
   color {
@@ -127,7 +136,7 @@ nodes {
   id: "selected"
   pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_STRETCH
-  parent: "button"
+  parent: "E_Anchor"
   inherit_alpha: true
 }
 material: "/builtins/materials/gui.material"

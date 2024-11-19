@@ -212,7 +212,9 @@ end
 ---@param node_or_node_id node|string
 ---@param on_drag_callback function
 function M:init(node_or_node_id, on_drag_callback)
+	self.druid = self:get_druid()
 	self.node = self:get_node(node_or_node_id)
+	self.hover = self.druid:new_hover(self.node)
 
 	self.dx = 0
 	self.dy = 0
@@ -239,6 +241,20 @@ function M:init(node_or_node_id, on_drag_callback)
 	self.on_drag_end = Event()
 
 	self:on_window_resized()
+	self:set_drag_cursors(true)
+end
+
+
+---Set Drag component enabled state.
+---@param is_enabled boolean
+function M:set_drag_cursors(is_enabled)
+	if defos and is_enabled then
+		self.hover.style.ON_HOVER_CURSOR = defos.CURSOR_CROSSHAIR
+		self.hover.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_HAND
+	else
+		self.hover.style.ON_HOVER_CURSOR = nil
+		self.hover.style.ON_MOUSE_HOVER_CURSOR = nil
+	end
 end
 
 

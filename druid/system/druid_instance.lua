@@ -733,7 +733,7 @@ local rich_input = require("druid.custom.rich_input.rich_input")
 ---Create RichInput component.
 -- As a template please check rich_input.gui layout.
 ---@param template string The template string name
----@param nodes table Nodes table from gui.clone_tree
+---@param nodes table|nil Nodes table from gui.clone_tree
 ---@return druid.rich_input RichInput component
 function M:new_rich_input(template, nodes)
 	return self:new(rich_input, template, nodes)

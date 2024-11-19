@@ -2,23 +2,19 @@
 ---@field root node
 ---@field container druid.container
 ---@field druid druid_instance
----@field text_name druid.lang_text
+---@field text_name druid.text
 ---@field text_value druid.text
 ---@field slider druid.slider
 local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
 	self._value = 0
 
-	self.text_name = self.druid:new_lang_text("text_name") --[[@as druid.lang_text]]
+	self.text_name = self.druid:new_text("text_name")
 	self.text_value = self.druid:new_text("text_value")
 	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(55, 0, 0), self._on_slider_change_by_user) --[[@as druid.slider]]
 	self.slider:set_input_node("slider")
@@ -36,7 +32,7 @@ end
 ---@param callback fun(value:number):string
 function M:set_text_function(callback)
 	self._text_function = callback
-	self.text_value:set_to(self._text_function(self._value))
+	self.text_value:set_text(self._text_function(self._value))
 end
 
 

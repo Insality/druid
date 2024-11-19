@@ -1,16 +1,13 @@
 ---@class property_checkbox: druid.widget
 ---@field root node
 ---@field druid druid_instance
----@field text_name druid.lang_text
+---@field text_name druid.text
 ---@field button druid.button
 ---@field selected node
 local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
+function M:init()
 	self.root = self:get_node("root")
 
 	self.icon = self:get_node("icon")
@@ -19,7 +16,7 @@ function M:init(template, nodes)
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
 
-	self.text_name = self.druid:new_lang_text("text_name")
+	self.text_name = self.druid:new_text("text_name")
 
 	self.button = self.druid:new_button("button", self.on_click)
 

@@ -22,4 +22,10 @@ images {
 images {
   image: "/druid/images/panels/rect_round2_width2.png"
 }
+images {
+  image: "/druid/images/icons/icon_drag.png"
+}
+images {
+  image: "/druid/images/icons/icon_arrow.png"
+}
 extrude_borders: 2

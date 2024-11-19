@@ -196,7 +196,7 @@ end
 ---Get current size of layout node
 ---@return vector3 size
 function M:get_size()
-	return self.size
+	return vmath.vector3(self.size)
 end
 
 

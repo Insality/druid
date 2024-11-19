@@ -33,8 +33,24 @@ nodes {
 }
 nodes {
   position {
+    y: 70.0
+  }
+  size {
+    x: 200.0
+    y: 40.0
+  }
+  type: TYPE_BOX
+  id: "header"
+  pivot: PIVOT_N
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
     x: -92.0
-    y: 63.0
+    y: -8.0
   }
   scale {
     x: 0.5
@@ -64,26 +80,26 @@ nodes {
     y: 1.0
     z: 1.0
   }
-  parent: "root"
+  parent: "header"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
 }
 nodes {
   position {
-    x: 92.0
-    y: 67.0
+    x: 96.0
+    y: -4.0
   }
   color {
-    x: 0.129
-    y: 0.141
-    z: 0.157
+    x: 0.306
+    y: 0.31
+    z: 0.314
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid/icon_drag"
   id: "icon_drag"
   pivot: PIVOT_NE
-  parent: "root"
+  parent: "header"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
@@ -102,7 +118,7 @@ nodes {
   }
   type: TYPE_BOX
   texture: "druid/ui_circle_16"
-  id: "panel_diagram"
+  id: "content"
   pivot: PIVOT_S
   parent: "root"
   inherit_alpha: true
@@ -113,6 +129,7 @@ nodes {
     w: 8.0
   }
   clipping_mode: CLIPPING_MODE_STENCIL
+  material: "gui_stencil"
 }
 nodes {
   size {
@@ -128,44 +145,32 @@ nodes {
   texture: "druid/pixel"
   id: "prefab_line"
   pivot: PIVOT_S
-  parent: "panel_diagram"
+  parent: "content"
   inherit_alpha: true
 }
 nodes {
   position {
-    y: 12.0
-  }
-  scale {
-    x: 0.7
-    y: 0.7
+    x: -10.0
+    y: 4.0
   }
   size {
-    x: 260.0
-    y: 40.0
+    x: 8.0
+    y: 8.0
   }
   color {
-    x: 0.463
-    y: 0.475
-    z: 0.49
+    x: 0.557
+    y: 0.835
+    z: 0.62
   }
-  type: TYPE_TEXT
-  text: "120.23 KB"
-  font: "text_bold"
-  id: "text_value"
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-  parent: "root"
+  type: TYPE_BOX
+  texture: "druid/pixel"
+  id: "color_low"
+  parent: "content"
   inherit_alpha: true
-  outline_alpha: 0.0
-  shadow_alpha: 0.0
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
+materials {
+  name: "gui_stencil"
+  material: "/druid/materials/stencil/gui_stencil.material"
+}
