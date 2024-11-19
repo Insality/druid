@@ -426,5 +426,69 @@ nodes {
   parent: "property_text/root"
   template_node_child: true
 }
+nodes {
+  position {
+    y: -250.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_left_right_selector"
+  parent: "propeties"
+  inherit_alpha: true
+  template: "/druid/widget/properties_panel/properties/property_left_right_selector.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_left_right_selector/root"
+  parent: "property_left_right_selector"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_left_right_selector/text_name"
+  parent: "property_left_right_selector/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_left_right_selector/E_Anchor"
+  parent: "property_left_right_selector/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_left_right_selector/button_left"
+  parent: "property_left_right_selector/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_left_right_selector/icon_left"
+  parent: "property_left_right_selector/button_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_left_right_selector/button_right"
+  parent: "property_left_right_selector/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_left_right_selector/icon_right"
+  parent: "property_left_right_selector/button_right"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_left_right_selector/selected"
+  parent: "property_left_right_selector/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "property_left_right_selector/text_value"
+  parent: "property_left_right_selector/E_Anchor"
+  template_node_child: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

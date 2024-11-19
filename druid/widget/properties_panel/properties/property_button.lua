@@ -1,6 +1,6 @@
 local color = require("druid.color")
 
----@class property_button: druid.widget
+---@class widget.property_button: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field text_name druid.text
@@ -12,6 +12,8 @@ local M = {}
 function M:init()
 	self.root = self:get_node("root")
 	self.text_name = self.druid:new_text("text_name")
+		:set_text_adjust("trim_left")
+
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
 
@@ -33,7 +35,7 @@ end
 
 
 ---@param text string
----@return property_button
+---@return widget.property_button
 function M:set_text_button(text)
 	self.text_button:set_text(text)
 	return self

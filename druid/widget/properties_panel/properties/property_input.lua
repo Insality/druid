@@ -1,4 +1,4 @@
----@class property_input: druid.widget
+---@class widget.property_input: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field text_name druid.text

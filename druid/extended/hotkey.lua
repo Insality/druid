@@ -74,7 +74,7 @@ end
 --- Add hotkey for component callback
 ---@param keys string[]|hash[]|string|hash that have to be pressed before key pressed to activate
 ---@param callback_argument any|nil The argument to pass into the callback function
----@return Hotkey Current instance
+---@return druid.hotkey Current instance
 function M:add_hotkey(keys, callback_argument)
 	keys = keys or {}
 	if type(keys) == "string" then
@@ -86,7 +86,7 @@ function M:add_hotkey(keys, callback_argument)
 
 	for index = 1, #keys do
 		local key_hash = hash(keys[index])
-		if helper.contains(self.style.MODIFICATORS, key_hash) then
+		if #keys > 1 and helper.contains(self.style.MODIFICATORS, key_hash) then
 			table.insert(modificators, key_hash)
 		else
 			if not key then
@@ -114,6 +114,17 @@ function M:add_hotkey(keys, callback_argument)
 end
 
 
+function M:is_processing()
+	for index = 1, #self._hotkeys do
+		if self._hotkeys[index].is_processing then
+			return true
+		end
+	end
+
+	return false
+end
+
+
 function M:on_focus_gained()
 	for k, v in pairs(self._modificators) do
 		self._modificators[k] = false
@@ -122,32 +133,32 @@ end
 
 
 function M:on_input(action_id, action)
-	if not action_id or #self._hotkeys == 0 then
+	if not action_id then
 		return false
 	end
 
-	if self._modificators[action_id] ~= nil then
-		if action.pressed then
-			self._modificators[action_id] = true
-		end
-		if action.released then
-			self._modificators[action_id] = false
-		end
+	if self._modificators[action_id] ~= nil and action.pressed then
+		self._modificators[action_id] = true
 	end
 
 	for index = 1, #self._hotkeys do
 		local hotkey = self._hotkeys[index]
-		if action_id == hotkey.key then
+		local is_relative_key = helper.contains(self.style.MODIFICATORS, action_id) or action_id == hotkey.key
+
+		if is_relative_key and (action_id == hotkey.key or not hotkey.key) then
 			local is_modificator_ok = true
+			local is_consume = not not (hotkey.key)
 
 			-- Check only required modificators pressed
-			for i = 1, #self.style.MODIFICATORS do
-				local mod = self.style.MODIFICATORS[i]
-				if helper.contains(hotkey.modificators, mod) and self._modificators[mod] == false then
-					is_modificator_ok = false
-				end
-				if not helper.contains(hotkey.modificators, mod) and self._modificators[mod] == true then
-					is_modificator_ok = false
+			if hotkey.key and #hotkey.modificators > 0 then
+				for i = 1, #self.style.MODIFICATORS do
+					local mod = self.style.MODIFICATORS[i]
+					if helper.contains(hotkey.modificators, mod) and self._modificators[mod] == false then
+						is_modificator_ok = false
+					end
+					if not helper.contains(hotkey.modificators, mod) and self._modificators[mod] == true then
+						is_modificator_ok = false
+					end
 				end
 			end
 
@@ -157,14 +168,18 @@ function M:on_input(action_id, action)
 			end
 			if not action.pressed and self._is_process_repeated and action.repeated and is_modificator_ok and hotkey.is_processing then
 				self.on_hotkey_released:trigger(self:get_context(), hotkey.callback_argument)
-				return true
+				return is_consume
 			end
 			if action.released and is_modificator_ok and hotkey.is_processing then
-				hotkey.is_processing = false
 				self.on_hotkey_released:trigger(self:get_context(), hotkey.callback_argument)
-				return true
+				hotkey.is_processing = false
+				return is_consume
 			end
 		end
+	end
+
+	if self._modificators[action_id] ~= nil and action.released then
+		self._modificators[action_id] = false
 	end
 
 	return false
@@ -173,7 +188,7 @@ end
 
 --- If true, the callback will be triggered on action.repeated
 ---@param is_enabled_repeated bool The flag value
----@return Hotkey
+---@return druid.hotkey
 function M:set_repeat(is_enabled_repeated)
 	self._is_process_repeated = is_enabled_repeated
 	return self

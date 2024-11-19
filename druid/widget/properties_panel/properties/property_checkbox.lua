@@ -1,4 +1,4 @@
----@class property_checkbox: druid.widget
+---@class widget.property_checkbox: druid.widget
 ---@field root node
 ---@field druid druid_instance
 ---@field text_name druid.text

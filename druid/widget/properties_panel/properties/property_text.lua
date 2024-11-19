@@ -1,4 +1,4 @@
----@class property_text: druid.widget
+---@class widget.property_text: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field text_name druid.text
@@ -8,6 +8,7 @@ local M = {}
 function M:init()
 	self.root = self:get_node("root")
 	self.text_name = self.druid:new_text("text_name")
+		:set_text_adjust("scale_when_trim_left", 0.3)
 	self.text_right = self.druid:new_text("text_right", "")
 
 	self.container = self.druid:new_container(self.root)
@@ -21,15 +22,15 @@ end
 
 
 ---@param text string
----@return property_text
+---@return widget.property_text
 function M:set_text(text)
 	self.text_name:set_text(text)
 	return self
 end
 
 
----@param text string
----@return property_text
+---@param text string|nil
+---@return widget.property_text
 function M:set_right_text(text)
 	self.text_right:set_text(text or "")
 	return self

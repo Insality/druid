@@ -209,6 +209,8 @@ local function update_text_area_size(self)
 end
 
 
+---@param self druid.text
+---@param trim_postfix string
 local function update_text_with_trim(self, trim_postfix)
 	local max_width = self.text_area.x
 	local text_width = self:get_text_size()
@@ -228,6 +230,24 @@ local function update_text_with_trim(self, trim_postfix)
 		gui.set_text(self.node, new_text .. trim_postfix)
 	else
 		gui.set_text(self.node, self.last_value)
+	end
+end
+
+local function update_text_with_trim_left(self, trim_postfix)
+	local max_width = self.text_area.x
+	local text_width = self:get_text_size()
+	local text_length = utf8.len(self.last_value)
+	local trim_index = 1
+
+	if text_width > max_width then
+		local new_text = self.last_value
+		while text_width > max_width and trim_index < text_length do
+			trim_index = trim_index + 1
+			new_text = trim_postfix .. utf8.sub(self.last_value, trim_index, text_length)
+			text_width = self:get_text_size(new_text)
+		end
+
+		gui.set_text(self.node, new_text)
 	end
 end
 
@@ -255,6 +275,10 @@ local function update_adjust(self)
 		update_text_with_trim(self, self.style.TRIM_POSTFIX)
 	end
 
+	if self.adjust_type == const.TEXT_ADJUST.TRIM_LEFT then
+		update_text_with_trim_left(self, self.style.TRIM_POSTFIX)
+	end
+
 	if self.adjust_type == const.TEXT_ADJUST.DOWNSCALE_LIMITED then
 		update_text_area_size(self)
 	end
@@ -266,6 +290,16 @@ local function update_adjust(self)
 	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_SCROLL then
 		update_text_area_size(self)
 		update_text_with_anchor_shift(self)
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_TRIM then
+		update_text_area_size(self)
+		update_text_with_trim(self, self.style.TRIM_POSTFIX)
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_TRIM_LEFT then
+		update_text_area_size(self)
+		update_text_with_trim_left(self, self.style.TRIM_POSTFIX)
 	end
 end
 
@@ -312,13 +346,13 @@ function M:init(node, value, adjust_type)
 	self.on_set_pivot = Event()
 	self.on_update_text_scale = Event()
 
-	self:set_to(value or gui.get_text(self.node))
+	self:set_text(value or gui.get_text(self.node))
 	return self
 end
 
 
 function M:on_layout_change()
-	self:set_to(self.last_value)
+	self:set_text(self.last_value)
 end
 
 
@@ -328,13 +362,13 @@ function M:on_message_input(node_id, message)
 	end
 
 	if message.action == const.MESSAGE_INPUT.TEXT_SET then
-		Text.set_to(self, message.value)
+		M.set_text(self, message.value)
 	end
 end
 
 
 --- Calculate text width with font with respect to trailing space
----@param text|nil string
+---@param text string|nil
 ---@return number Width
 ---@return number Height
 function M:get_text_size(text)
@@ -421,13 +455,15 @@ end
 
 --- Set text area size
 ---@param size vector3 The new text area size
----@return druid.text Current text instance
+---@return druid.text self Current text instance
 function M:set_size(size)
 	self.start_size = size
 	self.text_area = vmath.vector3(size)
 	self.text_area.x = self.text_area.x * self.start_scale.x
 	self.text_area.y = self.text_area.y * self.start_scale.y
 	update_adjust(self)
+
+	return self
 end
 
 
@@ -497,13 +533,15 @@ end
 
 
 --- Set text adjust, refresh the current text visuals, if needed
+---Values are: "downscale", "trim", "no_adjust", "downscale_limited",
+---"scroll", "scale_then_scroll", "trim_left", "scale_then_trim", "scale_then_trim_left"
 ---@param adjust_type string|nil See const.TEXT_ADJUST. If pass nil - use current adjust type
 ---@param minimal_scale number|nil If pass nil - not use minimal scale
----@return druid.text Current text instance
+---@return druid.text self Current text instance
 function M:set_text_adjust(adjust_type, minimal_scale)
 	self.adjust_type = adjust_type
 	self._minimal_scale = minimal_scale
-	self:set_to(self.last_value)
+	self:set_text(self.last_value)
 
 	return self
 end
@@ -520,8 +558,8 @@ end
 
 
 --- Return current text adjust type
----@return number The current text adjust type
-function M:get_text_adjust(adjust_type)
+---@return string adjust_type The current text adjust type
+function M:get_text_adjust()
 	return self.adjust_type
 end
 

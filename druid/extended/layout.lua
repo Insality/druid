@@ -68,6 +68,22 @@ function M:update()
 end
 
 
+function M:get_entities()
+	return self.entities
+end
+
+
+function M:set_node_index(node, index)
+	for i = 1, #self.entities do
+		if self.entities[i] == node then
+			table.remove(self.entities, i)
+			table.insert(self.entities, index, node)
+			break
+		end
+	end
+end
+
+
 ---@param margin_x number|nil
 ---@param margin_y number|nil
 ---@return druid.layout
@@ -444,15 +460,16 @@ function M:calculate_rows_data()
 end
 
 
+---Will reset z value to 0!
+local TEMP_VECTOR = vmath.vector3(0, 0, 0)
 ---@param node node
 ---@param x number
 ---@param y number
 ---@return node
 function M:set_node_position(node, x, y)
-	local position = gui.get_position(node)
-	position.x = x
-	position.y = y
-	gui.set_position(node, position)
+	TEMP_VECTOR.x = x
+	TEMP_VECTOR.y = y
+	gui.set_position(node, TEMP_VECTOR)
 
 	return node
 end

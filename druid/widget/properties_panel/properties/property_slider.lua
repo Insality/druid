@@ -1,4 +1,4 @@
----@class property_slider: druid.widget
+---@class widget.property_slider: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field druid druid_instance
