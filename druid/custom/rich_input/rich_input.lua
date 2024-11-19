@@ -252,12 +252,16 @@ function M:on_input(action_id, action)
 		end
 	end
 
-	if action_id == const.ACTION_LEFT and (action.pressed or action.repeated) then
-		self.input:move_selection(-1, self.is_lshift, self.is_lctrl)
-	end
+	if self.input.is_selected then
+		if action_id == const.ACTION_LEFT and (action.pressed or action.repeated) then
+			self.input:move_selection(-1, self.is_lshift, self.is_lctrl)
+			return true
+		end
 
-	if action_id == const.ACTION_RIGHT and (action.pressed or action.repeated) then
-		self.input:move_selection(1, self.is_lshift, self.is_lctrl)
+		if action_id == const.ACTION_RIGHT and (action.pressed or action.repeated) then
+			self.input:move_selection(1, self.is_lshift, self.is_lctrl)
+			return true
+		end
 	end
 end
 
@@ -265,7 +269,7 @@ end
 --- Set placeholder text
 ---@param placeholder_text string The placeholder text
 function M:set_placeholder(placeholder_text)
-	self.placeholder:set_to(placeholder_text)
+	self.placeholder:set_text(placeholder_text)
 	return self
 end
 

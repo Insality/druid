@@ -16,6 +16,8 @@ function M:init()
 	gui.set_alpha(self.selected, 0)
 
 	self.text_name = self.druid:new_text("text_name")
+		:set_text_adjust("scale_then_trim_left", 0.3)
+
 	self.text_value = self.druid:new_text("text_value")
 	self.button_left = self.druid:new_button("button_left", self.on_button_left)
 	self.button_right = self.druid:new_button("button_right", self.on_button_right)

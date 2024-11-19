@@ -261,6 +261,7 @@ local function update_text_with_anchor_shift(self)
 end
 
 
+---@param self druid.text
 local function update_adjust(self)
 	if not self.adjust_type or self.adjust_type == const.TEXT_ADJUST.NO_ADJUST then
 		reset_default_scale(self)

@@ -9,6 +9,7 @@ function M:init()
 	self.root = self:get_node("root")
 	self.text_name = self.druid:new_text("text_name")
 		:set_text_adjust("scale_when_trim_left", 0.3)
+
 	self.text_right = self.druid:new_text("text_right", "")
 
 	self.container = self.druid:new_container(self.root)

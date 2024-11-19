@@ -12,7 +12,7 @@ local M = {}
 function M:init()
 	self.root = self:get_node("root")
 	self.text_name = self.druid:new_text("text_name")
-		:set_text_adjust("trim_left")
+		:set_text_adjust("scale_then_trim_left", 0.3)
 
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)

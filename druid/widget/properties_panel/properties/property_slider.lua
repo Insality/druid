@@ -15,6 +15,8 @@ function M:init()
 	self._value = 0
 
 	self.text_name = self.druid:new_text("text_name")
+		:set_text_adjust("scale_then_trim_left", 0.3)
+
 	self.text_value = self.druid:new_text("text_value")
 	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(55, 0, 0), self._on_slider_change_by_user) --[[@as druid.slider]]
 	self.slider:set_input_node("slider")
