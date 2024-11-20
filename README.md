@@ -178,13 +178,6 @@ Here is full **Druid** components list.
 
 ### Extended components
 
-> Extended components before usage should be registered in **Druid** with [`druid.register()`](https://insality.github.io/druid/modules/Druid.html#druid.register) function.
-> On usage of unregistered **Druid** component the next log will be shown in the console.
-```
-local data_list = require("druid.extended.data_list")
-druid.register("data_list", data_list)
-```
-
 | Name | Description | Example | <div style="width:200px">Preview</div> |
 |------|-------------|---------|---------|
 | **[Data List](https://insality.github.io/druid/modules/DataList.html)** | Logic over Scroll and Grid components. Create only visible GUI nodes or components to make "infinity" scroll befaviour | [Data List Example](https://insality.github.io/druid/druid/?example=ui_example_data_list_basic) | <img src="media/preview/data_list.gif" width="200" height="100"> |

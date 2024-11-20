@@ -1,6 +1,4 @@
 local component = require("druid.component")
-local container = require("example.components.container.container")
-local lang_text = require("druid.extended.lang_text")
 
 ---@class output_list: druid.base_component
 ---@field root druid.container
@@ -14,7 +12,7 @@ local M = component.create("output_list")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
 	self.root:add_container("text_header")
 	self.root:add_container("separator")
 
@@ -27,7 +25,7 @@ function M:init(template, nodes)
 	self.scroll:bind_grid(self.grid)
 	self.scroll:set_horizontal_scroll(false)
 
-	self.druid:new(lang_text, "text_header", "ui_output")
+	self.druid:new_lang_text("text_header", "ui_output")
 
 	local defold_version = sys.get_engine_info().version
 	gui.set_text(self:get_node("text_version_defold"), "Defold v" .. defold_version)

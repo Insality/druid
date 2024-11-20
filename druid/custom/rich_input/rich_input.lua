@@ -43,8 +43,6 @@ local const  = require("druid.const")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
-local input = require("druid.extended.input")
-
 ---@class druid.rich_input: druid.base_component
 ---@field root node
 ---@field input druid.input
@@ -209,7 +207,7 @@ function M:init(template, nodes)
 	self.is_lshift = false
 	self.is_lctrl = false
 
-	self.input = self.druid:new(input, "button", "input_text")
+	self.input = self.druid:new_input("button", "input_text")
 	self.is_button_input_enabled = gui.is_enabled(self.input.button.node)
 
 	self.cursor = self:get_node("cursor_node")

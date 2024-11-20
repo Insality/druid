@@ -1,6 +1,4 @@
 local component = require("druid.component")
-local container = require("example.components.container.container")
-local lang_text = require("druid.extended.lang_text")
 
 local property_checkbox = require("example.components.properties_panel.properties.property_checkbox")
 local property_slider = require("example.components.properties_panel.properties.property_slider")
@@ -18,7 +16,7 @@ local M = component.create("properties_panel")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
 	self.root:add_container("text_header")
 	self.root:add_container("separator")
 	--self.root:add_container("scroll_view", nil, function()
@@ -27,8 +25,8 @@ function M:init(template, nodes)
 
 	self.properties = {}
 
-	self.druid:new(lang_text, "text_header", "ui_properties_panel")
-	self.text_no_properties = self.druid:new(lang_text, "text_no_properties", "ui_no_properties") --[[@as druid.lang_text]]
+	self.druid:new_lang_text("text_header", "ui_properties_panel")
+	self.text_no_properties = self.druid:new_lang_text("text_no_properties", "ui_no_properties") --[[@as druid.lang_text]]
 
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
 	self.grid = self.druid:new_grid("scroll_content", "item_size", 1)

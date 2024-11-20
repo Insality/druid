@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local lang_text = require("druid.extended.lang_text")
 local panthera = require("panthera.panthera")
 
 local window_animation_panthera = require("example.examples.windows.window_animation_panthera")
@@ -19,10 +18,10 @@ local M = component.create("window_confirmation")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.text_header = self.druid:new(lang_text, "text_header", "ui_confirmation") --[[@as druid.lang_text]]
-	self.text_button_accept = self.druid:new(lang_text, "button_accept/text", "ui_accept") --[[@as druid.lang_text]]
-	self.text_button_decline = self.druid:new(lang_text, "button_decline/text", "ui_decline") --[[@as druid.lang_text]]
-	self.text_description = self.druid:new(lang_text, "text") --[[@as druid.lang_text]]
+	self.text_header = self.druid:new_lang_text("text_header", "ui_confirmation") --[[@as druid.lang_text]]
+	self.text_button_accept = self.druid:new_lang_text("button_accept/text", "ui_accept") --[[@as druid.lang_text]]
+	self.text_button_decline = self.druid:new_lang_text("button_decline/text", "ui_decline") --[[@as druid.lang_text]]
+	self.text_description = self.druid:new_lang_text("text") --[[@as druid.lang_text]]
 
 	self.button_close = self.druid:new_button("button_close", self.on_button_close)
 	self.button_accept = self.druid:new_button("button_accept/root")

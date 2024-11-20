@@ -2,7 +2,6 @@ local lang = require("lang.lang")
 local druid = require("druid.druid")
 local event = require("event.event")
 local component = require("druid.component")
-local lang_text = require("druid.extended.lang_text")
 local panthera = require("panthera.panthera")
 
 local window_animation_panthera = require("example.examples.windows.window_animation_panthera")
@@ -35,7 +34,7 @@ function M:init(template, nodes)
 
 	self.button_close = self.druid:new_button("button_close", self.on_button_close)
 
-	self.druid:new(lang_text, "text_header", "ui_language")
+	self.druid:new_lang_text("text_header", "ui_language")
 	self.grid = self.druid:new_grid("content", self.prefab, 2)
 	self.grid.style.IS_DYNAMIC_NODE_POSES = true
 
@@ -73,7 +72,7 @@ function M:load_langs()
 		local text = prefab_nodes[template .. "button/text"]
 
 		local button = self.druid:new_button(button_node, self.on_language_button, lang_id)
-		self.druid:new(lang_text, text, "ui_language_" .. lang_id)
+		self.druid:new_lang_text(text, "ui_language_" .. lang_id)
 		gui.set_enabled(root, true)
 		self.grid:add(root)
 

@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local progress = require("druid.extended.progress")
 
 ---@class gamepad_tester: druid.base_component
 ---@field root node
@@ -38,8 +37,8 @@ function M:init(template, nodes)
 	self.button_start = self.druid:new_button("button_start/button"):set_key_trigger("gamepad_start")
 	self.button_back = self.druid:new_button("button_back/button"):set_key_trigger("gamepad_back")
 
-	self.trigger_l2 = self.druid:new(progress, "button_l2/fill", "x", 0) --[[@as druid.progress]]
-	self.trigger_r2 = self.druid:new(progress, "button_r2/fill", "x", 0) --[[@as druid.progress]]
+	self.trigger_l2 = self.druid:new_progress("button_l2/fill", "x", 0) --[[@as druid.progress]]
+	self.trigger_r2 = self.druid:new_progress("button_r2/fill", "x", 0) --[[@as druid.progress]]
 
 	self.stick_left = self:get_node("stick_left/stick_root")
 	self.stick_right = self:get_node("stick_right/stick_root")

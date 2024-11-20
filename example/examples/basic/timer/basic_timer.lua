@@ -1,9 +1,8 @@
 local event = require("event.event")
-local timer = require("druid.extended.timer")
 
 local component = require("druid.component")
 
----@class basic_timer: druid.component
+---@class basic_timer: druid.base_component
 ---@field druid druid_instance
 ---@field root node
 ---@field text druid.text
@@ -16,7 +15,7 @@ function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
 	self.root = self:get_node("root")
-	self.timer = self.druid:new(timer, "text")
+	self.timer = self.druid:new_timer("text")
 
 	local time = 5
 	self.timer:set_interval(time, 0)

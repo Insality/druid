@@ -2,7 +2,6 @@ local panthera = require("panthera.panthera")
 local component = require("druid.component")
 
 local druid_logo_panthera = require("example.components.druid_logo.druid_logo_panthera")
-local container = require("example.components.container.container")
 
 ---@class druid_logo: druid.base_component
 ---@field root druid.container
@@ -16,7 +15,7 @@ local DruidLogo = component.create("druid_logo")
 function DruidLogo:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
 	self.root:add_container("E_Anchor")
 	self.root:add_container("W_Anchor")
 

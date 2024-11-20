@@ -1,6 +1,5 @@
 local event = require("event.event")
 local component = require("druid.component")
-local data_list = require("druid.extended.data_list")
 
 local button_component = require("example.examples.data_list.cache_with_component.button_component")
 
@@ -19,7 +18,7 @@ function M:init(template, nodes)
 
 	self.scroll = self.druid:new_scroll("view", "content")
 	self.grid = self.druid:new_grid("content", self.prefab, 1)
-	self.data_list = self.druid:new(data_list, self.scroll, self.grid, self.create_item_callback) --[[@as druid.data_list]]
+	self.data_list = self.druid:new_data_list(self.scroll, self.grid, self.create_item_callback) --[[@as druid.data_list]]
 	self.data_list:set_use_cache(true)
 	self.data_list.on_element_add:subscribe(self.on_element_add)
 	self.data_list.on_element_remove:subscribe(self.on_element_remove)

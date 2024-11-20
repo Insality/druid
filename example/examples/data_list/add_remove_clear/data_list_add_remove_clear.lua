@@ -1,6 +1,5 @@
 local event = require("event.event")
 local component = require("druid.component")
-local data_list = require("druid.extended.data_list")
 
 ---@class data_list_add_remove_clear: druid.base_component
 ---@field druid druid_instance
@@ -18,7 +17,7 @@ function M:init(template, nodes)
 
 	self.scroll = self.druid:new_scroll("view", "content")
 	self.grid = self.druid:new_grid("content", self.prefab, 1)
-	self.data_list = self.druid:new(data_list, self.scroll, self.grid, self.create_item_callback) --[[@as druid.data_list]]
+	self.data_list = self.druid:new_data_list(self.scroll, self.grid, self.create_item_callback) --[[@as druid.data_list]]
 
 	local data = {}
 	for index = 1, 20 do

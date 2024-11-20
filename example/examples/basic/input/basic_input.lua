@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local input = require("druid.extended.input")
 
 ---@class basic_input: druid.base_component
 ---@field druid druid_instance
@@ -12,9 +11,9 @@ local M = component.create("basic_input")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.input = self.druid:new(input, "input/root", "input/text")
+	self.input = self.druid:new_input("input/root", "input/text")
 
-	self.input_2 = self.druid:new(input, "input_2/root", "input_2/text") --[[@as druid.input]]
+	self.input_2 = self.druid:new_input("input_2/root", "input_2/text") --[[@as druid.input]]
 
 	-- you can set custom style for input and their components
 	-- Check in the example, how long tap on bottom input will erase text

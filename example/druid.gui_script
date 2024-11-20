@@ -3,7 +3,6 @@ local saver = require("saver.saver")
 local storage = require("saver.storage")
 local druid = require("druid.druid")
 
-local container = require("example.components.container.container")
 local druid_logo = require("example.components.druid_logo.druid_logo")
 local panel_information = require("example.components.panel_information.panel_information")
 local example_scene = require("example.components.example_scene.example_scene")
@@ -56,7 +55,7 @@ end
 --- This allow easily move components in the GUI scene and change the size of each section
 ---@param self druid.example
 local function setup_layout(self)
-	self.container_root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.container_root = self.druid:new_container("root") --[[@as druid.container]]
 	self.container_left = self.container_root:add_container("container_left", "stretch_y")
 	self.container_logo = self.container_left:add_container("container_logo")
 	self.container_examples = self.container_left:add_container("container_examples")

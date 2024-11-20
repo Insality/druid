@@ -667,7 +667,7 @@ end
 local timer_component = require("druid.extended.timer")
 ---Create Timer component
 ---@param node string|node Gui text node
----@param seconds_from number Start timer value in seconds
+---@param seconds_from number|nil Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
 ---@param callback function|nil Function on timer end
 ---@return druid.timer Timer component
@@ -690,7 +690,7 @@ end
 local layout = require("druid.extended.layout")
 ---Create Layout component
 ---@param node string|node The_node id or gui.get_node(node_id).
----@param mode string vertical|horizontal|horizontal_wrap
+---@param mode string|nil vertical|horizontal|horizontal_wrap. Default: horizontal
 ---@return druid.layout Layout component
 function M:new_layout(node, mode)
 	return self:new(layout, node, mode)

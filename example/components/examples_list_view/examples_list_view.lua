@@ -1,7 +1,5 @@
 local event = require("event.event")
 local component = require("druid.component")
-local container = require("example.components.container.container")
-local lang_text = require("druid.extended.lang_text")
 local storage = require("saver.storage")
 
 local examples_list_view_item = require("example.components.examples_list_view.examples_list_view_item")
@@ -19,10 +17,10 @@ local M = component.create("examples_list_view")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
 	self.root:add_container("text_header")
 
-	self.druid:new(lang_text, "text_header", "ui_examples")
+	self.druid:new_lang_text("text_header", "ui_examples")
 	self.druid:new(examples_list_view_item, "examples_list_view_item")
 
 	self.prefab = self:get_node("examples_list_view_item/root")

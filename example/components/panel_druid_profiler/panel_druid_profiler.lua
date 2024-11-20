@@ -1,8 +1,6 @@
 local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
-local container = require("example.components.container.container")
-local lang_text = require("druid.extended.lang_text")
 
 
 ---@class panel_druid_profiler: druid.base_component
@@ -16,7 +14,7 @@ local FPS_SAMPLES = 60
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
 	self.group_memory = self.root:add_container("group_memory")
 	self.group_fps = self.root:add_container("group_fps")
 	self.group_components = self.root:add_container("group_components")
@@ -35,10 +33,10 @@ function M:init(template, nodes)
 	self.text_components_amount = self.druid:new_text("text_components_amount")
 	self.text_events_amount = self.druid:new_text("text_events_amount")
 
-	self.druid:new(lang_text, "text_memory", "ui_profiler_memory")
-	self.druid:new(lang_text, "text_fps", "ui_profiler_fps")
-	self.druid:new(lang_text, "text_components", "ui_profiler_components")
-	self.druid:new(lang_text, "text_events", "ui_profiler_events")
+	self.druid:new_lang_text("text_memory", "ui_profiler_memory")
+	self.druid:new_lang_text("text_fps", "ui_profiler_fps")
+	self.druid:new_lang_text("text_components", "ui_profiler_components")
+	self.druid:new_lang_text("text_events", "ui_profiler_events")
 
 	self.previous_time = nil
 	self.fps_samples = {}
