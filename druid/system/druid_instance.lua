@@ -386,18 +386,7 @@ end
 function M:on_message(message_id, message, sender)
 	local specific_ui_message = base_component.SPECIFIC_UI_MESSAGES[message_id]
 
-	if specific_ui_message == base_component.ON_MESSAGE_INPUT then
-		-- ON_MESSAGE_INPUT is special message, need to perform additional logic
-		local components = self.components_interest[base_component.ON_MESSAGE_INPUT]
-		if components then
-			for i = 1, #components do
-				local component = components[i]
-				if can_use_input_component(self, component) then
-					component[specific_ui_message](component, hash(message.node_id), message)
-				end
-			end
-		end
-	elseif specific_ui_message then
+	if specific_ui_message then
 		-- Resend special message to all components with the related interest
 		local components = self.components_interest[specific_ui_message]
 		if components then

@@ -357,17 +357,6 @@ function M:on_layout_change()
 end
 
 
-function M:on_message_input(node_id, message)
-	if node_id ~= self.node_id  then
-		return false
-	end
-
-	if message.action == const.MESSAGE_INPUT.TEXT_SET then
-		M.set_text(self, message.value)
-	end
-end
-
-
 --- Calculate text width with font with respect to trailing space
 ---@param text string|nil
 ---@return number Width

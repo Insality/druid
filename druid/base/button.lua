@@ -444,31 +444,6 @@ function M:on_input_interrupt()
 end
 
 
-function M:on_message_input(node_id, message)
-	if node_id ~= self.node_id or self.disabled or not gui.is_enabled(self.node) then
-		return false
-	end
-
-	if message.action == const.MESSAGE_INPUT.BUTTON_CLICK then
-		on_button_click(self)
-	end
-
-	if message.action == const.MESSAGE_INPUT.BUTTON_LONG_CLICK then
-		on_button_long_click(self)
-	end
-
-	if message.action == const.MESSAGE_INPUT.BUTTON_DOUBLE_CLICK then
-		on_button_double_click(self)
-	end
-
-	if message.action == const.MESSAGE_INPUT.BUTTON_REPEATED_CLICK then
-		on_button_repeated_click(self)
-		self.is_repeated_started = false
-		self.last_pressed_time = socket.gettime()
-	end
-end
-
-
 --- Set button enabled state.
 -- The style.on_set_enabled will be triggered.
 -- Disabled button is not clickable.
