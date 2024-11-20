@@ -39,13 +39,24 @@ function M:init()
 end
 
 
-function M:set_samples(samples)
-	self.samples = samples
+function M:on_remove()
+	self:clear()
+end
+
+
+function M:clear()
 	self.layout:clear_layout()
 	for index = 1, #self.lines do
 		gui.delete_node(self.lines[index])
 	end
+
 	self.lines = {}
+end
+
+
+function M:set_samples(samples)
+	self.samples = samples
+	self:clear()
 
 	local line_width = self.layout:get_size().x / self.samples
 	for index = 1, self.samples do

@@ -20,7 +20,10 @@ function M:init()
 
 	self.text_value = self.druid:new_text("text_value")
 	self.button_left = self.druid:new_button("button_left", self.on_button_left)
+	self.button_left.on_repeated_click:subscribe(self.on_button_left, self)
+
 	self.button_right = self.druid:new_button("button_right", self.on_button_right)
+	self.button_right.on_repeated_click:subscribe(self.on_button_right, self)
 
 	self.on_change_value = event.create()
 

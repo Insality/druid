@@ -69,6 +69,14 @@ function M.get_examples()
 			code_url = "example/examples/widgets/fps_panel/example_fps_panel.lua",
 			widget_class = require("example.examples.widgets.fps_panel.example_fps_panel"),
 		},
+		{
+			name_id = "ui_example_widget_properties_panel",
+			information_text_id = "ui_example_widget_properties_panel_description",
+			template = "example_properties_panel",
+			root = "example_properties_panel/root",
+			code_url = "example/examples/widgets/properties_panel/example_properties_panel.lua",
+			widget_class = require("example.examples.widgets.properties_panel.example_properties_panel"),
+		},
 	}
 end
 

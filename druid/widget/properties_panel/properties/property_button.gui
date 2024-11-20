@@ -37,7 +37,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "Button"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "text_name"
   pivot: PIVOT_W
   outline {
@@ -134,7 +134,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "Button"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "text_button"
   outline {
     x: 1.0

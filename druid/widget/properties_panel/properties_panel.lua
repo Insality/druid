@@ -75,6 +75,11 @@ function M:init()
 end
 
 
+function M:on_remove()
+	self:clear()
+end
+
+
 function M:on_drag_widget(dx, dy)
 	local position = self.container:get_position()
 	self.container:set_position(position.x + dx, position.y + dy)

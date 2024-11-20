@@ -33,6 +33,11 @@ function M:init()
 end
 
 
+function M:on_remove()
+	timer.cancel(self.timer_id)
+end
+
+
 function M:update(dt)
 	if not self.previous_time then
 		self.previous_time = socket.gettime()

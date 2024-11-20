@@ -28,6 +28,11 @@ function M:init()
 end
 
 
+function M:on_remove()
+	timer.cancel(self.timer_id)
+end
+
+
 function M:set_low_memory_limit(limit)
 	self.memory_limit = limit
 end
