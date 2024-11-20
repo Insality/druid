@@ -30,7 +30,7 @@ nodes {
     z: 0.49
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "progress_bar_back"
   pivot: PIVOT_W
   parent: "root"
@@ -47,7 +47,7 @@ nodes {
     z: 0.961
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "progress_bar_fill"
   pivot: PIVOT_W
   parent: "progress_bar_back"

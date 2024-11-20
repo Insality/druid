@@ -27,7 +27,7 @@ nodes {
     z: 0.961
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "panel"
   parent: "root"
   inherit_alpha: true

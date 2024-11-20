@@ -28,7 +28,7 @@ nodes {
     z: 0.49
   }
   type: TYPE_BOX
-  texture: "druid/rect_round2_width1"
+  texture: "druid_example/rect_round2_width1"
   id: "button"
   parent: "root"
   inherit_alpha: true
@@ -46,7 +46,7 @@ nodes {
     z: 0.761
   }
   type: TYPE_BOX
-  texture: "druid/icon_check"
+  texture: "druid_example/icon_check"
   id: "icon"
   parent: "button"
   inherit_alpha: true
@@ -66,7 +66,7 @@ nodes {
     z: 0.333
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "selected"
   pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_STRETCH

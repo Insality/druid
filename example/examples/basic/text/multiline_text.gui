@@ -28,7 +28,7 @@ nodes {
     z: 0.49
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "text_area"
   parent: "root"
   inherit_alpha: true

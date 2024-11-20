@@ -13,7 +13,7 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "root"
   inherit_alpha: true
 }
@@ -28,7 +28,7 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_8"
+  texture: "druid_example/ui_circle_8"
   id: "slider_back"
   parent: "root"
   inherit_alpha: true
@@ -53,7 +53,7 @@ nodes {
     z: 0.761
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_8"
+  texture: "druid_example/ui_circle_8"
   id: "slider_pin"
   parent: "root"
   inherit_alpha: true

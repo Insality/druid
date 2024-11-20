@@ -25,7 +25,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "root"
   inherit_alpha: true
   slice9 {
@@ -158,7 +158,7 @@ nodes {
     y: -364.0
   }
   type: TYPE_BOX
-  texture: "druid/icon_heart"
+  texture: "druid_example/icon_heart"
   id: "icon_heart1"
   parent: "root"
   inherit_alpha: true
@@ -170,7 +170,7 @@ nodes {
     y: -364.0
   }
   type: TYPE_BOX
-  texture: "druid/icon_heart"
+  texture: "druid_example/icon_heart"
   id: "icon_heart2"
   parent: "root"
   inherit_alpha: true
@@ -183,7 +183,7 @@ nodes {
     y: -364.0
   }
   type: TYPE_BOX
-  texture: "druid/icon_heart"
+  texture: "druid_example/icon_heart"
   id: "icon_heart3"
   parent: "root"
   inherit_alpha: true

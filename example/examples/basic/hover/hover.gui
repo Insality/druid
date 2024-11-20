@@ -23,20 +23,6 @@ nodes {
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "button_mouse_hover/root"
-  parent: "button_mouse_hover"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "Mouse Hover"
-  id: "button_mouse_hover/text"
-  parent: "button_mouse_hover/root"
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
   position {
     y: -100.0
   }
@@ -45,20 +31,6 @@ nodes {
   parent: "root"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_mobile_hover/root"
-  parent: "button_mobile_hover"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "Mobile Hover"
-  id: "button_mobile_hover/text"
-  parent: "button_mobile_hover/root"
-  overridden_fields: 8
-  template_node_child: true
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

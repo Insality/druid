@@ -8,7 +8,7 @@ textures {
 }
 nodes {
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "root"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
@@ -28,7 +28,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "view"
   pivot: PIVOT_N
   parent: "root"
@@ -41,7 +41,7 @@ nodes {
     y: 700.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "content"
   pivot: PIVOT_N
   parent: "view"
@@ -57,24 +57,6 @@ nodes {
   parent: "content"
   inherit_alpha: true
   template: "/example/examples/data_list/cache_with_component/button_component.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_component/root"
-  parent: "button_component"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_component/panel"
-  parent: "button_component/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "button_component/text"
-  parent: "button_component/root"
-  template_node_child: true
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

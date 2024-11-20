@@ -17,7 +17,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
   layer: "druid"
@@ -72,7 +72,7 @@ nodes {
     y: 290.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "scroll_view"
   xanchor: XANCHOR_LEFT
   pivot: PIVOT_NW
@@ -88,7 +88,7 @@ nodes {
     y: 290.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "scroll_content"
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
@@ -126,7 +126,7 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "separator"
   pivot: PIVOT_N
   parent: "root"
@@ -139,7 +139,7 @@ nodes {
     y: 100.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "propeties"
   parent: "root"
   inherit_alpha: true
@@ -154,60 +154,6 @@ nodes {
   template: "/example/components/properties_panel/properties/property_slider.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "property_slider/root"
-  parent: "property_slider"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "property_slider/text_name"
-  parent: "property_slider/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_slider/E_Anchor"
-  parent: "property_slider/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_slider/button"
-  parent: "property_slider/E_Anchor"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_slider/selected"
-  parent: "property_slider/button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "property_slider/text_value"
-  parent: "property_slider/button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_slider/slider"
-  parent: "property_slider/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_slider/slider_back"
-  parent: "property_slider/slider"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_slider/slider_pin"
-  parent: "property_slider/slider"
-  template_node_child: true
-}
-nodes {
   position {
     y: -50.0
   }
@@ -218,36 +164,6 @@ nodes {
   template: "/example/components/properties_panel/properties/property_checkbox.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "property_checkbox/root"
-  parent: "property_checkbox"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "property_checkbox/text_name"
-  parent: "property_checkbox/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_checkbox/button"
-  parent: "property_checkbox/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_checkbox/icon"
-  parent: "property_checkbox/button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_checkbox/selected"
-  parent: "property_checkbox/button"
-  template_node_child: true
-}
-nodes {
   position {
     y: -100.0
   }
@@ -256,36 +172,6 @@ nodes {
   parent: "propeties"
   inherit_alpha: true
   template: "/example/components/properties_panel/properties/property_button.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_button/root"
-  parent: "property_button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "property_button/text_name"
-  parent: "property_button/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_button/button"
-  parent: "property_button/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "property_button/selected"
-  parent: "property_button/button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "property_button/text_button"
-  parent: "property_button/button"
-  template_node_child: true
 }
 nodes {
   position {

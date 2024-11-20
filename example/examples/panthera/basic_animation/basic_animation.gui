@@ -20,19 +20,5 @@ nodes {
   inherit_alpha: true
   template: "/example/templates/button_text_blue.gui"
 }
-nodes {
-  type: TYPE_BOX
-  id: "button/root"
-  parent: "button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "Hover Me!"
-  id: "button/text"
-  parent: "button/root"
-  overridden_fields: 8
-  template_node_child: true
-}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

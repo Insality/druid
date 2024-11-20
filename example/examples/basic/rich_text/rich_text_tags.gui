@@ -35,7 +35,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "background"
   parent: "root"
   inherit_alpha: true

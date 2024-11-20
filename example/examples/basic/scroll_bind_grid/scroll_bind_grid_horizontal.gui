@@ -12,7 +12,7 @@ nodes {
     y: 1000.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "root"
   inherit_alpha: true
   visible: false
@@ -31,7 +31,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "view"
   pivot: PIVOT_W
   parent: "root"
@@ -50,7 +50,7 @@ nodes {
     y: 360.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "content"
   pivot: PIVOT_W
   parent: "view"
@@ -82,7 +82,7 @@ nodes {
     z: 0.961
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "panel"
   parent: "prefab"
   inherit_alpha: true

@@ -39,7 +39,7 @@ nodes {
     y: 1080.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_left"
   pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_STRETCH
@@ -56,7 +56,7 @@ nodes {
     y: 170.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_logo"
   pivot: PIVOT_NW
   parent: "container_left"
@@ -125,7 +125,7 @@ nodes {
     y: 910.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_examples"
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
@@ -213,7 +213,7 @@ nodes {
     y: 1080.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_right"
   pivot: PIVOT_E
   adjust_mode: ADJUST_MODE_STRETCH
@@ -230,7 +230,7 @@ nodes {
     y: 450.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_info"
   pivot: PIVOT_NE
   adjust_mode: ADJUST_MODE_STRETCH
@@ -336,7 +336,7 @@ nodes {
     y: 630.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_group_settings_output"
   pivot: PIVOT_SE
   adjust_mode: ADJUST_MODE_STRETCH
@@ -353,7 +353,7 @@ nodes {
     y: 350.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_settings"
   pivot: PIVOT_NE
   adjust_mode: ADJUST_MODE_STRETCH
@@ -558,7 +558,7 @@ nodes {
     y: 280.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_output"
   pivot: PIVOT_SE
   adjust_mode: ADJUST_MODE_STRETCH
@@ -635,7 +635,7 @@ nodes {
     y: 1030.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_center"
   xanchor: XANCHOR_LEFT
   yanchor: YANCHOR_BOTTOM
@@ -683,7 +683,7 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "intro_examples"
   parent: "examples"
   inherit_alpha: true
@@ -2447,7 +2447,6 @@ nodes {
   type: TYPE_BOX
   id: "window_language/root"
   parent: "window_language"
-  overridden_fields: 1
   template_node_child: true
 }
 nodes {
@@ -2521,7 +2520,6 @@ nodes {
   type: TYPE_BOX
   id: "window_confirmation/root"
   parent: "window_confirmation"
-  overridden_fields: 1
   template_node_child: true
 }
 nodes {
@@ -2613,7 +2611,6 @@ nodes {
   type: TYPE_BOX
   id: "window_info/root"
   parent: "window_info"
-  overridden_fields: 1
   template_node_child: true
 }
 nodes {
@@ -2868,7 +2865,7 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "gamepad"
   parent: "examples"
   inherit_alpha: true
@@ -3673,7 +3670,7 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "layout"
   parent: "examples"
   inherit_alpha: true
@@ -3707,7 +3704,7 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "widgets"
   parent: "examples"
   inherit_alpha: true
@@ -3927,9 +3924,15 @@ nodes {
   template: "/example/examples/widgets/memory_panel/example_memory_panel.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "example_memory_panel/root"
+  parent: "example_memory_panel"
+  template_node_child: true
+}
+nodes {
   type: TYPE_TEMPLATE
   id: "example_memory_panel/memory_panel"
-  parent: "example_memory_panel"
+  parent: "example_memory_panel/root"
   template_node_child: true
 }
 nodes {
@@ -4032,7 +4035,7 @@ nodes {
     y: 50.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "container_status"
   xanchor: XANCHOR_LEFT
   pivot: PIVOT_S

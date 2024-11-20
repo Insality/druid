@@ -17,7 +17,7 @@ nodes {
     z: 0.49
   }
   type: TYPE_BOX
-  texture: "druid/rect_round2_width1"
+  texture: "druid_example/rect_round2_width1"
   id: "root"
   inherit_alpha: true
   slice9 {

@@ -1,6 +1,18 @@
 nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
   type: TYPE_TEMPLATE
   id: "memory_panel"
+  parent: "root"
   inherit_alpha: true
   template: "/druid/widget/memory_panel/memory_panel.gui"
 }

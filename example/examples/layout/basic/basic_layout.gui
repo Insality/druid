@@ -13,7 +13,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "root"
   inherit_alpha: true
   slice9 {
@@ -29,7 +29,7 @@ nodes {
     y: 500.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "layout"
   parent: "root"
   inherit_alpha: true
@@ -46,7 +46,7 @@ nodes {
     z: 0.961
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_16"
+  texture: "druid_example/ui_circle_16"
   id: "prefab"
   parent: "layout"
   inherit_alpha: true

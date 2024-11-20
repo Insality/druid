@@ -24,20 +24,6 @@ nodes {
   template: "/example/templates/button_text_blue.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "drag/root"
-  parent: "drag"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "Drag Me"
-  id: "drag/text"
-  parent: "drag/root"
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
   position {
     y: 300.0
   }
@@ -51,7 +37,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "zone"
   parent: "root"
   inherit_alpha: true

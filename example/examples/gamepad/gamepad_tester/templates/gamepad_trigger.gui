@@ -17,7 +17,7 @@ nodes {
     z: 0.322
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "button"
   inherit_alpha: true
   slice9 {
@@ -41,7 +41,7 @@ nodes {
     z: 0.961
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "fill"
   pivot: PIVOT_W
   parent: "button"

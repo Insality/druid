@@ -21,7 +21,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
   layer: "druid"
@@ -76,7 +76,7 @@ nodes {
     y: 190.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "scroll_view"
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
@@ -91,7 +91,7 @@ nodes {
     y: 190.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "scroll_content"
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
@@ -150,7 +150,7 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "separator"
   pivot: PIVOT_N
   parent: "root"

@@ -17,7 +17,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "root"
   inherit_alpha: true
   slice9 {
@@ -33,24 +33,6 @@ nodes {
   parent: "root"
   inherit_alpha: true
   template: "/example/templates/slider.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "slider/root"
-  parent: "slider"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "slider/slider_back"
-  parent: "slider/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "slider/slider_pin"
-  parent: "slider/root"
-  template_node_child: true
 }
 nodes {
   position {

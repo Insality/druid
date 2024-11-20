@@ -18,8 +18,9 @@ local M = {}
 ---@field root string
 ---@field template string|nil
 ---@field code_url string|nil @URL to the source code
----@field component_class druid.base_component
----@field on_create fun(instance: druid.base_component, output_list: output_list)|nil
+---@field component_class druid.base_component|nil
+---@field widget_class druid.widget|nil New way to create components
+---@field on_create fun(instance: druid.base_component|druid.widget, output_list: output_list)|nil
 ---@field get_debug_info (fun(instance: druid.base_component):string)|nil
 ---@field properties_control (fun(instance: druid.base_component, properties_panel: properties_panel))|nil
 ---@field information_text_id string|nil

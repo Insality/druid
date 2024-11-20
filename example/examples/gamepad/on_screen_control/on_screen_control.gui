@@ -13,7 +13,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "root"
   inherit_alpha: true
   slice9 {
@@ -34,7 +34,7 @@ nodes {
     z: 0.624
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "character"
   parent: "root"
   inherit_alpha: true
@@ -56,7 +56,7 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "eye_left"
   parent: "character"
   inherit_alpha: true
@@ -72,7 +72,7 @@ nodes {
     y: 0.984
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_8"
+  texture: "druid_example/ui_circle_8"
   id: "eye_left_blick"
   parent: "eye_left"
   inherit_alpha: true
@@ -89,7 +89,7 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "eye_right"
   parent: "character"
   inherit_alpha: true
@@ -105,7 +105,7 @@ nodes {
     y: 0.984
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_8"
+  texture: "druid_example/ui_circle_8"
   id: "eye_right_blick"
   parent: "eye_right"
   inherit_alpha: true
@@ -135,66 +135,6 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  id: "on_screen_input/on_screen_stick/root"
-  parent: "on_screen_input/on_screen_stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_PIE
-  id: "on_screen_input/on_screen_stick/background_mask"
-  parent: "on_screen_input/on_screen_stick/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/on_screen_stick/background"
-  parent: "on_screen_input/on_screen_stick/background_mask"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/on_screen_stick/stick_root"
-  parent: "on_screen_input/on_screen_stick/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/on_screen_stick/stick_shadow"
-  parent: "on_screen_input/on_screen_stick/stick_root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/on_screen_stick/stick"
-  parent: "on_screen_input/on_screen_stick/stick_root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/on_screen_stick/dot_1"
-  parent: "on_screen_input/on_screen_stick/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/on_screen_stick/dot_2"
-  parent: "on_screen_input/on_screen_stick/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/on_screen_stick/dot_3"
-  parent: "on_screen_input/on_screen_stick/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/on_screen_stick/dot_4"
-  parent: "on_screen_input/on_screen_stick/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
   id: "on_screen_input/on_screen_button"
   parent: "on_screen_input/root"
   template_node_child: true
@@ -203,24 +143,6 @@ nodes {
   type: TYPE_TEMPLATE
   id: "on_screen_input/button_action"
   parent: "on_screen_input/on_screen_button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/button_action/button"
-  parent: "on_screen_input/button_action"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "on_screen_input/button_action/text"
-  parent: "on_screen_input/button_action/button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "on_screen_input/button_action/icon"
-  parent: "on_screen_input/button_action/button"
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"

@@ -90,7 +90,13 @@ function M:add_example(examples, druid_example)
 
 			local root = gui.get_node(example_data.root)
 			gui.set_enabled(root, true)
-			local instance = druid_example.druid:new(example_data.component_class, example_data.template)
+
+			local instance
+			if example_data.widget_class then
+				instance = druid_example.druid:new_widget(example_data.widget_class, example_data.template)
+			else
+				instance = druid_example.druid:new(example_data.component_class, example_data.template)
+			end
 
 			self.selected_example = {
 				data = example_data,

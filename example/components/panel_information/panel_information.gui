@@ -21,7 +21,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
   layer: "druid"
@@ -92,30 +92,6 @@ nodes {
   template: "/example/templates/button_text_blue.gui"
 }
 nodes {
-  size {
-    x: 240.0
-    y: 80.0
-  }
-  type: TYPE_BOX
-  id: "button_view_code/root"
-  parent: "button_view_code"
-  overridden_fields: 4
-  template_node_child: true
-}
-nodes {
-  scale {
-    x: 0.75
-    y: 0.75
-  }
-  type: TYPE_TEXT
-  text: "View code"
-  id: "button_view_code/text"
-  parent: "button_view_code/root"
-  overridden_fields: 3
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
   position {
     x: 220.0
     y: 225.0
@@ -143,44 +119,6 @@ nodes {
   template: "/example/templates/button_text_yellow.gui"
 }
 nodes {
-  size {
-    x: 130.0
-    y: 35.0
-  }
-  type: TYPE_BOX
-  texture: "druid/ui_circle_8"
-  id: "button_profiler/root"
-  parent: "button_profiler"
-  slice9 {
-    x: 4.0
-    y: 4.0
-    z: 4.0
-    w: 4.0
-  }
-  overridden_fields: 4
-  overridden_fields: 9
-  overridden_fields: 22
-  template_node_child: true
-}
-nodes {
-  scale {
-    x: 0.6
-    y: 0.6
-  }
-  size {
-    x: 190.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  text: "Profiler"
-  id: "button_profiler/text"
-  parent: "button_profiler/root"
-  overridden_fields: 3
-  overridden_fields: 4
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
   position {
     x: -200.0
     y: 150.0
@@ -190,7 +128,7 @@ nodes {
     y: 250.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "scroll_view"
   pivot: PIVOT_NW
   parent: "root"
@@ -203,7 +141,7 @@ nodes {
     y: 250.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "scroll_content"
   pivot: PIVOT_NW
   parent: "scroll_view"

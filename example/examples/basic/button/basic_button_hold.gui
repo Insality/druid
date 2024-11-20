@@ -28,7 +28,7 @@ nodes {
     z: 0.624
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "button"
   parent: "root"
   inherit_alpha: true
@@ -63,7 +63,7 @@ nodes {
     z: 0.62
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "button_image"
   parent: "mask"
   inherit_alpha: true

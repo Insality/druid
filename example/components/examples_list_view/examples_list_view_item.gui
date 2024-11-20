@@ -17,7 +17,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "root"
   pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_STRETCH
@@ -36,7 +36,7 @@ nodes {
     z: 0.322
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "panel_highlight"
   pivot: PIVOT_W
   parent: "root"
@@ -55,7 +55,7 @@ nodes {
     z: 0.333
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "panel_selected"
   pivot: PIVOT_W
   parent: "root"
@@ -77,7 +77,7 @@ nodes {
     z: 0.851
   }
   type: TYPE_BOX
-  texture: "druid/icon_arrow"
+  texture: "druid_example/icon_arrow"
   id: "icon"
   parent: "root"
   layer: "druid"

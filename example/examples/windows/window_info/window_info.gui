@@ -17,7 +17,7 @@ nodes {
     y: 500.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
   inherit_alpha: true
@@ -40,7 +40,7 @@ nodes {
     z: 0.322
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "window"
   parent: "root"
   inherit_alpha: true
@@ -65,7 +65,7 @@ nodes {
     z: 0.961
   }
   type: TYPE_BOX
-  texture: "druid/ui_rounded_top_32"
+  texture: "druid_example/ui_rounded_top_32"
   id: "panel_header"
   pivot: PIVOT_N
   parent: "window"
@@ -135,7 +135,7 @@ nodes {
     z: 0.322
   }
   type: TYPE_BOX
-  texture: "druid/icon_cross"
+  texture: "druid_example/icon_cross"
   id: "icon_close"
   parent: "button_close"
   inherit_alpha: true
@@ -200,18 +200,6 @@ nodes {
   parent: "content"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_accept/root"
-  parent: "button_accept"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "button_accept/text"
-  parent: "button_accept/root"
-  template_node_child: true
 }
 layers {
   name: "druid"

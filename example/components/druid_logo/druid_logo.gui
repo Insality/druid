@@ -21,7 +21,7 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "root"
   layer: "druid"
   inherit_alpha: true

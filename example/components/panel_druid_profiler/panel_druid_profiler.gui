@@ -156,7 +156,7 @@ nodes {
     y: 50.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "group_fps"
   parent: "root"
   inherit_alpha: true
@@ -286,7 +286,7 @@ nodes {
     y: 50.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "group_components"
   parent: "root"
   inherit_alpha: true

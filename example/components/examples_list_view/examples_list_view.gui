@@ -17,7 +17,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/pixel"
+  texture: "druid_example/pixel"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
   layer: "druid"
@@ -72,7 +72,7 @@ nodes {
     y: 850.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "scroll_view"
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
@@ -87,7 +87,7 @@ nodes {
     y: 850.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "scroll_content"
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
@@ -105,36 +105,6 @@ nodes {
   parent: "scroll_content"
   inherit_alpha: true
   template: "/example/components/examples_list_view/examples_list_view_item.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "examples_list_view_item/root"
-  parent: "examples_list_view_item"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "examples_list_view_item/panel_highlight"
-  parent: "examples_list_view_item/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "examples_list_view_item/panel_selected"
-  parent: "examples_list_view_item/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "examples_list_view_item/icon"
-  parent: "examples_list_view_item/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "examples_list_view_item/text"
-  parent: "examples_list_view_item/root"
-  template_node_child: true
 }
 layers {
   name: "druid"
