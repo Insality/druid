@@ -11,93 +11,93 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "memory_panel"
+  id: "fps_panel"
   parent: "root"
   inherit_alpha: true
   template: "/druid/widget/fps_panel/fps_panel.gui"
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/root"
-  parent: "memory_panel"
+  id: "fps_panel/root"
+  parent: "fps_panel"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "memory_panel/mini_graph"
-  parent: "memory_panel/root"
+  id: "fps_panel/mini_graph"
+  parent: "fps_panel/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/mini_graph/root"
-  parent: "memory_panel/mini_graph"
+  id: "fps_panel/mini_graph/root"
+  parent: "fps_panel/mini_graph"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/mini_graph/header"
-  parent: "memory_panel/mini_graph/root"
+  id: "fps_panel/mini_graph/header"
+  parent: "fps_panel/mini_graph/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "memory_panel/mini_graph/text_header"
-  parent: "memory_panel/mini_graph/header"
+  id: "fps_panel/mini_graph/text_header"
+  parent: "fps_panel/mini_graph/header"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/mini_graph/icon_drag"
-  parent: "memory_panel/mini_graph/header"
+  id: "fps_panel/mini_graph/icon_drag"
+  parent: "fps_panel/mini_graph/header"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/mini_graph/content"
-  parent: "memory_panel/mini_graph/root"
+  id: "fps_panel/mini_graph/content"
+  parent: "fps_panel/mini_graph/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/mini_graph/prefab_line"
-  parent: "memory_panel/mini_graph/content"
+  id: "fps_panel/mini_graph/prefab_line"
+  parent: "fps_panel/mini_graph/content"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/mini_graph/color_low"
-  parent: "memory_panel/mini_graph/content"
+  id: "fps_panel/mini_graph/color_low"
+  parent: "fps_panel/mini_graph/content"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/content"
-  parent: "memory_panel/root"
+  id: "fps_panel/content"
+  parent: "fps_panel/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "memory_panel/text_min_fps"
-  parent: "memory_panel/content"
+  id: "fps_panel/text_min_fps"
+  parent: "fps_panel/content"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "memory_panel/text_fps"
-  parent: "memory_panel/content"
+  id: "fps_panel/text_fps"
+  parent: "fps_panel/content"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/line_second_1"
-  parent: "memory_panel/content"
+  id: "fps_panel/line_second_1"
+  parent: "fps_panel/content"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "memory_panel/line_second_2"
-  parent: "memory_panel/content"
+  id: "fps_panel/line_second_2"
+  parent: "fps_panel/content"
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"

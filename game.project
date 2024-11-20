@@ -10,6 +10,7 @@ height = 1080
 display_profiles = /builtins/render/default.display_profilesc
 dynamic_orientation = 1
 high_dpi = 1
+update_frequency = 60
 
 [project]
 title = druid

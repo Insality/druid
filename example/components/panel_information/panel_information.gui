@@ -92,6 +92,18 @@ nodes {
   template: "/example/templates/button_text_blue.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "button_view_code/root"
+  parent: "button_view_code"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button_view_code/text"
+  parent: "button_view_code/root"
+  template_node_child: true
+}
+nodes {
   position {
     x: 220.0
     y: 225.0
@@ -112,11 +124,27 @@ nodes {
     x: -85.0
     y: -32.5
   }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
   type: TYPE_TEMPLATE
   id: "button_profiler"
   parent: "NE_Anchor"
   inherit_alpha: true
   template: "/example/templates/button_text_yellow.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_profiler/root"
+  parent: "button_profiler"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button_profiler/text"
+  parent: "button_profiler/root"
+  template_node_child: true
 }
 nodes {
   position {

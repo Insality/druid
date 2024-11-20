@@ -4026,6 +4026,109 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_TEMPLATE
+  id: "example_fps_panel"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/examples/widgets/fps_panel/example_fps_panel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/root"
+  parent: "example_fps_panel"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "example_fps_panel/fps_panel"
+  parent: "example_fps_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/root"
+  parent: "example_fps_panel/fps_panel"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "example_fps_panel/fps_panel/mini_graph"
+  parent: "example_fps_panel/fps_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/mini_graph/root"
+  parent: "example_fps_panel/fps_panel/mini_graph"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/mini_graph/header"
+  parent: "example_fps_panel/fps_panel/mini_graph/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "example_fps_panel/fps_panel/mini_graph/text_header"
+  parent: "example_fps_panel/fps_panel/mini_graph/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/mini_graph/icon_drag"
+  parent: "example_fps_panel/fps_panel/mini_graph/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/mini_graph/content"
+  parent: "example_fps_panel/fps_panel/mini_graph/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/mini_graph/prefab_line"
+  parent: "example_fps_panel/fps_panel/mini_graph/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/mini_graph/color_low"
+  parent: "example_fps_panel/fps_panel/mini_graph/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/content"
+  parent: "example_fps_panel/fps_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "example_fps_panel/fps_panel/text_min_fps"
+  parent: "example_fps_panel/fps_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "example_fps_panel/fps_panel/text_fps"
+  parent: "example_fps_panel/fps_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/line_second_1"
+  parent: "example_fps_panel/fps_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_fps_panel/fps_panel/line_second_2"
+  parent: "example_fps_panel/fps_panel/content"
+  template_node_child: true
+}
+nodes {
   position {
     x: -20.0
     y: -540.0
