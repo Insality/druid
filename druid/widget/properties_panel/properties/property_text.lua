@@ -11,6 +11,7 @@ function M:init()
 		:set_text_adjust("scale_when_trim_left", 0.3)
 
 	self.text_right = self.druid:new_text("text_right", "")
+		--:set_text_adjust("scale_when_trim_left", 0.3) -- TODO: not works? why?
 
 	self.container = self.druid:new_container(self.root)
 	self.container:add_container("text_name", nil, function(_, size)

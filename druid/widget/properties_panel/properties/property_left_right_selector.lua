@@ -129,16 +129,16 @@ end
 
 
 function M:on_button_left()
-	self:add_value(true)
+	self:add_step(-1)
 end
 
 function M:on_button_right()
-	self:add_value(false)
+	self:add_step(1)
 end
 
 
-function M:add_value(is_left)
-	local koef = is_left and -1 or 1
+---@param koef number -1 0 1, on 0 will not move
+function M:add_step(koef)
 	local array_type = self.array_type
 	if array_type then
 		local value = self.value
@@ -165,6 +165,7 @@ function M:set_number_type(min, max, is_loop, steps)
 		steps = steps or 1,
 		is_loop = is_loop,
 	}
+
 	return self
 end
 

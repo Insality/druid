@@ -281,4 +281,11 @@ function M:set_properties_per_page(properties_per_page)
 end
 
 
+function M:set_page(page)
+	self.current_page = page
+	self.paginator:set_value(self.current_page, true)
+	self:refresh_page()
+end
+
+
 return M
