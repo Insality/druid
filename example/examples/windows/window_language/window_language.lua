@@ -12,7 +12,7 @@ local window_animation_panthera = require("example.examples.windows.window_anima
 ---@field button_close druid.button
 ---@field druid druid_instance
 ---@field lang_buttons table<string, druid.button>
----@field grid druid.static_grid
+---@field grid druid.grid
 ---@field on_language_change druid.event
 local M = component.create("window_language")
 
@@ -36,7 +36,7 @@ function M:init(template, nodes)
 	self.button_close = self.druid:new_button("button_close", self.on_button_close)
 
 	self.druid:new(lang_text, "text_header", "ui_language")
-	self.grid = self.druid:new_static_grid("content", self.prefab, 2)
+	self.grid = self.druid:new_grid("content", self.prefab, 2)
 	self.grid.style.IS_DYNAMIC_NODE_POSES = true
 
 	self.animation = panthera.create_gui(window_animation_panthera, self:get_template(), nodes)

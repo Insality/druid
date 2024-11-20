@@ -50,7 +50,7 @@ function M.get_commands()
 		},
 
 		{
-			label = "Create Druid Component",
+			label = "Create Druid Widget",
 			locations = { "Edit", "Assets" },
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
@@ -62,7 +62,7 @@ function M.get_commands()
 				print("Run script for", editor.get(file, "path"))
 				save_file_from_dependency('/druid/editor_scripts/run_python_script_on_gui.sh', "./build/run_python_script_on_gui.sh")
 				save_file_from_dependency('/druid/editor_scripts/create_druid_component.py', "./build/create_druid_component.py")
-				save_file_from_dependency('/druid/editor_scripts/component.lua_template', "./build/component.lua_template")
+				save_file_from_dependency('/druid/editor_scripts/widget.lua_template', "./build/widget.lua_template")
 				return {
 					{
 						action = "shell",

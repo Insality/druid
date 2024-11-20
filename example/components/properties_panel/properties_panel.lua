@@ -31,7 +31,7 @@ function M:init(template, nodes)
 	self.text_no_properties = self.druid:new(lang_text, "text_no_properties", "ui_no_properties") --[[@as druid.lang_text]]
 
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
-	self.grid = self.druid:new_static_grid("scroll_content", "item_size", 1)
+	self.grid = self.druid:new_grid("scroll_content", "item_size", 1)
 	self.scroll:bind_grid(self.grid)
 
 	self.property_checkbox_prefab = self:get_node("property_checkbox/root")

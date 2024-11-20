@@ -1,10 +1,10 @@
 fonts {
-  name: "text_regular"
-  font: "/druid/fonts/text_regular.font"
+  name: "druid_text_regular"
+  font: "/druid/fonts/druid_text_regular.font"
 }
 fonts {
-  name: "text_bold"
-  font: "/druid/fonts/text_bold.font"
+  name: "druid_text_bold"
+  font: "/druid/fonts/druid_text_bold.font"
 }
 textures {
   name: "druid"
@@ -104,7 +104,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "120.23 KB"
-  font: "text_regular"
+  font: "druid_text_regular"
   id: "text_max_value"
   pivot: PIVOT_W
   outline {
@@ -142,7 +142,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "120 KB/s"
-  font: "text_regular"
+  font: "druid_text_regular"
   id: "text_per_second"
   pivot: PIVOT_E
   outline {
@@ -221,7 +221,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "120 KB"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "text_memory"
   outline {
     x: 1.0

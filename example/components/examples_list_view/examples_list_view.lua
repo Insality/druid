@@ -10,7 +10,7 @@ local examples_list_view_item = require("example.components.examples_list_view.e
 ---@field root druid.container
 ---@field druid druid_instance
 ---@field scroll druid.scroll
----@field grid druid.static_grid
+---@field grid druid.grid
 local M = component.create("examples_list_view")
 
 
@@ -29,7 +29,7 @@ function M:init(template, nodes)
 	gui.set_enabled(self.prefab, false)
 
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
-	self.grid = self.druid:new_static_grid("scroll_content", self.prefab, 1)
+	self.grid = self.druid:new_grid("scroll_content", self.prefab, 1)
 	self.scroll:bind_grid(self.grid)
 
 	self.root:add_container("scroll_view", nil, function(_, size)

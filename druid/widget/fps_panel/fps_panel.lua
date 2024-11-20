@@ -75,9 +75,9 @@ function M:push_fps_value()
 
 	self.mini_graph:push_line_value(1 / average_frame_time)
 
-	self.text_fps:set_to(tostring(math.ceil(1 / average_frame_time) .. " FPS"))
+	self.text_fps:set_text(tostring(math.ceil(1 / average_frame_time) .. " FPS"))
 	local lowest_value = math.ceil(self.mini_graph:get_lowest_value())
-	self.text_min_fps:set_to(lowest_value .. " lowest")
+	self.text_min_fps:set_text(lowest_value .. " lowest")
 end
 
 

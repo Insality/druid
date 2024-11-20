@@ -34,7 +34,7 @@
 -- <a href="https://insality.github.io/druid/druid/index.html?example=general_grid" target="_blank"><b>Example Link</b></a>
 -- @module StaticGrid
 -- @within BaseComponent
--- @alias druid.static_grid
+-- @alias druid.grid
 
 --- On item add callback(self, node, index)
 -- @tfield druid.event on_add_item druid.event
@@ -377,7 +377,7 @@ end
 --- Change set position function for grid nodes. It will call on
 -- update poses on grid elements. Default: gui.set_position
 ---@param callback function Function on node set position
----@return druid.static_grid Current grid instance
+---@return druid.grid Current grid instance
 function M:set_position_function(callback)
 	self._set_position_function = callback or gui.set_position
 
@@ -387,7 +387,7 @@ end
 
 --- Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
----@return druid.static_grid Current grid instance
+---@return druid.grid Current grid instance
 function M:clear()
 	self.border.x = 0
 	self.border.y = 0
@@ -421,7 +421,7 @@ end
 
 --- Set new in_row elements for grid
 ---@param in_row number The new in_row value
----@return druid.static_grid Current grid instance
+---@return druid.grid Current grid instance
 function M:set_in_row(in_row)
 	self.in_row = in_row
 	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
@@ -440,7 +440,7 @@ end
 --- Set new node size for grid
 -- @tparam[opt] number width The new node width
 -- @tparam[opt] number height The new node height
----@return druid.static_grid Current grid instance
+---@return druid.grid Current grid instance
 function M:set_item_size(width, height)
 	if width then
 		self.node_size.x = width
@@ -463,7 +463,7 @@ end
 
 --- Sort grid nodes by custom comparator function
 ---@param comparator function The comparator function. (a, b) -> boolean
----@return druid.static_grid Current grid instance
+---@return druid.grid Current grid instance
 function M:sort_nodes(comparator)
 	table.sort(self.nodes, comparator)
 	self:_update(true)

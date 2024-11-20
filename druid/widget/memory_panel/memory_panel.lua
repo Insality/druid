@@ -51,14 +51,14 @@ function M:push_next_value()
 	self.mini_graph:set_max_value(max_value)
 
 	local max_memory = math.ceil(self.mini_graph:get_highest_value())
-	self.max_value:set_to(max_memory .. " KB")
+	self.max_value:set_text(max_memory .. " KB")
 
 	local last_second = 0
 	local last_second_samples = math.ceil(1 / self.delta_time)
 	for index = #self.memory_samples - last_second_samples + 1, #self.memory_samples do
 		last_second = last_second + (self.memory_samples[index] or 0)
 	end
-	self.text_per_second:set_to(math.ceil(last_second) .. " KB/s")
+	self.text_per_second:set_text(math.ceil(last_second) .. " KB/s")
 end
 
 
@@ -66,9 +66,9 @@ function M:update_text_memory()
 	local memory = math.ceil(collectgarbage("count")) -- in KB
 	if memory > 1024 then
 		memory = memory / 1024
-		self.text_memory:set_to(string.format("%.2f", memory) .. " MB")
+		self.text_memory:set_text(string.format("%.2f", memory) .. " MB")
 	else
-		self.text_memory:set_to(memory .. " KB")
+		self.text_memory:set_text(memory .. " KB")
 	end
 end
 

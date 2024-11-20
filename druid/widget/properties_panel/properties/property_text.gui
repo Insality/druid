@@ -1,6 +1,6 @@
 fonts {
-  name: "text_bold"
-  font: "/druid/fonts/text_bold.font"
+  name: "druid_text_bold"
+  font: "/druid/fonts/druid_text_bold.font"
 }
 textures {
   name: "druid"

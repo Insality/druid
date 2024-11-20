@@ -216,7 +216,7 @@ Static grid have constant node size, so it possible to calculate node positions 
 Static grid can shift elements on add/remove functions.
 
 ### Setup
-Create  component with druid: `grid = druid:new_static_grid(parent_node, prefab_node, max_in_row_elements)`
+Create  component with druid: `grid = druid:new_grid(parent_node, prefab_node, max_in_row_elements)`
 
 ### Notes
 - On _add node_ grid will set nodeup parent to _parent_node_

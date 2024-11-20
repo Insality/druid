@@ -1,0 +1,98 @@
+nodes {
+  type: TYPE_TEMPLATE
+  id: "memory_panel"
+  inherit_alpha: true
+  template: "/druid/widget/memory_panel/memory_panel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/root"
+  parent: "memory_panel"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "memory_panel/mini_graph"
+  parent: "memory_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/root"
+  parent: "memory_panel/mini_graph"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/header"
+  parent: "memory_panel/mini_graph/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "memory_panel/mini_graph/text_header"
+  parent: "memory_panel/mini_graph/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/icon_drag"
+  parent: "memory_panel/mini_graph/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/content"
+  parent: "memory_panel/mini_graph/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/prefab_line"
+  parent: "memory_panel/mini_graph/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/color_low"
+  parent: "memory_panel/mini_graph/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/content"
+  parent: "memory_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "memory_panel/text_max_value"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "memory_panel/text_per_second"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/line_second_1"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/line_second_2"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "memory_panel/text_memory"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

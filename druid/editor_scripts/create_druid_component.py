@@ -1,12 +1,9 @@
-# @license MIT, Insality 2021
-# @source https://github.com/Insality/druid
-
 import os
 import sys
 import deftree
 
 current_filepath = os.path.abspath(os.path.dirname(__file__))
-TEMPLATE_PATH = current_filepath + "/component.lua_template"
+TEMPLATE_PATH = current_filepath + "/widget.lua_template"
 
 component_annotations = ""
 component_functions = ""
@@ -44,9 +41,9 @@ def process_component(node_name, component_name):
 		component_define += "\n\tself.{0} = self.druid:new_lang_text(\"{1}\", \"lang_id\")".format(node_name, node_name)
 
 	if node_name.startswith("grid") or node_name.startswith("static_grid"):
-		component_annotations += "\n---@field {0} druid.static_grid".format(node_name)
+		component_annotations += "\n---@field {0} druid.grid".format(node_name)
 		component_define += "\n--TODO: Replace prefab_name with grid element prefab"
-		component_define += "\n\tself.{0} = self.druid:new_static_grid(\"{1}\", \"prefab_name\", 1)".format(node_name, node_name)
+		component_define += "\n\tself.{0} = self.druid:new_grid(\"{1}\", \"prefab_name\", 1)".format(node_name, node_name)
 
 	if node_name.startswith("scroll_view"):
 		field_name = node_name.replace("_view", "")

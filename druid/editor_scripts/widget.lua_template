@@ -1,9 +1,14 @@
----@class widget.TEMPLATE: druid.widget
+---This is a template for a {COMPONENT_NAME} Druid widget.
+---Instantiate this template with `druid.new_widget(widget_module, [template_id], [nodes])`.
+---Read more about Druid Widgets here: ...
+
+---@class widget.{COMPONENT_TYPE}: druid.widget
 local M = {}
+
 
 function M:init()
 	self.root = self:get_node("root")
-	self.button = self.druid:new_button("button"), self.on_button, self)
+	self.button = self.druid:new_button("button", self.on_button, self)
 end
 
 

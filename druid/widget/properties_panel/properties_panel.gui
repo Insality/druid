@@ -1,10 +1,10 @@
 fonts {
-  name: "text_regular"
-  font: "/druid/fonts/text_regular.font"
+  name: "druid_text_regular"
+  font: "/druid/fonts/druid_text_regular.font"
 }
 fonts {
-  name: "text_bold"
-  font: "/druid/fonts/text_bold.font"
+  name: "druid_text_bold"
+  font: "/druid/fonts/druid_text_bold.font"
 }
 textures {
   name: "druid"
@@ -67,7 +67,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "Properties"
-  font: "text_regular"
+  font: "druid_text_regular"
   id: "text_header"
   pivot: PIVOT_NW
   outline {

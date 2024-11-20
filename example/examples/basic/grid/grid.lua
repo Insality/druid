@@ -1,7 +1,7 @@
 local component = require("druid.component")
 
 ---@class grid: druid.base_component
----@field grid druid.static_grid
+---@field grid druid.grid
 ---@field text druid.text
 ---@field druid druid_instance
 local M = component.create("grid")
@@ -17,7 +17,7 @@ function M:init(template, nodes)
 	self.prefab = self:get_node("prefab")
 	gui.set_enabled(self.prefab, false)
 
-	self.grid = self.druid:new_static_grid("grid", "prefab", 3)
+	self.grid = self.druid:new_grid("grid", "prefab", 3)
 
 	for index = 1, 9 do
 		self:add_element()

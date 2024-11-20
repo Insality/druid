@@ -53,6 +53,14 @@ function M.get_examples()
 				end)
 			end,
 		},
+		{
+			name_id = "ui_example_widget_memory_panel",
+			information_text_id = "ui_example_widget_memory_panel_description",
+			template = "example_memory_panel",
+			root = "example_memory_panel/root",
+			code_url = "example/examples/widgets/memory_panel/example_memory_panel.lua",
+			component_class = require("example.examples.widgets.memory_panel.example_memory_panel"),
+		},
 	}
 end
 

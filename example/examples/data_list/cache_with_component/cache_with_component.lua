@@ -18,7 +18,7 @@ function M:init(template, nodes)
 	gui.set_enabled(self.prefab, false)
 
 	self.scroll = self.druid:new_scroll("view", "content")
-	self.grid = self.druid:new_static_grid("content", self.prefab, 1)
+	self.grid = self.druid:new_grid("content", self.prefab, 1)
 	self.data_list = self.druid:new(data_list, self.scroll, self.grid, self.create_item_callback) --[[@as druid.data_list]]
 	self.data_list:set_use_cache(true)
 	self.data_list.on_element_add:subscribe(self.on_element_add)

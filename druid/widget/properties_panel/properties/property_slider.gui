@@ -1,6 +1,6 @@
 fonts {
-  name: "text_bold"
-  font: "/druid/fonts/text_bold.font"
+  name: "druid_text_bold"
+  font: "/druid/fonts/druid_text_bold.font"
 }
 textures {
   name: "druid"
@@ -37,7 +37,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "Slider"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "text_name"
   pivot: PIVOT_W
   outline {
@@ -201,7 +201,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "25 %"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "text_value"
   outline {
     x: 1.0
