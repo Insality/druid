@@ -1,4 +1,4 @@
-local event = require("druid.event")
+local event = require("event.event")
 local component = require("druid.component")
 local container = require("example.components.container.container")
 local lang_text = require("druid.extended.lang_text")
@@ -39,9 +39,9 @@ function M:init(template, nodes)
 
 	self.selected_example = nil
 	self.examples = {}
-	self.on_debug_info = event()
-	self.on_set_information = event()
-	self.add_log_text = event()
+	self.on_debug_info = event.create()
+	self.on_set_information = event.create()
+	self.add_log_text = event.create()
 
 	timer.delay(0.1, true, function()
 		self:update_debug_info()

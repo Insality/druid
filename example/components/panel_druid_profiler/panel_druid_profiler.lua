@@ -1,4 +1,4 @@
-local event = require("druid.event")
+local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 local container = require("example.components.container.container")

@@ -9,22 +9,22 @@
 -- @tfield node node
 
 --- On hover callback(self, state, hover_instance)
--- @tfield druid.event on_hover druid.event
+-- @tfield event on_hover event
 
 --- On mouse hover callback(self, state, hover_instance)
--- @tfield druid.event on_mouse_hover druid.event
+-- @tfield event on_mouse_hover event
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.hover: druid.base_component
 ---@field node node
----@field on_hover druid.event
----@field on_mouse_hover druid.event
+---@field on_hover event
+---@field on_mouse_hover event
 ---@field style table
 ---@field click_zone node
 ---@field private _is_hovered boolean
@@ -46,8 +46,8 @@ function M:init(node, on_hover_callback, on_mouse_hover)
 	self._is_enabled = true
 	self._is_mobile = helper.is_mobile()
 
-	self.on_hover = Event(on_hover_callback)
-	self.on_mouse_hover = Event(on_mouse_hover)
+	self.on_hover = event.create(on_hover_callback)
+	self.on_mouse_hover = event.create(on_mouse_hover)
 end
 
 

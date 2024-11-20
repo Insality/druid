@@ -1,6 +1,6 @@
 local lang = require("lang.lang")
 local druid = require("druid.druid")
-local event = require("druid.event")
+local event = require("event.event")
 local component = require("druid.component")
 local lang_text = require("druid.extended.lang_text")
 local panthera = require("panthera.panthera")
@@ -13,7 +13,7 @@ local window_animation_panthera = require("example.examples.windows.window_anima
 ---@field druid druid_instance
 ---@field lang_buttons table<string, druid.button>
 ---@field grid druid.grid
----@field on_language_change druid.event
+---@field on_language_change event
 local M = component.create("window_language")
 
 ---Color: #F0FBFF
@@ -44,7 +44,7 @@ function M:init(template, nodes)
 
 	self:load_langs()
 
-	self.on_language_change = event()
+	self.on_language_change = event.create()
 end
 
 

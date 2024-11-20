@@ -1,4 +1,4 @@
-local event = require("druid.event")
+local event = require("event.event")
 local component = require("druid.component")
 local data_list = require("druid.extended.data_list")
 
@@ -25,7 +25,7 @@ function M:init(template, nodes)
 	end
 	self.data_list:set_data(data)
 
-	self.on_item_click = event()
+	self.on_item_click = event.create()
 end
 
 

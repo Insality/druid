@@ -1,7 +1,7 @@
 local panthera = require("panthera.panthera")
 local component = require("druid.component")
 local helper = require("druid.helper")
-local event = require("druid.event")
+local event = require("event.event")
 local lang_text = require("druid.extended.lang_text")
 local rich_text = require("druid.custom.rich_text.rich_text")
 
@@ -31,7 +31,7 @@ function M:init(template, nodes)
 	})
 
 	self:setup_rich_text()
-	self.on_update = event()
+	self.on_update = event.create()
 end
 
 

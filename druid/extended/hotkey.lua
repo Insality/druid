@@ -8,10 +8,10 @@
 -- @alias druid.hotkey
 
 --- On hotkey released callback(self, argument)
--- @tfield druid.event on_hotkey_pressed druid.event
+-- @tfield event on_hotkey_pressed event
 
 --- On hotkey released callback(self, argument)
--- @tfield druid.event on_hotkey_released druid.event
+-- @tfield event on_hotkey_released event
 
 --- Visual node
 -- @tfield node node
@@ -26,11 +26,11 @@
 
 local helper = require("druid.helper")
 local component = require("druid.component")
-local Event = require("druid.event")
+local event = require("event.event")
 
 ---@class druid.hotkey: druid.base_component
----@field on_hotkey_pressed druid.event
----@field on_hotkey_released druid.event
+---@field on_hotkey_pressed event
+---@field on_hotkey_released event
 ---@field style table
 ---@field private _hotkeys table
 ---@field private _modificators table
@@ -47,8 +47,8 @@ function M:init(keys, callback, callback_argument)
 	self._hotkeys = {}
 	self._modificators = {}
 
-	self.on_hotkey_pressed = Event()
-	self.on_hotkey_released = Event(callback)
+	self.on_hotkey_pressed = event.create()
+	self.on_hotkey_released = event.create(callback)
 
 	if keys then
 		self:add_hotkey(keys, callback_argument)

@@ -16,18 +16,18 @@
 ---@param click_zone node|nil
 
 --- Trigger on swipe event(self, swipe_side, dist, delta_time)
--- @tfield druid.event on_swipe) druid.event
+-- @tfield event on_swipe) event
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.swipe: druid.base_component
 ---@field node node
----@field on_swipe druid.event
+---@field on_swipe event
 ---@field style table
 ---@field click_zone node
 ---@field private _trigger_on_move boolean
@@ -106,7 +106,7 @@ function M:init(node_or_node_id, on_swipe_callback)
 	self._start_pos = vmath.vector3(0)
 
 	self.click_zone = nil
-	self.on_swipe = Event(on_swipe_callback)
+	self.on_swipe = event.create(on_swipe_callback)
 end
 
 

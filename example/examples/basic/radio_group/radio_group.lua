@@ -1,5 +1,5 @@
 local component = require("druid.component")
-local event = require("druid.event")
+local event = require("event.event")
 
 -- Require checkbox component from checkbox example
 local checkbox = require("example.examples.basic.checkbox.checkbox")

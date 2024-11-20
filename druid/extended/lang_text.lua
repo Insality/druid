@@ -18,7 +18,7 @@
 -- @alias druid.lang_text
 
 --- On change text callback
--- @tfield druid.event on_change druid.event
+-- @tfield event on_change event
 
 --- The text component
 -- @tfield Text text Text
@@ -28,14 +28,14 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local settings = require("druid.system.settings")
 local component = require("druid.component")
 
 ---@class druid.lang_text: druid.base_component
 ---@field text druid.text
 ---@field node node
----@field on_change druid.event
+---@field on_change event
 ---@field private last_locale_args table
 ---@field private last_locale string
 local M = component.create("lang_text")
@@ -51,7 +51,7 @@ function M:init(node, locale_id, adjust_type)
 	self.node = self.text.node
 	self.last_locale_args = {}
 
-	self.on_change = Event()
+	self.on_change = event.create()
 
 	self:translate(locale_id or gui.get_text(self.node))
 	self.text.on_set_text:subscribe(self.on_change.trigger, self.on_change)

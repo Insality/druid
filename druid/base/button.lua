@@ -35,16 +35,16 @@
 -- @alias druid.button
 
 
---- The druid.event: Event on successful release action over button.
+--- The event: Event on successful release action over button.
 -- @usage
 -- -- Custom args passed in Button constructor
 -- button.on_click:subscribe(function(self, custom_args, button_instance)
 --     print("On button click!")
 -- end)
--- @tfield druid.event on_click druid.event
+-- @tfield event on_click event
 
 
---- The druid.event: Event on repeated action over button.
+--- The event: Event on repeated action over button.
 --
 -- This callback will be triggered if user hold the button. The repeat rate pick from `input.repeat_interval` in game.project
 -- @usage
@@ -52,10 +52,10 @@
 -- button.on_repeated_click:subscribe(function(self, custom_args, button_instance, click_count)
 --     print("On repeated Button click!")
 -- end)
--- @tfield druid.event on_repeated_click druid.event
+-- @tfield event on_repeated_click event
 
 
---- The druid.event: Event on long tap action over button.
+--- The event: Event on long tap action over button.
 --
 -- This callback will be triggered if user pressed the button and hold the some amount of time.
 -- The amount of time picked from button style param: LONGTAP_TIME
@@ -64,10 +64,10 @@
 -- button.on_long_click:subscribe(function(self, custom_args, button_instance, hold_time)
 --     print("On long Button click!")
 -- end)
--- @tfield druid.event on_long_click druid.event
+-- @tfield event on_long_click event
 
 
---- The druid.event: Event on double tap action over button.
+--- The event: Event on double tap action over button.
 --
 -- If secondary click was too fast after previous one, the double
 -- click will be called instead usual click (if on_double_click subscriber exists)
@@ -76,10 +76,10 @@
 -- button.on_double_click:subscribe(function(self, custom_args, button_instance, click_amount)
 --     print("On double Button click!")
 -- end)
--- @tfield druid.event on_double_click druid.event
+-- @tfield event on_double_click event
 
 
---- The druid.event: Event calls every frame before on_long_click event.
+--- The event: Event calls every frame before on_long_click event.
 --
 -- If long_click subscriber exists, the on_hold_callback will be called before long_click trigger.
 --
@@ -89,10 +89,10 @@
 -- button.on_double_click:subscribe(function(self, custom_args, button_instance, time)
 --     print("On hold Button callback!")
 -- end)
--- @tfield druid.event on_hold_callback druid.event
+-- @tfield event on_hold_callback event
 
 
---- The druid.event: Event calls if click event was outside of button.
+--- The event: Event calls if click event was outside of button.
 --
 -- This event will be triggered for each button what was not clicked on user click action
 --
@@ -102,16 +102,16 @@
 -- button.on_click_outside:subscribe(function(self, custom_args, button_instance)
 --     print("On click Button outside!")
 -- end)
--- @tfield druid.event on_click_outside druid.event
+-- @tfield event on_click_outside event
 
 
---- The druid.event: Event triggered if button was pressed by user.
+--- The event: Event triggered if button was pressed by user.
 -- @usage
 -- -- Custom args passed in Button constructor
 -- button.on_pressed:subscribe(function(self, custom_args, button_instance)
 --     print("On Button pressed!")
 -- end)
--- @tfield druid.event on_pressed druid.event
+-- @tfield event on_pressed event
 
 --- Button trigger node
 -- @tfield node node
@@ -136,19 +136,19 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.button: druid.base_component
----@field on_click druid.event
----@field on_pressed druid.event
----@field on_repeated_click druid.event
----@field on_long_click druid.event
----@field on_double_click druid.event
----@field on_hold_callback druid.event
----@field on_click_outside druid.event
+---@field on_click event
+---@field on_pressed event
+---@field on_repeated_click event
+---@field on_long_click event
+---@field on_double_click event
+---@field on_hold_callback event
+---@field on_click_outside event
 ---@field node node
 ---@field node_id hash
 ---@field anim_node node
@@ -229,6 +229,7 @@ local function on_button_hold(self, press_time)
 end
 
 
+---@param self druid.button
 local function on_button_release(self)
 	if self.is_repeated_started then
 		return false
@@ -253,10 +254,10 @@ local function on_button_release(self)
 
 			local time = socket.gettime()
 			local is_long_click = (time - self.last_pressed_time) >= self.style.LONGTAP_TIME
-			is_long_click = is_long_click and self.on_long_click:is_exist()
+			is_long_click = is_long_click and not self.on_long_click:is_empty()
 
 			local is_double_click = (time - self.last_released_time) < self.style.DOUBLETAP_TIME
-			is_double_click = is_double_click and self.on_double_click:is_exist()
+			is_double_click = is_double_click and not self.on_double_click:is_empty()
 
 			if is_long_click then
 				local is_hold_complete = (time - self.last_pressed_time) >= self.style.AUTOHOLD_TRIGGER
@@ -335,13 +336,13 @@ function M:init(node_or_node_id, callback, custom_args, anim_node)
 	self._is_html5_listener_set = false
 
 	-- Events
-	self.on_click = Event(callback)
-	self.on_pressed = Event()
-	self.on_repeated_click = Event()
-	self.on_long_click = Event()
-	self.on_double_click = Event()
-	self.on_hold_callback = Event()
-	self.on_click_outside = Event()
+	self.on_click = event.create(callback)
+	self.on_pressed = event.create()
+	self.on_repeated_click = event.create()
+	self.on_long_click = event.create()
+	self.on_double_click = event.create()
+	self.on_hold_callback = event.create()
+	self.on_click_outside = event.create()
 end
 
 
@@ -408,7 +409,7 @@ function M:on_input(action_id, action)
 
 	-- While hold button, repeat rate pick from input.repeat_interval
 	if action.repeated then
-		if self.on_repeated_click:is_exist() and self.can_action then
+		if not self.on_repeated_click:is_empty() and self.can_action then
 			on_button_repeated_click(self)
 			return is_consume
 		end
@@ -418,7 +419,7 @@ function M:on_input(action_id, action)
 		return on_button_release(self) and is_consume
 	end
 
-	if self.can_action and self.on_long_click:is_exist() then
+	if self.can_action and not self.on_long_click:is_empty() then
 		local press_time = socket.gettime() - self.last_pressed_time
 
 		if self.style.AUTOHOLD_TRIGGER <= press_time then

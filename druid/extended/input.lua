@@ -10,25 +10,25 @@
 -- @alias druid.input
 
 --- On input field select callback(self, input_instance)
--- @tfield druid.event on_input_select druid.event
+-- @tfield event on_input_select event
 
 --- On input field unselect callback(self, input_text, input_instance)
--- @tfield druid.event on_input_unselect druid.event
+-- @tfield event on_input_unselect event
 
 --- On input field text change callback(self, input_text)
--- @tfield druid.event on_input_text druid.event
+-- @tfield event on_input_text event
 
 --- On input field text change to empty string callback(self, input_text)
--- @tfield druid.event on_input_empty druid.event
+-- @tfield event on_input_empty event
 
 --- On input field text change to max length string callback(self, input_text)
--- @tfield druid.event on_input_full druid.event
+-- @tfield event on_input_full event
 
 --- On trying user input with not allowed character callback(self, params, input_text)
--- @tfield druid.event on_input_wrong druid.event
+-- @tfield event on_input_wrong event
 
 --- On cursor position change callback(self, cursor_index, start_index, end_index)
--- @tfield druid.event on_select_cursor_change druid.event
+-- @tfield event on_select_cursor_change event
 
 --- The cursor index. The index of letter cursor after. Leftmost cursor - 0
 -- @tfield number cursor_index
@@ -80,7 +80,7 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
@@ -88,13 +88,13 @@ local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
 ---@class druid.input: druid.base_component
----@field on_input_select druid.event
----@field on_input_unselect druid.event
----@field on_input_text druid.event
----@field on_input_empty druid.event
----@field on_input_full druid.event
----@field on_input_wrong druid.event
----@field on_select_cursor_change druid.event
+---@field on_input_select event
+---@field on_input_unselect event
+---@field on_input_text event
+---@field on_input_empty event
+---@field on_input_full event
+---@field on_input_wrong event
+---@field on_select_cursor_change event
 ---@field style table
 ---@field text druid.text
 local M = component.create("input")
@@ -200,13 +200,13 @@ function M:init(click_node, text_node, keyboard_type)
 		self.button:set_web_user_interaction(true)
 	end
 
-	self.on_input_select = Event()
-	self.on_input_unselect = Event()
-	self.on_input_text = Event()
-	self.on_input_empty = Event()
-	self.on_input_full = Event()
-	self.on_input_wrong = Event()
-	self.on_select_cursor_change = Event()
+	self.on_input_select = event.create()
+	self.on_input_unselect = event.create()
+	self.on_input_text = event.create()
+	self.on_input_empty = event.create()
+	self.on_input_full = event.create()
+	self.on_input_wrong = event.create()
+	self.on_select_cursor_change = event.create()
 end
 
 

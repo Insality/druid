@@ -25,27 +25,27 @@
 -- @tfield number last_index
 
 --- Event triggered when scroll progress is changed; event(self, progress_value)
--- @tfield druid.event on_scroll_progress_change druid.event
+-- @tfield event on_scroll_progress_change event
 
 ---On DataList visual element created Event callback(self, index, node, instance)
--- @tfield druid.event on_element_add druid.event
+-- @tfield event on_element_add event
 
 ---On DataList visual element created Event callback(self, index)
--- @tfield druid.event on_element_remove druid.event
+-- @tfield event on_element_remove event
 
 ---
 
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
-local Event = require("druid.event")
+local event = require("event.event")
 
 ---@class druid.data_list: druid.base_component
 ---@field scroll druid.scroll
 ---@field grid druid.grid
----@field on_scroll_progress_change druid.event
----@field on_element_add druid.event
----@field on_element_remove druid.event
+---@field on_scroll_progress_change event
+---@field on_element_add event
+---@field on_element_remove event
 ---@field private _create_function function
 ---@field private _is_use_cache boolean
 ---@field private _cache table
@@ -79,9 +79,9 @@ function M:init(scroll, grid, create_function)
 
 	self.scroll.on_scroll:subscribe(self._refresh, self)
 
-	self.on_scroll_progress_change = Event()
-	self.on_element_add = Event()
-	self.on_element_remove = Event()
+	self.on_scroll_progress_change = event.create()
+	self.on_element_add = event.create()
+	self.on_element_remove = event.create()
 end
 
 

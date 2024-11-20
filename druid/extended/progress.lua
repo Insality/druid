@@ -20,7 +20,7 @@
 -- @alias druid.progress
 
 --- On progress bar change callback(self, new_value)
--- @tfield druid.event on_change druid.event
+-- @tfield event on_change event
 
 --- Progress bar fill node
 -- @tfield node node
@@ -44,14 +44,14 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.progress: druid.base_component
 ---@field node node
----@field on_change druid.event
+---@field on_change event
 ---@field style table
 ---@field key string
 ---@field prop hash
@@ -154,7 +154,7 @@ function M:init(node, key, init_value)
 		0
 	)
 
-	self.on_change = Event()
+	self.on_change = event.create()
 
 	self:set_to(self.last_value)
 end

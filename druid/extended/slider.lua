@@ -8,7 +8,7 @@
 -- @alias druid.slider
 
 --- On change value callback(self, value)
--- @tfield druid.event on_change_value druid.event
+-- @tfield event on_change_value event
 
 --- Slider pin node
 -- @tfield node node
@@ -37,14 +37,14 @@
 ---
 
 
-local Event = require("druid.event")
+local event = require("event.event")
 local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
 ---@class druid.slider: druid.base_component
 ---@field node node
----@field on_change_value druid.event
+---@field on_change_value event
 ---@field style table
 ---@field private start_pos vector3
 ---@field private pos vector3
@@ -85,7 +85,7 @@ function M:init(node, end_pos, callback)
 	self.is_drag = false
 	self.value = 0
 
-	self.on_change_value = Event(callback)
+	self.on_change_value = event.create(callback)
 	self:on_window_resized()
 
 	assert(self.dist.x == 0 or self.dist.y == 0, "Slider for now can be only vertical or horizontal")

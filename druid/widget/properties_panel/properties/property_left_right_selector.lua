@@ -1,4 +1,4 @@
-local event = require("druid.event")
+local event = require("event.event")
 
 ---@class widget.property_left_right_selector: druid.widget
 ---@field root node

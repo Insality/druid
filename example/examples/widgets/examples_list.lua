@@ -59,7 +59,15 @@ function M.get_examples()
 			template = "example_memory_panel",
 			root = "example_memory_panel/root",
 			code_url = "example/examples/widgets/memory_panel/example_memory_panel.lua",
-			component_class = require("example.examples.widgets.memory_panel.example_memory_panel"),
+			widget_class = require("example.examples.widgets.memory_panel.example_memory_panel"),
+		},
+		{
+			name_id = "ui_example_widget_fps_panel",
+			information_text_id = "ui_example_widget_fps_panel_description",
+			template = "example_fps_panel",
+			root = "example_fps_panel/root",
+			code_url = "example/examples/widgets/fps_panel/example_fps_panel.lua",
+			widget_class = require("example.examples.widgets.fps_panel.example_fps_panel"),
 		},
 	}
 end

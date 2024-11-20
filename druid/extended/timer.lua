@@ -1,11 +1,11 @@
-local Event = require("druid.event")
+local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.timer: druid.base_component
----@field on_tick druid.event
----@field on_set_enabled druid.event
----@field on_timer_end druid.event
+---@field on_tick event
+---@field on_set_enabled event
+---@field on_timer_end event
 ---@field style table
 ---@field node node
 ---@field from number
@@ -31,9 +31,9 @@ function M:init(node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
 	seconds_to = math.max(seconds_to or 0, 0)
 
-	self.on_tick = Event()
-	self.on_set_enabled = Event()
-	self.on_timer_end = Event(callback)
+	self.on_tick = event.create()
+	self.on_set_enabled = event.create()
+	self.on_timer_end = event.create(callback)
 
 	if seconds_from then
 		seconds_from = math.max(seconds_from, 0)

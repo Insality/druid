@@ -37,19 +37,19 @@
 -- @alias druid.grid
 
 --- On item add callback(self, node, index)
--- @tfield druid.event on_add_item druid.event
+-- @tfield event on_add_item event
 
 --- On item remove callback(self, index)
--- @tfield druid.event on_remove_item druid.event
+-- @tfield event on_remove_item event
 
 --- On item add, remove or change in_row callback(self, index|nil)
--- @tfield druid.event on_change_items druid.event
+-- @tfield event on_change_items event
 
 --- On grid clear callback(self)
--- @tfield druid.event on_clear druid.event
+-- @tfield event on_clear event
 
 --- On update item positions callback(self)
--- @tfield druid.event on_update_positions druid.event
+-- @tfield event on_update_positions event
 
 --- Parent gui node
 -- @tfield node parent
@@ -78,16 +78,16 @@
 ---
 
 local const = require("druid.const")
-local Event = require("druid.event")
+local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.grid: druid.base_component
----@field on_add_item druid.event
----@field on_remove_item druid.event
----@field on_change_items druid.event
----@field on_clear druid.event
----@field on_update_positions druid.event
+---@field on_add_item event
+---@field on_remove_item event
+---@field on_change_items event
+---@field on_clear event
+---@field on_update_positions event
 ---@field parent node
 ---@field nodes node[]
 ---@field first_index number
@@ -152,11 +152,11 @@ function M:init(parent, element, in_row)
 
 	self.border = vmath.vector4(0) -- Current grid content size
 
-	self.on_add_item = Event()
-	self.on_remove_item = Event()
-	self.on_change_items = Event()
-	self.on_clear = Event()
-	self.on_update_positions = Event()
+	self.on_add_item = event.create()
+	self.on_remove_item = event.create()
+	self.on_change_items = event.create()
+	self.on_clear = event.create()
+	self.on_update_positions = event.create()
 
 	self._set_position_function = gui.set_position
 end

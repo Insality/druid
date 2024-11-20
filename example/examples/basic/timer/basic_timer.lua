@@ -1,4 +1,4 @@
-local event = require("druid.event")
+local event = require("event.event")
 local timer = require("druid.extended.timer")
 
 local component = require("druid.component")

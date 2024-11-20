@@ -6,7 +6,7 @@ local lang_text = require("druid.extended.lang_text")
 ---@field root druid.container
 ---@field text druid.lang_text
 ---@field druid druid_instance
----@field on_click druid.event
+---@field on_click event
 local M = component.create("examples_list_view_item")
 
 ---@param template string

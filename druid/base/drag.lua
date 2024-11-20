@@ -14,19 +14,19 @@
 -- @tfield node node
 
 --- Event on touch start callback(self)
--- @tfield druid.event on_touch_start druid.event
+-- @tfield event on_touch_start event
 
 --- Event on touch end callback(self)
--- @tfield druid.event on_touch_end druid.event
+-- @tfield event on_touch_end event
 
 --- Event on drag start callback(self, touch)
--- @tfield druid.event on_drag_start druid.event
+-- @tfield event on_drag_start event
 
 --- on drag progress callback(self, dx, dy, total_x, total_y, touch)
--- @tfield druid.event on_drag Event druid.event
+-- @tfield event on_drag Event event
 
 --- Event on drag end callback(self, total_x, total_y, touch)
--- @tfield druid.event on_drag_end druid.event
+-- @tfield event on_drag_end event
 
 --- Is component now touching
 -- @tfield boolean is_touch
@@ -57,18 +57,18 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.drag: druid.base_component
 ---@field node node
----@field on_touch_start druid.event
----@field on_touch_end druid.event
----@field on_drag_start druid.event
----@field on_drag druid.event
----@field on_drag_end druid.event
+---@field on_touch_start event
+---@field on_touch_end event
+---@field on_drag_start event
+---@field on_drag event
+---@field on_drag_end event
 ---@field style table
 ---@field click_zone node
 ---@field is_touch boolean
@@ -234,11 +234,11 @@ function M:init(node_or_node_id, on_drag_callback)
 	self._scene_scale = helper.get_scene_scale(self.node)
 
 	self.click_zone = nil
-	self.on_touch_start = Event()
-	self.on_touch_end = Event()
-	self.on_drag_start = Event()
-	self.on_drag = Event(on_drag_callback)
-	self.on_drag_end = Event()
+	self.on_touch_start = event.create()
+	self.on_touch_end = event.create()
+	self.on_drag_start = event.create()
+	self.on_drag = event.create(on_drag_callback)
+	self.on_drag_end = event.create()
 
 	self:on_window_resized()
 	self:set_drag_cursors(true)

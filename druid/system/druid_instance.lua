@@ -3,7 +3,7 @@
 --
 -- Helper - A useful set of functions for working with GUI nodes, such as centering nodes, get GUI scale ratio, etc
 --
--- druid.event - The core event system in Druid. Learn how to subscribe to any event in every Druid component.
+-- event - The core event system in Druid. Learn how to subscribe to any event in every Druid component.
 --
 -- BaseComponent - The parent class of all Druid components. You can find all default component methods there.
 --

@@ -13,7 +13,7 @@
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
-local Event = require("druid.event")
+local event = require("event.event")
 
 ---@class druid.container: druid.base_component
 ---@field node node
@@ -29,7 +29,7 @@ local Event = require("druid.event")
 ---@field fit_size vector3
 ---@field min_size_x number|nil
 ---@field min_size_y number|nil
----@field on_size_changed druid.event @function on_size_changed(size)
+---@field on_size_changed event @function on_size_changed(size)
 ---@field _parent_container druid.container
 ---@field _containers table
 ---@field _draggable_corners table
@@ -82,7 +82,7 @@ function M:init(node, mode, callback)
 	gui.set_size_mode(self.node, gui.SIZE_MODE_MANUAL)
 	gui.set_adjust_mode(self.node, gui.ADJUST_FIT)
 
-	self.on_size_changed = Event(callback)
+	self.on_size_changed = event.create(callback)
 
 	self.pivot_offset = helper.get_pivot_offset(gui.get_pivot(self.node))
 	self.center_offset = -vmath.vector3(self.size.x * self.pivot_offset.x, self.size.y * self.pivot_offset.y, 0)

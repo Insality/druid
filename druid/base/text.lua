@@ -36,13 +36,13 @@
 -- @alias druid.text
 
 --- On set text callback(self, text)
--- @tfield druid.event on_set_text druid.event
+-- @tfield event on_set_text event
 
 --- On adjust text size callback(self, new_scale, text_metrics)
--- @tfield druid.event on_update_text_scale druid.event
+-- @tfield event on_update_text_scale event
 
 --- On change pivot callback(self, pivot)
--- @tfield druid.event on_set_pivot druid.event
+-- @tfield event on_set_pivot event
 
 --- Text node
 -- @tfield node node
@@ -76,7 +76,7 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local utf8_lua = require("druid.system.utf8")
@@ -85,9 +85,9 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 
 ---@class druid.text: druid.base_component
 ---@field node node
----@field on_set_text druid.event
----@field on_update_text_scale druid.event
----@field on_set_pivot druid.event
+---@field on_set_text event
+---@field on_update_text_scale event
+---@field on_set_pivot event
 ---@field style table
 ---@field private start_pivot number
 ---@field private start_scale vector3
@@ -343,9 +343,9 @@ function M:init(node, value, adjust_type)
 	self.adjust_type = adjust_type or self.style.DEFAULT_ADJUST
 	self.color = gui.get_color(self.node)
 
-	self.on_set_text = Event()
-	self.on_set_pivot = Event()
-	self.on_update_text_scale = Event()
+	self.on_set_text = event.create()
+	self.on_set_pivot = event.create()
+	self.on_update_text_scale = event.create()
 
 	self:set_text(value or gui.get_text(self.node))
 	return self

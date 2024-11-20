@@ -1,7 +1,7 @@
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.rich_text")
 local helper = require("druid.helper")
-local event = require("druid.event")
+local event = require("event.event")
 
 ---@class rich_text_tags_custom: druid.base_component
 ---@field druid druid_instance

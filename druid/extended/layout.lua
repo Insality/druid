@@ -1,10 +1,10 @@
-local event = require("druid.event")
+local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@alias druid.layout.mode "horizontal"|"vertical"|"horizontal_wrap"
 
----@class druid.event.on_size_changed: druid.event
+---@class event.on_size_changed: event
 ---@field subscribe fun(_, callback: fun(new_size: vector3), context: any|nil)
 
 ---@class druid.layout.row_data
@@ -30,7 +30,7 @@ local component = require("druid.component")
 ---@field is_resize_width boolean
 ---@field is_resize_height boolean
 ---@field is_justify boolean
----@field on_size_changed druid.event.on_size_changed
+---@field on_size_changed event.on_size_changed
 local M = component.create("layout")
 
 ---Layout component constructor
@@ -54,7 +54,7 @@ function M:init(node_or_node_id, layout_type)
 	self.is_resize_height = false
 	self.is_justify = false
 
-	self.on_size_changed = event.create() --[[@as druid.event.on_size_changed]]
+	self.on_size_changed = event.create() --[[@as event.on_size_changed]]
 end
 
 

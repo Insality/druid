@@ -39,13 +39,13 @@
 
 
 --- On scroll move callback(self, position)
--- @tfield druid.event on_scroll druid.event
+-- @tfield event on_scroll event
 
 --- On scroll_to function callback(self, target, is_instant)
--- @tfield druid.event on_scroll_to druid.event
+-- @tfield event on_scroll_to event
 
 --- On scroll_to_index function callback(self, index, point)
--- @tfield druid.event on_point_scroll druid.event
+-- @tfield event on_point_scroll event
 
 --- Scroll view node
 -- @tfield node view_node
@@ -85,15 +85,15 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.scroll: druid.base_component
----@field on_scroll druid.event
----@field on_scroll_to druid.event
----@field on_point_scroll druid.event
+---@field on_scroll event
+---@field on_scroll_to event
+---@field on_point_scroll event
 ---@field view_node node
 ---@field view_border vector4
 ---@field content_node node
@@ -194,9 +194,9 @@ function M:init(view_node, content_node)
 	self.hover.on_mouse_hover:subscribe(self._on_mouse_hover)
 	self._is_mouse_hover = false
 
-	self.on_scroll = Event()
-	self.on_scroll_to = Event()
-	self.on_point_scroll = Event()
+	self.on_scroll = event.create()
+	self.on_scroll_to = event.create()
+	self.on_point_scroll = event.create()
 
 	self.selected = nil
 	self.is_animate = false

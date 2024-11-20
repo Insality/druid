@@ -1,9 +1,9 @@
-local event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
 ---@class druid.back_handler: druid.base_component
----@field on_back druid.event Trigger on back handler action, fun(self, params)
+---@field on_back event Trigger on back handler action, fun(self, params)
 ---@field params any|nil Custom args to pass in the callback
 local M = component.create("back_handler")
 
