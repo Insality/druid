@@ -61,29 +61,6 @@ no_auto_input = 1
 ```
 
 
-## Template Name Check
-
-By default, **Druid** automatically checks the parent component's template name to construct the full template name for the component. It's used in user custom components.
-
-If, for some reason, you want to pass the full template name manually, you can disable this feature by setting the `druid.no_auto_template` field in the _game.project_ file:
-
-```
-[druid]
-no_auto_template = 1
-```
-
-
-## Stencil Check
-
-When creating input components inside stencil nodes, **Druid** automatically sets up `component:set_click_zone()` during the _late_init_ component step to restrict input clicks outside of the stencil zone. This is particularly useful for buttons inside scroll stencil nodes.
-
-To disable this feature, add the following field to your _game.project_ file:
-```
-[druid]
-no_stencil_check = 1
-```
-
-
 ## Code Bindings
 
 Adjust **Druid** settings as needed:

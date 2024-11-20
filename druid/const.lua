@@ -17,8 +17,6 @@ M.ACTION_LSHIFT = hash(sys.get_config_string("druid.input_key_lshift", "key_lshi
 M.ACTION_LCTRL = hash(sys.get_config_string("druid.input_key_lctrl", "key_lctrl"))
 M.ACTION_LCMD = hash(sys.get_config_string("druid.input_key_lsuper", "key_lsuper"))
 
-M.IS_STENCIL_CHECK = not (sys.get_config_int("druid.no_stencil_check", 0) == 1)
-
 M.ON_INPUT = "on_input"
 M.ON_UPDATE = "update"
 M.ON_MESSAGE = "on_message"

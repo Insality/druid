@@ -347,7 +347,7 @@ end
 
 
 function M:on_late_init()
-	if not self.click_zone and const.IS_STENCIL_CHECK then
+	if not self.click_zone then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
 		if stencil_node then
 			self:set_click_zone(stencil_node)

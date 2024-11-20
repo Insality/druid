@@ -40,7 +40,6 @@ local helper = require("druid.helper")
 local M = {}
 
 local INTERESTS = {} -- Cache interests per component class in runtime
-local IS_AUTO_TEMPLATE = not (sys.get_config_int("druid.no_auto_template", 0) == 1)
 
 -- Component Interests
 M.ON_INPUT = const.ON_INPUT
@@ -114,7 +113,7 @@ function M:set_template(template)
 	template = template or ""
 
 	local parent = self:get_parent_component()
-	if parent and IS_AUTO_TEMPLATE then
+	if parent then
 		local parent_template = parent:get_template()
 		if #parent_template > 0 then
 			if #template > 0 then
