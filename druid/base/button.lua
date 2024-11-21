@@ -154,7 +154,7 @@ local component = require("druid.component")
 ---@field anim_node node
 ---@field params any
 ---@field hover druid.hover
----@field click_zone node
+---@field click_zone node|nil
 ---@field start_scale vector3
 ---@field start_pos vector3
 ---@field disabled boolean
@@ -474,7 +474,7 @@ end
 ---@param zone node|string|nil Gui node
 ---@return druid.button self
 function M:set_click_zone(zone)
-	self.click_zone = self:get_node(zone)
+	self.click_zone = zone and self:get_node(zone) or nil
 	self.hover:set_click_zone(zone)
 
 	return self

@@ -221,6 +221,7 @@ function M:refresh_layout()
 	local layout_pivot_offset = helper.get_pivot_offset(gui.get_pivot(layout_node)) -- {x: -0.5, y: -0.5} - is left bot, {x: 0.5, y: 0.5} - is right top
 
 	local rows_data = self:calculate_rows_data()
+	self.rows_data = rows_data
 	local rows = rows_data.rows
 	local row_index = 1
 	local row = rows[row_index]

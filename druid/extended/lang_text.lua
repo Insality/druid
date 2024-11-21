@@ -69,7 +69,7 @@ end
 
 --- Setup raw text to lang_text component
 ---@param text string Text for text node
----@return LangText Current instance
+---@return druid.lang_text Current instance
 function M:set_to(text)
 	self.last_locale = false
 	self.text:set_to(text)
@@ -88,7 +88,7 @@ end
 ---@param e string|nil Optional param to string.format
 ---@param f string|nil Optional param to string.format
 ---@param g string|nil Optional param to string.format
----@return LangText Current instance
+---@return druid.lang_text Current instance
 function M:translate(locale_id, a, b, c, d, e, f, g)
 	self.last_locale_args = { a, b, c, d, e, f, g }
 	self.last_locale = locale_id or self.last_locale
@@ -106,7 +106,7 @@ end
 ---@param e string|nil Optional param to string.format
 ---@param f string|nil Optional param to string.format
 ---@param g string|nil Optional param to string.format
----@return LangText Current instance
+---@return druid.lang_text Current instance
 function M:format(a, b, c, d, e, f, g)
 	self.last_locale_args = { a, b, c, d, e, f, g }
 	self.text:set_to(settings.get_text(self.last_locale, a, b, c, d, e, f, g) or "")

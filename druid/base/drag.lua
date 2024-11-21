@@ -70,7 +70,7 @@ local component = require("druid.component")
 ---@field on_drag event
 ---@field on_drag_end event
 ---@field style table
----@field click_zone node
+---@field click_zone node|nil
 ---@field is_touch boolean
 ---@field is_drag boolean
 ---@field can_x boolean
@@ -365,9 +365,9 @@ end
 
 ---Set Drag click zone
 ---@param node node|string|nil
----@return druid.drag self
+---@return druid.drag self Current instance
 function M:set_click_zone(node)
-	self.click_zone = self:get_node(node)
+	self.click_zone = node and self:get_node(node) or nil
 
 	return self
 end
@@ -375,7 +375,7 @@ end
 
 ---Set Drag component enabled state.
 ---@param is_enabled boolean
----@return druid.drag self
+---@return druid.drag self Current instance
 function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
 

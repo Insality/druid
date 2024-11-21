@@ -212,7 +212,7 @@ end
 -- apply closest step position
 ---@param steps number[] Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
----@return Slider Slider
+---@return druid.slider Slider
 function M:set_steps(steps)
 	self.steps = steps
 	return self
@@ -224,8 +224,13 @@ end
 -- move at this position and node drag will start.
 -- This function require the Defold version 1.3.0+
 ---@param input_node node|string|nil
----@return Slider Slider
+---@return druid.slider Slider
 function M:set_input_node(input_node)
+	if not input_node then
+		self._input_node = nil
+		return self
+	end
+
 	self._input_node = self:get_node(input_node)
 	return self
 end

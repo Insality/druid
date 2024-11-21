@@ -27,18 +27,12 @@ M.ON_LAYOUT_CHANGE = "on_layout_change"
 M.ON_WINDOW_RESIZED = "on_window_resized"
 M.ON_LANGUAGE_CHANGE = "on_language_change"
 
+M.MSG_LAYOUT_CHANGED = hash("layout_changed")
+
 -- Components with higher priority value processed first
 M.PRIORITY_INPUT = 10
 M.PRIORITY_INPUT_HIGH = 20
 M.PRIORITY_INPUT_MAX = 100
-
-M.MESSAGE_INPUT = {
-	BUTTON_CLICK = "button_click",
-	BUTTON_LONG_CLICK = "button_long_click",
-	BUTTON_DOUBLE_CLICK = "button_double_click",
-	BUTTON_REPEATED_CLICK = "button_repeated_click",
-	TEXT_SET = "text_set",
-}
 
 M.PIVOTS = {
 	[gui.PIVOT_CENTER] = vmath.vector3(0),
@@ -73,7 +67,6 @@ M.LAYOUT_MODE = {
 	STRETCH = gui.ADJUST_STRETCH,
 }
 
-M.VECTOR_ZERO = vmath.vector3(0)
 M.SYS_INFO = sys.get_sys_info()
 M.CURRENT_SYSTEM_NAME = M.SYS_INFO.system_name
 
@@ -94,13 +87,13 @@ M.SHIFT = {
 
 M.TEXT_ADJUST = {
 	DOWNSCALE = "downscale",
+	NO_ADJUST = "no_adjust",
+	DOWNSCALE_LIMITED = "downscale_limited",
+	SCROLL = "scroll",
 	TRIM = "trim",
 	TRIM_LEFT = "trim_left",
 	SCALE_THEN_TRIM = "scale_then_trim",
 	SCALE_THEN_TRIM_LEFT = "scale_then_trim_left",
-	NO_ADJUST = "no_adjust",
-	DOWNSCALE_LIMITED = "downscale_limited",
-	SCROLL = "scroll",
 	SCALE_THEN_SCROLL = "scale_then_scroll",
 }
 
@@ -109,13 +102,5 @@ M.SIDE = {
 	Y = "y"
 }
 
-M.SWIPE = {
-	UP = "up",
-	DOWN = "down",
-	LEFT = "left",
-	RIGHT = "right",
-}
-
-M.EMPTY_FUNCTION = function() end
 
 return M

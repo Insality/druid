@@ -279,8 +279,8 @@ end
 
 
 --- Set input field text
----@return druid.input Current input instance
 ---@param text string The input text
+---@return druid.rich_input self Current instance
 function M:set_text(text)
 	self.input:set_text(text)
 	gui.set_enabled(self.placeholder.node, true and #self.input:get_text() == 0)
@@ -291,7 +291,7 @@ end
 
 --- Set input field font
 ---@param font hash The font hash
----@return druid.input Current input instance
+---@return druid.rich_input self Current instance
 function M:set_font(font)
 	gui.set_font(self.input.text.node, font)
 	gui.set_font(self.placeholder.node, font)
@@ -310,7 +310,7 @@ end
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
 ---@param characters string Regulax exp. for validate user input
----@return RichInput Current instance
+---@return druid.rich_input Current instance
 function M:set_allowed_characters(characters)
 	self.input:set_allowed_characters(characters)
 

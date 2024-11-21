@@ -8,7 +8,6 @@ local SIZE_Y = hash("size.y")
 
 function M:init()
 	self.root = self:get_node("root")
-	self.container = self.druid:new_container(self.root)
 	self.text_header = self.druid:new_text("text_header")
 
 	self.druid:new_drag("header", self.on_drag_widget)

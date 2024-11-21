@@ -1,0 +1,8 @@
+name: "gui_world"
+tags: "tile"
+vertex_program: "/druid/materials/gui_world/gui_world.vp"
+fragment_program: "/druid/materials/gui_world/gui_world.fp"
+vertex_constants {
+  name: "view_proj"
+  type: CONSTANT_TYPE_VIEWPROJ
+}

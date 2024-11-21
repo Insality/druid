@@ -1,7 +1,6 @@
---- Druid Helper module
-
 local const = require("druid.const")
 
+-- Localize functions for better performance
 local gui_get_node = gui.get_node
 local gui_get = gui.get
 local gui_pick_node = gui.pick_node
@@ -153,8 +152,7 @@ end
 ---@return number scale_x
 function M.get_gui_scale()
 	local window_x, window_y = window.get_size()
-	return math.min(window_x / gui.get_width(),
-		window_y / gui.get_height())
+	return math.min(window_x / gui.get_width(), window_y / gui.get_height())
 end
 
 
@@ -462,7 +460,7 @@ end
 
 
 ---Add value to array with shift policy
--- Shift policy can be: left, right, no_shift
+---Shift policy can be: left, right, no_shift
 ---@param array table Array
 ---@param item any Item to insert
 ---@param index number|nil Index to insert. If nil, item will be inserted at the end of array
@@ -492,7 +490,6 @@ end
 
 
 ---Remove value from array with shift policy
---
 -- Shift policy can be: left, right, no_shift
 ---@param array any[] Array
 ---@param index number|nil Index to remove. If nil, item will be removed from the end of array

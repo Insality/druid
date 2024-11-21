@@ -1,20 +1,4 @@
-
--- Please review the following API pages:
---
--- Helper - A useful set of functions for working with GUI nodes, such as centering nodes, get GUI scale ratio, etc
---
--- event - The core event system in Druid. Learn how to subscribe to any event in every Druid component.
---
--- BaseComponent - The parent class of all Druid components. You can find all default component methods there.
---
--- # Tech Info #
---
--- • To use Druid, you need to create a Druid instance first. This instance is used to spawn components.
---
--- • When using Druid components, provide the node name as a string argument directly. Avoid calling gui.get_node() before passing it to the component. Because Druid can get nodes from template and cloned gui nodes.
---
--- • All Druid and component methods are called using the colon operator (e.g., self.druid:new_button()).
-
+local events = require("event.events")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local settings = require("druid.system.settings")
@@ -162,7 +146,10 @@ local function check_sort_input_stack(self, components)
 end
 
 
---- Check whitelists and blacklists for input components
+---Check whitelists and blacklists for input components
+---@param self druid_instance
+---@param component druid.base_component
+---@return boolean
 local function can_use_input_component(self, component)
 	local can_by_whitelist = true
 	local can_by_blacklist = true
@@ -222,7 +209,6 @@ function M:initialize(context, style)
 	self._deleted = false
 	self._is_late_remove_enabled = false
 	self._late_remove = {}
-	self.url = msg.url()
 
 	self._input_blacklist = nil
 	self._input_whitelist = nil
@@ -232,6 +218,9 @@ function M:initialize(context, style)
 	for i = 1, #base_component.ALL_INTERESTS do
 		self.components_interest[base_component.ALL_INTERESTS[i]] = {}
 	end
+
+	events.subscribe("druid.window_event", self.on_window_event, self)
+	events.subscribe("druid.language_change", self.on_language_change, self)
 end
 
 
@@ -267,6 +256,9 @@ function M:final()
 	self._deleted = true
 
 	set_input_state(self, false)
+
+	events.unsubscribe("druid.window_event", self.on_window_event, self)
+	events.unsubscribe("druid.language_change", self.on_language_change, self)
 end
 
 
@@ -340,9 +332,7 @@ function M:late_init()
 end
 
 
---- Call this in gui_script update function.
---
--- Used for: scroll, progress, timer components
+---Call this in gui_script update function.
 ---@param dt number Delta time
 function M:update(dt)
 	self._is_late_remove_enabled = true
@@ -357,9 +347,7 @@ function M:update(dt)
 end
 
 
---- Call this in gui_script on_input function.
---
--- Used for almost all components
+---Call this in gui_script on_input function.
 ---@param action_id hash Action_id from on_input
 ---@param action table Action from on_input
 ---@return boolean The boolean value is input was consumed
@@ -378,22 +366,15 @@ end
 
 
 --- Call this in gui_script on_message function.
---
--- Used for special actions. See SPECIFIC_UI_MESSAGES table
 ---@param message_id hash Message_id from on_message
 ---@param message table Message from on_message
 ---@param sender url Sender from on_message
 function M:on_message(message_id, message, sender)
-	local specific_ui_message = base_component.SPECIFIC_UI_MESSAGES[message_id]
-
-	if specific_ui_message then
+	if message_id == const.MSG_LAYOUT_CHANGED then
 		-- Resend special message to all components with the related interest
-		local components = self.components_interest[specific_ui_message]
-		if components then
-			for i = 1, #components do
-				local component = components[i]
-				component[specific_ui_message](component, message, sender)
-			end
+		local components = self.components_interest[base_component.ON_LAYOUT_CHANGE]
+		for i = 1, #components do
+			components[i]:on_layout_change()
 		end
 	else
 		-- Resend message to all components with on_message interest
@@ -405,24 +386,22 @@ function M:on_message(message_id, message, sender)
 end
 
 
---- Calls the on_focus_lost function in all related components
--- This one called by on_window_callback by global window listener
----@private
-function M:on_focus_lost()
-	local components = self.components_interest[base_component.ON_FOCUS_LOST]
-	for i = 1, #components do
-		components[i]:on_focus_lost()
-	end
-end
-
-
---- Calls the on_focus_gained function in all related components
--- This one called by on_window_callback by global window listener
----@private
-function M:on_focus_gained()
-	local components = self.components_interest[base_component.ON_FOCUS_GAINED]
-	for i = 1, #components do
-		components[i]:on_focus_gained()
+function M:on_window_event(window_event)
+	if window_event == window.WINDOW_EVENT_FOCUS_LOST then
+		local components = self.components_interest[base_component.ON_FOCUS_LOST]
+		for i = 1, #components do
+			components[i]:on_focus_lost()
+		end
+	elseif window_event == window.WINDOW_EVENT_FOCUS_GAINED then
+		local components = self.components_interest[base_component.ON_FOCUS_GAINED]
+		for i = 1, #components do
+			components[i]:on_focus_gained()
+		end
+	elseif window_event == window.WINDOW_EVENT_RESIZED then
+		local components = self.components_interest[base_component.ON_WINDOW_RESIZED]
+		for i = 1, #components do
+			components[i]:on_window_resized()
+		end
 	end
 end
 
@@ -439,9 +418,9 @@ function M:on_language_change()
 end
 
 
---- Set whitelist components for input processing.
--- If whitelist is not empty and component not contains in this list,
--- component will be not processed on input step
+---Set whitelist components for input processing.
+---If whitelist is not empty and component not contains in this list,
+---component will be not processed on input step
 ---@param whitelist_components table|druid.base_component[]|nil The array of component to whitelist
 ---@return druid_instance
 function M:set_whitelist(whitelist_components)
@@ -459,9 +438,9 @@ function M:set_whitelist(whitelist_components)
 end
 
 
---- Set blacklist components for input processing.
--- If blacklist is not empty and component contains in this list,
--- component will be not processed on input step DruidInstance
+---Set blacklist components for input processing.
+---If blacklist is not empty and component contains in this list,
+---component will be not processed on input step DruidInstance
 ---@param blacklist_components table|druid.base_component[]|nil The array of component to blacklist
 ---@return druid_instance
 function M:set_blacklist(blacklist_components)
@@ -497,11 +476,17 @@ end
 ---@generic T: druid.base_component
 ---@param widget T
 ---@param template string|nil The template name used by widget
----@param nodes table|nil The nodes table from gui.clone_tree
+---@param nodes table|node|nil The nodes table from gui.clone_tree or prefab node to use for clone
 ---@vararg any
 ---@return T
 function M:new_widget(widget, template, nodes, ...)
 	local instance = create_widget(self, widget)
+
+	if type(nodes) == "userdata" then
+		-- It's a node, we will use it as a root node to make nodes
+		nodes = gui.clone_tree(nodes)
+	end
+
 	instance.druid = instance:get_druid(template, nodes)
 
 	if instance.init then
@@ -614,7 +599,7 @@ local lang_text = require("druid.extended.lang_text")
 ---@param node string|node The_node id or gui.get_node(node_id)
 ---@param locale_id string|nil Default locale id or text from node as default
 ---@param adjust_type string|nil Adjust type for text node. Default: const.TEXT_ADJUST.DOWNSCALE
----@return druid.lang_text LangText component
+---@return druid.lang_text lang_text component
 function M:new_lang_text(node, locale_id, adjust_type)
 	return self:new(lang_text, node, locale_id, adjust_type)
 end
@@ -625,7 +610,7 @@ local slider = require("druid.extended.slider")
 ---@param pin_node string|node The_node id or gui.get_node(node_id).
 ---@param end_pos vector3 The end position of slider
 ---@param callback function|nil On slider change callback
----@return druid.slider Slider component
+---@return druid.slider slider component
 function M:new_slider(pin_node, end_pos, callback)
 	return self:new(slider, pin_node, end_pos, callback)
 end
@@ -636,7 +621,7 @@ local input = require("druid.extended.input")
 ---@param click_node string|node Button node to enabled input component
 ---@param text_node string|node|druid.text Text node what will be changed on user input
 ---@param keyboard_type number|nil Gui keyboard type for input field
----@return druid.input Input component
+---@return druid.input input component
 function M:new_input(click_node, text_node, keyboard_type)
 	return self:new(input, click_node, text_node, keyboard_type)
 end
@@ -647,7 +632,7 @@ local data_list = require("druid.extended.data_list")
 ---@param druid_scroll druid.scroll The Scroll instance for Data List component
 ---@param druid_grid druid.grid The StaticGrid} or @{DynamicGrid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
----@return druid.data_list DataList component
+---@return druid.data_list data_list component
 function M:new_data_list(druid_scroll, druid_grid, create_function)
 	return self:new(data_list, druid_scroll, druid_grid, create_function)
 end
@@ -659,7 +644,7 @@ local timer_component = require("druid.extended.timer")
 ---@param seconds_from number|nil Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
 ---@param callback function|nil Function on timer end
----@return druid.timer Timer component
+---@return druid.timer timer component
 function M:new_timer(node, seconds_from, seconds_to, callback)
 	return self:new(timer_component, node, seconds_from, seconds_to, callback)
 end
@@ -670,7 +655,7 @@ local progress = require("druid.extended.progress")
 ---@param node string|node Progress bar fill node or node name
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
 ---@param init_value number|nil Initial value of progress bar. Default: 1
----@return druid.progress Progress component
+---@return druid.progress progress component
 function M:new_progress(node, key, init_value)
 	return self:new(progress, node, key, init_value)
 end
@@ -680,7 +665,7 @@ local layout = require("druid.extended.layout")
 ---Create Layout component
 ---@param node string|node The_node id or gui.get_node(node_id).
 ---@param mode string|nil vertical|horizontal|horizontal_wrap. Default: horizontal
----@return druid.layout Layout component
+---@return druid.layout layout component
 function M:new_layout(node, mode)
 	return self:new(layout, node, mode)
 end
@@ -691,7 +676,7 @@ local container = require("druid.extended.container")
 ---@param node string|node The_node id or gui.get_node(node_id).
 ---@param mode string|nil Layout mode
 ---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
----@return druid.container Container component
+---@return druid.container container component
 function M:new_container(node, mode, callback)
 	return self:new(container, node, mode, callback)
 end
@@ -702,7 +687,7 @@ local hotkey = require("druid.extended.hotkey")
 ---@param keys_array string|string[] Keys for trigger action. Should contains one action key and any amount of modificator keys
 ---@param callback function|nil The callback function
 ---@param callback_argument any|nil The argument to pass into the callback function
----@return druid.hotkey Hotkey component
+---@return druid.hotkey hotkey component
 function M:new_hotkey(keys_array, callback, callback_argument)
 	return self:new(hotkey, keys_array, callback, callback_argument)
 end

@@ -247,7 +247,7 @@ end
 
 --- Set progress bar max node size
 ---@param max_size vector3 The new node maximum (full) size
----@return Progress Progress
+---@return druid.progress Progress
 function M:set_max_size(max_size)
 	self.max_size[self.key] = max_size[self.key]
 	self:set_to(self.last_value)

@@ -214,8 +214,7 @@ end
 
 ---@private
 function M:create_from_prefab(widget_class, widget_name, prefab)
-	local nodes = gui.clone_tree(prefab)
-	local instance = self.druid:new_widget(widget_class, widget_name, nodes)
+	local instance = self.druid:new_widget(widget_class, widget_name, prefab)
 	self:add_property(instance)
 	return instance
 end

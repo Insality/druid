@@ -16,7 +16,7 @@
 ---@param click_zone node|nil
 
 --- Trigger on swipe event(self, swipe_side, dist, delta_time)
--- @tfield event on_swipe) event
+---@param  event event on_swipe
 
 ---
 
@@ -27,7 +27,7 @@ local component = require("druid.component")
 
 ---@class druid.swipe: druid.base_component
 ---@field node node
----@field on_swipe event
+---@field on_swipe event function(side, dist, dt), side - "left", "right", "up", "down"
 ---@field style table
 ---@field click_zone node
 ---@field private _trigger_on_move boolean
@@ -62,16 +62,16 @@ local function check_swipe(self, action)
 		local swipe_side = false
 
 		if is_x_swipe and dx > 0 then
-			swipe_side = const.SWIPE.RIGHT
+			swipe_side = "right"
 		end
 		if is_x_swipe and dx < 0 then
-			swipe_side = const.SWIPE.LEFT
+			swipe_side = "left"
 		end
 		if not is_x_swipe and dy > 0 then
-			swipe_side = const.SWIPE.UP
+			swipe_side = "up"
 		end
 		if not is_x_swipe and dy < 0 then
-			swipe_side = const.SWIPE.DOWN
+			swipe_side = "down"
 		end
 
 		self.on_swipe:trigger(self:get_context(), swipe_side, dist, delta_time)
@@ -83,10 +83,12 @@ end
 --- Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
--- @table style
--- @tfield number|nil SWIPE_TIME Maximum time for swipe trigger. Default: 0.4
--- @tfield number|nil SWIPE_THRESHOLD Minimum distance for swipe trigger. Default: 50
--- @tfield boolean|nil SWIPE_TRIGGER_ON_MOVE If true, trigger on swipe moving, not only release action. Default: false
+---@class druid.swipe.style
+---@field SWIPE_TIME number|nil Maximum time for swipe trigger. Default: 0.4
+---@field SWIPE_THRESHOLD number|nil Minimum distance for swipe trigger. Default: 50
+---@field SWIPE_TRIGGER_ON_MOVE boolean|nil If true, trigger on swipe moving, not only release action. Default: false
+
+---@param style druid.swipe.style
 function M:on_style_change(style)
 	self.style = {}
 	self.style.SWIPE_TIME = style.SWIPE_TIME or 0.4

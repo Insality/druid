@@ -15,3 +15,4 @@ deployer_version_settings.txt
 bob*.jar
 manifest.private.der
 manifest.public.der
+/.editor_settings

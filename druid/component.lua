@@ -1,17 +1,15 @@
----Base component class for all Druid components.
-
 local const = require("druid.const")
 local helper = require("druid.helper")
 
 ---@class druid.base_component.meta
 ---@field template string
 ---@field context table
----@field nodes table
----@field style table
+---@field nodes table<string|hash, node>|nil
+---@field style table|nil
 ---@field druid druid_instance
 ---@field input_enabled boolean
 ---@field children table
----@field parent druid.base_component
+---@field parent druid.base_component|nil
 ---@field instance_class table
 
 ---@class druid.base_component.component
@@ -62,15 +60,6 @@ M.ALL_INTERESTS = {
 	M.ON_LAYOUT_CHANGE,
 	M.ON_WINDOW_RESIZED,
 	M.ON_LANGUAGE_CHANGE,
-}
-
--- Mapping from on_message method to specific method name
-M.SPECIFIC_UI_MESSAGES = {
-	[hash("layout_changed")] = M.ON_LAYOUT_CHANGE, -- The message_id from Defold
-	[hash(M.ON_FOCUS_LOST)] = M.ON_FOCUS_LOST,
-	[hash(M.ON_FOCUS_GAINED)] = M.ON_FOCUS_GAINED,
-	[hash(M.ON_WINDOW_RESIZED)] = M.ON_WINDOW_RESIZED,
-	[hash(M.ON_LANGUAGE_CHANGE)] = M.ON_LANGUAGE_CHANGE,
 }
 
 
@@ -136,7 +125,7 @@ end
 
 
 ---Set current component nodes, returned from `gui.clone_tree` function.
----@param nodes table<hash, node>
+---@param nodes table<string|hash, node>
 ---@return druid.base_component
 function M:set_nodes(nodes)
 	self._meta.nodes = nodes
@@ -271,7 +260,7 @@ end
 ---@param context table Druid context. Usually it is self of script
 ---@param style table Druid style module
 ---@param instance_class table The component instance class
----@return component BaseComponent itself
+---@return druid.base_component BaseComponent itself
 ---@private
 function M:setup_component(druid_instance, context, style, instance_class)
 	self._meta = {
@@ -282,7 +271,7 @@ function M:setup_component(druid_instance, context, style, instance_class)
 		druid = druid_instance,
 		input_enabled = true,
 		children = {},
-		parent = type(context) ~= "userdata" and context,
+		parent = type(context) ~= "userdata" and context --[[@as druid.base_component]],
 		instance_class = instance_class
 	}
 
@@ -341,20 +330,28 @@ function M:get_nodes()
 	if parent then
 		nodes = nodes or parent:get_nodes()
 	end
+
 	return nodes
 end
 
 
 ---Add child to component children list
----@param child druid.base_component The druid component instance
+---@generic T: druid.base_component
+---@param child T The druid component instance
+---@return T self The component itself for chaining
 ---@private
 function M:__add_child(child)
 	table.insert(self._meta.children, child)
+
+	return self
 end
 
 
---- Remove child from component children list
----@param child component The druid component instance
+
+---Remove child from component children list
+---@generic T: druid.base_component
+---@param child T The druid component instance
+---@return boolean true if child was removed
 ---@private
 function M:__remove_child(child)
 	for i = #self._meta.children, 1, -1 do
@@ -363,6 +360,8 @@ function M:__remove_child(child)
 			return true
 		end
 	end
+
+	return false
 end
 
 

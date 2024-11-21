@@ -541,7 +541,7 @@ end
 ---@private
 function M:_get_zero_offset()
 	if not self.style.IS_DYNAMIC_NODE_POSES then
-		return const.VECTOR_ZERO
+		return vmath.vector3(0)
 	end
 
 	-- zero offset: center pos - border size * anchor
