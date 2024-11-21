@@ -212,6 +212,13 @@ function M:add_left_right_selector(text, value, on_change_callback)
 end
 
 
+
+---@param widget druid.widget
+function M:add_widget(widget)
+	self:add_property(widget)
+end
+
+
 ---@private
 function M:create_from_prefab(widget_class, widget_name, prefab)
 	local instance = self.druid:new_widget(widget_class, widget_name, prefab)

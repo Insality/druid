@@ -49,7 +49,7 @@ end
 
 
 local function sort_input_stack(self)
-	local input_components = self.components_interest[base_component.ON_INPUT]
+	local input_components = self.components_interest[const.ON_INPUT]
 	if not input_components then
 		return
 	end
@@ -215,8 +215,8 @@ function M:initialize(context, style)
 
 	self.components_all = {}
 	self.components_interest = {}
-	for i = 1, #base_component.ALL_INTERESTS do
-		self.components_interest[base_component.ALL_INTERESTS[i]] = {}
+	for i = 1, #const.ALL_INTERESTS do
+		self.components_interest[const.ALL_INTERESTS[i]] = {}
 	end
 
 	events.subscribe("druid.window_event", self.on_window_event, self)
@@ -319,13 +319,13 @@ end
 -- An example use case is performing an auto stencil check in the GUI hierarchy for input components.
 ---@private
 function M:late_init()
-	local late_init_components = self.components_interest[base_component.ON_LATE_INIT]
+	local late_init_components = self.components_interest[const.ON_LATE_INIT]
 	while late_init_components[1] do
 		late_init_components[1]:on_late_init()
 		table.remove(late_init_components, 1)
 	end
 
-	if not self.input_inited and #self.components_interest[base_component.ON_INPUT] > 0 then
+	if not self.input_inited and #self.components_interest[const.ON_INPUT] > 0 then
 		-- Input init on late init step, to be sure it goes after user go acquire input
 		set_input_state(self, true)
 	end
@@ -337,7 +337,7 @@ end
 function M:update(dt)
 	self._is_late_remove_enabled = true
 
-	local components = self.components_interest[base_component.ON_UPDATE]
+	local components = self.components_interest[const.ON_UPDATE]
 	for i = 1, #components do
 		components[i]:update(dt)
 	end
@@ -354,7 +354,7 @@ end
 function M:on_input(action_id, action)
 	self._is_late_remove_enabled = true
 
-	local components = self.components_interest[base_component.ON_INPUT]
+	local components = self.components_interest[const.ON_INPUT]
 	check_sort_input_stack(self, components)
 	local is_input_consumed = process_input(self, action_id, action, components)
 
@@ -372,13 +372,13 @@ end
 function M:on_message(message_id, message, sender)
 	if message_id == const.MSG_LAYOUT_CHANGED then
 		-- Resend special message to all components with the related interest
-		local components = self.components_interest[base_component.ON_LAYOUT_CHANGE]
+		local components = self.components_interest[const.ON_LAYOUT_CHANGE]
 		for i = 1, #components do
 			components[i]:on_layout_change()
 		end
 	else
 		-- Resend message to all components with on_message interest
-		local components = self.components_interest[base_component.ON_MESSAGE]
+		local components = self.components_interest[const.ON_MESSAGE]
 		for i = 1, #components do
 			components[i]:on_message(message_id, message, sender)
 		end
@@ -388,17 +388,17 @@ end
 
 function M:on_window_event(window_event)
 	if window_event == window.WINDOW_EVENT_FOCUS_LOST then
-		local components = self.components_interest[base_component.ON_FOCUS_LOST]
+		local components = self.components_interest[const.ON_FOCUS_LOST]
 		for i = 1, #components do
 			components[i]:on_focus_lost()
 		end
 	elseif window_event == window.WINDOW_EVENT_FOCUS_GAINED then
-		local components = self.components_interest[base_component.ON_FOCUS_GAINED]
+		local components = self.components_interest[const.ON_FOCUS_GAINED]
 		for i = 1, #components do
 			components[i]:on_focus_gained()
 		end
 	elseif window_event == window.WINDOW_EVENT_RESIZED then
-		local components = self.components_interest[base_component.ON_WINDOW_RESIZED]
+		local components = self.components_interest[const.ON_WINDOW_RESIZED]
 		for i = 1, #components do
 			components[i]:on_window_resized()
 		end
@@ -411,7 +411,7 @@ end
 -- call manualy to update all translations
 ---@private
 function M:on_language_change()
-	local components = self.components_interest[base_component.ON_LANGUAGE_CHANGE]
+	local components = self.components_interest[const.ON_LANGUAGE_CHANGE]
 	for i = 1, #components do
 		components[i]:on_language_change()
 	end

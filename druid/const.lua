@@ -27,6 +27,18 @@ M.ON_LAYOUT_CHANGE = "on_layout_change"
 M.ON_WINDOW_RESIZED = "on_window_resized"
 M.ON_LANGUAGE_CHANGE = "on_language_change"
 
+M.ALL_INTERESTS = {
+	M.ON_INPUT,
+	M.ON_UPDATE,
+	M.ON_MESSAGE,
+	M.ON_LATE_INIT,
+	M.ON_FOCUS_LOST,
+	M.ON_FOCUS_GAINED,
+	M.ON_LAYOUT_CHANGE,
+	M.ON_WINDOW_RESIZED,
+	M.ON_LANGUAGE_CHANGE,
+}
+
 M.MSG_LAYOUT_CHANGED = hash("layout_changed")
 
 -- Components with higher priority value processed first

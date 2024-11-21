@@ -39,29 +39,6 @@ local M = {}
 
 local INTERESTS = {} -- Cache interests per component class in runtime
 
--- Component Interests
-M.ON_INPUT = const.ON_INPUT
-M.ON_UPDATE = const.ON_UPDATE
-M.ON_MESSAGE = const.ON_MESSAGE
-M.ON_LATE_INIT = const.ON_LATE_INIT
-M.ON_FOCUS_LOST = const.ON_FOCUS_LOST
-M.ON_FOCUS_GAINED = const.ON_FOCUS_GAINED
-M.ON_LAYOUT_CHANGE = const.ON_LAYOUT_CHANGE
-M.ON_WINDOW_RESIZED = const.ON_WINDOW_RESIZED
-M.ON_LANGUAGE_CHANGE = const.ON_LANGUAGE_CHANGE
-
-M.ALL_INTERESTS = {
-	M.ON_INPUT,
-	M.ON_UPDATE,
-	M.ON_MESSAGE,
-	M.ON_LATE_INIT,
-	M.ON_FOCUS_LOST,
-	M.ON_FOCUS_GAINED,
-	M.ON_LAYOUT_CHANGE,
-	M.ON_WINDOW_RESIZED,
-	M.ON_LANGUAGE_CHANGE,
-}
-
 
 local uid = 0
 function M.create_uid()
@@ -310,8 +287,8 @@ function M:__get_interests()
 	end
 
 	local interests = {}
-	for index = 1, #M.ALL_INTERESTS do
-		local interest = M.ALL_INTERESTS[index]
+	for index = 1, #const.ALL_INTERESTS do
+		local interest = const.ALL_INTERESTS[index]
 		if self[interest] and type(self[interest]) == "function" then
 			table.insert(interests, interest)
 		end
