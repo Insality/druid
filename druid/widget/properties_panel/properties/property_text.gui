@@ -37,7 +37,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "Text"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "text_name"
   pivot: PIVOT_W
   outline {
@@ -74,7 +74,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "Text"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "text_right"
   pivot: PIVOT_E
   outline {

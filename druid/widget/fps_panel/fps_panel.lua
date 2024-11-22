@@ -1,3 +1,4 @@
+local helper = require("druid.helper")
 local mini_graph = require("druid.widget.mini_graph.mini_graph")
 
 ---@class widget.fps_panel: druid.widget
@@ -22,7 +23,13 @@ function M:init()
 	self.mini_graph:set_samples(self.graph_samples) -- show last 30 seconds
 	self.mini_graph:set_max_value(TARGET_FPS)
 
-	gui.set_parent(self:get_node("content"), self.mini_graph.content, true)
+	do -- Set parent manually
+		local parent_node = self.mini_graph.content
+		local position = helper.get_full_position(parent_node, self.mini_graph.root)
+		local content = self:get_node("content")
+		gui.set_parent(content, self.mini_graph.content)
+		gui.set_position(content, -position)
+	end
 
 	self.text_min_fps = self.druid:new_text("text_min_fps")
 	self.text_fps = self.druid:new_text("text_fps")

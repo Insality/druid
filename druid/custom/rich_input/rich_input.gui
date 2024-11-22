@@ -54,7 +54,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "Placeholder"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "placeholder_text"
   outline {
     x: 0.4
@@ -87,7 +87,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "User input"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "input_text"
   shadow {
     x: 1.0
@@ -145,7 +145,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "|"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "cursor_text"
   shadow {
     x: 1.0

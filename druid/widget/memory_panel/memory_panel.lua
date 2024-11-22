@@ -1,3 +1,4 @@
+local helper = require("druid.helper")
 local mini_graph = require("druid.widget.mini_graph.mini_graph")
 
 ---@class widget.memory_panel: druid.widget
@@ -5,13 +6,24 @@ local mini_graph = require("druid.widget.mini_graph.mini_graph")
 local M = {}
 
 function M:init()
+	self.root = self:get_node("root")
 	self.delta_time = 0.1
 	self.samples_count = 30
 	self.memory_limit = 100
 
 	self.mini_graph = self.druid:new_widget(mini_graph, "mini_graph")
 	self.mini_graph:set_samples(self.samples_count)
-	gui.set_parent(self:get_node("content"), self.mini_graph.content, true)
+
+	-- This one is not works with scaled root
+	--gui.set_parent(self:get_node("content"), self.mini_graph.content, true)
+
+	do -- Set parent manually
+		local parent_node = self.mini_graph.content
+		local position = helper.get_full_position(parent_node, self.mini_graph.root)
+		local content = self:get_node("content")
+		gui.set_parent(content, self.mini_graph.content)
+		gui.set_position(content, -position)
+	end
 
 	self.max_value = self.druid:new_text("text_max_value")
 	self.text_per_second = self.druid:new_text("text_per_second")

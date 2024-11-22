@@ -37,7 +37,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "Input"
-  font: "text_bold"
+  font: "druid_text_bold"
   id: "text_name"
   pivot: PIVOT_W
   outline {

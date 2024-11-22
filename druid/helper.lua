@@ -519,4 +519,21 @@ function M.remove_with_shift(array, index, shift_policy)
 end
 
 
+---Get full position of node in the GUI tree
+---@param node node GUI node
+---@param root node|nil GUI root node to stop search
+function M.get_full_position(node, root)
+	local position = gui.get_position(node)
+	local parent = gui.get_parent(node)
+	while parent and parent ~= root do
+		local parent_position = gui.get_position(parent)
+		position.x = position.x + parent_position.x
+		position.y = position.y + parent_position.y
+		parent = gui.get_parent(parent)
+	end
+
+	return position
+end
+
+
 return M
