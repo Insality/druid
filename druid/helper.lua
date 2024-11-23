@@ -171,22 +171,26 @@ end
 
 
 ---Clamp value between min and max
----@param a number Value
----@param min number Min value
----@param max number Max value
+---@param value number Value
+---@param v1 number|nil Min value. If nil, value will be clamped to positive infinity
+---@param v2 number|nil Max value If nil, value will be clamped to negative infinity
 ---@return number value Clamped value
-function M.clamp(a, min, max)
-	if min > max then
-		min, max = max, min
+function M.clamp(value, v1, v2)
+	if v1 and v2 then
+		if v1 > v2 then
+			v1, v2 = v2, v1
+		end
 	end
 
-	if a >= min and a <= max then
-		return a
-	elseif a < min then
-		return min
-	else
-		return max
+	if v1 and value < v1 then
+		return v1
 	end
+
+	if v2 and value > v2 then
+		return v2
+	end
+
+	return value
 end
 
 

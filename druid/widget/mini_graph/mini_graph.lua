@@ -1,4 +1,5 @@
 local color = require("druid.color")
+local helper = require("druid.helper")
 
 ---@class widget.mini_graph: druid.widget
 local M = {}
@@ -78,7 +79,7 @@ function M:set_line_value(index, value)
 
 	self.values[index] = value
 
-	local normalized = vmath.clamp(value/self.max_value, 0, 1)
+	local normalized = helper.clamp(value/self.max_value, 0, 1)
 	local target_color = color.lerp(normalized, self.color_zero, self.color_one)
 	gui.set_color(line, target_color)
 	self:set_line_height(index)
@@ -115,7 +116,7 @@ end
 
 function M:set_line_height(index)
 	local value = self.values[index] or 0
-	local normalized = vmath.clamp(value / self.max_value, 0, 1)
+	local normalized = helper.clamp(value / self.max_value, 0, 1)
 	local size_y = normalized * 70
 	gui.set(self.lines[index], SIZE_Y, size_y)
 end

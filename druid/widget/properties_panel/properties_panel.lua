@@ -142,7 +142,7 @@ function M:add_slider(text, initial_value, on_change_callback)
 
 	instance.text_name:set_text(text)
 	instance:set_value(initial_value, true)
-	instance.slider.on_change_value:subscribe(function(_, value)
+	instance.on_change_value:subscribe(function(value)
 		on_change_callback(value)
 	end)
 

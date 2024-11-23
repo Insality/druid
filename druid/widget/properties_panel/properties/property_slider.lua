@@ -1,3 +1,6 @@
+local event = require("event.event")
+local helper = require("druid.helper")
+
 ---@class widget.property_slider: druid.widget
 ---@field root node
 ---@field container druid.container
@@ -14,11 +17,14 @@ function M:init()
 	gui.set_alpha(self.selected, 0)
 	self._value = 0
 
+	self.min = 0
+	self.max = 1
+
 	self.text_name = self.druid:new_text("text_name")
 		:set_text_adjust("scale_then_trim_left", 0.3)
 
 	self.text_value = self.druid:new_text("text_value")
-	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(55, 0, 0), self._on_slider_change_by_user) --[[@as druid.slider]]
+	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(55, 0, 0), self.update_value) --[[@as druid.slider]]
 	self.slider:set_input_node("slider")
 
 	self:set_text_function(function(value)
@@ -28,6 +34,8 @@ function M:init()
 	self.container = self.druid:new_container(self.root)
 	self.container:add_container("text_name")
 	self.container:add_container("E_Anchor")
+
+	self.on_change_value = event.create()
 end
 
 
@@ -40,13 +48,17 @@ end
 
 ---@param value number
 function M:set_value(value, is_instant)
-	if self._value == value then
+	local diff = math.abs(self.max - self.min)
+	self.slider:set(value / diff, true)
+
+	local is_changed = self._value ~= value
+	if not is_changed then
 		return
 	end
 
 	self._value = value
-	self.slider:set(value, true)
-	self.text_value:set_to(self._text_function(value))
+	self.text_value:set_text(self._text_function(value))
+	self.on_change_value:trigger(value)
 
 	if not is_instant then
 		gui.set_alpha(self.selected, 1)
@@ -61,12 +73,37 @@ function M:get_value()
 end
 
 
-function M:_on_slider_change_by_user(value)
-	self._value = value
-	self.text_value:set_to(self._text_function(value))
+function M:update_value(value)
+	local current_value = self._value
 
-	gui.set_alpha(self.selected, 1)
-	gui.animate(self.selected, "color.w", 0, gui.EASING_INSINE, 0.16)
+	local diff = math.abs(self.max - self.min)
+	-- [0..1] To range
+	value = value * diff + self.min
+
+	-- Round to steps value (0.1, or 5. Should be divided on this value)
+	value = math.floor(value / self.step + 0.5) * self.step
+
+	value = helper.clamp(value, self.min, self.max)
+
+	self:set_value(value)
+end
+
+
+function M:set_number_type(min, max, step)
+	self.min = min or 0
+	self.max = max or 1
+	self.step = step
+
+	self:set_text_function(function(value)
+		return tostring(value)
+	end)
+
+	self:set_value(self._value, true)
+end
+
+
+function M:_on_slider_change_by_user(value)
+	self:set_value(value)
 end
 
 
