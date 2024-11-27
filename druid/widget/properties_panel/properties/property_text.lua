@@ -25,7 +25,7 @@ end
 
 ---@param text string
 ---@return widget.property_text
-function M:set_text(text)
+function M:set_text_property(text)
 	self.text_name:set_text(text)
 	return self
 end
@@ -33,7 +33,7 @@ end
 
 ---@param text string|nil
 ---@return widget.property_text
-function M:set_right_text(text)
+function M:set_text_value(text)
 	self.text_right:set_text(text or "")
 	return self
 end

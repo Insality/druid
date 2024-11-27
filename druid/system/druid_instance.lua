@@ -476,14 +476,13 @@ end
 ---@generic T: druid.base_component
 ---@param widget T
 ---@param template string|nil The template name used by widget
----@param nodes table|node|nil The nodes table from gui.clone_tree or prefab node to use for clone
+---@param nodes table<string|hash, node>|node|nil The nodes table from gui.clone_tree or prefab node to use for clone
 ---@vararg any
 ---@return T
 function M:new_widget(widget, template, nodes, ...)
 	local instance = create_widget(self, widget)
 
 	if type(nodes) == "userdata" then
-		-- It's a node, we will use it as a root node to make nodes
 		nodes = gui.clone_tree(nodes)
 	end
 

@@ -45,7 +45,9 @@ function M:init(node_or_node_id, layout_type)
 	self.size = gui.get_size(self.node)
 
 	self.padding = gui.get_slice9(self.node)
+	-- Grab default margins from slice9 z/w values
 	self.margin = { x = self.padding.z, y = self.padding.w }
+	-- Use symmetrical padding from x/z
 	self.padding.z = self.padding.x
 	self.padding.w = self.padding.y
 
@@ -199,10 +201,11 @@ function M:get_size()
 end
 
 
----@return vector3
+---@return number, number
 function M:get_content_size()
-	local rows_data = self:calculate_rows_data()
-	return vmath.vector3(rows_data.total_width, rows_data.total_height, 0)
+	local width = self.size.x - self.padding.x - self.padding.z
+	local height = self.size.y - self.padding.y - self.padding.w
+	return width, height
 end
 
 

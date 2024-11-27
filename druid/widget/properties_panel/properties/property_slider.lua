@@ -21,7 +21,7 @@ function M:init()
 	self.max = 1
 
 	self.text_name = self.druid:new_text("text_name")
-		:set_text_adjust("scale_then_trim_left", 0.3)
+		:set_text_adjust("scale_then_trim", 0.3)
 
 	self.text_value = self.druid:new_text("text_value")
 	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(55, 0, 0), self.update_value) --[[@as druid.slider]]
@@ -43,6 +43,20 @@ end
 function M:set_text_function(callback)
 	self._text_function = callback
 	self.text_value:set_text(self._text_function(self._value))
+end
+
+
+--- Sets the text property of the slider
+---@param text string
+function M:set_text_property(text)
+	self.text_name:set_text(text)
+end
+
+
+--- Sets the callback function for when the slider value changes
+---@param callback fun(value:number)
+function M:on_change(callback)
+	self.on_change_value:subscribe(callback)
 end
 
 

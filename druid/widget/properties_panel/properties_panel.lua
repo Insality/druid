@@ -8,7 +8,15 @@ local property_left_right_selector = require("druid.widget.properties_panel.prop
 ---@class widget.properties_panel: druid.widget
 ---@field root node
 ---@field scroll druid.scroll
----@field druid druid_instance
+---@field layout druid.layout
+---@field container druid.container
+---@field container_content druid.container
+---@field container_scroll_view druid.container
+---@field contaienr_scroll_content druid.container
+---@field text_header druid.text
+---@field paginator widget.property_left_right_selector
+---@field properties druid.widget[] List of created properties
+---@field properties_constructors fun()[] List of properties functions to create a new widget. Used to not spawn non-visible widgets but keep the reference
 local M = {}
 
 
@@ -59,19 +67,18 @@ function M:init()
 	self.property_left_right_selector_prefab = self:get_node("property_left_right_selector/root")
 	gui.set_enabled(self.property_left_right_selector_prefab, false)
 
-	self.paginator = self:add_left_right_selector("Page", self.current_page, function(value)
-		self.current_page = value
-		self:refresh_page()
-	end):set_number_type(1, 1, true)
-	gui.set_enabled(self.paginator.root, false)
+	-- We not using as a part of properties, since it handled in a way to be paginable
+	self.paginator = self.druid:new_widget(property_left_right_selector, "property_left_right_selector", self.property_left_right_selector_prefab)
+	self.paginator:set_text("Page")
+	self.paginator:set_number_type(1, 1, true)
+	self.paginator:set_value(self.current_page)
+	self.paginator.on_change_value:subscribe(function(value)
+		self:set_page(value)
+	end)
+	local width = self.layout:get_content_size()
+	self.paginator.container:set_size(width)
 
-	-- Remove paginator from properties
-	for index = 1, #self.properties do
-		if self.properties[index] == self.paginator then
-			table.remove(self.properties, index)
-			break
-		end
-	end
+	gui.set_enabled(self.paginator.root, false)
 end
 
 
@@ -86,18 +93,23 @@ function M:on_drag_widget(dx, dy)
 end
 
 
-function M:clear()
+function M:clear_created_properties()
 	for index = 1, #self.properties do
 		gui.delete_node(self.properties[index].root)
 		self.druid:remove(self.properties[index])
 	end
-	self.layout:clear_layout()
-	self.layout:add(self.paginator.root)
-
 	self.properties = {}
-	self.properties_constructors = {}
 
-	self:refresh_page()
+	self.layout:clear_layout()
+
+	-- Use paginator as "pinned" widget
+	self.layout:add(self.paginator.root)
+end
+
+
+function M:clear()
+	self:clear_created_properties()
+	self.properties_constructors = {}
 end
 
 
@@ -113,117 +125,114 @@ function M:on_size_changed(new_size)
 	for index = 1, #self.properties do
 		self.properties[index].container:set_size(width)
 	end
+	self.paginator.container:set_size(width)
 end
 
 
----@param text string
----@param initial_value boolean
----@param on_change_callback function
----@return widget.property_checkbox
-function M:add_checkbox(text, initial_value, on_change_callback)
-	local instance = self:create_from_prefab(property_checkbox, "property_checkbox", self.property_checkbox_prefab)
+function M:update(dt)
+	if self.is_dirty then
+		self.is_dirty = false
 
-	instance.text_name:set_text(text)
-	instance:set_value(initial_value, true)
-	instance.button.on_click:subscribe(function()
-		on_change_callback(instance:get_value())
-	end)
+		self:clear_created_properties()
 
-	return instance
-end
+		local properties_count = #self.properties_constructors
 
+		-- Render all current properties
+		local start_index = (self.current_page - 1) * self.properties_per_page + 1
+		local end_index = start_index + self.properties_per_page - 1
+		end_index = math.min(end_index, properties_count)
 
----@param text string
----@param initial_value number
----@param on_change_callback function
----@return widget.property_slider
-function M:add_slider(text, initial_value, on_change_callback)
-	local instance = self:create_from_prefab(property_slider, "property_slider", self.property_slider_prefab)
+		local is_paginator_visible = properties_count > self.properties_per_page
+		gui.set_enabled(self.paginator.root, is_paginator_visible)
+		self.paginator:set_number_type(1, math.ceil(properties_count / self.properties_per_page), true)
+		self.paginator.text_value:set_text(self.current_page .. " / " .. math.ceil(properties_count / self.properties_per_page))
 
-	instance.text_name:set_text(text)
-	instance:set_value(initial_value, true)
-	instance.on_change_value:subscribe(function(value)
-		on_change_callback(value)
-	end)
-
-	return instance
-end
-
-
----@param text string
----@param on_click_callback function|nil
----@param callback_context any|nil
----@return widget.property_button
-function M:add_button(text, on_click_callback, callback_context)
-	local instance = self:create_from_prefab(property_button, "property_button", self.property_button_prefab)
-
-	instance.text_name:set_text(text)
-	if on_click_callback then
-		instance.button.on_click:subscribe(on_click_callback, callback_context)
+		for index = start_index, end_index do
+			self.properties_constructors[index]()
+		end
 	end
-
-	return instance
 end
 
 
----@param text string
----@param initial_value string
----@param on_change_callback function
----@return widget.property_input
-function M:add_input(text, initial_value, on_change_callback)
-	local instance = self:create_from_prefab(property_input, "property_input", self.property_input_prefab)
+---@param on_create fun(checkbox: widget.property_checkbox)|nil
+---@return widget.properties_panel
+function M:add_checkbox(on_create)
+	return self:add_inner_widget(property_checkbox, "property_checkbox", self.property_checkbox_prefab, on_create)
+end
 
-	instance.text_name:set_text(text)
-	instance.rich_input:set_text(initial_value)
-	instance.rich_input:set_placeholder("")
-	instance.rich_input.input.on_input_unselect:subscribe(function(_, value)
-		on_change_callback(value)
+
+---@param on_create fun(slider: widget.property_slider)|nil
+---@return widget.properties_panel
+function M:add_slider(on_create)
+	return self:add_inner_widget(property_slider, "property_slider", self.property_slider_prefab, on_create)
+end
+
+
+---@param on_create fun(button: widget.property_button)|nil
+---@return widget.properties_panel
+function M:add_button(on_create)
+	return self:add_inner_widget(property_button, "property_button", self.property_button_prefab, on_create)
+end
+
+
+---@param on_create fun(input: widget.property_input)|nil
+---@return widget.properties_panel
+function M:add_input(on_create)
+	return self:add_inner_widget(property_input, "property_input", self.property_input_prefab, on_create)
+end
+
+
+---@param on_create fun(text: widget.property_text)|nil
+function M:add_text(on_create)
+	return self:add_inner_widget(property_text, "property_text", self.property_text_prefab, on_create)
+end
+
+
+---@param on_create fun(selector: widget.property_left_right_selector)|nil
+function M:add_left_right_selector(on_create)
+	return self:add_inner_widget(property_left_right_selector, "property_left_right_selector", self.property_left_right_selector_prefab, on_create)
+end
+
+
+---@generic T: druid.widget
+---@param widget_class T
+---@param template string|nil
+---@param nodes table<string, node>|node|nil
+---@param on_create fun(widget: T)|nil
+---@return widget.properties_panel
+function M:add_inner_widget(widget_class, template, nodes, on_create)
+	table.insert(self.properties_constructors, function()
+		local widget = self.druid:new_widget(widget_class, template, nodes)
+
+		self:add_property(widget)
+		if on_create then
+			on_create(widget)
+		end
 	end)
 
-	return instance
+	self.is_dirty = true
+
+	return self
 end
 
 
----@param text string
----@param right_text string|nil
----@return widget.property_text
-function M:add_text(text, right_text)
-	local instance = self:create_from_prefab(property_text, "property_text", self.property_text_prefab)
+---@param create_widget_callback fun(): druid.widget
+---@return widget.properties_panel
+function M:add_widget(create_widget_callback)
+	table.insert(self.properties_constructors, function()
+		local widget = create_widget_callback()
+		self:add_property(widget)
+	end)
 
-	instance:set_text(text)
-	instance:set_right_text(right_text)
+	self.is_dirty = true
 
-	return instance
-end
-
-
----@param text string
----@param value string|number|nil
----@param on_change_callback fun(value: string|number)
----@return widget.property_left_right_selector
-function M:add_left_right_selector(text, value, on_change_callback)
-	local instance = self:create_from_prefab(property_left_right_selector, "property_left_right_selector", self.property_left_right_selector_prefab)
-
-	instance:set_text(text)
-	instance:set_value(value or 0, true)
-	instance.on_change_value:subscribe(on_change_callback)
-
-	return instance
-end
-
-
-
----@param widget druid.widget
-function M:add_widget(widget)
-	self:add_property(widget)
+	return self
 end
 
 
 ---@private
-function M:create_from_prefab(widget_class, widget_name, prefab)
-	local instance = self.druid:new_widget(widget_class, widget_name, prefab)
-	self:add_property(instance)
-	return instance
+function M:create_from_prefab(widget_class, template, nodes)
+	return self:add_property(self.druid:new_widget(widget_class, template, nodes))
 end
 
 
@@ -233,31 +242,10 @@ function M:add_property(widget)
 	self.layout:add(widget.root)
 
 	table.insert(self.properties, widget)
-	local width = self.layout:get_size().x - self.layout.padding.x - self.layout.padding.z
+	local width = self.layout:get_content_size()
 	widget.container:set_size(width)
 
-	if #self.properties > self.properties_per_page then
-		self:refresh_page()
-	end
-
 	return widget
-end
-
-
-function M:refresh_page()
-	local start_index = (self.current_page - 1) * self.properties_per_page + 1
-	local end_index = start_index + self.properties_per_page - 1
-
-	for index = 1, #self.properties do
-		local is_visible = index >= start_index and index <= end_index
-		gui.set_enabled(self.properties[index].root, is_visible)
-	end
-
-	gui.set_enabled(self.paginator.root, #self.properties > self.properties_per_page)
-	self.paginator:set_number_type(1, math.ceil(#self.properties / self.properties_per_page), true)
-	self.paginator.text_value:set_text(self.current_page .. " / " .. math.ceil(#self.properties / self.properties_per_page))
-
-	self.layout:set_dirty()
 end
 
 
@@ -294,8 +282,7 @@ end
 
 function M:set_page(page)
 	self.current_page = page
-	self.paginator:set_value(self.current_page, true)
-	self:refresh_page()
+	self.is_dirty = true
 end
 
 

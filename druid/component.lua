@@ -81,7 +81,7 @@ function M:set_template(template)
 	local parent = self:get_parent_component()
 	if parent then
 		local parent_template = parent:get_template()
-		if #parent_template > 0 then
+		if parent_template and #parent_template > 0 then
 			if #template > 0 then
 				template = "/" .. template
 			end
@@ -89,7 +89,12 @@ function M:set_template(template)
 		end
 	end
 
-	self._meta.template = template
+	if template ~= "" then
+		self._meta.template = template
+	else
+		self._meta.template = nil
+	end
+
 	return self
 end
 
@@ -127,7 +132,7 @@ end
 
 ---Get Druid instance for inner component creation.
 ---@param template string|nil
----@param nodes table<hash, node>|nil
+---@param nodes table<string|hash, node>|nil
 ---@return druid_instance
 function M:get_druid(template, nodes)
 	local context = { _context = self }

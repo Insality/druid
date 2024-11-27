@@ -373,7 +373,7 @@ function M:set_text(input_text)
 		self.is_empty = #value == 0 and #marked_value == 0
 
 		local final_text = value .. marked_value
-		self.text:set_to(final_text)
+		self.text:set_text(final_text)
 
 		-- measure it
 		self.text_width = self.text:get_text_size(value)

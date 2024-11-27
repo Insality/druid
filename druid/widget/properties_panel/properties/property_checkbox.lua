@@ -1,3 +1,5 @@
+local event = require("event.event")
+
 ---@class widget.property_checkbox: druid.widget
 ---@field root node
 ---@field druid druid_instance
@@ -17,13 +19,15 @@ function M:init()
 	gui.set_alpha(self.selected, 0)
 
 	self.text_name = self.druid:new_text("text_name")
-		:set_text_adjust("scale_then_trim_left", 0.3)
+		:set_text_adjust("scale_then_trim", 0.3)
 
 	self.button = self.druid:new_button("button", self.on_click)
 
 	self.container = self.druid:new_container(self.root)
 	self.container:add_container("text_name")
 	self.container:add_container("E_Anchor")
+
+	self.on_change_value = event.create()
 end
 
 
@@ -35,6 +39,7 @@ function M:set_value(value, is_instant)
 
 	self._value = value
 	gui.set_enabled(self.icon, value)
+	self.on_change_value:trigger(value)
 
 	if not is_instant then
 		gui.set_alpha(self.selected, 1)
@@ -51,6 +56,20 @@ end
 
 function M:on_click()
 	self:set_value(not self:get_value())
+end
+
+
+--- Set the text property of the checkbox
+---@param text string
+function M:set_text_property(text)
+	self.text_name:set_text(text)
+end
+
+
+--- Set the callback function for when the checkbox value changes
+---@param callback function
+function M:on_change(callback)
+	self.on_change_value:subscribe(callback)
 end
 
 

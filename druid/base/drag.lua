@@ -62,6 +62,10 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
+---@class druid.drag.style
+---@field DRAG_DEADZONE number Distance in pixels to start dragging. Default: 10
+---@field NO_USE_SCREEN_KOEF boolean If screen aspect ratio affects on drag values. Default: false
+
 ---@class druid.drag: druid.base_component
 ---@field node node
 ---@field on_touch_start event
@@ -69,7 +73,7 @@ local component = require("druid.component")
 ---@field on_drag_start event
 ---@field on_drag event
 ---@field on_drag_end event
----@field style table
+---@field style druid.drag.style
 ---@field click_zone node|nil
 ---@field is_touch boolean
 ---@field is_drag boolean

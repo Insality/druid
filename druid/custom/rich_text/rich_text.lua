@@ -76,6 +76,42 @@
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
 
+---@class druid.rich_text.word
+---@field node node
+---@field relative_scale number
+---@field color vector4
+---@field position vector3
+---@field offset vector3
+---@field scale vector3
+---@field size vector3
+---@field metrics druid.rich_text.metrics
+---@field pivot userdata
+---@field text string
+---@field shadow vector4
+---@field outline vector4
+---@field font string
+---@field image druid.rich_text.word.image
+---@field br boolean
+---@field nobr boolean
+
+---@class druid.rich_text.word.image
+---@field texture string
+---@field anim string
+---@field width number
+---@field height number
+
+---@class druid.rich_text.lines_metrics
+---@field text_width number
+---@field text_height number
+---@field lines table<number, druid.rich_text.metrics>
+
+---@class druid.rich_text.metrics
+---@field width number
+---@field height number
+---@field offset_x number|nil
+---@field offset_y number|nil
+---@field node_size vector3|nil
+
 ---@class druid.rich_text: druid.base_component
 ---@field root node
 ---@field text_prefab node
@@ -231,7 +267,7 @@ end
 
 
 --- Get all current words.
----@return table druid.rich_text.word[]
+---@return druid.rich_text.word[]
 function M:get_words()
 	return self._words
 end

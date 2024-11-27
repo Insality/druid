@@ -12,7 +12,7 @@ local M = {}
 function M:init()
 	self.root = self:get_node("root")
 	self.text_name = self.druid:new_text("text_name")
-		:set_text_adjust("scale_then_trim_left", 0.3)
+		:set_text_adjust("scale_then_trim", 0.3)
 
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
@@ -31,6 +31,14 @@ end
 function M:on_click()
 	gui.set_alpha(self.selected, 1)
 	gui.animate(self.selected, "color.w", 0, gui.EASING_INSINE, 0.16)
+end
+
+
+---@param text string
+---@return widget.property_button
+function M:set_text_property(text)
+	self.text_name:set_text(text)
+	return self
 end
 
 

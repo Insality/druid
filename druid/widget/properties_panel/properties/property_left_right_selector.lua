@@ -7,6 +7,7 @@ local event = require("event.event")
 ---@field button druid.button
 ---@field selected node
 ---@field value string|number
+---@field on_change_value event fun(value: string|number)
 local M = {}
 
 
@@ -16,7 +17,7 @@ function M:init()
 	gui.set_alpha(self.selected, 0)
 
 	self.text_name = self.druid:new_text("text_name")
-		:set_text_adjust("scale_then_trim_left", 0.3)
+		:set_text_adjust("scale_then_trim", 0.3)
 
 	self.text_value = self.druid:new_text("text_value")
 	self.button_left = self.druid:new_button("button_left", self.on_button_left)
