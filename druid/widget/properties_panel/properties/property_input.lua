@@ -22,18 +22,13 @@ function M:init()
 end
 
 
-function M:on_click()
-	gui.set_alpha(self.selected, 1)
-	gui.animate(self.selected, "color.w", 0, gui.EASING_INSINE, 0.16)
-end
-
-
 ---@param text string
 ---@return widget.property_input
 function M:set_text_property(text)
 	self.text_name:set_text(text)
 	return self
 end
+
 
 ---@param text string
 ---@return widget.property_input

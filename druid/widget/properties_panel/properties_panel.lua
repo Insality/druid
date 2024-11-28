@@ -4,6 +4,7 @@ local property_button = require("druid.widget.properties_panel.properties.proper
 local property_input = require("druid.widget.properties_panel.properties.property_input")
 local property_text = require("druid.widget.properties_panel.properties.property_text")
 local property_left_right_selector = require("druid.widget.properties_panel.properties.property_left_right_selector")
+local property_vector3 = require("druid.widget.properties_panel.properties.property_vector3")
 
 ---@class widget.properties_panel: druid.widget
 ---@field root node
@@ -66,6 +67,9 @@ function M:init()
 
 	self.property_left_right_selector_prefab = self:get_node("property_left_right_selector/root")
 	gui.set_enabled(self.property_left_right_selector_prefab, false)
+
+	self.property_vector3_prefab = self:get_node("property_vector3/root")
+	gui.set_enabled(self.property_vector3_prefab, false)
 
 	-- We not using as a part of properties, since it handled in a way to be paginable
 	self.paginator = self.druid:new_widget(property_left_right_selector, "property_left_right_selector", self.property_left_right_selector_prefab)
@@ -191,6 +195,12 @@ end
 ---@param on_create fun(selector: widget.property_left_right_selector)|nil
 function M:add_left_right_selector(on_create)
 	return self:add_inner_widget(property_left_right_selector, "property_left_right_selector", self.property_left_right_selector_prefab, on_create)
+end
+
+
+---@param on_create fun(vector3: widget.property_vector3)|nil
+function M:add_vector3(on_create)
+	return self:add_inner_widget(property_vector3, "property_vector3", self.property_vector3_prefab, on_create)
 end
 
 
