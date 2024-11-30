@@ -249,11 +249,11 @@ end
 ---@private
 function M:add_property(widget)
 	gui.set_enabled(widget.root, true)
-	self.layout:add(widget.root)
-
 	table.insert(self.properties, widget)
 	local width = self.layout:get_content_size()
 	widget.container:set_size(width)
+
+	self.layout:add(widget.root)
 
 	return widget
 end

@@ -37,6 +37,9 @@ function M:init()
 	self.timer_id = timer.delay(self.delta_time, true, function()
 		self:push_next_value()
 	end)
+
+	self.container = self.druid:new_container(self.root)
+	self.container:add_container(self.mini_graph.container)
 end
 
 

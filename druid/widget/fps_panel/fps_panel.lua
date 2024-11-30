@@ -11,6 +11,8 @@ if TARGET_FPS == 0 then
 end
 
 function M:init()
+	self.root = self:get_node("root")
+
 	self.delta_time = 0.1 -- in seconds
 	self.collect_time = 3 -- in seconds
 	self.collect_time_counter = 0
@@ -37,6 +39,9 @@ function M:init()
 	self.timer_id = timer.delay(self.delta_time, true, function()
 		self:push_fps_value()
 	end)
+
+	self.container = self.druid:new_container(self.root)
+	self.container:add_container(self.mini_graph.container)
 end
 
 
