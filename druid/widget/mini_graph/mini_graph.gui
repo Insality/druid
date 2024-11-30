@@ -67,7 +67,7 @@ nodes {
   }
   type: TYPE_TEXT
   text: "Mini Graph"
-  font: "druid_text_regular"
+  font: "druid_text_bold"
   id: "text_header"
   pivot: PIVOT_NW
   outline {

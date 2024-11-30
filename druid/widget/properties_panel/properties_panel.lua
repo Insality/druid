@@ -99,7 +99,16 @@ end
 
 function M:clear_created_properties()
 	for index = 1, #self.properties do
-		gui.delete_node(self.properties[index].root)
+		local property = self.properties[index]
+
+		-- If prefab used clone nodes we can remove it
+		if property:get_nodes() then
+			gui.delete_node(property.root)
+		else
+			-- Probably we have component placed on scene directly
+			gui.set_enabled(property.root, false)
+		end
+
 		self.druid:remove(self.properties[index])
 	end
 	self.properties = {}
@@ -264,7 +273,15 @@ function M:remove(widget)
 		if self.properties[index] == widget then
 			self.druid:remove(widget)
 			self.layout:remove(widget.root)
-			gui.delete_node(widget.root)
+
+			-- If prefab used clone nodes we can remove it
+			if widget:get_nodes() then
+				gui.delete_node(widget.root)
+			else
+				-- Probably we have component placed on scene directly
+				gui.set_enabled(widget.root, false)
+			end
+
 			table.remove(self.properties, index)
 			break
 		end
