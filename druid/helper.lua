@@ -12,6 +12,11 @@ local POSITION_X = hash("position.x")
 local SCALE_X = hash("scale.x")
 local SIZE_X = hash("size.x")
 
+M.PROP_SIZE_X = hash("size.x")
+M.PROP_SIZE_Y = hash("size.y")
+M.PROP_SCALE_X = hash("scale.x")
+M.PROP_SCALE_Y = hash("scale.y")
+
 local function get_text_width(text_node)
 	if text_node then
 		local text_metrics = M.get_text_metrics_from_node(text_node)
@@ -537,6 +542,123 @@ function M.get_full_position(node, root)
 	end
 
 	return position
+end
+
+
+---@class druid.animation_data
+---@field frames table<number, table<string, number>> @List of frames with uv coordinates and size
+---@field width number @Width of the animation
+---@field height number @Height of the animation
+---@field fps number @Frames per second
+---@field current_frame number @Current frame
+---@field node node @Node with flipbook animation
+---@field v vector4 @Vector with UV coordinates and size
+
+---@param node node
+---@param atlas_path string @Path to the atlas
+---@return druid.animation_data
+function M.get_animation_data_from_node(node, atlas_path)
+	local atlas_data = resource.get_atlas(atlas_path)
+	local tex_info = resource.get_texture_info(atlas_data.texture)
+	local tex_w = tex_info.width
+	local tex_h = tex_info.height
+
+	local animation_data
+
+	local sprite_image_id = gui.get_flipbook(node)
+	for _, animation in ipairs(atlas_data.animations) do
+		if hash(animation.id) == sprite_image_id then
+			animation_data = animation
+			break
+		end
+	end
+	assert(animation_data, "Unable to find image " .. sprite_image_id)
+
+	local frames = {}
+	for index = animation_data.frame_start, animation_data.frame_end - 1 do
+		local uvs = atlas_data.geometries[index].uvs
+		assert(#uvs == 8, "Sprite trim mode should be disabled for the images.")
+
+		--   UV texture coordinates
+		--   1
+		--   ^ V
+		--   |
+		--   |
+		--   |       U
+		--   0-------> 1
+
+		-- uvs = {
+		-- 0,     0,
+		-- 0,     height,
+		-- width, height,
+		-- width, 0
+		-- },
+		-- Point indeces (Point number {uv_index_x, uv_index_y})
+		-- geometries.indices = {0 (1,2),  1(3,4),  2(5,6),  0(1,2),  2(5,6),  3(7,8)}
+		--   1------2
+		--   |    / |
+		--   | A /  |
+		--   |  / B |
+		--   | /    |
+		--   0------3
+
+		local width = uvs[5] - uvs[1] -- Width of sprite region
+		local height = uvs[2] - uvs[4] -- Height of sprite region
+		local is_rotated = height < 0 -- In case of rotated sprite
+
+		local x_left = uvs[1]
+		local y_bottom = uvs[2]
+		local x_right = uvs[5]
+		local y_top = uvs[6]
+
+		-- Okay now it's correct for non rotated
+		local uv_coord = vmath.vector4(
+			x_left / tex_w,
+			(tex_h - y_bottom) / tex_h,
+			x_right / tex_w,
+			(tex_h - y_top) / tex_h
+		)
+
+		if is_rotated then
+			-- In case the atlas has clockwise rotated sprite.
+			--   0---------------1
+			--   | \        A    |
+			--   |     \         |
+			--   |         \     |
+			--   | B           \ |
+			--   3---------------2
+			height = -height
+
+			uv_coord.x, uv_coord.y, uv_coord.z, uv_coord.w = uv_coord.y, uv_coord.z, uv_coord.w, uv_coord.x
+
+			-- Update uv_coord
+			--uv_coord = vmath.vector4(
+			--	u1 / tex_w,
+			--	(tex_h - v2) / tex_h,
+			--	u2 / tex_w,
+			--	(tex_h - v1) / tex_h
+			--)
+		end
+
+		local frame = {
+			uv_coord = uv_coord,
+			w = width,
+			h = height,
+			uv_rotated = is_rotated and vmath.vector4(0, 1, 0, 0) or vmath.vector4(1, 0, 0, 0)
+		}
+
+		table.insert(frames, frame)
+	end
+
+	return {
+		frames 	= frames,
+		width   = animation_data.width,
+		height 	= animation_data.height,
+		fps     = animation_data.fps,
+		v       = vmath.vector4(1, 1, animation_data.width, animation_data.height),
+		current_frame = 1,
+		node    = node,
+	}
 end
 
 

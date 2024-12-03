@@ -19,6 +19,7 @@ function M:init()
 
 	self.min = 0
 	self.max = 1
+	self.step = 0.01
 
 	self.text_name = self.druid:new_text("text_name")
 		:set_text_adjust("scale_then_trim", 0.3)
@@ -63,7 +64,7 @@ end
 ---@param value number
 function M:set_value(value, is_instant)
 	local diff = math.abs(self.max - self.min)
-	self.slider:set(value / diff, true)
+	self.slider:set((value - self.min) / diff, true)
 
 	local is_changed = self._value ~= value
 	if not is_changed then
