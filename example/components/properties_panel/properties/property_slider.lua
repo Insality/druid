@@ -33,7 +33,7 @@ end
 ---@param callback fun(value:number):string
 function M:set_text_function(callback)
 	self._text_function = callback
-	self.text_value:set_to(self._text_function(self._value))
+	self.text_value:set_text(self._text_function(self._value))
 end
 
 
@@ -45,7 +45,7 @@ function M:set_value(value, is_instant)
 
 	self._value = value
 	self.slider:set(value, true)
-	self.text_value:set_to(self._text_function(value))
+	self.text_value:set_text(self._text_function(value))
 
 	if not is_instant then
 		gui.set_alpha(self.selected, 1)
@@ -62,7 +62,7 @@ end
 
 function M:_on_slider_change_by_user(value)
 	self._value = value
-	self.text_value:set_to(self._text_function(value))
+	self.text_value:set_text(self._text_function(value))
 
 	gui.set_alpha(self.selected, 1)
 	gui.animate(self.selected, "color.w", 0, gui.EASING_INSINE, 0.16)

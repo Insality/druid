@@ -21,18 +21,18 @@ local helper = require("druid.helper")
 
 ---@class druid.base_component
 ---@field druid druid_instance Druid instance to create inner components
----@field protected init fun(self:druid.base_component, ...)|nil
----@field protected update fun(self:druid.base_component, dt:number)|nil
----@field protected on_remove fun(self:druid.base_component)|nil
----@field protected on_input fun(self:druid.base_component, action_id:number, action:table)|nil
----@field protected on_message fun(self:druid.base_component, message_id:hash, message:table, sender:userdata)|nil
----@field protected on_late_init fun(self:druid.base_component)|nil
----@field protected on_focus_lost fun(self:druid.base_component)|nil
----@field protected on_focus_gained fun(self:druid.base_component)|nil
----@field protected on_style_change fun(self:druid.base_component, style: table)|nil
----@field protected on_layout_change fun(self:druid.base_component)|nil
----@field protected on_window_resized fun(self:druid.base_component, width:number, height:number)|nil
----@field protected on_language_change fun(self:druid.base_component, language:string)|nil
+---@field init fun(self:druid.base_component, ...)|nil
+---@field update fun(self:druid.base_component, dt:number)|nil
+---@field on_remove fun(self:druid.base_component)|nil
+---@field on_input fun(self:druid.base_component, action_id:number, action:table)|nil
+---@field on_message fun(self:druid.base_component, message_id:hash, message:table, sender:userdata)|nil
+---@field on_late_init fun(self:druid.base_component)|nil
+---@field on_focus_lost fun(self:druid.base_component)|nil
+---@field on_focus_gained fun(self:druid.base_component)|nil
+---@field on_style_change fun(self:druid.base_component, style: table)|nil
+---@field on_layout_change fun(self:druid.base_component)|nil
+---@field on_window_resized fun(self:druid.base_component)|nil
+---@field on_language_change fun(self:druid.base_component)|nil
 ---@field private _component druid.base_component.component
 ---@field private _meta druid.base_component.meta
 local M = {}

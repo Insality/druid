@@ -147,10 +147,9 @@ end
 
 
 ---Check whitelists and blacklists for input components
----@param self druid_instance
 ---@param component druid.base_component
 ---@return boolean
-local function can_use_input_component(self, component)
+function M:_can_use_input_component(component)
 	local can_by_whitelist = true
 	local can_by_blacklist = true
 
@@ -166,13 +165,13 @@ local function can_use_input_component(self, component)
 end
 
 
-local function process_input(self, action_id, action, components)
+function M:_process_input(action_id, action, components)
 	local is_input_consumed = false
 
 	for i = #components, 1, -1 do
 		local component = components[i]
 		local meta = component._meta
-		if meta.input_enabled and can_use_input_component(self, component) then
+		if meta.input_enabled and self:_can_use_input_component(component) then
 			if not is_input_consumed then
 				is_input_consumed = component:on_input(action_id, action) or false
 			else
@@ -356,7 +355,7 @@ function M:on_input(action_id, action)
 
 	local components = self.components_interest[const.ON_INPUT]
 	check_sort_input_stack(self, components)
-	local is_input_consumed = process_input(self, action_id, action, components)
+	local is_input_consumed = self:_process_input(action_id, action, components)
 
 	self._is_late_remove_enabled = false
 	self:_clear_late_remove()
@@ -421,7 +420,7 @@ end
 ---Set whitelist components for input processing.
 ---If whitelist is not empty and component not contains in this list,
 ---component will be not processed on input step
----@param whitelist_components table|druid.base_component[]|nil The array of component to whitelist
+---@param whitelist_components table|druid.base_component[] The array of component to whitelist
 ---@return druid_instance
 function M:set_whitelist(whitelist_components)
 	if whitelist_components and whitelist_components._component then
@@ -441,7 +440,7 @@ end
 ---Set blacklist components for input processing.
 ---If blacklist is not empty and component contains in this list,
 ---component will be not processed on input step DruidInstance
----@param blacklist_components table|druid.base_component[]|nil The array of component to blacklist
+---@param blacklist_components table|druid.base_component[] The array of component to blacklist
 ---@return druid_instance
 function M:set_blacklist(blacklist_components)
 	if blacklist_components and blacklist_components._component then

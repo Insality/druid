@@ -515,22 +515,22 @@ function M:set_pivot(pivot)
 end
 
 
---- Return true, if text with line break
+---Return true, if text with line break
 ---@return boolean Is text node with line break
 function M:is_multiline()
 	return gui.get_line_break(self.node)
 end
 
 
---- Set text adjust, refresh the current text visuals, if needed
+---Set text adjust, refresh the current text visuals, if needed
 ---Values are: "downscale", "trim", "no_adjust", "downscale_limited",
 ---"scroll", "scale_then_scroll", "trim_left", "scale_then_trim", "scale_then_trim_left"
 ---@param adjust_type string|nil See const.TEXT_ADJUST. If pass nil - use current adjust type
----@param minimal_scale number|nil If pass nil - not use minimal scale
+---@param minimal_scale number|nil To remove minimal scale, use `text:set_minimal_scale(nil)`, if pass nil - not change minimal scale
 ---@return druid.text self Current text instance
 function M:set_text_adjust(adjust_type, minimal_scale)
 	self.adjust_type = adjust_type
-	self._minimal_scale = minimal_scale
+	self._minimal_scale = minimal_scale or self._minimal_scale
 	self:set_text(self.last_value)
 
 	return self

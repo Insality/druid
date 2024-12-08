@@ -10,13 +10,13 @@
 -- @alias druid.swipe
 
 --- Swipe node
----@param node node
+--@param node node
 
 --- Restriction zone
----@param click_zone node|nil
+--@param click_zone node|nil
 
 --- Trigger on swipe event(self, swipe_side, dist, delta_time)
----@param  event event on_swipe
+--@param  event event on_swipe
 
 ---
 
@@ -59,7 +59,7 @@ local function check_swipe(self, action)
 
 	if is_swipe then
 		local is_x_swipe = math.abs(dx) >= math.abs(dy)
-		local swipe_side = false
+		local swipe_side = "undefined"
 
 		if is_x_swipe and dx > 0 then
 			swipe_side = "right"
@@ -164,6 +164,11 @@ end
 -- restrict events outside stencil node
 ---@param zone node|string|nil Gui node
 function M:set_click_zone(zone)
+	if not zone then
+		self.click_zone = nil
+		return
+	end
+
 	self.click_zone = self:get_node(zone)
 end
 

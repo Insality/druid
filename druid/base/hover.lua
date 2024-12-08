@@ -27,9 +27,9 @@ local component = require("druid.component")
 ---@field on_mouse_hover event
 ---@field style table
 ---@field click_zone node
----@field private _is_hovered boolean
----@field private _is_mouse_hovered boolean
----@field private _is_enabled boolean
+---@field private _is_hovered boolean|nil
+---@field private _is_mouse_hovered boolean|nil
+---@field private _is_enabled boolean|nil
 ---@field private _is_mobile boolean
 local M = component.create("hover")
 
@@ -163,6 +163,11 @@ end
 -- no click events outside stencil node
 ---@param zone node|string|nil Gui node
 function M:set_click_zone(zone)
+	if not zone then
+		self.click_zone = nil
+		return
+	end
+
 	self.click_zone = self:get_node(zone)
 end
 

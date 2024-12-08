@@ -76,6 +76,27 @@
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
 
+---@class druid.rich_text.settings
+---@field parent node
+---@field size number
+---@field fonts table<string, string>
+---@field scale vector3
+---@field color vector4
+---@field shadow vector4
+---@field outline vector4
+---@field position vector3
+---@field image_pixel_grid_snap boolean
+---@field combine_words boolean
+---@field default_animation string
+---@field text_prefab node
+---@field adjust_scale number
+---@field default_texture string
+---@field is_multiline boolean
+---@field text_leading number
+---@field font hash
+---@field width number
+---@field height number
+
 ---@class druid.rich_text.word
 ---@field node node
 ---@field relative_scale number

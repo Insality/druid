@@ -88,7 +88,7 @@ end
 
 ---@private
 function M:refresh_content(node, hint_text, pivot_point, content_pivot)
-	self.text_hint:set_to(hint_text)
+	self.text_hint:set_text(hint_text)
 	local text_width, text_height = self.text_hint:get_text_size()
 
 	local panel_width = math.max(text_width, MIN_PANEL_WIDTH) + PANEL_MARGIN

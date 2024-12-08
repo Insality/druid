@@ -181,7 +181,7 @@ function M.create(text, settings, style)
 		outline = settings.outline,
 		font = gui.get_font(settings.text_prefab),
 		-- Image params
-		---@type druid.rich_text.image
+		---@type druid.rich_text.word.image
 		image = nil,
 		-- Tags
 		br = nil,

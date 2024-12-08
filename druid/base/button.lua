@@ -485,7 +485,11 @@ end
 ---@param key hash|string The action_id of the input key. Example: "key_space"
 ---@return druid.button self
 function M:set_key_trigger(key)
-	self.key_trigger = hash(key)
+	if type(key) == "string" then
+		self.key_trigger = hash(key)
+	else
+		self.key_trigger = key
+	end
 
 	return self
 end
@@ -498,22 +502,24 @@ function M:get_key_trigger()
 end
 
 
---- Set function for additional check for button click availability
+---Set function for additional check for button click availability
 ---@param check_function function|nil Should return true or false. If true - button can be pressed.
 ---@param failure_callback function|nil Function will be called on button click, if check function return false
 ---@return druid.button self
 function M:set_check_function(check_function, failure_callback)
 	self._check_function = check_function
 	self._failure_callback = failure_callback
+
+	return self
 end
 
 
---- Set Button mode to work inside user HTML5 interaction event.
---
--- It's required to make protected things like copy & paste text, show mobile keyboard, etc
--- The HTML5 button's doesn't call any events except on_click event.
---
--- If the game is not HTML, html mode will be not enabled
+---Set Button mode to work inside user HTML5 interaction event.
+---
+---It's required to make protected things like copy & paste text, show mobile keyboard, etc
+---The HTML5 button's doesn't call any events except on_click event.
+---
+---If the game is not HTML, html mode will be not enabled
 ---@param is_web_mode boolean|nil If true - button will be called inside html5 callback
 ---@return druid.button self
 function M:set_web_user_interaction(is_web_mode)

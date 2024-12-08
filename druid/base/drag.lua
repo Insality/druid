@@ -206,9 +206,10 @@ end
 -- @tfield number|nil DRAG_DEADZONE Distance in pixels to start dragging. Default: 10
 -- @tfield boolean|nil NO_USE_SCREEN_KOEF If screen aspect ratio affects on drag values. Default: false
 function M:on_style_change(style)
-	self.style = {}
-	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
-	self.style.NO_USE_SCREEN_KOEF = style.NO_USE_SCREEN_KOEF or false
+	self.style = {
+		DRAG_DEADZONE = style.DRAG_DEADZONE or 10,
+		NO_USE_SCREEN_KOEF = style.NO_USE_SCREEN_KOEF or false,
+	}
 end
 
 

@@ -24,7 +24,7 @@ end
 
 ---@param info string
 function M:set_debug_info(info)
-	self.text_debug_info:set_to(info)
+	self.text_debug_info:set_text(info)
 end
 
 
@@ -34,7 +34,7 @@ function M:set_gui_path(path)
 	-- We need add "/" before path and replace .lua to .gui
 	path = "/" .. path:gsub(".lua", ".gui")
 
-	self.text_gui_path:set_to(path)
+	self.text_gui_path:set_text(path)
 end
 
 

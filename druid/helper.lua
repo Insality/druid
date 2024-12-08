@@ -311,9 +311,9 @@ end
 
 ---Get size of node with scale multiplier
 ---@param node node GUI node
----@treturn vector3 Scaled size
+---@return vector3 scaled_size
 function M.get_scaled_size(node)
-	return vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node))
+	return vmath.mul_per_elem(gui.get_size(node), gui.get_scale(node)) --[[@as vector3]]
 end
 
 

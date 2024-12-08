@@ -32,16 +32,11 @@ void main()
 	var_perspective = perspective;
 	var_uv_rotated = uv_rotated;
 
-	float perspective_y = position.z;
-
-	float scale_x = 1.0 - abs(perspective.x);
-	float scale_y = 1.0 - abs(perspective_y);
-
 	mat4 transform = mat4(
-		scale_x, 0, 0, perspective.z,
-		0, scale_y, 0, perspective.w,
+		1.0, 0, 0, 0.0,
+		0, 1.0, 0, 0.0,
 		0, 0, 1, 0,
-		perspective.x, perspective_y, 0, 1.0
+		0.0, position.z, 0, 1.0
 	);
 
 	// Matrix Info = mat4(

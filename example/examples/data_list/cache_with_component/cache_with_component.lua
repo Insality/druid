@@ -51,7 +51,7 @@ end
 ---@param instance button_component
 ---@param data table
 function M:on_element_add(index, node, instance, data)
-	instance.text:set_to("Data Item " .. index)
+	instance.text:set_text("Data Item " .. index)
 	instance.button.on_click:subscribe(self.on_button_click, self)
 	instance:set_data(index)
 end

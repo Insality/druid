@@ -157,7 +157,7 @@ end
 
 --- The Input constructor
 ---@param click_node node Node to enabled input component
----@param text_node node|Text Text node what will be changed on user input. You can pass text component instead of text node name Text
+---@param text_node node|druid.text Text node what will be changed on user input. You can pass text component instead of text node name Text
 ---@param keyboard_type number|nil Gui keyboard type for input field
 function M:init(click_node, text_node, keyboard_type)
 	self.druid = self:get_druid()

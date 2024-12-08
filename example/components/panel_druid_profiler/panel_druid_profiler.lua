@@ -81,7 +81,7 @@ end
 
 function M:update_memory()
 	local memory = collectgarbage("count")
-	self.text_memory_amount:set_to(tostring(math.ceil(memory)))
+	self.text_memory_amount:set_text(tostring(math.ceil(memory)))
 
 	local width = helper.centrate_nodes(2, unpack(self.nodes_memory))
 	for index = 1, #self.nodes_memory do
@@ -102,8 +102,8 @@ function M:update_fps()
 	end
 	average_frame_time = average_frame_time / #self.fps_samples
 
-	self.text_fps_amount:set_to(tostring(math.ceil(1 / average_frame_time)))
-	self.text_fps_min:set_to("/ " .. tostring(math.ceil(1 / max_frame_time)))
+	self.text_fps_amount:set_text(tostring(math.ceil(1 / average_frame_time)))
+	self.text_fps_min:set_text("/ " .. tostring(math.ceil(1 / max_frame_time)))
 
 	local width = helper.centrate_nodes(2, unpack(self.nodes_fps))
 	self.group_fps:set_size(width, nil)
@@ -114,14 +114,14 @@ function M:update_components()
 	---@diagnostic disable-next-line: undefined-field
 	local components = #self.druid.components_all
 
-	self.text_components_amount:set_to(tostring(components))
+	self.text_components_amount:set_text(tostring(components))
 	local width = helper.centrate_nodes(2, unpack(self.nodes_components))
 	self.group_components:set_size(width, nil)
 end
 
 
 function M:update_events()
-	self.text_events_amount:set_to(tostring(event.COUNTER))
+	self.text_events_amount:set_text("unsupported")
 
 	local width = helper.centrate_nodes(2, unpack(self.nodes_events))
 	for index = 1, #self.nodes_events do

@@ -51,13 +51,13 @@ local event = require("event.event")
 ---@field private _cache table
 ---@field private _data table
 ---@field private _data_visual table
----@field private top_index number
+---@field top_index number
 local M = component.create("data_list")
 
 
 --- The DataList constructor
----@param scroll Scroll The Scroll instance for Data List component
----@param grid StaticGrid The StaticGrid} or @{DynamicGrid instance for Data List component
+---@param scroll druid.scroll The Scroll instance for Data List component
+---@param grid druid.grid The StaticGrid} or @{DynamicGrid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
 function M:init(scroll, grid, create_function)
 	self.scroll = scroll

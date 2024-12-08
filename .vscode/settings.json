@@ -29,7 +29,7 @@
 		"utils/annotations_manual.lua"
 	],
 	"Lua.runtime.pathStrict": true,
-	"Lua.diagnostics.libraryFiles": "Enable",
+	"Lua.diagnostics.libraryFiles": "Disable",
 	"Lua.runtime.version": "Lua 5.1",
 	"Lua.workspace.library": [
 		"~/Library/Application Support/Code/User/globalStorage/astronachos.defold",
