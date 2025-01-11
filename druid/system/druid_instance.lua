@@ -86,7 +86,7 @@ local function create_widget(self, widget_class)
 	})
 
 	local uid = base_component.create_uid()
-	instance._components = {
+	instance._component = {
 		_uid = uid,
 		name = "Druid Widget #" .. uid,
 		input_priority = const.PRIORITY_INPUT,
