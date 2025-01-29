@@ -1,10 +1,9 @@
 local component = require("druid.component")
 local panthera = require("panthera.panthera")
-local intro_panthera = require("example.examples.intro.intro.intro_panthera")
 
----@class intro: druid.base_component
+---@class how_to_use_example: druid.base_component
 ---@field root node
-local M = component.create("intro")
+local M = component.create("how_to_use_example")
 
 ---@param template string
 ---@param nodes table<hash, node>
@@ -23,19 +22,11 @@ function M:init(template, nodes)
 		:add("sponsor_coffee")
 		:add("sponsor_kofi")
 		:set_margin(8, 0)
-
-	self.animation = panthera.create_gui(intro_panthera, self:get_template(), nodes)
-	panthera.play(self.animation, "idle", { is_loop = true })
 end
 
 
 function M:open_link(link)
 	sys.open_url(link, { target = "_blank" })
-end
-
-
-function M:on_remove()
-	panthera.stop(self.animation)
 end
 
 

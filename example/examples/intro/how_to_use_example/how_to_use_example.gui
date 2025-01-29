@@ -1,0 +1,257 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+fonts {
+  name: "text_regular"
+  font: "/example/assets/fonts/text_regular.font"
+}
+textures {
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
+}
+textures {
+  name: "druid_logo"
+  texture: "/example/assets/druid_logo.atlas"
+}
+nodes {
+  size {
+    x: 600.0
+    y: 1000.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_64"
+  id: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 32.0
+    y: 32.0
+    z: 32.0
+    w: 32.0
+  }
+}
+nodes {
+  position {
+    x: -180.0
+    y: 375.0
+  }
+  type: TYPE_BOX
+  texture: "druid_logo/icon_druid"
+  id: "icon_druid_left"
+  parent: "root"
+  layer: "druid_logo"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 180.0
+    y: 375.0
+  }
+  type: TYPE_BOX
+  texture: "druid_logo/icon_druid"
+  id: "icon_druid_right"
+  parent: "root"
+  layer: "druid_logo"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: 255.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  size {
+    x: 200.0
+    y: 40.0
+  }
+  color {
+    x: 0.941
+    y: 0.984
+  }
+  type: TYPE_TEXT
+  text: "Hello!"
+  font: "text_bold"
+  id: "text_hello"
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -210.0
+    y: 191.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
+  }
+  size {
+    x: 600.0
+    y: 400.0
+  }
+  color {
+    x: 0.525
+    y: 0.525
+    z: 0.525
+  }
+  type: TYPE_TEXT
+  text: "Welcome to Druid Example Page\n"
+  "\n"
+  "Navigate over examples on the left\n"
+  "\n"
+  "Check example info on the right"
+  font: "text_bold"
+  id: "text_description"
+  pivot: PIVOT_NW
+  line_break: true
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -210.0
+    y: -189.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
+  }
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  color {
+    x: 0.525
+    y: 0.525
+    z: 0.525
+  }
+  type: TYPE_TEXT
+  text: "Your donation helps me stay engaged in creating valuable projects for Defold.\n"
+  "\n"
+  "If you appreciate what I\'m doing, please consider supporting me!"
+  font: "text_bold"
+  id: "text_support"
+  pivot: PIVOT_W
+  line_break: true
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: -170.0
+    y: -364.0
+  }
+  type: TYPE_BOX
+  texture: "druid_example/icon_heart"
+  id: "icon_heart1"
+  parent: "root"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: -364.0
+  }
+  type: TYPE_BOX
+  texture: "druid_example/icon_heart"
+  id: "icon_heart2"
+  parent: "root"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 170.0
+    y: -364.0
+  }
+  type: TYPE_BOX
+  texture: "druid_example/icon_heart"
+  id: "icon_heart3"
+  parent: "root"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: -450.0
+  }
+  size {
+    x: 500.0
+    y: 80.0
+  }
+  type: TYPE_BOX
+  id: "sponsor"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -196.0
+    y: -3.0
+  }
+  type: TYPE_BOX
+  texture: "druid_logo/sponsor_github"
+  id: "sponsor_github"
+  parent: "sponsor"
+  layer: "druid_logo"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 21.0
+    y: -3.0
+  }
+  type: TYPE_BOX
+  texture: "druid_logo/sponsor_coffee"
+  id: "sponsor_coffee"
+  parent: "sponsor"
+  layer: "druid_logo"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 217.0
+    y: -3.0
+  }
+  type: TYPE_BOX
+  texture: "druid_logo/sponsor_kofi"
+  id: "sponsor_kofi"
+  parent: "sponsor"
+  layer: "druid_logo"
+  inherit_alpha: true
+  alpha: 0.75
+  size_mode: SIZE_MODE_AUTO
+}
+layers {
+  name: "druid_logo"
+}
+layers {
+  name: "text_regular"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

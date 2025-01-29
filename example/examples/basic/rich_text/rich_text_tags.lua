@@ -25,7 +25,7 @@ function M:init(template, nodes)
 	self.rich_text_breaks:set_text("Hello, I'm Rich Text<br/>With \"<color=E6DF9F>Line Breaks</color>\"\nEnabled in GUI")
 
 	self.rich_text_image = self.druid:new_rich_text("rich_text_image") --[[@as druid.rich_text]]
-	self.rich_text_image:set_text("Hello, I'm<img=druid:icon_cross,32/>Rich Text <img=druid_logo:icon_druid,48/> <color=8ED59E><img=druid_logo:icon_druid,48/></color> <color=F49B9B><img=druid_logo:icon_druid,48/></color>")
+	self.rich_text_image:set_text("Hello, I'm<img=druid_example:icon_cross,32/>Rich Text <img=druid_logo:icon_druid,48/> <color=8ED59E><img=druid_logo:icon_druid,48/></color> <color=F49B9B><img=druid_logo:icon_druid,48/></color>")
 
 	self.position = {
 		[self.rich_text_color] = gui.get_position(self.rich_text_color.root),

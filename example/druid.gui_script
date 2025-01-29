@@ -89,7 +89,7 @@ local function setup_components(self)
 	self.examples_list_view = self.druid:new(examples_list_view, "examples_list_view") --[[@as examples_list_view]]
 	self.container_examples:add_container(self.examples_list_view.root)
 
-	self.properties_panel = self.druid:new(properties_panel, "properties_panel") --[[@as properties_panel]]
+	self.properties_panel = self.druid:new(properties_panel, "example_properties_panel") --[[@as properties_panel]]
 	self.container_settings:add_container(self.properties_panel.root)
 
 	self.output_list = self.druid:new(output_list, "output_list") --[[@as output_list]]
