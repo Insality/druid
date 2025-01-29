@@ -8,10 +8,6 @@ textures {
   texture: "/example/assets/druid_example.atlas"
 }
 nodes {
-  position {
-    x: 960.0
-    y: 540.0
-  }
   size {
     x: 700.0
     y: 500.0
@@ -200,6 +196,18 @@ nodes {
   parent: "content"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_accept/root"
+  parent: "button_accept"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button_accept/text"
+  parent: "button_accept/root"
+  template_node_child: true
 }
 layers {
   name: "druid"

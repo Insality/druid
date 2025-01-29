@@ -131,8 +131,12 @@ Create a new lua file to create a new widget class. This widget can be created w
 local M = {}
 
 function M:init()
-	self.druid = self:get_druid()
 	self.root = self:get_node("root")
+	self.button = self.druid:new_button("button", self.on_click)
+end
+
+function M:on_click()
+	print("Button clicked!")
 end
 
 return M

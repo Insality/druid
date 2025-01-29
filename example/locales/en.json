@@ -177,6 +177,15 @@
 	"ui_example_widget_property_checkbox": "Property Checkbox",
 	"ui_example_widget_property_checkbox_description": "Here is a widget used in Properties panel",
 
+	"ui_example_widget_memory_panel": "Memory Panel",
+	"ui_example_widget_memory_panel_description": "Here is a example of memory panel usage",
+
+	"ui_example_widget_fps_panel": "FPS Panel",
+	"ui_example_widget_fps_panel_description": "Here is a example of FPS panel usage",
+
+	"ui_example_widget_properties_panel": "Properties Panel",
+	"ui_example_widget_properties_panel_description": "Here is a example of properties panel usage",
+
 	"ui_example_gamepad_tester": "Gamepad Tester",
 	"ui_example_gamepad_tester_description": "Test your gamepad here to bind buttons and axes",
 

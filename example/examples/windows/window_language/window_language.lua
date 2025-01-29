@@ -38,7 +38,7 @@ function M:init(template, nodes)
 	self.grid = self.druid:new_grid("content", self.prefab, 2)
 	self.grid.style.IS_DYNAMIC_NODE_POSES = true
 
-	self.animation = panthera.create_gui(window_animation_panthera, self:get_template(), nodes)
+	self.animation = panthera.create_gui(window_animation_panthera, self:get_template(), self:get_nodes())
 	panthera.play(self.animation, "open")
 
 	self:load_langs()
