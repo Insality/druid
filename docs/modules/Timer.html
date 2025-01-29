@@ -1,0 +1,409 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Framework</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><strong>Timer</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Timer</code></h1>
+<p>Component to handle GUI timers.</p>
+<p>
+ Timer updating by game delta time. If game is not focused -
+ timer will be not updated.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, node, seconds_from, seconds_to, callback)</a></td>
+	<td class="summary">The <a href="../modules/Timer.html#">Timer</a> constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_interval">set_interval(self, from, to)</a></td>
+	<td class="summary">Set time interval</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_state">set_state(self, is_on)</a></td>
+	<td class="summary">Called when update</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_to">set_to(self, set_to)</a></td>
+	<td class="summary">Set text to text field</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#from">from</a></td>
+	<td class="summary">Initial timer value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Trigger node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_set_enabled">on_set_enabled</a></td>
+	<td class="summary">On timer change enabled state callback(self, is_enabled)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_tick">on_tick</a></td>
+	<td class="summary">On timer tick.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_timer_end">on_timer_end</a></td>
+	<td class="summary">On timer end callback</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#target">target</a></td>
+	<td class="summary">Target timer value</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#value">value</a></td>
+	<td class="summary">Current timer value</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, node, seconds_from, seconds_to, callback)</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/Timer.html#">Timer</a> constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Timer</span></span>
+         <a href="../modules/Timer.html#">Timer</a>
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Timer.html#node">node</a></span>
+         Gui text node
+        </li>
+        <li><span class="parameter">seconds_from</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Start timer value in seconds
+        </li>
+        <li><span class="parameter">seconds_to</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         End timer value in seconds
+        </li>
+        <li><span class="parameter">callback</span>
+            <span class="types"><span class="type">function</span> or <span class="type">nil</span></span>
+         Function on timer end
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_interval"></a>
+    <strong>set_interval(self, from, to)</strong>
+    </dt>
+    <dd>
+    Set time interval
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Timer</span></span>
+         <a href="../modules/Timer.html#">Timer</a>
+        </li>
+        <li><span class="parameter">from</span>
+            <span class="types"><span class="type">number</span></span>
+         Start time in seconds
+        </li>
+        <li><span class="parameter">to</span>
+            <span class="types"><span class="type">number</span></span>
+         Target time in seconds
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_state"></a>
+    <strong>set_state(self, is_on)</strong>
+    </dt>
+    <dd>
+    Called when update
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Timer</span></span>
+         <a href="../modules/Timer.html#">Timer</a>
+        </li>
+        <li><span class="parameter">is_on</span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         Timer enable state
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_to"></a>
+    <strong>set_to(self, set_to)</strong>
+    </dt>
+    <dd>
+    Set text to text field
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Timer</span></span>
+         <a href="../modules/Timer.html#">Timer</a>
+        </li>
+        <li><span class="parameter">set_to</span>
+            <span class="types"><span class="type">number</span></span>
+         Value in seconds
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "from"></a>
+    <strong>from</strong>
+    </dt>
+    <dd>
+    Initial timer value
+
+
+    <ul>
+        <li><span class="parameter">from</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Trigger node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Timer.html#node">node</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_set_enabled"></a>
+    <strong>on_set_enabled</strong>
+    </dt>
+    <dd>
+    On timer change enabled state callback(self, is_enabled)
+
+
+    <ul>
+        <li><span class="parameter">on_set_enabled</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_tick"></a>
+    <strong>on_tick</strong>
+    </dt>
+    <dd>
+    On timer tick.  Fire every second callback(self, value)
+
+
+    <ul>
+        <li><span class="parameter">on_tick</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_timer_end"></a>
+    <strong>on_timer_end</strong>
+    </dt>
+    <dd>
+    On timer end callback
+
+
+    <ul>
+        <li><span class="parameter">on_timer_end</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+        (self, Timer) <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "target"></a>
+    <strong>target</strong>
+    </dt>
+    <dd>
+    Target timer value
+
+
+    <ul>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "value"></a>
+    <strong>value</strong>
+    </dt>
+    <dd>
+    Current timer value
+
+
+    <ul>
+        <li><span class="parameter">value</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

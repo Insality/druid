@@ -1,0 +1,560 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Framework</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
+  <li><a href="../modules/Hover.html">Hover</a></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><strong>RichText</strong></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>RichText</code></h1>
+<p>Druid Rich Text Custom Component.</p>
+<p>
+ <b># Overview #</b>
+<p> This custom component is inspired by <a href="https://github.com/britzl/defold-richtext" target="_blank">defold-richtext</a> by britzl.
+ It uses a similar syntax for tags but currently supports fewer tags.
+<p> Create Rich Text on your GUI Text Node. All properties of the text node will be used as default for the text.
+<p> <b># Notes #</b>
+<p> • Nested tags are supported
+<p> <a href="https://insality.github.io/druid/druid/index.html?example=custom_rich_text" target="_blank"><b>Example Link</b></a></p>
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">local RichText = require(&quot;druid.custom.rich_text.rich_text&quot;)
+...
+self.rich_text = self.druid:new(RichText, &quot;rich_text&quot;)
+self.rich_text:set_text(&quot;Hello, Druid Rich Text!&quot;)
+</pre></li>
+        <li><pre class="example">type druid.rich_text.word = {
+  node: Node,
+  relative_scale: number,
+  color: vector4,
+  position: vector3,
+  offset: vector3,
+  scale: vector3,
+  size: vector3,
+  metrics: druid.rich_text.metrics,
+  pivot: Pivot,
+  text: string,
+  shadow: vector4,
+  outline: vector4,
+  font: string,
+  image: druid.rich_text.image,
+  br: boolean,
+  nobr: boolean,
+}
+
+type druid.rich_text.word.image = {
+  texture: string,
+  anim: string,
+  width: number,
+  height: number,
+}
+
+type druid.rich_text.lines_metrics = {
+  text_width: number,
+  text_height: number,
+  lines: table&lt;number, druid.rich_text.metrics&gt;,
+}
+
+type druid.rich_text.metrics = {
+  width: number,
+  height: number,
+  offset_x: number|nil,
+  offset_y: number|nil,
+  node_size: vector3|nil @For images only,
+}
+</pre></li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#characters">characters(self, word)</a></td>
+	<td class="summary">Split a word into it's characters</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#clear">clear()</a></td>
+	<td class="summary">Clear all created words.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_line_metric">get_line_metric()</a></td>
+	<td class="summary">Get current line metrics</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_text">get_text(self)</a></td>
+	<td class="summary">Get current text</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#get_words">get_words()</a></td>
+	<td class="summary">Get all current words.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, text_node, value)</a></td>
+	<td class="summary">The <a href="../modules/RichText.html#">RichText</a> constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_text">set_text(self, text)</a></td>
+	<td class="summary">Set text for Rich Text</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#tagged">tagged(self, tag)</a></td>
+	<td class="summary">Get all words, which has a passed tag.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#style">style</a></td>
+	<td class="summary">Component style params.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#druid">druid</a></td>
+	<td class="summary">The component druid instance</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#root">root</a></td>
+	<td class="summary">The root node of the Rich Text</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#text_prefab">text_prefab</a></td>
+	<td class="summary">The text prefab node</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "characters"></a>
+    <strong>characters(self, word)</strong>
+    </dt>
+    <dd>
+    Split a word into it's characters
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichText</span></span>
+         <a href="../modules/RichText.html#">RichText</a>
+        </li>
+        <li><span class="parameter">word</span>
+            <span class="types"><span class="type">druid.rich_text.word</span></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.rich_text.word[]</span></span>
+        characters
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "clear"></a>
+    <strong>clear()</strong>
+    </dt>
+    <dd>
+    Clear all created words.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_line_metric"></a>
+    <strong>get_line_metric()</strong>
+    </dt>
+    <dd>
+    Get current line metrics
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.rich_text.lines_metrics</span></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_text"></a>
+    <strong>get_text(self)</strong>
+    </dt>
+    <dd>
+    Get current text
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichText</span></span>
+         <a href="../modules/RichText.html#">RichText</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        text
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "get_words"></a>
+    <strong>get_words()</strong>
+    </dt>
+    <dd>
+    Get all current words.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+        druid.rich_text.word[]
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, text_node, value)</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/RichText.html#">RichText</a> constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichText</span></span>
+         <a href="../modules/RichText.html#">RichText</a>
+        </li>
+        <li><span class="parameter">text_node</span>
+            <span class="types"><span class="type">node</span> or <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The text node to make Rich Text
+        </li>
+        <li><span class="parameter">value</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         The initial text value. Default will be gui.get_text(text_node)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_text"></a>
+    <strong>set_text(self, text)</strong>
+    </dt>
+    <dd>
+    Set text for Rich Text
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichText</span></span>
+         <a href="../modules/RichText.html#">RichText</a>
+        </li>
+        <li><span class="parameter">text</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         The text to set
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+        <li>
+           <span class="types"><span class="type">druid.rich_text.word[]</span></span>
+        words</li>
+        <li>
+           <span class="types"><span class="type">druid.rich_text.lines_metrics</span></span>
+        line_metrics</li>
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">• color: Change text color
+
+&lt;color=red&gt;Foobar&lt;/color&gt;
+&lt;color=<span class="number">1.0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1.0</span>&gt;Foobar&lt;/color&gt;
+&lt;color=#ff0000&gt;Foobar&lt;/color&gt;
+&lt;color=#ff0000ff&gt;Foobar&lt;/color&gt;
+
+• shadow: Change text shadow
+
+&lt;shadow=red&gt;Foobar&lt;/shadow&gt;
+&lt;shadow=<span class="number">1.0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1.0</span>&gt;Foobar&lt;/shadow&gt;
+&lt;shadow=#ff0000&gt;Foobar&lt;/shadow&gt;
+&lt;shadow=#ff0000ff&gt;Foobar&lt;/shadow&gt;
+
+• outline: Change text shadow
+
+&lt;outline=red&gt;Foobar&lt;/outline&gt;
+&lt;outline=<span class="number">1.0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1.0</span>&gt;Foobar&lt;/outline&gt;
+&lt;outline=#ff0000&gt;Foobar&lt;/outline&gt;
+&lt;outline=#ff0000ff&gt;Foobar&lt;/outline&gt;
+
+• font: Change font
+
+&lt;font=MyCoolFont&gt;Foobar&lt;/font&gt;
+
+• size: Change text size, relative to default size
+
+&lt;size=<span class="number">2</span>&gt;Twice as large&lt;/size&gt;
+
+• br: Insert a line <span class="keyword">break</span>
+
+&lt;br/&gt;
+
+• nobr: Prevent the text from breaking
+
+Words &lt;nobr&gt;inside tag&lt;/nobr&gt; won't <span class="keyword">break</span>
+
+• img: Display image
+
+&lt;img=texture:image/&gt;
+&lt;img=texture:image,size/&gt;
+&lt;img=texture:image,width,height/&gt;</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "tagged"></a>
+    <strong>tagged(self, tag)</strong>
+    </dt>
+    <dd>
+    Get all words, which has a passed tag.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">RichText</span></span>
+         <a href="../modules/RichText.html#">RichText</a>
+        </li>
+        <li><span class="parameter">tag</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">druid.rich_text.word[]</span></span>
+        words
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "style"></a>
+    <strong>style</strong>
+    </dt>
+    <dd>
+    Component style params.
+ You can override this component styles params in Druid styles table
+ or create your own style
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">COLORS</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a> or <span class="type">nil</span></span>
+         Rich Text color aliases. Default: {}
+        </li>
+        <li><span class="parameter">ADJUST_STEPS</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Amount steps of attemps text adjust by height. Default: 20
+        </li>
+        <li><span class="parameter">ADJUST_SCALE_DELTA</span>
+            <span class="types"><span class="type">number</span> or <span class="type">nil</span></span>
+         Scale step on each height adjust step. Default: 0.02
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "druid"></a>
+    <strong>druid</strong>
+    </dt>
+    <dd>
+    The component druid instance
+
+
+    <ul>
+        <li><span class="parameter">druid</span>
+            <span class="types"><span class="type">DruidInstance</span></span>
+         <a href="../modules/DruidInstance.html#">DruidInstance</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "root"></a>
+    <strong>root</strong>
+    </dt>
+    <dd>
+    The root node of the Rich Text
+
+
+    <ul>
+        <li><span class="parameter">root</span>
+            <span class="types"><span class="type">node</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "text_prefab"></a>
+    <strong>text_prefab</strong>
+    </dt>
+    <dd>
+    The text prefab node
+
+
+    <ul>
+        <li><span class="parameter">text_prefab</span>
+            <span class="types"><span class="type">node</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

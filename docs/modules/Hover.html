@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Defold Druid UI Framework</title>
+    <link rel="stylesheet" href="../ldoc_fixed.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>Druid</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/BackHandler.html">BackHandler</a></li>
+  <li><a href="../modules/BaseComponent.html">BaseComponent</a></li>
+  <li><a href="../modules/Blocker.html">Blocker</a></li>
+  <li><a href="../modules/Button.html">Button</a></li>
+  <li><a href="../modules/DataList.html">DataList</a></li>
+  <li><a href="../modules/Drag.html">Drag</a></li>
+  <li><a href="../modules/Druid.html">Druid</a></li>
+  <li><a href="../modules/DruidEvent.html">DruidEvent</a></li>
+  <li><a href="../modules/DruidInstance.html">DruidInstance</a></li>
+  <li><a href="../modules/DynamicGrid.html">DynamicGrid</a></li>
+  <li><a href="../modules/Helper.html">Helper</a></li>
+  <li><a href="../modules/Hotkey.html">Hotkey</a></li>
+  <li><strong>Hover</strong></li>
+  <li><a href="../modules/Input.html">Input</a></li>
+  <li><a href="../modules/LangText.html">LangText</a></li>
+  <li><a href="../modules/Layout.html">Layout</a></li>
+  <li><a href="../modules/Progress.html">Progress</a></li>
+  <li><a href="../modules/RichInput.html">RichInput</a></li>
+  <li><a href="../modules/RichText.html">RichText</a></li>
+  <li><a href="../modules/Scroll.html">Scroll</a></li>
+  <li><a href="../modules/Slider.html">Slider</a></li>
+  <li><a href="../modules/StaticGrid.html">StaticGrid</a></li>
+  <li><a href="../modules/Swipe.html">Swipe</a></li>
+  <li><a href="../modules/Text.html">Text</a></li>
+  <li><a href="../modules/Timer.html">Timer</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>Hover</code></h1>
+<p>Component to handle hover node interaction</p>
+<p></p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#init">init(self, node, on_hover_callback, on_mouse_hover)</a></td>
+	<td class="summary">The <a href="../modules/Hover.html#">Hover</a> constructor</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_enabled">is_enabled(self)</a></td>
+	<td class="summary">Return current hover enabled state</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_hovered">is_hovered(self)</a></td>
+	<td class="summary">Return current hover state.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#is_mouse_hovered">is_mouse_hovered(self)</a></td>
+	<td class="summary">Return current hover state.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_click_zone">set_click_zone(self, zone)</a></td>
+	<td class="summary">Strict hover click area.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_enabled">set_enabled(self, state)</a></td>
+	<td class="summary">Set enable state of hover component.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_hover">set_hover(self, state)</a></td>
+	<td class="summary">Set hover state</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#set_mouse_hover">set_mouse_hover(self, state)</a></td>
+	<td class="summary">Set mouse hover state</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#style">style</a></td>
+	<td class="summary">Component style params.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#node">node</a></td>
+	<td class="summary">Hover node</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_hover">on_hover</a></td>
+	<td class="summary">On hover callback(self, state, hover_instance)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_mouse_hover">on_mouse_hover</a></td>
+	<td class="summary">On mouse hover callback(self, state, hover_instance)</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "init"></a>
+    <strong>init(self, node, on_hover_callback, on_mouse_hover)</strong>
+    </dt>
+    <dd>
+    The <a href="../modules/Hover.html#">Hover</a> constructor
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Hover.html#node">node</a></span>
+         Gui node
+        </li>
+        <li><span class="parameter">on_hover_callback</span>
+            <span class="types"><span class="type">function</span></span>
+         Hover callback
+        </li>
+        <li><span class="parameter">on_mouse_hover</span>
+            <span class="types"><span class="type">function</span></span>
+         On mouse hover callback
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_enabled"></a>
+    <strong>is_enabled(self)</strong>
+    </dt>
+    <dd>
+    Return current hover enabled state
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        The hover enabled state
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_hovered"></a>
+    <strong>is_hovered(self)</strong>
+    </dt>
+    <dd>
+    Return current hover state.  True if touch action was on the node at current time
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        The current hovered state
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "is_mouse_hovered"></a>
+    <strong>is_mouse_hovered(self)</strong>
+    </dt>
+    <dd>
+    Return current hover state.  True if nil action_id (usually desktop mouse) was on the node at current time
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">boolean</span></span>
+        The current hovered state
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_click_zone"></a>
+    <strong>set_click_zone(self, zone)</strong>
+    </dt>
+    <dd>
+    Strict hover click area.  Useful for
+ no click events outside stencil node
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+        <li><span class="parameter">zone</span>
+            <span class="types"><a class="type" href="../modules/Hover.html#node">node</a>, <a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a> or <span class="type">nil</span></span>
+         Gui node
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_enabled"></a>
+    <strong>set_enabled(self, state)</strong>
+    </dt>
+    <dd>
+    Set enable state of hover component.
+ If hover is not enabled, it will not generate
+ any hover events
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         The hover enabled state
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_hover"></a>
+    <strong>set_hover(self, state)</strong>
+    </dt>
+    <dd>
+    Set hover state
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         The hover state
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "set_mouse_hover"></a>
+    <strong>set_mouse_hover(self, state)</strong>
+    </dt>
+    <dd>
+    Set mouse hover state
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+            <span class="types"><span class="type">Hover</span></span>
+         <a href="../modules/Hover.html#">Hover</a>
+        </li>
+        <li><span class="parameter">state</span>
+            <span class="types"><span class="type">boolean</span> or <span class="type">nil</span></span>
+         The mouse hover state
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "style"></a>
+    <strong>style</strong>
+    </dt>
+    <dd>
+    Component style params.
+ You can override this component styles params in druid styles table
+ or create your own style
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">ON_HOVER_CURSOR</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Mouse hover style on node hover
+         (<em>optional</em>)
+        </li>
+        <li><span class="parameter">ON_MOUSE_HOVER_CURSOR</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Mouse hover style on node mouse hover
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "node"></a>
+    <strong>node</strong>
+    </dt>
+    <dd>
+    Hover node
+
+
+    <ul>
+        <li><span class="parameter">node</span>
+            <span class="types"><a class="type" href="../modules/Hover.html#node">node</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_hover"></a>
+    <strong>on_hover</strong>
+    </dt>
+    <dd>
+    On hover callback(self, state, hover_instance)
+
+
+    <ul>
+        <li><span class="parameter">on_hover</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_mouse_hover"></a>
+    <strong>on_mouse_hover</strong>
+    </dt>
+    <dd>
+    On mouse hover callback(self, state, hover_instance)
+
+
+    <ul>
+        <li><span class="parameter">on_mouse_hover</span>
+            <span class="types"><span class="type">DruidEvent</span></span>
+         <a href="../modules/DruidEvent.html#">DruidEvent</a>
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc TESTING</a></i>
+<i style="float:right;">Last updated 2015-01-01 12:00:00 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
