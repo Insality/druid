@@ -17,9 +17,24 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
+  texture: "druid_example/pixel"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
   inherit_alpha: true
+}
+nodes {
+  size {
+    x: 1040.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "layout"
+  xanchor: XANCHOR_LEFT
+  adjust_mode: ADJUST_MODE_STRETCH
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
 }
 nodes {
   position {
@@ -32,7 +47,7 @@ nodes {
   type: TYPE_BOX
   id: "group_memory"
   pivot: PIVOT_W
-  parent: "root"
+  parent: "layout"
   inherit_alpha: true
   visible: false
 }
@@ -149,7 +164,7 @@ nodes {
 }
 nodes {
   position {
-    x: -130.0
+    x: -31.0
   }
   size {
     x: 16.0
@@ -158,7 +173,7 @@ nodes {
   type: TYPE_BOX
   texture: "druid_example/empty"
   id: "group_fps"
-  parent: "root"
+  parent: "layout"
   inherit_alpha: true
   visible: false
 }
@@ -279,7 +294,7 @@ nodes {
 }
 nodes {
   position {
-    x: 130.0
+    x: 355.0
   }
   size {
     x: 16.0
@@ -288,7 +303,7 @@ nodes {
   type: TYPE_BOX
   texture: "druid_example/empty"
   id: "group_components"
-  parent: "root"
+  parent: "layout"
   inherit_alpha: true
   visible: false
 }
@@ -361,95 +376,6 @@ nodes {
     z: 1.0
   }
   parent: "group_components"
-  layer: "text_bold"
-  inherit_alpha: true
-  outline_alpha: 0.0
-  shadow_alpha: 0.0
-}
-nodes {
-  position {
-    x: 530.0
-  }
-  size {
-    x: 16.0
-    y: 50.0
-  }
-  type: TYPE_BOX
-  id: "group_events"
-  pivot: PIVOT_E
-  parent: "root"
-  inherit_alpha: true
-  visible: false
-}
-nodes {
-  position {
-    x: -163.0
-  }
-  scale {
-    x: 0.8
-    y: 0.8
-  }
-  size {
-    x: 200.0
-    y: 50.0
-  }
-  color {
-    x: 0.306
-    y: 0.31
-    z: 0.314
-  }
-  type: TYPE_TEXT
-  text: "Events"
-  font: "text_bold"
-  id: "text_events"
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-  parent: "group_events"
-  layer: "text_bold"
-  inherit_alpha: true
-  outline_alpha: 0.0
-  shadow_alpha: 0.0
-}
-nodes {
-  position {
-    x: -59.0
-  }
-  scale {
-    x: 0.8
-    y: 0.8
-  }
-  size {
-    x: 200.0
-    y: 50.0
-  }
-  color {
-    x: 0.463
-    y: 0.475
-    z: 0.49
-  }
-  type: TYPE_TEXT
-  text: "6000"
-  font: "text_bold"
-  id: "text_events_amount"
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-  parent: "group_events"
   layer: "text_bold"
   inherit_alpha: true
   outline_alpha: 0.0

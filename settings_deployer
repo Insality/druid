@@ -2,7 +2,7 @@
 bob_folder=./
 
 # You can point bob version for project in format "filename:sha"
-bob_sha="195:87b6907759f7b8dff830d54b2250b8d721bde291"
+bob_sha="196:11d2cd3a9be17b2fc5a2cb5cea59bbfb4af1ca96"
 
 # Select Defold channel. Values: stable, beta, alpha
 bob_channel="stable"

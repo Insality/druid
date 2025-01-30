@@ -4824,8 +4824,14 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  id: "panel_druid_profiler/group_memory"
+  id: "panel_druid_profiler/layout"
   parent: "panel_druid_profiler/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_druid_profiler/group_memory"
+  parent: "panel_druid_profiler/layout"
   template_node_child: true
 }
 nodes {
@@ -4849,7 +4855,7 @@ nodes {
 nodes {
   type: TYPE_BOX
   id: "panel_druid_profiler/group_fps"
-  parent: "panel_druid_profiler/root"
+  parent: "panel_druid_profiler/layout"
   template_node_child: true
 }
 nodes {
@@ -4873,7 +4879,7 @@ nodes {
 nodes {
   type: TYPE_BOX
   id: "panel_druid_profiler/group_components"
-  parent: "panel_druid_profiler/root"
+  parent: "panel_druid_profiler/layout"
   template_node_child: true
 }
 nodes {
@@ -4886,24 +4892,6 @@ nodes {
   type: TYPE_TEXT
   id: "panel_druid_profiler/text_components_amount"
   parent: "panel_druid_profiler/group_components"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "panel_druid_profiler/group_events"
-  parent: "panel_druid_profiler/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "panel_druid_profiler/text_events"
-  parent: "panel_druid_profiler/group_events"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "panel_druid_profiler/text_events_amount"
-  parent: "panel_druid_profiler/group_events"
   template_node_child: true
 }
 layers {

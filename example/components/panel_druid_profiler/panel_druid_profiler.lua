@@ -18,25 +18,30 @@ function M:init(template, nodes)
 	self.group_memory = self.root:add_container("group_memory")
 	self.group_fps = self.root:add_container("group_fps")
 	self.group_components = self.root:add_container("group_components")
-	self.group_events = self.root:add_container("group_events")
+
+	self.root:add_container("layout", nil, function()
+		self.layout:set_dirty()
+	end)
+	self.layout = self.druid:new_layout("layout", "horizontal")
+	self.layout:add(self.group_memory.node)
+	self.layout:add(self.group_fps.node)
+	self.layout:add(self.group_components.node)
+	self.layout:set_justify(true)
 
 	self.druid:new_button("group_memory", self.run_collectgarbage)
 
 	self.group_memory:set_min_size(270, nil)
 	self.group_fps:set_min_size(270, nil)
 	self.group_components:set_min_size(270, nil)
-	self.group_events:set_min_size(270, nil)
 
 	self.text_memory_amount = self.druid:new_text("text_memory_amount")
 	self.text_fps_amount = self.druid:new_text("text_fps_amount")
 	self.text_fps_min = self.druid:new_text("text_fps_min")
 	self.text_components_amount = self.druid:new_text("text_components_amount")
-	self.text_events_amount = self.druid:new_text("text_events_amount")
 
 	self.druid:new_lang_text("text_memory", "ui_profiler_memory")
 	self.druid:new_lang_text("text_fps", "ui_profiler_fps")
 	self.druid:new_lang_text("text_components", "ui_profiler_components")
-	self.druid:new_lang_text("text_events", "ui_profiler_events")
 
 	self.previous_time = nil
 	self.fps_samples = {}
@@ -55,17 +60,12 @@ function M:init(template, nodes)
 		self:get_node("text_components"),
 		self:get_node("text_components_amount"),
 	}
-	self.nodes_events = {
-		self:get_node("text_events"),
-		self:get_node("text_events_amount"),
-	}
 
 	timer.delay(0.16, true, function()
 		self:update_memory()
 		self:update_fps()
 		self:update_components()
-		self:update_events()
-		self:align_fps_components()
+		self.layout:set_dirty()
 	end)
 end
 
@@ -74,8 +74,7 @@ function M:on_language_change()
 	self:update_memory()
 	self:update_fps()
 	self:update_components()
-	self:update_events()
-	self:align_fps_components()
+	self.layout:set_dirty()
 end
 
 
@@ -117,34 +116,6 @@ function M:update_components()
 	self.text_components_amount:set_text(tostring(components))
 	local width = helper.centrate_nodes(2, unpack(self.nodes_components))
 	self.group_components:set_size(width, nil)
-end
-
-
-function M:update_events()
-	self.text_events_amount:set_text("unsupported")
-
-	local width = helper.centrate_nodes(2, unpack(self.nodes_events))
-	for index = 1, #self.nodes_events do
-		local node = self.nodes_events[index]
-		local position_x = gui.get(node, "position.x")
-		gui.set(node, "position.x", position_x - width/2)
-	end
-	self.group_events:set_size(width, nil)
-end
-
-
-function M:align_fps_components()
-	local pos_x_memory = gui.get(self.group_memory.node, "position.x") + gui.get(self.group_memory.node, "size.x")
-	local pos_x_events = gui.get(self.group_events.node, "position.x") - gui.get(self.group_events.node, "size.x")
-	local width = pos_x_events - pos_x_memory
-
-	-- Align FPS and Components
-	local fps_size = gui.get(self.group_fps.node, "size.x")
-	local components_size = gui.get(self.group_components.node, "size.x")
-
-	local free_width = width - fps_size - components_size
-	gui.set(self.group_fps.node, "position.x", pos_x_memory + fps_size/2 + free_width/3)
-	gui.set(self.group_components.node, "position.x", pos_x_events - components_size/2 - free_width/3)
 end
 
 
