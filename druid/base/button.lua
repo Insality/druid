@@ -141,8 +141,9 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
+---Clickable node with various interaction callbacks
 ---@class druid.button: druid.base_component
----@field on_click event
+---@field on_click event function(self, custom_args, button_instance)
 ---@field on_pressed event
 ---@field on_repeated_click event
 ---@field on_long_click event

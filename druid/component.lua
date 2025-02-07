@@ -4,7 +4,7 @@ local helper = require("druid.helper")
 ---@class druid.base_component.meta
 ---@field template string
 ---@field context table
----@field nodes table<string|hash, node>|nil
+---@field nodes table<hash, node>|nil
 ---@field style table|nil
 ---@field druid druid_instance
 ---@field input_enabled boolean
@@ -41,6 +41,7 @@ local INTERESTS = {} -- Cache interests per component class in runtime
 
 
 local uid = 0
+---@private
 function M.create_uid()
 	uid = uid + 1
 	return uid
@@ -107,7 +108,7 @@ end
 
 
 ---Set current component nodes, returned from `gui.clone_tree` function.
----@param nodes table<string|hash, node>
+---@param nodes table<hash, node>
 ---@return druid.base_component
 function M:set_nodes(nodes)
 	self._meta.nodes = nodes
@@ -132,7 +133,7 @@ end
 
 ---Get Druid instance for inner component creation.
 ---@param template string|nil
----@param nodes table<string|hash, node>|nil
+---@param nodes table<hash, node>|nil
 ---@return druid_instance
 function M:get_druid(template, nodes)
 	local context = { _context = self }
@@ -305,7 +306,7 @@ end
 
 
 ---Get current component nodes
----@return table<hash, node>
+---@return table<hash, node>|nil
 function M:get_nodes()
 	local nodes = self._meta.nodes
 	local parent = self:get_parent_component()

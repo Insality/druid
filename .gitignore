@@ -16,3 +16,4 @@ bob*.jar
 manifest.private.der
 manifest.public.der
 /.editor_settings
+/.deployer_cache

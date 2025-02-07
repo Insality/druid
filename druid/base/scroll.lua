@@ -91,14 +91,30 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.scroll: druid.base_component
----@field on_scroll event
----@field on_scroll_to event
----@field on_point_scroll event
----@field view_node node
----@field view_border vector4
----@field content_node node
----@field view_size vector3
----@field position vector3
+---@field node node
+---@field click_zone node|nil
+---@field on_scroll event On scroll move callback(self, position)
+---@field on_scroll_to event On scroll_to function callback(self, target, is_instant)
+---@field on_point_scroll event On scroll_to_index function callback(self, index, point)
+---@field view_node node Scroll view node
+---@field view_border vector4 Scroll view border
+---@field content_node node Scroll content node
+---@field view_size vector3 Scroll view size
+---@field position vector3 Current scroll position
+---@field target_position vector3 Current scroll target position
+---@field available_pos vector4 Available position for content node: (min_x, max_y, max_x, min_y)
+---@field available_size vector3 Size of available positions: (width, height, 0)
+---@field drag druid.drag Drag Druid component
+---@field selected number|nil Current index of points of interests
+---@field is_animate boolean Flag, if scroll now animating by gui.animate
+---@field private _is_inert boolean Flag, if scroll now moving by inertion
+---@field private inertion vector3 Current inert speed
+---@field private _is_horizontal_scroll boolean Flag, if scroll now horizontal
+---@field private _is_vertical_scroll boolean Flag, if scroll now vertical
+---@field private _grid_on_change event Grid on change items event
+---@field private _grid_on_change_callback function Grid on change items callback
+---@field private _offset vector3 Offset value to set, where content is starts
+---@field private style table Component style params
 local M = component.create("scroll")
 
 
@@ -228,8 +244,8 @@ end
 
 function M:update(dt)
 	if self.is_animate then
-		self.position.x = gui.get(self.content_node, "position.x")
-		self.position.y = gui.get(self.content_node, "position.y")
+		self.position.x = gui.get(self.content_node, "position.x") --[[@as number]]
+		self.position.y = gui.get(self.content_node, "position.y") --[[@as number]]
 		self.on_scroll:trigger(self:get_context(), self.position)
 	end
 
@@ -383,7 +399,7 @@ end
 --- Enable or disable scroll inert.
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
----@param state boolean|nil Inert scroll state
+---@param state boolean Inert scroll state
 ---@return druid.scroll Current scroll instance
 function M:set_inert(state)
 	self._is_inert = state
@@ -436,21 +452,21 @@ end
 
 
 --- Lock or unlock horizontal scroll
----@param state boolean|nil True, if horizontal scroll is enabled
+---@param state boolean True, if horizontal scroll is enabled
 ---@return druid.scroll Current scroll instance
 function M:set_horizontal_scroll(state)
 	self._is_horizontal_scroll = state
-	self.drag.can_x = self.available_size.x > 0 and state
+	self.drag.can_x = self.available_size.x > 0 and state or false
 	return self
 end
 
 
 --- Lock or unlock vertical scroll
----@param state boolean|nil True, if vertical scroll is enabled
+---@param state boolean True, if vertical scroll is enabled
 ---@return druid.scroll Current scroll instance
 function M:set_vertical_scroll(state)
 	self._is_vertical_scroll = state
-	self.drag.can_y = self.available_size.y > 0 and state
+	self.drag.can_y = self.available_size.y > 0 and state or false
 	return self
 end
 
@@ -497,7 +513,7 @@ end
 
 --- Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
----@param grid druid.grid Druid grid component
+---@param grid druid.grid|nil Druid grid component
 ---@return druid.scroll Current scroll instance
 function M:bind_grid(grid)
 	if self._grid_on_change then
@@ -508,7 +524,7 @@ function M:bind_grid(grid)
 	end
 
 	if not grid then
-		return
+		return self
 	end
 
 	self._grid_on_change = grid.on_change_items

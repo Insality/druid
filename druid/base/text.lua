@@ -89,7 +89,7 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 ---@field on_update_text_scale event
 ---@field on_set_pivot event
 ---@field style table
----@field private start_pivot number
+---@field private start_pivot userdata
 ---@field private start_scale vector3
 ---@field private scale vector3
 local M = component.create("text")
@@ -491,7 +491,7 @@ end
 
 
 --- Set text pivot. Text will re-anchor inside text area
----@param pivot number The gui.PIVOT_* constant
+---@param pivot userdata The gui.PIVOT_* constant
 ---@return druid.text Current text instance
 function M:set_pivot(pivot)
 	local prev_pivot = gui.get_pivot(self.node)

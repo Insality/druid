@@ -69,6 +69,15 @@ function M:set_samples(samples)
 end
 
 
+function M:get_samples()
+	return self.samples
+end
+
+
+---Set normalized to control the color of the line
+---	for index = 1, mini_graph:get_samples() do
+---		mini_graph:set_line_value(index, math.random())
+---	end
 ---@param index number
 ---@param value number The normalized value from 0 to 1
 function M:set_line_value(index, value)
@@ -83,7 +92,6 @@ function M:set_line_value(index, value)
 	local target_color = color.lerp(normalized, self.color_zero, self.color_one)
 	gui.set_color(line, target_color)
 	self:set_line_height(index)
-
 end
 
 

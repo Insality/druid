@@ -200,8 +200,7 @@ end
 
 --- Druid class constructor
 ---@param context table Druid context. Usually it is self of gui script
----@param style table Druid style table
----@private
+---@param style table? Druid style table
 function M:initialize(context, style)
 	self._context = context
 	self._style = style or settings.default_style

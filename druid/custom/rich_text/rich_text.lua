@@ -272,7 +272,7 @@ end
 ---@return druid.rich_text.word[] words
 function M:tagged(tag)
 	if not self._words then
-		return
+		return {}
 	end
 
 	return rich_text.tagged(self._words, tag)
