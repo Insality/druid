@@ -474,14 +474,14 @@ end
 ---@generic T: druid.base_component
 ---@param widget T
 ---@param template string|nil The template name used by widget
----@param nodes table<string|hash, node>|node|nil The nodes table from gui.clone_tree or prefab node to use for clone
+---@param nodes table<hash, node>|node|nil The nodes table from gui.clone_tree or prefab node to use for clone
 ---@vararg any
 ---@return T
 function M:new_widget(widget, template, nodes, ...)
 	local instance = create_widget(self, widget)
 
 	if type(nodes) == "userdata" then
-		nodes = gui.clone_tree(nodes)
+		nodes = gui.clone_tree(nodes) --[[@as table<hash, node>]]
 	end
 
 	instance.druid = instance:get_druid(template, nodes)
@@ -543,10 +543,10 @@ local text = require("druid.base.text")
 ---Create Text component
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param value string|nil Initial text. Default value is node text from GUI scene.
----@param no_adjust boolean|nil If true, text will be not auto-adjust size
+---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 ---@return druid.text Text component
-function M:new_text(node, value, no_adjust)
-	return self:new(text, node, value, no_adjust)
+function M:new_text(node, value, adjust_type)
+	return self:new(text, node, value, adjust_type)
 end
 
 

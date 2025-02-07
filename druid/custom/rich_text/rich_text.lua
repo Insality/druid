@@ -121,6 +121,13 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field width number
 ---@field height number
 
+---@class druid.rich_text.style
+---@field COLORS table<string, vector4>
+---@field ADJUST_STEPS number
+---@field ADJUST_SCALE_DELTA number
+---@field ADJUST_TYPE string
+---@field ADJUST_SCALE number
+
 ---@class druid.rich_text.lines_metrics
 ---@field text_width number
 ---@field text_height number

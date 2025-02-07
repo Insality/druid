@@ -71,7 +71,7 @@ end
 ---@param text string Text for text node
 ---@return druid.lang_text Current instance
 function M:set_to(text)
-	self.last_locale = false
+	self.last_locale = nil
 	self.text:set_text(text)
 	self.on_change:trigger()
 

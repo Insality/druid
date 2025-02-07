@@ -201,7 +201,7 @@ end
 
 --- Return grid index by node
 ---@param node node The gui node in the grid
----@return number The node index
+---@return number|nil index The node index
 function M:get_index_by_node(node)
 	for index, grid_node in pairs(self.nodes) do
 		if node == grid_node then
@@ -356,7 +356,7 @@ end
 
 
 --- Return grid content borders
----@return vector3 The grid content borders
+---@return vector4 The grid content borders
 function M:get_borders()
 	return self.border
 end
@@ -463,10 +463,12 @@ end
 
 --- Sort grid nodes by custom comparator function
 ---@param comparator function The comparator function. (a, b) -> boolean
----@return druid.grid Current grid instance
+---@return druid.grid self Current grid instance
 function M:sort_nodes(comparator)
 	table.sort(self.nodes, comparator)
 	self:_update(true)
+
+	return self
 end
 
 

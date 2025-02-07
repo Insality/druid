@@ -528,11 +528,12 @@ function M:bind_grid(grid)
 	end
 
 	self._grid_on_change = grid.on_change_items
-	self._grid_on_change_callback = self._grid_on_change:subscribe(function()
+	self._grid_on_change_callback = function()
 		local size = grid:get_size()
 		local offset = grid:get_offset()
 		self:set_size(size, offset)
-	end)
+	end
+	self._grid_on_change:subscribe(self._grid_on_change_callback)
 	self:set_size(grid:get_size(), grid:get_offset())
 
 	return self

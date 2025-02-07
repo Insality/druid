@@ -136,7 +136,10 @@ function M:on_size_changed(new_size)
 
 	local width = self.layout:get_size().x - self.layout.padding.x - self.layout.padding.z
 	for index = 1, #self.properties do
-		self.properties[index].container:set_size(width)
+		local property = self.properties[index]
+		if property.container then
+			property.container:set_size(width)
+		end
 	end
 	self.paginator.container:set_size(width)
 end
@@ -216,7 +219,7 @@ end
 ---@generic T: druid.widget
 ---@param widget_class T
 ---@param template string|nil
----@param nodes table<string, node>|node|nil
+---@param nodes table<hash, node>|node|nil
 ---@param on_create fun(widget: T)|nil
 ---@return widget.properties_panel
 function M:add_inner_widget(widget_class, template, nodes, on_create)

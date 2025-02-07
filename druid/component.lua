@@ -25,7 +25,7 @@ local helper = require("druid.helper")
 ---@field update fun(self:druid.base_component, dt:number)|nil
 ---@field on_remove fun(self:druid.base_component)|nil
 ---@field on_input fun(self:druid.base_component, action_id:number, action:table)|nil
----@field on_message fun(self:druid.base_component, message_id:hash, message:table, sender:userdata)|nil
+---@field on_message fun(self:druid.base_component, message_id:hash, message:table, sender:url)|nil
 ---@field on_late_init fun(self:druid.base_component)|nil
 ---@field on_focus_lost fun(self:druid.base_component)|nil
 ---@field on_focus_gained fun(self:druid.base_component)|nil
