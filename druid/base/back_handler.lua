@@ -1,65 +1,24 @@
--- Copyright (c) 2023 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component with event on back and backspace button.
--- <b># Overview #</b>
---
--- Back Handler is recommended to put in every game window to close it
--- or in main screen to call settings window.
---
--- <b># Notes #</b>
---
--- • Back Handler inheritance @{BaseComponent}, you can use all of its methods in addition to those described here.
---
--- • Back Handler react on release action ACTION_BACK or ACTION_BACKSPACE
--- @usage
--- local callback = function(self, params) ... end
---
--- local params = {}
--- local back_handler = self.druid:new_back_handler(callback, [params])
--- @module BackHandler
--- @within BaseComponent
--- @alias druid.back_handler
-
---- The @{DruidEvent} Event on back handler action.
---
--- Trigger on input action ACTION_BACK or ACTION_BACKSPACE
--- @usage
--- -- Subscribe additional callbacks:
--- back_handler.on_back:subscribe(callback)
--- @tfield DruidEvent on_back @{DruidEvent}
-
---- Custom args to pass in the callback
--- @usage
--- -- Replace params on runtime:
--- back_handler.params = { ... }
--- @tfield any|nil params
-
----
-
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local BackHandler = component.create("back_handler")
+---@class druid.back_handler: druid.base_component
+---@field on_back event Trigger on back handler action, fun(self, params)
+---@field params any|nil Custom args to pass in the callback
+local M = component.create("back_handler")
 
 
---- The @{BackHandler} constructor
--- @tparam BackHandler self @{BackHandler}
--- @tparam function callback @The callback(self, custom_args) to call on back event
--- @tparam any|nil custom_args Button events custom arguments
--- @local
-function BackHandler.init(self, callback, custom_args)
-	self.params = custom_args
-	self.on_back = Event(callback)
+---@param callback function|nil
+---@param params any|nil
+function M:init(callback, params)
+	self.params = params
+	self.on_back = event.create(callback)
 end
 
 
---- Component input handler
--- @tparam BackHandler self @{BackHandler}
--- @tparam string action_id on_input action id
--- @tparam table action on_input action
--- @local
-function BackHandler.on_input(self, action_id, action)
+---@param action_id string
+---@param action table
+function M:on_input(action_id, action)
 	if not action.released then
 		return false
 	end
@@ -73,4 +32,4 @@ function BackHandler.on_input(self, action_id, action)
 end
 
 
-return BackHandler
+return M

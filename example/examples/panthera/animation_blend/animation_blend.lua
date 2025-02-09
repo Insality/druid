@@ -1,9 +1,7 @@
 local panthera = require("panthera.panthera")
 local component = require("druid.component")
 local helper = require("druid.helper")
-local event = require("druid.event")
-local lang_text = require("druid.extended.lang_text")
-local rich_text = require("druid.custom.rich_text.rich_text")
+local event = require("event.event")
 
 local character_animation_blend = require("example.examples.panthera.animation_blend.character_animation_blend")
 
@@ -20,7 +18,7 @@ function M:init(template, nodes)
 
 	self.root = self:get_node("root")
 	self.root_size = gui.get_size(self.root)
-	self.druid:new(lang_text, "text_hint", "ui_example_panthera_animation_blend_hint")
+	self.druid:new_lang_text("text_hint", "ui_example_panthera_animation_blend_hint")
 
 	self.animation_idle = panthera.create_gui(character_animation_blend, self:get_template(), nodes)
 	self.animation_vertical = panthera.create_gui(character_animation_blend, self:get_template(), nodes)
@@ -31,7 +29,7 @@ function M:init(template, nodes)
 	})
 
 	self:setup_rich_text()
-	self.on_update = event()
+	self.on_update = event.create()
 end
 
 
@@ -59,7 +57,7 @@ end
 
 
 function M:setup_rich_text()
-	self.rich_text = self.druid:new(rich_text, "rich_text_kenney", "Character assets by <color=865BD9><link>Kenney</link></color>")
+	self.rich_text = self.druid:new_rich_text("rich_text_kenney", "Character assets by <color=865BD9><link>Kenney</link></color>")
 
 	local tagged = self.rich_text:tagged("link")
 	for index = 1, #tagged do

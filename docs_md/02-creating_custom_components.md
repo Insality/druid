@@ -148,7 +148,6 @@ Available keywords:
 - `text`: Adds a [Druid Text](01-components.md#text) component.
 - `lang_text`: Adds a [Druid Lang Text](01-components.md#lang-text) component.
 - `grid` or `static_grid`: Adds a [Druid Static Grid](01-components.md#static-grid) component. You should set up the Grid prefab for this component after generating the file.
-- `dynamic_grid`: Adds a [Druid Dynamic Grid](01-components.md#dynamic-grid) component.
 - `scroll_view`: Adds a [Druid Scroll](01-components.md#scroll) component. It also adds a `scroll_content` node with the same postfix. Ensure that it's the correct node.
 - `blocker`: Adds a [Druid Blocker](01-components.md#blocker) component.
 - `slider`: Adds a [Druid Slider](01-components.md#slider) component. You should adjust the end position of the Slider after generating the file.

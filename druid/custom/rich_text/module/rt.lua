@@ -2,10 +2,6 @@
 -- Author: Britzl
 -- Modified by: Insality
 
---- RT
--- @module rich_text.rt
--- @local
-
 local helper = require("druid.helper")
 local parser = require("druid.custom.rich_text.module.rt_parse")
 local utf8_lua = require("druid.system.utf8")
@@ -185,7 +181,7 @@ function M.create(text, settings, style)
 		outline = settings.outline,
 		font = gui.get_font(settings.text_prefab),
 		-- Image params
-		---@type druid.rich_text.image
+		---@type druid.rich_text.word.image
 		image = nil,
 		-- Tags
 		br = nil,
@@ -428,7 +424,7 @@ function M._update_nodes(lines, settings)
 				gui.set_outline(node, word.outline)
 				gui.set_shadow(node, word.shadow)
 				gui.set_text(node, word.text)
-				gui.set_color(node, word.color or word.text_color)
+				gui.set_color(node, word.color)
 				gui.set_font(node, word.font or settings.font)
 			end
 			word.node = node

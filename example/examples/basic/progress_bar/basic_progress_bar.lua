@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local progress = require("druid.extended.progress")
 
 ---@class basic_progress_bar: druid.base_component
 ---@field druid druid_instance
@@ -12,7 +11,7 @@ local M = component.create("basic_progress_bar")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.progress = self.druid:new(progress, "progress_bar_fill", "x")
+	self.progress = self.druid:new_progress("progress_bar_fill", "x")
 	self.text_value = self:get_node("progress_value")
 
 	self:set_value(self.progress:get())

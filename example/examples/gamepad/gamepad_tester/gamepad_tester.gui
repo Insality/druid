@@ -1,6 +1,6 @@
 textures {
-  name: "druid"
-  texture: "/example/assets/druid.atlas"
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
 }
 nodes {
   size {
@@ -8,7 +8,7 @@ nodes {
     y: 1000.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "root"
   inherit_alpha: true
   visible: false
@@ -19,7 +19,7 @@ nodes {
     y: 100.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "gamepad"
   parent: "root"
   inherit_alpha: true
@@ -37,66 +37,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_stick.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "stick_left/root"
-  parent: "stick_left"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_PIE
-  id: "stick_left/background_mask"
-  parent: "stick_left/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_left/background"
-  parent: "stick_left/background_mask"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_left/stick_root"
-  parent: "stick_left/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_left/stick_shadow"
-  parent: "stick_left/stick_root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_left/stick"
-  parent: "stick_left/stick_root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_left/dot_1"
-  parent: "stick_left/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_left/dot_2"
-  parent: "stick_left/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_left/dot_3"
-  parent: "stick_left/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_left/dot_4"
-  parent: "stick_left/stick"
-  template_node_child: true
-}
-nodes {
   position {
     x: 200.0
     y: -300.0
@@ -108,66 +48,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_stick.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "stick_right/root"
-  parent: "stick_right"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_PIE
-  id: "stick_right/background_mask"
-  parent: "stick_right/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_right/background"
-  parent: "stick_right/background_mask"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_right/stick_root"
-  parent: "stick_right/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_right/stick_shadow"
-  parent: "stick_right/stick_root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_right/stick"
-  parent: "stick_right/stick_root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_right/dot_1"
-  parent: "stick_right/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_right/dot_2"
-  parent: "stick_right/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_right/dot_3"
-  parent: "stick_right/stick"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "stick_right/dot_4"
-  parent: "stick_right/stick"
-  template_node_child: true
-}
-nodes {
   position {
     x: -330.0
     y: 24.0
@@ -177,7 +57,7 @@ nodes {
     y: 290.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "dpad"
   parent: "gamepad"
   inherit_alpha: true
@@ -194,32 +74,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "button_left/button"
-  parent: "button_left"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "button_left/text"
-  parent: "button_left/button"
-  overridden_fields: 45
-  overridden_fields: 46
-  template_node_child: true
-  enabled: false
-  visible: false
-}
-nodes {
-  rotation {
-    z: 180.0
-  }
-  type: TYPE_BOX
-  id: "button_left/icon"
-  parent: "button_left/button"
-  overridden_fields: 2
-  template_node_child: true
-}
-nodes {
   position {
     y: 100.0
   }
@@ -228,32 +82,6 @@ nodes {
   parent: "dpad"
   inherit_alpha: true
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_up/button"
-  parent: "button_up"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "button_up/text"
-  parent: "button_up/button"
-  overridden_fields: 45
-  overridden_fields: 46
-  template_node_child: true
-  enabled: false
-  visible: false
-}
-nodes {
-  rotation {
-    z: 90.0
-  }
-  type: TYPE_BOX
-  id: "button_up/icon"
-  parent: "button_up/button"
-  overridden_fields: 2
-  template_node_child: true
 }
 nodes {
   position {
@@ -266,28 +94,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "button_right/button"
-  parent: "button_right"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "button_right/text"
-  parent: "button_right/button"
-  overridden_fields: 45
-  overridden_fields: 46
-  template_node_child: true
-  enabled: false
-  visible: false
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_right/icon"
-  parent: "button_right/button"
-  template_node_child: true
-}
-nodes {
   position {
     y: -100.0
   }
@@ -296,32 +102,6 @@ nodes {
   parent: "dpad"
   inherit_alpha: true
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_down/button"
-  parent: "button_down"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "button_down/text"
-  parent: "button_down/button"
-  overridden_fields: 45
-  overridden_fields: 46
-  template_node_child: true
-  enabled: false
-  visible: false
-}
-nodes {
-  rotation {
-    z: -90.0
-  }
-  type: TYPE_BOX
-  id: "button_down/icon"
-  parent: "button_down/button"
-  overridden_fields: 2
-  template_node_child: true
 }
 nodes {
   position {
@@ -333,7 +113,7 @@ nodes {
     y: 290.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "buttons"
   parent: "gamepad"
   inherit_alpha: true
@@ -350,26 +130,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "button_x/button"
-  parent: "button_x"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "button_x/text"
-  parent: "button_x/button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_x/icon"
-  parent: "button_x/button"
-  overridden_fields: 45
-  template_node_child: true
-  enabled: false
-}
-nodes {
   position {
     y: 100.0
   }
@@ -378,28 +138,6 @@ nodes {
   parent: "buttons"
   inherit_alpha: true
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_y/button"
-  parent: "button_y"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "Y"
-  id: "button_y/text"
-  parent: "button_y/button"
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_y/icon"
-  parent: "button_y/button"
-  overridden_fields: 45
-  template_node_child: true
-  enabled: false
 }
 nodes {
   position {
@@ -412,28 +150,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "button_b/button"
-  parent: "button_b"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "B"
-  id: "button_b/text"
-  parent: "button_b/button"
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_b/icon"
-  parent: "button_b/button"
-  overridden_fields: 45
-  template_node_child: true
-  enabled: false
-}
-nodes {
   position {
     y: -100.0
   }
@@ -444,28 +160,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "button_a/button"
-  parent: "button_a"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "A"
-  id: "button_a/text"
-  parent: "button_a/button"
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_a/icon"
-  parent: "button_a/button"
-  overridden_fields: 45
-  template_node_child: true
-  enabled: false
-}
-nodes {
   position {
     y: 160.0
   }
@@ -474,7 +168,7 @@ nodes {
     y: 290.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "buttons_system"
   parent: "gamepad"
   inherit_alpha: true
@@ -491,33 +185,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  size {
-    x: 180.0
-    y: 90.0
-  }
-  type: TYPE_BOX
-  id: "button_back/button"
-  parent: "button_back"
-  overridden_fields: 4
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "Back"
-  id: "button_back/text"
-  parent: "button_back/button"
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_back/icon"
-  parent: "button_back/button"
-  overridden_fields: 45
-  template_node_child: true
-  enabled: false
-}
-nodes {
   position {
     x: 110.0
   }
@@ -526,33 +193,6 @@ nodes {
   parent: "buttons_system"
   inherit_alpha: true
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
-}
-nodes {
-  size {
-    x: 180.0
-    y: 90.0
-  }
-  type: TYPE_BOX
-  id: "button_start/button"
-  parent: "button_start"
-  overridden_fields: 4
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "Start"
-  id: "button_start/text"
-  parent: "button_start/button"
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_start/icon"
-  parent: "button_start/button"
-  overridden_fields: 45
-  template_node_child: true
-  enabled: false
 }
 nodes {
   position {
@@ -564,7 +204,7 @@ nodes {
     y: 200.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "button_left_bump"
   parent: "gamepad"
   inherit_alpha: true
@@ -582,33 +222,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  size {
-    x: 180.0
-    y: 90.0
-  }
-  type: TYPE_BOX
-  id: "button_l1/button"
-  parent: "button_l1"
-  overridden_fields: 4
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "L1"
-  id: "button_l1/text"
-  parent: "button_l1/button"
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_l1/icon"
-  parent: "button_l1/button"
-  overridden_fields: 45
-  template_node_child: true
-  enabled: false
-}
-nodes {
   position {
     y: 60.0
   }
@@ -617,26 +230,6 @@ nodes {
   parent: "button_left_bump"
   inherit_alpha: true
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_trigger.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_l2/button"
-  parent: "button_l2"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_l2/fill"
-  parent: "button_l2/button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "L2"
-  id: "button_l2/text"
-  parent: "button_l2/button"
-  overridden_fields: 8
-  template_node_child: true
 }
 nodes {
   position {
@@ -648,7 +241,7 @@ nodes {
     y: 200.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "button_right_bump"
   parent: "gamepad"
   inherit_alpha: true
@@ -665,33 +258,6 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  size {
-    x: 180.0
-    y: 90.0
-  }
-  type: TYPE_BOX
-  id: "button_r1/button"
-  parent: "button_r1"
-  overridden_fields: 4
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "R1"
-  id: "button_r1/text"
-  parent: "button_r1/button"
-  overridden_fields: 8
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_r1/icon"
-  parent: "button_r1/button"
-  overridden_fields: 45
-  template_node_child: true
-  enabled: false
-}
-nodes {
   position {
     y: 60.0
   }
@@ -700,26 +266,6 @@ nodes {
   parent: "button_right_bump"
   inherit_alpha: true
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_trigger.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_r2/button"
-  parent: "button_r2"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  id: "button_r2/fill"
-  parent: "button_r2/button"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  text: "R2"
-  id: "button_r2/text"
-  parent: "button_r2/button"
-  overridden_fields: 8
-  template_node_child: true
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

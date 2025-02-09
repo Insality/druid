@@ -3,8 +3,9 @@ local mock = require("deftest.mock.mock")
 local M = {}
 
 -- Userdata type instead of script self
+---@return vector3|vector4
 function M.get_context()
-	return vmath.vector()
+	return vmath.vector({})
 end
 
 

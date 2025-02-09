@@ -1,7 +1,5 @@
 local helper = require("druid.helper")
 local component = require("druid.component")
-local container = require("example.components.container.container")
-local lang_text = require("druid.extended.lang_text")
 
 ---@class basic_text: druid.base_component
 ---@field druid druid_instance
@@ -16,7 +14,7 @@ function M:init(template, nodes)
 	self.text = self.druid:new_text("text")
 
 	-- This code is for adjustable text area with mouse
-	self.container = self.druid:new(container, "text_area", nil, function(_, size)
+	self.container = self.druid:new_container("text_area", nil, function(_, size)
 		self.text:set_size(size)
 		self:refresh_text_position()
 	end) --[[@as druid.container]]

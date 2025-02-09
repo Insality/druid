@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local container = require("example.components.container.container")
 
 ---@class example_scene: druid.base_component
 ---@field root druid.container
@@ -14,7 +13,7 @@ local M = component.create("example_scene")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
 	self.root:add_container("text_debug_info")
 	self.root:add_container("text_gui_path")
 
@@ -25,7 +24,7 @@ end
 
 ---@param info string
 function M:set_debug_info(info)
-	self.text_debug_info:set_to(info)
+	self.text_debug_info:set_text(info)
 end
 
 
@@ -35,7 +34,7 @@ function M:set_gui_path(path)
 	-- We need add "/" before path and replace .lua to .gui
 	path = "/" .. path:gsub(".lua", ".gui")
 
-	self.text_gui_path:set_to(path)
+	self.text_gui_path:set_text(path)
 end
 
 

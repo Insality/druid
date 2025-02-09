@@ -3,8 +3,8 @@ fonts {
   font: "/example/assets/fonts/text_bold.font"
 }
 textures {
-  name: "druid"
-  texture: "/example/assets/druid.atlas"
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
 }
 nodes {
   size {
@@ -28,109 +28,11 @@ nodes {
   template: "/example/examples/basic/checkbox/checkbox.gui"
 }
 nodes {
-  type: TYPE_BOX
-  id: "checkbox_1/root"
-  parent: "checkbox_1"
-  template_node_child: true
-}
-nodes {
-  color {
-    x: 0.31
-    y: 0.318
-    z: 0.322
-  }
-  type: TYPE_BOX
-  texture: "druid/ui_circle_32"
-  id: "checkbox_1/button"
-  parent: "checkbox_1/root"
-  slice9 {
-    x: 8.0
-    y: 8.0
-    z: 8.0
-    w: 8.0
-  }
-  overridden_fields: 5
-  overridden_fields: 9
-  overridden_fields: 22
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  texture: "druid/ui_circle_16"
-  id: "checkbox_1/icon"
-  parent: "checkbox_1/button"
-  overridden_fields: 9
-  template_node_child: true
-}
-nodes {
-  position {
-    y: -8.0
-  }
-  type: TYPE_BOX
-  texture: "druid/ui_circle_16"
-  id: "checkbox_1/selected"
-  parent: "checkbox_1/button"
-  overridden_fields: 1
-  overridden_fields: 9
-  overridden_fields: 38
-  template_node_child: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
   type: TYPE_TEMPLATE
   id: "checkbox_2"
   parent: "root"
   inherit_alpha: true
   template: "/example/examples/basic/checkbox/checkbox.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "checkbox_2/root"
-  parent: "checkbox_2"
-  template_node_child: true
-}
-nodes {
-  color {
-    x: 0.31
-    y: 0.318
-    z: 0.322
-  }
-  type: TYPE_BOX
-  texture: "druid/ui_circle_32"
-  id: "checkbox_2/button"
-  parent: "checkbox_2/root"
-  slice9 {
-    x: 8.0
-    y: 8.0
-    z: 8.0
-    w: 8.0
-  }
-  overridden_fields: 5
-  overridden_fields: 9
-  overridden_fields: 22
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  texture: "druid/ui_circle_16"
-  id: "checkbox_2/icon"
-  parent: "checkbox_2/button"
-  overridden_fields: 9
-  template_node_child: true
-}
-nodes {
-  position {
-    y: -8.0
-  }
-  type: TYPE_BOX
-  texture: "druid/ui_circle_16"
-  id: "checkbox_2/selected"
-  parent: "checkbox_2/button"
-  overridden_fields: 1
-  overridden_fields: 9
-  overridden_fields: 38
-  template_node_child: true
-  size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
@@ -141,55 +43,6 @@ nodes {
   parent: "root"
   inherit_alpha: true
   template: "/example/examples/basic/checkbox/checkbox.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "checkbox_3/root"
-  parent: "checkbox_3"
-  template_node_child: true
-}
-nodes {
-  color {
-    x: 0.31
-    y: 0.318
-    z: 0.322
-  }
-  type: TYPE_BOX
-  texture: "druid/ui_circle_32"
-  id: "checkbox_3/button"
-  parent: "checkbox_3/root"
-  slice9 {
-    x: 8.0
-    y: 8.0
-    z: 8.0
-    w: 8.0
-  }
-  overridden_fields: 5
-  overridden_fields: 9
-  overridden_fields: 22
-  template_node_child: true
-}
-nodes {
-  type: TYPE_BOX
-  texture: "druid/ui_circle_16"
-  id: "checkbox_3/icon"
-  parent: "checkbox_3/button"
-  overridden_fields: 9
-  template_node_child: true
-}
-nodes {
-  position {
-    y: -8.0
-  }
-  type: TYPE_BOX
-  texture: "druid/ui_circle_16"
-  id: "checkbox_3/selected"
-  parent: "checkbox_3/button"
-  overridden_fields: 1
-  overridden_fields: 9
-  overridden_fields: 38
-  template_node_child: true
-  size_mode: SIZE_MODE_AUTO
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

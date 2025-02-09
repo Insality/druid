@@ -20,7 +20,7 @@
 -- @alias druid.progress
 
 --- On progress bar change callback(self, new_value)
--- @tfield DruidEvent on_change @{DruidEvent}
+-- @tfield event on_change event
 
 --- Progress bar fill node
 -- @tfield node node
@@ -44,12 +44,18 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Progress = component.create("progress")
+---@class druid.progress: druid.base_component
+---@field node node
+---@field on_change event
+---@field style table
+---@field key string
+---@field prop hash
+local M = component.create("progress")
 
 
 local function check_steps(self, from, to, exactly)
@@ -117,19 +123,18 @@ end
 -- @table style
 -- @tfield number|nil SPEED Progress bas fill rate. More -> faster. Default: 5
 -- @tfield number|nil MIN_DELTA Minimum step to fill progress bar. Default: 0.005
-function Progress.on_style_change(self, style)
+function M:on_style_change(style)
 	self.style = {}
 	self.style.SPEED = style.SPEED or 5
 	self.style.MIN_DELTA = style.MIN_DELTA or 0.005
 end
 
 
---- The @{Progress} constructor
--- @tparam Progress self @{Progress}
--- @tparam string|node node Node name or GUI Node itself.
--- @tparam string key Progress bar direction: const.SIDE.X or const.SIDE.Y
--- @tparam number|nil init_value Initial value of progress bar. Default: 1
-function Progress.init(self, node, key, init_value)
+--- The Progress constructor
+---@param node string|node Node name or GUI Node itself.
+---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
+---@param init_value number|nil Initial value of progress bar. Default: 1
+function M:init(node, key, init_value)
 	assert(key == const.SIDE.X or const.SIDE.Y, "Progress bar key should be 'x' or 'y'")
 
 	self.key = key
@@ -149,24 +154,24 @@ function Progress.init(self, node, key, init_value)
 		0
 	)
 
-	self.on_change = Event()
+	self.on_change = event.create()
 
 	self:set_to(self.last_value)
 end
 
 
-function Progress.on_layout_change(self)
+function M:on_layout_change()
 	self:set_to(self.last_value)
 end
 
 
-function Progress.on_remove(self)
+function M:on_remove()
 	-- Return default size
 	gui.set_size(self.node, self.max_size)
 end
 
 
-function Progress.update(self, dt)
+function M:update(dt)
 	if self.target then
 		local prev_value = self.last_value
 		local step = math.abs(self.last_value - self.target) * (self.style.SPEED*dt)
@@ -187,51 +192,45 @@ end
 
 
 --- Fill a progress bar and stop progress animation
--- @tparam Progress self @{Progress}
-function Progress.fill(self)
+function M:fill()
 	set_bar_to(self, 1, true)
 end
 
 
 --- Empty a progress bar
--- @tparam Progress self @{Progress}
-function Progress.empty(self)
+function M:empty()
 	set_bar_to(self, 0, true)
 end
 
 
 --- Instant fill progress bar to value
--- @tparam Progress self @{Progress}
--- @tparam number to Progress bar value, from 0 to 1
-function Progress.set_to(self, to)
+---@param to number Progress bar value, from 0 to 1
+function M:set_to(to)
 	to = helper.clamp(to, 0, 1)
 	set_bar_to(self, to)
 end
 
 
 --- Return current progress bar value
--- @tparam Progress self @{Progress}
-function Progress.get(self)
+function M:get()
 	return self.last_value
 end
 
 
 --- Set points on progress bar to fire the callback
--- @tparam Progress self @{Progress}
--- @tparam number[] steps Array of progress bar values
--- @tparam function callback Callback on intersect step value
+---@param steps number[] Array of progress bar values
+---@param callback function Callback on intersect step value
 -- @usage progress:set_steps({0, 0.3, 0.6, 1}, function(self, step) end)
-function Progress.set_steps(self, steps, callback)
+function M:set_steps(steps, callback)
 	self.steps = steps
 	self.step_callback = callback
 end
 
 
 --- Start animation of a progress bar
--- @tparam Progress self @{Progress}
--- @tparam number to value between 0..1
--- @tparam function|nil callback Callback on animation ends
-function Progress.to(self, to, callback)
+---@param to number value between 0..1
+---@param callback function|nil Callback on animation ends
+function M:to(to, callback)
 	to = helper.clamp(to, 0, 1)
 	-- cause of float error
 	local value = helper.round(to, 5)
@@ -247,14 +246,13 @@ end
 
 
 --- Set progress bar max node size
--- @tparam Progress self @{Progress}
--- @tparam vector3 max_size The new node maximum (full) size
--- @treturn Progress @{Progress}
-function Progress.set_max_size(self, max_size)
+---@param max_size vector3 The new node maximum (full) size
+---@return druid.progress Progress
+function M:set_max_size(max_size)
 	self.max_size[self.key] = max_size[self.key]
 	self:set_to(self.last_value)
 	return self
 end
 
 
-return Progress
+return M

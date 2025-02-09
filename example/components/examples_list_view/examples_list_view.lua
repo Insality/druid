@@ -1,7 +1,5 @@
-local event = require("druid.event")
+local event = require("event.event")
 local component = require("druid.component")
-local container = require("example.components.container.container")
-local lang_text = require("druid.extended.lang_text")
 local storage = require("saver.storage")
 
 local examples_list_view_item = require("example.components.examples_list_view.examples_list_view_item")
@@ -10,7 +8,7 @@ local examples_list_view_item = require("example.components.examples_list_view.e
 ---@field root druid.container
 ---@field druid druid_instance
 ---@field scroll druid.scroll
----@field grid druid.static_grid
+---@field grid druid.grid
 local M = component.create("examples_list_view")
 
 
@@ -19,17 +17,17 @@ local M = component.create("examples_list_view")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
 	self.root:add_container("text_header")
 
-	self.druid:new(lang_text, "text_header", "ui_examples")
+	self.druid:new_lang_text("text_header", "ui_examples")
 	self.druid:new(examples_list_view_item, "examples_list_view_item")
 
 	self.prefab = self:get_node("examples_list_view_item/root")
 	gui.set_enabled(self.prefab, false)
 
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
-	self.grid = self.druid:new_static_grid("scroll_content", self.prefab, 1)
+	self.grid = self.druid:new_grid("scroll_content", self.prefab, 1)
 	self.scroll:bind_grid(self.grid)
 
 	self.root:add_container("scroll_view", nil, function(_, size)
@@ -39,9 +37,9 @@ function M:init(template, nodes)
 
 	self.selected_example = nil
 	self.examples = {}
-	self.on_debug_info = event()
-	self.on_set_information = event()
-	self.add_log_text = event()
+	self.on_debug_info = event.create()
+	self.on_set_information = event.create()
+	self.add_log_text = event.create()
 
 	timer.delay(0.1, true, function()
 		self:update_debug_info()
@@ -90,7 +88,13 @@ function M:add_example(examples, druid_example)
 
 			local root = gui.get_node(example_data.root)
 			gui.set_enabled(root, true)
-			local instance = druid_example.druid:new(example_data.component_class, example_data.template)
+
+			local instance
+			if example_data.widget_class then
+				instance = druid_example.druid:new_widget(example_data.widget_class, example_data.template)
+			else
+				instance = druid_example.druid:new(example_data.component_class, example_data.template)
+			end
 
 			self.selected_example = {
 				data = example_data,

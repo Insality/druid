@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local lang_text = require("druid.extended.lang_text")
 
 ---@class property_button: druid.base_component
 ---@field root node
@@ -15,7 +14,7 @@ function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
 	self.root = self:get_node("root")
-	self.text_name = self.druid:new(lang_text, "text_name") --[[@as druid.lang_text]]
+	self.text_name = self.druid:new_lang_text("text_name") --[[@as druid.lang_text]]
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
 

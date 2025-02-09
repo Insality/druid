@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local swipe = require("druid.extended.swipe")
 
 ---@class basic_swipe: druid.base_component
 ---@field druid druid_instance
@@ -10,7 +9,7 @@ local M = component.create("basic_swipe")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.swipe = self.druid:new(swipe, "root", self.on_swipe) --[[@as druid.swipe]]
+	self.swipe = self.druid:new_swipe("root", self.on_swipe) --[[@as druid.swipe]]
 
 	self.text_hint = self:get_node("swipe_hint")
 end

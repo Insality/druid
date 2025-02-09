@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local rich_text = require("druid.custom.rich_text.rich_text")
 local helper = require("druid.helper")
 
 ---@class rich_text_tags: druid.base_component
@@ -13,20 +12,20 @@ local M = component.create("rich_text_tags")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.rich_text_color = self.druid:new(rich_text, "rich_text_color") --[[@as druid.rich_text]]
+	self.rich_text_color = self.druid:new_rich_text("rich_text_color") --[[@as druid.rich_text]]
 	self.rich_text_color:set_text("Hello, I'm a <color=E48155>Rich Text</color> and it's <color=8ED59E>nested <color=A1D7F5>color</color> tag</color>")
 
-	self.rich_text_font = self.druid:new(rich_text, "rich_text_font") --[[@as druid.rich_text]]
+	self.rich_text_font = self.druid:new_rich_text("rich_text_font") --[[@as druid.rich_text]]
 	self.rich_text_font:set_text("Hello, I'm a <font=text_bold>Rich Text</font> and this is <font=text_bold><color=8ED59E>bold text</color></font>")
 
-	self.rich_text_size = self.druid:new(rich_text, "rich_text_size") --[[@as druid.rich_text]]
+	self.rich_text_size = self.druid:new_rich_text("rich_text_size") --[[@as druid.rich_text]]
 	self.rich_text_size:set_text("Hello, I'm have <size=1.15><font=text_bold>East Pivot</font></size> and <size=0.85><font=text_bold>different text scale</font></size>")
 
-	self.rich_text_breaks = self.druid:new(rich_text, "rich_text_breaks") --[[@as druid.rich_text]]
+	self.rich_text_breaks = self.druid:new_rich_text("rich_text_breaks") --[[@as druid.rich_text]]
 	self.rich_text_breaks:set_text("Hello, I'm Rich Text<br/>With \"<color=E6DF9F>Line Breaks</color>\"\nEnabled in GUI")
 
-	self.rich_text_image = self.druid:new(rich_text, "rich_text_image") --[[@as druid.rich_text]]
-	self.rich_text_image:set_text("Hello, I'm<img=druid:icon_cross,32/>Rich Text <img=druid_logo:icon_druid,48/> <color=8ED59E><img=druid_logo:icon_druid,48/></color> <color=F49B9B><img=druid_logo:icon_druid,48/></color>")
+	self.rich_text_image = self.druid:new_rich_text("rich_text_image") --[[@as druid.rich_text]]
+	self.rich_text_image:set_text("Hello, I'm<img=druid_example:icon_cross,32/>Rich Text <img=druid_logo:icon_druid,48/> <color=8ED59E><img=druid_logo:icon_druid,48/></color> <color=F49B9B><img=druid_logo:icon_druid,48/></color>")
 
 	self.position = {
 		[self.rich_text_color] = gui.get_position(self.rich_text_color.root),

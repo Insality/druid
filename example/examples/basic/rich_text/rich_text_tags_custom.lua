@@ -1,7 +1,6 @@
 local component = require("druid.component")
-local rich_text = require("druid.custom.rich_text.rich_text")
 local helper = require("druid.helper")
-local event = require("druid.event")
+local event = require("event.event")
 
 ---@class rich_text_tags_custom: druid.base_component
 ---@field druid druid_instance
@@ -15,7 +14,7 @@ function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
 	do -- Init rich text with links example
-		self.rich_text_link = self.druid:new(rich_text, "rich_text_link") --[[@as druid.rich_text]]
+		self.rich_text_link = self.druid:new_rich_text("rich_text_link") --[[@as druid.rich_text]]
 		self.rich_text_link:set_text("Hello, I'm a <custom_link><color=A1D7F5>Custom Link</color></custom_link>")
 
 		local tagged = self.rich_text_link:tagged("custom_link")
@@ -27,10 +26,10 @@ function M:init(template, nodes)
 		end
 	end
 
-	self.rich_text_characters = self.druid:new(rich_text, "rich_text_characters") --[[@as druid.rich_text]]
+	self.rich_text_characters = self.druid:new_rich_text("rich_text_characters") --[[@as druid.rich_text]]
 	self.rich_text_characters:set_text("Hello, I'm a have a splitted characters")
 
-	self.rich_text_custom = self.druid:new(rich_text, "rich_text_custom") --[[@as druid.rich_text]]
+	self.rich_text_custom = self.druid:new_rich_text("rich_text_custom") --[[@as druid.rich_text]]
 	self.rich_text_custom:set_text("Hello, I'm have <size=1.25><font=text_bold>South Text Pivot</font></size> to adjust <size=0.75><font=text_bold>different text scale</font></size>")
 
 	self.position = {

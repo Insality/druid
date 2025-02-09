@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local slider = require("druid.extended.slider")
 
 ---@class scroll_slider: druid.base_component
 ---@field root node
@@ -16,7 +15,7 @@ function M:init(template, nodes)
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
 	self.scroll.on_scroll:subscribe(self.on_scroll)
 
-	self.slider = self.druid:new(slider, "slider_pin", vmath.vector3(-8, -976, 0), self.on_slider) --[[@as druid.slider]]
+	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(-8, -976, 0), self.on_slider) --[[@as druid.slider]]
 	self.slider:set_input_node("slider_back")
 
 	self.druid:new_hover("slider_back", nil, self.on_slider_back_hover)

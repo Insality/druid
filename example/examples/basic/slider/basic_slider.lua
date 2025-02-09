@@ -1,5 +1,4 @@
 local component = require("druid.component")
-local slider = require("druid.extended.slider")
 
 ---@class basic_slider: druid.base_component
 ---@field druid druid_instance
@@ -13,7 +12,7 @@ local M = component.create("basic_slider")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.slider = self.druid:new(slider, "slider/slider_pin", vmath.vector3(118, 0, 0), self.on_slider_change) --[[@as druid.slider]]
+	self.slider = self.druid:new_slider("slider/slider_pin", vmath.vector3(118, 0, 0), self.on_slider_change) --[[@as druid.slider]]
 
 	-- To add input across all slider widget add a root node to acquire additional input
 	self.slider:set_input_node("slider/root")

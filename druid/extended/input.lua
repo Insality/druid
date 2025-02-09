@@ -10,25 +10,25 @@
 -- @alias druid.input
 
 --- On input field select callback(self, input_instance)
--- @tfield DruidEvent on_input_select @{DruidEvent}
+-- @tfield event on_input_select event
 
 --- On input field unselect callback(self, input_text, input_instance)
--- @tfield DruidEvent on_input_unselect @{DruidEvent}
+-- @tfield event on_input_unselect event
 
 --- On input field text change callback(self, input_text)
--- @tfield DruidEvent on_input_text @{DruidEvent}
+-- @tfield event on_input_text event
 
 --- On input field text change to empty string callback(self, input_text)
--- @tfield DruidEvent on_input_empty @{DruidEvent}
+-- @tfield event on_input_empty event
 
 --- On input field text change to max length string callback(self, input_text)
--- @tfield DruidEvent on_input_full @{DruidEvent}
+-- @tfield event on_input_full event
 
 --- On trying user input with not allowed character callback(self, params, input_text)
--- @tfield DruidEvent on_input_wrong @{DruidEvent}
+-- @tfield event on_input_wrong event
 
 --- On cursor position change callback(self, cursor_index, start_index, end_index)
--- @tfield DruidEvent on_select_cursor_change @{DruidEvent}
+-- @tfield event on_select_cursor_change event
 
 --- The cursor index. The index of letter cursor after. Leftmost cursor - 0
 -- @tfield number cursor_index
@@ -40,7 +40,7 @@
 -- @tfield number end_index
 
 --- Text component
--- @tfield Text text @{Text}
+-- @tfield Text text Text
 
 --- Current input value
 -- @tfield string value
@@ -61,7 +61,7 @@
 -- @tfield number marked_text_width
 
 --- Button component
--- @tfield Button button @{Button}
+-- @tfield Button button Button
 
 --- Is current input selected now
 -- @tfield boolean is_selected
@@ -80,16 +80,26 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
-local Input = component.create("input")
+---@class druid.input: druid.base_component
+---@field on_input_select event
+---@field on_input_unselect event
+---@field on_input_text event
+---@field on_input_empty event
+---@field on_input_full event
+---@field on_input_wrong event
+---@field on_select_cursor_change event
+---@field style table
+---@field text druid.text
+local M = component.create("input")
 
-Input.ALLOWED_ACTIONS = {
+M.ALLOWED_ACTIONS = {
 	[const.ACTION_TOUCH] = true,
 	[const.ACTION_TEXT] = true,
 	[const.ACTION_MARKED_TEXT] = true,
@@ -99,9 +109,9 @@ Input.ALLOWED_ACTIONS = {
 }
 
 --- Mask text by replacing every character with a mask character
--- @tparam string text
--- @tparam string mask
--- @treturn string Masked text
+---@param text string
+---@param mask string
+---@return string Masked text
 local function mask_text(text, mask)
 	mask = mask or "*"
 	local masked_text = ""
@@ -132,7 +142,7 @@ end
 -- @tfield function on_select (self, button_node) Callback on input field selecting
 -- @tfield function on_unselect (self, button_node) Callback on input field unselecting
 -- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
-function Input.on_style_change(self, style)
+function M:on_style_change(style)
 	self.style = {}
 
 	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
@@ -145,12 +155,11 @@ function Input.on_style_change(self, style)
 end
 
 
---- The @{Input} constructor
--- @tparam Input self @{Input}
--- @tparam node click_node Node to enabled input component
--- @tparam node|Text text_node Text node what will be changed on user input. You can pass text component instead of text node name @{Text}
--- @tparam number|nil keyboard_type Gui keyboard type for input field
-function Input.init(self, click_node, text_node, keyboard_type)
+--- The Input constructor
+---@param click_node node Node to enabled input component
+---@param text_node node|druid.text Text node what will be changed on user input. You can pass text component instead of text node name Text
+---@param keyboard_type number|nil Gui keyboard type for input field
+function M:init(click_node, text_node, keyboard_type)
 	self.druid = self:get_druid()
 
 	if type(text_node) == "table" then
@@ -191,18 +200,18 @@ function Input.init(self, click_node, text_node, keyboard_type)
 		self.button:set_web_user_interaction(true)
 	end
 
-	self.on_input_select = Event()
-	self.on_input_unselect = Event()
-	self.on_input_text = Event()
-	self.on_input_empty = Event()
-	self.on_input_full = Event()
-	self.on_input_wrong = Event()
-	self.on_select_cursor_change = Event()
+	self.on_input_select = event.create()
+	self.on_input_unselect = event.create()
+	self.on_input_text = event.create()
+	self.on_input_empty = event.create()
+	self.on_input_full = event.create()
+	self.on_input_wrong = event.create()
+	self.on_select_cursor_change = event.create()
 end
 
 
-function Input.on_input(self, action_id, action)
-	if not (action_id == nil or Input.ALLOWED_ACTIONS[action_id]) then
+function M:on_input(action_id, action)
+	if not (action_id == nil or M.ALLOWED_ACTIONS[action_id]) then
 		return false
 	end
 
@@ -299,17 +308,17 @@ function Input.on_input(self, action_id, action)
 end
 
 
-function Input.on_focus_lost(self)
+function M:on_focus_lost()
 	self:unselect()
 end
 
 
-function Input.on_input_interrupt(self)
+function M:on_input_interrupt()
 	--self:unselect()
 end
 
 
-function Input.get_text_selected(self)
+function M:get_text_selected()
 	if self.start_index == self.end_index then
 		return self.value
 	end
@@ -318,10 +327,9 @@ function Input.get_text_selected(self)
 end
 
 --- Replace selected text with new text
--- @tparam Input self @{Input}
--- @tparam string text The text to replace selected text
--- @treturn string New input text
-function Input.get_text_selected_replaced(self, text)
+---@param text string The text to replace selected text
+---@return string New input text
+function M:get_text_selected_replaced(text)
 	local left_part = utf8.sub(self.value, 1, self.start_index)
 	local right_part = utf8.sub(self.value, self.end_index + 1, utf8.len(self.value))
 	local result = left_part .. text .. right_part
@@ -336,9 +344,8 @@ end
 
 
 --- Set text for input field
--- @tparam Input self @{Input}
--- @tparam string input_text The string to apply for input field
-function Input.set_text(self, input_text)
+---@param input_text string The string to apply for input field
+function M:set_text(input_text)
 	input_text = tostring(input_text or "")
 
 	-- Case when update with marked text
@@ -366,7 +373,7 @@ function Input.set_text(self, input_text)
 		self.is_empty = #value == 0 and #marked_value == 0
 
 		local final_text = value .. marked_value
-		self.text:set_to(final_text)
+		self.text:set_text(final_text)
 
 		-- measure it
 		self.text_width = self.text:get_text_size(value)
@@ -385,8 +392,7 @@ end
 
 
 --- Select input field. It will show the keyboard and trigger on_select events
--- @tparam Input self @{Input}
-function Input.select(self)
+function M:select()
 	gui.reset_keyboard()
 	self.marked_value = ""
 	if not self.is_selected then
@@ -410,8 +416,7 @@ end
 
 
 --- Remove selection from input. It will hide the keyboard and trigger on_unselect events
--- @tparam Input self @{Input}
-function Input.unselect(self)
+function M:unselect()
 	gui.reset_keyboard()
 	self.marked_value = ""
 	self.value = self.current_value
@@ -429,9 +434,8 @@ end
 
 
 --- Return current input field text
--- @tparam Input self @{Input}
--- @treturn string The current input field text
-function Input.get_text(self)
+---@return string The current input field text
+function M:get_text()
 	if self.marked_value ~= "" then
 		return self.value .. self.marked_value
 	end
@@ -442,10 +446,9 @@ end
 
 --- Set maximum length for input field.
 -- Pass nil to make input field unliminted (by default)
--- @tparam Input self @{Input}
--- @tparam number max_length Maximum length for input text field
--- @treturn druid.input Current input instance
-function Input.set_max_length(self, max_length)
+---@param max_length number Maximum length for input text field
+---@return druid.input Current input instance
+function M:set_max_length(max_length)
 	self.max_length = max_length
 	return self
 end
@@ -454,19 +457,17 @@ end
 --- Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
--- @tparam Input self @{Input}
--- @tparam string characters Regulax exp. for validate user input
--- @treturn druid.input Current input instance
-function Input.set_allowed_characters(self, characters)
+---@param characters string Regulax exp. for validate user input
+---@return druid.input Current input instance
+function M:set_allowed_characters(characters)
 	self.allowed_characters = characters
 	return self
 end
 
 
 --- Reset current input selection and return previous value
--- @tparam Input self @{Input}
--- @treturn druid.input Current input instance
-function Input.reset_changes(self)
+---@return druid.input Current input instance
+function M:reset_changes()
 	self:set_text(self.previous_value)
 	self:unselect()
 	return self
@@ -474,12 +475,11 @@ end
 
 
 --- Set cursor position in input field
--- @tparam Input self @{Input}
--- @tparam number|nil cursor_index Cursor index for cursor position, if nil - will be set to the end of the text
--- @tparam number|nil start_index Start index for cursor position, if nil - will be set to the end of the text
--- @tparam number|nil end_index End index for cursor position, if nil - will be set to the start_index
--- @treturn druid.input Current input instance
-function Input.select_cursor(self, cursor_index, start_index, end_index)
+---@param cursor_index number|nil Cursor index for cursor position, if nil - will be set to the end of the text
+---@param start_index number|nil Start index for cursor position, if nil - will be set to the end of the text
+---@param end_index number|nil End index for cursor position, if nil - will be set to the start_index
+---@return druid.input Current input instance
+function M:select_cursor(cursor_index, start_index, end_index)
 	local len = utf8.len(self.value)
 
 	self.cursor_index = cursor_index or len
@@ -497,11 +497,10 @@ end
 
 
 --- Change cursor position by delta
--- @tparam Input self @{Input}
--- @tparam number delta side for cursor position, -1 for left, 1 for right
--- @tparam boolean is_add_to_selection (Shift key)
--- @tparam boolean is_move_to_end (Ctrl key)
-function Input.move_selection(self, delta, is_add_to_selection, is_move_to_end)
+---@param delta number side for cursor position, -1 for left, 1 for right
+---@param is_add_to_selection boolean (Shift key)
+---@param is_move_to_end boolean (Ctrl key)
+function M:move_selection(delta, is_add_to_selection, is_move_to_end)
 	local len = utf8.len(self.value)
 	local cursor_index = self.cursor_index
 	local start_index, end_index -- if nil, the selection will be 0 at cursor position
@@ -559,4 +558,4 @@ function Input.move_selection(self, delta, is_add_to_selection, is_move_to_end)
 end
 
 
-return Input
+return M

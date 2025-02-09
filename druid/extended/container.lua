@@ -13,7 +13,7 @@
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
-local Event = require("druid.event")
+local event = require("event.event")
 
 ---@class druid.container: druid.base_component
 ---@field node node
@@ -29,7 +29,7 @@ local Event = require("druid.event")
 ---@field fit_size vector3
 ---@field min_size_x number|nil
 ---@field min_size_y number|nil
----@field on_size_changed druid.event @function on_size_changed(size)
+---@field on_size_changed event @function on_size_changed(size)
 ---@field _parent_container druid.container
 ---@field _containers table
 ---@field _draggable_corners table
@@ -50,7 +50,7 @@ local CORNER_PIVOTS = {
 --- The Container init
 ---@param node node Gui node
 ---@param mode string Layout mode
----@param callback fun(self: druid.container, size: vector3) Callback on size changed
+---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
 function M:init(node, mode, callback)
 	self.node = self:get_node(node)
 	self.druid = self:get_druid()
@@ -82,7 +82,7 @@ function M:init(node, mode, callback)
 	gui.set_size_mode(self.node, gui.SIZE_MODE_MANUAL)
 	gui.set_adjust_mode(self.node, gui.ADJUST_FIT)
 
-	self.on_size_changed = Event(callback)
+	self.on_size_changed = event.create(callback)
 
 	self.pivot_offset = helper.get_pivot_offset(gui.get_pivot(self.node))
 	self.center_offset = -vmath.vector3(self.size.x * self.pivot_offset.x, self.size.y * self.pivot_offset.y, 0)
@@ -134,8 +134,9 @@ end
 --- Set new size of layout node
 ---@param width number|nil
 ---@param height number|nil
----@return druid.container @{Container}
-function M:set_size(width, height)
+---@param anchor_pivot constant|nil If set will keep the corner possition relative to the new size
+---@return druid.container Container
+function M:set_size(width, height, anchor_pivot)
 	width = width or self.size.x
 	height = height or self.size.y
 
@@ -149,16 +150,33 @@ function M:set_size(width, height)
 	if (width and width ~= self.size.x) or (height and height ~= self.size.y) then
 		self.center_offset.x = -width * self.pivot_offset.x
 		self.center_offset.y = -height * self.pivot_offset.y
+		local dx = self.size.x - width
+		local dy = self.size.y - height
 		self.size.x = width
 		self.size.y = height
 		self.size.z = 0
 		gui.set_size(self.node, self.size)
+
+		if anchor_pivot then
+			local pivot = gui.get_pivot(self.node)
+			local pivot_offset = helper.get_pivot_offset(pivot)
+			local new_pivot_offset = helper.get_pivot_offset(anchor_pivot)
+
+			local position_dx = dx * (pivot_offset.x - new_pivot_offset.x)
+			local position_dy = dy * (pivot_offset.y - new_pivot_offset.y)
+			self:set_position(self._position.x + position_dx, self._position.y - position_dy)
+		end
 
 		self:update_child_containers()
 		self.on_size_changed:trigger(self:get_context(), self.size)
 	end
 
 	return self
+end
+
+
+function M:get_position()
+	return self._position
 end
 
 
@@ -178,7 +196,7 @@ end
 ---Get current size of layout node
 ---@return vector3 size
 function M:get_size()
-	return self.size
+	return vmath.vector3(self.size)
 end
 
 
@@ -191,22 +209,22 @@ end
 
 --- Set size for layout node to fit inside it
 ---@param target_size vector3
----@return druid.container @{Container}
+---@return druid.container Container
 function M:fit_into_size(target_size)
 	self.fit_size = target_size
 	self:refresh()
+
 	return self
 end
 
 
 --- Set current size for layout node to fit inside it
----@return druid.container @{Container}
+---@return druid.container Container
 function M:fit_into_window()
 	return self:fit_into_size(vmath.vector3(gui.get_width(), gui.get_height(), 0))
 end
 
 
----@param self druid.container
 function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self.x_koef = x_koef
@@ -221,7 +239,7 @@ end
 ---@param node_or_container node|string|druid.container|table
 ---@param mode string|nil stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
 ---@param on_resize_callback fun(self: userdata, size: vector3)|nil
----@return druid.container @{Container} New created layout instance
+---@return druid.container Container New created layout instance
 function M:add_container(node_or_container, mode, on_resize_callback)
 	local container = nil
 	local node = node_or_container
@@ -422,7 +440,7 @@ function M:update_child_containers()
 end
 
 
----@return druid.container @{Container}
+---@return druid.container Container
 function M:create_draggable_corners()
 	self:clear_draggable_corners()
 
@@ -452,7 +470,7 @@ function M:create_draggable_corners()
 end
 
 
----@return druid.container @{Container}
+---@return druid.container Container
 function M:clear_draggable_corners()
 	for index = 1, #self._draggable_corners do
 		local drag_component = self._draggable_corners[index]
@@ -505,7 +523,7 @@ end
 
 --- Set node for layout node to fit inside it. Pass nil to reset
 ---@param node string|node The node_id or gui.get_node(node_id)
----@return druid.container @{Layout}
+---@return druid.container Layout
 function M:fit_into_node(node)
 	self._fit_node = self:get_node(node)
 	self:refresh_scale()

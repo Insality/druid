@@ -1,0 +1,50 @@
+#version 140
+
+in mediump vec3 position;
+in mediump vec2 texcoord0;
+in lowp vec4 color;
+
+uniform vertex_inputs
+{
+	highp mat4 view_proj;
+	highp vec4 uv_coord;
+	highp vec4 uv_repeat; // [repeat_x, repeat_y, pivot_x, pivot_y]
+	vec4 uv_rotated;
+	vec4 params; // [margin_x, margin_y, offset_x, offset_y]
+	vec4 perspective; // [perspective_x, perspective_y, zoom, offset_y]
+};
+
+out mediump vec2 var_texcoord0;
+out lowp vec4 var_color;
+out highp vec4 var_uv;
+out highp vec4 var_repeat;
+out vec4 var_params;
+out vec4 var_perspective;
+out vec4 var_uv_rotated;
+
+void main()
+{
+	var_texcoord0 = texcoord0;
+	var_color = vec4(color.rgb * color.a, color.a);
+	var_uv = uv_coord;
+	var_repeat = uv_repeat;
+	var_params = params;
+	var_perspective = perspective;
+	var_uv_rotated = uv_rotated;
+
+	mat4 transform = mat4(
+		1.0, 0, 0, 0.0,
+		0, 1.0, 0, 0.0,
+		0, 0, 1, 0,
+		0.0, position.z, 0, 1.0
+	);
+
+	// Matrix Info = mat4(
+	// scale_x,       skew_x,           0,             offset_x,
+	// skew_y,        scale_y,          0,             offset_y,
+	// 0,             0,                scale_z,       offset_z,
+	// perspective_x, perspective_y,    perspective_z, zoom
+	//)
+
+	gl_Position = view_proj * vec4(position.xyz, 1.0) * transform;
+}

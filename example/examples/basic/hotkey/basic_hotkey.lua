@@ -1,5 +1,3 @@
-local hotkey = require("druid.extended.hotkey")
-
 local component = require("druid.component")
 
 ---@class basic_hotkey: druid.base_component
@@ -15,7 +13,7 @@ function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
 	self.root = self:get_node("root")
-	self.hotkey = self.druid:new(hotkey, { "key_lshift", "key_x" }, self.on_hotkey)
+	self.hotkey = self.druid:new_hotkey({ "key_lshift", "key_x" }, self.on_hotkey)
 end
 
 

@@ -15,7 +15,7 @@ function M:init(template, nodes)
 	gui.set_text(self.text_counter, self.counter)
 
 	-- Init drag and move the drag node on drag callback
-	self.drag = self.druid:new_drag("drag/root", self.on_drag_start)
+	self.drag = self.druid:new_drag("drag/root", self.on_drag)
 	self.drag.on_drag_end:subscribe(self.on_drag_end)
 
 	-- Save start position for animation
@@ -23,7 +23,7 @@ function M:init(template, nodes)
 end
 
 
-function M:on_drag_start(dx, dy, x, y, touch)
+function M:on_drag(dx, dy, x, y, touch)
 	local position_x = gui.get(self.drag.node, "position.x")
 	local position_y = gui.get(self.drag.node, "position.y")
 	gui.set(self.drag.node, "position.x", position_x + dx)

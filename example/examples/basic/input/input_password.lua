@@ -1,7 +1,6 @@
 local component = require("druid.component")
-local input = require("druid.extended.input")
 
----@class input_password: druid.component
+---@class input_password: druid.base_component
 ---@field druid druid_instance
 ---@field root node
 local M = component.create("input_password")
@@ -13,7 +12,7 @@ function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
 	self.root = self:get_node("root")
-	self.input = self.druid:new(input, "input/root", "input/text", gui.KEYBOARD_TYPE_PASSWORD)
+	self.input = self.druid:new_input("input/root", "input/text", gui.KEYBOARD_TYPE_PASSWORD)
 	self.input:set_text("")
 
 	self.input.on_input_unselect:subscribe(function(_, text)

@@ -1,5 +1,5 @@
 local component = require("druid.component")
-local event = require("druid.event")
+local event = require("event.event")
 
 ---@class checkbox: druid.base_component
 ---@field druid druid_instance

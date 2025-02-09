@@ -216,7 +216,7 @@ Static grid have constant node size, so it possible to calculate node positions 
 Static grid can shift elements on add/remove functions.
 
 ### Setup
-Create  component with druid: `grid = druid:new_static_grid(parent_node, prefab_node, max_in_row_elements)`
+Create  component with druid: `grid = druid:new_grid(parent_node, prefab_node, max_in_row_elements)`
 
 ### Notes
 - On _add node_ grid will set nodeup parent to _parent_node_
@@ -226,33 +226,6 @@ Create  component with druid: `grid = druid:new_static_grid(parent_node, prefab_
 - Pivot of parent_node matter for node placement
 - _Prefab node_ used to get node size and anchor
 - You can point *position_function* for animations with _static_grid:set_position_function(node, pos)_ callback. Default - *gui.set_position()*
-
-
-## Dynamic Grid
-[Dynamic Grid API here](https://insality.github.io/druid/modules/DynamicGrid.html)
-
-### Overview
-Component for manage node positions with different node sizes.
-Unlike Static Grid, Dynamic Grid can place nodes only in one row or in one column.
-Dynamic Grid can't have gaps between elements
-- you will get error, if try spawn element far away from others.
-Dynamic Grid should have __West__, __East__, __South__ or __North__ pivot (vertical or horizontal element placement)
-
-### Setup
-Create component with druid: `grid = druid:new_dynamic_grid(parent_node)`
-
-Check the _parent_node_ have correct pivot point. You will get the error otherwise.
-
-### Notes
-- On _add node_ grid will set node parent to _parent_node_
-- You can get array of position of every element for setup points of interest in scroll component
-- You can get size of all elements for setup size in scroll component
-- You can also bind the grid to the scroll component for auto resize scroll content size
-- Pivot of parent_node matter for node placement
-- You can point *position_function* for animations with _static_grid:set_position_function(node, pos)_ callback. Default - *gui.set_position()*
-- First node placed at Grid pivot point. Other nodes placed nearby of other nodes.
-- On *add/remove* nodes always shifted. You can point the shift side in this functions (*is_shift_left* boolean argumentp
-
 
 ## Data List
 [Data List API here](https://insality.github.io/druid/modules/DataList.html)

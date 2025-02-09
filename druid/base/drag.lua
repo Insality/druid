@@ -14,19 +14,19 @@
 -- @tfield node node
 
 --- Event on touch start callback(self)
--- @tfield DruidEvent on_touch_start @{DruidEvent}
+-- @tfield event on_touch_start event
 
 --- Event on touch end callback(self)
--- @tfield DruidEvent on_touch_end @{DruidEvent}
+-- @tfield event on_touch_end event
 
 --- Event on drag start callback(self, touch)
--- @tfield DruidEvent on_drag_start @{DruidEvent}
+-- @tfield event on_drag_start event
 
 --- on drag progress callback(self, dx, dy, total_x, total_y, touch)
--- @tfield DruidEvent on_drag Event @{DruidEvent}
+-- @tfield event on_drag Event event
 
 --- Event on drag end callback(self, total_x, total_y, touch)
--- @tfield DruidEvent on_drag_end @{DruidEvent}
+-- @tfield event on_drag_end event
 
 --- Is component now touching
 -- @tfield boolean is_touch
@@ -57,12 +57,40 @@
 
 ---
 
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Drag = component.create("drag", const.PRIORITY_INPUT_HIGH)
+---@class druid.drag.style
+---@field DRAG_DEADZONE number Distance in pixels to start dragging. Default: 10
+---@field NO_USE_SCREEN_KOEF boolean If screen aspect ratio affects on drag values. Default: false
+
+---@class druid.drag: druid.base_component
+---@field node node
+---@field on_touch_start event
+---@field on_touch_end event
+---@field on_drag_start event
+---@field on_drag event
+---@field on_drag_end event
+---@field style druid.drag.style
+---@field click_zone node|nil
+---@field is_touch boolean
+---@field is_drag boolean
+---@field can_x boolean
+---@field can_y boolean
+---@field dx number
+---@field dy number
+---@field touch_id number
+---@field x number
+---@field y number
+---@field screen_x number
+---@field screen_y number
+---@field touch_start_pos vector3
+---@field private _is_enabled boolean
+---@field private _x_koef number
+---@field private _y_koef number
+local M = component.create("drag", const.PRIORITY_INPUT_HIGH)
 
 
 local function start_touch(self, touch)
@@ -177,19 +205,21 @@ end
 -- @table style
 -- @tfield number|nil DRAG_DEADZONE Distance in pixels to start dragging. Default: 10
 -- @tfield boolean|nil NO_USE_SCREEN_KOEF If screen aspect ratio affects on drag values. Default: false
-function Drag.on_style_change(self, style)
-	self.style = {}
-	self.style.DRAG_DEADZONE = style.DRAG_DEADZONE or 10
-	self.style.NO_USE_SCREEN_KOEF = style.NO_USE_SCREEN_KOEF or false
+function M:on_style_change(style)
+	self.style = {
+		DRAG_DEADZONE = style.DRAG_DEADZONE or 10,
+		NO_USE_SCREEN_KOEF = style.NO_USE_SCREEN_KOEF or false,
+	}
 end
 
 
---- The @{Drag} constructor
--- @tparam Drag self @{Drag}
--- @tparam node node GUI node to detect dragging
--- @tparam function on_drag_callback Callback for on_drag_event(self, dx, dy)
-function Drag.init(self, node, on_drag_callback)
-	self.node = self:get_node(node)
+---Drag constructor
+---@param node_or_node_id node|string
+---@param on_drag_callback function
+function M:init(node_or_node_id, on_drag_callback)
+	self.druid = self:get_druid()
+	self.node = self:get_node(node_or_node_id)
+	self.hover = self.druid:new_hover(self.node)
 
 	self.dx = 0
 	self.dy = 0
@@ -209,18 +239,32 @@ function Drag.init(self, node, on_drag_callback)
 	self._scene_scale = helper.get_scene_scale(self.node)
 
 	self.click_zone = nil
-	self.on_touch_start = Event()
-	self.on_touch_end = Event()
-	self.on_drag_start = Event()
-	self.on_drag = Event(on_drag_callback)
-	self.on_drag_end = Event()
+	self.on_touch_start = event.create()
+	self.on_touch_end = event.create()
+	self.on_drag_start = event.create()
+	self.on_drag = event.create(on_drag_callback)
+	self.on_drag_end = event.create()
 
 	self:on_window_resized()
+	self:set_drag_cursors(true)
 end
 
 
-function Drag.on_late_init(self)
-	if not self.click_zone and const.IS_STENCIL_CHECK then
+---Set Drag component enabled state.
+---@param is_enabled boolean
+function M:set_drag_cursors(is_enabled)
+	if defos and is_enabled then
+		self.hover.style.ON_HOVER_CURSOR = defos.CURSOR_CROSSHAIR
+		self.hover.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_HAND
+	else
+		self.hover.style.ON_HOVER_CURSOR = nil
+		self.hover.style.ON_MOUSE_HOVER_CURSOR = nil
+	end
+end
+
+
+function M:on_late_init()
+	if not self.click_zone then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
 		if stencil_node then
 			self:set_click_zone(stencil_node)
@@ -229,7 +273,7 @@ function Drag.on_late_init(self)
 end
 
 
-function Drag.on_window_resized(self)
+function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self._x_koef = x_koef
 	self._y_koef = y_koef
@@ -237,14 +281,17 @@ function Drag.on_window_resized(self)
 end
 
 
-function Drag.on_input_interrupt(self)
+function M:on_input_interrupt()
 	if self.is_drag or self.is_touch then
 		end_touch(self)
 	end
 end
 
 
-function Drag.on_input(self, action_id, action)
+---@local
+---@param action_id string
+---@param action table
+function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
 		return false
 	end
@@ -321,29 +368,31 @@ function Drag.on_input(self, action_id, action)
 end
 
 
---- Strict drag click area. Useful for
--- restrict events outside stencil node
--- @tparam Drag self @{Drag}
--- @tparam node|string|nil node Gui node
-function Drag.set_click_zone(self, node)
-	self.click_zone = self:get_node(node)
+---Set Drag click zone
+---@param node node|string|nil
+---@return druid.drag self Current instance
+function M:set_click_zone(node)
+	self.click_zone = node and self:get_node(node) or nil
+
+	return self
 end
 
 
---- Set Drag input enabled or disabled
--- @tparam Drag self @{Drag}
--- @tparam boolean|nil is_enabled
-function Drag.set_enabled(self, is_enabled)
+---Set Drag component enabled state.
+---@param is_enabled boolean
+---@return druid.drag self Current instance
+function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
+
+	return self
 end
 
 
---- Check if Drag component is enabled
--- @tparam Drag self @{Drag}
--- @treturn boolean
-function Drag.is_enabled(self)
+---Check if Drag component is enabled
+---@return boolean
+function M:is_enabled()
 	return self._is_enabled
 end
 
 
-return Drag
+return M

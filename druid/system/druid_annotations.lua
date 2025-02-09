@@ -1,0 +1,29 @@
+---@class druid.widget: druid.base_component
+---@field druid druid_instance Ready to use druid instance
+---@field root node
+
+---@class GUITextMetrics
+---@field width number
+---@field height number
+---@field max_ascent number
+---@field max_descent number
+---@field offset_x number
+---@field offset_y number
+
+---@class utf8
+---@field len fun(s: string):number
+---@field sub fun(s: string, start_index: number, length: number)
+---@field reverse fun()
+---@field char fun()
+---@field unicode fun()
+---@field gensub fun()
+---@field byte fun()
+---@field find fun()
+---@field match fun(s: string, m: string)
+---@field gmatch fun(s: string, m: string)
+---@field gsub fun()
+---@field dump fun()
+---@field format fun()
+---@field lower fun()
+---@field upper fun()
+---@field rep fun()

@@ -1,6 +1,3 @@
---- @license MIT, Insality 2021
---- @source https://github.com/Insality/druid
-
 local M = {}
 
 
@@ -27,18 +24,12 @@ function M.get_commands()
 	return {
 		{
 			label = "Assign Layers",
-
-			locations = {"Edit"},
-
-			query = {
-				selection = {type = "resource", cardinality = "one"}
-			},
-
+			locations = { "Edit" },
+			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
 				local path = editor.get(opts.selection, "path")
 				return ends_with(path, ".gui")
 			end,
-
 			run = function(opts)
 				local file = opts.selection
 				print("Run script for", editor.get(file, "path"))
@@ -59,25 +50,19 @@ function M.get_commands()
 		},
 
 		{
-			label = "Create Druid Component",
-
-			locations = {"Edit"},
-
-			query = {
-				selection = {type = "resource", cardinality = "one"}
-			},
-
+			label = "Create Druid Widget",
+			locations = { "Edit", "Assets" },
+			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
 				local path = editor.get(opts.selection, "path")
 				return ends_with(path, ".gui")
 			end,
-
 			run = function(opts)
 				local file = opts.selection
 				print("Run script for", editor.get(file, "path"))
 				save_file_from_dependency('/druid/editor_scripts/run_python_script_on_gui.sh', "./build/run_python_script_on_gui.sh")
 				save_file_from_dependency('/druid/editor_scripts/create_druid_component.py', "./build/create_druid_component.py")
-				save_file_from_dependency('/druid/editor_scripts/component.lua_template', "./build/component.lua_template")
+				save_file_from_dependency('/druid/editor_scripts/widget.lua_template', "./build/widget.lua_template")
 				return {
 					{
 						action = "shell",

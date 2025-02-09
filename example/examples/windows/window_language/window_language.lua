@@ -1,8 +1,7 @@
 local lang = require("lang.lang")
 local druid = require("druid.druid")
-local event = require("druid.event")
+local event = require("event.event")
 local component = require("druid.component")
-local lang_text = require("druid.extended.lang_text")
 local panthera = require("panthera.panthera")
 
 local window_animation_panthera = require("example.examples.windows.window_animation_panthera")
@@ -12,8 +11,8 @@ local window_animation_panthera = require("example.examples.windows.window_anima
 ---@field button_close druid.button
 ---@field druid druid_instance
 ---@field lang_buttons table<string, druid.button>
----@field grid druid.static_grid
----@field on_language_change druid.event
+---@field grid druid.grid
+---@field on_language_change event
 local M = component.create("window_language")
 
 ---Color: #F0FBFF
@@ -35,16 +34,16 @@ function M:init(template, nodes)
 
 	self.button_close = self.druid:new_button("button_close", self.on_button_close)
 
-	self.druid:new(lang_text, "text_header", "ui_language")
-	self.grid = self.druid:new_static_grid("content", self.prefab, 2)
+	self.druid:new_lang_text("text_header", "ui_language")
+	self.grid = self.druid:new_grid("content", self.prefab, 2)
 	self.grid.style.IS_DYNAMIC_NODE_POSES = true
 
-	self.animation = panthera.create_gui(window_animation_panthera, self:get_template(), nodes)
+	self.animation = panthera.create_gui(window_animation_panthera, self:get_template(), self:get_nodes())
 	panthera.play(self.animation, "open")
 
 	self:load_langs()
 
-	self.on_language_change = event()
+	self.on_language_change = event.create()
 end
 
 
@@ -73,7 +72,7 @@ function M:load_langs()
 		local text = prefab_nodes[template .. "button/text"]
 
 		local button = self.druid:new_button(button_node, self.on_language_button, lang_id)
-		self.druid:new(lang_text, text, "ui_language_" .. lang_id)
+		self.druid:new_lang_text(text, "ui_language_" .. lang_id)
 		gui.set_enabled(root, true)
 		self.grid:add(root)
 

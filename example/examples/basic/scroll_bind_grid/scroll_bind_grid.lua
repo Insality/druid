@@ -2,7 +2,7 @@ local component = require("druid.component")
 
 ---@class scroll_bind_grid: druid.base_component
 ---@field scroll druid.scroll
----@field grid druid.static_grid
+---@field grid druid.grid
 ---@field text druid.text
 ---@field druid druid_instance
 local M = component.create("scroll_bind_grid")
@@ -19,7 +19,7 @@ function M:init(template, nodes)
 	gui.set_enabled(self.prefab, false)
 
 	self.scroll = self.druid:new_scroll("view", "content")
-	self.grid = self.druid:new_static_grid("content", "prefab", 1)
+	self.grid = self.druid:new_grid("content", "prefab", 1)
 	self.scroll:bind_grid(self.grid)
 
 	for index = 1, 20 do
