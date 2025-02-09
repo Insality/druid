@@ -100,6 +100,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@class druid.rich_text.word
 ---@field node node
 ---@field relative_scale number
+---@field source_text string
 ---@field color vector4
 ---@field position vector3
 ---@field offset vector3

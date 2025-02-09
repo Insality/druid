@@ -424,7 +424,7 @@ function M._update_nodes(lines, settings)
 				gui.set_outline(node, word.outline)
 				gui.set_shadow(node, word.shadow)
 				gui.set_text(node, word.text)
-				gui.set_color(node, word.color or word.text_color)
+				gui.set_color(node, word.color)
 				gui.set_font(node, word.font or settings.font)
 			end
 			word.node = node

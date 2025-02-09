@@ -7,6 +7,8 @@
 ---@field height number
 ---@field max_ascent number
 ---@field max_descent number
+---@field offset_x number
+---@field offset_y number
 
 ---@class utf8
 ---@field len fun(s: string):number

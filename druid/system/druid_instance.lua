@@ -85,9 +85,8 @@ local function create_widget(self, widget_class)
 		__index = setmetatable(widget_class, WIDGET_METATABLE)
 	})
 
-	local uid = base_component.create_uid()
 	instance._component = {
-		_uid = uid,
+		_uid = base_component.create_uid(),
 		name = "Druid Widget",
 		input_priority = const.PRIORITY_INPUT,
 		default_input_priority = const.PRIORITY_INPUT,

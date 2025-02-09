@@ -91,30 +91,30 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.scroll: druid.base_component
----@field node node
----@field click_zone node|nil
----@field on_scroll event On scroll move callback(self, position)
----@field on_scroll_to event On scroll_to function callback(self, target, is_instant)
----@field on_point_scroll event On scroll_to_index function callback(self, index, point)
----@field view_node node Scroll view node
----@field view_border vector4 Scroll view border
----@field content_node node Scroll content node
----@field view_size vector3 Scroll view size
+---@field node node The root node
+---@field click_zone node|nil Optional click zone to restrict scroll area
+---@field on_scroll event Triggered on scroll move with (self, position)
+---@field on_scroll_to event Triggered on scroll_to with (self, target, is_instant)
+---@field on_point_scroll event Triggered on scroll_to_index with (self, index, point)
+---@field view_node node The scroll view node (static part)
+---@field view_border vector4 The scroll view borders
+---@field content_node node The scroll content node (moving part)
+---@field view_size vector3 Size of the view node
 ---@field position vector3 Current scroll position
----@field target_position vector3 Current scroll target position
----@field available_pos vector4 Available position for content node: (min_x, max_y, max_x, min_y)
----@field available_size vector3 Size of available positions: (width, height, 0)
----@field drag druid.drag Drag Druid component
----@field selected number|nil Current index of points of interests
----@field is_animate boolean Flag, if scroll now animating by gui.animate
----@field private _is_inert boolean Flag, if scroll now moving by inertion
----@field private inertion vector3 Current inert speed
----@field private _is_horizontal_scroll boolean Flag, if scroll now horizontal
----@field private _is_vertical_scroll boolean Flag, if scroll now vertical
----@field private _grid_on_change event Grid on change items event
----@field private _grid_on_change_callback function Grid on change items callback
----@field private _offset vector3 Offset value to set, where content is starts
----@field private style table Component style params
+---@field target_position vector3 Target scroll position for animations
+---@field available_pos vector4 Available content position (min_x, max_y, max_x, min_y)
+---@field available_size vector3 Size of available positions (width, height, 0)
+---@field drag druid.drag The drag component instance
+---@field selected number|nil Current selected point of interest index
+---@field is_animate boolean True if scroll is animating
+---@field private _is_inert boolean True if inertial scrolling is enabled
+---@field private inertion vector3 Current inertial movement vector
+---@field private _is_horizontal_scroll boolean True if horizontal scroll enabled
+---@field private _is_vertical_scroll boolean True if vertical scroll enabled
+---@field private _grid_on_change event Grid items change event
+---@field private _grid_on_change_callback function Grid change callback
+---@field private _offset vector3 Content start offset
+---@field private style table Component style parameters
 local M = component.create("scroll")
 
 
