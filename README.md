@@ -46,8 +46,8 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 | Platform         | Library Size  |
 | ---------------- | ------------- |
-| HTML5            | **38.00 KB**  |
-| Desktop / Mobile | **65.74 KB**  |
+| HTML5            | **84.52 KB**  |
+| Desktop / Mobile | **141.03 KB**  |
 
 
 ### Input Bindings
@@ -202,7 +202,7 @@ For a complete overview, see: **_[components.md](docs_md/01-components.md)_**.
 
 ## Druid Events
 
-All **Druid** components using [Druid Events](https://insality.github.io/druid/modules/druid.event.html) for components callbacks. In component API ([button example](https://insality.github.io/druid/modules/Button.html#on_click)) pointed list of component events. You can manually subscribe to these events with the following API:
+All **Druid** components using [Defold Event](https://github.com/Insality/defold-event) for components callbacks. In component API ([button example](https://insality.github.io/druid/modules/Button.html#on_click)) pointed list of component events. You can manually subscribe to these events with the following API:
 
 - **event:subscribe**(callback)
 

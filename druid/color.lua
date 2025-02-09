@@ -194,7 +194,7 @@ end
 
 
 function M.load_palette()
-	local PALETTE_PATH = sys.get_config_string("fluid.palette")
+	local PALETTE_PATH = sys.get_config_string("druid.palette")
 	if PALETTE_PATH then
 		PALETTE_DATA = M.load_json(PALETTE_PATH) --[[@as table<string, table<string, vector4>>]]
 	end

@@ -102,6 +102,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field relative_scale number
 ---@field source_text string
 ---@field color vector4
+---@field text_color vector4
 ---@field position vector3
 ---@field offset vector3
 ---@field scale vector3

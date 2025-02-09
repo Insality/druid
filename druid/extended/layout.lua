@@ -288,14 +288,16 @@ function M:refresh_layout()
 				local new_row_width = width * (0.5 - layout_pivot_offset.x)
 
 				-- Compare with eps due the float loss and element flickering
-				if current_x + node_width - new_row_width > 0.0001 then
+				if current_x + node_width - new_row_width > 0.00001 then
+					current_y = current_y - row.height - margin.y
+
 					if row_index < #rows then
 						row_index = row_index + 1
 						row = rows[row_index]
 					end
 
 					current_x = -row.width * (0.5 + layout_pivot_offset.x)
-					current_y = current_y - row.height - margin.y
+
 					if is_justify and row.count > 1 then
 						current_x = -max_width * (0.5 + layout_pivot_offset.x)
 					end

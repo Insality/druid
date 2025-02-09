@@ -309,10 +309,10 @@ end
 
 
 ---Button constructor
----@param node_or_node_id node|string Node name or GUI Node itself.
+---@param node_or_node_id node|string Node name or GUI Node itself
 ---@param callback fun()|nil Callback on button click
 ---@param custom_args any|nil Custom args for any Button event
----@param anim_node node|string|nil Node to animate instead of trigger node.
+---@param anim_node node|string|nil Node to animate instead of trigger node
 function M:init(node_or_node_id, callback, custom_args, anim_node)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node_or_node_id)

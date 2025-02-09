@@ -16,7 +16,7 @@ function M.get_examples()
 
 				properties_panel:add_slider("ui_padding", 0, function(value)
 					local padding = math.floor((value * 64) * 100) / 100
-					instance.layout:set_padding(vmath.vector4(padding))
+					instance.layout:set_padding(padding, padding, padding, padding)
 				end)
 
 				properties_panel:add_slider("ui_margin_x", 0, function(value)

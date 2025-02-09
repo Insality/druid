@@ -80,6 +80,7 @@ self.druid:set_whitelist(whitelist_components)
 ## Components
 
 ### Base Component
+
 ```lua
 component:get_childrens()
 component:get_context()
@@ -101,14 +102,20 @@ component:set_template([template])
 ```
 
 ### Blocker
+
 ```lua
+local blocker = self.druid:new_blocker(node)
+
 blocker:is_enabled()
 blocker:on_input(action_id, action)
 blocker:set_enabled(state)
 ```
 
 ### Button
+
 ```lua
+local button = self.druid:new_button(node, [callback], [params], [anim_node])
+
 button:get_key_trigger()
 button:is_enabled()
 button:on_input([action_id], [action])
@@ -123,7 +130,10 @@ button:set_web_user_interaction([is_web_mode])
 ```
 
 ### Container
+
 ```lua
+local container = self.druid:new_container(node, [mode], [callback])
+
 container:add_container(node_or_container, [mode], [on_resize_callback])
 container:clear_draggable_corners()
 container:create_draggable_corners()
@@ -151,7 +161,10 @@ container:update_child_containers()
 ```
 
 ### Data List
+
 ```lua
+local data_list = self.druid:new_data_list(druid_scroll, druid_grid, create_function)
+
 data_list:add(data, [index], [shift_policy])
 data_list:clear()
 data_list:get_created_components()
@@ -168,7 +181,10 @@ data_list:set_use_cache(is_use_cache)
 ```
 
 ### Drag
+
 ```lua
+local drag = self.druid:new_drag(node, [on_drag_callback])
+
 drag:init(node_or_node_id, on_drag_callback)
 drag:is_enabled()
 drag:on_input(action_id, action)
@@ -182,8 +198,9 @@ drag:set_enabled(is_enabled)
 ```
 
 ### Grid
+
 ```lua
-local static_grid = require("druid.base.static_grid")
+local grid = self.druid:new_grid(parent_node, item, [in_row])
 
 grid:add(item, [index], [shift_policy], [is_instant])
 grid:clear()
@@ -210,8 +227,9 @@ grid:sort_nodes(comparator)
 ```
 
 ### Hotkey
+
 ```lua
-local hotkey = require("druid.extended.hotkey")
+local hotkey = self.druid:new_hotkey(keys_array, [callback], [callback_argument])
 
 hotkey:add_hotkey(keys, [callback_argument])
 hotkey:init(keys, callback, [callback_argument])
@@ -223,8 +241,9 @@ hotkey:set_repeat(is_enabled_repeated)
 ```
 
 ### Hover
+
 ```lua
-local hover = require("druid.base.hover")
+local hover = self.druid:new_hover(node, [on_hover_callback], [on_mouse_hover_callback])
 
 hover:init(node, on_hover_callback, on_mouse_hover)
 hover:is_enabled()
@@ -241,8 +260,9 @@ hover:set_mouse_hover([state])
 ```
 
 ### Input
+
 ```lua
-local input = require("druid.extended.input")
+local input = self.druid:new_input(click_node, text_node, [keyboard_type])
 
 input:get_text()
 input:get_text_selected()
@@ -263,7 +283,10 @@ input:unselect()
 ```
 
 ### Lang Text
+
 ```lua
+local lang_text = self.druid:new_lang_text(node, [locale_id], [adjust_type])
+
 lang_text:format([a], [b], [c], [d], [e], [f], [g])
 lang_text:init(node, [locale_id], [adjust_type])
 lang_text:on_language_change()
@@ -273,8 +296,9 @@ lang_text:translate(locale_id, [a], [b], [c], [d], [e], [f], [g])
 ```
 
 ### Layout
+
 ```lua
-local layout = require("druid.extended.layout")
+local layout = self.druid:new_layout(node, [mode])
 
 layout:add(node_or_node_id)
 layout:calculate_rows_data()
@@ -298,8 +322,9 @@ layout:update()
 ```
 
 ### Progress
+
 ```lua
-local progress = require("druid.extended.progress")
+local progress = self.druid:new_progress(node, key, [init_value])
 
 progress:empty()
 progress:fill()
@@ -316,8 +341,9 @@ progress:update([dt])
 ```
 
 ### Rich Input
+
 ```lua
-local rich_input = require("druid.custom.rich_input.rich_input")
+local rich_input = self.druid:new_rich_input(template, [nodes])
 
 rich_input:get_text()
 rich_input:init(template, nodes)
@@ -330,8 +356,9 @@ rich_input:set_text(text)
 ```
 
 ### Rich Text
+
 ```lua
-local rich_text = require("druid.custom.rich_text.rich_text")
+local rich_text = self.druid:new_rich_text(text_node, [value])
 
 rich_text:characters(word)
 rich_text:clear()
@@ -347,8 +374,9 @@ rich_text:tagged(tag)
 ```
 
 ### Scroll
+
 ```lua
-local scroll = require("druid.base.scroll")
+local scroll = self.druid:new_scroll(view_node, content_node)
 
 scroll:bind_grid([grid])
 scroll:get_percent()
@@ -377,8 +405,9 @@ scroll:update_view_size()
 ```
 
 ### Slider
+
 ```lua
-local slider = require("druid.extended.slider")
+local slider = self.druid:new_slider(pin_node, end_pos, [callback])
 
 slider:init(node, end_pos, [callback])
 slider:is_enabled()
@@ -393,8 +422,9 @@ slider:set_steps(steps)
 ```
 
 ### Swipe
+
 ```lua
-local swipe = require("druid.extended.swipe")
+local swipe = self.druid:new_swipe(node, [on_swipe_callback])
 
 swipe:init(node_or_node_id, on_swipe_callback)
 swipe:on_input(action_id, action)
@@ -405,8 +435,9 @@ swipe:set_click_zone([zone])
 ```
 
 ### Text
+
 ```lua
-local text = require("druid.base.text")
+local text = self.druid:new_text(node, [value], [no_adjust])
 
 text:get_text()
 text:get_text_adjust()
@@ -428,8 +459,9 @@ text:set_to(set_to)
 ```
 
 ### Timer
+
 ```lua
-local timer = require("druid.extended.timer")
+local timer = self.druid:new_timer(node, [seconds_from], [seconds_to], [callback])
 
 timer:init(node, [seconds_from], [seconds_to], [callback])
 timer:on_layout_change()
@@ -439,8 +471,8 @@ timer:set_to(set_to)
 timer:update([dt])
 ```
 
-
 ## Helper
+
 ```lua
 local helper = require("druid.helper")
 

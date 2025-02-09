@@ -1,3 +1,5 @@
+-- Hello! Wish you a good day!
+
 local events = require("event.events")
 local const = require("druid.const")
 local helper = require("druid.helper")

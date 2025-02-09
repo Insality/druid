@@ -574,3 +574,44 @@ And all my other supporters! Very appreciated!
 Please support me if you like this project! It will help me keep engaged to update **Druid** and make it even better!
 
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
+
+
+### Druid 1.1
+
+Hello! Druid 1.1 is here! It's brings a lot of new features and improvements. Let's dive in!
+
+---
+
+**Milestone**:
+
+**Changelog 1.1**
+- Remove external annotations, remove old HTML API page
+- Fully annotated code and new API readme page (hope more comfortable to use)
+- Widgets here!
+	- A replacement for `custom_component`. Basically it's the same, but widgets contains no boilerplate code and more convinient to use.
+	- Now I can include a kind of `widgets` with Druid and you can use it almost instantly in your project.
+- Removed `druid.register()`. Now all components are available by default and available with `self.druid:new_*` functions
+	- This means the druid will be bigger in size, but it's much comfortable to use
+	- In case you want to delete components you not using, you can do it in fork in `druid.lua` file
+	- Any additional widgets, color library will be not included until you use it
+- Remove `druid.event`, replaced with defold-event library. Now it required to double dependency to use Druid.
+- Add Druid UI kit, contains atlas so now you can use Druid GUI files in your projects.
+	- Contains mostly basic shapes for my UI and can contains several icons. Atlas is a small, only `128x128` size and will be included in build only if you use it.
+- [Text]: Add `trim_left` and `scale_then_trim_left` text adjust modes
+- [Text]: Add `set_text` function instead `set_to` (now it deprecated)
+- Add `druid.bindings` module to handle cross-context widgets
+- Add `druid.color` module to work with colors and palettes
+- Add `container` component to handle more complex adaptive layouts
+- [Shaders] Add repeat, hard image stencil and world gui materials
+- [Widget] Add widget `mini_graph`
+- [Widget] Add widget `memory_panel`
+- [Widget] Add widget `fps_panel`
+- [Widget] Add widget `properties_panel`
+	- Include `property_button` widget
+	- Include `property_checkbox` widget
+	- Include `property_input` widget
+	- Include `property_left_right_selector` widget
+	- Include `property_slider` widget
+	- Include `property_text` widget
+	- Include `property_vector3` widget
+- Removed old `druid.no_stencil_check` and `druid.no_auto_template` flags. Now it's always disabled

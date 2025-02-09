@@ -89,35 +89,23 @@ end
 
 --- Translate the text by locale_id
 ---@param locale_id string Locale id
----@param a string|nil Optional param to string.format
----@param b string|nil Optional param to string.format
----@param c string|nil Optional param to string.format
----@param d string|nil Optional param to string.format
----@param e string|nil Optional param to string.format
----@param f string|nil Optional param to string.format
----@param g string|nil Optional param to string.format
+---@param ... string Optional params for string.format
 ---@return druid.lang_text Current instance
-function M:translate(locale_id, a, b, c, d, e, f, g)
-	self.last_locale_args = { a, b, c, d, e, f, g }
+function M:translate(locale_id, ...)
+	self.last_locale_args = { ... }
 	self.last_locale = locale_id or self.last_locale
-	self.text:set_text(settings.get_text(self.last_locale, a, b, c, d, e, f, g) or "")
+	self.text:set_text(settings.get_text(self.last_locale, ...) or "")
 
 	return self
 end
 
 
 --- Format string with new text params on localized text
----@param a string|nil Optional param to string.format
----@param b string|nil Optional param to string.format
----@param c string|nil Optional param to string.format
----@param d string|nil Optional param to string.format
----@param e string|nil Optional param to string.format
----@param f string|nil Optional param to string.format
----@param g string|nil Optional param to string.format
+---@param ... string Optional params for string.format
 ---@return druid.lang_text Current instance
-function M:format(a, b, c, d, e, f, g)
-	self.last_locale_args = { a, b, c, d, e, f, g }
-	self.text:set_text(settings.get_text(self.last_locale, a, b, c, d, e, f, g) or "")
+function M:format(...)
+	self.last_locale_args = { ... }
+	self.text:set_text(settings.get_text(self.last_locale, ...) or "")
 
 	return self
 end
