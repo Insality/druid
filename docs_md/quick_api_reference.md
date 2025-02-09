@@ -1,5 +1,33 @@
 # Quick API Reference
 
+# Table of Contents
+1. [Druid](#druid)
+2. [Druid Instance](#druid-instance)
+3. [Components](#components)
+    1. [Base Component](#base-component)
+    2. [Blocker](#blocker)
+    3. [Button](#button)
+    4. [Container](#container)
+    5. [Data List](#data-list)
+    6. [Drag](#drag)
+    7. [Grid](#grid)
+    8. [Hotkey](#hotkey)
+    9. [Hover](#hover)
+    10. [Input](#input)
+    11. [Lang Text](#lang-text)
+    12. [Layout](#layout)
+    13. [Progress](#progress)
+    14. [Rich Input](#rich-input)
+    15. [Rich Text](#rich-text)
+    16. [Scroll](#scroll)
+    17. [Slider](#slider)
+    18. [Swipe](#swipe)
+    19. [Text](#text)
+    20. [Timer](#timer)
+4. [Helper](#helper)
+
+# API Reference
+
 ## Druid
 ```lua
 local druid = require("druid.druid")
@@ -50,25 +78,401 @@ self.druid:set_whitelist(whitelist_components)
 ```
 
 ## Components
+
 ### Base Component
+```lua
+component:get_childrens()
+component:get_context()
+component:get_druid([template], [nodes])
+component:get_input_priority()
+component:get_name()
+component:get_node(node_id)
+component:get_nodes()
+component:get_parent_component()
+component:get_parent_name()
+component:get_template()
+component:get_uid()
+component:reset_input_priority()
+component:set_input_enabled(state)
+component:set_input_priority(value, [is_temporary])
+component:set_nodes(nodes)
+component:set_style([druid_style])
+component:set_template([template])
+```
+
 ### Blocker
+```lua
+blocker:is_enabled()
+blocker:on_input(action_id, action)
+blocker:set_enabled(state)
+```
+
 ### Button
+```lua
+button:get_key_trigger()
+button:is_enabled()
+button:on_input([action_id], [action])
+button:on_input_interrupt()
+button:on_late_init()
+button:on_style_change(style)
+button:set_check_function([check_function], [failure_callback])
+button:set_click_zone([zone])
+button:set_enabled([state])
+button:set_key_trigger(key)
+button:set_web_user_interaction([is_web_mode])
+```
+
 ### Container
+```lua
+container:add_container(node_or_container, [mode], [on_resize_callback])
+container:clear_draggable_corners()
+container:create_draggable_corners()
+container:fit_into_node(node)
+container:fit_into_size(target_size)
+container:fit_into_window()
+container:get_position()
+container:get_scale()
+container:get_size()
+container:init(node, mode, [callback])
+container:on_late_init()
+container:on_remove()
+container:on_style_change([style])
+container:on_window_resized()
+container:refresh()
+container:refresh_origins()
+container:refresh_scale()
+container:remove_container_by_node([node])
+container:set_min_size([min_size_x], [min_size_y])
+container:set_parent_container([parent_container])
+container:set_pivot(pivot)
+container:set_position(pos_x, pos_y)
+container:set_size([width], [height], [anchor_pivot])
+container:update_child_containers()
+```
+
 ### Data List
+```lua
+data_list:add(data, [index], [shift_policy])
+data_list:clear()
+data_list:get_created_components()
+data_list:get_created_nodes()
+data_list:get_data()
+data_list:get_index(data)
+data_list:init(scroll, grid, create_function)
+data_list:on_remove()
+data_list:remove([index], [shift_policy])
+data_list:remove_by_data(data, [shift_policy])
+data_list:scroll_to_index(index)
+data_list:set_data(data)
+data_list:set_use_cache(is_use_cache)
+```
+
 ### Drag
+```lua
+drag:init(node_or_node_id, on_drag_callback)
+drag:is_enabled()
+drag:on_input(action_id, action)
+drag:on_input_interrupt()
+drag:on_late_init()
+drag:on_style_change([style])
+drag:on_window_resized()
+drag:set_click_zone([node])
+drag:set_drag_cursors(is_enabled)
+drag:set_enabled(is_enabled)
+```
+
 ### Grid
+```lua
+local static_grid = require("druid.base.static_grid")
+
+grid:add(item, [index], [shift_policy], [is_instant])
+grid:clear()
+grid:get_all_pos()
+grid:get_borders()
+grid:get_index(pos)
+grid:get_index_by_node(node)
+grid:get_offset()
+grid:get_pos(index)
+grid:get_size()
+grid:get_size_for([count])
+grid:init(parent, element, [in_row])
+grid:on_layout_change()
+grid:on_style_change([style])
+grid:refresh()
+grid:remove(index, [shift_policy], [is_instant])
+grid:set_anchor(anchor)
+grid:set_in_row(in_row)
+grid:set_item_size([width], [height])
+grid:set_items(nodes, [is_instant])
+grid:set_pivot([pivot])
+grid:set_position_function(callback)
+grid:sort_nodes(comparator)
+```
+
 ### Hotkey
+```lua
+local hotkey = require("druid.extended.hotkey")
+
+hotkey:add_hotkey(keys, [callback_argument])
+hotkey:init(keys, callback, [callback_argument])
+hotkey:is_processing()
+hotkey:on_focus_gained()
+hotkey:on_input([action_id], [action])
+hotkey:on_style_change([style])
+hotkey:set_repeat(is_enabled_repeated)
+```
+
 ### Hover
+```lua
+local hover = require("druid.base.hover")
+
+hover:init(node, on_hover_callback, on_mouse_hover)
+hover:is_enabled()
+hover:is_hovered()
+hover:is_mouse_hovered()
+hover:on_input([action_id], [action])
+hover:on_input_interrupt()
+hover:on_late_init()
+hover:on_style_change([style])
+hover:set_click_zone([zone])
+hover:set_enabled([state])
+hover:set_hover([state])
+hover:set_mouse_hover([state])
+```
+
 ### Input
+```lua
+local input = require("druid.extended.input")
+
+input:get_text()
+input:get_text_selected()
+input:get_text_selected_replaced(text)
+input:init(click_node, text_node, [keyboard_type])
+input:move_selection(delta, is_add_to_selection, is_move_to_end)
+input:on_focus_lost()
+input:on_input([action_id], [action])
+input:on_input_interrupt()
+input:on_style_change([style])
+input:reset_changes()
+input:select()
+input:select_cursor([cursor_index], [start_index], [end_index])
+input:set_allowed_characters(characters)
+input:set_max_length(max_length)
+input:set_text(input_text)
+input:unselect()
+```
+
 ### Lang Text
+```lua
+lang_text:format([a], [b], [c], [d], [e], [f], [g])
+lang_text:init(node, [locale_id], [adjust_type])
+lang_text:on_language_change()
+lang_text:set_text(text)
+lang_text:set_to(text)
+lang_text:translate(locale_id, [a], [b], [c], [d], [e], [f], [g])
+```
+
 ### Layout
+```lua
+local layout = require("druid.extended.layout")
+
+layout:add(node_or_node_id)
+layout:calculate_rows_data()
+layout:clear_layout()
+layout:get_content_size()
+layout:get_entities()
+layout:get_node_size(node)
+layout:get_size()
+layout:init(node_or_node_id, layout_type)
+layout:refresh_layout()
+layout:remove(node_or_node_id)
+layout:set_dirty()
+layout:set_hug_content(is_hug_width, is_hug_height)
+layout:set_justify(is_justify)
+layout:set_margin([margin_x], [margin_y])
+layout:set_node_index([node], [index])
+layout:set_node_position(node, x, y)
+layout:set_padding([padding_x], [padding_y], [padding_z], [padding_w])
+layout:set_type(type)
+layout:update()
+```
+
 ### Progress
+```lua
+local progress = require("druid.extended.progress")
+
+progress:empty()
+progress:fill()
+progress:get()
+progress:init(node, key, [init_value])
+progress:on_layout_change()
+progress:on_remove()
+progress:on_style_change([style])
+progress:set_max_size(max_size)
+progress:set_steps(steps, callback)
+progress:set_to(to)
+progress:to(to, [callback])
+progress:update([dt])
+```
+
 ### Rich Input
+```lua
+local rich_input = require("druid.custom.rich_input.rich_input")
+
+rich_input:get_text()
+rich_input:init(template, nodes)
+rich_input:on_input([action_id], [action])
+rich_input:select()
+rich_input:set_allowed_characters(characters)
+rich_input:set_font(font)
+rich_input:set_placeholder(placeholder_text)
+rich_input:set_text(text)
+```
+
 ### Rich Text
+```lua
+local rich_text = require("druid.custom.rich_text.rich_text")
+
+rich_text:characters(word)
+rich_text:clear()
+rich_text:get_line_metric()
+rich_text:get_text()
+rich_text:get_words()
+rich_text:init(text_node, [value])
+rich_text:on_layout_change()
+rich_text:on_remove()
+rich_text:on_style_change([style])
+rich_text:set_text([text])
+rich_text:tagged(tag)
+```
+
 ### Scroll
+```lua
+local scroll = require("druid.base.scroll")
+
+scroll:bind_grid([grid])
+scroll:get_percent()
+scroll:get_scroll_size()
+scroll:init(view_node, content_node)
+scroll:is_inert()
+scroll:is_node_in_view(node)
+scroll:on_input([action_id], [action])
+scroll:on_late_init()
+scroll:on_layout_change()
+scroll:on_remove()
+scroll:on_style_change([style])
+scroll:scroll_to(point, [is_instant])
+scroll:scroll_to_index(index, [skip_cb])
+scroll:scroll_to_percent(percent, [is_instant])
+scroll:set_click_zone(node)
+scroll:set_extra_stretch_size([stretch_size])
+scroll:set_horizontal_scroll(state)
+scroll:set_inert(state)
+scroll:set_points(points)
+scroll:set_size(size, [offset])
+scroll:set_vertical_scroll(state)
+scroll:set_view_size(size)
+scroll:update([dt])
+scroll:update_view_size()
+```
+
 ### Slider
+```lua
+local slider = require("druid.extended.slider")
+
+slider:init(node, end_pos, [callback])
+slider:is_enabled()
+slider:on_input([action_id], [action])
+slider:on_layout_change()
+slider:on_remove()
+slider:on_window_resized()
+slider:set(value, [is_silent])
+slider:set_enabled(is_enabled)
+slider:set_input_node([input_node])
+slider:set_steps(steps)
+```
+
 ### Swipe
+```lua
+local swipe = require("druid.extended.swipe")
+
+swipe:init(node_or_node_id, on_swipe_callback)
+swipe:on_input(action_id, action)
+swipe:on_input_interrupt()
+swipe:on_late_init()
+swipe:on_style_change(style)
+swipe:set_click_zone([zone])
+```
+
 ### Text
+```lua
+local text = require("druid.base.text")
+
+text:get_text()
+text:get_text_adjust()
+text:get_text_index_by_width(width)
+text:get_text_size([text])
+text:init(node, [value], [adjust_type])
+text:is_multiline()
+text:on_layout_change()
+text:on_style_change([style])
+text:set_alpha(alpha)
+text:set_color(color)
+text:set_minimal_scale(minimal_scale)
+text:set_pivot(pivot)
+text:set_scale(scale)
+text:set_size(size)
+text:set_text([new_text])
+text:set_text_adjust([adjust_type], [minimal_scale])
+text:set_to(set_to)
+```
+
 ### Timer
+```lua
+local timer = require("druid.extended.timer")
+
+timer:init(node, [seconds_from], [seconds_to], [callback])
+timer:on_layout_change()
+timer:set_interval(from, to)
+timer:set_state([is_on])
+timer:set_to(set_to)
+timer:update([dt])
+```
+
 
 ## Helper
+```lua
+local helper = require("druid.helper")
+
+helper.add_array([target], [source])
+helper.centrate_icon_with_text([icon_node], [text_node], [margin])
+helper.centrate_nodes([margin], ...)
+helper.centrate_text_with_icon([text_node], [icon_node], margin)
+helper.clamp(value, [v1], [v2])
+helper.contains([array], [value])
+helper.deepcopy(orig_table)
+helper.distance(x1, y1, x2, y2)
+helper.get_animation_data_from_node(node, atlas_path)
+helper.get_border(node, [offset])
+helper.get_closest_stencil_node(node)
+helper.get_full_position(node, [root])
+helper.get_gui_scale()
+helper.get_node(node_id, [template], [nodes])
+helper.get_pivot_offset(pivot_or_node)
+helper.get_scaled_size(node)
+helper.get_scene_scale(node, [include_passed_node_scale])
+helper.get_screen_aspect_koef()
+helper.get_text_metrics_from_node(text_node)
+helper.insert_with_shift(array, [item], [index], [shift_policy])
+helper.is_mobile()
+helper.is_multitouch_supported()
+helper.is_web()
+helper.is_web_mobile()
+helper.lerp(a, b, t)
+helper.pick_node(node, x, y, [node_click_area])
+helper.remove_with_shift([array], [index], [shift_policy])
+helper.round(num, [num_decimal_places])
+helper.sign(val)
+helper.step(current, target, step)
+helper.table_to_string(t)
+```

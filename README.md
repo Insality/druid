@@ -15,24 +15,34 @@ Check the [**HTML5 version**](https://insality.github.io/druid/druid/) of the **
 
 In this example you can inspect a variety of **Druid** components and see how they work. Each example page provides a direct link to the corresponding example code, making it easier for you to understand how to use **Druid**.
 
+
 ## Setup
 
-### [Dependency](https://www.defold.com/manuals/libraries/)
+### [Dependency](https://defold.com/manuals/libraries/#setting-up-library-dependencies)
 
-Open your `game.project` file and add the following line to the dependencies field under the project section:
+Open your `game.project` file and add the following lines to the dependencies field under the project section:
 
-**[Druid](https://github.com/Insality/druid/archive/refs/tags/1.0.zip)**
+
+**[Druid](https://github.com/Insality/druid/)**
 
 ```
 https://github.com/Insality/druid/archive/refs/tags/1.0.zip
 ```
+
+**[Defold Event](https://github.com/Insality/defold-event)**
+
+```
+https://github.com/Insality/defold-event/archive/refs/tags/10.zip
+```
+
+After that, select `Project ▸ Fetch Libraries` to update [library dependencies]((https://defold.com/manuals/libraries/#setting-up-library-dependencies)). This happens automatically whenever you open a project so you will only need to do this if the dependencies change without re-opening the project.
 
 Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 
 ### Library Size
 
-> **Note:** The library size is calculated based on the build report per platform. The extended components are exlcuded, which are including only on demand.
+> **Note:** The library size is calculated based on the build report per platform.
 
 | Platform         | Library Size  |
 | ---------------- | ------------- |
@@ -165,8 +175,6 @@ Here is full **Druid** components list.
 
 ### Basic Components
 
-> Basic components always included in the build and available for use.
-
 | Name | Description | Example | <div style="width:200px">Preview</div> |
 |------|-------------|---------|---------|
 | **[Button](https://insality.github.io/druid/modules/Button.html)** | Logic over GUI Node. Handle the user click interactions: click, long click, double click, etc. | [Button Example](https://insality.github.io/druid/druid/?example=ui_example_basic_button) | <img src="media/preview/button.gif" width="200" height="100"> |
@@ -178,12 +186,6 @@ Here is full **Druid** components list.
 | **[Hover](https://insality.github.io/druid/modules/Hover.html)** | Logic over GUI Node. Handle hover action over node. For both: mobile touch and mouse cursor. | [Hover Example](https://insality.github.io/druid/druid/?example=ui_example_basic_hover) | <img src="media/preview/hover.gif" width="200" height="100"> |
 | **[Swipe](https://insality.github.io/druid/modules/Swipe.html)** | Logic over GUI Node. Handle swipe gestures over node. | [Swipe Example](https://insality.github.io/druid/druid/?example=ui_example_basic_swipe) | <img src="media/preview/swipe.gif" width="200" height="100"> |
 | **[Drag](https://insality.github.io/druid/modules/Drag.html)** | Logic over GUI Node. Handle drag input actions. Can be useful to make on screen controlls. | [Drag Example](https://insality.github.io/druid/druid/?example=ui_example_basic_drag) | <img src="media/preview/drag.gif" width="200" height="100"> |
-
-
-### Extended components
-
-| Name | Description | Example | <div style="width:200px">Preview</div> |
-|------|-------------|---------|---------|
 | **[Data List](https://insality.github.io/druid/modules/DataList.html)** | Logic over Scroll and Grid components. Create only visible GUI nodes or components to make "infinity" scroll befaviour | [Data List Example](https://insality.github.io/druid/druid/?example=ui_example_data_list_basic) | <img src="media/preview/data_list.gif" width="200" height="100"> |
 | **[Input](https://insality.github.io/druid/modules/Input.html)** | Logic over GUI Node and GUI Text (or Text component). Provides basic user text input. | [Input Example](https://insality.github.io/druid/druid/?example=ui_example_basic_input) | <img src="media/preview/input.gif" width="200" height="100"> |
 | **[Lang text](https://insality.github.io/druid/modules/LangText.html)** | Logic over Text component to handle localization. Can be translated in real-time with `druid.on_language_change` | [Lang Text Example](https://insality.github.io/druid/druid/?example=ui_example_window_language) | <img src="media/preview/lang_text.gif" width="200" height="100"> |
@@ -200,7 +202,7 @@ For a complete overview, see: **_[components.md](docs_md/01-components.md)_**.
 
 ## Druid Events
 
-Any **Druid** components as callbacks use [Druid Events](https://insality.github.io/druid/modules/druid.event.html). In component API ([button example](https://insality.github.io/druid/modules/Button.html#on_click)) pointed list of component events. You can manually subscribe to these events with the following API:
+All **Druid** components using [Druid Events](https://insality.github.io/druid/modules/druid.event.html) for components callbacks. In component API ([button example](https://insality.github.io/druid/modules/Button.html#on_click)) pointed list of component events. You can manually subscribe to these events with the following API:
 
 - **event:subscribe**(callback)
 
@@ -240,9 +242,7 @@ You can find the full **Druid** [documentation here](https://insality.github.io/
 
 ## Licenses
 
-- Developed and supported by [Insality](https://github.com/Insality)
-- Original idea by [AGulev](https://github.com/AGulev)
-- Assets from [Kenney](http://www.kenney.nl/)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 
 ## Issues and suggestions

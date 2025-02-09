@@ -5,6 +5,8 @@ local gui_get_node = gui.get_node
 local gui_get = gui.get
 local gui_pick_node = gui.pick_node
 
+---The helper module contains various functions that are used in the Druid library.
+---You can use these functions in your projects as well.
 ---@class druid.system.helper
 local M = {}
 
