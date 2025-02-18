@@ -42,6 +42,9 @@ function M:init()
 
 	self.container = self.druid:new_container(self.root)
 	self.container:add_container(self.mini_graph.container)
+	local container_content = self.container:add_container("content")
+	container_content:add_container("text_min_fps")
+	container_content:add_container("text_fps")
 end
 
 

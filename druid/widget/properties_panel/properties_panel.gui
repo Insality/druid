@@ -13,7 +13,7 @@ textures {
 nodes {
   size {
     x: 400.0
-    y: 240.0
+    y: 400.0
   }
   color {
     x: 0.173
@@ -23,6 +23,7 @@ nodes {
   type: TYPE_BOX
   texture: "druid/ui_circle_16"
   id: "root"
+  pivot: PIVOT_N
   inherit_alpha: true
   slice9 {
     x: 8.0
@@ -32,9 +33,6 @@ nodes {
   }
 }
 nodes {
-  position {
-    y: 120.0
-  }
   size {
     x: 400.0
     y: 40.0
@@ -105,15 +103,15 @@ nodes {
 }
 nodes {
   position {
-    y: -120.0
+    y: -50.0
   }
   size {
     x: 400.0
-    y: 190.0
+    y: 350.0
   }
   type: TYPE_BOX
   id: "content"
-  pivot: PIVOT_S
+  pivot: PIVOT_N
   parent: "root"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
@@ -122,11 +120,10 @@ nodes {
 nodes {
   position {
     x: -200.0
-    y: 190.0
   }
   size {
     x: 400.0
-    y: 190.0
+    y: 350.0
   }
   type: TYPE_BOX
   texture: "druid/empty"
@@ -141,7 +138,7 @@ nodes {
 nodes {
   size {
     x: 400.0
-    y: 190.0
+    y: 350.0
   }
   type: TYPE_BOX
   texture: "druid/pixel"
@@ -159,7 +156,7 @@ nodes {
 }
 nodes {
   position {
-    y: 170.0
+    y: -10.0
   }
   type: TYPE_BOX
   texture: "druid/empty"

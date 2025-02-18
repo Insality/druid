@@ -14,6 +14,7 @@ local property_vector3 = require("druid.widget.properties_panel.properties.prope
 ---@field container_content druid.container
 ---@field container_scroll_view druid.container
 ---@field contaienr_scroll_content druid.container
+---@field button_hidden druid.button
 ---@field text_header druid.text
 ---@field paginator widget.property_left_right_selector
 ---@field properties druid.widget[] List of created properties
@@ -47,8 +48,9 @@ function M:init()
 	self.layout.on_size_changed:subscribe(self.on_size_changed, self)
 
 	self.druid:new_drag("header", self.on_drag_widget)
-	self.druid:new_button("icon_drag", self.toggle_hide)
-		:set_style(nil)
+	self.button_hidden = self.druid:new_button("icon_drag", function()
+		self:set_hidden(not self._is_hidden)
+	end):set_style(nil)
 
 	self.property_checkbox_prefab = self:get_node("property_checkbox/root")
 	gui.set_enabled(self.property_checkbox_prefab, false)
@@ -130,7 +132,7 @@ function M:on_size_changed(new_size)
 	self.container_content:set_size(new_size.x, new_size.y, gui.PIVOT_N)
 
 	self.default_size = vmath.vector3(new_size.x, new_size.y + 50, 0)
-	if not self.is_hidden then
+	if not self._is_hidden then
 		self.container:set_size(self.default_size.x, self.default_size.y, gui.PIVOT_N)
 	end
 
@@ -292,15 +294,19 @@ function M:remove(widget)
 end
 
 
-function M:toggle_hide()
-	self.is_hidden = not self.is_hidden
+function M:set_hidden(is_hidden)
+	self._is_hidden = is_hidden
 	local hidden_size = gui.get_size(self:get_node("header"))
 
-	local new_size = self.is_hidden and hidden_size or self.default_size
+	local new_size = self._is_hidden and hidden_size or self.default_size
 	self.container:set_size(new_size.x, new_size.y, gui.PIVOT_N)
 
-	gui.set_enabled(self.content, not self.is_hidden)
-	return self
+	gui.set_enabled(self.content, not self._is_hidden)
+end
+
+
+function M:is_hidden()
+	return self._is_hidden
 end
 
 

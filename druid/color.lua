@@ -86,32 +86,20 @@ function M.lerp(t, color1, color2)
 	return vmath.vector4(r, g, b, a)
 end
 
-
 ---@param hex string
----@param alpha number|nil
----@return number, number, number, number
-function M.hex2rgb(hex, alpha)
-	alpha = alpha or 1
-	if alpha > 1 then
-		alpha = alpha / 100
+---@return number, number, number
+function M.hex2rgb(hex)
+	if not hex or #hex < 3 then
+		return 0, 0, 0
 	end
 
-	-- Remove leading #
-	if string.sub(hex, 1, 1) == "#" then
-		hex = string.sub(hex, 2)
-	end
-
-	-- Expand 3-digit hex codes to 6 digits
+	hex = hex:gsub("^#", "")
 	if #hex == 3 then
-		hex = string.rep(string.sub(hex, 1, 1), 2) ..
-				string.rep(string.sub(hex, 2, 2), 2) ..
-				string.rep(string.sub(hex, 3, 3), 2)
+		hex = hex:gsub("(.)", "%1%1")
 	end
-
-	local r = tonumber("0x" .. string.sub(hex, 1, 2)) / 255
-	local g = tonumber("0x" .. string.sub(hex, 3, 4)) / 255
-	local b = tonumber("0x" .. string.sub(hex, 5, 6)) / 255
-	return r, g, b, alpha
+	return tonumber("0x" .. hex:sub(1,2)) / 255,
+		   tonumber("0x" .. hex:sub(3,4)) / 255,
+		   tonumber("0x" .. hex:sub(5,6)) / 255
 end
 
 
@@ -119,8 +107,8 @@ end
 ---@param alpha number|nil
 ---@return vector4
 function M.hex2vector4(hex, alpha)
-	local r, g, b, a = M.hex2rgb(hex, alpha)
-	return vmath.vector4(r, g, b, a)
+	local r, g, b = M.hex2rgb(hex)
+	return vmath.vector4(r, g, b, alpha or 1)
 end
 
 

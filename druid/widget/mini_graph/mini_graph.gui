@@ -23,6 +23,7 @@ nodes {
   type: TYPE_BOX
   texture: "druid/ui_circle_16"
   id: "root"
+  adjust_mode: ADJUST_MODE_STRETCH
   inherit_alpha: true
   slice9 {
     x: 8.0
@@ -120,6 +121,7 @@ nodes {
   texture: "druid/ui_circle_16"
   id: "content"
   pivot: PIVOT_S
+  adjust_mode: ADJUST_MODE_STRETCH
   parent: "root"
   inherit_alpha: true
   slice9 {
