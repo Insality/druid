@@ -3,7 +3,7 @@ local component = require("druid.component")
 ---@class grid: druid.base_component
 ---@field grid druid.grid
 ---@field text druid.text
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("grid")
 
 

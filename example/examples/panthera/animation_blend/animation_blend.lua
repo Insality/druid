@@ -7,7 +7,7 @@ local character_animation_blend = require("example.examples.panthera.animation_b
 
 ---@class animation_blend: druid.base_component
 ---@field root node
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("animation_blend")
 
 

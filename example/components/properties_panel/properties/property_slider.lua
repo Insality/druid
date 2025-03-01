@@ -1,7 +1,7 @@
 local component = require("druid.component")
 
 ---@class property_slider: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field root druid.container
 ---@field text_name druid.lang_text
 ---@field text_value druid.text

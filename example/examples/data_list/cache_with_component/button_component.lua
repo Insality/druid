@@ -2,7 +2,7 @@ local component = require("druid.component")
 
 ---@class button_component: druid.base_component
 ---@field root node
----@field druid druid_instance
+---@field druid druid.instance
 ---@field text druid.text
 ---@field data any
 local M = component.create("button_component")

@@ -6,7 +6,7 @@ local helper = require("druid.helper")
 ---@field context table
 ---@field nodes table<hash, node>|nil
 ---@field style table|nil
----@field druid druid_instance
+---@field druid druid.instance
 ---@field input_enabled boolean
 ---@field children table
 ---@field parent druid.base_component|nil
@@ -20,7 +20,7 @@ local helper = require("druid.helper")
 ---@field _uid number
 
 ---@class druid.base_component
----@field druid druid_instance Druid instance to create inner components
+---@field druid druid.instance Druid instance to create inner components
 ---@field init fun(self:druid.base_component, ...)|nil
 ---@field update fun(self:druid.base_component, dt:number)|nil
 ---@field on_remove fun(self:druid.base_component)|nil
@@ -134,7 +134,7 @@ end
 ---Get Druid instance for inner component creation.
 ---@param template string|nil
 ---@param nodes table<hash, node>|nil
----@return druid_instance
+---@return druid.instance
 function M:get_druid(template, nodes)
 	local context = { _context = self }
 	local druid_instance = setmetatable(context, { __index = self._meta.druid })
@@ -239,7 +239,7 @@ end
 
 
 --- Setup component context and his style table
----@param druid_instance table The parent druid instance
+---@param druid_instance druid.instance The parent druid instance
 ---@param context table Druid context. Usually it is self of script
 ---@param style table Druid style module
 ---@param instance_class table The component instance class

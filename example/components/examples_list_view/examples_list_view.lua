@@ -6,7 +6,7 @@ local examples_list_view_item = require("example.components.examples_list_view.e
 
 ---@class examples_list_view: druid.base_component
 ---@field root druid.container
----@field druid druid_instance
+---@field druid druid.instance
 ---@field scroll druid.scroll
 ---@field grid druid.grid
 local M = component.create("examples_list_view")

@@ -2,7 +2,7 @@ local event = require("event.event")
 
 ---@class widget.property_left_right_selector: druid.widget
 ---@field root node
----@field druid druid_instance
+---@field druid druid.instance
 ---@field text_name druid.text
 ---@field button druid.button
 ---@field selected node

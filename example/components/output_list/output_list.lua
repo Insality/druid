@@ -4,7 +4,7 @@ local component = require("druid.component")
 ---@field root druid.container
 ---@field text_header druid.text
 ---@field scroll druid.scroll
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("output_list")
 
 ---@param template string

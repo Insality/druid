@@ -2,7 +2,7 @@ local component = require("druid.component")
 local on_screen_input = require("example.examples.gamepad.on_screen_control.on_screen_input")
 
 ---@class on_screen_control: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field on_screen_input on_screen_input
 local M = component.create("on_screen_control")
 

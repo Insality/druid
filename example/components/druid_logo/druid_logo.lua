@@ -6,7 +6,7 @@ local druid_logo_panthera = require("example.components.druid_logo.druid_logo_pa
 ---@class druid_logo: druid.base_component
 ---@field root druid.container
 ---@field text_description druid.text
----@field druid druid_instance
+---@field druid druid.instance
 local DruidLogo = component.create("druid_logo")
 
 

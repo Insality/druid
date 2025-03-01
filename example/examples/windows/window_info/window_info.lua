@@ -8,7 +8,7 @@ local window_animation_panthera = require("example.examples.windows.window_anima
 ---@field text_button_accept druid.lang_text
 ---@field text_description druid.lang_text
 ---@field button_close druid.button
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("window_info")
 
 

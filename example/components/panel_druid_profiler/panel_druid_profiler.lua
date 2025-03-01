@@ -5,7 +5,7 @@ local component = require("druid.component")
 
 ---@class panel_druid_profiler: druid.base_component
 ---@field root druid.container
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("panel_druid_profiler")
 local FPS_SAMPLES = 60
 

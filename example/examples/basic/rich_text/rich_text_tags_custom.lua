@@ -3,7 +3,7 @@ local helper = require("druid.helper")
 local event = require("event.event")
 
 ---@class rich_text_tags_custom: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field rich_text druid.rich_text
 local M = component.create("rich_text_tags_custom")
 

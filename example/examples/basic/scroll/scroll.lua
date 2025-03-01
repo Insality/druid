@@ -3,7 +3,7 @@ local component = require("druid.component")
 ---@class scroll: druid.base_component
 ---@field root node
 ---@field scroll druid.scroll
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("scroll")
 
 ---@param template string

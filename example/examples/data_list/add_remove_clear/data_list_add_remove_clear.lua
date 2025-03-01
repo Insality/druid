@@ -2,7 +2,7 @@ local event = require("event.event")
 local component = require("druid.component")
 
 ---@class data_list_add_remove_clear: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field data_list druid.data_list
 local M = component.create("data_list_add_remove_clear")
 

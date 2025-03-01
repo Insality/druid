@@ -4,7 +4,7 @@ local component = require("druid.component")
 ---@field scroll druid.scroll
 ---@field grid druid.grid
 ---@field text druid.text
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("scroll_bind_grid_horizontal")
 
 

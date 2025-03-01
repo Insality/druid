@@ -1,7 +1,7 @@
 local component = require("druid.component")
 
 ---@class basic_input: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field input druid.input
 local M = component.create("basic_input")
 

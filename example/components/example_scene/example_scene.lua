@@ -4,7 +4,7 @@ local component = require("druid.component")
 ---@field root druid.container
 ---@field text_debug_info druid.text
 ---@field text_gui_path druid.text
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("example_scene")
 
 

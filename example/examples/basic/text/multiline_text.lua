@@ -3,7 +3,7 @@ local component = require("druid.component")
 
 ---@class multiline_text: druid.base_component
 ---@field root node
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("multiline_text")
 
 ---@param template string

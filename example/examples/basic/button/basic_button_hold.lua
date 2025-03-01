@@ -4,7 +4,7 @@ local panthera = require("panthera.panthera")
 local animation = require("example.examples.basic.button.basic_button_hold_panthera")
 
 ---@class basic_button_hold: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field button druid.button
 local M = component.create("basic_button_hold")
 

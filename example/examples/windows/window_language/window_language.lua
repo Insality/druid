@@ -9,7 +9,7 @@ local window_animation_panthera = require("example.examples.windows.window_anima
 ---@class window_language: druid.base_component
 ---@field text_header druid.text
 ---@field button_close druid.button
----@field druid druid_instance
+---@field druid druid.instance
 ---@field lang_buttons table<string, druid.button>
 ---@field grid druid.grid
 ---@field on_language_change event

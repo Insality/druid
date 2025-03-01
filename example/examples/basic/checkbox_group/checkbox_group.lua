@@ -5,7 +5,7 @@ local component = require("druid.component")
 local checkbox = require("example.examples.basic.checkbox.checkbox")
 
 ---@class checkbox_group: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field button druid.button
 local M = component.create("checkbox_group")
 

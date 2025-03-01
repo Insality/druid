@@ -4,7 +4,7 @@ local component = require("druid.component")
 ---@field root node
 ---@field scroll druid.scroll
 ---@field slider druid.slider
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("scroll_slider")
 
 ---@param template string

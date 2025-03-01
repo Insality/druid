@@ -3,7 +3,7 @@ local component = require("druid.component")
 ---@class examples_list_view_item: druid.base_component
 ---@field root druid.container
 ---@field text druid.lang_text
----@field druid druid_instance
+---@field druid druid.instance
 ---@field on_click event
 local M = component.create("examples_list_view_item")
 

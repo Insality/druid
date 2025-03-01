@@ -1,7 +1,7 @@
 local component = require("druid.component")
 
 ---@class basic_slider_stepped: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field root node
 ---@field slider druid.slider
 local M = component.create("basic_slider_stepped")

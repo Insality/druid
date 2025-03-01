@@ -6,7 +6,7 @@ local helper = require("druid.helper")
 local settings = require("druid.system.settings")
 local base_component = require("druid.component")
 
----@class druid_instance
+---@class druid.instance
 ---@field components_all druid.base_component[] All created components
 ---@field components_interest table<string, druid.base_component[]> All components sorted by interest
 ---@field url url
@@ -80,7 +80,7 @@ end
 local WIDGET_METATABLE = { __index = base_component }
 
 ---Create the Druid component instance
----@param self druid_instance
+---@param self druid.instance
 ---@param widget_class druid.base_component
 local function create_widget(self, widget_class)
 	local instance = setmetatable({}, {
@@ -124,7 +124,7 @@ end
 
 
 ---Before processing any input check if we need to update input stack
----@param self druid_instance
+---@param self druid.instance
 ---@param components table[]
 local function check_sort_input_stack(self, components)
 	if not components or #components == 0 then
@@ -421,7 +421,7 @@ end
 ---If whitelist is not empty and component not contains in this list,
 ---component will be not processed on input step
 ---@param whitelist_components table|druid.base_component[] The array of component to whitelist
----@return druid_instance
+---@return druid.instance
 function M:set_whitelist(whitelist_components)
 	if whitelist_components and whitelist_components._component then
 		whitelist_components = { whitelist_components }
@@ -441,7 +441,7 @@ end
 ---If blacklist is not empty and component contains in this list,
 ---component will be not processed on input step DruidInstance
 ---@param blacklist_components table|druid.base_component[] The array of component to blacklist
----@return druid_instance
+---@return druid.instance
 function M:set_blacklist(blacklist_components)
 	if blacklist_components and blacklist_components._component then
 		blacklist_components = { blacklist_components }

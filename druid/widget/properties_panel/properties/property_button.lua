@@ -6,7 +6,7 @@ local color = require("druid.color")
 ---@field text_name druid.text
 ---@field button druid.button
 ---@field text_button druid.text
----@field druid druid_instance
+---@field druid druid.instance
 local M = {}
 
 function M:init()

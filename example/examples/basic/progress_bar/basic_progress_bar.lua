@@ -1,7 +1,7 @@
 local component = require("druid.component")
 
 ---@class basic_progress_bar: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field progress druid.progress
 local M = component.create("basic_progress_bar")
 

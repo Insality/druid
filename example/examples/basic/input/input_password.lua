@@ -1,7 +1,7 @@
 local component = require("druid.component")
 
 ---@class input_password: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field root node
 local M = component.create("input_password")
 

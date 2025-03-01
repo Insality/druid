@@ -1,7 +1,7 @@
 local component = require("druid.component")
 
 ---@class basic_button_double_click: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field button druid.button
 local M = component.create("basic_button_double_click")
 

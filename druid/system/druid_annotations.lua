@@ -1,5 +1,5 @@
 ---@class druid.widget: druid.base_component
----@field druid druid_instance Ready to use druid instance
+---@field druid druid.instance Ready to use druid instance
 ---@field root node
 
 ---@class GUITextMetrics

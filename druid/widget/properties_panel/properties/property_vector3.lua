@@ -6,7 +6,7 @@ local event = require("event.event")
 ---@field container druid.container
 ---@field text_name druid.text
 ---@field button druid.button
----@field druid druid_instance
+---@field druid druid.instance
 local M = {}
 
 function M:init()

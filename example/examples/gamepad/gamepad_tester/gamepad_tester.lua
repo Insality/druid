@@ -6,7 +6,7 @@ local component = require("druid.component")
 ---@field buttons_system druid.button
 ---@field button_left_bump druid.button
 ---@field button_right_bump druid.button
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("gamepad_tester")
 
 local STICK_DISTANCE = 50

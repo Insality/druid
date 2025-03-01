@@ -2,7 +2,7 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class basic_text: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field text druid.text
 local M = component.create("basic_text")
 

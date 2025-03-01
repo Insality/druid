@@ -17,7 +17,7 @@ local event = require("event.event")
 
 ---@class druid.container: druid.base_component
 ---@field node node
----@field druid druid_instance
+---@field druid druid.instance
 ---@field node_offset vector4
 ---@field origin_size vector3
 ---@field size vector3

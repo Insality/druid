@@ -8,7 +8,7 @@ local property_button = require("example.components.properties_panel.properties.
 ---@field root druid.container
 ---@field text_no_properties druid.lang_text
 ---@field scroll druid.scroll
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("properties_panel")
 
 ---@param template string

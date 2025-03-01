@@ -3,7 +3,7 @@ local druid_const = require("druid.const")
 local component = require("druid.component")
 
 ---@class hover_hint: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field root node
 ---@field panel_hint node
 ---@field text_hint druid.text

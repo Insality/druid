@@ -4,7 +4,7 @@ local helper = require("druid.helper")
 ---@class widget.property_slider: druid.widget
 ---@field root node
 ---@field container druid.container
----@field druid druid_instance
+---@field druid druid.instance
 ---@field text_name druid.text
 ---@field text_value druid.text
 ---@field slider druid.slider

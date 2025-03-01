@@ -5,7 +5,7 @@ local component = require("druid.component")
 ---@field text_name druid.lang_text
 ---@field button druid.button
 ---@field text_button druid.text
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("property_button")
 
 ---@param template string

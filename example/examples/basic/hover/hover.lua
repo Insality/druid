@@ -1,7 +1,7 @@
 local component = require("druid.component")
 
 ---@class hover: druid.base_component
----@field druid druid_instance
+---@field druid druid.instance
 ---@field hover druid.hover
 ---@field hover_pressed druid.hover
 local M = component.create("hover")
