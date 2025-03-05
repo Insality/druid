@@ -10,6 +10,7 @@ if TARGET_FPS == 0 then
 	TARGET_FPS = 60
 end
 
+
 function M:init()
 	self.root = self:get_node("root")
 

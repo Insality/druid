@@ -5,6 +5,7 @@ local mini_graph = require("druid.widget.mini_graph.mini_graph")
 ---@field root node
 local M = {}
 
+
 function M:init()
 	self.root = self:get_node("root")
 	self.delta_time = 0.1

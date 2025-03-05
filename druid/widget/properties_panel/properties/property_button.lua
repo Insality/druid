@@ -9,6 +9,7 @@ local color = require("druid.color")
 ---@field druid druid.instance
 local M = {}
 
+
 function M:init()
 	self.root = self:get_node("root")
 	self.text_name = self.druid:new_text("text_name")

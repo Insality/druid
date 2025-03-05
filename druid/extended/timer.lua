@@ -14,13 +14,6 @@ local component = require("druid.component")
 local M = component.create("timer")
 
 
-local function second_string_min(sec)
-	local mins = math.floor(sec / 60)
-	local seconds = math.floor(sec - mins * 60)
-	return string.format("%.2d:%.2d", mins, seconds)
-end
-
-
 ---@param node node Gui text node
 ---@param seconds_from number|nil Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
@@ -80,7 +73,7 @@ end
 ---@return druid.timer self
 function M:set_to(set_to)
 	self.last_value = set_to
-	gui.set_text(self.node, second_string_min(set_to))
+	gui.set_text(self.node, self:_second_string_min(set_to))
 
 	return self
 end
@@ -108,6 +101,13 @@ function M:set_interval(from, to)
 	self:set_to(from)
 
 	return self
+end
+
+
+function M:_second_string_min(sec)
+	local mins = math.floor(sec / 60)
+	local seconds = math.floor(sec - mins * 60)
+	return string.format("%.2d:%.2d", mins, seconds)
 end
 
 
