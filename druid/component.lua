@@ -235,7 +235,7 @@ end
 
 
 ---Get parent component
----@return druid.component|nil parent The parent component if exist or nil
+---@return druid.component|nil parent_component The parent component if exist or nil
 function M:get_parent_component()
 	return self._meta.parent
 end
