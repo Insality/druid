@@ -16,65 +16,6 @@ local component = require("druid.component")
 local M = component.create("progress")
 
 
-local function check_steps(self, from, to, exactly)
-	if not self.steps then
-		return
-	end
-
-	for i = 1, #self.steps do
-		local step = self.steps[i]
-		local v1, v2 = from, to
-		if v1 > v2 then
-			v1, v2 = v2, v1
-		end
-
-		if v1 < step and step < v2 then
-			self.step_callback(self:get_context(), step)
-		end
-		if exactly and exactly == step then
-			self.step_callback(self:get_context(), step)
-		end
-	end
-end
-
-
-local function set_bar_to(self, set_to, is_silent)
-	local prev_value = self.last_value
-	local other_side = self.key == const.SIDE.X and const.SIDE.Y or const.SIDE.X
-	self.last_value = set_to
-
-	local total_width = set_to * self.max_size[self.key]
-
-	local scale = 1
-	if self.slice_size[self.key] > 0 then
-		scale = math.min(total_width / self.slice_size[self.key], 1)
-	end
-	local size = math.max(total_width, self.slice_size[self.key])
-
-	do -- Scale other side
-		-- Decrease other side of progress bar to match the oppotize slice_size
-		local minimal_size = self.size[other_side] - self.slice_size[other_side]
-		local maximum_size = self.size[other_side]
-		local scale_diff = (maximum_size - minimal_size) / maximum_size
-		local other_scale = 1 - (scale_diff * (1 - scale))
-		self.scale[other_side] = other_scale
-	end
-
-	self.scale[self.key] = scale
-	gui.set_scale(self.node, self.scale)
-
-	self.size[self.key] = size
-	gui.set_size(self.node, self.size)
-
-	if not is_silent then
-		check_steps(self, prev_value, set_to)
-		if prev_value ~= self.last_value then
-			self.on_change:trigger(self:get_context(), self.last_value)
-		end
-	end
-end
-
-
 ---@param node string|node Node name or GUI Node itself.
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
 ---@param init_value number|nil Initial value of progress bar. Default: 1
@@ -132,7 +73,7 @@ function M:update(dt)
 		self:set_to(helper.step(self.last_value, self.target, step))
 
 		if self.last_value == self.target then
-			check_steps(self, prev_value, self.target, self.target)
+			self:_check_steps(prev_value, self.target, self.target)
 
 			if self.target_callback then
 				self.target_callback(self:get_context(), self.target)
@@ -146,13 +87,13 @@ end
 
 ---Fill a progress bar and stop progress animation
 function M:fill()
-	set_bar_to(self, 1, true)
+	self:_set_bar_to(1, true)
 end
 
 
 ---Empty a progress bar
 function M:empty()
-	set_bar_to(self, 0, true)
+	self:_set_bar_to(0, true)
 end
 
 
@@ -160,7 +101,7 @@ end
 ---@param to number Progress bar value, from 0 to 1
 function M:set_to(to)
 	to = helper.clamp(to, 0, 1)
-	set_bar_to(self, to)
+	self:_set_bar_to(to)
 end
 
 
@@ -205,6 +146,70 @@ function M:set_max_size(max_size)
 	self:set_to(self.last_value)
 	return self
 end
+
+
+
+
+---@private
+function M:_check_steps(from, to, exactly)
+	if not self.steps then
+		return
+	end
+
+	for i = 1, #self.steps do
+		local step = self.steps[i]
+		local v1, v2 = from, to
+		if v1 > v2 then
+			v1, v2 = v2, v1
+		end
+
+		if v1 < step and step < v2 then
+			self.step_callback(self:get_context(), step)
+		end
+		if exactly and exactly == step then
+			self.step_callback(self:get_context(), step)
+		end
+	end
+end
+
+
+---@private
+function M:_set_bar_to(set_to, is_silent)
+	local prev_value = self.last_value
+	local other_side = self.key == const.SIDE.X and const.SIDE.Y or const.SIDE.X
+	self.last_value = set_to
+
+	local total_width = set_to * self.max_size[self.key]
+
+	local scale = 1
+	if self.slice_size[self.key] > 0 then
+		scale = math.min(total_width / self.slice_size[self.key], 1)
+	end
+	local size = math.max(total_width, self.slice_size[self.key])
+
+	do -- Scale other side
+		-- Decrease other side of progress bar to match the oppotize slice_size
+		local minimal_size = self.size[other_side] - self.slice_size[other_side]
+		local maximum_size = self.size[other_side]
+		local scale_diff = (maximum_size - minimal_size) / maximum_size
+		local other_scale = 1 - (scale_diff * (1 - scale))
+		self.scale[other_side] = other_scale
+	end
+
+	self.scale[self.key] = scale
+	gui.set_scale(self.node, self.scale)
+
+	self.size[self.key] = size
+	gui.set_size(self.node, self.size)
+
+	if not is_silent then
+		self:_check_steps(prev_value, set_to)
+		if prev_value ~= self.last_value then
+			self.on_change:trigger(self:get_context(), self.last_value)
+		end
+	end
+end
+
 
 
 return M

@@ -5,6 +5,7 @@ local druid_instance = require("druid.system.druid_instance")
 
 local default_style = require("druid.styles.default.style")
 
+---Entry point for Druid UI Framework. Create a new Druid instance and adjust the settings.
 ---@class druid
 local M = {}
 
@@ -87,7 +88,7 @@ end
 local WRAPPED_WIDGETS = {}
 
 ---Set a widget to the current game object. The game object can acquire the widget by calling `bindings.get_widget`
----It wraps with events only top level functions cross-context, so no access to nested widgets functions
+---It wraps with events only top level functions cross-context, so you will have no access to nested widgets functions
 ---@param widget druid.widget
 function M.set_widget(widget)
 	local object = msg.url()
