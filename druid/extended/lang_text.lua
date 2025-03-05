@@ -1,6 +1,6 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to wrap over GUI Text nodes with localization helpers
+---Component to wrap over GUI Text nodes with localization helpers
 --
 -- <b># Overview #</b>
 --
@@ -17,13 +17,13 @@
 -- @within BaseComponent
 -- @alias druid.lang_text
 
---- On change text callback
+---On change text callback
 -- @tfield event on_change event
 
---- The text component
+---The text component
 -- @tfield Text text Text
 
---- Text node
+---Text node
 -- @tfield node node
 
 ---
@@ -41,7 +41,7 @@ local component = require("druid.component")
 local M = component.create("lang_text")
 
 
---- The LangText constructor
+---The LangText constructor
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param locale_id string|nil Default locale id or text from node as default
 ---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
@@ -67,7 +67,7 @@ function M:on_language_change()
 end
 
 
---- Setup raw text to lang_text component
+---Setup raw text to lang_text component
 ---@param text string Text for text node
 ---@return druid.lang_text Current instance
 function M:set_to(text)
@@ -79,7 +79,7 @@ function M:set_to(text)
 end
 
 
---- Setup raw text to lang_text component
+---Setup raw text to lang_text component
 ---@param text string Text for text node
 ---@return druid.lang_text Current instance
 function M:set_text(text)
@@ -87,7 +87,7 @@ function M:set_text(text)
 end
 
 
---- Translate the text by locale_id
+---Translate the text by locale_id
 ---@param locale_id string Locale id
 ---@param ... string Optional params for string.format
 ---@return druid.lang_text Current instance
@@ -100,7 +100,7 @@ function M:translate(locale_id, ...)
 end
 
 
---- Format string with new text params on localized text
+---Format string with new text params on localized text
 ---@param ... string Optional params for string.format
 ---@return druid.lang_text Current instance
 function M:format(...)

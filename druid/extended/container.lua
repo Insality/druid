@@ -1,4 +1,4 @@
---- Container component
+---Container component
 -- Container setup in GUI
 -- parent container - container that contains this container. If not, then it's a window default container or parent node
 -- container pivot - the point of the parent container that will be used as a pivot point for positioning
@@ -47,7 +47,7 @@ local CORNER_PIVOTS = {
 }
 
 
---- The Container init
+---The Container init
 ---@param node node Gui node
 ---@param mode string Layout mode
 ---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
@@ -118,7 +118,7 @@ function M:set_pivot(pivot)
 end
 
 
---- Component style params.
+---Component style params.
 -- You can override this component styles params in Druid styles table
 -- or create your own style
 -- @table style
@@ -131,7 +131,7 @@ function M:on_style_change(style)
 end
 
 
---- Set new size of layout node
+---Set new size of layout node
 ---@param width number|nil
 ---@param height number|nil
 ---@param anchor_pivot constant|nil If set will keep the corner possition relative to the new size
@@ -207,7 +207,7 @@ function M:get_scale()
 end
 
 
---- Set size for layout node to fit inside it
+---Set size for layout node to fit inside it
 ---@param target_size vector3
 ---@return druid.container Container
 function M:fit_into_size(target_size)
@@ -218,7 +218,7 @@ function M:fit_into_size(target_size)
 end
 
 
---- Set current size for layout node to fit inside it
+---Set current size for layout node to fit inside it
 ---@return druid.container Container
 function M:fit_into_window()
 	return self:fit_into_size(vmath.vector3(gui.get_width(), gui.get_height(), 0))
@@ -388,7 +388,7 @@ function M:refresh()
 				stretch_side_y = parent.size.y - (abs(self.node_offset.y) + abs(self.node_offset.w))
 			end
 
-			---- Size Update (for stretch)
+			----Size Update (for stretch)
 			if self.mode == const.LAYOUT_MODE.STRETCH then
 				self:set_size(
 					abs(stretch_side_x * self.node_fill_x),
@@ -522,7 +522,7 @@ function M:_on_corner_drag(x, y, corner_offset)
 end
 
 
---- Set node for layout node to fit inside it. Pass nil to reset
+---Set node for layout node to fit inside it. Pass nil to reset
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@return druid.container Layout
 function M:fit_into_node(node)

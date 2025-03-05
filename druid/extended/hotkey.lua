@@ -1,25 +1,25 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid hotkey component
+---Druid hotkey component
 --
 -- <a href="https://insality.github.io/druid/druid/index.html?example=general_hotkey" target="_blank"><b>Example Link</b></a>
 -- @module Hotkey
 -- @within BaseComponent
 -- @alias druid.hotkey
 
---- On hotkey released callback(self, argument)
+---On hotkey released callback(self, argument)
 -- @tfield event on_hotkey_pressed event
 
---- On hotkey released callback(self, argument)
+---On hotkey released callback(self, argument)
 -- @tfield event on_hotkey_released event
 
---- Visual node
+---Visual node
 -- @tfield node node
 
---- Button trigger node
+---Button trigger node
 -- @tfield node|nil click_node
 
---- Button component from click_node
+---Button component from click_node
 -- @tfield Button button Button
 
 ---
@@ -37,7 +37,7 @@ local event = require("event.event")
 local M = component.create("hotkey")
 
 
---- The Hotkey constructor
+---The Hotkey constructor
 ---@param keys string[]|string The keys to be pressed for trigger callback. Should contains one key and any modificator keys
 ---@param callback function The callback function
 ---@param callback_argument any|nil The argument to pass into the callback function
@@ -56,7 +56,7 @@ function M:init(keys, callback, callback_argument)
 end
 
 
---- Component style params.
+---Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
@@ -71,7 +71,7 @@ function M:on_style_change(style)
 end
 
 
---- Add hotkey for component callback
+---Add hotkey for component callback
 ---@param keys string[]|hash[]|string|hash that have to be pressed before key pressed to activate
 ---@param callback_argument any|nil The argument to pass into the callback function
 ---@return druid.hotkey Current instance
@@ -186,7 +186,7 @@ function M:on_input(action_id, action)
 end
 
 
---- If true, the callback will be triggered on action.repeated
+---If true, the callback will be triggered on action.repeated
 ---@param is_enabled_repeated bool The flag value
 ---@return druid.hotkey
 function M:set_repeat(is_enabled_repeated)

@@ -96,7 +96,7 @@ function M:on_input_interrupt()
 end
 
 
---- Strict swipe click area. Useful for
+---Strict swipe click area. Useful for
 -- restrict events outside stencil node
 ---@param zone node|string|nil Gui node
 function M:set_click_zone(zone)

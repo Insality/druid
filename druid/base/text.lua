@@ -1,81 +1,3 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component for Wrapping GUI Text Nodes: Druid Text
---
--- ## Overview ##
---
--- Druid Text is a component that provides various adjustment modes for text nodes. It allows text to be scaled down to fit within the size of the text node.
---
--- ## Notes ##
---
--- • The text pivot can be changed using the text:set_pivot method.
--- The anchoring will be inside the text node's area size.
---
--- • There are several text adjustment types available. The default is DOWNSCALE.
--- You can change the default adjustment type in the Text style. Refer to the example below to see all available adjustment types:
---
--- - const.TEXT_ADJUST.DOWNSCALE: Changes the text's scale to fit within the text node's size.
---
--- - const.TEXT_ADJUST.TRIM: Trims the text with a postfix (default: "...", can be overridden in styles)
--- to fit within the text node's size.
---
--- - const.TEXT_ADJUST.NO_ADJUST: No adjustment is applied, similar
--- to the default Defold Text Node behavior.
---
--- - const.TEXT_ADJUST.DOWNSCALE_LIMITED: Changes the text's scale
--- with a limited downscale. You can set the minimum scale using the text:set_minimal_scale() function.
---
--- - const.TEXT_ADJUST.SCROLL: Changes the text's pivot to imitate scrolling within the text box.
--- For better effect, use with a stencil node.
---
--- - const.TEXT_ADJUST.SCALE_THEN_SCROLL: Combines two modes: limited downscale first, then scroll.
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=texts_general" target="_blank"><b>Example Link</b></a>
--- @module Text
--- @within BaseComponent
--- @alias druid.text
-
---- On set text callback(self, text)
--- @tfield event on_set_text event
-
---- On adjust text size callback(self, new_scale, text_metrics)
--- @tfield event on_update_text_scale event
-
---- On change pivot callback(self, pivot)
--- @tfield event on_set_pivot event
-
---- Text node
--- @tfield node node
-
---- The node id of text node
--- @tfield hash node_id
-
---- Current text position
--- @tfield vector3 pos
-
---- The last text value
--- @tfield string last_value
-
---- Initial text node scale
--- @tfield vector3 start_scale
-
---- Current text node scale
--- @tfield vector3 scale
-
---- Initial text node size
--- @tfield vector3 start_size
-
---- Current text node available are
--- @tfield vector3 text_area
-
---- Current text size adjust settings
--- @tfield number adjust_type
-
---- Current text color
--- @tfield vector3 color
-
----
-
 local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -83,14 +5,20 @@ local utf8_lua = require("druid.system.utf8")
 local component = require("druid.component")
 local utf8 = utf8 or utf8_lua --[[@as utf8]]
 
+---@class druid.text.style
+---@field TRIM_POSTFIX string|nil The postfix for TRIM adjust type. Default: ...
+---@field DEFAULT_ADJUST string|nil The default adjust type for any text component. Default: DOWNSCALE
+---@field ADJUST_STEPS number|nil Amount of iterations for text adjust by height. Default: 20
+---@field ADJUST_SCALE_DELTA number|nil Scale step on each height adjust step. Default: 0.02
+
 ---@class druid.text: druid.component
----@field node node
----@field on_set_text event
----@field on_update_text_scale event
----@field on_set_pivot event
----@field style table
----@field private start_pivot userdata
----@field private start_scale vector3
+---@field node node The text node
+---@field on_set_text event The event triggered when the text is set, fun(self, text)
+---@field on_update_text_scale event The event triggered when the text scale is updated, fun(self, scale, metrics)
+---@field on_set_pivot event The event triggered when the text pivot is set, fun(self, pivot)
+---@field style druid.text.style The style of the text
+---@field private start_pivot userdata The start pivot of the text
+---@field private start_scale vector3 The start scale of the text
 ---@field private scale vector3
 local M = component.create("text")
 
@@ -111,7 +39,7 @@ local function update_text_size(self)
 end
 
 
---- Reset initial scale for text
+---Reset initial scale for text
 local function reset_default_scale(self)
 	self.scale.x = self.start_scale.x
 	self.scale.y = self.start_scale.y
@@ -127,7 +55,7 @@ local function is_fit_info_area(self, metrics)
 end
 
 
---- Setup scale x, but can only be smaller, than start text scale
+---Setup scale x, but can only be smaller, than start text scale
 local function update_text_area_size(self)
 	reset_default_scale(self)
 
@@ -305,24 +233,18 @@ local function update_adjust(self)
 end
 
 
---- Component style params.
--- You can override this component styles params in druid styles table
--- or create your own style
--- @table style
--- @tfield string|nil TRIM_POSTFIX The postfix for TRIM adjust type. Default: ...
--- @tfield string|nil DEFAULT_ADJUST The default adjust type for any text component. Default: DOWNSCALE
--- @tfield string|nil ADJUST_STEPS Amount of iterations for text adjust by height. Default: 20
--- @tfield string|nil ADJUST_SCALE_DELTA Scale step on each height adjust step. Default: 0.02
+---@param style druid.text.style
 function M:on_style_change(style)
-	self.style = {}
-	self.style.TRIM_POSTFIX = style.TRIM_POSTFIX or "..."
-	self.style.DEFAULT_ADJUST = style.DEFAULT_ADJUST or const.TEXT_ADJUST.DOWNSCALE
-	self.style.ADJUST_STEPS = style.ADJUST_STEPS or 20
-	self.style.ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02
+	self.style = {
+		TRIM_POSTFIX = style.TRIM_POSTFIX or "...",
+		DEFAULT_ADJUST = style.DEFAULT_ADJUST or const.TEXT_ADJUST.DOWNSCALE,
+		ADJUST_STEPS = style.ADJUST_STEPS or 20,
+		ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02
+	}
 end
 
 
---- The Text constructor
+---The Text constructor
 ---@param node string|node Node name or GUI Text Node itself
 ---@param value string|nil Initial text. Default value is node text from GUI scene. Default: nil
 ---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
@@ -357,7 +279,7 @@ function M:on_layout_change()
 end
 
 
---- Calculate text width with font with respect to trailing space
+---Calculate text width with font with respect to trailing space
 ---@param text string|nil
 ---@return number Width
 ---@return number Height
@@ -381,7 +303,7 @@ function M:get_text_size(text)
 end
 
 
---- Get chars count by width
+---Get chars count by width
 ---@param width number
 ---@return number Chars count
 function M:get_text_index_by_width(width)
@@ -414,7 +336,7 @@ function M:get_text_index_by_width(width)
 end
 
 
---- Set text to text field
+---Set text to text field
 ---@deprecated
 ---@param set_to string Text for node
 ---@return druid.text Current text instance
@@ -443,7 +365,7 @@ function M:get_text()
 end
 
 
---- Set text area size
+---Set text area size
 ---@param size vector3 The new text area size
 ---@return druid.text self Current text instance
 function M:set_size(size)
@@ -457,7 +379,7 @@ function M:set_size(size)
 end
 
 
---- Set color
+---Set color
 ---@param color vector4 Color for node
 ---@return druid.text Current text instance
 function M:set_color(color)
@@ -468,7 +390,7 @@ function M:set_color(color)
 end
 
 
---- Set alpha
+---Set alpha
 ---@param alpha number Alpha for node
 ---@return druid.text Current text instance
 function M:set_alpha(alpha)
@@ -479,7 +401,7 @@ function M:set_alpha(alpha)
 end
 
 
---- Set scale
+---Set scale
 ---@param scale vector3 Scale for node
 ---@return druid.text Current text instance
 function M:set_scale(scale)
@@ -490,7 +412,7 @@ function M:set_scale(scale)
 end
 
 
---- Set text pivot. Text will re-anchor inside text area
+---Set text pivot. Text will re-anchor inside text area
 ---@param pivot userdata The gui.PIVOT_* constant
 ---@return druid.text Current text instance
 function M:set_pivot(pivot)
@@ -537,7 +459,7 @@ function M:set_text_adjust(adjust_type, minimal_scale)
 end
 
 
---- Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
+---Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
 ---@param minimal_scale number If pass nil - not use minimal scale
 ---@return druid.text Current text instance
 function M:set_minimal_scale(minimal_scale)
@@ -547,7 +469,7 @@ function M:set_minimal_scale(minimal_scale)
 end
 
 
---- Return current text adjust type
+---Return current text adjust type
 ---@return string adjust_type The current text adjust type
 function M:get_text_adjust()
 	return self.adjust_type

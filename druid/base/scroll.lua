@@ -51,7 +51,7 @@ local function inverse_lerp(min, max, current)
 end
 
 
---- Update vector with next conditions:
+---Update vector with next conditions:
 -- Field x have to <= field z
 -- Field y have to <= field w
 local function get_border_vector(vector, offset)
@@ -69,7 +69,7 @@ local function get_border_vector(vector, offset)
 end
 
 
---- Return size from scroll border vector4
+---Return size from scroll border vector4
 local function get_size_vector(vector)
 	return vmath.vector3(vector.z - vector.x, vector.w - vector.y, 0)
 end
@@ -99,7 +99,7 @@ function M:on_style_change(style)
 end
 
 
---- The Scroll constructor
+---The Scroll constructor
 ---@param view_node string|node GUI view scroll node
 ---@param content_node string|node GUI content scroll node
 function M:init(view_node, content_node)
@@ -180,7 +180,7 @@ function M:on_remove()
 end
 
 
---- Start scroll to target point.
+---Start scroll to target point.
 ---@param point vector3 Target point
 ---@param is_instant boolean|nil Instant scroll flag
 -- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
@@ -213,7 +213,7 @@ function M:scroll_to(point, is_instant)
 end
 
 
---- Scroll to item in scroll by point index.
+---Scroll to item in scroll by point index.
 ---@param index number Point index
 ---@param skip_cb boolean|nil If true, skip the point callback
 function M:scroll_to_index(index, skip_cb)
@@ -235,7 +235,7 @@ function M:scroll_to_index(index, skip_cb)
 end
 
 
---- Start scroll to target scroll percent
+---Start scroll to target scroll percent
 ---@param percent vector3 target percent
 ---@param is_instant boolean|nil instant scroll flag
 -- @usage scroll:scroll_to_percent(vmath.vector3(0.5, 0, 0))
@@ -259,7 +259,7 @@ function M:scroll_to_percent(percent, is_instant)
 end
 
 
---- Return current scroll progress status.
+---Return current scroll progress status.
 -- Values will be in [0..1] interval
 ---@return vector3 New vector with scroll progress values
 function M:get_percent()
@@ -270,7 +270,7 @@ function M:get_percent()
 end
 
 
---- Set scroll content size.
+---Set scroll content size.
 -- It will change content gui node size
 ---@param size vector3 The new size for content node
 ---@param offset vector3|nil Offset value to set, where content is starts
@@ -286,7 +286,7 @@ function M:set_size(size, offset)
 end
 
 
---- Set new scroll view size in case the node size was changed.
+---Set new scroll view size in case the node size was changed.
 ---@param size vector3 The new size for view node
 ---@return druid.scroll Current scroll instance
 function M:set_view_size(size)
@@ -299,7 +299,7 @@ function M:set_view_size(size)
 end
 
 
---- Refresh scroll view size
+---Refresh scroll view size
 function M:update_view_size()
 	self.view_size = helper.get_scaled_size(self.view_node)
 	self.view_border = helper.get_border(self.view_node)
@@ -309,7 +309,7 @@ function M:update_view_size()
 end
 
 
---- Enable or disable scroll inert.
+---Enable or disable scroll inert.
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
 ---@param state boolean Inert scroll state
@@ -321,14 +321,14 @@ function M:set_inert(state)
 end
 
 
---- Return if scroll have inertion.
+---Return if scroll have inertion.
 ---@return boolean @If scroll have inertion
 function M:is_inert()
 	return self._is_inert
 end
 
 
---- Set extra size for scroll stretching.
+---Set extra size for scroll stretching.
 -- Set 0 to disable stretching effect
 ---@param stretch_size number|nil Size in pixels of additional scroll area
 ---@return druid.scroll Current scroll instance
@@ -340,14 +340,14 @@ function M:set_extra_stretch_size(stretch_size)
 end
 
 
---- Return vector of scroll size with width and height.
+---Return vector of scroll size with width and height.
 ---@return vector3 Available scroll size
 function M:get_scroll_size()
 	return self.available_size
 end
 
 
---- Set points of interest.
+---Set points of interest.
 -- Scroll will always centered on closer points
 ---@param points table Array of vector3 points
 ---@return druid.scroll Current scroll instance
@@ -364,7 +364,7 @@ function M:set_points(points)
 end
 
 
---- Lock or unlock horizontal scroll
+---Lock or unlock horizontal scroll
 ---@param state boolean True, if horizontal scroll is enabled
 ---@return druid.scroll Current scroll instance
 function M:set_horizontal_scroll(state)
@@ -374,7 +374,7 @@ function M:set_horizontal_scroll(state)
 end
 
 
---- Lock or unlock vertical scroll
+---Lock or unlock vertical scroll
 ---@param state boolean True, if vertical scroll is enabled
 ---@return druid.scroll Current scroll instance
 function M:set_vertical_scroll(state)
@@ -384,7 +384,7 @@ function M:set_vertical_scroll(state)
 end
 
 
---- Check node if it visible now on scroll.
+---Check node if it visible now on scroll.
 -- Extra border is not affected. Return true for elements in extra scroll zone
 ---@param node node The node to check
 ---@return boolean True if node in visible scroll area
@@ -424,7 +424,7 @@ function M:is_node_in_view(node)
 end
 
 
---- Bind the grid component (Static or Dynamic) to recalculate
+---Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
 ---@param grid druid.grid|nil Druid grid component
 ---@return druid.scroll Current scroll instance
@@ -453,7 +453,7 @@ function M:bind_grid(grid)
 end
 
 
---- Strict drag scroll area. Useful for
+---Strict drag scroll area. Useful for
 -- restrict events outside stencil node
 ---@param node node|string Gui node
 function M:set_click_zone(node)
@@ -560,7 +560,7 @@ function M:_set_scroll_position(position_x, position_y)
 end
 
 
---- Find closer point of interest
+---Find closer point of interest
 -- if no inert, scroll to next point by scroll direction
 -- if inert, find next point by scroll director
 ---@private

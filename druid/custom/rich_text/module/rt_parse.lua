@@ -107,7 +107,7 @@ local function merge_tags(dst, src)
 end
 
 
---- Parse the text into individual words
+---Parse the text into individual words
 -- @param text The text to parse
 -- @param default_settings Default settings for each word
 -- @param color_aliases Color aliases table
@@ -184,7 +184,7 @@ function M.parse(text, default_settings, style)
 end
 
 
---- Get the length of a text, excluding any tags (except image and spine tags)
+---Get the length of a text, excluding any tags (except image and spine tags)
 function M.length(text)
 	return utf8.len(text:gsub("<img.-/>", " "):gsub("<.->", ""))
 end

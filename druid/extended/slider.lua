@@ -1,37 +1,37 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid slider component
+---Druid slider component
 --
 -- <a href="https://insality.github.io/druid/druid/index.html?example=general_sliders" target="_blank"><b>Example Link</b></a>
 -- @module Slider
 -- @within BaseComponent
 -- @alias druid.slider
 
---- On change value callback(self, value)
+---On change value callback(self, value)
 -- @tfield event on_change_value event
 
---- Slider pin node
+---Slider pin node
 -- @tfield node node
 
---- Start pin node position
+---Start pin node position
 -- @tfield vector3 start_pos
 
---- Current pin node position
+---Current pin node position
 -- @tfield vector3 pos
 
---- Targer pin node position
+---Targer pin node position
 -- @tfield vector3 target_pos
 
---- End pin node position
+---End pin node position
 -- @tfield vector3 end_pos
 
---- Length between start and end position
+---Length between start and end position
 -- @tfield vector3 dist
 
---- Current drag state
+---Current drag state
 -- @tfield boolean is_drag
 
---- Current slider value
+---Current slider value
 -- @tfield number value
 
 ---
@@ -68,7 +68,7 @@ local function set_position(self, value)
 end
 
 
---- The Slider constructor
+---The Slider constructor
 ---@param node node Gui pin node
 ---@param end_pos vector3 The end position of slider
 ---@param callback function|nil On slider change callback
@@ -195,7 +195,7 @@ function M:on_input(action_id, action)
 end
 
 
---- Set value for slider
+---Set value for slider
 ---@param value number Value from 0 to 1
 ---@param is_silent boolean|nil Don't trigger event if true
 function M:set(value, is_silent)
@@ -208,7 +208,7 @@ function M:set(value, is_silent)
 end
 
 
---- Set slider steps. Pin node will
+---Set slider steps. Pin node will
 -- apply closest step position
 ---@param steps number[] Array of steps
 -- @usage slider:set_steps({0, 0.2, 0.6, 1})
@@ -219,7 +219,7 @@ function M:set_steps(steps)
 end
 
 
---- Set input zone for slider.
+---Set input zone for slider.
 -- User can touch any place of node, pin instantly will
 -- move at this position and node drag will start.
 -- This function require the Defold version 1.3.0+
@@ -236,14 +236,14 @@ function M:set_input_node(input_node)
 end
 
 
---- Set Slider input enabled or disabled
+---Set Slider input enabled or disabled
 ---@param is_enabled boolean
 function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
 end
 
 
---- Check if Slider component is enabled
+---Check if Slider component is enabled
 ---@return boolean
 function M:is_enabled()
 	return self._is_enabled

@@ -1,6 +1,6 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Component to manage data for huge dataset in scroll.
+---Component to manage data for huge dataset in scroll.
 -- It requires Druid Scroll and Druid Grid (Static or Dynamic) components
 --
 -- <a href="https://insality.github.io/druid/druid/index.html?example=general_data_list" target="_blank"><b>Example Link</b></a>
@@ -9,22 +9,22 @@
 -- @alias druid.data_list
 
 
---- The Druid scroll component
+---The Druid scroll component
 -- @tfield Scroll scroll Scroll
 
---- The Druid Grid component
+---The Druid Grid component
 -- @tfield StaticGrid grid StaticGrid}, @{DynamicGrid
 
---- The current progress of scroll posititon
+---The current progress of scroll posititon
 -- @tfield number scroll_progress
 
---- The current top index of visual elements
+---The current top index of visual elements
 -- @tfield number top_index
 
---- The current last index of visual elements
+---The current last index of visual elements
 -- @tfield number last_index
 
---- Event triggered when scroll progress is changed; event(self, progress_value)
+---Event triggered when scroll progress is changed; event(self, progress_value)
 -- @tfield event on_scroll_progress_change event
 
 ---On DataList visual element created Event callback(self, index, node, instance)
@@ -55,7 +55,7 @@ local event = require("event.event")
 local M = component.create("data_list")
 
 
---- The DataList constructor
+---The DataList constructor
 ---@param scroll druid.scroll The Scroll instance for Data List component
 ---@param grid druid.grid The StaticGrid} or @{DynamicGrid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
@@ -85,14 +85,14 @@ function M:init(scroll, grid, create_function)
 end
 
 
---- Druid System on_remove function
+---Druid System on_remove function
 function M:on_remove()
 	self:clear()
 	self.scroll.on_scroll:unsubscribe(self._refresh, self)
 end
 
 
---- Set refresh function for DataList component
+---Set refresh function for DataList component
 ---@param is_use_cache boolean Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
 ---@return druid.data_list Current DataList instance
 function M:set_use_cache(is_use_cache)
@@ -101,7 +101,7 @@ function M:set_use_cache(is_use_cache)
 end
 
 
---- Set new data set for DataList component
+---Set new data set for DataList component
 ---@param data table The new data array
 ---@return druid.data_list Current DataList instance
 function M:set_data(data)
@@ -112,14 +112,14 @@ function M:set_data(data)
 end
 
 
---- Return current data from DataList component
+---Return current data from DataList component
 ---@return table The current data array
 function M:get_data()
 	return self._data
 end
 
 
---- Add element to DataList. Currenly untested
+---Add element to DataList. Currenly untested
 ---@param data table
 ---@param index number|nil
 ---@param shift_policy number|nil The constant from const.SHIFT.*
@@ -132,7 +132,7 @@ function M:add(data, index, shift_policy)
 end
 
 
---- Remove element from DataList. Currenly untested
+---Remove element from DataList. Currenly untested
 ---@param index number|nil
 ---@param shift_policy number|nil The constant from const.SHIFT.*
 function M:remove(index, shift_policy)
@@ -141,7 +141,7 @@ function M:remove(index, shift_policy)
 end
 
 
---- Remove element from DataList by data value. Currenly untested
+---Remove element from DataList by data value. Currenly untested
 ---@param data table
 ---@param shift_policy number|nil The constant from const.SHIFT.*
 function M:remove_by_data(data, shift_policy)
@@ -153,14 +153,14 @@ function M:remove_by_data(data, shift_policy)
 end
 
 
---- Clear the DataList and refresh visuals
+---Clear the DataList and refresh visuals
 function M:clear()
 	self._data = {}
 	self:_refresh()
 end
 
 
---- Return index for data value
+---Return index for data value
 ---@param data table
 function M:get_index(data)
 	for index, value in pairs(self._data) do
@@ -173,7 +173,7 @@ function M:get_index(data)
 end
 
 
---- Return all currenly created nodes in DataList
+---Return all currenly created nodes in DataList
 ---@return node[] List of created nodes
 function M:get_created_nodes()
 	local nodes = {}
@@ -186,7 +186,7 @@ function M:get_created_nodes()
 end
 
 
---- Return all currenly created components in DataList
+---Return all currenly created components in DataList
 ---@return druid.component[] List of created nodes
 function M:get_created_components()
 	local components = {}
@@ -199,7 +199,7 @@ function M:get_created_components()
 end
 
 
---- Instant scroll to element with passed index
+---Instant scroll to element with passed index
 ---@param index number
 function M:scroll_to_index(index)
 	local pos = self.grid:get_pos(index)
@@ -207,7 +207,7 @@ function M:scroll_to_index(index)
 end
 
 
---- Add element at passed index using cache or create new
+---Add element at passed index using cache or create new
 ---@param index number
 ---@private
 function M:_add_at(index)
@@ -240,7 +240,7 @@ function M:_add_at(index)
 end
 
 
---- Remove element from passed index and add it to cache if applicable
+---Remove element from passed index and add it to cache if applicable
 ---@param index number
 ---@private
 function M:_remove_at(index)
@@ -270,7 +270,7 @@ end
 
 
 
---- Refresh all elements in DataList
+---Refresh all elements in DataList
 ---@private
 function M:_refresh()
 	self.scroll:set_size(self.grid:get_size_for(#self._data))

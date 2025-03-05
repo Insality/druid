@@ -1,62 +1,3 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component to handle drag action on node.
--- Drag have correct handling for multitouch and swap
--- touched while dragging. Drag will be processed even
--- the cursor is outside of node, if drag is already started
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_drag" target="_blank"><b>Example Link</b></a>
--- @module Drag
--- @within BaseComponent
--- @alias druid.drag
-
---- Drag node
--- @tfield node node
-
---- Event on touch start callback(self)
--- @tfield event on_touch_start event
-
---- Event on touch end callback(self)
--- @tfield event on_touch_end event
-
---- Event on drag start callback(self, touch)
--- @tfield event on_drag_start event
-
---- on drag progress callback(self, dx, dy, total_x, total_y, touch)
--- @tfield event on_drag Event event
-
---- Event on drag end callback(self, total_x, total_y, touch)
--- @tfield event on_drag_end event
-
---- Is component now touching
--- @tfield boolean is_touch
-
---- Is component now dragging
--- @tfield boolean is_drag
-
---- Is drag component process vertical dragging. Default - true
--- @tfield boolean can_x
-
---- Is drag component process horizontal. Default - true
--- @tfield boolean can_y
-
---- Current touch x position
--- @tfield number x
-
---- Current touch y position
--- @tfield number y
-
---- Current touch x screen position
--- @tfield number screen_x
-
---- Current touch y screen position
--- @tfield number screen_y
-
---- Touch start position
--- @tfield vector3 touch_start_pos
-
----
-
 local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -150,8 +91,12 @@ local function process_touch(self, touch)
 end
 
 
---- Return current touch action from action input data
--- If touch_id stored - return exact this touch action
+---Return current touch action from action input data
+---If touch_id stored - return exact this touch action
+---@param action_id hash Action id from on_input
+---@param action table Action from on_input
+---@param touch_id number Touch id
+---@return table|nil Touch action
 local function find_touch(action_id, action, touch_id)
 	local act = helper.is_mobile() and const.ACTION_MULTITOUCH or const.ACTION_TOUCH
 
@@ -173,8 +118,11 @@ local function find_touch(action_id, action, touch_id)
 end
 
 
---- Process on touch release. We should to find, if any other
--- touches exists to switch to another touch.
+---Process on touch release. We should to find, if any other
+---touches exists to switch to another touch.
+---@param self druid.drag
+---@param action_id hash Action id from on_input
+---@param action table Action from on_input
 local function on_touch_release(self, action_id, action)
 	if #action.touch >= 2 then
 		-- Find next unpressed touch
@@ -199,12 +147,7 @@ local function on_touch_release(self, action_id, action)
 end
 
 
---- Component style params.
--- You can override this component styles params in druid styles table
--- or create your own style
--- @table style
--- @tfield number|nil DRAG_DEADZONE Distance in pixels to start dragging. Default: 10
--- @tfield boolean|nil NO_USE_SCREEN_KOEF If screen aspect ratio affects on drag values. Default: false
+---@param style druid.drag.style
 function M:on_style_change(style)
 	self.style = {
 		DRAG_DEADZONE = style.DRAG_DEADZONE or 10,
@@ -289,7 +232,7 @@ end
 
 
 ---@local
----@param action_id string
+---@param action_id hash
 ---@param action table
 function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
@@ -388,7 +331,7 @@ function M:set_enabled(is_enabled)
 end
 
 
----Check if Drag component is enabled
+---Check if Drag component is capture input
 ---@return boolean
 function M:is_enabled()
 	return self._is_enabled

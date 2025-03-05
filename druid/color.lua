@@ -113,10 +113,10 @@ end
 
 
 ---Convert hsb color to rgb color
----@param r number @Red value
----@param g number @Green value
----@param b number @Blue value
----@param alpha number|nil @Alpha value. Default is 1
+---@param r number Red value
+---@param g number Green value
+---@param b number Blue value
+---@param alpha number|nil Alpha value. Default is 1
 function M.rgb2hsb(r, g, b, alpha)
 	alpha = alpha or 1
 	local min, max = math.min(r, g, b), math.max(r, g, b)
@@ -143,10 +143,10 @@ end
 
 
 ---Convert hsb color to rgb color
----@param h number @Hue
----@param s number @Saturation
----@param v number @Value
----@param alpha number|nil @Alpha value. Default is 1
+---@param h number Hue
+---@param s number Saturation
+---@param v number Value
+---@param alpha number|nil Alpha value. Default is 1
 function M.hsb2rgb(h, s, v, alpha)
 	local r, g, b
 	local i = math.floor(h * 6)
@@ -170,9 +170,9 @@ end
 
 
 ---Convert rgb color to hex color
----@param red number @Red value
----@param green number @Green value
----@param blue number @Blue value
+---@param red number Red value
+---@param green number Green value
+---@param blue number Blue value
 function M.rgb2hex(red, green, blue)
 	local r = string.format("%x", math.floor(red * 255))
 	local g = string.format("%x", math.floor(green * 255))

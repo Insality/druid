@@ -50,7 +50,7 @@ local function compare_words(one, two)
 end
 
 
---- Get the length of a text ignoring any tags except image tags
+---Get the length of a text ignoring any tags except image tags
 -- which are treated as having a length of 1
 -- @param text String with text or a list of words (from richtext.create)
 -- @return Length of text
@@ -152,12 +152,12 @@ end
 
 
 -- Create rich text gui nodes from text
---- @param text string The text to create rich text nodes from
---- @param settings table Optional settings table (refer to documentation for details)
---- @param style druid.rich_text.style
---- @return druid.rich_text.word[]
---- @return druid.rich_text.settings
---- @return druid.rich_text.lines_metrics
+---@param text string The text to create rich text nodes from
+---@param settings table Optional settings table (refer to documentation for details)
+---@param style druid.rich_text.style
+---@return druid.rich_text.word[]
+---@return druid.rich_text.settings
+---@return druid.rich_text.lines_metrics
 function M.create(text, settings, style)
 	assert(text, "You must provide a text")
 
@@ -522,7 +522,7 @@ function M.is_fit_info_area(lines, settings)
 end
 
 
---- Get all words with a specific tag
+---Get all words with a specific tag
 -- @param words The words to search (as received from richtext.create)
 -- @param tag The tag to search for. Nil to search for words without a tag
 -- @return Words matching the tag

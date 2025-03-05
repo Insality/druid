@@ -241,7 +241,7 @@ function M:get_parent_component()
 end
 
 
---- Setup component context and his style table
+---Setup component context and his style table
 ---@param druid_instance druid.instance The parent druid instance
 ---@param context table Druid context. Usually it is self of script
 ---@param style table Druid style module
@@ -272,21 +272,21 @@ function M:setup_component(druid_instance, context, style, instance_class)
 end
 
 
---- Return true, if input priority was changed
+---Return true, if input priority was changed
 ---@private
 function M:_is_input_priority_changed()
 	return self._component._is_input_priority_changed
 end
 
 
---- Reset is_input_priority_changed field
+---Reset is_input_priority_changed field
 ---@private
 function M:_reset_input_priority_changed()
 	self._component._is_input_priority_changed = false
 end
 
 
---- Get current component interests
+---Get current component interests
 ---@return table List of component interests
 ---@private
 function M:__get_interests()
@@ -351,7 +351,7 @@ function M:__remove_child(child)
 end
 
 
---- Return all children components, recursive
+---Return all children components, recursive
 ---@return table Array of childrens if the Druid component instance
 function M:get_childrens()
 	local childrens = {}

@@ -47,14 +47,14 @@ function M:set_text_function(callback)
 end
 
 
---- Sets the text property of the slider
+---Sets the text property of the slider
 ---@param text string
 function M:set_text_property(text)
 	self.text_name:set_text(text)
 end
 
 
---- Sets the callback function for when the slider value changes
+---Sets the callback function for when the slider value changes
 ---@param callback fun(value:number)
 function M:on_change(callback)
 	self.on_change_value:subscribe(callback)

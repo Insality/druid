@@ -211,7 +211,7 @@ end
 
 ---Get button enabled state.
 ---By default all Buttons is enabled on creating.
----@return boolean @True, if button is enabled now, False overwise
+---@return boolean is_enabled True, if button is enabled now, False overwise
 function M:is_enabled()
 	return not self.disabled
 end

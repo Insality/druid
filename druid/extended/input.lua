@@ -1,6 +1,6 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid input text component.
+---Druid input text component.
 -- Carry on user text input
 --
 -- <a href="https://insality.github.io/druid/druid/index.html?example=general_input" target="_blank"><b>Example Link</b></a>
@@ -9,73 +9,73 @@
 -- @within BaseComponent
 -- @alias druid.input
 
---- On input field select callback(self, input_instance)
+---On input field select callback(self, input_instance)
 -- @tfield event on_input_select event
 
---- On input field unselect callback(self, input_text, input_instance)
+---On input field unselect callback(self, input_text, input_instance)
 -- @tfield event on_input_unselect event
 
---- On input field text change callback(self, input_text)
+---On input field text change callback(self, input_text)
 -- @tfield event on_input_text event
 
---- On input field text change to empty string callback(self, input_text)
+---On input field text change to empty string callback(self, input_text)
 -- @tfield event on_input_empty event
 
---- On input field text change to max length string callback(self, input_text)
+---On input field text change to max length string callback(self, input_text)
 -- @tfield event on_input_full event
 
---- On trying user input with not allowed character callback(self, params, input_text)
+---On trying user input with not allowed character callback(self, params, input_text)
 -- @tfield event on_input_wrong event
 
---- On cursor position change callback(self, cursor_index, start_index, end_index)
+---On cursor position change callback(self, cursor_index, start_index, end_index)
 -- @tfield event on_select_cursor_change event
 
---- The cursor index. The index of letter cursor after. Leftmost cursor - 0
+---The cursor index. The index of letter cursor after. Leftmost cursor - 0
 -- @tfield number cursor_index
 
---- The selection start index. The index of letter cursor after. Leftmost selection - 0
+---The selection start index. The index of letter cursor after. Leftmost selection - 0
 -- @tfield number start_index
 
---- Theselection end index. The index of letter cursor before. Rightmost selection - #text
+---Theselection end index. The index of letter cursor before. Rightmost selection - #text
 -- @tfield number end_index
 
---- Text component
+---Text component
 -- @tfield Text text Text
 
---- Current input value
+---Current input value
 -- @tfield string value
 
---- Previous input value
+---Previous input value
 -- @tfield string previous_value
 
---- Current input value with marked text
+---Current input value with marked text
 -- @tfield string current_value
 
---- Marked text for input field. Info: https://defold.com/manuals/input-key-and-text/#marked-text
+---Marked text for input field. Info: https://defold.com/manuals/input-key-and-text/#marked-text
 -- @tfield string marked_value
 
---- Text width
+---Text width
 -- @tfield number text_width
 
---- Marked text width
+---Marked text width
 -- @tfield number marked_text_width
 
---- Button component
+---Button component
 -- @tfield Button button Button
 
---- Is current input selected now
+---Is current input selected now
 -- @tfield boolean is_selected
 
---- Is current input is empty now
+---Is current input is empty now
 -- @tfield boolean is_empty
 
---- Max length for input text
+---Max length for input text
 -- @tfield number|nil max_length
 
---- Pattern matching for user input
+---Pattern matching for user input
 -- @tfield string|nil allowerd_characters
 
---- Gui keyboard type for input field
+---Gui keyboard type for input field
 -- @tfield number keyboard_type
 
 ---
@@ -108,7 +108,7 @@ M.ALLOWED_ACTIONS = {
 	[const.ACTION_ESC] = true,
 }
 
---- Mask text by replacing every character with a mask character
+---Mask text by replacing every character with a mask character
 ---@param text string
 ---@param mask string
 ---@return string Masked text
@@ -132,7 +132,7 @@ local function clear_and_select(self)
 end
 
 
---- Component style params.
+---Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
@@ -155,7 +155,7 @@ function M:on_style_change(style)
 end
 
 
---- The Input constructor
+---The Input constructor
 ---@param click_node node Node to enabled input component
 ---@param text_node node|druid.text Text node what will be changed on user input. You can pass text component instead of text node name Text
 ---@param keyboard_type number|nil Gui keyboard type for input field
@@ -326,7 +326,7 @@ function M:get_text_selected()
 	return utf8.sub(self.value, self.start_index + 1, self.end_index)
 end
 
---- Replace selected text with new text
+---Replace selected text with new text
 ---@param text string The text to replace selected text
 ---@return string New input text
 function M:get_text_selected_replaced(text)
@@ -343,7 +343,7 @@ function M:get_text_selected_replaced(text)
 end
 
 
---- Set text for input field
+---Set text for input field
 ---@param input_text string The string to apply for input field
 function M:set_text(input_text)
 	input_text = tostring(input_text or "")
@@ -391,7 +391,7 @@ function M:set_text(input_text)
 end
 
 
---- Select input field. It will show the keyboard and trigger on_select events
+---Select input field. It will show the keyboard and trigger on_select events
 function M:select()
 	gui.reset_keyboard()
 	self.marked_value = ""
@@ -415,7 +415,7 @@ function M:select()
 end
 
 
---- Remove selection from input. It will hide the keyboard and trigger on_unselect events
+---Remove selection from input. It will hide the keyboard and trigger on_unselect events
 function M:unselect()
 	gui.reset_keyboard()
 	self.marked_value = ""
@@ -433,7 +433,7 @@ function M:unselect()
 end
 
 
---- Return current input field text
+---Return current input field text
 ---@return string The current input field text
 function M:get_text()
 	if self.marked_value ~= "" then
@@ -444,7 +444,7 @@ function M:get_text()
 end
 
 
---- Set maximum length for input field.
+---Set maximum length for input field.
 -- Pass nil to make input field unliminted (by default)
 ---@param max_length number Maximum length for input text field
 ---@return druid.input Current input instance
@@ -454,7 +454,7 @@ function M:set_max_length(max_length)
 end
 
 
---- Set allowed charaters for input field.
+---Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
 ---@param characters string Regulax exp. for validate user input
@@ -465,7 +465,7 @@ function M:set_allowed_characters(characters)
 end
 
 
---- Reset current input selection and return previous value
+---Reset current input selection and return previous value
 ---@return druid.input Current input instance
 function M:reset_changes()
 	self:set_text(self.previous_value)
@@ -474,7 +474,7 @@ function M:reset_changes()
 end
 
 
---- Set cursor position in input field
+---Set cursor position in input field
 ---@param cursor_index number|nil Cursor index for cursor position, if nil - will be set to the end of the text
 ---@param start_index number|nil Start index for cursor position, if nil - will be set to the end of the text
 ---@param end_index number|nil End index for cursor position, if nil - will be set to the start_index
@@ -496,7 +496,7 @@ function M:select_cursor(cursor_index, start_index, end_index)
 end
 
 
---- Change cursor position by delta
+---Change cursor position by delta
 ---@param delta number side for cursor position, -1 for left, 1 for right
 ---@param is_add_to_selection boolean (Shift key)
 ---@param is_move_to_end boolean (Ctrl key)

@@ -7,7 +7,7 @@ local gui_pick_node = gui.pick_node
 
 ---The helper module contains various functions that are used in the Druid library.
 ---You can use these functions in your projects as well.
----@class druid.system.helper
+---@class druid.helper
 local M = {}
 
 local POSITION_X = hash("position.x")
@@ -44,15 +44,15 @@ local function is_text_node(node)
 end
 
 
---- Text node or icon node can be nil
+---Text node or icon node can be nil
 local function get_width(node)
 	return is_text_node(node) and get_text_width(node) or get_icon_width(node)
 end
 
 
 ---Center two nodes.
---Nodes will be center around 0 x position
---text_node will be first (at left side)
+---Nodes will be center around 0 x position
+---text_node will be first (at left side)
 ---@param text_node node|nil Gui text node
 ---@param icon_node node|nil Gui box node
 ---@param margin number Offset between nodes
@@ -63,8 +63,8 @@ end
 
 
 ---Center two nodes.
---Nodes will be center around 0 x position
---icon_node will be first (at left side)
+---Nodes will be center around 0 x position
+---icon_node will be first (at left side)
 ---@param icon_node node|nil Gui box node
 ---@param text_node node|nil Gui text node
 ---@param margin number|nil Offset between nodes
@@ -115,8 +115,8 @@ end
 
 
 ---@param node_id string|node
----@param template string|nil @Full Path to the template
----@param nodes table<hash, node>|nil @Nodes what created with gui.clone_tree
+---@param template string|nil Full Path to the template
+---@param nodes table<hash, node>|nil Nodes what created with gui.clone_tree
 ---@return node
 function M.get_node(node_id, template, nodes)
 	if type(node_id) ~= "string" then
@@ -177,7 +177,7 @@ function M.step(current, target, step)
 end
 
 
----Clamp value between min and max
+---Clamp value between min and max. Works with nil values and swap min and max if needed.
 ---@param value number Value
 ---@param v1 number|nil Min value. If nil, value will be clamped to positive infinity
 ---@param v2 number|nil Max value If nil, value will be clamped to negative infinity
@@ -450,15 +450,20 @@ function M.get_border(node, offset)
 end
 
 
+local TEXT_METRICS_OPTIONS = {
+	line_break = false,
+	tracking = 0,
+	leading = 0,
+	width = 0,
+}
+
 ---Get text metric from GUI node.
 ---@param text_node node
 ---@return GUITextMetrics
 function M.get_text_metrics_from_node(text_node)
-	local font_resource = gui.get_font_resource(gui.get_font(text_node))
-	local options = {
-		tracking = gui.get_tracking(text_node),
-		line_break = gui.get_line_break(text_node),
-	}
+	local options = TEXT_METRICS_OPTIONS
+	options.tracking = gui.get_tracking(text_node)
+	options.line_break = gui.get_line_break(text_node)
 
 	-- Gather other options only if it used in node
 	if options.line_break then
@@ -466,6 +471,7 @@ function M.get_text_metrics_from_node(text_node)
 		options.leading = gui.get_leading(text_node)
 	end
 
+	local font_resource = gui.get_font_resource(gui.get_font(text_node))
 	return resource.get_text_metrics(font_resource, gui.get_text(text_node), options)
 end
 
@@ -548,16 +554,16 @@ end
 
 
 ---@class druid.animation_data
----@field frames table<number, table<string, number>> @List of frames with uv coordinates and size
----@field width number @Width of the animation
----@field height number @Height of the animation
----@field fps number @Frames per second
----@field current_frame number @Current frame
----@field node node @Node with flipbook animation
----@field v vector4 @Vector with UV coordinates and size
+---@field frames table<number, table<string, number>> List of frames with uv coordinates and size
+---@field width number Width of the animation
+---@field height number Height of the animation
+---@field fps number Frames per second
+---@field current_frame number Current frame
+---@field node node Node with flipbook animation
+---@field v vector4 Vector with UV coordinates and size
 
 ---@param node node
----@param atlas_path string @Path to the atlas
+---@param atlas_path string Path to the atlas
 ---@return druid.animation_data
 function M.get_animation_data_from_node(node, atlas_path)
 	local atlas_data = resource.get_atlas(atlas_path)

@@ -1,38 +1,38 @@
 -- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid Rich Input custom component.
+---Druid Rich Input custom component.
 -- It's wrapper on Input component with cursor and placeholder text
 -- @module RichInput
 -- @alias druid.rich_input
 
---- The component druid instance
+---The component druid instance
 -- @tfield DruidInstance druid DruidInstance
 
---- Root node
+---Root node
 -- @tfield node root
 
---- On input field text change callback(self, input_text)
+---On input field text change callback(self, input_text)
 -- @tfield Input input Input
 
---- On input field text change to empty string callback(self, input_text)
+---On input field text change to empty string callback(self, input_text)
 -- @tfield node cursor
 
---- On input field text change to empty string callback(self, input_text)
+---On input field text change to empty string callback(self, input_text)
 -- @tfield node cursor_text
 
---- On input field text change to empty string callback(self, input_text)
+---On input field text change to empty string callback(self, input_text)
 -- @tfield vector3 cursor_position
 
---- On input field text change to empty string callback(self, input_text)
+---On input field text change to empty string callback(self, input_text)
 -- @tfield druid.text input_text
 
---- On input field text change to empty string callback(self, input_text)
+---On input field text change to empty string callback(self, input_text)
 -- @tfield druid.drag drag
 
---- On input field text change to empty string callback(self, input_text)
+---On input field text change to empty string callback(self, input_text)
 -- @tfield druid.text placeholder
 
---- On input field text change to empty string callback(self, input_text)
+---On input field text change to empty string callback(self, input_text)
 -- @tfield vector3 text_position
 
 ---
@@ -120,7 +120,7 @@ local function on_unselect(self)
 end
 
 
---- Update selection
+---Update selection
 local function update_selection(self)
 	update_text(self)
 end
@@ -264,7 +264,7 @@ function M:on_input(action_id, action)
 end
 
 
---- Set placeholder text
+---Set placeholder text
 ---@param placeholder_text string The placeholder text
 function M:set_placeholder(placeholder_text)
 	self.placeholder:set_text(placeholder_text)
@@ -272,13 +272,13 @@ function M:set_placeholder(placeholder_text)
 end
 
 
---- Select input field
+---Select input field
 function M:select()
 	self.input:select()
 end
 
 
---- Set input field text
+---Set input field text
 ---@param text string The input text
 ---@return druid.rich_input self Current instance
 function M:set_text(text)
@@ -289,7 +289,7 @@ function M:set_text(text)
 end
 
 
---- Set input field font
+---Set input field font
 ---@param font hash The font hash
 ---@return druid.rich_input self Current instance
 function M:set_font(font)
@@ -300,13 +300,13 @@ function M:set_font(font)
 end
 
 
---- Set input field text
+---Set input field text
 function M:get_text()
 	return self.input:get_text()
 end
 
 
---- Set allowed charaters for input field.
+---Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
 ---@param characters string Regulax exp. for validate user input

@@ -204,7 +204,7 @@ local function schedule_late_init(self)
 end
 
 
---- Druid class constructor
+---Druid class constructor
 ---@param context table Druid context. Usually it is self of gui script
 ---@param style table? Druid style table
 function M:initialize(context, style)
@@ -247,7 +247,7 @@ function M:new(component, ...)
 end
 
 
---- Call this in gui_script final function.
+---Call this in gui_script final function.
 function M:final()
 	local components = self.components_all
 
@@ -266,7 +266,7 @@ function M:final()
 end
 
 
---- Remove created component from Druid instance.
+---Remove created component from Druid instance.
 --
 -- Component `on_remove` function will be invoked, if exist.
 ---@generic T: druid.component
@@ -369,7 +369,7 @@ function M:on_input(action_id, action)
 end
 
 
---- Call this in gui_script on_message function.
+---Call this in gui_script on_message function.
 ---@param message_id hash Message_id from on_message
 ---@param message table Message from on_message
 ---@param sender url Sender from on_message
@@ -410,7 +410,7 @@ function M:on_window_event(window_event)
 end
 
 
---- Calls the on_language_change function in all related components
+---Calls the on_language_change function in all related components
 -- This one called by global druid.on_language_change, but can be
 -- call manualy to update all translations
 ---@private

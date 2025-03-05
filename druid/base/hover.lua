@@ -1,31 +1,17 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component to handle hover node interaction
--- @module Hover
--- @within BaseComponent
--- @alias druid.hover
-
---- Hover node
--- @tfield node node
-
---- On hover callback(self, state, hover_instance)
--- @tfield event on_hover event
-
---- On mouse hover callback(self, state, hover_instance)
--- @tfield event on_mouse_hover event
-
----
-
 local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
+---@class druid.hover.style
+---@field ON_HOVER_CURSOR string|nil Mouse hover style on node hover
+---@field ON_MOUSE_HOVER_CURSOR string|nil Mouse hover style on node mouse hover
+
 ---@class druid.hover: druid.component
 ---@field node node
 ---@field on_hover event
 ---@field on_mouse_hover event
----@field style table
+---@field style druid.hover.style
 ---@field click_zone node
 ---@field private _is_hovered boolean|nil
 ---@field private _is_mouse_hovered boolean|nil
@@ -34,7 +20,6 @@ local component = require("druid.component")
 local M = component.create("hover")
 
 
---- The Hover constructor
 ---@param node node Gui node
 ---@param on_hover_callback function Hover callback
 ---@param on_mouse_hover function On mouse hover callback
@@ -61,12 +46,7 @@ function M:on_late_init()
 end
 
 
---- Component style params.
--- You can override this component styles params in druid styles table
--- or create your own style
--- @table style
--- @tfield[opt] string ON_HOVER_CURSOR Mouse hover style on node hover
--- @tfield[opt] string ON_MOUSE_HOVER_CURSOR Mouse hover style on node mouse hover
+---@param style druid.hover.style
 function M:on_style_change(style)
 	self.style = {}
 	self.style.ON_HOVER_CURSOR = style.ON_HOVER_CURSOR or nil
@@ -74,6 +54,9 @@ function M:on_style_change(style)
 end
 
 
+---@param action_id hash
+---@param action table
+---@return boolean
 function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= nil then
 		return false
@@ -113,7 +96,7 @@ function M:on_input_interrupt()
 end
 
 
---- Set hover state
+---Set hover state
 ---@param state boolean|nil The hover state
 function M:set_hover(state)
 	if self._is_hovered == state then
@@ -129,14 +112,14 @@ function M:set_hover(state)
 end
 
 
---- Return current hover state. True if touch action was on the node at current time
----@return boolean The current hovered state
+---Return current hover state. True if touch action was on the node at current time
+---@return boolean is_hovered The current hovered state
 function M:is_hovered()
 	return self._is_hovered
 end
 
 
---- Set mouse hover state
+---Set mouse hover state
 ---@param state boolean|nil The mouse hover state
 function M:set_mouse_hover(state)
 	if self._is_mouse_hovered == state then
@@ -152,15 +135,14 @@ function M:set_mouse_hover(state)
 end
 
 
---- Return current hover state. True if nil action_id (usually desktop mouse) was on the node at current time
+---Return current hover state. True if nil action_id (usually desktop mouse) was on the node at current time
 ---@return boolean The current hovered state
 function M:is_mouse_hovered()
 	return self._is_mouse_hovered
 end
 
 
---- Strict hover click area. Useful for
--- no click events outside stencil node
+---Strict hover click area. Useful for no click events outside stencil node
 ---@param zone node|string|nil Gui node
 function M:set_click_zone(zone)
 	if not zone then
@@ -172,9 +154,9 @@ function M:set_click_zone(zone)
 end
 
 
---- Set enable state of hover component.
--- If hover is not enabled, it will not generate
--- any hover events
+---Set enable state of hover component.
+---If hover is not enabled, it will not generate
+---any hover events
 ---@param state boolean|nil The hover enabled state
 function M:set_enabled(state)
 	self._is_enabled = state
@@ -190,7 +172,7 @@ function M:set_enabled(state)
 end
 
 
---- Return current hover enabled state
+---Return current hover enabled state
 ---@return boolean The hover enabled state
 function M:is_enabled()
 	return self._is_enabled

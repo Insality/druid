@@ -16,14 +16,11 @@ function M:init(callback, params)
 end
 
 
----@param action_id string
+---@param action_id hash
 ---@param action table
+---@return boolean
 function M:on_input(action_id, action)
-	if not action.released then
-		return false
-	end
-
-	if action_id == const.ACTION_BACK or action_id == const.ACTION_BACKSPACE then
+	if action.released and (action_id == const.ACTION_BACK or action_id == const.ACTION_BACKSPACE) then
 		self.on_back:trigger(self:get_context(), self.params)
 		return true
 	end

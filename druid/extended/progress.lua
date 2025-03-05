@@ -1,6 +1,6 @@
 -- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid component to handle the progress bars.
+---Druid component to handle the progress bars.
 -- <b># Overview #</b>
 --
 -- <b># Notes #</b>
@@ -19,27 +19,27 @@
 -- @within BaseComponent
 -- @alias druid.progress
 
---- On progress bar change callback(self, new_value)
+---On progress bar change callback(self, new_value)
 -- @tfield event on_change event
 
---- Progress bar fill node
+---Progress bar fill node
 -- @tfield node node
 
---- The progress bar direction.
+---The progress bar direction.
 --
 -- The values are: "x" or "y". (const.SIDE.X or const.SIDE.Y)
 -- @tfield string key
 
---- Current progress bar scale
+---Current progress bar scale
 -- @tfield vector3 scale
 
---- Current progress bar size
+---Current progress bar size
 -- @tfield vector3 size
 
---- Maximum size of progress bar
+---Maximum size of progress bar
 -- @tfield number max_size
 
---- Progress bar slice9 settings
+---Progress bar slice9 settings
 -- @tfield vector4 slice
 
 ---
@@ -117,7 +117,7 @@ local function set_bar_to(self, set_to, is_silent)
 end
 
 
---- Component style params.
+---Component style params.
 -- You can override this component styles params in druid styles table
 -- or create your own style
 -- @table style
@@ -130,7 +130,7 @@ function M:on_style_change(style)
 end
 
 
---- The Progress constructor
+---The Progress constructor
 ---@param node string|node Node name or GUI Node itself.
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
 ---@param init_value number|nil Initial value of progress bar. Default: 1
@@ -191,19 +191,19 @@ function M:update(dt)
 end
 
 
---- Fill a progress bar and stop progress animation
+---Fill a progress bar and stop progress animation
 function M:fill()
 	set_bar_to(self, 1, true)
 end
 
 
---- Empty a progress bar
+---Empty a progress bar
 function M:empty()
 	set_bar_to(self, 0, true)
 end
 
 
---- Instant fill progress bar to value
+---Instant fill progress bar to value
 ---@param to number Progress bar value, from 0 to 1
 function M:set_to(to)
 	to = helper.clamp(to, 0, 1)
@@ -211,13 +211,13 @@ function M:set_to(to)
 end
 
 
---- Return current progress bar value
+---Return current progress bar value
 function M:get()
 	return self.last_value
 end
 
 
---- Set points on progress bar to fire the callback
+---Set points on progress bar to fire the callback
 ---@param steps number[] Array of progress bar values
 ---@param callback function Callback on intersect step value
 -- @usage progress:set_steps({0, 0.3, 0.6, 1}, function(self, step) end)
@@ -227,7 +227,7 @@ function M:set_steps(steps, callback)
 end
 
 
---- Start animation of a progress bar
+---Start animation of a progress bar
 ---@param to number value between 0..1
 ---@param callback function|nil Callback on animation ends
 function M:to(to, callback)
@@ -245,7 +245,7 @@ function M:to(to, callback)
 end
 
 
---- Set progress bar max node size
+---Set progress bar max node size
 ---@param max_size vector3 The new node maximum (full) size
 ---@return druid.progress Progress
 function M:set_max_size(max_size)

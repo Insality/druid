@@ -1,6 +1,6 @@
 -- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
 
---- Druid Rich Text Custom Component.
+---Druid Rich Text Custom Component.
 -- <b># Overview #</b>
 --
 -- This custom component is inspired by <a href="https://github.com/britzl/defold-richtext" target="_blank">defold-richtext</a> by britzl.
@@ -62,13 +62,13 @@
 -- @within BaseComponent
 -- @alias druid.rich_text
 
---- The component druid instance
+---The component druid instance
 -- @tfield DruidInstance druid DruidInstance
 
---- The root node of the Rich Text
+---The root node of the Rich Text
 -- @tfield node root
 
---- The text prefab node
+---The text prefab node
 -- @tfield node text_prefab
 
 --
@@ -150,7 +150,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 local M = component.create("rich_text")
 
 
---- The RichText constructor
+---The RichText constructor
 ---@param text_node node|string The text node to make Rich Text
 ---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
 function M:init(text_node, value)
@@ -175,7 +175,7 @@ function M:on_layout_change()
 end
 
 
---- Component style params.
+---Component style params.
 -- You can override this component styles params in Druid styles table
 -- or create your own style
 -- @table style
@@ -190,7 +190,7 @@ function M:on_style_change(style)
 end
 
 
---- Set text for Rich Text
+---Set text for Rich Text
 ---@param text string|nil The text to set
 ---@return druid.rich_text.word[] words
 ---@return druid.rich_text.lines_metrics line_metrics
@@ -252,7 +252,7 @@ function M:set_text(text)
 end
 
 
---- Get current text
+---Get current text
 ---@return string text
 function M:get_text()
 	return self._last_value
@@ -266,7 +266,7 @@ function M:on_remove()
 end
 
 
---- Clear all created words.
+---Clear all created words.
 function M:clear()
 	if self._words then
 		rich_text.remove(self._words)
@@ -276,7 +276,7 @@ function M:clear()
 end
 
 
---- Get all words, which has a passed tag.
+---Get all words, which has a passed tag.
 ---@param tag string
 ---@return druid.rich_text.word[] words
 function M:tagged(tag)
@@ -296,14 +296,14 @@ function M:characters(word)
 end
 
 
---- Get all current words.
+---Get all current words.
 ---@return druid.rich_text.word[]
 function M:get_words()
 	return self._words
 end
 
 
---- Get current line metrics
+---Get current line metrics
 ----@return druid.rich_text.lines_metrics
 function M:get_line_metric()
 	return self._line_metrics
