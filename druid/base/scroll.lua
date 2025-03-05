@@ -90,7 +90,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class druid.scroll: druid.base_component
+---@class druid.scroll: druid.component
 ---@field node node The root node
 ---@field click_zone node|nil Optional click zone to restrict scroll area
 ---@field on_scroll event Triggered on scroll move with (self, position)

@@ -1,6 +1,6 @@
----@class druid.widget: druid.base_component
+---@class druid.widget: druid.component
 ---@field druid druid.instance Ready to use druid instance
----@field root node
+---@field root node Is it really needed?
 
 ---@class GUITextMetrics
 ---@field width number

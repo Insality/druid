@@ -3,7 +3,7 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 
 
----@class panel_druid_profiler: druid.base_component
+---@class panel_druid_profiler: druid.component
 ---@field root druid.container
 ---@field druid druid.instance
 local M = component.create("panel_druid_profiler")

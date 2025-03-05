@@ -3,7 +3,7 @@ local component = require("druid.component")
 
 local basic_animation_panthera = require("example.examples.panthera.basic_animation.basic_animation_panthera")
 
----@class basic_animation: druid.base_component
+---@class basic_animation: druid.component
 ---@field druid druid.instance
 local M = component.create("basic_animation")
 

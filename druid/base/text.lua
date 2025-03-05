@@ -83,7 +83,7 @@ local utf8_lua = require("druid.system.utf8")
 local component = require("druid.component")
 local utf8 = utf8 or utf8_lua --[[@as utf8]]
 
----@class druid.text: druid.base_component
+---@class druid.text: druid.component
 ---@field node node
 ---@field on_set_text event
 ---@field on_update_text_scale event

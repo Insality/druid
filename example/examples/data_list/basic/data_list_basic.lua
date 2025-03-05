@@ -1,7 +1,7 @@
 local event = require("event.event")
 local component = require("druid.component")
 
----@class data_list_basic: druid.base_component
+---@class data_list_basic: druid.component
 ---@field druid druid.instance
 local M = component.create("data_list_basic")
 
@@ -30,7 +30,7 @@ end
 
 ---@param item_data table
 ---@param index number
----@return node, druid.base_component
+---@return node, druid.component
 function M:create_item_callback(item_data, index)
 	local nodes = gui.clone_tree(self.prefab)
 

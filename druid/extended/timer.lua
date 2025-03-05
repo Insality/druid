@@ -2,7 +2,7 @@ local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class druid.timer: druid.base_component
+---@class druid.timer: druid.component
 ---@field on_tick event
 ---@field on_set_enabled event
 ---@field on_timer_end event

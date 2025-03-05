@@ -2,7 +2,7 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local layout = require("druid.extended.layout")
 
----@class basic_layout: druid.base_component
+---@class basic_layout: druid.component
 ---@field druid druid.instance
 ---@field root node
 local M = component.create("basic_layout")

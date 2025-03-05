@@ -3,7 +3,7 @@ local panthera = require("panthera.panthera")
 
 local window_animation_panthera = require("example.examples.windows.window_animation_panthera")
 
----@class window_info: druid.base_component
+---@class window_info: druid.component
 ---@field text_header druid.lang_text
 ---@field text_button_accept druid.lang_text
 ---@field text_description druid.lang_text

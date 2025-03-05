@@ -3,7 +3,7 @@ local component = require("druid.component")
 
 local button_component = require("example.examples.data_list.cache_with_component.button_component")
 
----@class data_list_cache_with_component: druid.base_component
+---@class data_list_cache_with_component: druid.component
 ---@field druid druid.instance
 local M = component.create("data_list_cache_with_component")
 
@@ -35,7 +35,7 @@ end
 
 ---@param item_data table
 ---@param index number
----@return node, druid.base_component
+---@return node, druid.component
 function M:create_item_callback(item_data, index)
 	local nodes = gui.clone_tree(self.prefab)
 

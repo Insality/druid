@@ -3,7 +3,7 @@ local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class on_screen_input: druid.base_component
+---@class on_screen_input: druid.component
 ---@field druid druid.instance
 ---@field on_action event @()
 ---@field on_movement event @(x: number, y: number, dt: number) X/Y values are in range -1..1

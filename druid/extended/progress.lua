@@ -49,7 +49,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class druid.progress: druid.base_component
+---@class druid.progress: druid.component
 ---@field node node
 ---@field on_change event
 ---@field style table

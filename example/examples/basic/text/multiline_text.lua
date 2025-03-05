@@ -1,7 +1,7 @@
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class multiline_text: druid.base_component
+---@class multiline_text: druid.component
 ---@field root node
 ---@field druid druid.instance
 local M = component.create("multiline_text")

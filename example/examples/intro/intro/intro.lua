@@ -2,7 +2,7 @@ local component = require("druid.component")
 local panthera = require("panthera.panthera")
 local intro_panthera = require("example.examples.intro.intro.intro_panthera")
 
----@class intro: druid.base_component
+---@class intro: druid.component
 ---@field root node
 local M = component.create("intro")
 

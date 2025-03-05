@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class property_checkbox: druid.base_component
+---@class property_checkbox: druid.component
 ---@field druid druid.instance
 ---@field root druid.container
 ---@field text_name druid.lang_text

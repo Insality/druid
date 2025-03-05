@@ -19,7 +19,7 @@ local component = require("druid.component")
 ---@field nodes_height table<node, number>
 ---@field rows druid.layout.row_data[]>
 
----@class druid.layout: druid.base_component
+---@class druid.layout: druid.component
 ---@field node node
 ---@field rows_data druid.layout.rows_data Last calculated rows data
 ---@field is_dirty boolean

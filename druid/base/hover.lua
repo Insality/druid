@@ -21,7 +21,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class druid.hover: druid.base_component
+---@class druid.hover: druid.component
 ---@field node node
 ---@field on_hover event
 ---@field on_mouse_hover event

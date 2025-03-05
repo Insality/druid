@@ -4,7 +4,7 @@ local storage = require("saver.storage")
 
 local examples_list_view_item = require("example.components.examples_list_view.examples_list_view_item")
 
----@class examples_list_view: druid.base_component
+---@class examples_list_view: druid.component
 ---@field root druid.container
 ---@field druid druid.instance
 ---@field scroll druid.scroll

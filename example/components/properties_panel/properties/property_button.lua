@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class property_button: druid.base_component
+---@class property_button: druid.component
 ---@field root node
 ---@field text_name druid.lang_text
 ---@field button druid.button

@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class example_scene: druid.base_component
+---@class example_scene: druid.component
 ---@field root druid.container
 ---@field text_debug_info druid.text
 ---@field text_gui_path druid.text

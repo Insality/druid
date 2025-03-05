@@ -28,7 +28,7 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local event = require("event.event")
 
----@class druid.hotkey: druid.base_component
+---@class druid.hotkey: druid.component
 ---@field on_hotkey_pressed event
 ---@field on_hotkey_released event
 ---@field style table

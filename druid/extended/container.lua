@@ -15,7 +15,7 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local event = require("event.event")
 
----@class druid.container: druid.base_component
+---@class druid.container: druid.component
 ---@field node node
 ---@field druid druid.instance
 ---@field node_offset vector4

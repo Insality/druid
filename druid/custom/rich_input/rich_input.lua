@@ -43,7 +43,7 @@ local const  = require("druid.const")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
----@class druid.rich_input: druid.base_component
+---@class druid.rich_input: druid.component
 ---@field root node
 ---@field input druid.input
 ---@field cursor node

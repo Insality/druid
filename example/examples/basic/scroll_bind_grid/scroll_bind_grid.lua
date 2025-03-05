@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class scroll_bind_grid: druid.base_component
+---@class scroll_bind_grid: druid.component
 ---@field scroll druid.scroll
 ---@field grid druid.grid
 ---@field text druid.text

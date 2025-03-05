@@ -32,7 +32,7 @@ local event = require("event.event")
 local settings = require("druid.system.settings")
 local component = require("druid.component")
 
----@class druid.lang_text: druid.base_component
+---@class druid.lang_text: druid.component
 ---@field text druid.text
 ---@field node node
 ---@field on_change event

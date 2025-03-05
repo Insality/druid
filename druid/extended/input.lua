@@ -87,7 +87,7 @@ local component = require("druid.component")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
----@class druid.input: druid.base_component
+---@class druid.input: druid.component
 ---@field on_input_select event
 ---@field on_input_unselect event
 ---@field on_input_text event

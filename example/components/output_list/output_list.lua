@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class output_list: druid.base_component
+---@class output_list: druid.component
 ---@field root druid.container
 ---@field text_header druid.text
 ---@field scroll druid.scroll

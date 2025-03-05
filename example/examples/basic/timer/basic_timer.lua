@@ -2,7 +2,7 @@ local event = require("event.event")
 
 local component = require("druid.component")
 
----@class basic_timer: druid.base_component
+---@class basic_timer: druid.component
 ---@field druid druid.instance
 ---@field root node
 ---@field text druid.text

@@ -7,19 +7,19 @@ local settings = require("druid.system.settings")
 local base_component = require("druid.component")
 
 ---@class druid.instance
----@field components_all druid.base_component[] All created components
----@field components_interest table<string, druid.base_component[]> All components sorted by interest
+---@field components_all druid.component[] All created components
+---@field components_interest table<string, druid.component[]> All components sorted by interest
 ---@field url url
 ---@field private _context table Druid context
 ---@field private _style table Druid style table
 ---@field private _deleted boolean
 ---@field private _is_late_remove_enabled boolean
----@field private _late_remove druid.base_component[]
----@field private _input_blacklist druid.base_component[]|nil
----@field private _input_whitelist druid.base_component[]|nil
+---@field private _late_remove druid.component[]
+---@field private _input_blacklist druid.component[]|nil
+---@field private _input_whitelist druid.component[]|nil
 ---@field private input_inited boolean
 ---@field private _late_init_timer_id number
----@field private _input_components druid.base_component[]
+---@field private _input_components druid.component[]
 local M = {}
 
 local MSG_ADD_FOCUS = hash("acquire_input_focus")
@@ -81,7 +81,7 @@ local WIDGET_METATABLE = { __index = base_component }
 
 ---Create the Druid component instance
 ---@param self druid.instance
----@param widget_class druid.base_component
+---@param widget_class druid.component
 local function create_widget(self, widget_class)
 	local instance = setmetatable({}, {
 		__index = setmetatable(widget_class, WIDGET_METATABLE)
@@ -148,7 +148,7 @@ end
 
 
 ---Check whitelists and blacklists for input components
----@param component druid.base_component
+---@param component druid.component
 ---@return boolean
 function M:_can_use_input_component(component)
 	local can_by_whitelist = true
@@ -224,7 +224,7 @@ end
 
 
 ---Create new Druid component instance
----@generic T: druid.base_component
+---@generic T: druid.component
 ---@param component T
 ---@vararg any
 ---@return T
@@ -264,7 +264,7 @@ end
 --- Remove created component from Druid instance.
 --
 -- Component `on_remove` function will be invoked, if exist.
----@generic T: druid.base_component
+---@generic T: druid.component
 ---@param component T Component instance
 ---@return boolean True if component was removed
 function M:remove(component)
@@ -420,7 +420,7 @@ end
 ---Set whitelist components for input processing.
 ---If whitelist is not empty and component not contains in this list,
 ---component will be not processed on input step
----@param whitelist_components table|druid.base_component[] The array of component to whitelist
+---@param whitelist_components table|druid.component[] The array of component to whitelist
 ---@return druid.instance
 function M:set_whitelist(whitelist_components)
 	if whitelist_components and whitelist_components._component then
@@ -440,7 +440,7 @@ end
 ---Set blacklist components for input processing.
 ---If blacklist is not empty and component contains in this list,
 ---component will be not processed on input step DruidInstance
----@param blacklist_components table|druid.base_component[] The array of component to blacklist
+---@param blacklist_components table|druid.component[] The array of component to blacklist
 ---@return druid.instance
 function M:set_blacklist(blacklist_components)
 	if blacklist_components and blacklist_components._component then
@@ -472,7 +472,7 @@ end
 
 
 ---Create new Druid widget instance
----@generic T: druid.base_component
+---@generic T: druid.component
 ---@param widget T
 ---@param template string|nil The template name used by widget
 ---@param nodes table<hash, node>|node|nil The nodes table from gui.clone_tree or prefab node to use for clone

@@ -82,7 +82,7 @@ local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class druid.grid: druid.base_component
+---@class druid.grid: druid.component
 ---@field on_add_item event
 ---@field on_remove_item event
 ---@field on_change_items event

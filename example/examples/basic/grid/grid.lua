@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class grid: druid.base_component
+---@class grid: druid.component
 ---@field grid druid.grid
 ---@field text druid.text
 ---@field druid druid.instance

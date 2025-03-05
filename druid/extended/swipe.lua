@@ -25,7 +25,7 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class druid.swipe: druid.base_component
+---@class druid.swipe: druid.component
 ---@field node node
 ---@field on_swipe event function(side, dist, dt), side - "left", "right", "up", "down"
 ---@field style table

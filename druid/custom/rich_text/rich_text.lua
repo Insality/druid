@@ -142,7 +142,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field offset_y number|nil
 ---@field node_size vector3|nil
 
----@class druid.rich_text: druid.base_component
+---@class druid.rich_text: druid.component
 ---@field root node
 ---@field text_prefab node
 ---@field private _last_value string

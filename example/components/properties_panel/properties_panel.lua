@@ -4,7 +4,7 @@ local property_checkbox = require("example.components.properties_panel.propertie
 local property_slider = require("example.components.properties_panel.properties.property_slider")
 local property_button = require("example.components.properties_panel.properties.property_button")
 
----@class properties_panel: druid.base_component
+---@class properties_panel: druid.component
 ---@field root druid.container
 ---@field text_no_properties druid.lang_text
 ---@field scroll druid.scroll

@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class basic_rich_text: druid.base_component
+---@class basic_rich_text: druid.component
 ---@field druid druid.instance
 ---@field rich_text druid.rich_text
 local M = component.create("basic_rich_text")

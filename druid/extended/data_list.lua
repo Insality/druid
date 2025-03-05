@@ -40,7 +40,7 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local event = require("event.event")
 
----@class druid.data_list: druid.base_component
+---@class druid.data_list: druid.component
 ---@field scroll druid.scroll
 ---@field grid druid.grid
 ---@field on_scroll_progress_change event
@@ -187,7 +187,7 @@ end
 
 
 --- Return all currenly created components in DataList
----@return druid.base_component[] List of created nodes
+---@return druid.component[] List of created nodes
 function M:get_created_components()
 	local components = {}
 

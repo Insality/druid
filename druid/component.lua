@@ -1,7 +1,7 @@
 local const = require("druid.const")
 local helper = require("druid.helper")
 
----@class druid.base_component.meta
+---@class druid.component.meta
 ---@field template string
 ---@field context table
 ---@field nodes table<hash, node>|nil
@@ -9,32 +9,32 @@ local helper = require("druid.helper")
 ---@field druid druid.instance
 ---@field input_enabled boolean
 ---@field children table
----@field parent druid.base_component|nil
+---@field parent druid.component|nil
 ---@field instance_class table
 
----@class druid.base_component.component
+---@class druid.component.component
 ---@field name string
 ---@field input_priority number
 ---@field default_input_priority number
 ---@field _is_input_priority_changed boolean
 ---@field _uid number
 
----@class druid.base_component
+---@class druid.component
 ---@field druid druid.instance Druid instance to create inner components
----@field init fun(self:druid.base_component, ...)|nil
----@field update fun(self:druid.base_component, dt:number)|nil
----@field on_remove fun(self:druid.base_component)|nil
----@field on_input fun(self:druid.base_component, action_id:number, action:table)|nil
----@field on_message fun(self:druid.base_component, message_id:hash, message:table, sender:url)|nil
----@field on_late_init fun(self:druid.base_component)|nil
----@field on_focus_lost fun(self:druid.base_component)|nil
----@field on_focus_gained fun(self:druid.base_component)|nil
----@field on_style_change fun(self:druid.base_component, style: table)|nil
----@field on_layout_change fun(self:druid.base_component)|nil
----@field on_window_resized fun(self:druid.base_component)|nil
----@field on_language_change fun(self:druid.base_component)|nil
----@field private _component druid.base_component.component
----@field private _meta druid.base_component.meta
+---@field init fun(self:druid.component, ...)|nil
+---@field update fun(self:druid.component, dt:number)|nil
+---@field on_remove fun(self:druid.component)|nil
+---@field on_input fun(self:druid.component, action_id:number, action:table)|nil
+---@field on_message fun(self:druid.component, message_id:hash, message:table, sender:url)|nil
+---@field on_late_init fun(self:druid.component)|nil
+---@field on_focus_lost fun(self:druid.component)|nil
+---@field on_focus_gained fun(self:druid.component)|nil
+---@field on_style_change fun(self:druid.component, style: table)|nil
+---@field on_layout_change fun(self:druid.component)|nil
+---@field on_window_resized fun(self:druid.component)|nil
+---@field on_language_change fun(self:druid.component)|nil
+---@field private _component druid.component.component
+---@field private _meta druid.component.meta
 local M = {}
 
 local INTERESTS = {} -- Cache interests per component class in runtime
@@ -54,7 +54,7 @@ end
 ---@param druid_style table|nil
 ---@return T self The component itself for chaining
 function M:set_style(druid_style)
-	---@cast self druid.base_component
+	---@cast self druid.component
 
 	self._meta.style = druid_style or {}
 	local component_style = self._meta.style[self._component.name] or {}
@@ -75,7 +75,7 @@ end
 ---@param template string|nil
 ---@return T self The component itself for chaining
 function M:set_template(template)
-	---@cast self druid.base_component
+	---@cast self druid.component
 
 	template = template or ""
 
@@ -109,7 +109,7 @@ end
 
 ---Set current component nodes, returned from `gui.clone_tree` function.
 ---@param nodes table<hash, node>
----@return druid.base_component
+---@return druid.component
 function M:set_nodes(nodes)
 	self._meta.nodes = nodes
 	return self
@@ -176,7 +176,7 @@ end
 ---Set component input priority, the bigger number processed first. Default value: 10
 ---@param value number
 ---@param is_temporary boolean|nil If true, the reset input priority will return to previous value
----@return druid.base_component self The component itself for chaining
+---@return druid.component self The component itself for chaining
 function M:set_input_priority(value, is_temporary)
 	assert(value)
 
@@ -201,7 +201,7 @@ end
 
 
 ---Reset component input priority to it's default value, that was set in `create` function or `set_input_priority`
----@return druid.base_component self The component itself for chaining
+---@return druid.component self The component itself for chaining
 function M:reset_input_priority()
 	self:set_input_priority(self._component.default_input_priority)
 	return self
@@ -219,7 +219,7 @@ end
 ---If input is disabled, the component will not receive input events.
 ---Recursive for all children components.
 ---@param state boolean
----@return druid.base_component self The component itself for chaining
+---@return druid.component self The component itself for chaining
 function M:set_input_enabled(state)
 	self._meta.input_enabled = state
 
@@ -232,7 +232,7 @@ end
 
 
 ---Get parent component
----@return druid.base_component|nil parent The parent component if exist or nil
+---@return druid.component|nil parent The parent component if exist or nil
 function M:get_parent_component()
 	return self._meta.parent
 end
@@ -243,7 +243,7 @@ end
 ---@param context table Druid context. Usually it is self of script
 ---@param style table Druid style module
 ---@param instance_class table The component instance class
----@return druid.base_component BaseComponent itself
+---@return druid.component BaseComponent itself
 ---@private
 function M:setup_component(druid_instance, context, style, instance_class)
 	self._meta = {
@@ -254,7 +254,7 @@ function M:setup_component(druid_instance, context, style, instance_class)
 		druid = druid_instance,
 		input_enabled = true,
 		children = {},
-		parent = type(context) ~= "userdata" and context --[[@as druid.base_component]],
+		parent = type(context) ~= "userdata" and context --[[@as druid.component]],
 		instance_class = instance_class
 	}
 
@@ -319,7 +319,7 @@ end
 
 
 ---Add child to component children list
----@generic T: druid.base_component
+---@generic T: druid.component
 ---@param child T The druid component instance
 ---@return T self The component itself for chaining
 ---@private
@@ -332,7 +332,7 @@ end
 
 
 ---Remove child from component children list
----@generic T: druid.base_component
+---@generic T: druid.component
 ---@param child T The druid component instance
 ---@return boolean true if child was removed
 ---@private
@@ -367,7 +367,7 @@ end
 ---Сreate a new component class, which will inherit from the base Druid component.
 ---@param name string|nil The name of the component
 ---@param input_priority number|nil The input priority. The bigger number processed first. Default value: 10
----@return druid.base_component
+---@return druid.component
 function M.create(name, input_priority)
 	local new_class = setmetatable({}, {
 		__index = M,

@@ -1,7 +1,7 @@
 local component = require("druid.component")
 local event = require("event.event")
 
----@class checkbox: druid.base_component
+---@class checkbox: druid.component
 ---@field druid druid.instance
 ---@field button druid.button
 local M = component.create("checkbox")

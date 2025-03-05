@@ -1,7 +1,7 @@
 local const = require("druid.const")
 local component = require("druid.component")
 
----@class druid.blocker: druid.base_component
+---@class druid.blocker: druid.component
 ---@field node node
 ---@field private _is_enabled boolean
 local M = component.create("blocker")

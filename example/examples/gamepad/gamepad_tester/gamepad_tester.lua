@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class gamepad_tester: druid.base_component
+---@class gamepad_tester: druid.component
 ---@field root node
 ---@field buttons druid.button
 ---@field buttons_system druid.button

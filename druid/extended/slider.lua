@@ -42,7 +42,7 @@ local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
----@class druid.slider: druid.base_component
+---@class druid.slider: druid.component
 ---@field node node
 ---@field on_change_value event
 ---@field style table

@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class basic_button: druid.base_component
+---@class basic_button: druid.component
 ---@field druid druid.instance
 ---@field button druid.button
 local M = component.create("basic_button")
