@@ -1,7 +1,7 @@
 local event = require("event.event")
 local component = require("druid.component")
 
----@class data_list_basic: druid.component
+---@class examples.data_list_basic: druid.component
 ---@field druid druid.instance
 local M = component.create("data_list_basic")
 

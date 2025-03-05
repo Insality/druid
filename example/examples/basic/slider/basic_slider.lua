@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class basic_slider: druid.component
+---@class examples.basic_slider: druid.component
 ---@field druid druid.instance
 ---@field root node
 ---@field slider druid.slider

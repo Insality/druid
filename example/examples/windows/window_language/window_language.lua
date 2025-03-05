@@ -6,7 +6,7 @@ local panthera = require("panthera.panthera")
 
 local window_animation_panthera = require("example.examples.windows.window_animation_panthera")
 
----@class window_language: druid.component
+---@class examples.window_language: druid.component
 ---@field text_header druid.text
 ---@field button_close druid.button
 ---@field druid druid.instance

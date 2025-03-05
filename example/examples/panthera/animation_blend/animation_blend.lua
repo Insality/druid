@@ -5,7 +5,7 @@ local event = require("event.event")
 
 local character_animation_blend = require("example.examples.panthera.animation_blend.character_animation_blend")
 
----@class animation_blend: druid.component
+---@class examples.animation_blend: druid.component
 ---@field root node
 ---@field druid druid.instance
 local M = component.create("animation_blend")

@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class basic_hotkey: druid.component
+---@class examples.basic_hotkey: druid.component
 ---@field druid druid.instance
 ---@field root node
 ---@field text druid.text

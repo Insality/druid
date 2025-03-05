@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class basic_back_handler: druid.component
+---@class examples.basic_back_handler: druid.component
 ---@field druid druid.instance
 local M = component.create("basic_back_handler")
 

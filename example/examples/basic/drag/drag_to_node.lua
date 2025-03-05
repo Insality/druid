@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class drag_to_node: druid.component
+---@class examples.drag_to_node: druid.component
 ---@field druid druid.instance
 local M = component.create("drag_to_node")
 

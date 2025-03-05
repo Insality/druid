@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class hover: druid.component
+---@class examples.hover: druid.component
 ---@field druid druid.instance
 ---@field hover druid.hover
 ---@field hover_pressed druid.hover

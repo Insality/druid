@@ -3,7 +3,7 @@ local component = require("druid.component")
 
 local button_component = require("example.examples.data_list.cache_with_component.button_component")
 
----@class data_list_cache_with_component: druid.component
+---@class examples.data_list_cache_with_component: druid.component
 ---@field druid druid.instance
 local M = component.create("data_list_cache_with_component")
 

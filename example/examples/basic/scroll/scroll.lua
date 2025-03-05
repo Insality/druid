@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class scroll: druid.component
+---@class examples.scroll: druid.component
 ---@field root node
 ---@field scroll druid.scroll
 ---@field druid druid.instance

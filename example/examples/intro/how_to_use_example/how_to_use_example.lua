@@ -1,7 +1,6 @@
 local component = require("druid.component")
-local panthera = require("panthera.panthera")
 
----@class how_to_use_example: druid.component
+---@class examples.how_to_use_example: druid.component
 ---@field root node
 local M = component.create("how_to_use_example")
 

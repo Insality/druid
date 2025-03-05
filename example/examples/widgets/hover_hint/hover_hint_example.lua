@@ -2,7 +2,7 @@ local hover_hint = require("example.examples.widgets.hover_hint.hover_hint")
 
 local component = require("druid.component")
 
----@class hover_hint_example: druid.component
+---@class examples.hover_hint_example: druid.component
 ---@field druid druid.instance
 local M = component.create("hover_hint_example")
 

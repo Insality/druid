@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class basic_swipe: druid.component
+---@class examples.basic_swipe: druid.component
 ---@field druid druid.instance
 local M = component.create("basic_swipe")
 

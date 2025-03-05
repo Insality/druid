@@ -2,7 +2,7 @@ local helper = require("druid.helper")
 local druid_const = require("druid.const")
 local component = require("druid.component")
 
----@class hover_hint: druid.component
+---@class examples.hover_hint: druid.component
 ---@field druid druid.instance
 ---@field root node
 ---@field panel_hint node

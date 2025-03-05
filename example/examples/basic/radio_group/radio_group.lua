@@ -4,7 +4,7 @@ local event = require("event.event")
 -- Require checkbox component from checkbox example
 local checkbox = require("example.examples.basic.checkbox.checkbox")
 
----@class radio_group: druid.component
+---@class examples.radio_group: druid.component
 ---@field druid druid.instance
 ---@field button druid.button
 local M = component.create("radio_group")
