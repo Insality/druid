@@ -14,7 +14,7 @@ local output_list = require("example.components.output_list.output_list")
 local druid_examples = require("example.examples.druid_examples")
 
 ---@class druid.example
----@field druid druid_instance
+---@field druid druid.instance
 ---@field container_root druid.container
 ---@field container_left druid.container
 ---@field container_logo druid.container

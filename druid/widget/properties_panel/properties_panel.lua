@@ -139,8 +139,9 @@ function M:on_size_changed(new_size)
 	local width = self.layout:get_size().x - self.layout.padding.x - self.layout.padding.z
 	for index = 1, #self.properties do
 		local property = self.properties[index]
-		if property.container then
-			property.container:set_size(width)
+		local container = property.container --[[@as druid.container]]
+		if container then
+			container:set_size(width)
 		end
 	end
 	self.paginator.container:set_size(width)

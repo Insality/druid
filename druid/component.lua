@@ -181,15 +181,17 @@ end
 function M:set_input_priority(value, is_temporary)
 	assert(value)
 
-	if self._component.input_priority == value then
+	local component = self._component
+
+	if component.input_priority == value then
 		return self
 	end
 
-	self._component.input_priority = value
-	self._component._is_input_priority_changed = true
+	component.input_priority = value
+	component._is_input_priority_changed = true
 
 	if not is_temporary then
-		self._component.default_input_priority = value
+		component.default_input_priority = value
 	end
 
 	local children = self:get_childrens()

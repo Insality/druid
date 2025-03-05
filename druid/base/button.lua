@@ -16,7 +16,6 @@ local component = require("druid.component")
 ---@field on_mouse_hover fun(self, node, hover_state)|nil
 ---@field on_set_enabled fun(self, node, enabled_state)|nil
 
-
 ---Clickable node with various interaction callbacks
 ---@class druid.button: druid.component
 ---@field on_click event function(self, custom_args, button_instance)

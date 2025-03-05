@@ -1,94 +1,22 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component to handle scroll content.
--- <b># Overview #</b>
---
--- The Scroll component is designed to handle scrollable content and consists of two nodes: the scroll parent and the scroll input.
---
--- The scroll input represents the user input zone and remains static.
---
--- The scroll parent is the movable part of the scroll and changes its position.
---
--- The initial scroll size can be set by adjusting the size of the scroll parent.
--- If the size of the scroll parent is smaller than the scroll input size, scrolling is not available.
---
--- <b># Notes #</b>
---
--- • By default, the scroll style includes inertia and extra size for a stretching effect.
--- These settings can be adjusted using the scroll style settings.
--- For more details, refer to the scroll style settings.
---
--- • "Points of interest" can be set up for the scroll.
--- The scroll will always be centered on the closest point of interest.
--- This feature allows creating a slider without inertia and with points of interest on each scroll element.
---
--- • The scroll content size can be adjusted using the scroll:set_size(node_size) method.
--- This method sets a new size for the _content node.
---
--- • Inertial scrolling mode can be enabled or disabled using the scroll:set_inert(state) method.
---
--- • The extra stretch size can be adjusted using the scroll:set_extra_stretch_size method.
---
--- • Multitouch is required for scrolling. The scroll component correctly handles
--- touch ID swaps while dragging the scroll.
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_scroll" target="_blank"><b>Example Link</b></a>
--- @module Scroll
--- @within BaseComponent
--- @alias druid.scroll
-
-
---- On scroll move callback(self, position)
--- @tfield event on_scroll event
-
---- On scroll_to function callback(self, target, is_instant)
--- @tfield event on_scroll_to event
-
---- On scroll_to_index function callback(self, index, point)
--- @tfield event on_point_scroll event
-
---- Scroll view node
--- @tfield node view_node
-
---- Scroll view size
--- @tfield vector3 view_size
-
---- Scroll content node
--- @tfield node content_node
-
---- Flag, if scroll now moving by inertion
--- @tfield boolean _is_inert
-
---- Current inert speed
--- @tfield vector3 inertion
-
---- Current scroll posisition
--- @tfield vector3 position
-
---- Current scroll target position
--- @tfield vector3 target_position
-
---- Available position for content node: (min_x, max_y, max_x, min_y)
--- @tfield vector4 available_pos
-
---- Size of available positions: (width, height, 0)
--- @tfield vector3 available_size
-
---- Drag Druid component
--- @tfield Drag drag Drag
-
---- Current index of points of interests
--- @tfield number|nil selected
-
---- Flag, if scroll now animating by gui.animate
--- @tfield boolean is_animate
-
----
-
 local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
+
+---Scroll style parameters
+---@class druid.scroll.style
+---@field FRICT number|nil Multiplier for free inertion. Default: 0
+---@field FRICT_HOLD number|nil Multiplier for inertion, while touching. Default: 0
+---@field INERT_THRESHOLD number|nil Scroll speed to stop inertion. Default: 3
+---@field INERT_SPEED number|nil Multiplier for inertion speed. Default: 30
+---@field POINTS_DEADZONE number|nil Speed to check points of interests in no_inertion mode. Default: 20
+---@field BACK_SPEED number|nil Scroll back returning lerp speed. Default: 35
+---@field ANIM_SPEED number|nil Scroll gui.animation speed for scroll_to function. Default: 2
+---@field EXTRA_STRETCH_SIZE number|nil extra size in pixels outside of scroll (stretch effect). Default: 0
+---@field SMALL_CONTENT_SCROLL boolean|nil If true, content node with size less than view node size can be scrolled. Default: false
+---@field WHEEL_SCROLL_SPEED number|nil The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
+---@field WHEEL_SCROLL_INVERTED boolean|nil If true, invert direction for touchpad and mouse wheel scroll. Default: false
+---@field WHEEL_SCROLL_BY_INERTION boolean|nil If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
 
 ---@class druid.scroll: druid.component
 ---@field node node The root node
@@ -107,6 +35,7 @@ local component = require("druid.component")
 ---@field drag druid.drag The drag component instance
 ---@field selected number|nil Current selected point of interest index
 ---@field is_animate boolean True if scroll is animating
+---@field style druid.scroll.style Component style parameters
 ---@field private _is_inert boolean True if inertial scrolling is enabled
 ---@field private inertion vector3 Current inertial movement vector
 ---@field private _is_horizontal_scroll boolean True if horizontal scroll enabled
@@ -114,7 +43,6 @@ local component = require("druid.component")
 ---@field private _grid_on_change event Grid items change event
 ---@field private _grid_on_change_callback function Grid change callback
 ---@field private _offset vector3 Content start offset
----@field private style table Component style parameters
 local M = component.create("scroll")
 
 
@@ -147,22 +75,7 @@ local function get_size_vector(vector)
 end
 
 
---- Component style params.
--- You can override this component styles params in druid styles table
--- or create your own style
--- @table style
--- @tfield number|nil FRICT Multiplier for free inertion. Default: 0
--- @tfield number|nil FRICT_HOLD Multiplier for inertion, while touching. Default: 0
--- @tfield number|nil INERT_THRESHOLD Scroll speed to stop inertion. Default: 3
--- @tfield number|nil INERT_SPEED Multiplier for inertion speed. Default: 30
--- @tfield number|nil POINTS_DEADZONE Speed to check points of interests in no_inertion mode. Default: 20
--- @tfield number|nil BACK_SPEED Scroll back returning lerp speed. Default: 35
--- @tfield number|nil ANIM_SPEED Scroll gui.animation speed for scroll_to function. Default: 2
--- @tfield number|nil EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect). Default: 0
--- @tfield boolean|nil SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled. Default: false
--- @tfield boolean|nil WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
--- @tfield boolean|nil WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll. Default: false
--- @tfield boolean|nil WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
+---@param style druid.scroll.style
 function M:on_style_change(style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0

@@ -252,6 +252,7 @@ function M:add_container(node_or_container, mode, on_resize_callback)
 	end
 
 	-- Covert node_id to node if needed
+	---@cast node node
 	node = self:get_node(node)
 
 	container = container or self.druid:new(M, node, mode)
