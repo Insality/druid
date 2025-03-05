@@ -21,18 +21,19 @@ local helper = require("druid.helper")
 
 ---@class druid.component
 ---@field druid druid.instance Druid instance to create inner components
----@field init fun(self:druid.component, ...)|nil
----@field update fun(self:druid.component, dt:number)|nil
----@field on_remove fun(self:druid.component)|nil
----@field on_input fun(self:druid.component, action_id:number, action:table)|nil
----@field on_message fun(self:druid.component, message_id:hash, message:table, sender:url)|nil
----@field on_late_init fun(self:druid.component)|nil
----@field on_focus_lost fun(self:druid.component)|nil
----@field on_focus_gained fun(self:druid.component)|nil
----@field on_style_change fun(self:druid.component, style: table)|nil
----@field on_layout_change fun(self:druid.component)|nil
----@field on_window_resized fun(self:druid.component)|nil
----@field on_language_change fun(self:druid.component)|nil
+---@field init fun(self:druid.component, ...)|nil Called when component is created
+---@field update fun(self:druid.component, dt:number)|nil Called every frame
+---@field on_remove fun(self:druid.component)|nil Called when component is removed
+---@field on_input fun(self:druid.component, action_id:hash, action:table)|nil Called when input event is triggered
+---@field on_input_interrupt fun(self:druid.component, action_id:hash, action:table)|nil Called when input event is consumed before
+---@field on_message fun(self:druid.component, message_id:hash, message:table, sender:url)|nil Called when message is received
+---@field on_late_init fun(self:druid.component)|nil Called before update once time after GUI init
+---@field on_focus_lost fun(self:druid.component)|nil Called when app lost focus
+---@field on_focus_gained fun(self:druid.component)|nil Called when app gained focus
+---@field on_style_change fun(self:druid.component, style: table)|nil Called when style is changed
+---@field on_layout_change fun(self:druid.component)|nil Called when GUI layout is changed
+---@field on_window_resized fun(self:druid.component)|nil Called when window is resized
+---@field on_language_change fun(self:druid.component)|nil Called when language is changed
 ---@field private _component druid.component.component
 ---@field private _meta druid.component.meta
 local M = {}

@@ -166,6 +166,11 @@ function M:_can_use_input_component(component)
 end
 
 
+---Process input for components
+---@param action_id hash Action_id from on_input
+---@param action table Action from on_input
+---@param components druid.component[] Components to process input
+---@return boolean The boolean value is input was consumed
 function M:_process_input(action_id, action, components)
 	local is_input_consumed = false
 
@@ -313,9 +318,9 @@ function M:remove(component)
 end
 
 
---- Druid late update function called after initialization and before the regular update step
--- This function is used to check the GUI state and perform actions after all components and nodes have been created.
--- An example use case is performing an auto stencil check in the GUI hierarchy for input components.
+---Druid late update function called after initialization and before the regular update step.
+---This function is used to check the GUI state and perform actions after all components and nodes have been created.
+---An example use case is performing an auto stencil check in the GUI hierarchy for input components.
 ---@private
 function M:late_init()
 	local late_init_components = self.components_interest[const.ON_LATE_INIT]
@@ -457,7 +462,7 @@ function M:set_blacklist(blacklist_components)
 end
 
 
---- Remove all components on late remove step DruidInstance
+---Remove all components on late remove step DruidInstance
 ---@private
 function M:_clear_late_remove()
 	if #self._late_remove == 0 then
