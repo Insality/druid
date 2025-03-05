@@ -1,40 +1,3 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
----Component to manage data for huge dataset in scroll.
--- It requires Druid Scroll and Druid Grid (Static or Dynamic) components
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_data_list" target="_blank"><b>Example Link</b></a>
--- @module DataList
--- @within BaseComponent
--- @alias druid.data_list
-
-
----The Druid scroll component
--- @tfield Scroll scroll Scroll
-
----The Druid Grid component
--- @tfield StaticGrid grid StaticGrid}, @{DynamicGrid
-
----The current progress of scroll posititon
--- @tfield number scroll_progress
-
----The current top index of visual elements
--- @tfield number top_index
-
----The current last index of visual elements
--- @tfield number last_index
-
----Event triggered when scroll progress is changed; event(self, progress_value)
--- @tfield event on_scroll_progress_change event
-
----On DataList visual element created Event callback(self, index, node, instance)
--- @tfield event on_element_add event
-
----On DataList visual element created Event callback(self, index)
--- @tfield event on_element_remove event
-
----
-
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
@@ -46,16 +9,17 @@ local event = require("event.event")
 ---@field on_scroll_progress_change event
 ---@field on_element_add event
 ---@field on_element_remove event
+---@field top_index number
+---@field last_index number
+---@field scroll_progress number
 ---@field private _create_function function
 ---@field private _is_use_cache boolean
 ---@field private _cache table
 ---@field private _data table
 ---@field private _data_visual table
----@field top_index number
 local M = component.create("data_list")
 
 
----The DataList constructor
 ---@param scroll druid.scroll The Scroll instance for Data List component
 ---@param grid druid.grid The StaticGrid} or @{DynamicGrid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])

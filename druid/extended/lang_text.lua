@@ -1,36 +1,6 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
----Component to wrap over GUI Text nodes with localization helpers
---
--- <b># Overview #</b>
---
--- • The initialization of druid.set_text_function is required to enable localization
--- using the localization ID.
---
--- • The LangText component supports up to 7 string format parameters.
--- This limitation exists due to certain issues with using ... arguments.
---
--- <b># Notes #</b>
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=texts_lang_text" target="_blank"><b>Example Link</b></a>
--- @module LangText
--- @within BaseComponent
--- @alias druid.lang_text
-
----On change text callback
--- @tfield event on_change event
-
----The text component
--- @tfield Text text Text
-
----Text node
--- @tfield node node
-
----
-
 local event = require("event.event")
-local settings = require("druid.system.settings")
 local component = require("druid.component")
+local settings = require("druid.system.settings")
 
 ---@class druid.lang_text: druid.component
 ---@field text druid.text
@@ -41,7 +11,6 @@ local component = require("druid.component")
 local M = component.create("lang_text")
 
 
----The LangText constructor
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param locale_id string|nil Default locale id or text from node as default
 ---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
@@ -109,5 +78,6 @@ function M:format(...)
 
 	return self
 end
+
 
 return M

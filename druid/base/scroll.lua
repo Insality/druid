@@ -183,8 +183,6 @@ end
 ---Start scroll to target point.
 ---@param point vector3 Target point
 ---@param is_instant boolean|nil Instant scroll flag
--- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
--- @usage scroll:scroll_to(vmath.vector3(0), true)
 function M:scroll_to(point, is_instant)
 	local b = self.available_pos
 	local target = vmath.vector3(
@@ -238,7 +236,6 @@ end
 ---Start scroll to target scroll percent
 ---@param percent vector3 target percent
 ---@param is_instant boolean|nil instant scroll flag
--- @usage scroll:scroll_to_percent(vmath.vector3(0.5, 0, 0))
 function M:scroll_to_percent(percent, is_instant)
 	local border = self.available_pos
 

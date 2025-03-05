@@ -1,58 +1,16 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
----Druid component to handle the progress bars.
--- <b># Overview #</b>
---
--- <b># Notes #</b>
---
--- • Progress Node should be fully filled in your GUI scene node. It will be the progress maximum size
---
--- • Progress correct working with Slice9 nodes, it trying to set size by _set_size_ first, if it is not possible, it set up sizing via _set_scale_
---
--- • Progress bar can fill only by vertical or horizontal size. If you want make diagonal progress bar, just rotate node in GUI scene
---
--- • If you have glitchy or dark texture bug with progress bar, try to disable mipmaps in your texture profiles
---
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_progress_bar" target="_blank"><b>Example Link</b></a>
--- @module Progress
--- @within BaseComponent
--- @alias druid.progress
-
----On progress bar change callback(self, new_value)
--- @tfield event on_change event
-
----Progress bar fill node
--- @tfield node node
-
----The progress bar direction.
---
--- The values are: "x" or "y". (const.SIDE.X or const.SIDE.Y)
--- @tfield string key
-
----Current progress bar scale
--- @tfield vector3 scale
-
----Current progress bar size
--- @tfield vector3 size
-
----Maximum size of progress bar
--- @tfield number max_size
-
----Progress bar slice9 settings
--- @tfield vector4 slice
-
----
-
 local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
+---@class druid.progress.style
+---@field SPEED number|nil Progress bas fill rate. More -> faster. Default: 5
+---@field MIN_DELTA number|nil Minimum step to fill progress bar. Default: 0.005
+
 ---@class druid.progress: druid.component
 ---@field node node
 ---@field on_change event
----@field style table
+---@field style druid.progress.style
 ---@field key string
 ---@field prop hash
 local M = component.create("progress")
@@ -117,16 +75,12 @@ local function set_bar_to(self, set_to, is_silent)
 end
 
 
----Component style params.
--- You can override this component styles params in druid styles table
--- or create your own style
--- @table style
--- @tfield number|nil SPEED Progress bas fill rate. More -> faster. Default: 5
--- @tfield number|nil MIN_DELTA Minimum step to fill progress bar. Default: 0.005
+---@param style druid.progress.style
 function M:on_style_change(style)
-	self.style = {}
-	self.style.SPEED = style.SPEED or 5
-	self.style.MIN_DELTA = style.MIN_DELTA or 0.005
+	self.style = {
+		SPEED = style.SPEED or 5,
+		MIN_DELTA = style.MIN_DELTA or 0.005,
+	}
 end
 
 
@@ -166,7 +120,6 @@ end
 
 
 function M:on_remove()
-	-- Return default size
 	gui.set_size(self.node, self.max_size)
 end
 
@@ -220,7 +173,6 @@ end
 ---Set points on progress bar to fire the callback
 ---@param steps number[] Array of progress bar values
 ---@param callback function Callback on intersect step value
--- @usage progress:set_steps({0, 0.3, 0.6, 1}, function(self, step) end)
 function M:set_steps(steps, callback)
 	self.steps = steps
 	self.step_callback = callback

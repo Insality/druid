@@ -51,15 +51,6 @@ local utf8 = utf8 or utf8_lua
 ---@field cursor_position vector3
 local M = component.create("druid.rich_input")
 
---local SCHEME = {
---	ROOT = "root",
---	BUTTON = "button",
---	PLACEHOLDER = "placeholder_text",
---	INPUT = "input_text",
---	CURSOR = "cursor_node",
---	CURSOR_TEXT = "cursor_text",
---}
-
 local DOUBLE_CLICK_TIME = 0.35
 
 local function animate_cursor(self)

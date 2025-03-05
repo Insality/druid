@@ -33,8 +33,7 @@ local component = require("druid.component")
 ---@field on_size_changed event.on_size_changed
 local M = component.create("layout")
 
----Layout component constructor
----@local
+
 ---@param node_or_node_id node|string
 ---@param layout_type druid.layout.mode
 function M:init(node_or_node_id, layout_type)
@@ -60,7 +59,6 @@ function M:init(node_or_node_id, layout_type)
 end
 
 
----@local
 function M:update()
 	if not self.is_dirty then
 		return

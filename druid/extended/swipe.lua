@@ -3,9 +3,6 @@ local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----Component style params.
----You can override this component styles params in druid styles table
----or create your own style
 ---@class druid.swipe.style
 ---@field SWIPE_TIME number|nil Maximum time for swipe trigger. Default: 0.4
 ---@field SWIPE_THRESHOLD number|nil Minimum distance for swipe trigger. Default: 50
@@ -26,14 +23,14 @@ local M = component.create("swipe")
 
 ---@param style druid.swipe.style
 function M:on_style_change(style)
-	self.style = {}
-	self.style.SWIPE_TIME = style.SWIPE_TIME or 0.4
-	self.style.SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50
-	self.style.SWIPE_TRIGGER_ON_MOVE = style.SWIPE_TRIGGER_ON_MOVE or false
+	self.style = {
+		SWIPE_TIME = style.SWIPE_TIME or 0.4,
+		SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50,
+		SWIPE_TRIGGER_ON_MOVE = style.SWIPE_TRIGGER_ON_MOVE or false,
+	}
 end
 
 
----Swipe constructor
 ---@param node_or_node_id node|string
 ---@param on_swipe_callback function
 function M:init(node_or_node_id, on_swipe_callback)
@@ -97,7 +94,7 @@ end
 
 
 ---Strict swipe click area. Useful for
--- restrict events outside stencil node
+---restrict events outside stencil node
 ---@param zone node|string|nil Gui node
 function M:set_click_zone(zone)
 	if not zone then

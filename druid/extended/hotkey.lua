@@ -1,37 +1,14 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
----Druid hotkey component
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_hotkey" target="_blank"><b>Example Link</b></a>
--- @module Hotkey
--- @within BaseComponent
--- @alias druid.hotkey
-
----On hotkey released callback(self, argument)
--- @tfield event on_hotkey_pressed event
-
----On hotkey released callback(self, argument)
--- @tfield event on_hotkey_released event
-
----Visual node
--- @tfield node node
-
----Button trigger node
--- @tfield node|nil click_node
-
----Button component from click_node
--- @tfield Button button Button
-
----
-
+local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
-local event = require("event.event")
+
+---@class druid.hotkey.style
+---@field MODIFICATORS string[]|hash[] The list of action_id as hotkey modificators
 
 ---@class druid.hotkey: druid.component
 ---@field on_hotkey_pressed event
 ---@field on_hotkey_released event
----@field style table
+---@field style druid.hotkey.style
 ---@field private _hotkeys table
 ---@field private _modificators table
 local M = component.create("hotkey")
@@ -56,17 +33,17 @@ function M:init(keys, callback, callback_argument)
 end
 
 
----Component style params.
--- You can override this component styles params in druid styles table
--- or create your own style
--- @table style
--- @tfield string[] MODIFICATORS The list of action_id as hotkey modificators
+---@param style druid.hotkey.style
 function M:on_style_change(style)
-	self.style = {}
-	self.style.MODIFICATORS = style.MODIFICATORS or {}
+	self.style = {
+		MODIFICATORS = style.MODIFICATORS or {},
+	}
 
 	for index = 1, #style.MODIFICATORS do
-		self.style.MODIFICATORS[index] = hash(self.style.MODIFICATORS[index])
+		local modificator = style.MODIFICATORS[index]
+		if type(modificator) == "string" then
+			self.style.MODIFICATORS[index] = hash(modificator)
+		end
 	end
 end
 
@@ -132,6 +109,9 @@ function M:on_focus_gained()
 end
 
 
+---@param action_id hash|nil
+---@param action action
+---@return boolean
 function M:on_input(action_id, action)
 	if not action_id then
 		return false

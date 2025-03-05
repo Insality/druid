@@ -6,7 +6,6 @@ local component = require("druid.component")
 ---@field on_tick event
 ---@field on_set_enabled event
 ---@field on_timer_end event
----@field style table
 ---@field node node
 ---@field from number
 ---@field target number

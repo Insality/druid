@@ -127,8 +127,6 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field COLORS table<string, vector4>
 ---@field ADJUST_STEPS number
 ---@field ADJUST_SCALE_DELTA number
----@field ADJUST_TYPE string
----@field ADJUST_SCALE number
 
 ---@class druid.rich_text.lines_metrics
 ---@field text_width number
@@ -150,7 +148,6 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 local M = component.create("rich_text")
 
 
----The RichText constructor
 ---@param text_node node|string The text node to make Rich Text
 ---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
 function M:init(text_node, value)
@@ -175,18 +172,13 @@ function M:on_layout_change()
 end
 
 
----Component style params.
--- You can override this component styles params in Druid styles table
--- or create your own style
--- @table style
--- @tfield table|nil COLORS Rich Text color aliases. Default: {}
--- @tfield number|nil ADJUST_STEPS Amount steps of attemps text adjust by height. Default: 20
--- @tfield number|nil ADJUST_SCALE_DELTA Scale step on each height adjust step. Default: 0.02
+---@param style druid.rich_text.style
 function M:on_style_change(style)
-	self.style = {}
-	self.style.COLORS = style.COLORS or {}
-	self.style.ADJUST_STEPS = style.ADJUST_STEPS or 20
-	self.style.ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02
+	self.style = {
+		COLORS = style.COLORS or {},
+		ADJUST_STEPS = style.ADJUST_STEPS or 20,
+		ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02,
+	}
 end
 
 

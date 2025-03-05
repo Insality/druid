@@ -1,42 +1,3 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
----Druid slider component
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_sliders" target="_blank"><b>Example Link</b></a>
--- @module Slider
--- @within BaseComponent
--- @alias druid.slider
-
----On change value callback(self, value)
--- @tfield event on_change_value event
-
----Slider pin node
--- @tfield node node
-
----Start pin node position
--- @tfield vector3 start_pos
-
----Current pin node position
--- @tfield vector3 pos
-
----Targer pin node position
--- @tfield vector3 target_pos
-
----End pin node position
--- @tfield vector3 end_pos
-
----Length between start and end position
--- @tfield vector3 dist
-
----Current drag state
--- @tfield boolean is_drag
-
----Current slider value
--- @tfield number value
-
----
-
-
 local event = require("event.event")
 local helper = require("druid.helper")
 local const = require("druid.const")
@@ -209,9 +170,8 @@ end
 
 
 ---Set slider steps. Pin node will
--- apply closest step position
+---apply closest step position
 ---@param steps number[] Array of steps
--- @usage slider:set_steps({0, 0.2, 0.6, 1})
 ---@return druid.slider Slider
 function M:set_steps(steps)
 	self.steps = steps
@@ -220,9 +180,9 @@ end
 
 
 ---Set input zone for slider.
--- User can touch any place of node, pin instantly will
--- move at this position and node drag will start.
--- This function require the Defold version 1.3.0+
+---User can touch any place of node, pin instantly will
+---move at this position and node drag will start.
+---This function require the Defold version 1.3.0+
 ---@param input_node node|string|nil
 ---@return druid.slider Slider
 function M:set_input_node(input_node)
