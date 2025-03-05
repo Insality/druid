@@ -46,59 +46,6 @@ local component = require("druid.component")
 local M = component.create("scroll")
 
 
-local function inverse_lerp(min, max, current)
-	return helper.clamp((current - min) / (max - min), 0, 1)
-end
-
-
----Update vector with next conditions:
--- Field x have to <= field z
--- Field y have to <= field w
-local function get_border_vector(vector, offset)
-	if vector.x > vector.z then
-		vector.x, vector.z = vector.z, vector.x
-	end
-	if vector.y > vector.w then
-		vector.y, vector.w = vector.w, vector.y
-	end
-	vector.x = vector.x - offset.x
-	vector.z = vector.z - offset.x
-	vector.y = vector.y - offset.y
-	vector.w = vector.w - offset.y
-	return vector
-end
-
-
----Return size from scroll border vector4
-local function get_size_vector(vector)
-	return vmath.vector3(vector.z - vector.x, vector.w - vector.y, 0)
-end
-
-
----@param style druid.scroll.style
-function M:on_style_change(style)
-	self.style = {}
-	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
-	self.style.ANIM_SPEED = style.ANIM_SPEED or 0.2
-	self.style.BACK_SPEED = style.BACK_SPEED or 0.35
-
-	self.style.FRICT = style.FRICT or 0
-	self.style.FRICT_HOLD = style.FRICT_HOLD or 0
-
-	self.style.INERT_THRESHOLD = style.INERT_THRESHOLD or 3
-	self.style.INERT_SPEED = style.INERT_SPEED or 30
-	self.style.POINTS_DEADZONE = style.POINTS_DEADZONE or 20
-	self.style.SMALL_CONTENT_SCROLL = style.SMALL_CONTENT_SCROLL or false
-	self.style.WHEEL_SCROLL_SPEED = style.WHEEL_SCROLL_SPEED or 0
-	self.style.WHEEL_SCROLL_INVERTED = style.WHEEL_SCROLL_INVERTED or false
-	self.style.WHEEL_SCROLL_BY_INERTION = style.WHEEL_SCROLL_BY_INERTION or false
-
-	self._is_inert = not (self.style.FRICT == 0 or
-		self.style.FRICT_HOLD == 0 or
-		self.style.INERT_SPEED == 0)
-end
-
-
 ---The Scroll constructor
 ---@param view_node string|node GUI view scroll node
 ---@param content_node string|node GUI content scroll node
@@ -137,6 +84,30 @@ function M:init(view_node, content_node)
 	self._grid_on_change_callback = nil
 
 	self:_update_size()
+end
+
+
+---@param style druid.scroll.style
+function M:on_style_change(style)
+	self.style = {}
+	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
+	self.style.ANIM_SPEED = style.ANIM_SPEED or 0.2
+	self.style.BACK_SPEED = style.BACK_SPEED or 0.35
+
+	self.style.FRICT = style.FRICT or 0
+	self.style.FRICT_HOLD = style.FRICT_HOLD or 0
+
+	self.style.INERT_THRESHOLD = style.INERT_THRESHOLD or 3
+	self.style.INERT_SPEED = style.INERT_SPEED or 30
+	self.style.POINTS_DEADZONE = style.POINTS_DEADZONE or 20
+	self.style.SMALL_CONTENT_SCROLL = style.SMALL_CONTENT_SCROLL or false
+	self.style.WHEEL_SCROLL_SPEED = style.WHEEL_SCROLL_SPEED or 0
+	self.style.WHEEL_SCROLL_INVERTED = style.WHEEL_SCROLL_INVERTED or false
+	self.style.WHEEL_SCROLL_BY_INERTION = style.WHEEL_SCROLL_BY_INERTION or false
+
+	self._is_inert = not (self.style.FRICT == 0 or
+		self.style.FRICT_HOLD == 0 or
+		self.style.INERT_SPEED == 0)
 end
 
 
@@ -260,8 +231,8 @@ end
 -- Values will be in [0..1] interval
 ---@return vector3 New vector with scroll progress values
 function M:get_percent()
-	local x_perc = 1 - inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
-	local y_perc = inverse_lerp(self.available_pos.w, self.available_pos.y, self.position.y)
+	local x_perc = 1 - self:_inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
+	local y_perc = self:_inverse_lerp(self.available_pos.w, self.available_pos.y, self.position.y)
 
 	return vmath.vector3(x_perc, y_perc, 0)
 end
@@ -470,11 +441,11 @@ function M:_on_scroll_drag(dx, dy)
 
 	-- Right border (minimum x)
 	if t.x < b.x and dx < 0 then
-		x_perc = inverse_lerp(eb.x, b.x, t.x)
+		x_perc = self:_inverse_lerp(eb.x, b.x, t.x)
 	end
 	-- Left border (maximum x)
 	if t.x > b.z and dx > 0 then
-		x_perc = inverse_lerp(eb.z, b.z, t.x)
+		x_perc = self:_inverse_lerp(eb.z, b.z, t.x)
 	end
 	-- Disable x scroll
 	if not self.drag.can_x then
@@ -483,11 +454,11 @@ function M:_on_scroll_drag(dx, dy)
 
 	-- Top border (minimum y)
 	if t.y < b.y and dy < 0 then
-		y_perc = inverse_lerp(eb.y, b.y, t.y)
+		y_perc = self:_inverse_lerp(eb.y, b.y, t.y)
 	end
 	-- Bot border (maximum y)
 	if t.y > b.w and dy > 0 then
-		y_perc = inverse_lerp(eb.w, b.w, t.y)
+		y_perc = self:_inverse_lerp(eb.w, b.w, t.y)
 	end
 	-- Disable y scroll
 	if not self.drag.can_y then
@@ -692,8 +663,8 @@ function M:_update_size()
 	local content_border = helper.get_border(self.content_node)
 	local content_size = helper.get_scaled_size(self.content_node)
 
-	self.available_pos = get_border_vector(self.view_border - content_border, self._offset)
-	self.available_size = get_size_vector(self.available_pos)
+	self.available_pos = self:_get_border_vector(self.view_border - content_border, self._offset)
+	self.available_size = self:_get_size_vector(self.available_pos)
 
 	self.drag.can_x = self.available_size.x > 0 and self._is_horizontal_scroll
 	self.drag.can_y = self.available_size.y > 0 and self._is_vertical_scroll
@@ -717,8 +688,8 @@ function M:_update_size()
 		self.drag.can_y = content_size.y > self.view_size.y and self._is_vertical_scroll
 	end
 
-	self.available_pos_extra = get_border_vector(self.view_border - content_border_extra, self._offset)
-	self.available_size_extra = get_size_vector(self.available_pos_extra)
+	self.available_pos_extra = self:_get_border_vector(self.view_border - content_border_extra, self._offset)
+	self.available_size_extra = self:_get_size_vector(self.available_pos_extra)
 
 	self:_set_scroll_position(self.position.x, self.position.y)
 	self.target_position.x = self.position.x
@@ -767,6 +738,37 @@ end
 
 function M:_on_mouse_hover(state)
 	self._is_mouse_hover = state
+end
+
+
+function M:_inverse_lerp(min, max, current)
+	return helper.clamp((current - min) / (max - min), 0, 1)
+end
+
+
+---Update vector with next conditions:
+---Field x have to <= field z
+---Field y have to <= field w
+function M:_get_border_vector(vector, offset)
+	if vector.x > vector.z then
+		vector.x, vector.z = vector.z, vector.x
+	end
+	if vector.y > vector.w then
+		vector.y, vector.w = vector.w, vector.y
+	end
+	vector.x = vector.x - offset.x
+	vector.z = vector.z - offset.x
+	vector.y = vector.y - offset.y
+	vector.w = vector.w - offset.y
+	return vector
+end
+
+
+---Return size from scroll border vector4
+---@param vector vector4
+---@return vector3
+function M:_get_size_vector(vector)
+	return vmath.vector3(vector.z - vector.x, vector.w - vector.y, 0)
 end
 
 

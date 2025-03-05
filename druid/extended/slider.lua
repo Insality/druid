@@ -18,17 +18,6 @@ local component = require("druid.component")
 local M = component.create("slider", const.PRIORITY_INPUT_HIGH)
 
 
-local function on_change_value(self)
-	self.on_change_value:trigger(self:get_context(), self.value)
-end
-
-
-local function set_position(self, value)
-	value = helper.clamp(value, 0, 1)
-	gui.set_position(self.node, self.start_pos + self.dist * value)
-end
-
-
 ---The Slider constructor
 ---@param node node Gui pin node
 ---@param end_pos vector3 The end position of slider
@@ -141,11 +130,11 @@ function M:on_input(action_id, action)
 			end
 
 			if prev_value ~= self.value then
-				on_change_value(self)
+				self:_on_change_value()
 			end
 		end
 
-		set_position(self, self.value)
+		self:_set_position(self.value)
 	end
 
 	if action.released then
@@ -161,10 +150,10 @@ end
 ---@param is_silent boolean|nil Don't trigger event if true
 function M:set(value, is_silent)
 	value = helper.clamp(value, 0, 1)
-	set_position(self, value)
+	self:_set_position(value)
 	self.value = value
 	if not is_silent then
-		on_change_value(self)
+		self:_on_change_value()
 	end
 end
 
@@ -207,6 +196,19 @@ end
 ---@return boolean
 function M:is_enabled()
 	return self._is_enabled
+end
+
+
+---@private
+function M:_on_change_value()
+	self.on_change_value:trigger(self:get_context(), self.value)
+end
+
+
+---@private
+function M:_set_position(value)
+	value = helper.clamp(value, 0, 1)
+	gui.set_position(self.node, self.start_pos + self.dist * value)
 end
 
 

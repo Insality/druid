@@ -39,23 +39,6 @@ local component = require("druid.component")
 local M = component.create("button")
 
 
----@param style druid.button.style
-function M:on_style_change(style)
-	self.style = {
-		LONGTAP_TIME = style.LONGTAP_TIME or 0.4,
-		AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8,
-		DOUBLETAP_TIME = style.DOUBLETAP_TIME or 0.4,
-
-		on_click = style.on_click or function(_, node) end,
-		on_click_disabled = style.on_click_disabled or function(_, node) end,
-		on_mouse_hover = style.on_mouse_hover or function(_, node, state) end,
-		on_hover = style.on_hover or function(_, node, state) end,
-		on_set_enabled = style.on_set_enabled or function(_, node, state) end,
-	}
-end
-
-
----Button constructor
 ---@param node_or_node_id node|string Node name or GUI Node itself
 ---@param callback fun()|nil Callback on button click
 ---@param custom_args any|nil Custom args for any Button event
@@ -91,6 +74,22 @@ function M:init(node_or_node_id, callback, custom_args, anim_node)
 	self.on_double_click = event.create()
 	self.on_hold_callback = event.create()
 	self.on_click_outside = event.create()
+end
+
+
+---@param style druid.button.style
+function M:on_style_change(style)
+	self.style = {
+		LONGTAP_TIME = style.LONGTAP_TIME or 0.4,
+		AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8,
+		DOUBLETAP_TIME = style.DOUBLETAP_TIME or 0.4,
+
+		on_click = style.on_click or function(_, node) end,
+		on_click_disabled = style.on_click_disabled or function(_, node) end,
+		on_mouse_hover = style.on_mouse_hover or function(_, node, state) end,
+		on_hover = style.on_hover or function(_, node, state) end,
+		on_set_enabled = style.on_set_enabled or function(_, node, state) end,
+	}
 end
 
 

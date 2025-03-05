@@ -1,91 +1,17 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
----Druid input text component.
--- Carry on user text input
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_input" target="_blank"><b>Example Link</b></a>
--- @author Part of code from Britzl gooey input component
--- @module Input
--- @within BaseComponent
--- @alias druid.input
-
----On input field select callback(self, input_instance)
--- @tfield event on_input_select event
-
----On input field unselect callback(self, input_text, input_instance)
--- @tfield event on_input_unselect event
-
----On input field text change callback(self, input_text)
--- @tfield event on_input_text event
-
----On input field text change to empty string callback(self, input_text)
--- @tfield event on_input_empty event
-
----On input field text change to max length string callback(self, input_text)
--- @tfield event on_input_full event
-
----On trying user input with not allowed character callback(self, params, input_text)
--- @tfield event on_input_wrong event
-
----On cursor position change callback(self, cursor_index, start_index, end_index)
--- @tfield event on_select_cursor_change event
-
----The cursor index. The index of letter cursor after. Leftmost cursor - 0
--- @tfield number cursor_index
-
----The selection start index. The index of letter cursor after. Leftmost selection - 0
--- @tfield number start_index
-
----Theselection end index. The index of letter cursor before. Rightmost selection - #text
--- @tfield number end_index
-
----Text component
--- @tfield Text text Text
-
----Current input value
--- @tfield string value
-
----Previous input value
--- @tfield string previous_value
-
----Current input value with marked text
--- @tfield string current_value
-
----Marked text for input field. Info: https://defold.com/manuals/input-key-and-text/#marked-text
--- @tfield string marked_value
-
----Text width
--- @tfield number text_width
-
----Marked text width
--- @tfield number marked_text_width
-
----Button component
--- @tfield Button button Button
-
----Is current input selected now
--- @tfield boolean is_selected
-
----Is current input is empty now
--- @tfield boolean is_empty
-
----Max length for input text
--- @tfield number|nil max_length
-
----Pattern matching for user input
--- @tfield string|nil allowerd_characters
-
----Gui keyboard type for input field
--- @tfield number keyboard_type
-
----
-
 local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
+
+---@class druid.input.style
+---@field MASK_DEFAULT_CHAR string Default character mask for password input
+---@field IS_LONGTAP_ERASE boolean Is long tap will erase current input data
+---@field IS_UNSELECT_ON_RESELECT boolean If true, call unselect on select selected input
+---@field on_select fun(self: druid.input, button_node: node) Callback on input field selecting
+---@field on_unselect fun(self: druid.input, button_node: node) Callback on input field unselecting
+---@field on_input_wrong fun(self: druid.input, button_node: node) Callback on wrong user input
 
 ---@class druid.input: druid.component
 ---@field on_input_select event
@@ -132,30 +58,6 @@ local function clear_and_select(self)
 end
 
 
----Component style params.
--- You can override this component styles params in druid styles table
--- or create your own style
--- @table style
--- @tfield boolean IS_LONGTAP_ERASE Is long tap will erase current input data. Default: false
--- @tfield string MASK_DEFAULT_CHAR Default character mask for password input. Default: *]
--- @tfield boolean IS_UNSELECT_ON_RESELECT If true, call unselect on select selected input. Default: false
--- @tfield function on_select (self, button_node) Callback on input field selecting
--- @tfield function on_unselect (self, button_node) Callback on input field unselecting
--- @tfield function on_input_wrong (self, button_node) Callback on wrong user input
-function M:on_style_change(style)
-	self.style = {}
-
-	self.style.IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false
-	self.style.MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*"
-	self.style.IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false
-
-	self.style.on_select = style.on_select or function(_, button_node) end
-	self.style.on_unselect = style.on_unselect or function(_, button_node) end
-	self.style.on_input_wrong = style.on_input_wrong or function(_, button_node) end
-end
-
-
----The Input constructor
 ---@param click_node node Node to enabled input component
 ---@param text_node node|druid.text Text node what will be changed on user input. You can pass text component instead of text node name Text
 ---@param keyboard_type number|nil Gui keyboard type for input field
@@ -207,6 +109,20 @@ function M:init(click_node, text_node, keyboard_type)
 	self.on_input_full = event.create()
 	self.on_input_wrong = event.create()
 	self.on_select_cursor_change = event.create()
+end
+
+
+---@param style druid.input.style
+function M:on_style_change(style)
+	self.style = {
+		IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false,
+		MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*",
+		IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false,
+
+		on_select = style.on_select or function(_, button_node) end,
+		on_unselect = style.on_unselect or function(_, button_node) end,
+		on_input_wrong = style.on_input_wrong or function(_, button_node) end,
+	}
 end
 
 

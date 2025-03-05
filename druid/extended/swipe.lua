@@ -21,16 +21,6 @@ local component = require("druid.component")
 local M = component.create("swipe")
 
 
----@param style druid.swipe.style
-function M:on_style_change(style)
-	self.style = {
-		SWIPE_TIME = style.SWIPE_TIME or 0.4,
-		SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50,
-		SWIPE_TRIGGER_ON_MOVE = style.SWIPE_TRIGGER_ON_MOVE or false,
-	}
-end
-
-
 ---@param node_or_node_id node|string
 ---@param on_swipe_callback function
 function M:init(node_or_node_id, on_swipe_callback)
@@ -52,6 +42,16 @@ function M:on_late_init()
 			self:set_click_zone(stencil_node)
 		end
 	end
+end
+
+
+---@param style druid.swipe.style
+function M:on_style_change(style)
+	self.style = {
+		SWIPE_TIME = style.SWIPE_TIME or 0.4,
+		SWIPE_THRESHOLD = style.SWIPE_THRESHOLD or 50,
+		SWIPE_TRIGGER_ON_MOVE = style.SWIPE_TRIGGER_ON_MOVE or false,
+	}
 end
 
 
@@ -152,8 +152,6 @@ function M:_check_swipe(action)
 		self:_reset_swipe()
 	end
 end
-
-
 
 
 return M

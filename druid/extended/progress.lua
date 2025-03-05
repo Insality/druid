@@ -75,16 +75,6 @@ local function set_bar_to(self, set_to, is_silent)
 end
 
 
----@param style druid.progress.style
-function M:on_style_change(style)
-	self.style = {
-		SPEED = style.SPEED or 5,
-		MIN_DELTA = style.MIN_DELTA or 0.005,
-	}
-end
-
-
----The Progress constructor
 ---@param node string|node Node name or GUI Node itself.
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
 ---@param init_value number|nil Initial value of progress bar. Default: 1
@@ -114,6 +104,15 @@ function M:init(node, key, init_value)
 end
 
 
+---@param style druid.progress.style
+function M:on_style_change(style)
+	self.style = {
+		SPEED = style.SPEED or 5,
+		MIN_DELTA = style.MIN_DELTA or 0.005,
+	}
+end
+
+
 function M:on_layout_change()
 	self:set_to(self.last_value)
 end
@@ -124,10 +123,11 @@ function M:on_remove()
 end
 
 
+---@param dt number Delta time
 function M:update(dt)
 	if self.target then
 		local prev_value = self.last_value
-		local step = math.abs(self.last_value - self.target) * (self.style.SPEED*dt)
+		local step = math.abs(self.last_value - self.target) * (self.style.SPEED * dt)
 		step = math.max(step, self.style.MIN_DELTA)
 		self:set_to(helper.step(self.last_value, self.target, step))
 

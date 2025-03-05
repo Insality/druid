@@ -15,6 +15,21 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local event = require("event.event")
 
+local abs = math.abs
+local min = math.min
+local max = math.max
+
+local CORNER_PIVOTS = {
+	gui.PIVOT_NE,
+	gui.PIVOT_NW,
+	gui.PIVOT_SE,
+	gui.PIVOT_SW,
+}
+
+---@class druid.container.style
+---@field DRAGGABLE_CORNER_SIZE vector3 Size of box node for debug draggable corners
+---@field DRAGGABLE_CORNER_COLOR vector4 Color of debug draggable corners
+
 ---@class druid.container: druid.component
 ---@field node node
 ---@field druid druid.instance
@@ -35,19 +50,7 @@ local event = require("event.event")
 ---@field _draggable_corners table
 local M = component.create("container")
 
-local abs = math.abs
-local min = math.min
-local max = math.max
 
-local CORNER_PIVOTS = {
-	gui.PIVOT_NE,
-	gui.PIVOT_NW,
-	gui.PIVOT_SE,
-	gui.PIVOT_SW,
-}
-
-
----The Container init
 ---@param node node Gui node
 ---@param mode string Layout mode
 ---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
@@ -118,16 +121,12 @@ function M:set_pivot(pivot)
 end
 
 
----Component style params.
--- You can override this component styles params in Druid styles table
--- or create your own style
--- @table style
--- @tfield[opt=vector3(24, 24, 0)] vector3 DRAGGABLE_CORNER_SIZE Size of box node for debug draggable corners
--- @tfield[opt=vector4(1)] vector4 DRAGGABLE_CORNER_COLOR Color of debug draggable corners
+---@param style druid.container.style
 function M:on_style_change(style)
-	self.style = {}
-	self.style.DRAGGABLE_CORNER_SIZE = style.DRAGGABLE_CORNER_SIZE or vmath.vector3(24, 24, 0)
-	self.style.DRAGGABLE_CORNER_COLOR = style.DRAGGABLE_CORNER_COLOR or vmath.vector4(10)
+	self.style = {
+		DRAGGABLE_CORNER_SIZE = style.DRAGGABLE_CORNER_SIZE or vmath.vector3(24, 24, 0),
+		DRAGGABLE_CORNER_COLOR = style.DRAGGABLE_CORNER_COLOR or vmath.vector4(10)
+	}
 end
 
 

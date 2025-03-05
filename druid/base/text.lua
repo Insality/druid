@@ -22,227 +22,6 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 ---@field private scale vector3
 local M = component.create("text")
 
-local function update_text_size(self)
-	if self.scale.x == 0 or self.scale.y == 0 then
-		return
-	end
-	if self.start_scale.x == 0 or self.start_scale.y == 0 then
-		return
-	end
-
-	local size = vmath.vector3(
-		self.start_size.x * (self.start_scale.x / self.scale.x),
-		self.start_size.y * (self.start_scale.y / self.scale.y),
-		self.start_size.z
-	)
-	gui.set_size(self.node, size)
-end
-
-
----Reset initial scale for text
-local function reset_default_scale(self)
-	self.scale.x = self.start_scale.x
-	self.scale.y = self.start_scale.y
-	self.scale.z = self.start_scale.z
-	gui.set_scale(self.node, self.start_scale)
-	gui.set_size(self.node, self.start_size)
-end
-
-
-local function is_fit_info_area(self, metrics)
-	return metrics.width * self.scale.x <= self.text_area.x and
-		   metrics.height * self.scale.y <= self.text_area.y
-end
-
-
----Setup scale x, but can only be smaller, than start text scale
-local function update_text_area_size(self)
-	reset_default_scale(self)
-
-	local metrics = helper.get_text_metrics_from_node(self.node)
-
-	if metrics.width == 0 then
-		reset_default_scale(self)
-		self.on_update_text_scale:trigger(self:get_context(), self.start_scale, metrics)
-		return
-	end
-
-	local text_area_width = self.text_area.x
-	local text_area_height = self.text_area.y
-
-	-- Adjust by width
-	local scale_modifier = text_area_width / metrics.width
-
-	-- Adjust by height
-	if self:is_multiline() then
-		-- Approximate scale by height to start adjust scale
-		scale_modifier = math.sqrt(text_area_height / metrics.height)
-		if metrics.width * scale_modifier > text_area_width then
-			scale_modifier = text_area_width / metrics.width
-		end
-
-		-- #RMME
-		if self._minimal_scale then
-			scale_modifier = math.max(scale_modifier, self._minimal_scale)
-		end
-		-- Limit max scale by initial scale
-		scale_modifier = math.min(scale_modifier, self.start_scale.x)
-		-- #RMME
-
-		local is_fit = is_fit_info_area(self, metrics)
-		local step = is_fit and self.style.ADJUST_SCALE_DELTA or -self.style.ADJUST_SCALE_DELTA
-
-		for i = 1, self.style.ADJUST_STEPS do
-			-- Grow down to check if we fit
-			if step < 0 and is_fit then
-				break
-			end
-			-- Grow up to check if we still fit
-			if step > 0 and not is_fit then
-				break
-			end
-
-			scale_modifier = scale_modifier + step
-
-			if self._minimal_scale then
-				scale_modifier = math.max(scale_modifier, self._minimal_scale)
-			end
-			-- Limit max scale by initial scale
-			scale_modifier = math.min(scale_modifier, self.start_scale.x)
-
-			self.scale.x = scale_modifier
-			self.scale.y = scale_modifier
-			self.scale.z = self.start_scale.z
-			gui.set_scale(self.node, self.scale)
-			update_text_size(self)
-			metrics = helper.get_text_metrics_from_node(self.node)
-			is_fit = is_fit_info_area(self, metrics)
-		end
-	end
-
-	if self._minimal_scale then
-		scale_modifier = math.max(scale_modifier, self._minimal_scale)
-	end
-
-	-- Limit max scale by initial scale
-	scale_modifier = math.min(scale_modifier, self.start_scale.x)
-
-	self.scale.x = scale_modifier
-	self.scale.y = scale_modifier
-	self.scale.z = self.start_scale.z
-	gui.set_scale(self.node, self.scale)
-	update_text_size(self)
-
-	self.on_update_text_scale:trigger(self:get_context(), self.scale, metrics)
-end
-
-
----@param self druid.text
----@param trim_postfix string
-local function update_text_with_trim(self, trim_postfix)
-	local max_width = self.text_area.x
-	local text_width = self:get_text_size()
-
-	if text_width > max_width then
-		local text_length = utf8.len(self.last_value)
-		local new_text = self.last_value
-		while text_width > max_width do
-			text_length = text_length - 1
-			new_text = utf8.sub(self.last_value, 1, text_length)
-			text_width = self:get_text_size(new_text .. trim_postfix)
-			if text_length == 0 then
-				break
-			end
-		end
-
-		gui.set_text(self.node, new_text .. trim_postfix)
-	else
-		gui.set_text(self.node, self.last_value)
-	end
-end
-
-local function update_text_with_trim_left(self, trim_postfix)
-	local max_width = self.text_area.x
-	local text_width = self:get_text_size()
-	local text_length = utf8.len(self.last_value)
-	local trim_index = 1
-
-	if text_width > max_width then
-		local new_text = self.last_value
-		while text_width > max_width and trim_index < text_length do
-			trim_index = trim_index + 1
-			new_text = trim_postfix .. utf8.sub(self.last_value, trim_index, text_length)
-			text_width = self:get_text_size(new_text)
-		end
-
-		gui.set_text(self.node, new_text)
-	end
-end
-
-
-local function update_text_with_anchor_shift(self)
-	if self:get_text_size() >= self.text_area.x then
-		self:set_pivot(const.REVERSE_PIVOTS[self.start_pivot])
-	else
-		self:set_pivot(self.start_pivot)
-	end
-end
-
-
----@param self druid.text
-local function update_adjust(self)
-	if not self.adjust_type or self.adjust_type == const.TEXT_ADJUST.NO_ADJUST then
-		reset_default_scale(self)
-		return
-	end
-
-	if self.adjust_type == const.TEXT_ADJUST.DOWNSCALE then
-		update_text_area_size(self)
-	end
-
-	if self.adjust_type == const.TEXT_ADJUST.TRIM then
-		update_text_with_trim(self, self.style.TRIM_POSTFIX)
-	end
-
-	if self.adjust_type == const.TEXT_ADJUST.TRIM_LEFT then
-		update_text_with_trim_left(self, self.style.TRIM_POSTFIX)
-	end
-
-	if self.adjust_type == const.TEXT_ADJUST.DOWNSCALE_LIMITED then
-		update_text_area_size(self)
-	end
-
-	if self.adjust_type == const.TEXT_ADJUST.SCROLL then
-		update_text_with_anchor_shift(self)
-	end
-
-	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_SCROLL then
-		update_text_area_size(self)
-		update_text_with_anchor_shift(self)
-	end
-
-	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_TRIM then
-		update_text_area_size(self)
-		update_text_with_trim(self, self.style.TRIM_POSTFIX)
-	end
-
-	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_TRIM_LEFT then
-		update_text_area_size(self)
-		update_text_with_trim_left(self, self.style.TRIM_POSTFIX)
-	end
-end
-
-
----@param style druid.text.style
-function M:on_style_change(style)
-	self.style = {
-		TRIM_POSTFIX = style.TRIM_POSTFIX or "...",
-		DEFAULT_ADJUST = style.DEFAULT_ADJUST or const.TEXT_ADJUST.DOWNSCALE,
-		ADJUST_STEPS = style.ADJUST_STEPS or 20,
-		ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02
-	}
-end
-
 
 ---The Text constructor
 ---@param node string|node Node name or GUI Text Node itself
@@ -272,6 +51,18 @@ function M:init(node, value, adjust_type)
 	self:set_text(value or gui.get_text(self.node))
 	return self
 end
+
+
+---@param style druid.text.style
+function M:on_style_change(style)
+	self.style = {
+		TRIM_POSTFIX = style.TRIM_POSTFIX or "...",
+		DEFAULT_ADJUST = style.DEFAULT_ADJUST or const.TEXT_ADJUST.DOWNSCALE,
+		ADJUST_STEPS = style.ADJUST_STEPS or 20,
+		ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02
+	}
+end
+
 
 
 function M:on_layout_change()
@@ -348,7 +139,7 @@ function M:set_to(set_to)
 
 	self.on_set_text:trigger(self:get_context(), set_to)
 
-	update_adjust(self)
+	self:_update_adjust()
 
 	return self
 end
@@ -373,7 +164,7 @@ function M:set_size(size)
 	self.text_area = vmath.vector3(size)
 	self.text_area.x = self.text_area.x * self.start_scale.x
 	self.text_area.y = self.text_area.y * self.start_scale.y
-	update_adjust(self)
+	self:_update_adjust()
 
 	return self
 end
@@ -473,6 +264,226 @@ end
 ---@return string adjust_type The current text adjust type
 function M:get_text_adjust()
 	return self.adjust_type
+end
+
+
+---@private
+function M:_update_text_size()
+	if self.scale.x == 0 or self.scale.y == 0 then
+		return
+	end
+	if self.start_scale.x == 0 or self.start_scale.y == 0 then
+		return
+	end
+
+	local size = vmath.vector3(
+		self.start_size.x * (self.start_scale.x / self.scale.x),
+		self.start_size.y * (self.start_scale.y / self.scale.y),
+		self.start_size.z
+	)
+	gui.set_size(self.node, size)
+end
+
+
+---Reset initial scale for text
+---@private
+function M:_reset_default_scale()
+	self.scale.x = self.start_scale.x
+	self.scale.y = self.start_scale.y
+	self.scale.z = self.start_scale.z
+	gui.set_scale(self.node, self.start_scale)
+	gui.set_size(self.node, self.start_size)
+end
+
+
+---@private
+---@param metrics table
+---@return boolean
+function M:_is_fit_info_area(metrics)
+	return metrics.width * self.scale.x <= self.text_area.x and
+		   metrics.height * self.scale.y <= self.text_area.y
+end
+
+
+---Setup scale x, but can only be smaller, than start text scale
+---@private
+function M:_update_text_area_size()
+	self:_reset_default_scale()
+
+	local metrics = helper.get_text_metrics_from_node(self.node)
+
+	if metrics.width == 0 then
+		self:_reset_default_scale()
+		self.on_update_text_scale:trigger(self:get_context(), self.start_scale, metrics)
+		return
+	end
+
+	local text_area_width = self.text_area.x
+	local text_area_height = self.text_area.y
+
+	-- Adjust by width
+	local scale_modifier = text_area_width / metrics.width
+
+	-- Adjust by height
+	if self:is_multiline() then
+		-- Approximate scale by height to start adjust scale
+		scale_modifier = math.sqrt(text_area_height / metrics.height)
+		if metrics.width * scale_modifier > text_area_width then
+			scale_modifier = text_area_width / metrics.width
+		end
+
+		-- #RMME
+		if self._minimal_scale then
+			scale_modifier = math.max(scale_modifier, self._minimal_scale)
+		end
+		-- Limit max scale by initial scale
+		scale_modifier = math.min(scale_modifier, self.start_scale.x)
+		-- #RMME
+
+		local is_fit = self:_is_fit_info_area(metrics)
+		local step = is_fit and self.style.ADJUST_SCALE_DELTA or -self.style.ADJUST_SCALE_DELTA
+
+		for i = 1, self.style.ADJUST_STEPS do
+			-- Grow down to check if we fit
+			if step < 0 and is_fit then
+				break
+			end
+			-- Grow up to check if we still fit
+			if step > 0 and not is_fit then
+				break
+			end
+
+			scale_modifier = scale_modifier + step
+
+			if self._minimal_scale then
+				scale_modifier = math.max(scale_modifier, self._minimal_scale)
+			end
+			-- Limit max scale by initial scale
+			scale_modifier = math.min(scale_modifier, self.start_scale.x)
+
+			self.scale.x = scale_modifier
+			self.scale.y = scale_modifier
+			self.scale.z = self.start_scale.z
+			gui.set_scale(self.node, self.scale)
+			self:_update_text_size()
+			metrics = helper.get_text_metrics_from_node(self.node)
+			is_fit = self:_is_fit_info_area(metrics)
+		end
+	end
+
+	if self._minimal_scale then
+		scale_modifier = math.max(scale_modifier, self._minimal_scale)
+	end
+
+	-- Limit max scale by initial scale
+	scale_modifier = math.min(scale_modifier, self.start_scale.x)
+
+	self.scale.x = scale_modifier
+	self.scale.y = scale_modifier
+	self.scale.z = self.start_scale.z
+	gui.set_scale(self.node, self.scale)
+	self:_update_text_size()
+
+	self.on_update_text_scale:trigger(self:get_context(), self.scale, metrics)
+end
+
+
+---@private
+---@param trim_postfix string
+function M:_update_text_with_trim(trim_postfix)
+	local max_width = self.text_area.x
+	local text_width = self:get_text_size()
+
+	if text_width > max_width then
+		local text_length = utf8.len(self.last_value)
+		local new_text = self.last_value
+		while text_width > max_width do
+			text_length = text_length - 1
+			new_text = utf8.sub(self.last_value, 1, text_length)
+			text_width = self:get_text_size(new_text .. trim_postfix)
+			if text_length == 0 then
+				break
+			end
+		end
+
+		gui.set_text(self.node, new_text .. trim_postfix)
+	else
+		gui.set_text(self.node, self.last_value)
+	end
+end
+
+---@private
+---@param trim_postfix string
+function M:_update_text_with_trim_left(trim_postfix)
+	local max_width = self.text_area.x
+	local text_width = self:get_text_size()
+	local text_length = utf8.len(self.last_value)
+	local trim_index = 1
+
+	if text_width > max_width then
+		local new_text = self.last_value
+		while text_width > max_width and trim_index < text_length do
+			trim_index = trim_index + 1
+			new_text = trim_postfix .. utf8.sub(self.last_value, trim_index, text_length)
+			text_width = self:get_text_size(new_text)
+		end
+
+		gui.set_text(self.node, new_text)
+	end
+end
+
+
+---@private
+function M:_update_text_with_anchor_shift()
+	if self:get_text_size() >= self.text_area.x then
+		self:set_pivot(const.REVERSE_PIVOTS[self.start_pivot])
+	else
+		self:set_pivot(self.start_pivot)
+	end
+end
+
+
+---@private
+function M:_update_adjust()
+	if not self.adjust_type or self.adjust_type == const.TEXT_ADJUST.NO_ADJUST then
+		self:_reset_default_scale()
+		return
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.DOWNSCALE then
+		self:_update_text_area_size()
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.TRIM then
+		self:_update_text_with_trim(self.style.TRIM_POSTFIX)
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.TRIM_LEFT then
+		self:_update_text_with_trim_left(self.style.TRIM_POSTFIX)
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.DOWNSCALE_LIMITED then
+		self:_update_text_area_size()
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.SCROLL then
+		self:_update_text_with_anchor_shift()
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_SCROLL then
+		self:_update_text_area_size()
+		self:_update_text_with_anchor_shift()
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_TRIM then
+		self:_update_text_area_size()
+		self:_update_text_with_trim(self.style.TRIM_POSTFIX)
+	end
+
+	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_TRIM_LEFT then
+		self:_update_text_area_size()
+		self:_update_text_with_trim_left(self.style.TRIM_POSTFIX)
+	end
 end
 
 

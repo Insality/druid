@@ -26,28 +26,6 @@ local component = require("druid.component")
 local M = component.create("grid")
 
 
-local function _extend_border(border, pos, size, pivot)
-	local left = pos.x - size.x/2 - (size.x * pivot.x)
-	local right = pos.x + size.x/2 - (size.x * pivot.x)
-	local top = pos.y + size.y/2 - (size.y * pivot.y)
-	local bottom = pos.y - size.y/2 - (size.y * pivot.y)
-
-	border.x = math.min(border.x, left)
-	border.y = math.max(border.y, top)
-	border.z = math.max(border.z, right)
-	border.w = math.min(border.w, bottom)
-end
-
-
----@param style druid.grid.style
-function M:on_style_change(style)
-	self.style = {
-		IS_DYNAMIC_NODE_POSES = style.IS_DYNAMIC_NODE_POSES or false,
-		IS_ALIGN_LAST_ROW = style.IS_ALIGN_LAST_ROW or false,
-	}
-end
-
-
 ---@param parent string|node The GUI Node container, where grid's items will be placed
 ---@param element node Element prefab. Need to get it size
 ---@param in_row number|nil How many nodes in row can be placed. By default 1
@@ -79,6 +57,15 @@ function M:init(parent, element, in_row)
 	self.on_update_positions = event.create()
 
 	self._set_position_function = gui.set_position
+end
+
+
+---@param style druid.grid.style
+function M:on_style_change(style)
+	self.style = {
+		IS_DYNAMIC_NODE_POSES = style.IS_DYNAMIC_NODE_POSES or false,
+		IS_ALIGN_LAST_ROW = style.IS_ALIGN_LAST_ROW or false,
+	}
 end
 
 
@@ -257,10 +244,10 @@ function M:get_size_for(count)
 
 	local size = self.node_size
 	local pivot = self.node_pivot
-	_extend_border(border, self:get_pos(1), size, pivot)
-	_extend_border(border, self:get_pos(count), size, pivot)
+	self:_extend_border(border, self:get_pos(1), size, pivot)
+	self:_extend_border(border, self:get_pos(count), size, pivot)
 	if count >= self.in_row then
-		_extend_border(border, self:get_pos(self.in_row), size, pivot)
+		self:_extend_border(border, self:get_pos(self.in_row), size, pivot)
 	end
 
 	return vmath.vector3(
@@ -425,7 +412,7 @@ function M:_update_borders()
 	local size = self.node_size
 	local pivot = self.node_pivot
 	for index, node in pairs(self.nodes) do
-		_extend_border(self.border, self:get_pos(index), size, pivot)
+		self:_extend_border(self.border, self:get_pos(index), size, pivot)
 	end
 end
 
@@ -453,7 +440,7 @@ end
 
 
 ---Return elements offset for correct posing nodes. Correct posing at
--- parent pivot node (0:0) with adjusting of node sizes and anchoring
+---parent pivot node (0:0) with adjusting of node sizes and anchoring
 ---@return vector3 The offset vector
 ---@private
 function M:_get_zero_offset()
@@ -488,6 +475,23 @@ function M:_get_zero_offset_x(row_index)
 	end
 
 	return offset_x
+end
+
+
+---@param border vector4 Will be updated with new border values
+---@param pos vector3
+---@param size vector3
+---@param pivot vector3
+function M:_extend_border(border, pos, size, pivot)
+	local left = pos.x - size.x/2 - (size.x * pivot.x)
+	local right = pos.x + size.x/2 - (size.x * pivot.x)
+	local top = pos.y + size.y/2 - (size.y * pivot.y)
+	local bottom = pos.y - size.y/2 - (size.y * pivot.y)
+
+	border.x = math.min(border.x, left)
+	border.y = math.max(border.y, top)
+	border.z = math.max(border.z, right)
+	border.w = math.min(border.w, bottom)
 end
 
 

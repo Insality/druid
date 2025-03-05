@@ -21,7 +21,6 @@ local function second_string_min(sec)
 end
 
 
----The Timer constructor
 ---@param node node Gui text node
 ---@param seconds_from number|nil Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
