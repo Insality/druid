@@ -44,7 +44,7 @@ local CORNER_PIVOTS = {
 ---@field fit_size vector3
 ---@field min_size_x number|nil
 ---@field min_size_y number|nil
----@field on_size_changed event @function on_size_changed(size)
+---@field on_size_changed event fun(self: druid.container, size: vector3)
 ---@field _parent_container druid.container
 ---@field _containers table
 ---@field _draggable_corners table
@@ -244,7 +244,7 @@ function M:add_container(node_or_container, mode, on_resize_callback)
 	local node = node_or_container
 
 	-- Check it's a container components instead of node
-	if type(node_or_container) == "table" and node_or_container._component then
+	if type(node_or_container) == "table" and node_or_container.add_container then
 		node = node_or_container.node
 		container = node_or_container
 		mode = mode or container.mode

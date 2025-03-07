@@ -148,8 +148,6 @@ function M:set_max_size(max_size)
 end
 
 
-
-
 ---@private
 function M:_check_steps(from, to, exactly)
 	if not self.steps then

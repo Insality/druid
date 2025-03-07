@@ -35,6 +35,37 @@ nodes {
   template: "/example/templates/slider.gui"
 }
 nodes {
+  size {
+    x: 40.0
+    y: 260.0
+  }
+  type: TYPE_BOX
+  id: "slider/root"
+  parent: "slider"
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  rotation {
+    z: 90.0
+  }
+  type: TYPE_BOX
+  id: "slider/slider_back"
+  parent: "slider/root"
+  overridden_fields: 2
+  template_node_child: true
+}
+nodes {
+  position {
+    y: 118.0
+  }
+  type: TYPE_BOX
+  id: "slider/slider_pin"
+  parent: "slider/root"
+  overridden_fields: 1
+  template_node_child: true
+}
+nodes {
   position {
     y: 170.0
   }

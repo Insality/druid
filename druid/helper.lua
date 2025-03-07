@@ -298,7 +298,7 @@ end
 ---@param node node
 ---@param x number
 ---@param y number
----@param node_click_area node|nil
+---@param node_click_area node|nil Additional node to check for click area. If nil, only node will be checked
 ---@local
 function M.pick_node(node, x, y, node_click_area)
 	local is_pick = gui_pick_node(node, x, y)

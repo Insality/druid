@@ -4,6 +4,8 @@
 
 Button component is a basic component that can be used to create a clickable button. It provides various interaction callbacks such as click, long click, double click, and more. The component makes any GUI node clickable and allows you to define different behaviors for various user interactions.
 
+Button component is not support multitouch. In case of multitouch required (ex. on screen control) the custom component should be written with own input handling.
+
 ## Features
 
 - Regular click handling

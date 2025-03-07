@@ -13,7 +13,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/button/basic_button.lua",
 			component_class = require("example.examples.basic.button.basic_button"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance basic_button
+				---@cast instance examples.basic_button
 
 				local checkbox = properties_panel:add_checkbox("ui_enabled", false, function(value)
 					instance.button:set_enabled(value)
@@ -21,7 +21,7 @@ function M.get_examples()
 				checkbox:set_value(true)
 			end,
 			on_create = function(instance, output_log)
-				---@cast instance basic_button
+				---@cast instance examples.basic_button
 				instance.button.on_click:subscribe(function()
 					output_log:add_log_text("Button Clicked")
 				end)
@@ -35,7 +35,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/button/basic_button_double_click.lua",
 			component_class = require("example.examples.basic.button.basic_button_double_click"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_button_double_click
+				---@cast instance examples.basic_button_double_click
 				instance.button.on_click:subscribe(function()
 					output_log:add_log_text("Clicked")
 				end)
@@ -52,7 +52,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/button/basic_button_hold.lua",
 			component_class = require("example.examples.basic.button.basic_button_hold"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_button_hold
+				---@cast instance examples.basic_button_hold
 				instance.button.on_click:subscribe(function()
 					output_log:add_log_text("Clicked")
 				end)
@@ -69,7 +69,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/text/basic_text.lua",
 			component_class = require("example.examples.basic.text.basic_text"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance basic_text
+				---@cast instance examples.basic_text
 
 				local adjust_index = 1
 				local adjust_types = {
@@ -100,7 +100,7 @@ function M.get_examples()
 					gui.PIVOT_NW,
 				}
 
-				---@cast instance rich_text_tags
+				---@cast instance examples.rich_text_tags
 				properties_panel:add_button("ui_pivot_next", function()
 					pivot_index = pivot_index + 1
 					if pivot_index > #pivot_list then
@@ -110,7 +110,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance multiline_text
+				---@cast instance examples.multiline_text
 				local info = ""
 
 				info = info .. "Text Adjust: " .. instance.text.adjust_type .. "\n"
@@ -127,7 +127,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/text/multiline_text.lua",
 			component_class = require("example.examples.basic.text.multiline_text"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance multiline_text
+				---@cast instance examples.multiline_text
 
 				local adjust_index = 1
 				local adjust_types = {
@@ -167,7 +167,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance multiline_text
+				---@cast instance examples.multiline_text
 				local info = ""
 
 				info = info .. "Text Adjust: " .. instance.text.adjust_type .. "\n"
@@ -208,7 +208,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/slider/basic_slider.lua",
 			component_class = require("example.examples.basic.slider.basic_slider"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_slider
+				---@cast instance examples.basic_slider
 				instance.slider.on_change_value:subscribe(function(_, value)
 					local value = helper.round(value, 2)
 					output_log:add_log_text("Slider Value: " .. value)
@@ -223,7 +223,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/slider/basic_slider_vertical.lua",
 			component_class = require("example.examples.basic.slider.basic_slider_vertical"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_slider_vertical
+				---@cast instance examples.basic_slider_vertical
 				instance.slider.on_change_value:subscribe(function(_, value)
 					local value = helper.round(value, 2)
 					output_log:add_log_text("Slider Value: " .. value)
@@ -238,7 +238,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/slider/basic_slider_stepped.lua",
 			component_class = require("example.examples.basic.slider.basic_slider_stepped"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_slider
+				---@cast instance examples.basic_slider_stepped
 				instance.slider.on_change_value:subscribe(function(_, value)
 					local value = helper.round(value, 2)
 					output_log:add_log_text("Slider Value: " .. value)
@@ -253,7 +253,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/progress_bar/basic_progress_bar.lua",
 			component_class = require("example.examples.basic.progress_bar.basic_progress_bar"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance basic_progress_bar
+				---@cast instance examples.basic_progress_bar
 				properties_panel:add_slider("ui_value", 1, function(value)
 					instance:set_value(value)
 				end)
@@ -267,7 +267,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/progress_bar/basic_progress_bar_slice9.lua",
 			component_class = require("example.examples.basic.progress_bar.basic_progress_bar_slice9"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance basic_progress_bar_slice9
+				---@cast instance examples.basic_progress_bar_slice9
 				properties_panel:add_slider("ui_value", 1, function(value)
 					instance:set_value(value)
 				end)
@@ -281,7 +281,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/blocker/basic_blocker.lua",
 			component_class = require("example.examples.basic.blocker.basic_blocker"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_blocker
+				---@cast instance examples.basic_blocker
 				instance.button_root.on_click:subscribe(function()
 					output_log:add_log_text("Root Clicked")
 				end)
@@ -306,7 +306,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/timer/basic_timer.lua",
 			component_class = require("example.examples.basic.timer.basic_timer"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_timer
+				---@cast instance examples.basic_timer
 				instance.on_cycle_end:subscribe(function()
 					output_log:add_log_text("Timer Cycle End")
 				end)
@@ -320,7 +320,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/hotkey/basic_hotkey.lua",
 			component_class = require("example.examples.basic.hotkey.basic_hotkey"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_hotkey
+				---@cast instance examples.basic_hotkey
 				instance.hotkey.on_hotkey_released:subscribe(function()
 					output_log:add_log_text("Hotkey Released")
 				end)
@@ -334,7 +334,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/scroll/scroll.lua",
 			component_class = require("example.examples.basic.scroll.scroll"),
 			on_create = function(instance, output_log)
-				---@cast instance scroll
+				---@cast instance examples.scroll
 				instance.button_tutorial.on_click:subscribe(function()
 					output_log:add_log_text("Button Tutorial Clicked")
 				end)
@@ -343,7 +343,7 @@ function M.get_examples()
 				end)
 			end,
 			properties_control = function(instance, properties_panel)
-				---@cast instance scroll
+				---@cast instance examples.scroll
 				local scroll = instance.scroll
 				local is_stretch = instance.scroll.style.EXTRA_STRETCH_SIZE > 0
 				properties_panel:add_checkbox("ui_elastic_scroll", is_stretch, function(value)
@@ -386,7 +386,7 @@ function M.get_examples()
 				wheel_by_inertion:set_value(scroll.style.WHEEL_SCROLL_BY_INERTION)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance scroll
+				---@cast instance examples.scroll
 				local info = ""
 
 				local s = instance.scroll
@@ -406,7 +406,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/scroll_slider/scroll_slider.lua",
 			component_class = require("example.examples.basic.scroll_slider.scroll_slider"),
 			get_debug_info = function(instance)
-				---@cast instance scroll_slider
+				---@cast instance examples.scroll_slider
 				local info = ""
 
 				local s = instance.scroll
@@ -426,7 +426,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/grid/grid.lua",
 			component_class = require("example.examples.basic.grid.grid"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance grid
+				---@cast instance examples.grid
 
 				local grid = instance.grid
 
@@ -495,7 +495,7 @@ function M.get_examples()
 				slider_size:set_value(0.5)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance grid
+				---@cast instance examples.grid
 				local info = ""
 
 				local grid = instance.grid
@@ -514,7 +514,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/scroll_bind_grid/scroll_bind_grid.lua",
 			component_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance scroll_bind_grid
+				---@cast instance examples.scroll_bind_grid
 
 				local view_node = instance.scroll.view_node
 				local is_stencil = gui.get_clipping_mode(view_node) == gui.CLIPPING_MODE_STENCIL
@@ -538,7 +538,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance scroll_bind_grid
+				---@cast instance examples.scroll_bind_grid
 				local info = ""
 
 				local s = instance.scroll
@@ -567,7 +567,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/scroll_bind_grid/scroll_bind_grid_horizontal.lua",
 			component_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid_horizontal"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance scroll_bind_grid_horizontal
+				---@cast instance examples.scroll_bind_grid_horizontal
 
 				local view_node = instance.scroll.view_node
 				local is_stencil = gui.get_clipping_mode(view_node) == gui.CLIPPING_MODE_STENCIL
@@ -593,7 +593,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance scroll_bind_grid_horizontal
+				---@cast instance examples.scroll_bind_grid_horizontal
 				local info = ""
 
 				local s = instance.scroll
@@ -621,7 +621,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/scroll_bind_grid/scroll_bind_grid_points.lua",
 			component_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid_points"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance scroll_bind_grid_points
+				---@cast instance examples.scroll_bind_grid_points
 
 				local view_node = instance.scroll.view_node
 				local is_stencil = gui.get_clipping_mode(view_node) == gui.CLIPPING_MODE_STENCIL
@@ -645,7 +645,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance scroll_bind_grid_points
+				---@cast instance examples.scroll_bind_grid_points
 				local info = ""
 
 				local s = instance.scroll
@@ -674,12 +674,18 @@ function M.get_examples()
 			code_url = "example/examples/basic/input/basic_input.lua",
 			component_class = require("example.examples.basic.input.basic_input"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_input
+				---@cast instance examples.basic_input
+				instance.input.on_input_select:subscribe(function()
+					output_log:add_log_text("Input Selected")
+				end)
+				instance.input_2.on_input_select:subscribe(function()
+					output_log:add_log_text("Input 2 Selected")
+				end)
 				instance.input.on_input_unselect:subscribe(function(_, text)
-					output_log:add_log_text("Input: " .. text)
+					output_log:add_log_text("Input Deselected. Text: " .. text)
 				end)
 				instance.input_2.on_input_unselect:subscribe(function(_, text)
-					output_log:add_log_text("Input 2: " .. text)
+					output_log:add_log_text("Input Deselected. Text: " .. text)
 				end)
 			end,
 		},
@@ -691,7 +697,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/input/input_password.lua",
 			component_class = require("example.examples.basic.input.input_password"),
 			on_create = function(instance, output_log)
-				---@cast instance input_password
+				---@cast instance examples.input_password
 				instance.input.on_input_unselect:subscribe(function(_, text)
 					output_log:add_log_text("Input: " .. text)
 				end)
@@ -705,7 +711,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/input/rich_input.lua",
 			component_class = require("example.examples.basic.input.rich_input"),
 			on_create = function(instance, output_log)
-				---@cast instance rich_input
+				---@cast instance examples.rich_input
 				instance.rich_input.input.on_input_unselect:subscribe(function(_, text)
 					output_log:add_log_text("Input: " .. text)
 				end)
@@ -743,7 +749,7 @@ function M.get_examples()
 					gui.PIVOT_NW,
 				}
 
-				---@cast instance rich_text_tags
+				---@cast instance examples.rich_text_tags
 				properties_panel:add_button("ui_pivot_next", function()
 					pivot_index = pivot_index + 1
 					if pivot_index > #pivot_list then
@@ -799,7 +805,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/swipe/basic_swipe.lua",
 			component_class = require("example.examples.basic.swipe.basic_swipe"),
 			on_create = function(instance, output_log)
-				---@cast instance basic_swipe
+				---@cast instance examples.basic_swipe
 				instance.swipe.on_swipe:subscribe(function(_, side, dist, delta_time)
 					output_log:add_log_text("Swipe Side: " .. side)
 				end)
@@ -813,7 +819,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/checkbox/checkbox.lua",
 			component_class = require("example.examples.basic.checkbox.checkbox"),
 			on_create = function(instance, output_log)
-				---@cast instance checkbox
+				---@cast instance examples.checkbox
 				instance.button.on_click:subscribe(function()
 					output_log:add_log_text("Checkbox Clicked: " .. tostring(instance.is_enabled))
 				end)
@@ -827,7 +833,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/checkbox_group/checkbox_group.lua",
 			component_class = require("example.examples.basic.checkbox_group.checkbox_group"),
 			on_create = function(instance, output_log)
-				---@cast instance checkbox_group
+				---@cast instance examples.checkbox_group
 				instance.on_state_changed:subscribe(function(state1, state2, state3)
 					output_log:add_log_text("State: " .. tostring(state1) .. " " .. tostring(state2) .. " " .. tostring(state3))
 				end)
@@ -841,7 +847,7 @@ function M.get_examples()
 			code_url = "example/examples/basic/radio_group/radio_group.lua",
 			component_class = require("example.examples.basic.radio_group.radio_group"),
 			on_create = function(instance, output_log)
-				---@cast instance radio_group
+				---@cast instance examples.radio_group
 				instance.on_state_changed:subscribe(function(selected)
 					output_log:add_log_text("Selected: " .. selected)
 				end)

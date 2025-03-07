@@ -38,8 +38,6 @@ local helper = require("druid.helper")
 ---@field private _meta druid.component.meta
 local M = {}
 
-local INTERESTS = {} -- Cache interests per component class in runtime
-
 
 local uid = 0
 ---@private
@@ -234,6 +232,13 @@ function M:set_input_enabled(state)
 end
 
 
+---Get component input state. By default it's enabled. Can be disabled by `set_input_enabled` function.
+---@return boolean
+function M:get_input_enabled()
+	return self._meta.input_enabled
+end
+
+
 ---Get parent component
 ---@return druid.component|nil parent_component The parent component if exist or nil
 function M:get_parent_component()
@@ -286,28 +291,6 @@ function M:_reset_input_priority_changed()
 end
 
 
----Get current component interests
----@return table List of component interests
----@private
-function M:__get_interests()
-	local instance_class = self._meta.instance_class
-	if INTERESTS[instance_class] then
-		return INTERESTS[instance_class]
-	end
-
-	local interests = {}
-	for index = 1, #const.ALL_INTERESTS do
-		local interest = const.ALL_INTERESTS[index]
-		if self[interest] and type(self[interest]) == "function" then
-			table.insert(interests, interest)
-		end
-	end
-
-	INTERESTS[instance_class] = interests
-	return INTERESTS[instance_class]
-end
-
-
 ---Get current component nodes
 ---@return table<hash, node>|nil
 function M:get_nodes()
@@ -331,7 +314,6 @@ function M:__add_child(child)
 
 	return self
 end
-
 
 
 ---Remove child from component children list
@@ -391,6 +373,47 @@ function M.create(name, input_priority)
 	})
 
 	return new_class
+end
+
+
+local WIDGET_METATABLE = { __index = M }
+
+---Create the Druid component instance
+---@param self druid.instance
+---@param widget_class druid.widget
+---@param context table
+---@return druid.widget
+function M.create_widget(self, widget_class, context)
+	local instance = setmetatable({}, {
+		__index = setmetatable(widget_class, WIDGET_METATABLE)
+	})
+
+	instance._component = {
+		_uid = M.create_uid(),
+		name = "Druid Widget",
+		input_priority = const.PRIORITY_INPUT,
+		default_input_priority = const.PRIORITY_INPUT,
+		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
+	}
+	instance._meta = {
+		druid = self,
+		template = "",
+		nodes = nil,
+		context = context,
+		style = nil,
+		input_enabled = true,
+		children = {},
+		parent = type(context) ~= "userdata" and context or nil,
+		instance_class = widget_class
+	}
+
+	-- Register
+	if instance._meta.parent then
+		instance._meta.parent:__add_child(instance)
+	end
+
+	---@cast instance druid.widget
+	return instance
 end
 
 

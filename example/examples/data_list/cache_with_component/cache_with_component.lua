@@ -48,7 +48,7 @@ end
 
 ---@param index number
 ---@param node node
----@param instance button_component
+---@param instance examples.button_component
 ---@param data table
 function M:on_element_add(index, node, instance, data)
 	instance.text:set_text("Data Item " .. index)
@@ -62,7 +62,7 @@ function M:on_element_remove(index, node, instance, data)
 end
 
 
----@param instance button_component
+---@param instance examples.button_component
 function M:on_button_click(instance)
 	local data = instance:get_data()
 	self.on_item_click:trigger(data)

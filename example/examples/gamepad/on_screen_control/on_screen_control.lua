@@ -3,7 +3,7 @@ local on_screen_input = require("example.examples.gamepad.on_screen_control.on_s
 
 ---@class examples.on_screen_control: druid.component
 ---@field druid druid.instance
----@field on_screen_input on_screen_input
+---@field on_screen_input examples.on_screen_input
 local M = component.create("on_screen_control")
 
 local CHARACTER_SPEED = 700
@@ -19,7 +19,7 @@ function M:init(template, nodes)
 	self.character_eye_left = self:get_node("eye_left")
 	self.character_eye_right = self:get_node("eye_right")
 
-	self.on_screen_input = self.druid:new(on_screen_input, "on_screen_input") --[[@as on_screen_input]]
+	self.on_screen_input = self.druid:new(on_screen_input, "on_screen_input")
 
 	self.on_screen_input.on_action:subscribe(self.on_action_button, self)
 	self.on_screen_input.on_movement:subscribe(self.on_movement, self)

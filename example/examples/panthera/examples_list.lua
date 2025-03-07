@@ -20,7 +20,7 @@ function M.get_examples()
 			code_url = "example/examples/panthera/animation_blend/animation_blend.lua",
 			component_class = require("example.examples.panthera.animation_blend.animation_blend"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance animation_blend
+				---@cast instance examples.animation_blend
 				local vertical_time = panthera.get_time(instance.animation_vertical)
 
 				local vertical_slider = properties_panel:add_slider("ui_animation_vertical", vertical_time, function(value)

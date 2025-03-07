@@ -102,13 +102,16 @@ end
 function M:clear_created_properties()
 	for index = 1, #self.properties do
 		local property = self.properties[index]
+		local root = property.root --[[@as node]]
 
-		-- If prefab used clone nodes we can remove it
-		if property:get_nodes() then
-			gui.delete_node(property.root)
-		else
-			-- Probably we have component placed on scene directly
-			gui.set_enabled(property.root, false)
+		if root then
+			-- If prefab used clone nodes we can remove it
+			if property:get_nodes() then
+				gui.delete_node(root)
+			else
+				-- Probably we have component placed on scene directly
+				gui.set_enabled(root, false)
+			end
 		end
 
 		self.druid:remove(self.properties[index])

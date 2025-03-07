@@ -1,18 +1,16 @@
--- Hello! Wish you a good day!
+-- Hello, Defolder! Wish you a good day!
 
 local events = require("event.events")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local settings = require("druid.system.settings")
-local base_component = require("druid.component")
+local druid_component = require("druid.component")
 
 ---@class druid.instance
 ---@field components_all druid.component[] All created components
 ---@field components_interest table<string, druid.component[]> All components sorted by interest
----@field url url
----@field private _context table Druid context
+---@field private _context table Druid context, usually a self of gui script
 ---@field private _style table Druid style table
----@field private _deleted boolean
 ---@field private _is_late_remove_enabled boolean
 ---@field private _late_remove druid.component[]
 ---@field private _input_blacklist druid.component[]|nil
@@ -25,6 +23,7 @@ local M = {}
 local MSG_ADD_FOCUS = hash("acquire_input_focus")
 local MSG_REMOVE_FOCUS = hash("release_input_focus")
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
+local INTERESTS_CACHE = {} -- Cache interests per component class in runtime
 
 local function set_input_state(self, is_input_inited)
 	if IS_NO_AUTO_INPUT or (self.input_inited == is_input_inited) then
@@ -36,17 +35,19 @@ local function set_input_state(self, is_input_inited)
 end
 
 
--- The a and b - two Druid components
 ---@private
-local function sort_input_comparator(a, b)
-	local a_priority = a:get_input_priority()
-	local b_priority = b:get_input_priority()
+---@param component_a druid.component
+---@param component_b druid.component
+---@return boolean
+local function sort_input_comparator(component_a, component_b)
+	local a_priority = component_a:get_input_priority()
+	local b_priority = component_b:get_input_priority()
 
 	if a_priority ~= b_priority then
 		return a_priority < b_priority
 	end
 
-	return a:get_uid() < b:get_uid()
+	return component_a:get_uid() < component_b:get_uid()
 end
 
 
@@ -60,64 +61,62 @@ local function sort_input_stack(self)
 end
 
 
--- Create the Druid component instance
-local function create(self, instance_class)
-	local instance = instance_class()
-	instance:setup_component(self, self._context, self._style, instance_class)
+---Get current component interests
+---@param instance druid.component
+---@return table interest_list List of component interests
+local function get_component_interests(instance)
+	---@diagnostic disable-next-line: invisible
+	local instance_class = instance._meta.instance_class
+	if INTERESTS_CACHE[instance_class] then
+		return INTERESTS_CACHE[instance_class]
+	end
 
+	local interests = {}
+	for index = 1, #const.ALL_INTERESTS do
+		local interest = const.ALL_INTERESTS[index]
+		if instance[interest] and type(instance[interest]) == "function" then
+			table.insert(interests, interest)
+		end
+	end
+
+	INTERESTS_CACHE[instance_class] = interests
+	return INTERESTS_CACHE[instance_class]
+end
+
+
+---@private
+---@param self druid.instance
+---@param instance druid.component
+local function register_interests(self, instance)
 	table.insert(self.components_all, instance)
-
-	local register_to = instance:__get_interests()
-	for i = 1, #register_to do
-		local interest = register_to[i]
+	local interest_list = get_component_interests(instance)
+	for i = 1, #interest_list do
+		local interest = interest_list[i]
 		table.insert(self.components_interest[interest], instance)
 	end
+end
+
+
+-- Create the Druid component instance
+---@param self druid.instance
+---@param instance_class druid.component
+---@return druid.component
+local function create(self, instance_class)
+	local instance = instance_class()
+	instance:setup_component(self, self:get_context(), self:get_style(), instance_class)
+	register_interests(self, instance)
 
 	return instance
 end
 
 
-local WIDGET_METATABLE = { __index = base_component }
-
----Create the Druid component instance
+---@private
 ---@param self druid.instance
----@param widget_class druid.component
+---@param widget_class druid.widget
+---@return druid.widget
 local function create_widget(self, widget_class)
-	local instance = setmetatable({}, {
-		__index = setmetatable(widget_class, WIDGET_METATABLE)
-	})
-
-	instance._component = {
-		_uid = base_component.create_uid(),
-		name = "Druid Widget",
-		input_priority = const.PRIORITY_INPUT,
-		default_input_priority = const.PRIORITY_INPUT,
-		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
-	}
-	instance._meta = {
-		druid = self,
-		template = "",
-		nodes = nil,
-		context = self._context,
-		style = nil,
-		input_enabled = true,
-		children = {},
-		parent = type(self._context) ~= "userdata" and self._context,
-		instance_class = widget_class
-	}
-
-	-- Register
-	if instance._meta.parent then
-		instance._meta.parent:__add_child(instance)
-	end
-
-	table.insert(self.components_all, instance)
-
-	local register_to = instance:__get_interests()
-	for i = 1, #register_to do
-		local interest = register_to[i]
-		table.insert(self.components_interest[interest], instance)
-	end
+	local instance = druid_component.create_widget(self, widget_class, self:get_context())
+	register_interests(self, instance)
 
 	return instance
 end
@@ -176,8 +175,9 @@ function M:_process_input(action_id, action, components)
 
 	for i = #components, 1, -1 do
 		local component = components[i]
-		local meta = component._meta
-		if meta.input_enabled and self:_can_use_input_component(component) then
+		local input_enabled = component:get_input_enabled()
+
+		if input_enabled and self:_can_use_input_component(component) then
 			if not is_input_consumed then
 				is_input_consumed = component:on_input(action_id, action) or false
 			else
@@ -210,7 +210,6 @@ end
 function M:initialize(context, style)
 	self._context = context
 	self._style = style or settings.default_style
-	self._deleted = false
 	self._is_late_remove_enabled = false
 	self._late_remove = {}
 
@@ -257,8 +256,6 @@ function M:final()
 		end
 	end
 
-	self._deleted = true
-
 	set_input_state(self, false)
 
 	events.unsubscribe("druid.window_event", self.on_window_event, self)
@@ -303,9 +300,9 @@ function M:remove(component)
 		end
 	end
 
-	local interests = component:__get_interests()
-	for i = 1, #interests do
-		local interest = interests[i]
+	local interest_list = get_component_interests(component)
+	for i = 1, #interest_list do
+		local interest = interest_list[i]
 		local components = self.components_interest[interest]
 		for j = #components, 1, -1 do
 			if components[j] == component then
@@ -315,6 +312,22 @@ function M:remove(component)
 	end
 
 	return is_removed
+end
+
+
+---Get a context of Druid instance (usually a self of gui script)
+---@package
+---@return any
+function M:get_context()
+	return self._context
+end
+
+
+---Get a style of Druid instance
+---@package
+---@return table
+function M:get_style()
+	return self._style
 end
 
 
@@ -506,7 +519,7 @@ end
 local button = require("druid.base.button")
 ---Create Button component
 ---@param node string|node The node_id or gui.get_node(node_id)
----@param callback function|nil Button callback
+---@param callback function|event|nil Button callback
 ---@param params any|nil Button callback params
 ---@param anim_node node|string|nil Button anim node (node, if not provided)
 ---@return druid.button Button component

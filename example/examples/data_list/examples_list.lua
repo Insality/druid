@@ -11,13 +11,13 @@ function M.get_examples()
 			code_url = "example/examples/data_list/basic/data_list_basic.lua",
 			component_class = require("example.examples.data_list.basic.data_list_basic"),
 			on_create = function(instance, output_list)
-				---@cast instance data_list_basic
+				---@cast instance examples.data_list_basic
 				instance.on_item_click:subscribe(function(index)
 					output_list:add_log_text("Item clicked: " .. index)
 				end)
 			end,
 			properties_control = function(instance, properties_panel)
-				---@cast instance data_list_basic
+				---@cast instance examples.data_list_basic
 
 				local view_node = instance.scroll.view_node
 				local is_stencil = gui.get_clipping_mode(view_node) == gui.CLIPPING_MODE_STENCIL
@@ -31,7 +31,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance data_list_basic
+				---@cast instance examples.data_list_basic
 				local data_list = instance.data_list
 
 				local data = data_list:get_data()
@@ -59,7 +59,7 @@ function M.get_examples()
 			code_url = "example/examples/data_list/basic/data_list_horizontal_basic.lua",
 			component_class = require("example.examples.data_list.basic.data_list_horizontal_basic"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance data_list_horizontal_basic
+				---@cast instance examples.data_list_horizontal_basic
 
 				local view_node = instance.scroll.view_node
 				local is_stencil = gui.get_clipping_mode(view_node) == gui.CLIPPING_MODE_STENCIL
@@ -69,7 +69,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance data_list_horizontal_basic
+				---@cast instance examples.data_list_horizontal_basic
 				local data_list = instance.data_list
 
 				local data = data_list:get_data()
@@ -97,14 +97,14 @@ function M.get_examples()
 			code_url = "example/examples/data_list/add_remove_clear/data_list_add_remove_clear.lua",
 			component_class = require("example.examples.data_list.add_remove_clear.data_list_add_remove_clear"),
 			on_create = function(instance, output_list)
-				---@cast instance data_list_add_remove_clear
+				---@cast instance examples.data_list_add_remove_clear
 				instance.on_item_click:subscribe(function(index)
 					instance:remove_item(index)
 					output_list:add_log_text("Item removed: " .. index)
 				end)
 			end,
 			properties_control = function(instance, properties_panel)
-				---@cast instance data_list_add_remove_clear
+				---@cast instance examples.data_list_add_remove_clear
 
 				local view_node = instance.scroll.view_node
 				local is_stencil = gui.get_clipping_mode(view_node) == gui.CLIPPING_MODE_STENCIL
@@ -130,7 +130,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance data_list_add_remove_clear
+				---@cast instance examples.data_list_add_remove_clear
 				local data_list = instance.data_list
 
 				local data = data_list:get_data()
@@ -158,13 +158,13 @@ function M.get_examples()
 			code_url = "example/examples/data_list/cache_with_component/cache_with_component.lua",
 			component_class = require("example.examples.data_list.cache_with_component.cache_with_component"),
 			on_create = function(instance, output_list)
-				---@cast instance data_list_cache_with_component
+				---@cast instance examples.data_list_cache_with_component
 				instance.on_item_click:subscribe(function(index)
 					output_list:add_log_text("Item clicked: " .. index)
 				end)
 			end,
 			properties_control = function(instance, properties_panel)
-				---@cast instance data_list_cache_with_component
+				---@cast instance examples.data_list_cache_with_component
 
 				local view_node = instance.scroll.view_node
 				local is_stencil = gui.get_clipping_mode(view_node) == gui.CLIPPING_MODE_STENCIL
@@ -178,7 +178,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance data_list_cache_with_component
+				---@cast instance examples.data_list_cache_with_component
 				local data_list = instance.data_list
 
 				local data = data_list:get_data()

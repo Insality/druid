@@ -12,7 +12,7 @@ function M.get_examples()
 			code_url = "example/examples/gamepad/gamepad_tester/gamepad_tester.lua",
 			component_class = require("example.examples.gamepad.gamepad_tester.gamepad_tester"),
 			on_create = function(instance, output_list)
-				---@cast instance gamepad_tester
+				---@cast instance examples.gamepad_tester
 				instance.button_left.on_click:subscribe(function()
 					output_list:add_log_text("Button Left Clicked")
 				end)

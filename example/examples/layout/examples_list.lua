@@ -12,7 +12,7 @@ function M.get_examples()
 			code_url = "example/examples/layout/basic/basic_layout.lua",
 			component_class = require("example.examples.layout.basic.basic_layout"),
 			properties_control = function(instance, properties_panel)
-				---@cast instance basic_layout
+				---@cast instance examples.basic_layout
 
 				properties_panel:add_slider("ui_padding", 0, function(value)
 					local padding = math.floor((value * 64) * 100) / 100
@@ -71,7 +71,7 @@ function M.get_examples()
 				end)
 			end,
 			get_debug_info = function(instance)
-				---@cast instance basic_layout
+				---@cast instance examples.basic_layout
 				local layout = instance.layout
 				local p = layout.padding
 				local info = ""
