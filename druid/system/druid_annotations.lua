@@ -1,6 +1,13 @@
 ---@class druid.widget: druid.component
 ---@field druid druid.instance Ready to use druid instance
 
+---@class druid.logger
+---@field trace fun(message: string, context: any)
+---@field debug fun(message: string, context: any)
+---@field info fun(message: string, context: any)
+---@field warn fun(message: string, context: any)
+---@field error fun(message: string, context: any)
+
 ---@class GUITextMetrics
 ---@field width number
 ---@field height number

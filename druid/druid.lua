@@ -5,10 +5,32 @@ local druid_instance = require("druid.system.druid_instance")
 
 local default_style = require("druid.styles.default.style")
 
----Entry point for Druid UI Framework. Create a new Druid instance and adjust the settings.
+--- Use empty function to save a bit of memory
+local EMPTY_FUNCTION = function(_, message, context) end
+
+---@type druid.logger
+local empty_logger = {
+	trace = EMPTY_FUNCTION,
+	debug = EMPTY_FUNCTION,
+	info = EMPTY_FUNCTION,
+	warn = EMPTY_FUNCTION,
+	error = EMPTY_FUNCTION,
+}
+
+---@type druid.logger
+local logger = {
+	trace = EMPTY_FUNCTION,
+	debug = EMPTY_FUNCTION,
+	info = EMPTY_FUNCTION,
+	warn = EMPTY_FUNCTION,
+	error = EMPTY_FUNCTION,
+}
+
+
+---Entry point for Druid UI Framework.
+---Create a new Druid instance and adjust the Druid settings here.
 ---@class druid
 local M = {}
-
 
 ---Create a new Druid instance for creating GUI components.
 ---@param context table The Druid context. Usually, this is the self of the gui_script. It is passed into all Druid callbacks.
@@ -26,6 +48,13 @@ function M.new(context, style)
 end
 
 
+---Set the logger for the Druid instance.
+---@param logger_instance druid.logger The logger
+function M:set_logger(logger_instance)
+	self.logger = logger_instance or empty_logger
+end
+
+
 ---Register a new external Druid component.
 ---Register component just makes the druid:new_{name} function.
 ---For example, if you register a component called "my_component", you can create it using druid:new_my_component(...).
@@ -33,6 +62,7 @@ end
 ---The default way to create component is `druid_instance:new(component_class, ...)`.
 ---@param name string Module name
 ---@param module table Lua table with component
+---@deprecated
 function M.register(name, module)
 	druid_instance["new_" .. name] = function(self, ...)
 		return druid_instance.new(self, module, ...)
@@ -129,6 +159,31 @@ function M.get_widget(object_url)
 	end
 
 	return socket_widgets[object_url.path]
+end
+
+
+---Release a binded widget to the current game object.
+---@param object_url string|userdata|url|nil Root object, if nil current object will be used
+---@return boolean is_released True if the widget was released, false if it was not found
+function M.release_widget(object_url)
+	object_url = object_url or msg.url()
+	if object_url then
+		object_url = msg.url(object_url --[[@as string]])
+	end
+
+	local socket_widgets = WRAPPED_WIDGETS[object_url.socket]
+	if not socket_widgets then
+		return false
+	end
+
+	socket_widgets[object_url.path] = nil
+
+	-- Remove the socket if it's empty
+	if next(socket_widgets) == nil then
+		WRAPPED_WIDGETS[object_url.socket] = nil
+	end
+
+	return true
 end
 
 

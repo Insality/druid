@@ -238,6 +238,7 @@ function M:new(component, ...)
 	if instance.init then
 		instance:init(...)
 	end
+
 	if instance.on_late_init or (not self.input_inited and instance.on_input) then
 		schedule_late_init(self)
 	end
