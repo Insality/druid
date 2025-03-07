@@ -36,8 +36,6 @@ game_binding = /builtins/input/all.input_bindingc
 
 [druid]
 no_auto_input = 0
-no_stencil_check = 0
-no_auto_template = 0
 input_text = text
 input_touch = touch
 input_marked_text = marked_text
@@ -60,7 +58,7 @@ cssfile = /builtins/manifests/web/dark_theme.css
 show_console_banner = 0
 
 [native_extension]
-app_manifest = 
+app_manifest =
 
 [graphics]
 texture_profiles = /builtins/graphics/default.texture_profiles

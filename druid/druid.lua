@@ -89,6 +89,7 @@ local WRAPPED_WIDGETS = {}
 
 ---Set a widget to the current game object. The game object can acquire the widget by calling `bindings.get_widget`
 ---It wraps with events only top level functions cross-context, so you will have no access to nested widgets functions
+---Only one widget can be set per game object.
 ---@param widget druid.widget
 function M.set_widget(widget)
 	local object = msg.url()
@@ -113,6 +114,7 @@ function M.set_widget(widget)
 end
 
 
+---Get a binded widget to the current game object.
 ---@param object_url string|userdata|url|nil Root object, if nil current object will be used
 ---@return druid.widget|nil
 function M.get_widget(object_url)

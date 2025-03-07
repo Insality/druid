@@ -16,7 +16,7 @@ local component = require("druid.component")
 ---@field on_mouse_hover fun(self, node, hover_state)|nil
 ---@field on_set_enabled fun(self, node, enabled_state)|nil
 
----Clickable node with various interaction callbacks
+---Druid component to make clickable node with various interaction callbacks
 ---@class druid.button: druid.component
 ---@field on_click event function(self, custom_args, button_instance)
 ---@field on_pressed event function(self, custom_args, button_instance)
@@ -218,7 +218,7 @@ end
 
 ---Set additional button click area.
 ---Useful to restrict click outside out stencil node or scrollable content.
----This functions calls automatically if you don't disable it in game.project: druid.no_stencil_check
+---If button node placed inside stencil node, it will be automatically set to this stencil node.
 ---@param zone node|string|nil Gui node
 ---@return druid.button self
 function M:set_click_zone(zone)

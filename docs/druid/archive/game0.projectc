@@ -123,7 +123,7 @@ max_count = 16
 launch_screen = /builtins/manifests/ios/LaunchScreen.storyboardc
 pre_renderered_icons = 0
 bundle_identifier = example.unnamed
-bundle_name = 
+bundle_name =
 infoplist = /builtins/manifests/ios/Info.plist
 privacymanifest = /builtins/manifests/ios/PrivacyInfo.xcprivacy
 default_language = en
@@ -134,28 +134,28 @@ version_code = 817
 minimum_sdk_version = 19
 target_sdk_version = 34
 package = com.insality.druid
-gcm_sender_id = 
+gcm_sender_id =
 manifest = /builtins/manifests/android/AndroidManifest.xml
 iap_provider = GooglePlay
 input_method = HiddenInputField
 immersive_mode = 0
 display_cutout = 1
 debuggable = 0
-proguard = 
+proguard =
 extract_native_libs = 1
 
 [osx]
-app_icon = 
+app_icon =
 infoplist = /builtins/manifests/osx/Info.plist
 privacymanifest = /builtins/manifests/osx/PrivacyInfo.xcprivacy
 bundle_identifier = example.unnamed
-bundle_name = 
+bundle_name =
 bundle_version = 1
 default_language = en
 localizations = en
 
 [windows]
-app_icon = 
+app_icon =
 
 [html5]
 custom_heap_size = 0
@@ -164,7 +164,7 @@ htmlfile = /builtins/manifests/web/engine_template.html
 cssfile = /builtins/manifests/web/dark_theme.css
 splash_image = /media/druid_logo.png
 archive_location_prefix = archive
-archive_location_suffix = 
+archive_location_suffix =
 engine_arguments = --verify-graphics-calls=false
 wasm_streaming = 0
 show_fullscreen_button = 0
@@ -179,7 +179,7 @@ max_particle_count = 0
 
 [network]
 http_timeout = 0
-ssl_certificates = 
+ssl_certificates =
 http_thread_count = 4
 http_cache_enabled = 1
 
@@ -213,8 +213,6 @@ max_time_step = 0.5
 
 [druid]
 no_auto_input = 0
-no_stencil_check = 0
-no_auto_template = 0
 input_text = text
 input_touch = touch
 input_marked_text = marked_text
@@ -227,7 +225,7 @@ input_scroll_up = mouse_wheel_up
 input_scroll_down = mouse_wheel_down
 
 [native_extension]
-app_manifest = 
+app_manifest =
 
 [saver]
 autosave_timer = 2

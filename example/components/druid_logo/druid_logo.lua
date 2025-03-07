@@ -3,7 +3,7 @@ local component = require("druid.component")
 
 local druid_logo_panthera = require("example.components.druid_logo.druid_logo_panthera")
 
----@class druid_logo: druid.component
+---@class examples.druid_logo: druid.component
 ---@field root druid.container
 ---@field text_description druid.text
 ---@field druid druid.instance
