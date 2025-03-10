@@ -41,10 +41,7 @@ function M.new(context, style)
 		M.set_default_style(default_style)
 	end
 
-	local new_instance = setmetatable({}, { __index = druid_instance })
-	new_instance:initialize(context, style)
-
-	return new_instance
+	return druid_instance.create_druid_instance(context, style)
 end
 
 

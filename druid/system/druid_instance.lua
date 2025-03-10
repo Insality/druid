@@ -207,7 +207,10 @@ end
 ---Druid class constructor
 ---@param context table Druid context. Usually it is self of gui script
 ---@param style table? Druid style table
-function M:initialize(context, style)
+---@return druid.instance
+function M.create_druid_instance(context, style)
+	local self = setmetatable({}, { __index = M })
+
 	self._context = context
 	self._style = style or settings.default_style
 	self._is_late_remove_enabled = false
@@ -224,6 +227,8 @@ function M:initialize(context, style)
 
 	events.subscribe("druid.window_event", self.on_window_event, self)
 	events.subscribe("druid.language_change", self.on_language_change, self)
+
+	return self
 end
 
 
