@@ -178,7 +178,7 @@ local function schedule_late_init(self)
 end
 
 
----Druid class constructor
+---Druid class constructor which used to create a Druid's components
 ---@param context table Druid context. Usually it is self of gui script
 ---@param style table? Druid style table
 ---@return druid.instance

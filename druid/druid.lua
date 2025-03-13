@@ -5,27 +5,6 @@ local druid_instance = require("druid.system.druid_instance")
 
 local default_style = require("druid.styles.default.style")
 
---- Use empty function to save a bit of memory
-local EMPTY_FUNCTION = function(_, message, context) end
-
----@type druid.logger
-local empty_logger = {
-	trace = EMPTY_FUNCTION,
-	debug = EMPTY_FUNCTION,
-	info = EMPTY_FUNCTION,
-	warn = EMPTY_FUNCTION,
-	error = EMPTY_FUNCTION,
-}
-
----@type druid.logger
-local logger = {
-	trace = EMPTY_FUNCTION,
-	debug = EMPTY_FUNCTION,
-	info = EMPTY_FUNCTION,
-	warn = EMPTY_FUNCTION,
-	error = EMPTY_FUNCTION,
-}
-
 
 ---Entry point for Druid UI Framework.
 ---Create a new Druid instance and adjust the Druid settings here.
@@ -42,13 +21,6 @@ function M.new(context, style)
 	end
 
 	return druid_instance.create_druid_instance(context, style)
-end
-
-
----Set the logger for the Druid instance.
----@param logger_instance druid.logger The logger
-function M:set_logger(logger_instance)
-	self.logger = logger_instance or empty_logger
 end
 
 

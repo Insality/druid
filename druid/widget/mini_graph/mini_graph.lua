@@ -1,6 +1,11 @@
 local color = require("druid.color")
 local helper = require("druid.helper")
 
+---Widget to display a several lines with different height in a row
+---Init, set amount of samples and max value of value means that the line will be at max height
+---Use `push_line_value` to add a new value to the line
+---Or `set_line_value` to set a value to the line by index
+---Setup colors inside template file (at minimum and maximum)
 ---@class widget.mini_graph: druid.widget
 local M = {}
 

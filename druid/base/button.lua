@@ -4,8 +4,7 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---Button style params.
----You can override this component styles params in Druid styles table
----or create your own style
+---You can override this component styles params in Druid styles table or create your own style
 ---@class druid.button.style
 ---@field LONGTAP_TIME number|nil Minimum time to trigger on_hold_callback. Default: 0.4
 ---@field AUTOHOLD_TRIGGER number|nil Maximum hold time to trigger button release while holding. Default: 0.8
