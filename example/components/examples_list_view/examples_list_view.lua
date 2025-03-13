@@ -95,6 +95,7 @@ function M:add_example(examples, druid_example)
 			else
 				instance = druid_example.druid:new(example_data.component_class, example_data.template)
 			end
+			---@cast instance druid.component|druid.widget
 
 			self.selected_example = {
 				data = example_data,

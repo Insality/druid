@@ -72,7 +72,7 @@ end
 local _temp_pos = vmath.vector3(0)
 ---Return pos for grid node index
 ---@param index number The grid element index
----@return vector3 @Node position
+---@return vector3 position Node position
 function M:get_pos(index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
@@ -191,7 +191,7 @@ end
 
 ---Set new items to the grid. All previous items will be removed
 ---@param nodes node[] The new grid nodes
--- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+---@param is_instant boolean|nil If true, update node positions instantly
 function M:set_items(nodes, is_instant)
 	self.nodes = nodes
 	for index = 1, #nodes do
@@ -340,8 +340,8 @@ end
 
 
 ---Set new node size for grid
--- @tparam[opt] number width The new node width
--- @tparam[opt] number height The new node height
+---@param width number|nil The new node width
+---@param height number|nil The new node height
 ---@return druid.grid Current grid instance
 function M:set_item_size(width, height)
 	if width then

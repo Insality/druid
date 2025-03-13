@@ -233,7 +233,6 @@ function M:_remove_at(index)
 end
 
 
-
 ---Refresh all elements in DataList
 ---@private
 function M:_refresh()

@@ -1,78 +1,3 @@
--- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
----Druid Rich Text Custom Component.
--- <b># Overview #</b>
---
--- This custom component is inspired by <a href="https://github.com/britzl/defold-richtext" target="_blank">defold-richtext</a> by britzl.
--- It uses a similar syntax for tags but currently supports fewer tags.
---
--- Create Rich Text on your GUI Text Node. All properties of the text node will be used as default for the text.
---
--- <b># Notes #</b>
---
--- • Nested tags are supported
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=custom_rich_text" target="_blank"><b>Example Link</b></a>
--- @usage
--- local RichText = require("druid.custom.rich_text.rich_text")
--- ...
--- self.rich_text = self.druid:new(RichText, "rich_text")
--- self.rich_text:set_text("Hello, Druid Rich Text!")
--- @usage
--- type druid.rich_text.word = {
---   node: Node,
---   relative_scale: number,
---   color: vector4,
---   position: vector3,
---   offset: vector3,
---   scale: vector3,
---   size: vector3,
---   metrics: druid.rich_text.metrics,
---   pivot: Pivot,
---   text: string,
---   shadow: vector4,
---   outline: vector4,
---   font: string,
---   image: druid.rich_text.image,
---   br: boolean,
---   nobr: boolean,
--- }
---
--- type druid.rich_text.word.image = {
---   texture: string,
---   anim: string,
---   width: number,
---   height: number,
--- }
---
--- type druid.rich_text.lines_metrics = {
---   text_width: number,
---   text_height: number,
---   lines: table<number, druid.rich_text.metrics>,
--- }
---
--- type druid.rich_text.metrics = {
---   width: number,
---   height: number,
---   offset_x: number|nil,
---   offset_y: number|nil,
---   node_size: vector3|nil @For images only,
--- }
--- @module RichText
--- @within BaseComponent
--- @alias druid.rich_text
-
----The component druid instance
--- @tfield DruidInstance druid DruidInstance
-
----The root node of the Rich Text
--- @tfield node root
-
----The text prefab node
--- @tfield node text_prefab
-
---
-
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
 
@@ -183,52 +108,28 @@ end
 
 
 ---Set text for Rich Text
+---		rich_text:set_text("＜color=red＞Foobar＜/color＞")
+---		rich_text:set_text("＜color=1.0,0,0,1.0＞Foobar＜/color＞")
+---		rich_text:set_text("＜color=#ff0000＞Foobar＜/color＞")
+---		rich_text:set_text("＜color=#ff0000ff＞Foobar＜/color＞")
+---		rich_text:set_text("＜shadow=red＞Foobar＜/shadow＞")
+---		rich_text:set_text("＜shadow=1.0,0,0,1.0＞Foobar＜/shadow＞")
+---		rich_text:set_text("＜shadow=#ff0000＞Foobar＜/shadow＞")
+---		rich_text:set_text("＜shadow=#ff0000ff＞Foobar＜/shadow＞")
+---		rich_text:set_text("＜outline=red＞Foobar＜/outline＞")
+---		rich_text:set_text("＜outline=1.0,0,0,1.0＞Foobar＜/outline＞")
+---		rich_text:set_text("＜outline=#ff0000＞Foobar＜/outline＞")
+---		rich_text:set_text("＜outline=#ff0000ff＞Foobar＜/outline＞")
+---		rich_text:set_text("＜font=MyCoolFont＞Foobar＜/font＞")
+---		rich_text:set_text("＜size=2＞Twice as large＜/size＞")
+---		rich_text:set_text("＜br/＞Insert a line break")
+---		rich_text:set_text("＜nobr＞Prevent the text from breaking")
+---		rich_text:set_text("＜img=texture:image＞Display image")
+---		rich_text:set_text("＜img=texture:image,size＞Display image with size")
+---		rich_text:set_text("＜img=texture:image,width,height＞Display image with width and height")
 ---@param text string|nil The text to set
 ---@return druid.rich_text.word[] words
 ---@return druid.rich_text.lines_metrics line_metrics
--- @usage
--- • color: Change text color
---
--- <color=red>Foobar</color>
--- <color=1.0,0,0,1.0>Foobar</color>
--- <color=#ff0000>Foobar</color>
--- <color=#ff0000ff>Foobar</color>
---
--- • shadow: Change text shadow
---
--- <shadow=red>Foobar</shadow>
--- <shadow=1.0,0,0,1.0>Foobar</shadow>
--- <shadow=#ff0000>Foobar</shadow>
--- <shadow=#ff0000ff>Foobar</shadow>
---
--- • outline: Change text shadow
---
--- <outline=red>Foobar</outline>
--- <outline=1.0,0,0,1.0>Foobar</outline>
--- <outline=#ff0000>Foobar</outline>
--- <outline=#ff0000ff>Foobar</outline>
---
--- • font: Change font
---
--- <font=MyCoolFont>Foobar</font>
---
--- • size: Change text size, relative to default size
---
--- <size=2>Twice as large</size>
---
--- • br: Insert a line break
---
--- <br/>
---
--- • nobr: Prevent the text from breaking
---
--- Words <nobr>inside tag</nobr> won't break
---
--- • img: Display image
---
--- <img=texture:image/>
--- <img=texture:image,size/>
--- <img=texture:image,width,height/>
 function M:set_text(text)
 	text = text or ""
 	self:clear()

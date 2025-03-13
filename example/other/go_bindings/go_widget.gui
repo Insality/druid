@@ -1,0 +1,156 @@
+script: "/druid/druid.gui_script"
+fonts {
+  name: "druid_text_bold"
+  font: "/druid/fonts/druid_text_bold.font"
+}
+textures {
+  name: "druid"
+  texture: "/druid/druid.atlas"
+}
+nodes {
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: 20.0
+  }
+  size {
+    x: 32.0
+    y: 120.0
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "circle"
+  pivot: PIVOT_S
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    y: 190.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "20"
+  font: "druid_text_bold"
+  id: "text"
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    x: 233.0
+    y: 127.0
+  }
+  type: TYPE_TEMPLATE
+  id: "memory_panel"
+  inherit_alpha: true
+  template: "/druid/widget/memory_panel/memory_panel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/root"
+  parent: "memory_panel"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "memory_panel/mini_graph"
+  parent: "memory_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/root"
+  parent: "memory_panel/mini_graph"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/header"
+  parent: "memory_panel/mini_graph/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "memory_panel/mini_graph/text_header"
+  parent: "memory_panel/mini_graph/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/icon_drag"
+  parent: "memory_panel/mini_graph/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/content"
+  parent: "memory_panel/mini_graph/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/prefab_line"
+  parent: "memory_panel/mini_graph/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/mini_graph/color_low"
+  parent: "memory_panel/mini_graph/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/content"
+  parent: "memory_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "memory_panel/text_max_value"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "memory_panel/text_per_second"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/line_second_1"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "memory_panel/line_second_2"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "memory_panel/text_memory"
+  parent: "memory_panel/content"
+  template_node_child: true
+}
+material: "/druid/materials/gui_world/gui_world.material"
+adjust_reference: ADJUST_REFERENCE_DISABLED

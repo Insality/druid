@@ -72,8 +72,8 @@ function M:init_tiling_animation(atlas_path)
 end
 
 -- Start our repeat shader work
--- @param repeat_x -- X factor
--- @param repeat_y -- Y factor
+---@param repeat_x number X factor
+---@param repeat_y number Y factor
 function M:animate(repeat_x, repeat_y)
 	if not self.is_inited then
 		return
@@ -110,9 +110,9 @@ function M:final()
 end
 
 
--- Update repeat factor values
--- @param repeat_x
--- @param repeat_y
+---Update repeat factor values
+---@param repeat_x number X factor
+---@param repeat_y number Y factor
 function M:set_repeat(repeat_x, repeat_y)
 	local animation = self.animation
 	animation.v.x = repeat_x or animation.v.x
@@ -181,12 +181,6 @@ function M:set_scale(scale)
 	gui.set(self.node, helper.PROP_SCALE_Y, scale)
 	gui.set(self.node, helper.PROP_SIZE_X, current_size_x / delta_scale_x)
 	gui.set(self.node, helper.PROP_SIZE_Y, current_size_y / delta_scale_y)
-
-	--self.druid:on_node_property_changed(self.node, "scale")
-	--self.druid:on_node_property_changed(self.node, "size")
-
-	--local repeat_x, repeat_y = self:get_repeat()
-	--self:set_repeat(repeat_x, repeat_y)
 
 	return self
 end

@@ -1,5 +1,6 @@
 -- Hello, Defolder! Wish you a good day!
 
+local event = require("event.event")
 local events = require("event.events")
 local const = require("druid.const")
 local helper = require("druid.helper")
@@ -165,33 +166,6 @@ function M:_can_use_input_component(component)
 end
 
 
----Process input for components
----@param action_id hash Action_id from on_input
----@param action table Action from on_input
----@param components druid.component[] Components to process input
----@return boolean The boolean value is input was consumed
-function M:_process_input(action_id, action, components)
-	local is_input_consumed = false
-
-	for i = #components, 1, -1 do
-		local component = components[i]
-		local input_enabled = component:get_input_enabled()
-
-		if input_enabled and self:_can_use_input_component(component) then
-			if not is_input_consumed then
-				is_input_consumed = component:on_input(action_id, action) or false
-			else
-				if component.on_input_interrupt then
-					component:on_input_interrupt(action_id, action)
-				end
-			end
-		end
-	end
-
-	return is_input_consumed
-end
-
-
 local function schedule_late_init(self)
 	if self._late_init_timer_id then
 		return
@@ -227,6 +201,9 @@ function M.create_druid_instance(context, style)
 
 	events.subscribe("druid.window_event", self.on_window_event, self)
 	events.subscribe("druid.language_change", self.on_language_change, self)
+
+	-- And we can rid of several bindings by this?
+	--self.on_node_size_changed = event.create()
 
 	return self
 end
@@ -379,7 +356,23 @@ function M:on_input(action_id, action)
 
 	local components = self.components_interest[const.ON_INPUT]
 	check_sort_input_stack(self, components)
-	local is_input_consumed = self:_process_input(action_id, action, components)
+
+	local is_input_consumed = false
+
+	for i = #components, 1, -1 do
+		local component = components[i]
+		local input_enabled = component:get_input_enabled()
+
+		if input_enabled and self:_can_use_input_component(component) then
+			if not is_input_consumed then
+				is_input_consumed = component:on_input(action_id, action) or false
+			else
+				if component.on_input_interrupt then
+					component:on_input_interrupt(action_id, action)
+				end
+			end
+		end
+	end
 
 	self._is_late_remove_enabled = false
 	self:_clear_late_remove()
@@ -652,7 +645,7 @@ end
 local data_list = require("druid.extended.data_list")
 ---Create DataList component
 ---@param druid_scroll druid.scroll The Scroll instance for Data List component
----@param druid_grid druid.grid The StaticGrid} or @{DynamicGrid instance for Data List component
+---@param druid_grid druid.grid The Grid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
 ---@return druid.data_list component DataList component
 function M:new_data_list(druid_scroll, druid_grid, create_function)

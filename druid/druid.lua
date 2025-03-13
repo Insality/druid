@@ -112,16 +112,14 @@ function M.on_language_change()
 end
 
 
-local WRAPPED_WIDGETS = {}
+local REGISTERED_GUI_WIDGETS = {}
 
 ---Set a widget to the current game object. The game object can acquire the widget by calling `bindings.get_widget`
 ---It wraps with events only top level functions cross-context, so you will have no access to nested widgets functions
 ---Only one widget can be set per game object.
 ---@param widget druid.widget
-function M.set_widget(widget)
-	local object = msg.url()
-	object.fragment = nil
-
+---@return druid.widget
+local function wrap_widget(widget)
 	-- Make a copy of the widget with all functions wrapped in events
 	-- It makes available to call gui functions from game objects
 	local wrapped_widget = setmetatable({}, { __index = widget })
@@ -136,52 +134,45 @@ function M.set_widget(widget)
 		end
 	end
 
-	WRAPPED_WIDGETS[object.socket] = WRAPPED_WIDGETS[object.socket] or {}
-	WRAPPED_WIDGETS[object.socket][object.path] = wrapped_widget
+	return wrapped_widget
 end
 
 
 ---Get a binded widget to the current game object.
----@param object_url string|userdata|url|nil Root object, if nil current object will be used
----@return druid.widget|nil
-function M.get_widget(object_url)
-	object_url = object_url or msg.url()
-	if object_url then
-		object_url = msg.url(object_url --[[@as string]])
-	end
-
-	local socket_widgets = WRAPPED_WIDGETS[object_url.socket]
-	if not socket_widgets then
+---@generic T: druid.widget
+---@param widget_class T The class of the widget to return
+---@param gui_url_string string GUI url, if nil current gui will be used
+---@return T|nil
+function M.get_widget(widget_class, gui_url_string)
+	local gui_url = msg.url(gui_url_string)
+	local guis = REGISTERED_GUI_WIDGETS[gui_url.socket]
+	if not guis then
 		return nil
 	end
 
-	return socket_widgets[object_url.path]
+	for index = 1, #guis do
+		local gui = guis[index]
+		if gui.fragment == gui_url.fragment and gui.path == gui_url.path then
+			return gui.new_widget:trigger(widget_class)
+		end
+	end
+
+	return nil
 end
 
 
----Release a binded widget to the current game object.
----@param object_url string|userdata|url|nil Root object, if nil current object will be used
----@return boolean is_released True if the widget was released, false if it was not found
-function M.release_widget(object_url)
-	object_url = object_url or msg.url()
-	if object_url then
-		object_url = msg.url(object_url --[[@as string]])
-	end
-
-	local socket_widgets = WRAPPED_WIDGETS[object_url.socket]
-	if not socket_widgets then
-		return false
-	end
-
-	socket_widgets[object_url.path] = nil
-
-	-- Remove the socket if it's empty
-	if next(socket_widgets) == nil then
-		WRAPPED_WIDGETS[object_url.socket] = nil
-	end
-
-	return true
+---Register a widget to the current game object.
+---@param druid druid.instance The druid instance to register
+function M.register_gui_widget(druid)
+	local gui_url = msg.url()
+	REGISTERED_GUI_WIDGETS[gui_url.socket] = REGISTERED_GUI_WIDGETS[gui_url.socket] or {}
+	table.insert(REGISTERED_GUI_WIDGETS[gui_url.socket], {
+		path = gui_url.path,
+		fragment = gui_url.fragment,
+		new_widget = event.create(function(widget_class)
+			return wrap_widget(druid:new_widget(widget_class))
+		end),
+	})
 end
-
 
 return M

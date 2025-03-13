@@ -51,9 +51,9 @@ end
 
 
 ---Get the length of a text ignoring any tags except image tags
--- which are treated as having a length of 1
--- @param text String with text or a list of words (from richtext.create)
--- @return Length of text
+---which are treated as having a length of 1
+---@param text string|table<string, any> String with text or a list of words (from richtext.create)
+---@return number Length of text
 function M.length(text)
 	assert(text)
 	if type(text) == "string" then
@@ -523,9 +523,9 @@ end
 
 
 ---Get all words with a specific tag
--- @param words The words to search (as received from richtext.create)
--- @param tag The tag to search for. Nil to search for words without a tag
--- @return Words matching the tag
+---@param words druid.rich_text.word[] The words to search (as received from richtext.create)
+---@param tag string|nil The tag to search for. Nil to search for words without a tag
+---@return druid.rich_text.word[] Words matching the tag
 function M.tagged(words, tag)
 	local tagged = {}
 	for i = 1, #words do

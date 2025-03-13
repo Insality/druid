@@ -26,9 +26,9 @@ local druid_examples = require("example.examples.druid_examples")
 ---@field container_output druid.container
 ---@field container_center druid.container
 ---@field container_status druid.container
----@field druid_logo druid_logo
+---@field druid_logo examples.druid_logo
 ---@field panel_information panel_information
----@field example_scene example_scene
+---@field example_scene examples.example_scene
 ---@field panel_druid_profiler panel_druid_profiler
 ---@field examples_list_view examples_list_view
 ---@field properties_panel properties_panel
@@ -74,13 +74,13 @@ end
 
 ---@param self druid.example
 local function setup_components(self)
-	self.druid_logo = self.druid:new(druid_logo, "druid_logo") --[[@as druid_logo]]
+	self.druid_logo = self.druid:new(druid_logo, "druid_logo") --[[@as examples.druid_logo]]
 	self.container_logo:add_container(self.druid_logo.root)
 
 	self.panel_information = self.druid:new(panel_information, "panel_information") --[[@as panel_information]]
 	self.container_info:add_container(self.panel_information.root)
 
-	self.example_scene = self.druid:new(example_scene, "example_scene") --[[@as example_scene]]
+	self.example_scene = self.druid:new(example_scene, "example_scene") --[[@as examples.example_scene]]
 	self.container_center:add_container(self.example_scene.root)
 
 	self.panel_druid_profiler = self.druid:new(panel_druid_profiler, "panel_druid_profiler") --[[@as panel_druid_profiler]]

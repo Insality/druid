@@ -277,7 +277,7 @@ function M:update_view_size()
 end
 
 
----Enable or disable scroll inert.
+---Enable or disable scroll inert
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
 ---@param state boolean Inert scroll state
@@ -289,14 +289,14 @@ function M:set_inert(state)
 end
 
 
----Return if scroll have inertion.
----@return boolean @If scroll have inertion
+---Return if scroll have inertion
+---@return boolean is_inert If scroll have inertion
 function M:is_inert()
 	return self._is_inert
 end
 
 
----Set extra size for scroll stretching.
+---Set extra size for scroll stretching
 -- Set 0 to disable stretching effect
 ---@param stretch_size number|nil Size in pixels of additional scroll area
 ---@return druid.scroll Current scroll instance

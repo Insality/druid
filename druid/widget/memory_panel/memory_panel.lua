@@ -39,11 +39,11 @@ function M:init()
 		self:push_next_value()
 	end)
 
-	self.container = self.druid:new_container(self.root)
-	self.container:add_container(self.mini_graph.container)
-	local container_content = self.container:add_container("content")
-	container_content:add_container("text_max_value")
-	container_content:add_container("text_per_second")
+	--self.container = self.druid:new_container(self.root)
+	--self.container:add_container(self.mini_graph.container)
+	--local container_content = self.container:add_container("content")
+	--container_content:add_container("text_max_value")
+	--container_content:add_container("text_per_second")
 end
 
 
