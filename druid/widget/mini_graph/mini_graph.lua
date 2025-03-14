@@ -85,9 +85,9 @@ end
 
 
 ---Set normalized to control the color of the line
----	for index = 1, mini_graph:get_samples() do
----		mini_graph:set_line_value(index, math.random())
----	end
+---		for index = 1, mini_graph:get_samples() do
+---			mini_graph:set_line_value(index, math.random())
+---		end
 ---@param index number
 ---@param value number The normalized value from 0 to 1
 function M:set_line_value(index, value)
