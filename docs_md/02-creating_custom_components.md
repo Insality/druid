@@ -1,5 +1,12 @@
 # Creating Custom Components
 
+# Deprecated
+Custom compomnents from 1.1 release are deprecated. Now we have a new way to create custom components - widgets.
+
+Custom components are will exists for more system things like basic components. You don't have to migrate to widgets.
+
+Read more about widgets in [widgets.md](widgets.md)
+
 ## Overview
 
 Druid offers the flexibility to create custom components that contain your own logic, as well as other Druid basic components or custom components. While Druid provides a set of predefined components like buttons and scrolls, it goes beyond that and provides a way to handle all your GUI elements in a more abstract manner. Custom components are a powerful way to separate logic and create higher levels of abstraction in your code.
@@ -43,8 +50,6 @@ function init(self)
     -- We pass a GUI template "template_name" and skip nodes due it already on the scene
     self.my_component = self.druid:new(my_component, "template_name")
     self.my_component:hello() -- Hello from custom component
-
-
 end
 
 ```
