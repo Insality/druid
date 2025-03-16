@@ -1,4 +1,4 @@
----@class widget.property_input: druid.widget
+---@class druid.widget.property_input: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field text_name druid.text
@@ -23,7 +23,7 @@ end
 
 
 ---@param text string
----@return widget.property_input
+---@return druid.widget.property_input
 function M:set_text_property(text)
 	self.text_name:set_text(text)
 	return self
@@ -31,14 +31,14 @@ end
 
 
 ---@param text string|number
----@return widget.property_input
+---@return druid.widget.property_input
 function M:set_text_value(text)
 	self.rich_input:set_text(tostring(text))
 	return self
 end
 
 
----@param callback fun(self: widget.property_input, text: string)
+---@param callback fun(self: druid.widget.property_input, text: string)
 ---@param callback_context any
 function M:on_change(callback, callback_context)
 	self.rich_input.input.on_input_unselect:subscribe(callback, callback_context)

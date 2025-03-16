@@ -19,7 +19,7 @@ function M.get_examples()
 			code_url = "example/examples/widgets/properties_panel/properties_panel.lua",
 			widget_class = require("druid.widget.properties_panel.properties_panel"),
 			on_create = function(instance, output_list)
-				---@cast instance widget.properties_panel
+				---@cast instance druid.widget.properties_panel
 
 				instance:add_button(function(button)
 					button:set_text_button("Button")
@@ -135,7 +135,7 @@ function M.get_examples()
 			code_url = "druid.widget.memory_panel.memory_panel.lua",
 			widget_class = require("druid.widget.memory_panel.memory_panel"),
 			on_create = function(instance, output_list)
-				---@cast instance widget.memory_panel
+				---@cast instance druid.widget.memory_panel
 				print("Memory panel created")
 			end,
 		},
@@ -147,7 +147,7 @@ function M.get_examples()
 			code_url = "druid.widget.fps_panel.fps_panel.lua",
 			widget_class = require("druid.widget.fps_panel.fps_panel"),
 			on_create = function(instance, output_list)
-				---@cast instance widget.fps_panel
+				---@cast instance druid.widget.fps_panel
 				print("FPS panel created")
 			end,
 		},
@@ -159,11 +159,11 @@ function M.get_examples()
 			code_url = "druid.widget.mini_graph.mini_graph.lua",
 			widget_class = require("druid.widget.mini_graph.mini_graph"),
 			on_create = function(instance, output_list)
-				---@cast instance widget.mini_graph
+				---@cast instance druid.widget.mini_graph
 				instance:set_samples(50)
 			end,
 			properties_control = function(instance, properties_panel)
-				---@cast instance widget.mini_graph
+				---@cast instance druid.widget.mini_graph
 				properties_panel:add_slider("value", 0.5, function(value)
 					-- Remap to -1, 2
 					value = value * 3 - 1

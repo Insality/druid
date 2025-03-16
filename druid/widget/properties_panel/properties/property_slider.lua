@@ -1,7 +1,7 @@
 local event = require("event.event")
 local helper = require("druid.helper")
 
----@class widget.property_slider: druid.widget
+---@class druid.widget.property_slider: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field druid druid.instance

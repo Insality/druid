@@ -148,4 +148,25 @@ function M.register_druid_as_widget(druid)
 end
 
 
+---Unregister a druid instance from the current game object.
+function M.unregister_druid_as_widget()
+	local gui_url = msg.url()
+	local socket = gui_url.socket
+	local path = gui_url.path
+	local fragment = gui_url.fragment
+
+	for index = 1, #REGISTERED_GUI_WIDGETS[socket] do
+		local gui = REGISTERED_GUI_WIDGETS[socket][index]
+		if gui.path == path and gui.fragment == fragment then
+			table.remove(REGISTERED_GUI_WIDGETS[socket], index)
+			break
+		end
+	end
+
+	if #REGISTERED_GUI_WIDGETS[socket] == 0 then
+		REGISTERED_GUI_WIDGETS[socket] = nil
+	end
+end
+
+
 return M

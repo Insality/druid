@@ -8,6 +8,7 @@ end
 
 
 function final(self)
+	druid.unregister_druid_as_widget()
 	self.druid:final()
 end
 

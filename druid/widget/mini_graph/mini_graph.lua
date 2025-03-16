@@ -6,7 +6,7 @@ local helper = require("druid.helper")
 ---Use `push_line_value` to add a new value to the line
 ---Or `set_line_value` to set a value to the line by index
 ---Setup colors inside template file (at minimum and maximum)
----@class widget.mini_graph: druid.widget
+---@class druid.widget.mini_graph: druid.widget
 local M = {}
 
 local SIZE_Y = hash("size.y")

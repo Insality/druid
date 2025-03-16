@@ -1,4 +1,4 @@
----@class widget.property_text: druid.widget
+---@class druid.widget.property_text: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field text_name druid.text
@@ -24,7 +24,7 @@ end
 
 
 ---@param text string
----@return widget.property_text
+---@return druid.widget.property_text
 function M:set_text_property(text)
 	self.text_name:set_text(text)
 	return self
@@ -32,7 +32,7 @@ end
 
 
 ---@param text string|nil
----@return widget.property_text
+---@return druid.widget.property_text
 function M:set_text_value(text)
 	self.text_right:set_text(text or "")
 	return self

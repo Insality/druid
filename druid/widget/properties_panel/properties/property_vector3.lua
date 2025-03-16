@@ -1,7 +1,7 @@
 local event = require("event.event")
 
 
----@class widget.property_vector3: druid.widget
+---@class druid.widget.property_vector3: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field text_name druid.text
@@ -53,7 +53,7 @@ end
 
 
 ---@param text string
----@return widget.property_vector3
+---@return druid.widget.property_vector3
 function M:set_text_property(text)
 	self.text_name:set_text(text)
 	return self
@@ -63,7 +63,7 @@ end
 ---@param x number
 ---@param y number
 ---@param z number
----@return widget.property_vector3
+---@return druid.widget.property_vector3
 function M:set_value(x, y, z)
 	self.rich_input_x:set_text(tostring(x))
 	self.rich_input_y:set_text(tostring(y))

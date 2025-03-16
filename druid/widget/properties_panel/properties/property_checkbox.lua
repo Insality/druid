@@ -1,6 +1,6 @@
 local event = require("event.event")
 
----@class widget.property_checkbox: druid.widget
+---@class druid.widget.property_checkbox: druid.widget
 ---@field root node
 ---@field druid druid.instance
 ---@field text_name druid.text

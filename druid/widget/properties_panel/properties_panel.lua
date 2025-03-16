@@ -6,7 +6,7 @@ local property_text = require("druid.widget.properties_panel.properties.property
 local property_left_right_selector = require("druid.widget.properties_panel.properties.property_left_right_selector")
 local property_vector3 = require("druid.widget.properties_panel.properties.property_vector3")
 
----@class widget.properties_panel: druid.widget
+---@class druid.widget.properties_panel: druid.widget
 ---@field root node
 ---@field scroll druid.scroll
 ---@field layout druid.layout
@@ -16,7 +16,7 @@ local property_vector3 = require("druid.widget.properties_panel.properties.prope
 ---@field contaienr_scroll_content druid.container
 ---@field button_hidden druid.button
 ---@field text_header druid.text
----@field paginator widget.property_left_right_selector
+---@field paginator druid.widget.property_left_right_selector
 ---@field properties druid.widget[] List of created properties
 ---@field properties_constructors fun()[] List of properties functions to create a new widget. Used to not spawn non-visible widgets but keep the reference
 local M = {}
@@ -176,47 +176,47 @@ function M:update(dt)
 end
 
 
----@param on_create fun(checkbox: widget.property_checkbox)|nil
----@return widget.properties_panel
+---@param on_create fun(checkbox: druid.widget.property_checkbox)|nil
+---@return druid.widget.properties_panel
 function M:add_checkbox(on_create)
 	return self:add_inner_widget(property_checkbox, "property_checkbox", self.property_checkbox_prefab, on_create)
 end
 
 
----@param on_create fun(slider: widget.property_slider)|nil
----@return widget.properties_panel
+---@param on_create fun(slider: druid.widget.property_slider)|nil
+---@return druid.widget.properties_panel
 function M:add_slider(on_create)
 	return self:add_inner_widget(property_slider, "property_slider", self.property_slider_prefab, on_create)
 end
 
 
----@param on_create fun(button: widget.property_button)|nil
----@return widget.properties_panel
+---@param on_create fun(button: druid.widget.property_button)|nil
+---@return druid.widget.properties_panel
 function M:add_button(on_create)
 	return self:add_inner_widget(property_button, "property_button", self.property_button_prefab, on_create)
 end
 
 
----@param on_create fun(input: widget.property_input)|nil
----@return widget.properties_panel
+---@param on_create fun(input: druid.widget.property_input)|nil
+---@return druid.widget.properties_panel
 function M:add_input(on_create)
 	return self:add_inner_widget(property_input, "property_input", self.property_input_prefab, on_create)
 end
 
 
----@param on_create fun(text: widget.property_text)|nil
+---@param on_create fun(text: druid.widget.property_text)|nil
 function M:add_text(on_create)
 	return self:add_inner_widget(property_text, "property_text", self.property_text_prefab, on_create)
 end
 
 
----@param on_create fun(selector: widget.property_left_right_selector)|nil
+---@param on_create fun(selector: druid.widget.property_left_right_selector)|nil
 function M:add_left_right_selector(on_create)
 	return self:add_inner_widget(property_left_right_selector, "property_left_right_selector", self.property_left_right_selector_prefab, on_create)
 end
 
 
----@param on_create fun(vector3: widget.property_vector3)|nil
+---@param on_create fun(vector3: druid.widget.property_vector3)|nil
 function M:add_vector3(on_create)
 	return self:add_inner_widget(property_vector3, "property_vector3", self.property_vector3_prefab, on_create)
 end
@@ -227,7 +227,7 @@ end
 ---@param template string|nil
 ---@param nodes table<hash, node>|node|nil
 ---@param on_create fun(widget: T)|nil
----@return widget.properties_panel
+---@return druid.widget.properties_panel
 function M:add_inner_widget(widget_class, template, nodes, on_create)
 	table.insert(self.properties_constructors, function()
 		local widget = self.druid:new_widget(widget_class, template, nodes)
@@ -245,7 +245,7 @@ end
 
 
 ---@param create_widget_callback fun(): druid.widget
----@return widget.properties_panel
+---@return druid.widget.properties_panel
 function M:add_widget(create_widget_callback)
 	table.insert(self.properties_constructors, function()
 		local widget = create_widget_callback()

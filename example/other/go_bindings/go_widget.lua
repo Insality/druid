@@ -3,7 +3,7 @@ local panthera = require("panthera.panthera")
 local animation = require("example.other.go_bindings.go_widget_panthera")
 local memory_panel = require("druid.widget.memory_panel.memory_panel")
 
----@class widget.go_widget: druid.widget
+---@class druid.widget.go_widget: druid.widget
 local M = {}
 
 

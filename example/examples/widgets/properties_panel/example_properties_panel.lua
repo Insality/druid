@@ -1,6 +1,6 @@
 local properties_panel = require("druid.widget.properties_panel.properties_panel")
 
----@class widget.example_properties_panel: druid.widget
+---@class druid.widget.example_properties_panel: druid.widget
 local M = {}
 
 
