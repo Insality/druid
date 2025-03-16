@@ -92,6 +92,18 @@ function M:on_style_change(style)
 end
 
 
+---@return druid.button self
+function M:set_animations_disabled()
+	self.style.on_click = function() end
+	self.style.on_click_disabled = function() end
+	self.style.on_mouse_hover = function() end
+	self.style.on_hover = function() end
+	self.style.on_set_enabled = function() end
+
+	return self
+end
+
+
 function M:on_late_init()
 	if not self.click_zone then
 		local stencil_node = helper.get_closest_stencil_node(self.node)

@@ -700,7 +700,7 @@ end
 local hotkey = require("druid.extended.hotkey")
 ---Create Hotkey component
 ---@param keys_array string|string[] Keys for trigger action. Should contains one action key and any amount of modificator keys
----@param callback function|nil The callback function
+---@param callback function|event|nil The callback function
 ---@param callback_argument any|nil The argument to pass into the callback function
 ---@return druid.hotkey component Hotkey component
 function M:new_hotkey(keys_array, callback, callback_argument)

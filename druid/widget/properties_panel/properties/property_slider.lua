@@ -8,6 +8,7 @@ local helper = require("druid.helper")
 ---@field text_name druid.text
 ---@field text_value druid.text
 ---@field slider druid.slider
+---@field on_change_value event fun(value:number)
 local M = {}
 
 

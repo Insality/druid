@@ -113,8 +113,8 @@ end
 ---Get a binded widget to the current game object.
 ---@generic T: druid.widget
 ---@param widget_class T The class of the widget to return
----@param gui_url_string string GUI url, if nil current gui will be used
----@return T|nil
+---@param gui_url_string string? GUI url, if nil current gui will be used
+---@return T
 function M.get_widget(widget_class, gui_url_string)
 	local gui_url = msg.url(gui_url_string)
 	local guis = REGISTERED_GUI_WIDGETS[gui_url.socket]
@@ -135,7 +135,7 @@ end
 
 ---Register a widget to the current game object.
 ---@param druid druid.instance The druid instance to register
-function M.register_gui_widget(druid)
+function M.register_druid_as_widget(druid)
 	local gui_url = msg.url()
 	REGISTERED_GUI_WIDGETS[gui_url.socket] = REGISTERED_GUI_WIDGETS[gui_url.socket] or {}
 	table.insert(REGISTERED_GUI_WIDGETS[gui_url.socket], {
@@ -146,5 +146,6 @@ function M.register_gui_widget(druid)
 		end),
 	})
 end
+
 
 return M

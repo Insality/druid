@@ -14,13 +14,13 @@ local utf8 = utf8 or utf8_lua
 ---@field on_input_wrong fun(self: druid.input, button_node: node) Callback on wrong user input
 
 ---@class druid.input: druid.component
----@field on_input_select event
----@field on_input_unselect event
----@field on_input_text event
----@field on_input_empty event
----@field on_input_full event
----@field on_input_wrong event
----@field on_select_cursor_change event
+---@field on_input_select event fun(self: druid.input, input: druid.input)
+---@field on_input_unselect event fun(self: druid.input, text: string, input: druid.input)
+---@field on_input_text event fun(self: druid.input)
+---@field on_input_empty event fun(self: druid.input)
+---@field on_input_full event fun(self: druid.input)
+---@field on_input_wrong event fun(self: druid.input)
+---@field on_select_cursor_change event fun(self: druid.input, cursor_index: number, start_index: number, end_index: number)
 ---@field style table
 ---@field text druid.text
 local M = component.create("input")

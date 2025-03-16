@@ -3,7 +3,7 @@ local druid = require("druid.druid")
 
 function init(self)
 	self.druid = druid.new(self)
-	druid.register_gui_widget(self.druid)
+	druid.register_druid_as_widget(self.druid)
 end
 
 

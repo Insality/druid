@@ -9,8 +9,8 @@ local component = require("druid.component")
 
 ---@class druid.hover: druid.component
 ---@field node node
----@field on_hover event
----@field on_mouse_hover event
+---@field on_hover event fun(self: druid.hover, is_hover: boolean)
+---@field on_mouse_hover event fun(self: druid.hover, is_hover: boolean)
 ---@field style druid.hover.style
 ---@field click_zone node
 ---@field private _is_hovered boolean|nil
