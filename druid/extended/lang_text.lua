@@ -30,6 +30,7 @@ function M:init(node, locale_id, adjust_type)
 end
 
 
+---@private
 function M:on_language_change()
 	if self.last_locale then
 		self:translate(self.last_locale, unpack(self.last_locale_args))

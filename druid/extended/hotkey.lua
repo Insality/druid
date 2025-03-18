@@ -34,6 +34,7 @@ function M:init(keys, callback, callback_argument)
 end
 
 
+---@private
 ---@param style druid.hotkey.style
 function M:on_style_change(style)
 	self.style = {
@@ -103,6 +104,7 @@ function M:is_processing()
 end
 
 
+---@private
 function M:on_focus_gained()
 	for k, v in pairs(self._modificators) do
 		self._modificators[k] = false
@@ -110,6 +112,7 @@ function M:on_focus_gained()
 end
 
 
+---@private
 ---@param action_id hash|nil The action id
 ---@param action action The action
 ---@return boolean is_consume True if the action is consumed

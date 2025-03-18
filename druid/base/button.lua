@@ -94,13 +94,16 @@ function M:on_style_change(style)
 end
 
 
+---Remove default button style animations
 ---@return druid.button self The current button instance
 function M:set_animations_disabled()
-	self.style.on_click = function() end
-	self.style.on_click_disabled = function() end
-	self.style.on_mouse_hover = function() end
-	self.style.on_hover = function() end
-	self.style.on_set_enabled = function() end
+	local empty_function = function() end
+
+	self.style.on_click = empty_function
+	self.style.on_hover = empty_function
+	self.style.on_mouse_hover = empty_function
+	self.style.on_set_enabled = empty_function
+	self.style.on_click_disabled = empty_function
 
 	return self
 end
@@ -117,6 +120,7 @@ function M:on_late_init()
 end
 
 
+---@private
 ---@param action_id hash The action id
 ---@param action table The action table
 ---@return boolean is_consumed True if the input was consumed
@@ -201,6 +205,7 @@ function M:on_input(action_id, action)
 end
 
 
+---@private
 function M:on_input_interrupt()
 	self.can_action = false
 	self.hover:set_hover(false)

@@ -94,6 +94,7 @@ function M:init(node, mode, callback)
 end
 
 
+---@private
 function M:on_late_init()
 	if not gui.get_parent(self.node) then
 		-- TODO: Scale issue here, in fit into window!
@@ -102,6 +103,7 @@ function M:on_late_init()
 end
 
 
+---@private
 function M:on_remove()
 	self:clear_draggable_corners()
 end
@@ -124,8 +126,8 @@ function M:set_pivot(pivot)
 end
 
 
----Set the style of the container
----@param style druid.container.style The style to set
+---@private
+---@param style druid.container.style
 function M:on_style_change(style)
 	self.style = {
 		DRAGGABLE_CORNER_SIZE = style.DRAGGABLE_CORNER_SIZE or vmath.vector3(24, 24, 0),
@@ -231,6 +233,7 @@ function M:fit_into_window()
 end
 
 
+---@private
 function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self.x_koef = x_koef

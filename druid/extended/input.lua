@@ -230,11 +230,13 @@ function M:on_input(action_id, action)
 end
 
 
+---@private
 function M:on_focus_lost()
 	self:unselect()
 end
 
 
+---@private
 function M:on_input_interrupt()
 	--self:unselect()
 end

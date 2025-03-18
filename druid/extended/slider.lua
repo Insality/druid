@@ -43,17 +43,20 @@ function M:init(node, end_pos, callback)
 end
 
 
+---@private
 function M:on_layout_change()
 	self:set(self.value)
 end
 
 
+---@private
 function M:on_remove()
 	-- Return pin to start position
 	gui.set_position(self.node, self.start_pos)
 end
 
 
+---@private
 function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self._x_koef = x_koef
@@ -62,9 +65,10 @@ function M:on_window_resized()
 end
 
 
----@param action_id number The action id
----@param action action The action table
----@return boolean is_consumed True if the input was consumed
+---@private
+---@param action_id hash Action id from on_input
+---@param action table Action table from on_input
+---@return boolean is_consumed True if input was consumed
 function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false

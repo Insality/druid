@@ -45,6 +45,7 @@ function M:init(node, key, init_value)
 end
 
 
+---@private
 ---@param style druid.progress.style
 function M:on_style_change(style)
 	self.style = {
@@ -54,11 +55,13 @@ function M:on_style_change(style)
 end
 
 
+---@private
 function M:on_layout_change()
 	self:set_to(self.last_value)
 end
 
 
+---@private
 function M:on_remove()
 	gui.set_size(self.node, self.max_size)
 end

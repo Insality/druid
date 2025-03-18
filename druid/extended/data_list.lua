@@ -50,7 +50,7 @@ function M:init(scroll, grid, create_function)
 end
 
 
----Druid System on_remove function
+---@private
 function M:on_remove()
 	self:clear()
 	self.scroll.on_scroll:unsubscribe(self._refresh, self)

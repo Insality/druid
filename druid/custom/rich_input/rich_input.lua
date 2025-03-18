@@ -191,6 +191,10 @@ function M:init(template, nodes)
 end
 
 
+---@private
+---@param action_id hash Action id from on_input
+---@param action table Action table from on_input
+---@return boolean is_consumed True if input was consumed
 function M:on_input(action_id, action)
 	if action_id == const.ACTION_LSHIFT then
 		if action.pressed then
