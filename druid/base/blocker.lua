@@ -14,6 +14,7 @@ function M:init(node)
 end
 
 
+---@private
 ---@param action_id string The action id
 ---@param action table The action table
 ---@return boolean is_consumed True if the input was consumed

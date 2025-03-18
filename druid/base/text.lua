@@ -53,6 +53,7 @@ function M:init(node, value, adjust_type)
 end
 
 
+---@private
 ---@param style druid.text.style
 function M:on_style_change(style)
 	self.style = {
@@ -64,6 +65,7 @@ function M:on_style_change(style)
 end
 
 
+---@private
 function M:on_layout_change()
 	self:set_text(self.last_value)
 end

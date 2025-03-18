@@ -21,6 +21,7 @@ local component = require("druid.component")
 local M = component.create("hover")
 
 
+---The constructor for the hover component
 ---@param node node Gui node
 ---@param on_hover_callback function Hover callback
 ---@param on_mouse_hover function On mouse hover callback
@@ -37,6 +38,7 @@ function M:init(node, on_hover_callback, on_mouse_hover)
 end
 
 
+---@private
 function M:on_late_init()
 	if not self.click_zone then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
@@ -47,6 +49,7 @@ function M:on_late_init()
 end
 
 
+---@private
 ---@param style druid.hover.style
 function M:on_style_change(style)
 	self.style = {}
@@ -55,9 +58,10 @@ function M:on_style_change(style)
 end
 
 
----@param action_id hash
----@param action table
----@return boolean
+---@private
+---@param action_id hash Action id from on_input
+---@param action table Action from on_input
+---@return boolean is_consumed True if the input was consumed
 function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= nil then
 		return false
@@ -92,6 +96,7 @@ function M:on_input(action_id, action)
 end
 
 
+---@private
 function M:on_input_interrupt()
 	self:set_hover(false)
 end

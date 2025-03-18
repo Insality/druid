@@ -62,6 +62,7 @@ function M:init(parent, element, in_row)
 end
 
 
+---@private
 ---@param style druid.grid.style
 function M:on_style_change(style)
 	self.style = {
@@ -122,6 +123,7 @@ function M:get_index_by_node(node)
 end
 
 
+---@private
 function M:on_layout_change()
 	self:_update(true)
 end

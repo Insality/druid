@@ -106,6 +106,7 @@ function M:set_animations_disabled()
 end
 
 
+---@private
 function M:on_late_init()
 	if not self.click_zone then
 		local stencil_node = helper.get_closest_stencil_node(self.node)

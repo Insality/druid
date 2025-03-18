@@ -113,6 +113,7 @@ function M:init(click_node, text_node, keyboard_type)
 end
 
 
+---@private
 ---@param style druid.input.style
 function M:on_style_change(style)
 	self.style = {
@@ -127,6 +128,7 @@ function M:on_style_change(style)
 end
 
 
+---@private
 ---@param action_id hash|nil The action id
 ---@param action action The action
 ---@return boolean is_consume True if the action is consumed

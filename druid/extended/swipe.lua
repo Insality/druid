@@ -36,6 +36,7 @@ function M:init(node_or_node_id, on_swipe_callback)
 end
 
 
+---@private
 function M:on_late_init()
 	if not self.click_zone then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
@@ -46,6 +47,7 @@ function M:on_late_init()
 end
 
 
+---@private
 ---@param style druid.swipe.style
 function M:on_style_change(style)
 	self.style = {
@@ -56,6 +58,7 @@ function M:on_style_change(style)
 end
 
 
+---@private
 ---@param action_id hash The action id
 ---@param action action The action table
 ---@return boolean is_consumed True if the input was consumed
@@ -90,6 +93,7 @@ function M:on_input(action_id, action)
 end
 
 
+---@private
 function M:on_input_interrupt()
 	self:_reset_swipe()
 end

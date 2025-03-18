@@ -17,6 +17,7 @@ function M:init(callback, params)
 end
 
 
+---@private
 ---@param action_id hash The action id
 ---@param action table The action table
 ---@return boolean is_consumed True if the input was consumed

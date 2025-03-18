@@ -42,6 +42,7 @@ function M:init(node, seconds_from, seconds_to, callback)
 end
 
 
+---@private
 function M:update(dt)
 	if not self.is_on then
 		return
@@ -65,6 +66,7 @@ function M:update(dt)
 end
 
 
+---@private
 function M:on_layout_change()
 	self:set_to(self.last_value)
 end

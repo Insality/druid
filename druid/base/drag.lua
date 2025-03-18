@@ -72,6 +72,7 @@ function M:init(node_or_node_id, on_drag_callback)
 end
 
 
+---@private
 ---@param style druid.drag.style The style of Drag component
 function M:on_style_change(style)
 	self.style = {
@@ -94,6 +95,7 @@ function M:set_drag_cursors(is_enabled)
 end
 
 
+---@private
 function M:on_late_init()
 	if not self.click_zone then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
@@ -104,6 +106,7 @@ function M:on_late_init()
 end
 
 
+---@private
 function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self._x_koef = x_koef
@@ -112,6 +115,7 @@ function M:on_window_resized()
 end
 
 
+---@private
 function M:on_input_interrupt()
 	if self.is_drag or self.is_touch then
 		self:_end_touch()
@@ -119,6 +123,7 @@ function M:on_input_interrupt()
 end
 
 
+---@private
 ---@param action_id hash Action id from on_input
 ---@param action table Action from on_input
 ---@return boolean is_consumed True if the input was consumed

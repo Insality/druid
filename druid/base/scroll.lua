@@ -87,6 +87,7 @@ function M:init(view_node, content_node)
 end
 
 
+---@private
 ---@param style druid.scroll.style
 function M:on_style_change(style)
 	self.style = {}
@@ -111,6 +112,7 @@ function M:on_style_change(style)
 end
 
 
+---@private
 function M:on_late_init()
 	if not self.click_zone then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
@@ -121,11 +123,13 @@ function M:on_late_init()
 end
 
 
+---@private
 function M:on_layout_change()
 	gui.set_position(self.content_node, self.position)
 end
 
 
+---@private
 function M:update(dt)
 	if self.is_animate then
 		self.position.x = gui.get(self.content_node, "position.x") --[[@as number]]
@@ -141,11 +145,13 @@ function M:update(dt)
 end
 
 
+---@private
 function M:on_input(action_id, action)
 	return self:_process_scroll_wheel(action_id, action)
 end
 
 
+---@private
 function M:on_remove()
 	self:bind_grid(nil)
 end

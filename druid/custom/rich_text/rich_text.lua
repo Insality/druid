@@ -91,6 +91,7 @@ function M:init(text_node, value)
 end
 
 
+---@private
 function M:on_layout_change()
 	if self._last_value then
 		self:set_text(self._last_value)
@@ -98,6 +99,7 @@ function M:on_layout_change()
 end
 
 
+---@private
 ---@param style druid.rich_text.style
 function M:on_style_change(style)
 	self.style = {
