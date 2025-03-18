@@ -1,6 +1,5 @@
 # Advanced Druid Setup
 
-
 ## Input Bindings
 
 By default, **Druid** uses all key names from Defold's default `/builtins/input/all.input_binding` for input bindings.
@@ -96,23 +95,3 @@ local function on_window_callback(self, event, data)
 end
 window.set_listener(on_window_callback)
 ```
-
-
-## Lua Annotations
-
-[EmmyLua](https://emmylua.github.io/annotation.html) is a Lua annotation library. It is a useful tool for enabling Lua code autocompletion in editors such as [VSCode](https://github.com/EmmyLua/VSCode-EmmyLua) and [IntelliJ IDEA](https://github.com/EmmyLua/IntelliJ-EmmyLua).
-
-Since dependencies cannot be processed by external editors, to use the EmmyLua annotations, you should copy the _druid/annotations.lua_ file to your project.
-
-Remember that you can restart the EmmyLua server to refresh the changes if something goes wrong.
-
-After the annotations are processed, you should specify the type of "Druid" in the "require" statement:
-
-```lua
----@type druid
-local druid = require("druid.druid")
-
--- Now the autocomplete is working
-```
-
-<img src="../media/emmy_lua_preview.png" width="700">

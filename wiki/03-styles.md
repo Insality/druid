@@ -1,6 +1,7 @@
 # Styles
 
 ## Overview
+
 Styles - set of functions and parameters for components to customize their behavior.
 
 Styles is a table, where key is name of component, and value is style table for this component.
@@ -8,29 +9,33 @@ Styles is a table, where key is name of component, and value is style table for 
 In component API documentation, you can find the style API for this component. Or just lookup for existing styles and modify them.
 
 ## Usage
+
 Setup default druid style for all druid instances via `druid.set_default_style`
 You can pass _nil_ or _empty_table_ to use default values for all components (no styles)
+
 ```lua
 local druid = require("druid.druid")
 local my_style = require("my.amazing.style")
 
 function init(self)
-	druid.set_default_style(my_style)
+    druid.set_default_style(my_style)
 end
 ```
 
 Setup custom style to specific druid instance:
+
 ```lua
 local druid = require("druid.druid")
 local my_style = require("my.amazing.style")
 
 function init(self)
-	-- This druid instance will be use my_style as default
-	self.druid = druid.new(self, my_style)
+    -- This druid instance will be use my_style as default
+    self.druid = druid.new(self, my_style)
 end
 ```
 
 Change component style with _set_style_ function
+
 ```lua
 local druid = require("druid.druid")
 local my_style = require("my.amazing.style")

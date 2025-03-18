@@ -25,6 +25,7 @@
     19. [Text](#text)
     20. [Timer](#timer)
 4. [Helper](#helper)
+5. [Widgets](#widgets)
 
 # API Reference
 
@@ -50,11 +51,12 @@ self.druid:final()
 self.druid:update(dt)
 self.druid:on_input(action_id, action)
 self.druid:on_message(message_id, message, sender)
-self.druid:on_window_event([window_event])
 
--- Component creation
+-- Custom components
 self.druid:new(component, ...)
 self.druid:new_widget(widget, [template], [nodes], ...)
+
+-- Built-in components
 self.druid:new_button(node, [callback], [params], [anim_node])
 self.druid:new_text(node, [value], [no_adjust])
 self.druid:new_grid(parent_node, item, [in_row])
@@ -76,6 +78,7 @@ self.druid:new_hotkey(keys_array, [callback], [callback_argument])
 self.druid:new_slider(pin_node, end_pos, [callback])
 self.druid:new_timer(node, [seconds_from], [seconds_to], [callback])
 
+-- Operational
 self.druid:remove(component)
 self.druid:set_blacklist(blacklist_components)
 self.druid:set_whitelist(whitelist_components)
@@ -85,7 +88,7 @@ self.druid:set_whitelist(whitelist_components)
 
 ### [Base Component](components/base/component_api.md)
 
-Basic methods for all components.
+Basic methods for all components and widgets.
 
 ```lua
 component:get_childrens()
@@ -102,6 +105,9 @@ component:set_input_priority(value, [is_temporary])
 component:set_nodes(nodes)
 component:set_style([druid_style])
 component:set_template([template])
+
+-- All widgets goes with created Druid instance
+widget.druid
 ```
 
 ### [Blocker](components/base/blocker_api.md)
@@ -116,15 +122,42 @@ blocker:set_enabled(state)
 ### [Button](components/base/button_api.md)
 
 ```lua
-local button = self.druid:new_button(node, [callback], [params], [anim_node])
+local button = require("druid.base.button")
 
-button:get_key_trigger()
-button:is_enabled()
-button:set_check_function([check_function], [failure_callback])
-button:set_click_zone([zone])
+button:init(node_or_node_id, [callback], [custom_args], [anim_node])
+button:set_animations_disabled()
 button:set_enabled([state])
+button:is_enabled()
+button:set_click_zone([zone])
 button:set_key_trigger(key)
+button:get_key_trigger()
+button:set_check_function([check_function], [failure_callback])
 button:set_web_user_interaction([is_web_mode])
+
+button.on_click
+button.on_pressed
+button.on_repeated_click
+button.on_long_click
+button.on_double_click
+button.on_hold_callback
+button.on_click_outside
+button.node
+button.node_id
+button.anim_node
+button.params
+button.hover
+button.click_zone
+button.start_scale
+button.start_pos
+button.disabled
+button.key_trigger
+button.style
+button.druid
+button.is_repeated_started
+button.last_pressed_time
+button.last_released_time
+button.click_in_row
+button.can_action
 ```
 
 ### [Container](components/extended/container_api.md)
@@ -446,4 +479,143 @@ helper.round(num, [num_decimal_places])
 helper.sign(val)
 helper.step(current, target, step)
 helper.table_to_string(t)
+```
+
+## [Widgets](widgets_api.md)
+
+### [FPS Panel](widgets/fps_panel_api.md)
+
+```lua
+local fps_panel = require("druid.widget.fps_panel.fps_panel")
+
+fps_panel:init()
+fps_panel:on_remove()
+fps_panel:update([dt])
+fps_panel:push_fps_value()
+
+fps_panel.root
+fps_panel.delta_time
+fps_panel.collect_time
+fps_panel.collect_time_counter
+fps_panel.graph_samples
+fps_panel.fps_samples
+fps_panel.mini_graph
+fps_panel.text_min_fps
+fps_panel.text_fps
+fps_panel.timer_id
+fps_panel.previous_time
+```
+
+### [Memory Panel](widgets/memory_panel_api.md)
+
+```lua
+local memory_panel = require("druid.widget.memory_panel.memory_panel")
+
+memory_panel:init()
+memory_panel:on_remove()
+memory_panel:set_low_memory_limit([limit])
+memory_panel:push_next_value()
+memory_panel:update_text_memory()
+
+memory_panel.root
+memory_panel.delta_time
+memory_panel.samples_count
+memory_panel.memory_limit
+memory_panel.mini_graph
+memory_panel.max_value
+memory_panel.text_per_second
+memory_panel.text_memory
+memory_panel.memory
+memory_panel.memory_samples
+memory_panel.timer_id
+```
+
+### [Mini Graph](widgets/mini_graph_api.md)
+
+```lua
+local mini_graph = require("druid.widget.mini_graph.mini_graph")
+
+mini_graph:init()
+mini_graph:on_remove()
+mini_graph:clear()
+mini_graph:set_samples([samples])
+mini_graph:get_samples()
+mini_graph:set_line_value(index, value)
+mini_graph:get_line_value([index])
+mini_graph:push_line_value([value])
+mini_graph:set_max_value([max_value])
+mini_graph:set_line_height([index])
+mini_graph:get_lowest_value()
+mini_graph:get_highest_value()
+mini_graph:on_drag_widget([dx], [dy])
+mini_graph:toggle_hide()
+
+mini_graph.root
+mini_graph.text_header
+mini_graph.icon_drag
+mini_graph.content
+mini_graph.layout
+mini_graph.prefab_line
+mini_graph.color_zero
+mini_graph.color_one
+mini_graph.is_hidden
+mini_graph.max_value
+mini_graph.lines
+mini_graph.values
+mini_graph.container
+mini_graph.default_size
+mini_graph.samples
+```
+
+### [Properties Panel](widgets/properties_panel_api.md)
+
+```lua
+local properties_panel = require("druid.widget.properties_panel.properties_panel")
+
+properties_panel:properties_constructors()
+properties_panel:init()
+properties_panel:on_remove()
+properties_panel:on_drag_widget([dx], [dy])
+properties_panel:clear_created_properties()
+properties_panel:clear()
+properties_panel:on_size_changed([new_size])
+properties_panel:update([dt])
+properties_panel:add_checkbox([on_create])
+properties_panel:add_slider([on_create])
+properties_panel:add_button([on_create])
+properties_panel:add_input([on_create])
+properties_panel:add_text([on_create])
+properties_panel:add_left_right_selector([on_create])
+properties_panel:add_vector3([on_create])
+properties_panel:add_inner_widget(widget_class, [template], [nodes], [on_create])
+properties_panel:add_widget(create_widget_callback)
+properties_panel:remove([widget])
+properties_panel:set_hidden([is_hidden])
+properties_panel:is_hidden()
+properties_panel:set_properties_per_page(properties_per_page)
+properties_panel:set_page([page])
+
+properties_panel.root
+properties_panel.scroll
+properties_panel.layout
+properties_panel.container
+properties_panel.container_content
+properties_panel.container_scroll_view
+properties_panel.contaienr_scroll_content
+properties_panel.button_hidden
+properties_panel.text_header
+properties_panel.paginator
+properties_panel.properties
+properties_panel.content
+properties_panel.default_size
+properties_panel.current_page
+properties_panel.properties_per_page
+properties_panel.property_checkbox_prefab
+properties_panel.property_slider_prefab
+properties_panel.property_button_prefab
+properties_panel.property_input_prefab
+properties_panel.property_text_prefab
+properties_panel.property_left_right_selector_prefab
+properties_panel.property_vector3_prefab
+properties_panel.is_dirty
 ```

@@ -137,7 +137,10 @@ end
 
 Create a new lua file to create a new widget class. This widget can be created with `self.druid:new_widget(widget_class, [template], [nodes])`
 
+Usually this widget lua file is placed nearby with the `GUI` file it belong to and have the same name.
+
 ```lua
+---@class your_widget_class: druid.widget
 local M = {}
 
 function M:init()
@@ -155,18 +158,13 @@ return M
 
 ### API Documentation
 
-**Druid** offers a wide range of components and functions. To facilitate usage, **Druid** provides comprehensive API documentation with examples and annotations.
+Best start is from the [Quick API Reference](api/quick_api_reference.md)
 
-Start reading the API documentation [here](https://insality.github.io/druid/modules/Druid.html).
+With next quick links:
 
-**Druid** provide the *EmmyLua* annotations to add autocomplete inside your IDE. Check [EmmyLua Setup here](docs_md/advanced-setup.md#emmylua-annotations).
-
-
-### Create custom components
-
-If you want to create your own components, refer to the [Create Custom Components](docs_md/02-creating_custom_components.md) section in the documentation.
-
-Custom components are one of the most powerful features of **Druid**. They allow you to create your own components effortlessly and utilize them in your game.
+- [Druid Instance](api/druid_instance_api.md) - **Druid** instance returned from `druid.new(self)`
+- [Helper](api/helper_api.md) - A lot of useful functions
+- [Widgets](wiki/widgets.md) - All widgets with examples
 
 
 ## Druid Components
@@ -208,9 +206,23 @@ All **Druid** components using [Defold Event](https://github.com/Insality/defold
 
 - **event:unsubscribe**(callback)
 
-- **event:clear**()
-
 You can subscribe several callbacks to a single event.
+
+Examples:
+
+```lua
+button.on_click_event:subscribe(function(self, args)
+	print("Button clicked!")
+end)
+
+scroll.on_scroll:subscribe(function(self, position)
+	print("Scroll scrolled!")
+end)
+
+input.on_input_unselect:subscribe(function(self, text)
+	print("User enter input:", text)
+end)
+```
 
 ## Details
 
@@ -230,14 +242,14 @@ Or refer directly to the [**example folder**](https://github.com/Insality/druid/
 
 ## Documentation
 
+You can find the full **Druid** functions at [Quick API Reference](api/quick_api_reference.md)
+
 To better understand **Druid**, read the following documentation:
 - [How To GUI in Defold](https://forum.defold.com/t/how-to-gui-in-defold/73256)
+- [Widgets](wiki/widgets.md)
 - [Druid components](docs_md/01-components.md)
 - [Create custom components](docs_md/02-creating_custom_components.md)
-- [See FAQ article](docs_md/FAQ.md)
 - [Druid styles](docs_md/03-styles.md)
-
-You can find the full **Druid** [documentation here](https://insality.github.io/druid/modules/Druid.html).
 
 
 ## Licenses

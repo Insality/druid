@@ -1,4 +1,4 @@
-# widget.mini_graph API
+# druid.widget.mini_graph API
 
 > at /druid/widget/mini_graph/mini_graph.lua
 
@@ -7,8 +7,6 @@ Init, set amount of samples and max value of value means that the line will be a
 Use `push_line_value` to add a new value to the line
 Or `set_line_value` to set a value to the line by index
 Setup colors inside template file (at minimum and maximum)
-
-## Table of Contents
 
 
 ## Functions
@@ -96,8 +94,6 @@ mini_graph:set_line_value(index, value)
 ```
 
 Set normalized to control the color of the line
-	for index = 1, mini_graph:get_samples() do
-	end
 
 - **Parameters:**
 	- `index` *(number)*:
@@ -106,7 +102,9 @@ Set normalized to control the color of the line
 - **Example Usage:**
 
 ```lua
-mini_graph:set_line_value(index, math.random())
+for index = 1, mini_graph:get_samples() do
+	mini_graph:set_line_value(index, math.random())
+end
 ```
 ### get_line_value
 
@@ -184,7 +182,7 @@ mini_graph:toggle_hide()
 ```
 
 - **Returns:**
-	- `` *(widget.mini_graph)*:
+	- `` *(druid.widget.mini_graph)*:
 
 
 ## Fields
@@ -192,7 +190,7 @@ mini_graph:toggle_hide()
 - **root** (_node_)
 
 <a name="text_header"></a>
-- **text_header** (_druid.text_)
+- **text_header** (_druid.text_): The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
 
 <a name="icon_drag"></a>
 - **icon_drag** (_node_)
@@ -201,7 +199,7 @@ mini_graph:toggle_hide()
 - **content** (_node_)
 
 <a name="layout"></a>
-- **layout** (_druid.layout_)
+- **layout** (_druid.layout_): The component used for managing the layout of nodes, placing them inside the node size with respect to the size and pivot of each node
 
 <a name="prefab_line"></a>
 - **prefab_line** (_node_)
@@ -225,7 +223,7 @@ mini_graph:toggle_hide()
 - **values** (_table_)
 
 <a name="container"></a>
-- **container** (_druid.container_)
+- **container** (_druid.container_): The component used for managing the size and positions with other containers relations to create a adaptable layouts
 
 <a name="default_size"></a>
 - **default_size** (_vector3_)
