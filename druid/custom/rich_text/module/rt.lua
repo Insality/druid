@@ -1,3 +1,4 @@
+---@diagnostic disable: inject-field
 -- Source: https://github.com/britzl/defold-richtext version 5.19.0
 -- Author: Britzl
 -- Modified by: Insality

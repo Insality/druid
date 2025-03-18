@@ -5,12 +5,6 @@
 
 ## Functions
 - [init](#init)
-- [on_style_change](#on_style_change)
-- [on_late_init](#on_late_init)
-- [on_layout_change](#on_layout_change)
-- [update](#update)
-- [on_input](#on_input)
-- [on_remove](#on_remove)
 - [scroll_to](#scroll_to)
 - [scroll_to_index](#scroll_to_index)
 - [scroll_to_percent](#scroll_to_percent)
@@ -68,61 +62,6 @@ The Scroll constructor
 - **Parameters:**
 	- `view_node` *(string|node)*: GUI view scroll node
 	- `content_node` *(string|node)*: GUI content scroll node
-
-### on_style_change
-
----
-```lua
-scroll:on_style_change(style)
-```
-
-- **Parameters:**
-	- `style` *(druid.scroll.style)*: Scroll style parameters
-
-### on_late_init
-
----
-```lua
-scroll:on_late_init()
-```
-
-### on_layout_change
-
----
-```lua
-scroll:on_layout_change()
-```
-
-### update
-
----
-```lua
-scroll:update([dt])
-```
-
-- **Parameters:**
-	- `[dt]` *(any)*:
-
-### on_input
-
----
-```lua
-scroll:on_input([action_id], [action])
-```
-
-- **Parameters:**
-	- `[action_id]` *(any)*:
-	- `[action]` *(any)*:
-
-- **Returns:**
-	- `` *(boolean)*:
-
-### on_remove
-
----
-```lua
-scroll:on_remove()
-```
 
 ### scroll_to
 
@@ -191,7 +130,7 @@ Set scroll content size.
 	- `[offset]` *(vector3|nil)*: Offset value to set, where content is starts
 
 - **Returns:**
-	- `Current` *(druid.scroll)*: scroll instance
+	- `self` *(druid.scroll)*: Current scroll instance
 
 ### set_view_size
 
@@ -206,7 +145,7 @@ Set new scroll view size in case the node size was changed.
 	- `size` *(vector3)*: The new size for view node
 
 - **Returns:**
-	- `Current` *(druid.scroll)*: scroll instance
+	- `self` *(druid.scroll)*: Current scroll instance
 
 ### update_view_size
 
@@ -215,10 +154,10 @@ Set new scroll view size in case the node size was changed.
 scroll:update_view_size()
 ```
 
-Refresh scroll view size
+Refresh scroll view size, used when view node size is changed
 
 - **Returns:**
-	- `` *(druid.scroll)*:
+	- `self` *(druid.scroll)*: Current scroll instance
 
 ### set_inert
 
@@ -235,7 +174,7 @@ Enable or disable scroll inert
 	- `state` *(boolean)*: Inert scroll state
 
 - **Returns:**
-	- `Current` *(druid.scroll)*: scroll instance
+	- `self` *(druid.scroll)*: Current scroll instance
 
 ### is_inert
 
@@ -263,7 +202,7 @@ Set extra size for scroll stretching
 	- `[stretch_size]` *(number|nil)*: Size in pixels of additional scroll area
 
 - **Returns:**
-	- `Current` *(druid.scroll)*: scroll instance
+	- `self` *(druid.scroll)*: Current scroll instance
 
 ### get_scroll_size
 
@@ -291,7 +230,7 @@ Set points of interest.
 	- `points` *(table)*: Array of vector3 points
 
 - **Returns:**
-	- `Current` *(druid.scroll)*: scroll instance
+	- `self` *(druid.scroll)*: Current scroll instance
 
 ### set_horizontal_scroll
 
@@ -306,7 +245,7 @@ Lock or unlock horizontal scroll
 	- `state` *(boolean)*: True, if horizontal scroll is enabled
 
 - **Returns:**
-	- `Current` *(druid.scroll)*: scroll instance
+	- `self` *(druid.scroll)*: Current scroll instance
 
 ### set_vertical_scroll
 
@@ -321,7 +260,7 @@ Lock or unlock vertical scroll
 	- `state` *(boolean)*: True, if vertical scroll is enabled
 
 - **Returns:**
-	- `Current` *(druid.scroll)*: scroll instance
+	- `self` *(druid.scroll)*: Current scroll instance
 
 ### is_node_in_view
 
@@ -353,7 +292,7 @@ Bind the grid component (Static or Dynamic) to recalculate
 	- `[grid]` *(druid.grid|nil)*: Druid grid component
 
 - **Returns:**
-	- `Current` *(druid.scroll)*: scroll instance
+	- `self` *(druid.scroll)*: Current scroll instance
 
 ### set_click_zone
 
@@ -422,10 +361,10 @@ Strict drag scroll area. Useful for
 - **style** (_druid.scroll.style_): Component style parameters
 
 <a name="druid"></a>
-- **druid** (_druid.instance_)
+- **druid** (_druid.instance_): The Druid Factory used to create components
 
 <a name="hover"></a>
-- **hover** (_druid.hover_)
+- **hover** (_druid.hover_): The component for handling hover events on a node
 
 <a name="points"></a>
 - **points** (_table_)

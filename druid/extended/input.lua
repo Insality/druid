@@ -23,9 +23,9 @@ local utf8 = utf8 or utf8_lua
 ---@field on_input_wrong event fun(self: druid.input) The event triggered when the input field is wrong
 ---@field on_select_cursor_change event fun(self: druid.input, cursor_index: number, start_index: number, end_index: number) The event triggered when the cursor index is changed
 ---@field style druid.input.style The style of the input component
----@field text druid.text The text component
 local M = component.create("input")
 
+---@private
 M.ALLOWED_ACTIONS = {
 	[const.ACTION_TOUCH] = true,
 	[const.ACTION_TEXT] = true,
@@ -61,7 +61,7 @@ end
 
 ---@param click_node node Node to enabled input component
 ---@param text_node node|druid.text Text node what will be changed on user input. You can pass text component instead of text node name Text
----@param keyboard_type number|nil Gui keyboard type for input field
+---@param keyboard_type constant|nil Gui keyboard type for input field
 function M:init(click_node, text_node, keyboard_type)
 	self.druid = self:get_druid()
 
@@ -269,7 +269,7 @@ end
 
 
 ---Set text for input field
----@param input_text string The string to apply for input field
+---@param input_text string? The string to apply for input field, if nil - will be set to empty string
 function M:set_text(input_text)
 	input_text = tostring(input_text or "")
 
@@ -370,7 +370,7 @@ end
 
 
 ---Set maximum length for input field.
--- Pass nil to make input field unliminted (by default)
+---Pass nil to make input field unliminted (by default)
 ---@param max_length number Maximum length for input text field
 ---@return druid.input self Current input instance
 function M:set_max_length(max_length)
@@ -380,9 +380,11 @@ end
 
 
 ---Set allowed charaters for input field.
--- See: https://defold.com/ref/stable/string/
--- ex: [%a%d] for alpha and numeric
----@param characters string Regulax exp. for validate user input
+---See: https://defold.com/ref/stable/string/
+---ex: [%a%d] for alpha and numeric
+---ex: [abcdef] to allow only these characters
+---ex: [^%s] to allow only non-space characters
+---@param characters string Regular expression for validate user input
 ---@return druid.input self Current input instance
 function M:set_allowed_characters(characters)
 	self.allowed_characters = characters
@@ -481,6 +483,8 @@ function M:move_selection(delta, is_add_to_selection, is_move_to_end)
 	end
 
 	self:select_cursor(cursor_index, start_index, end_index)
+
+	return self
 end
 
 

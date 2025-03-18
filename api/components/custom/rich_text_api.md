@@ -2,17 +2,15 @@
 
 > at /druid/custom/rich_text/rich_text.lua
 
+The component that handles a rich text display, allows to custom color, size, font, etc. of the parts of the text
+
 
 ## Functions
 - [init](#init)
-- [on_layout_change](#on_layout_change)
-- [on_style_change](#on_style_change)
 - [set_text](#set_text)
 - [get_text](#get_text)
-- [on_remove](#on_remove)
 - [clear](#clear)
 - [tagged](#tagged)
-- [characters](#characters)
 - [get_words](#get_words)
 - [get_line_metric](#get_line_metric)
 
@@ -34,23 +32,6 @@ rich_text:init(text_node, [value])
 - **Parameters:**
 	- `text_node` *(string|node)*: The text node to make Rich Text
 	- `[value]` *(string|nil)*: The initial text value. Default will be gui.get_text(text_node)
-
-### on_layout_change
-
----
-```lua
-rich_text:on_layout_change()
-```
-
-### on_style_change
-
----
-```lua
-rich_text:on_style_change(style)
-```
-
-- **Parameters:**
-	- `style` *(druid.rich_text.style)*:
 
 ### set_text
 
@@ -98,17 +79,10 @@ rich_text:set_text("＜img=texture:image,width,height＞Display image with width
 rich_text:get_text()
 ```
 
-Get current text
+Get the current text of the rich text
 
 - **Returns:**
-	- `text` *(string)*:
-
-### on_remove
-
----
-```lua
-rich_text:on_remove()
-```
+	- `text` *(string)*: The current text of the rich text
 
 ### clear
 
@@ -129,25 +103,10 @@ rich_text:tagged(tag)
 Get all words, which has a passed tag.
 
 - **Parameters:**
-	- `tag` *(string)*:
+	- `tag` *(string)*: The tag to get the words for
 
 - **Returns:**
-	- `words` *(druid.rich_text.word[])*:
-
-### characters
-
----
-```lua
-rich_text:characters(word)
-```
-
-Split a word into it's characters
-
-- **Parameters:**
-	- `word` *(druid.rich_text.word)*:
-
-- **Returns:**
-	- `characters` *(druid.rich_text.word[])*:
+	- `words` *(druid.rich_text.word[])*: The words with the passed tag
 
 ### get_words
 
@@ -156,7 +115,7 @@ Split a word into it's characters
 rich_text:get_words()
 ```
 
-Get all current words.
+Get all current created words, each word is a table that contains the information about the word
 
 - **Returns:**
 	- `` *(druid.rich_text.word[])*:
@@ -168,19 +127,18 @@ Get all current words.
 rich_text:get_line_metric()
 ```
 
-Get current line metrics
--@return druid.rich_text.lines_metrics
+Get the current line metrics
 
 - **Returns:**
-	- `` *(druid.rich_text.lines_metrics)*:
+	- `lines_metrics` *(druid.rich_text.lines_metrics)*: The line metrics of the rich text
 
 
 ## Fields
 <a name="root"></a>
-- **root** (_node_)
+- **root** (_node_): The root node of the rich text
 
 <a name="text_prefab"></a>
-- **text_prefab** (_node_)
+- **text_prefab** (_node_): The text prefab node
 
 <a name="style"></a>
 - **style** (_table_)

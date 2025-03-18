@@ -2,14 +2,14 @@
 
 > at /druid/base/static_grid.lua
 
+The component for manage the nodes position in the grid with various options
+
 
 ## Functions
 - [init](#init)
-- [on_style_change](#on_style_change)
 - [get_pos](#get_pos)
 - [get_index](#get_index)
 - [get_index_by_node](#get_index_by_node)
-- [on_layout_change](#on_layout_change)
 - [set_anchor](#set_anchor)
 - [refresh](#refresh)
 - [set_pivot](#set_pivot)
@@ -55,20 +55,12 @@
 grid:init(parent, element, [in_row])
 ```
 
+The constructor for the grid component
+
 - **Parameters:**
 	- `parent` *(string|node)*: The GUI Node container, where grid's items will be placed
 	- `element` *(node)*: Element prefab. Need to get it size
 	- `[in_row]` *(number|nil)*: How many nodes in row can be placed. By default 1
-
-### on_style_change
-
----
-```lua
-grid:on_style_change(style)
-```
-
-- **Parameters:**
-	- `style` *(druid.grid.style)*:
 
 ### get_pos
 
@@ -92,13 +84,13 @@ Return pos for grid node index
 grid:get_index(pos)
 ```
 
-Return index for grid pos
+Return grid index by position
 
 - **Parameters:**
 	- `pos` *(vector3)*: The node position in the grid
 
 - **Returns:**
-	- `The` *(number)*: node index
+	- `index` *(number)*: The node index
 
 ### get_index_by_node
 
@@ -114,13 +106,6 @@ Return grid index by node
 
 - **Returns:**
 	- `index` *(number|nil)*: The node index
-
-### on_layout_change
-
----
-```lua
-grid:on_layout_change()
-```
 
 ### set_anchor
 
@@ -141,17 +126,25 @@ Set grid anchor. Default anchor is equal to anchor of grid parent node
 grid:refresh()
 ```
 
-Update grid content
+Instantly update the grid content
+
+- **Returns:**
+	- `self` *(druid.grid)*: Current grid instance
 
 ### set_pivot
 
 ---
 ```lua
-grid:set_pivot([pivot])
+grid:set_pivot(pivot)
 ```
 
+Set grid pivot
+
 - **Parameters:**
-	- `[pivot]` *(any)*:
+	- `pivot` *(constant)*: The new pivot
+
+- **Returns:**
+	- `self` *(druid.grid)*: Current grid instance
 
 ### add
 
@@ -168,6 +161,9 @@ Add new item to the grid
 	- `[shift_policy]` *(number|nil)*: How shift nodes, if required. Default: const.SHIFT.RIGHT
 	- `[is_instant]` *(boolean|nil)*: If true, update node positions instantly
 
+- **Returns:**
+	- `self` *(druid.grid)*: Current grid instance
+
 ### set_items
 
 ---
@@ -180,6 +176,9 @@ Set new items to the grid. All previous items will be removed
 - **Parameters:**
 	- `nodes` *(node[])*: The new grid nodes
 	- `[is_instant]` *(boolean|nil)*: If true, update node positions instantly
+
+- **Returns:**
+	- `self` *(druid.grid)*: Current grid instance
 
 ### remove
 
@@ -196,7 +195,7 @@ Remove the item from the grid. Note that gui node will be not deleted
 	- `[is_instant]` *(boolean|nil)*: If true, update node positions instantly
 
 - **Returns:**
-	- `The` *(node)*: deleted gui node from grid
+	- `node` *(node)*: The deleted gui node from grid
 
 ### get_size
 
@@ -208,17 +207,22 @@ grid:get_size()
 Return grid content size
 
 - **Returns:**
-	- `The` *(vector3)*: grid content size
+	- `size` *(vector3)*: The grid content size
 
 ### get_size_for
 
 ---
 ```lua
-grid:get_size_for([count])
+grid:get_size_for(count)
 ```
 
+Return grid content size for given count of nodes
+
 - **Parameters:**
-	- `[count]` *(any)*:
+	- `count` *(number)*: The count of nodes
+
+- **Returns:**
+	- `size` *(vector3)*: The grid content size
 
 ### get_borders
 
@@ -230,7 +234,7 @@ grid:get_borders()
 Return grid content borders
 
 - **Returns:**
-	- `The` *(vector4)*: grid content borders
+	- `borders` *(vector4)*: The grid content borders
 
 ### get_all_pos
 
@@ -242,7 +246,7 @@ grid:get_all_pos()
 Return array of all node positions
 
 - **Returns:**
-	- `All` *(vector3[])*: grid node positions
+	- `positions` *(vector3[])*: All grid node positions
 
 ### set_position_function
 
@@ -258,7 +262,7 @@ Change set position function for grid nodes. It will call on
 	- `callback` *(function)*: Function on node set position
 
 - **Returns:**
-	- `Current` *(druid.grid)*: grid instance
+	- `self` *(druid.grid)*: Current grid instance
 
 ### clear
 
@@ -271,7 +275,7 @@ Clear grid nodes array. GUI nodes will be not deleted!
  If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
 
 - **Returns:**
-	- `Current` *(druid.grid)*: grid instance
+	- `self` *(druid.grid)*: Current grid instance
 
 ### get_offset
 
@@ -283,7 +287,7 @@ grid:get_offset()
 Return StaticGrid offset, where StaticGrid content starts.
 
 - **Returns:**
-	- `The` *(vector3)*: StaticGrid offset
+	- `offset` *(vector3)*: The StaticGrid offset
 
 ### set_in_row
 
@@ -298,7 +302,7 @@ Set new in_row elements for grid
 	- `in_row` *(number)*: The new in_row value
 
 - **Returns:**
-	- `Current` *(druid.grid)*: grid instance
+	- `self` *(druid.grid)*: Current grid instance
 
 ### set_item_size
 
@@ -314,7 +318,7 @@ Set new node size for grid
 	- `[height]` *(number|nil)*: The new node height
 
 - **Returns:**
-	- `Current` *(druid.grid)*: grid instance
+	- `self` *(druid.grid)*: Current grid instance
 
 ### sort_nodes
 
@@ -334,49 +338,49 @@ Sort grid nodes by custom comparator function
 
 ## Fields
 <a name="on_add_item"></a>
-- **on_add_item** (_event_)
+- **on_add_item** (_event_): Trigger on add item event, fun(self, item, index)
 
 <a name="on_remove_item"></a>
-- **on_remove_item** (_event_)
+- **on_remove_item** (_event_): Trigger on remove item event, fun(self, index)
 
 <a name="on_change_items"></a>
-- **on_change_items** (_event_)
+- **on_change_items** (_event_): Trigger on change items event, fun(self, index)
 
 <a name="on_clear"></a>
-- **on_clear** (_event_)
+- **on_clear** (_event_): Trigger on clear event, fun(self)
 
 <a name="on_update_positions"></a>
-- **on_update_positions** (_event_)
+- **on_update_positions** (_event_): Trigger on update positions event, fun(self)
 
 <a name="parent"></a>
-- **parent** (_node_)
+- **parent** (_node_): Parent node
 
 <a name="nodes"></a>
-- **nodes** (_node[]_)
+- **nodes** (_node[]_): Nodes array
 
 <a name="first_index"></a>
-- **first_index** (_number_)
+- **first_index** (_number_): First index
 
 <a name="last_index"></a>
-- **last_index** (_number_)
+- **last_index** (_number_): Last index
 
 <a name="anchor"></a>
-- **anchor** (_vector3_)
+- **anchor** (_vector3_): Anchor
 
 <a name="pivot"></a>
-- **pivot** (_vector3_)
+- **pivot** (_vector3_): Pivot
 
 <a name="node_size"></a>
-- **node_size** (_vector3_)
+- **node_size** (_vector3_): Node size
 
 <a name="border"></a>
-- **border** (_vector4_)
+- **border** (_vector4_): Border
 
 <a name="in_row"></a>
-- **in_row** (_number_)
+- **in_row** (_number_): In row
 
 <a name="style"></a>
-- **style** (_table_)
+- **style** (_druid.grid.style_): Style
 
 <a name="node_pivot"></a>
 - **node_pivot** (_unknown_)

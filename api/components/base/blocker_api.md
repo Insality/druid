@@ -5,7 +5,6 @@
 
 ## Functions
 - [init](#init)
-- [on_input](#on_input)
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
 
@@ -23,21 +22,7 @@ blocker:init(node)
 ```
 
 - **Parameters:**
-	- `node` *(node)*:
-
-### on_input
-
----
-```lua
-blocker:on_input(action_id, action)
-```
-
-- **Parameters:**
-	- `action_id` *(string)*:
-	- `action` *(table)*:
-
-- **Returns:**
-	- `` *(boolean)*:
+	- `node` *(string|node)*: The node to use as a blocker
 
 ### set_enabled
 
@@ -49,10 +34,10 @@ blocker:set_enabled(state)
 Set blocker enabled state
 
 - **Parameters:**
-	- `state` *(boolean)*:
+	- `state` *(boolean)*: The new enabled state
 
 - **Returns:**
-	- `self` *(druid.blocker)*:
+	- `self` *(druid.blocker)*: The blocker instance
 
 ### is_enabled
 
@@ -64,7 +49,7 @@ blocker:is_enabled()
 Get blocker enabled state
 
 - **Returns:**
-	- `` *(boolean)*:
+	- `is_enabled` *(boolean)*: True if the blocker is enabled
 
 
 ## Fields

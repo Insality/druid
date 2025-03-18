@@ -2,11 +2,11 @@
 
 > at /druid/extended/input.lua
 
+The component used for managing input fields in basic way
+
 
 ## Functions
 - [init](#init)
-- [on_style_change](#on_style_change)
-- [on_input](#on_input)
 - [on_focus_lost](#on_focus_lost)
 - [on_input_interrupt](#on_input_interrupt)
 - [get_text_selected](#get_text_selected)
@@ -66,30 +66,6 @@ input:init(click_node, text_node, [keyboard_type])
 	- `text_node` *(druid.text|node)*: Text node what will be changed on user input. You can pass text component instead of text node name Text
 	- `[keyboard_type]` *(number|nil)*: Gui keyboard type for input field
 
-### on_style_change
-
----
-```lua
-input:on_style_change(style)
-```
-
-- **Parameters:**
-	- `style` *(druid.input.style)*:
-
-### on_input
-
----
-```lua
-input:on_input([action_id], [action])
-```
-
-- **Parameters:**
-	- `[action_id]` *(any)*:
-	- `[action]` *(any)*:
-
-- **Returns:**
-	- `` *(boolean)*:
-
 ### on_focus_lost
 
 ---
@@ -127,7 +103,7 @@ Replace selected text with new text
 	- `text` *(string)*: The text to replace selected text
 
 - **Returns:**
-	- `New` *(string)*: input text
+	- `new_text` *(string)*: New input text
 
 ### set_text
 
@@ -169,7 +145,7 @@ input:get_text()
 Return current input field text
 
 - **Returns:**
-	- `The` *(string)*: current input field text
+	- `text` *(string)*: The current input field text
 
 ### set_max_length
 
@@ -185,7 +161,7 @@ Set maximum length for input field.
 	- `max_length` *(number)*: Maximum length for input text field
 
 - **Returns:**
-	- `Current` *(druid.input)*: input instance
+	- `self` *(druid.input)*: Current input instance
 
 ### set_allowed_characters
 
@@ -202,7 +178,7 @@ Set allowed charaters for input field.
 	- `characters` *(string)*: Regulax exp. for validate user input
 
 - **Returns:**
-	- `Current` *(druid.input)*: input instance
+	- `self` *(druid.input)*: Current input instance
 
 ### reset_changes
 
@@ -214,7 +190,7 @@ input:reset_changes()
 Reset current input selection and return previous value
 
 - **Returns:**
-	- `Current` *(druid.input)*: input instance
+	- `self` *(druid.input)*: Current input instance
 
 ### select_cursor
 
@@ -231,7 +207,7 @@ Set cursor position in input field
 	- `[end_index]` *(number|nil)*: End index for cursor position, if nil - will be set to the start_index
 
 - **Returns:**
-	- `Current` *(druid.input)*: input instance
+	- `self` *(druid.input)*: Current input instance
 
 ### move_selection
 
@@ -247,40 +223,43 @@ Change cursor position by delta
 	- `is_add_to_selection` *(boolean)*: (Shift key)
 	- `is_move_to_end` *(boolean)*: (Ctrl key)
 
+- **Returns:**
+	- `self` *(druid.input)*: Current input instance
+
 
 ## Fields
 <a name="on_input_select"></a>
-- **on_input_select** (_event_)
+- **on_input_select** (_event_): fun(self: druid.input, input: druid.input) The event triggered when the input field is selected
 
 <a name="on_input_unselect"></a>
-- **on_input_unselect** (_event_)
+- **on_input_unselect** (_event_): fun(self: druid.input, text: string, input: druid.input) The event triggered when the input field is unselected
 
 <a name="on_input_text"></a>
-- **on_input_text** (_event_)
+- **on_input_text** (_event_): fun(self: druid.input) The event triggered when the input field is changed
 
 <a name="on_input_empty"></a>
-- **on_input_empty** (_event_)
+- **on_input_empty** (_event_): fun(self: druid.input) The event triggered when the input field is empty
 
 <a name="on_input_full"></a>
-- **on_input_full** (_event_)
+- **on_input_full** (_event_): fun(self: druid.input) The event triggered when the input field is full
 
 <a name="on_input_wrong"></a>
-- **on_input_wrong** (_event_)
+- **on_input_wrong** (_event_): fun(self: druid.input) The event triggered when the input field is wrong
 
 <a name="on_select_cursor_change"></a>
-- **on_select_cursor_change** (_event_)
+- **on_select_cursor_change** (_event_): fun(self: druid.input, cursor_index: number, start_index: number, end_index: number) The event triggered when the cursor index is changed
 
 <a name="style"></a>
-- **style** (_table_)
+- **style** (_druid.input.style_): The style of the input component
 
 <a name="text"></a>
-- **text** (_druid.text_)
+- **text** (_druid.text_): The text component
 
 <a name="ALLOWED_ACTIONS"></a>
 - **ALLOWED_ACTIONS** (_table_)
 
 <a name="druid"></a>
-- **druid** (_druid.instance_)
+- **druid** (_druid.instance_): The Druid Factory used to create components
 
 <a name="is_selected"></a>
 - **is_selected** (_boolean_)

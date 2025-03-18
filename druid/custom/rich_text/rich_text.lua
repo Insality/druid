@@ -41,6 +41,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field image druid.rich_text.word.image
 ---@field br boolean
 ---@field nobr boolean
+---@field tags table<string, boolean>
 
 ---@class druid.rich_text.word.image
 ---@field texture string

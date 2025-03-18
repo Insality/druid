@@ -27,10 +27,10 @@ end
 
 
 ---Split string at first occurrence of token
----@param s string The string to split
+---@param s string? The string to split
 ---@param token string The token to split string on
----@return string before The string before the token or the whole string if token doesn't exist
----@return string after The string after the token or nil
+---@return string? before The string before the token or the whole string if token doesn't exist
+---@return string? after The string after the token or nil
 local function split(s, token)
 	if not s then return nil, nil end
 	local before, after = s:match("(.-)" .. token .. "(.*)")

@@ -2,6 +2,8 @@
 
 > at /druid/extended/hotkey.lua
 
+The component used for managing hotkeys and trigger callbacks when hotkeys are pressed
+
 
 ## Functions
 - [init](#init)
@@ -59,7 +61,7 @@ Add hotkey for component callback
 	- `[callback_argument]` *(any)*: The argument to pass into the callback function
 
 - **Returns:**
-	- `Current` *(druid.hotkey)*: instance
+	- `self` *(druid.hotkey)*: Current instance
 
 ### is_processing
 
@@ -86,11 +88,11 @@ hotkey:on_input([action_id], action)
 ```
 
 - **Parameters:**
-	- `[action_id]` *(hash|nil)*:
-	- `action` *(action)*:
+	- `[action_id]` *(hash|nil)*: The action id
+	- `action` *(action)*: The action
 
 - **Returns:**
-	- `` *(boolean)*:
+	- `is_consume` *(boolean)*: True if the action is consumed
 
 ### set_repeat
 
@@ -102,22 +104,22 @@ hotkey:set_repeat(is_enabled_repeated)
 If true, the callback will be triggered on action.repeated
 
 - **Parameters:**
-	- `is_enabled_repeated` *(bool)*: The flag value
+	- `is_enabled_repeated` *(boolean)*: The flag value
 
 - **Returns:**
-	- `` *(druid.hotkey)*:
+	- `self` *(druid.hotkey)*: Current instance
 
 
 ## Fields
 <a name="on_hotkey_pressed"></a>
-- **on_hotkey_pressed** (_event_)
+- **on_hotkey_pressed** (_event_): fun(self, context, callback_argument) The event triggered when a hotkey is pressed
 
 <a name="on_hotkey_released"></a>
-- **on_hotkey_released** (_event_)
+- **on_hotkey_released** (_event_): fun(self, context, callback_argument) The event triggered when a hotkey is released
 
 <a name="style"></a>
-- **style** (_druid.hotkey.style_)
+- **style** (_druid.hotkey.style_): The style of the hotkey component
 
 <a name="druid"></a>
-- **druid** (_druid.instance_)
+- **druid** (_druid.instance_): The Druid Factory used to create components
 

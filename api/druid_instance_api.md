@@ -2,13 +2,19 @@
 
 > at /druid/system/druid_instance.lua
 
+The Druid Factory used to create components
+
+
 ## Functions
+- [create_druid_instance](#create_druid_instance)
+
 - [new](#new)
 - [final](#final)
 - [remove](#remove)
 - [update](#update)
 - [on_input](#on_input)
 - [on_message](#on_message)
+- [on_window_event](#on_window_event)
 - [set_whitelist](#set_whitelist)
 - [set_blacklist](#set_blacklist)
 - [new_widget](#new_widget)
@@ -32,6 +38,12 @@
 - [new_hotkey](#new_hotkey)
 - [new_rich_text](#new_rich_text)
 - [new_rich_input](#new_rich_input)
+
+
+## Fields
+- [components_all](#components_all)
+- [components_interest](#components_interest)
+
 
 
 ### create_druid_instance
@@ -60,11 +72,11 @@ instance:new(component, ...)
 Create new Druid component instance
 
 - **Parameters:**
-	- `component` *(<T:druid.component>)*:
+	- `component` *(<T:druid.component>)*: The component class to create
 	- `...` *(...)*: vararg
 
 - **Returns:**
-	- `` *(<T:druid.component>)*:
+	- `instance` *(<T:druid.component>)*: The new ready to use component
 
 ### final
 
@@ -89,7 +101,7 @@ Remove created component from Druid instance.
 	- `component` *(<T:druid.component>)*: Component instance
 
 - **Returns:**
-	- `True` *(boolean)*: if component was removed
+	- `is_removed` *(boolean)*: True if component was removed
 
 ### update
 
@@ -117,7 +129,7 @@ Call this in gui_script on_input function.
 	- `action` *(table)*: Action from on_input
 
 - **Returns:**
-	- `The` *(boolean)*: boolean value is input was consumed
+	- `is_input_consumed` *(boolean)*: The boolean value is input was consumed
 
 ### on_message
 
@@ -137,11 +149,13 @@ Call this in gui_script on_message function.
 
 ---
 ```lua
-instance:on_window_event([window_event])
+instance:on_window_event(window_event)
 ```
 
+Called when the window event occurs
+
 - **Parameters:**
-	- `[window_event]` *(any)*:
+	- `window_event` *(number)*: The window event
 
 ### set_whitelist
 
@@ -158,7 +172,7 @@ component will be not processed on input step
 	- `whitelist_components` *(table|druid.component[])*: The array of component to whitelist
 
 - **Returns:**
-	- `` *(druid.instance)*:
+	- `self` *(druid.instance)*: The Druid instance
 
 ### set_blacklist
 
@@ -175,7 +189,7 @@ component will be not processed on input step DruidInstance
 	- `blacklist_components` *(table|druid.component[])*: The array of component to blacklist
 
 - **Returns:**
-	- `` *(druid.instance)*:
+	- `self` *(druid.instance)*: The Druid instance
 
 ### new_widget
 
@@ -187,13 +201,13 @@ instance:new_widget(widget, [template], [nodes], ...)
 Create new Druid widget instance
 
 - **Parameters:**
-	- `widget` *(<T:druid.component>)*:
+	- `widget` *(<T:druid.component>)*: The widget class to create
 	- `[template]` *(string|nil)*: The template name used by widget
 	- `[nodes]` *(node|table<hash, node>|nil)*: The nodes table from gui.clone_tree or prefab node to use for clone
 	- `...` *(...)*: vararg
 
 - **Returns:**
-	- `` *(<T:druid.component>)*:
+	- `widget` *(<T:druid.component>)*: The new ready to use widget
 
 ### new_button
 
@@ -211,7 +225,7 @@ Create Button component
 	- `[anim_node]` *(string|node|nil)*: Button anim node (node, if not provided)
 
 - **Returns:**
-	- `Button` *(druid.button)*: component
+	- `button` *(druid.button)*: The new button component
 
 ### new_blocker
 
@@ -226,7 +240,7 @@ Create Blocker component
 	- `node` *(string|node)*: The node_id or gui.get_node(node_id)
 
 - **Returns:**
-	- `component` *(druid.blocker)*: Blocker component
+	- `blocker` *(druid.blocker)*: The new blocker component
 
 ### new_back_handler
 
@@ -242,7 +256,7 @@ Create BackHandler component
 	- `[params]` *(any)*: Callback argument
 
 - **Returns:**
-	- `component` *(druid.back_handler)*: BackHandler component
+	- `back_handler` *(druid.back_handler)*: The new back handler component
 
 ### new_hover
 
@@ -259,7 +273,7 @@ Create Hover component
 	- `[on_mouse_hover_callback]` *(function|nil)*: Mouse hover callback
 
 - **Returns:**
-	- `component` *(druid.hover)*: Hover component
+	- `hover` *(druid.hover)*: The new hover component
 
 ### new_text
 
@@ -276,7 +290,7 @@ Create Text component
 	- `[adjust_type]` *(string|nil)*: Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 
 - **Returns:**
-	- `component` *(druid.text)*: Text component
+	- `text` *(druid.text)*: The new text component
 
 ### new_grid
 
@@ -293,7 +307,7 @@ Create Grid component
 	- `[in_row]` *(number|nil)*: How many nodes in row can be placed
 
 - **Returns:**
-	- `component` *(druid.grid)*: Grid component
+	- `grid` *(druid.grid)*: The new grid component
 
 ### new_scroll
 
@@ -309,7 +323,7 @@ Create Scroll component
 	- `content_node` *(string|node)*: The node_id or gui.get_node(node_id). Will used as scrollable node inside view_node.
 
 - **Returns:**
-	- `component` *(druid.scroll)*: Scroll component
+	- `scroll` *(druid.scroll)*: The new scroll component
 
 ### new_drag
 
@@ -325,7 +339,7 @@ Create Drag component
 	- `[on_drag_callback]` *(function|nil)*: Callback for on_drag_event(self, dx, dy)
 
 - **Returns:**
-	- `component` *(druid.drag)*: Drag component
+	- `drag` *(druid.drag)*: The new drag component
 
 ### new_swipe
 
@@ -341,7 +355,7 @@ Create Swipe component
 	- `[on_swipe_callback]` *(function|nil)*: Swipe callback for on_swipe_end event
 
 - **Returns:**
-	- `component` *(druid.swipe)*: Swipe component
+	- `swipe` *(druid.swipe)*: The new swipe component
 
 ### new_lang_text
 
@@ -358,7 +372,7 @@ Create LangText component
 	- `[adjust_type]` *(string|nil)*: Adjust type for text node. Default: const.TEXT_ADJUST.DOWNSCALE
 
 - **Returns:**
-	- `component` *(druid.lang_text)*: LangText component
+	- `lang_text` *(druid.lang_text)*: The new lang text component
 
 ### new_slider
 
@@ -375,7 +389,7 @@ Create Slider component
 	- `[callback]` *(function|nil)*: On slider change callback
 
 - **Returns:**
-	- `component` *(druid.slider)*: Slider component
+	- `slider` *(druid.slider)*: The new slider component
 
 ### new_input
 
@@ -392,7 +406,7 @@ Create Input component
 	- `[keyboard_type]` *(number|nil)*: Gui keyboard type for input field
 
 - **Returns:**
-	- `component` *(druid.input)*: Input component
+	- `input` *(druid.input)*: The new input component
 
 ### new_data_list
 
@@ -409,7 +423,7 @@ Create DataList component
 	- `create_function` *(function)*: The create function callback(self, data, index, data_list). Function should return (node, [component])
 
 - **Returns:**
-	- `component` *(druid.data_list)*: DataList component
+	- `data_list` *(druid.data_list)*: The new data list component
 
 ### new_timer
 
@@ -427,7 +441,7 @@ Create Timer component
 	- `[callback]` *(function|nil)*: Function on timer end
 
 - **Returns:**
-	- `component` *(druid.timer)*: Timer component
+	- `timer` *(druid.timer)*: The new timer component
 
 ### new_progress
 
@@ -444,7 +458,7 @@ Create Progress component
 	- `[init_value]` *(number|nil)*: Initial value of progress bar. Default: 1
 
 - **Returns:**
-	- `component` *(druid.progress)*: Progress component
+	- `progress` *(druid.progress)*: The new progress component
 
 ### new_layout
 
@@ -460,7 +474,7 @@ Create Layout component
 	- `[mode]` *(string|nil)*: vertical|horizontal|horizontal_wrap. Default: horizontal
 
 - **Returns:**
-	- `component` *(druid.layout)*: Layout component
+	- `layout` *(druid.layout)*: The new layout component
 
 ### new_container
 
@@ -477,7 +491,7 @@ Create Container component
 	- `[callback]` *(fun(self: druid.container, size: vector3)|nil)*: Callback on size changed
 
 - **Returns:**
-	- `container` *(druid.container)*: component
+	- `container` *(druid.container)*: The new container component
 
 ### new_hotkey
 
@@ -490,11 +504,11 @@ Create Hotkey component
 
 - **Parameters:**
 	- `keys_array` *(string|string[])*: Keys for trigger action. Should contains one action key and any amount of modificator keys
-	- `[callback]` *(function|nil)*: The callback function
+	- `[callback]` *(function|event|nil)*: The callback function
 	- `[callback_argument]` *(any)*: The argument to pass into the callback function
 
 - **Returns:**
-	- `component` *(druid.hotkey)*: Hotkey component
+	- `hotkey` *(druid.hotkey)*: The new hotkey component
 
 ### new_rich_text
 
@@ -510,7 +524,7 @@ Create RichText component.
 	- `[value]` *(string|nil)*: The initial text value. Default will be gui.get_text(text_node)
 
 - **Returns:**
-	- `component` *(druid.rich_text)*: RichText component
+	- `rich_text` *(druid.rich_text)*: The new rich text component
 
 ### new_rich_input
 
@@ -527,4 +541,13 @@ Create RichInput component.
 	- `[nodes]` *(table|nil)*: Nodes table from gui.clone_tree
 
 - **Returns:**
-	- `component` *(druid.rich_input)*: RichInput component
+	- `rich_input` *(druid.rich_input)*: The new rich input component
+
+
+## Fields
+<a name="components_all"></a>
+- **components_all** (_druid.component[]_): All created components
+
+<a name="components_interest"></a>
+- **components_interest** (_table<string, druid.component[]>_): All components sorted by interest
+

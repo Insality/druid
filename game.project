@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/druid.collectionc
+main_collection = /example/other/go_bindings/go_bindings.collectionc
 
 [script]
 shared_state = 1
@@ -58,7 +58,7 @@ cssfile = /builtins/manifests/web/dark_theme.css
 show_console_banner = 0
 
 [native_extension]
-app_manifest =
+app_manifest = 
 
 [graphics]
 texture_profiles = /builtins/graphics/default.texture_profiles

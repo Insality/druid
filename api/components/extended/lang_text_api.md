@@ -2,6 +2,8 @@
 
 > at /druid/extended/lang_text.lua
 
+The component used for displaying localized text, can automatically update text when locale is changed
+
 
 ## Functions
 - [init](#init)
@@ -55,7 +57,7 @@ Setup raw text to lang_text component
 	- `text` *(string)*: Text for text node
 
 - **Returns:**
-	- `Current` *(druid.lang_text)*: instance
+	- `self` *(druid.lang_text)*: Current instance
 
 ### set_text
 
@@ -70,7 +72,7 @@ Setup raw text to lang_text component
 	- `text` *(string)*: Text for text node
 
 - **Returns:**
-	- `Current` *(druid.lang_text)*: instance
+	- `self` *(druid.lang_text)*: Current instance
 
 ### translate
 
@@ -86,7 +88,7 @@ Translate the text by locale_id
 	- `...` *(...)*: vararg
 
 - **Returns:**
-	- `Current` *(druid.lang_text)*: instance
+	- `self` *(druid.lang_text)*: Current instance
 
 ### format
 
@@ -101,19 +103,19 @@ Format string with new text params on localized text
 	- `...` *(...)*: vararg
 
 - **Returns:**
-	- `Current` *(druid.lang_text)*: instance
+	- `self` *(druid.lang_text)*: Current instance
 
 
 ## Fields
 <a name="text"></a>
-- **text** (_druid.text_)
+- **text** (_druid.text_): The text component
 
 <a name="node"></a>
-- **node** (_node_)
+- **node** (_node_): The node of the text component
 
 <a name="on_change"></a>
-- **on_change** (_event_)
+- **on_change** (_event_): The event triggered when the text is changed
 
 <a name="druid"></a>
-- **druid** (_druid.instance_)
+- **druid** (_druid.instance_): The Druid Factory used to create components
 

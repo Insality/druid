@@ -2,6 +2,8 @@
 
 > at /druid/extended/progress.lua
 
+The component used to manage a node as a progress bar, changing the size and scale of the node
+
 
 ## Functions
 - [init](#init)
@@ -46,7 +48,7 @@ progress:init(node, key, [init_value])
 
 - **Parameters:**
 	- `node` *(string|node)*: Node name or GUI Node itself.
-	- `key` *(string)*: Progress bar direction: const.SIDE.X or const.SIDE.Y
+	- `key` *(string)*: Progress bar direction: "x" or "y"
 	- `[init_value]` *(number|nil)*: Initial value of progress bar. Default: 1
 
 ### on_style_change
@@ -90,7 +92,10 @@ progress:update(dt)
 progress:fill()
 ```
 
-Fill a progress bar and stop progress animation
+Fill the progress bar
+
+- **Returns:**
+	- `self` *(druid.progress)*: Current progress instance
 
 ### empty
 
@@ -99,7 +104,10 @@ Fill a progress bar and stop progress animation
 progress:empty()
 ```
 
-Empty a progress bar
+Empty the progress bar
+
+- **Returns:**
+	- `self` *(druid.progress)*: Current progress instance
 
 ### set_to
 
@@ -113,6 +121,9 @@ Instant fill progress bar to value
 - **Parameters:**
 	- `to` *(number)*: Progress bar value, from 0 to 1
 
+- **Returns:**
+	- `self` *(druid.progress)*: Current progress instance
+
 ### get
 
 ---
@@ -120,10 +131,10 @@ Instant fill progress bar to value
 progress:get()
 ```
 
-Return current progress bar value
+Return the current value of the progress bar
 
 - **Returns:**
-	- `` *(number)*:
+	- `value` *(number)*: The current value of the progress bar
 
 ### set_steps
 
@@ -138,6 +149,9 @@ Set points on progress bar to fire the callback
 	- `steps` *(number[])*: Array of progress bar values
 	- `callback` *(function)*: Callback on intersect step value
 
+- **Returns:**
+	- `self` *(druid.progress)*: Current progress instance
+
 ### to
 
 ---
@@ -150,6 +164,9 @@ Start animation of a progress bar
 - **Parameters:**
 	- `to` *(number)*: value between 0..1
 	- `[callback]` *(function|nil)*: Callback on animation ends
+
+- **Returns:**
+	- `self` *(druid.progress)*: Current progress instance
 
 ### set_max_size
 
@@ -164,7 +181,7 @@ Set progress bar max node size
 	- `max_size` *(vector3)*: The new node maximum (full) size
 
 - **Returns:**
-	- `Progress` *(druid.progress)*:
+	- `self` *(druid.progress)*: Current progress instance
 
 
 ## Fields

@@ -2,13 +2,11 @@
 
 > at /druid/extended/swipe.lua
 
+The component to manage swipe events over a node
+
 
 ## Functions
 - [init](#init)
-- [on_late_init](#on_late_init)
-- [on_style_change](#on_style_change)
-- [on_input](#on_input)
-- [on_input_interrupt](#on_input_interrupt)
 - [set_click_zone](#set_click_zone)
 
 
@@ -31,44 +29,6 @@ swipe:init(node_or_node_id, on_swipe_callback)
 	- `node_or_node_id` *(string|node)*:
 	- `on_swipe_callback` *(function)*:
 
-### on_late_init
-
----
-```lua
-swipe:on_late_init()
-```
-
-### on_style_change
-
----
-```lua
-swipe:on_style_change(style)
-```
-
-- **Parameters:**
-	- `style` *(druid.swipe.style)*:
-
-### on_input
-
----
-```lua
-swipe:on_input(action_id, action)
-```
-
-- **Parameters:**
-	- `action_id` *(hash)*:
-	- `action` *(action)*:
-
-- **Returns:**
-	- `` *(boolean)*:
-
-### on_input_interrupt
-
----
-```lua
-swipe:on_input_interrupt()
-```
-
 ### set_click_zone
 
 ---
@@ -76,8 +36,7 @@ swipe:on_input_interrupt()
 swipe:set_click_zone([zone])
 ```
 
-Strict swipe click area. Useful for
-restrict events outside stencil node
+Set the click zone for the swipe, useful for restricting events outside stencil node
 
 - **Parameters:**
 	- `[zone]` *(string|node|nil)*: Gui node
@@ -85,14 +44,14 @@ restrict events outside stencil node
 
 ## Fields
 <a name="node"></a>
-- **node** (_node_)
+- **node** (_node_): The node to manage the swipe
 
 <a name="on_swipe"></a>
-- **on_swipe** (_event_): function(side, dist, dt), side - "left", "right", "up", "down"
+- **on_swipe** (_event_): fun(context, side, dist, dt) The event triggered when a swipe is detected
 
 <a name="style"></a>
-- **style** (_table_)
+- **style** (_druid.swipe.style_): The style of the swipe
 
 <a name="click_zone"></a>
-- **click_zone** (_node_)
+- **click_zone** (_node_): The click zone of the swipe
 

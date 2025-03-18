@@ -2,6 +2,8 @@
 
 > at /druid/extended/layout.lua
 
+The component used for managing the layout of nodes, placing them inside the node size with respect to the size and pivot of each node
+
 
 ## Functions
 - [init](#init)
@@ -57,7 +59,7 @@ layout_type:
 
 - **Parameters:**
 	- `node_or_node_id` *(string|node)*:
-	- `layout_type` *(druid.layout.mode)*:
+	- `layout_type` *("horizontal"|"horizontal_wrap"|"vertical")*:
 
 ### update
 
@@ -74,18 +76,21 @@ layout:get_entities()
 ```
 
 - **Returns:**
-	- `` *(node[])*:
+	- `entities` *(node[])*: The entities to manage the layout of
 
 ### set_node_index
 
 ---
 ```lua
-layout:set_node_index([node], [index])
+layout:set_node_index(node, index)
 ```
 
 - **Parameters:**
-	- `[node]` *(any)*:
-	- `[index]` *(any)*:
+	- `node` *(node)*: The node to set the index of
+	- `index` *(number)*: The index to set the node to
+
+- **Returns:**
+	- `self` *(druid.layout)*: for chaining
 
 ### set_margin
 
@@ -94,12 +99,14 @@ layout:set_node_index([node], [index])
 layout:set_margin([margin_x], [margin_y])
 ```
 
+Set the margin of the layout
+
 - **Parameters:**
-	- `[margin_x]` *(number|nil)*:
-	- `[margin_y]` *(number|nil)*:
+	- `[margin_x]` *(number|nil)*: The margin x
+	- `[margin_y]` *(number|nil)*: The margin y
 
 - **Returns:**
-	- `` *(druid.layout)*:
+	- `self` *(druid.layout)*: Current layout instance
 
 ### set_padding
 
@@ -109,13 +116,13 @@ layout:set_padding([padding_x], [padding_y], [padding_z], [padding_w])
 ```
 
 - **Parameters:**
-	- `[padding_x]` *(number|nil)*:
-	- `[padding_y]` *(number|nil)*:
-	- `[padding_z]` *(number|nil)*:
-	- `[padding_w]` *(number|nil)*:
+	- `[padding_x]` *(number|nil)*: The padding x
+	- `[padding_y]` *(number|nil)*: The padding y
+	- `[padding_z]` *(number|nil)*: The padding z
+	- `[padding_w]` *(number|nil)*: The padding w
 
 - **Returns:**
-	- `` *(druid.layout)*:
+	- `self` *(druid.layout)*: Current layout instance
 
 ### set_dirty
 
@@ -125,7 +132,7 @@ layout:set_dirty()
 ```
 
 - **Returns:**
-	- `` *(druid.layout)*:
+	- `self` *(druid.layout)*: Current layout instance
 
 ### set_justify
 
@@ -138,7 +145,7 @@ layout:set_justify(is_justify)
 	- `is_justify` *(boolean)*:
 
 - **Returns:**
-	- `` *(druid.layout)*:
+	- `self` *(druid.layout)*: Current layout instance
 
 ### set_type
 
@@ -151,7 +158,7 @@ layout:set_type(type)
 	- `type` *(string)*: The layout type: "horizontal", "vertical", "horizontal_wrap"
 
 - **Returns:**
-	- `` *(druid.layout)*:
+	- `self` *(druid.layout)*: Current layout instance
 
 ### set_hug_content
 
@@ -165,7 +172,7 @@ layout:set_hug_content(is_hug_width, is_hug_height)
 	- `is_hug_height` *(boolean)*:
 
 - **Returns:**
-	- `` *(druid.layout)*:
+	- `self` *(druid.layout)*: Current layout instance
 
 ### add
 
@@ -180,7 +187,7 @@ Add node to layout
 	- `node_or_node_id` *(string|node)*: node_or_node_id
 
 - **Returns:**
-	- `` *(druid.layout)*:
+	- `self` *(druid.layout)*: Current layout instance
 
 ### remove
 
@@ -226,7 +233,7 @@ layout:refresh_layout()
 ```
 
 - **Returns:**
-	- `` *(druid.layout)*:
+	- `self` *(druid.layout)*: Current layout instance
 
 ### clear_layout
 
@@ -236,7 +243,7 @@ layout:clear_layout()
 ```
 
 - **Returns:**
-	- `` *(druid.layout)*:
+	- `self` *(druid.layout)*: Current layout instance
 
 ### get_node_size
 
@@ -249,8 +256,8 @@ layout:get_node_size(node)
 	- `node` *(node)*:
 
 - **Returns:**
-	- `` *(number)*:
-	- `` *(number)*:
+	- `width` *(number)*: The width of the node
+	- `height` *(number)*: The height of the node
 
 ### calculate_rows_data
 
@@ -282,7 +289,7 @@ layout:set_node_position(node, x, y)
 
 ## Fields
 <a name="node"></a>
-- **node** (_node_)
+- **node** (_node_): The node to manage the layout of
 
 <a name="rows_data"></a>
 - **rows_data** (_druid.layout.rows_data_): Last calculated rows data
@@ -291,28 +298,28 @@ layout:set_node_position(node, x, y)
 - **is_dirty** (_boolean_)
 
 <a name="entities"></a>
-- **entities** (_node[]_)
+- **entities** (_node[]_): The entities to manage the layout of
 
 <a name="margin"></a>
-- **margin** (_{ x: number, y: number }_)
+- **margin** (_{ x: number, y: number }_): The margin of the layout
 
 <a name="padding"></a>
-- **padding** (_vector4_)
+- **padding** (_vector4_): The padding of the layout
 
 <a name="type"></a>
-- **type** (_string_)
+- **type** (_string_): The type of the layout
 
 <a name="is_resize_width"></a>
-- **is_resize_width** (_boolean_)
+- **is_resize_width** (_boolean_): True if the layout should resize the width of the node
 
 <a name="is_resize_height"></a>
-- **is_resize_height** (_boolean_)
+- **is_resize_height** (_boolean_): True if the layout should resize the height of the node
 
 <a name="is_justify"></a>
-- **is_justify** (_boolean_)
+- **is_justify** (_boolean_): True if the layout should justify the nodes
 
 <a name="on_size_changed"></a>
-- **on_size_changed** (_event.on_size_changed_)
+- **on_size_changed** (_event.on_size_changed_): The event triggered when the size of the layout is changed
 
 <a name="size"></a>
 - **size** (_unknown_)

@@ -2,11 +2,11 @@
 
 > at /druid/base/text.lua
 
+The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
+
 
 ## Functions
 - [init](#init)
-- [on_style_change](#on_style_change)
-- [on_layout_change](#on_layout_change)
 - [get_text_size](#get_text_size)
 - [get_text_index_by_width](#get_text_index_by_width)
 - [set_to](#set_to)
@@ -54,26 +54,6 @@ The Text constructor
 	- `[value]` *(string|nil)*: Initial text. Default value is node text from GUI scene. Default: nil
 	- `[adjust_type]` *(string|nil)*: Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
 
-- **Returns:**
-	- `` *(druid.text)*:
-
-### on_style_change
-
----
-```lua
-text:on_style_change(style)
-```
-
-- **Parameters:**
-	- `style` *(druid.text.style)*:
-
-### on_layout_change
-
----
-```lua
-text:on_layout_change()
-```
-
 ### get_text_size
 
 ---
@@ -84,11 +64,11 @@ text:get_text_size([text])
 Calculate text width with font with respect to trailing space
 
 - **Parameters:**
-	- `[text]` *(string|nil)*:
+	- `[text]` *(string|nil)*: The text to calculate the size of, if nil - use current text
 
 - **Returns:**
-	- `Width` *(number)*:
-	- `Height` *(number)*:
+	- `width` *(number)*: The text width
+	- `height` *(number)*: The text height
 
 ### get_text_index_by_width
 
@@ -100,10 +80,10 @@ text:get_text_index_by_width(width)
 Get chars count by width
 
 - **Parameters:**
-	- `width` *(number)*:
+	- `width` *(number)*: The width to get the chars count of
 
 - **Returns:**
-	- `Chars` *(number)*: count
+	- `index` *(number)*: The chars count
 
 ### set_to
 
@@ -118,7 +98,7 @@ Set text to text field
 	- `set_to` *(string)*: Text for node
 
 - **Returns:**
-	- `Current` *(druid.text)*: text instance
+	- `self` *(druid.text)*: Current text instance
 
 ### set_text
 
@@ -171,7 +151,7 @@ Set color
 	- `color` *(vector4)*: Color for node
 
 - **Returns:**
-	- `Current` *(druid.text)*: text instance
+	- `self` *(druid.text)*: Current text instance
 
 ### set_alpha
 
@@ -186,7 +166,7 @@ Set alpha
 	- `alpha` *(number)*: Alpha for node
 
 - **Returns:**
-	- `Current` *(druid.text)*: text instance
+	- `self` *(druid.text)*: Current text instance
 
 ### set_scale
 
@@ -201,7 +181,7 @@ Set scale
 	- `scale` *(vector3)*: Scale for node
 
 - **Returns:**
-	- `Current` *(druid.text)*: text instance
+	- `self` *(druid.text)*: Current text instance
 
 ### set_pivot
 
@@ -216,7 +196,7 @@ Set text pivot. Text will re-anchor inside text area
 	- `pivot` *(userdata)*: The gui.PIVOT_* constant
 
 - **Returns:**
-	- `Current` *(druid.text)*: text instance
+	- `self` *(druid.text)*: Current text instance
 
 ### is_multiline
 
@@ -261,7 +241,7 @@ Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
 	- `minimal_scale` *(number)*: If pass nil - not use minimal scale
 
 - **Returns:**
-	- `Current` *(druid.text)*: text instance
+	- `self` *(druid.text)*: Current text instance
 
 ### get_text_adjust
 

@@ -49,6 +49,7 @@
 ---@field screen_dy number The change in screen space y value of a pointer device, if present.
 ---@field gamepad number The index of the gamepad device that provided the input.
 ---@field touch touch[] List of touch input, one element per finger, if present. See table below about touch input
+---@field text string The text input.
 
 ---@class touch
 ---@field id number A number identifying the touch input during its duration.

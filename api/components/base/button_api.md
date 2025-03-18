@@ -7,10 +7,7 @@ Druid component to make clickable node with various interaction callbacks
 
 ## Functions
 - [init](#init)
-- [on_style_change](#on_style_change)
-- [on_late_init](#on_late_init)
-- [on_input](#on_input)
-- [on_input_interrupt](#on_input_interrupt)
+- [set_animations_disabled](#set_animations_disabled)
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
 - [set_click_zone](#set_click_zone)
@@ -55,50 +52,25 @@ Druid component to make clickable node with various interaction callbacks
 button:init(node_or_node_id, [callback], [custom_args], [anim_node])
 ```
 
+The constructor for the button component
+
 - **Parameters:**
 	- `node_or_node_id` *(string|node)*: Node name or GUI Node itself
 	- `[callback]` *(fun()|nil)*: Callback on button click
 	- `[custom_args]` *(any)*: Custom args for any Button event
 	- `[anim_node]` *(string|node|nil)*: Node to animate instead of trigger node
 
-### on_style_change
+### set_animations_disabled
 
 ---
 ```lua
-button:on_style_change(style)
+button:set_animations_disabled()
 ```
 
-- **Parameters:**
-	- `style` *(druid.button.style)*: Button style params.
-You can override this component styles params in Druid styles table or create your own style
-
-### on_late_init
-
----
-```lua
-button:on_late_init()
-```
-
-### on_input
-
----
-```lua
-button:on_input(action_id, action)
-```
-
-- **Parameters:**
-	- `action_id` *(hash)*:
-	- `action` *(table)*:
+Remove default button style animations
 
 - **Returns:**
-	- `` *(boolean)*:
-
-### on_input_interrupt
-
----
-```lua
-button:on_input_interrupt()
-```
+	- `self` *(druid.button)*: The current button instance
 
 ### set_enabled
 
@@ -115,7 +87,7 @@ Disabled button is not clickable.
 	- `[state]` *(boolean|nil)*: Enabled state
 
 - **Returns:**
-	- `self` *(druid.button)*:
+	- `self` *(druid.button)*: The current button instance
 
 ### is_enabled
 
@@ -145,7 +117,7 @@ If button node placed inside stencil node, it will be automatically set to this 
 	- `[zone]` *(string|node|nil)*: Gui node
 
 - **Returns:**
-	- `self` *(druid.button)*:
+	- `self` *(druid.button)*: The current button instance
 
 ### set_key_trigger
 
@@ -160,7 +132,7 @@ Set key name to trigger this button by keyboard.
 	- `key` *(string|hash)*: The action_id of the input key. Example: "key_space"
 
 - **Returns:**
-	- `self` *(druid.button)*:
+	- `self` *(druid.button)*: The current button instance
 
 ### get_key_trigger
 
@@ -188,7 +160,7 @@ Set function for additional check for button click availability
 	- `[failure_callback]` *(function|nil)*: Function will be called on button click, if check function return false
 
 - **Returns:**
-	- `self` *(druid.button)*:
+	- `self` *(druid.button)*: The current button instance
 
 ### set_web_user_interaction
 
@@ -206,7 +178,7 @@ If the game is not HTML, html mode will be not enabled
 	- `[is_web_mode]` *(boolean|nil)*: If true - button will be called inside html5 callback
 
 - **Returns:**
-	- `self` *(druid.button)*:
+	- `self` *(druid.button)*: The current button instance
 
 
 ## Fields
@@ -265,7 +237,7 @@ If the game is not HTML, html mode will be not enabled
 - **style** (_table_): Style for this button
 
 <a name="druid"></a>
-- **druid** (_druid.instance_)
+- **druid** (_druid.instance_): The Druid Factory used to create components
 
 <a name="is_repeated_started"></a>
 - **is_repeated_started** (_boolean_)

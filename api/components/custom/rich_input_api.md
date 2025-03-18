@@ -2,6 +2,8 @@
 
 > at /druid/custom/rich_input/rich_input.lua
 
+The component that handles a rich text input field, it's a wrapper around the druid.input component
+
 
 ## Functions
 - [init](#init)
@@ -68,7 +70,7 @@ Set placeholder text
 	- `placeholder_text` *(string)*: The placeholder text
 
 - **Returns:**
-	- `` *(druid.rich_input)*:
+	- `self` *(druid.rich_input)*: Current instance
 
 ### select
 
@@ -78,6 +80,9 @@ rich_input:select()
 ```
 
 Select input field
+
+- **Returns:**
+	- `self` *(druid.rich_input)*: Current instance
 
 ### set_text
 
@@ -136,27 +141,27 @@ Set allowed charaters for input field.
 	- `characters` *(string)*: Regulax exp. for validate user input
 
 - **Returns:**
-	- `Current` *(druid.rich_input)*: instance
+	- `self` *(druid.rich_input)*: Current instance
 
 
 ## Fields
 <a name="root"></a>
-- **root** (_node_)
+- **root** (_node_): The root node of the rich input
 
 <a name="input"></a>
-- **input** (_druid.input_)
+- **input** (_druid.input_): The input component
 
 <a name="cursor"></a>
-- **cursor** (_node_)
+- **cursor** (_node_): The cursor node
 
 <a name="cursor_text"></a>
-- **cursor_text** (_node_)
+- **cursor_text** (_node_): The cursor text node
 
 <a name="cursor_position"></a>
-- **cursor_position** (_vector3_)
+- **cursor_position** (_vector3_): The position of the cursor
 
 <a name="druid"></a>
-- **druid** (_druid.instance_)
+- **druid** (_druid.instance_): The Druid Factory used to create components
 
 <a name="is_lshift"></a>
 - **is_lshift** (_boolean_)
@@ -168,10 +173,10 @@ Set allowed charaters for input field.
 - **is_button_input_enabled** (_unknown_)
 
 <a name="drag"></a>
-- **drag** (_druid.drag_)
+- **drag** (_druid.drag_): A component that allows you to subscribe to drag events over a node
 
 <a name="placeholder"></a>
-- **placeholder** (_druid.text_)
+- **placeholder** (_druid.text_): The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
 
 <a name="text_position"></a>
 - **text_position** (_unknown_)

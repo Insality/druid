@@ -558,7 +558,7 @@ end
 
 local text = require("druid.base.text")
 ---Create Text component
----@param node string|node The node_id or gui.get_node(node_id)
+---@param node string|node|druid.text The node_id or gui.get_node(node_id)
 ---@param value string|nil Initial text. Default value is node text from GUI scene.
 ---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 ---@return druid.text text The new text component

@@ -37,6 +37,7 @@ You can use these functions in your projects as well.
 - [insert_with_shift](#insert_with_shift)
 - [remove_with_shift](#remove_with_shift)
 - [get_full_position](#get_full_position)
+- [get_animation_data_from_node](#get_animation_data_from_node)
 
 
 ## Fields
@@ -516,3 +517,32 @@ Get full position of node in the GUI tree
 
 - **Returns:**
 	- `` *(unknown)*:
+
+### get_animation_data_from_node
+
+---
+```lua
+helper.get_animation_data_from_node(node, atlas_path)
+```
+
+- **Parameters:**
+	- `node` *(node)*:
+	- `atlas_path` *(string)*: Path to the atlas
+
+- **Returns:**
+	- `` *(druid.system.animation_data)*:
+
+
+## Fields
+<a name="PROP_SIZE_X"></a>
+- **PROP_SIZE_X** (_unknown_)
+
+<a name="PROP_SIZE_Y"></a>
+- **PROP_SIZE_Y** (_unknown_)
+
+<a name="PROP_SCALE_X"></a>
+- **PROP_SCALE_X** (_unknown_)
+
+<a name="PROP_SCALE_Y"></a>
+- **PROP_SCALE_Y** (_unknown_)
+

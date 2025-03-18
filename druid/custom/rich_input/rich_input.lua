@@ -223,6 +223,8 @@ function M:on_input(action_id, action)
 			return true
 		end
 	end
+
+	return false
 end
 
 

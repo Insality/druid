@@ -2,6 +2,8 @@
 
 > at /druid/extended/data_list.lua
 
+The component used for managing a list of data with a scrollable view, used to manage huge list data and render only visible elements
+
 
 ## Functions
 - [init](#init)
@@ -40,7 +42,7 @@ data_list:init(scroll, grid, create_function)
 
 - **Parameters:**
 	- `scroll` *(druid.scroll)*: The Scroll instance for Data List component
-	- `grid` *(druid.grid)*: The StaticGrid} or @{DynamicGrid instance for Data List component
+	- `grid` *(druid.grid)*: The StaticGrid instance for Data List component
 	- `create_function` *(function)*: The create function callback(self, data, index, data_list). Function should return (node, [component])
 
 ### on_remove
@@ -59,13 +61,13 @@ Druid System on_remove function
 data_list:set_use_cache(is_use_cache)
 ```
 
-Set refresh function for DataList component
+Set use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
 
 - **Parameters:**
-	- `is_use_cache` *(boolean)*: Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
+	- `is_use_cache` *(boolean)*: Use cache version of DataList
 
 - **Returns:**
-	- `Current` *(druid.data_list)*: DataList instance
+	- `self` *(druid.data_list)*: Current DataList instance
 
 ### set_data
 
@@ -80,7 +82,7 @@ Set new data set for DataList component
 	- `data` *(table)*: The new data array
 
 - **Returns:**
-	- `Current` *(druid.data_list)*: DataList instance
+	- `self` *(druid.data_list)*: Current DataList instance
 
 ### get_data
 
@@ -92,7 +94,7 @@ data_list:get_data()
 Return current data from DataList component
 
 - **Returns:**
-	- `The` *(table)*: current data array
+	- `data` *(table)*: The current data array
 
 ### add
 
@@ -101,12 +103,15 @@ Return current data from DataList component
 data_list:add(data, [index], [shift_policy])
 ```
 
-Add element to DataList. Currenly untested
+Add element to DataList
 
 - **Parameters:**
-	- `data` *(table)*:
-	- `[index]` *(number|nil)*:
+	- `data` *(table)*: The data to add
+	- `[index]` *(number|nil)*: The index to add the data at
 	- `[shift_policy]` *(number|nil)*: The constant from const.SHIFT.*
+
+- **Returns:**
+	- `self` *(druid.data_list)*: Current DataList instance
 
 ### remove
 
@@ -115,11 +120,14 @@ Add element to DataList. Currenly untested
 data_list:remove([index], [shift_policy])
 ```
 
-Remove element from DataList. Currenly untested
+Remove element from DataList
 
 - **Parameters:**
-	- `[index]` *(number|nil)*:
+	- `[index]` *(number|nil)*: The index to remove the data at
 	- `[shift_policy]` *(number|nil)*: The constant from const.SHIFT.*
+
+- **Returns:**
+	- `self` *(druid.data_list)*: Current DataList instance
 
 ### remove_by_data
 
@@ -128,11 +136,14 @@ Remove element from DataList. Currenly untested
 data_list:remove_by_data(data, [shift_policy])
 ```
 
-Remove element from DataList by data value. Currenly untested
+Remove element from DataList by data value
 
 - **Parameters:**
-	- `data` *(table)*:
+	- `data` *(table)*: The data to remove
 	- `[shift_policy]` *(number|nil)*: The constant from const.SHIFT.*
+
+- **Returns:**
+	- `self` *(druid.data_list)*: Current DataList instance
 
 ### clear
 
@@ -142,6 +153,9 @@ data_list:clear()
 ```
 
 Clear the DataList and refresh visuals
+
+- **Returns:**
+	- `self` *(druid.data_list)*: Current DataList instance
 
 ### get_index
 
@@ -180,7 +194,7 @@ data_list:get_created_components()
 Return all currenly created components in DataList
 
 - **Returns:**
-	- `List` *(druid.component[])*: of created nodes
+	- `components` *(druid.component[])*: List of created components
 
 ### scroll_to_index
 
@@ -192,31 +206,31 @@ data_list:scroll_to_index(index)
 Instant scroll to element with passed index
 
 - **Parameters:**
-	- `index` *(number)*:
+	- `index` *(number)*: The index to scroll to
 
 
 ## Fields
 <a name="scroll"></a>
-- **scroll** (_druid.scroll_)
+- **scroll** (_druid.scroll_): The scroll instance for Data List component
 
 <a name="grid"></a>
-- **grid** (_druid.grid_)
+- **grid** (_druid.grid_): The StaticGrid or DynamicGrid instance for Data List component
 
 <a name="on_scroll_progress_change"></a>
-- **on_scroll_progress_change** (_event_)
+- **on_scroll_progress_change** (_event_): The event triggered when the scroll progress changes
 
 <a name="on_element_add"></a>
-- **on_element_add** (_event_)
+- **on_element_add** (_event_): The event triggered when a new element is added
 
 <a name="on_element_remove"></a>
-- **on_element_remove** (_event_)
+- **on_element_remove** (_event_): The event triggered when an element is removed
 
 <a name="top_index"></a>
-- **top_index** (_number_)
+- **top_index** (_number_): The top index of the visible elements
 
 <a name="last_index"></a>
-- **last_index** (_number_)
+- **last_index** (_number_): The last index of the visible elements
 
 <a name="scroll_progress"></a>
-- **scroll_progress** (_number_)
+- **scroll_progress** (_number_): The scroll progress
 

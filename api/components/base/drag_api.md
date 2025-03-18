@@ -2,15 +2,12 @@
 
 > at /druid/base/drag.lua
 
+A component that allows you to subscribe to drag events over a node
+
 
 ## Functions
 - [init](#init)
-- [on_style_change](#on_style_change)
 - [set_drag_cursors](#set_drag_cursors)
-- [on_late_init](#on_late_init)
-- [on_window_resized](#on_window_resized)
-- [on_input_interrupt](#on_input_interrupt)
-- [on_input](#on_input)
 - [set_click_zone](#set_click_zone)
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
@@ -46,22 +43,14 @@
 
 ---
 ```lua
-drag:init(node_or_node_id, on_drag_callback)
+drag:init(node_or_node_id, [on_drag_callback])
 ```
 
-- **Parameters:**
-	- `node_or_node_id` *(string|node)*:
-	- `on_drag_callback` *(function)*:
-
-### on_style_change
-
----
-```lua
-drag:on_style_change(style)
-```
+The constructor for Drag component
 
 - **Parameters:**
-	- `style` *(druid.drag.style)*:
+	- `node_or_node_id` *(string|node)*: The node to subscribe to drag events over
+	- `[on_drag_callback]` *(fun(self: any, touch: any))*: The callback to call when a drag occurs
 
 ### set_drag_cursors
 
@@ -73,42 +62,7 @@ drag:set_drag_cursors(is_enabled)
 Set Drag component enabled state.
 
 - **Parameters:**
-	- `is_enabled` *(boolean)*:
-
-### on_late_init
-
----
-```lua
-drag:on_late_init()
-```
-
-### on_window_resized
-
----
-```lua
-drag:on_window_resized()
-```
-
-### on_input_interrupt
-
----
-```lua
-drag:on_input_interrupt()
-```
-
-### on_input
-
----
-```lua
-drag:on_input(action_id, action)
-```
-
-- **Parameters:**
-	- `action_id` *(hash)*:
-	- `action` *(table)*:
-
-- **Returns:**
-	- `` *(boolean)*:
+	- `is_enabled` *(boolean)*: True if Drag component is enabled
 
 ### set_click_zone
 
@@ -120,7 +74,7 @@ drag:set_click_zone([node])
 Set Drag click zone
 
 - **Parameters:**
-	- `[node]` *(string|node|nil)*:
+	- `[node]` *(string|node|nil)*: Node or node id
 
 - **Returns:**
 	- `self` *(druid.drag)*: Current instance
@@ -150,73 +104,73 @@ drag:is_enabled()
 Check if Drag component is capture input
 
 - **Returns:**
-	- `` *(boolean)*:
+	- `is_enabled` *(boolean)*: True if Drag component is enabled
 
 
 ## Fields
 <a name="node"></a>
-- **node** (_node_)
+- **node** (_node_): The node to subscribe to drag events over
 
 <a name="on_touch_start"></a>
-- **on_touch_start** (_event_)
+- **on_touch_start** (_event_): fun(self, touch) The event triggered when a touch starts
 
 <a name="on_touch_end"></a>
-- **on_touch_end** (_event_)
+- **on_touch_end** (_event_): fun(self, touch) The event triggered when a touch ends
 
 <a name="on_drag_start"></a>
-- **on_drag_start** (_event_)
+- **on_drag_start** (_event_): fun(self, touch) The event triggered when a drag starts
 
 <a name="on_drag"></a>
-- **on_drag** (_event_)
+- **on_drag** (_event_): fun(self, touch) The event triggered when a drag occurs
 
 <a name="on_drag_end"></a>
-- **on_drag_end** (_event_)
+- **on_drag_end** (_event_): fun(self, touch) The event triggered when a drag ends
 
 <a name="style"></a>
-- **style** (_druid.drag.style_)
+- **style** (_druid.drag.style_): The style of Drag component
 
 <a name="click_zone"></a>
-- **click_zone** (_node_)
+- **click_zone** (_node_): The click zone of Drag component
 
 <a name="is_touch"></a>
-- **is_touch** (_boolean_)
+- **is_touch** (_boolean_): True if a touch is active
 
 <a name="is_drag"></a>
-- **is_drag** (_boolean_)
+- **is_drag** (_boolean_): True if a drag is active
 
 <a name="can_x"></a>
-- **can_x** (_boolean_)
+- **can_x** (_boolean_): True if Drag can move horizontally
 
 <a name="can_y"></a>
-- **can_y** (_boolean_)
+- **can_y** (_boolean_): True if Drag can move vertically
 
 <a name="dx"></a>
-- **dx** (_number_)
+- **dx** (_number_): The horizontal drag distance
 
 <a name="dy"></a>
-- **dy** (_number_)
+- **dy** (_number_): The vertical drag distance
 
 <a name="touch_id"></a>
-- **touch_id** (_number_)
+- **touch_id** (_number_): The touch id
 
 <a name="x"></a>
-- **x** (_number_)
+- **x** (_number_): The current x position
 
 <a name="y"></a>
-- **y** (_number_)
+- **y** (_number_): The current y position
 
 <a name="screen_x"></a>
-- **screen_x** (_number_)
+- **screen_x** (_number_): The current screen x position
 
 <a name="screen_y"></a>
-- **screen_y** (_number_)
+- **screen_y** (_number_): The current screen y position
 
 <a name="touch_start_pos"></a>
-- **touch_start_pos** (_vector3_)
+- **touch_start_pos** (_vector3_): The touch start position
 
 <a name="druid"></a>
-- **druid** (_druid.instance_)
+- **druid** (_druid.instance_): The Druid Factory used to create components
 
 <a name="hover"></a>
-- **hover** (_druid.hover_)
+- **hover** (_druid.hover_): The component for handling hover events on a node
 

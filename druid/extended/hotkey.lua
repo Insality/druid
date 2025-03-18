@@ -63,6 +63,7 @@ function M:add_hotkey(keys, callback_argument)
 	local modificators = {}
 	local key = nil
 
+	---@cast keys string[]
 	for index = 1, #keys do
 		local key_hash = hash(keys[index])
 		if #keys > 1 and helper.contains(self.style.MODIFICATORS, key_hash) then
@@ -84,8 +85,9 @@ function M:add_hotkey(keys, callback_argument)
 	})
 
 	-- Current hotkey status
-	for index = 1, #self.style.MODIFICATORS do
-		local modificator = hash(self.style.MODIFICATORS[index])
+	local mods = self.style.MODIFICATORS ---@type string[]
+	for index = 1, #mods do
+		local modificator = hash(mods[index])
 		self._modificators[modificator] = self._modificators[modificator] or false
 	end
 

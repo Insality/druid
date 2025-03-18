@@ -2,14 +2,13 @@
 
 > at /druid/extended/container.lua
 
+The component used for managing the size and positions with other containers relations to create a adaptable layouts
+
 
 ## Functions
 - [init](#init)
-- [on_late_init](#on_late_init)
-- [on_remove](#on_remove)
 - [refresh_origins](#refresh_origins)
 - [set_pivot](#set_pivot)
-- [on_style_change](#on_style_change)
 - [set_size](#set_size)
 - [get_position](#get_position)
 - [set_position](#set_position)
@@ -17,7 +16,6 @@
 - [get_scale](#get_scale)
 - [fit_into_size](#fit_into_size)
 - [fit_into_window](#fit_into_window)
-- [on_window_resized](#on_window_resized)
 - [add_container](#add_container)
 - [remove_container_by_node](#remove_container_by_node)
 - [set_parent_container](#set_parent_container)
@@ -67,26 +65,14 @@ container:init(node, mode, [callback])
 	- `mode` *(string)*: Layout mode
 	- `[callback]` *(fun(self: druid.container, size: vector3)|nil)*: Callback on size changed
 
-### on_late_init
-
----
-```lua
-container:on_late_init()
-```
-
-### on_remove
-
----
-```lua
-container:on_remove()
-```
-
 ### refresh_origins
 
 ---
 ```lua
 container:refresh_origins()
 ```
+
+Refresh the origins of the container, origins is the size and position of the container when it was created
 
 ### set_pivot
 
@@ -95,18 +81,10 @@ container:refresh_origins()
 container:set_pivot(pivot)
 ```
 
-- **Parameters:**
-	- `pivot` *(constant)*:
-
-### on_style_change
-
----
-```lua
-container:on_style_change(style)
-```
+Set the pivot of the container
 
 - **Parameters:**
-	- `style` *(druid.container.style)*:
+	- `pivot` *(constant)*: The pivot to set
 
 ### set_size
 
@@ -118,8 +96,8 @@ container:set_size([width], [height], [anchor_pivot])
 Set new size of layout node
 
 - **Parameters:**
-	- `[width]` *(number|nil)*:
-	- `[height]` *(number|nil)*:
+	- `[width]` *(number|nil)*: The width to set
+	- `[height]` *(number|nil)*: The height to set
 	- `[anchor_pivot]` *(constant|nil)*: If set will keep the corner possition relative to the new size
 
 - **Returns:**
@@ -132,8 +110,10 @@ Set new size of layout node
 container:get_position()
 ```
 
+Get the position of the container
+
 - **Returns:**
-	- `` *(unknown)*:
+	- `position` *(vector3)*: The position of the container
 
 ### set_position
 
@@ -142,9 +122,11 @@ container:get_position()
 container:set_position(pos_x, pos_y)
 ```
 
+Set the position of the container
+
 - **Parameters:**
-	- `pos_x` *(number)*:
-	- `pos_y` *(number)*:
+	- `pos_x` *(number)*: The x position to set
+	- `pos_y` *(number)*: The y position to set
 
 ### get_size
 
@@ -153,10 +135,10 @@ container:set_position(pos_x, pos_y)
 container:get_size()
 ```
 
-Get current size of layout node
+Get the current size of the layout node
 
 - **Returns:**
-	- `size` *(vector3)*:
+	- `size` *(vector3)*: The current size of the layout node
 
 ### get_scale
 
@@ -165,10 +147,10 @@ Get current size of layout node
 container:get_scale()
 ```
 
-Get current scale of layout node
+Get the current scale of the layout node
 
 - **Returns:**
-	- `scale` *(vector3)*:
+	- `scale` *(vector3)*: The current scale of the layout node
 
 ### fit_into_size
 
@@ -180,10 +162,10 @@ container:fit_into_size(target_size)
 Set size for layout node to fit inside it
 
 - **Parameters:**
-	- `target_size` *(vector3)*:
+	- `target_size` *(vector3)*: The target size to fit into
 
 - **Returns:**
-	- `Container` *(druid.container)*:
+	- `self` *(druid.container)*: Current container instance
 
 ### fit_into_window
 
@@ -195,14 +177,7 @@ container:fit_into_window()
 Set current size for layout node to fit inside it
 
 - **Returns:**
-	- `Container` *(druid.container)*:
-
-### on_window_resized
-
----
-```lua
-container:on_window_resized()
-```
+	- `self` *(druid.container)*: Current container instance
 
 ### add_container
 
@@ -212,7 +187,7 @@ container:add_container(node_or_container, [mode], [on_resize_callback])
 ```
 
 - **Parameters:**
-	- `node_or_container` *(string|table|druid.container|node)*:
+	- `node_or_container` *(string|table|druid.container|node)*: The component used for managing the size and positions with other containers relations to create a adaptable layouts
 	- `[mode]` *(string|nil)*: stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
 	- `[on_resize_callback]` *(fun(self: userdata, size: vector3)|nil)*:
 
@@ -240,7 +215,7 @@ container:set_parent_container([parent_container])
 ```
 
 - **Parameters:**
-	- `[parent_container]` *(druid.container|nil)*:
+	- `[parent_container]` *(druid.container|nil)*: The component used for managing the size and positions with other containers relations to create a adaptable layouts
 
 ### refresh
 
@@ -274,7 +249,7 @@ container:create_draggable_corners()
 ```
 
 - **Returns:**
-	- `Container` *(druid.container)*:
+	- `self` *(druid.container)*: Current container instance
 
 ### clear_draggable_corners
 
@@ -284,7 +259,7 @@ container:clear_draggable_corners()
 ```
 
 - **Returns:**
-	- `Container` *(druid.container)*:
+	- `self` *(druid.container)*: Current container instance
 
 ### fit_into_node
 
@@ -299,7 +274,7 @@ Set node for layout node to fit inside it. Pass nil to reset
 	- `node` *(string|node)*: The node_id or gui.get_node(node_id)
 
 - **Returns:**
-	- `Layout` *(druid.container)*:
+	- `self` *(druid.container)*: Current container instance
 
 ### set_min_size
 
@@ -308,56 +283,58 @@ Set node for layout node to fit inside it. Pass nil to reset
 container:set_min_size([min_size_x], [min_size_y])
 ```
 
+Set the minimum size of the container
+
 - **Parameters:**
-	- `[min_size_x]` *(number|nil)*:
-	- `[min_size_y]` *(number|nil)*:
+	- `[min_size_x]` *(number|nil)*: The minimum size x
+	- `[min_size_y]` *(number|nil)*: The minimum size y
 
 - **Returns:**
-	- `` *(druid.container)*:
+	- `self` *(druid.container)*: Current container instance
 
 
 ## Fields
 <a name="node"></a>
-- **node** (_node_)
+- **node** (_node_): The gui node
 
 <a name="druid"></a>
-- **druid** (_druid.instance_)
+- **druid** (_druid.instance_): The druid instance
 
 <a name="node_offset"></a>
-- **node_offset** (_vector4_)
+- **node_offset** (_vector4_): The node offset
 
 <a name="origin_size"></a>
-- **origin_size** (_vector3_)
+- **origin_size** (_vector3_): The origin size
 
 <a name="size"></a>
-- **size** (_vector3_)
+- **size** (_vector3_): The current size
 
 <a name="origin_position"></a>
-- **origin_position** (_vector3_)
+- **origin_position** (_vector3_): The origin position
 
 <a name="position"></a>
-- **position** (_vector3_)
+- **position** (_vector3_): The current position
 
 <a name="pivot_offset"></a>
-- **pivot_offset** (_vector3_)
+- **pivot_offset** (_vector3_): The pivot offset
 
 <a name="center_offset"></a>
-- **center_offset** (_vector3_)
+- **center_offset** (_vector3_): The center offset
 
 <a name="mode"></a>
-- **mode** (_string_)
+- **mode** (_string_): The layout mode
 
 <a name="fit_size"></a>
-- **fit_size** (_vector3_)
+- **fit_size** (_vector3_): The fit size
 
 <a name="min_size_x"></a>
-- **min_size_x** (_number_)
+- **min_size_x** (_number_): The minimum size x
 
 <a name="min_size_y"></a>
-- **min_size_y** (_number_)
+- **min_size_y** (_number_): The minimum size y
 
 <a name="on_size_changed"></a>
-- **on_size_changed** (_event_): fun(self: druid.container, size: vector3)
+- **on_size_changed** (_event_): fun(self: druid.container, size: vector3) The event triggered when the size changes
 
 <a name="node_fill_x"></a>
 - **node_fill_x** (_nil_)

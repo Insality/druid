@@ -2,13 +2,11 @@
 
 > at /druid/base/hover.lua
 
+The component for handling hover events on a node
+
 
 ## Functions
 - [init](#init)
-- [on_late_init](#on_late_init)
-- [on_style_change](#on_style_change)
-- [on_input](#on_input)
-- [on_input_interrupt](#on_input_interrupt)
 - [set_hover](#set_hover)
 - [is_hovered](#is_hovered)
 - [set_mouse_hover](#set_mouse_hover)
@@ -34,48 +32,12 @@
 hover:init(node, on_hover_callback, on_mouse_hover)
 ```
 
+The constructor for the hover component
+
 - **Parameters:**
 	- `node` *(node)*: Gui node
 	- `on_hover_callback` *(function)*: Hover callback
 	- `on_mouse_hover` *(function)*: On mouse hover callback
-
-### on_late_init
-
----
-```lua
-hover:on_late_init()
-```
-
-### on_style_change
-
----
-```lua
-hover:on_style_change(style)
-```
-
-- **Parameters:**
-	- `style` *(druid.hover.style)*:
-
-### on_input
-
----
-```lua
-hover:on_input(action_id, action)
-```
-
-- **Parameters:**
-	- `action_id` *(hash)*:
-	- `action` *(table)*:
-
-- **Returns:**
-	- `` *(boolean)*:
-
-### on_input_interrupt
-
----
-```lua
-hover:on_input_interrupt()
-```
 
 ### set_hover
 
@@ -166,17 +128,17 @@ Return current hover enabled state
 
 ## Fields
 <a name="node"></a>
-- **node** (_node_)
+- **node** (_node_): Gui node
 
 <a name="on_hover"></a>
-- **on_hover** (_event_)
+- **on_hover** (_event_): fun(self: druid.hover, is_hover: boolean) Hover event
 
 <a name="on_mouse_hover"></a>
-- **on_mouse_hover** (_event_)
+- **on_mouse_hover** (_event_): fun(self: druid.hover, is_hover: boolean) Mouse hover event
 
 <a name="style"></a>
-- **style** (_druid.hover.style_)
+- **style** (_druid.hover.style_): Style of the hover component
 
 <a name="click_zone"></a>
-- **click_zone** (_node_)
+- **click_zone** (_node_): Click zone of the hover component
 
