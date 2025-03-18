@@ -2,15 +2,16 @@ local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
+---The component that handles a text to display a seconds timer
 ---@class druid.timer: druid.component
----@field on_tick event
----@field on_set_enabled event
----@field on_timer_end event
----@field node node
----@field from number
----@field target number
----@field value number
----@field is_on boolean|nil
+---@field on_tick event fun(context, value) The event triggered when the timer ticks
+---@field on_set_enabled event fun(context, is_on) The event triggered when the timer is enabled
+---@field on_timer_end event fun(context) The event triggered when the timer ends
+---@field node node The node to display the timer
+---@field from number The start time of the timer
+---@field target number The target time of the timer
+---@field value number The current value of the timer
+---@field is_on boolean|nil True if the timer is on
 local M = component.create("timer")
 
 
@@ -69,8 +70,9 @@ function M:on_layout_change()
 end
 
 
+---Set the timer to a specific value
 ---@param set_to number Value in seconds
----@return druid.timer self
+---@return druid.timer self Current timer instance
 function M:set_to(set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, self:_second_string_min(set_to))
@@ -79,8 +81,9 @@ function M:set_to(set_to)
 end
 
 
+---Set the timer to a specific value
 ---@param is_on boolean|nil Timer enable state
----@return druid.timer self
+---@return druid.timer self Current timer instance
 function M:set_state(is_on)
 	self.is_on = is_on
 	self.on_set_enabled:trigger(self:get_context(), is_on)
@@ -89,9 +92,10 @@ function M:set_state(is_on)
 end
 
 
+---Set the timer interval
 ---@param from number Start time in seconds
 ---@param to number Target time in seconds
----@return druid.timer self
+---@return druid.timer self Current timer instance
 function M:set_interval(from, to)
 	self.from = from
 	self.value = from
@@ -104,6 +108,9 @@ function M:set_interval(from, to)
 end
 
 
+---@private
+---@param sec number Seconds to convert
+---@return string The formatted time string
 function M:_second_string_min(sec)
 	local mins = math.floor(sec / 60)
 	local seconds = math.floor(sec - mins * 60)

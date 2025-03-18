@@ -242,7 +242,7 @@ end
 -- It will change content gui node size
 ---@param size vector3 The new size for content node
 ---@param offset vector3|nil Offset value to set, where content is starts
----@return druid.scroll Current scroll instance
+---@return druid.scroll self Current scroll instance
 function M:set_size(size, offset)
 	if offset then
 		self._offset = offset
@@ -256,7 +256,7 @@ end
 
 ---Set new scroll view size in case the node size was changed.
 ---@param size vector3 The new size for view node
----@return druid.scroll Current scroll instance
+---@return druid.scroll self Current scroll instance
 function M:set_view_size(size)
 	gui.set_size(self.view_node, size)
 	self.view_size = size
@@ -267,7 +267,8 @@ function M:set_view_size(size)
 end
 
 
----Refresh scroll view size
+---Refresh scroll view size, used when view node size is changed
+---@return druid.scroll self Current scroll instance
 function M:update_view_size()
 	self.view_size = helper.get_scaled_size(self.view_node)
 	self.view_border = helper.get_border(self.view_node)
@@ -281,7 +282,7 @@ end
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
 ---@param state boolean Inert scroll state
----@return druid.scroll Current scroll instance
+---@return druid.scroll self Current scroll instance
 function M:set_inert(state)
 	self._is_inert = state
 
@@ -299,7 +300,7 @@ end
 ---Set extra size for scroll stretching
 -- Set 0 to disable stretching effect
 ---@param stretch_size number|nil Size in pixels of additional scroll area
----@return druid.scroll Current scroll instance
+---@return druid.scroll self Current scroll instance
 function M:set_extra_stretch_size(stretch_size)
 	self.style.EXTRA_STRETCH_SIZE = stretch_size or 0
 	self:_update_size()
@@ -318,7 +319,7 @@ end
 ---Set points of interest.
 -- Scroll will always centered on closer points
 ---@param points table Array of vector3 points
----@return druid.scroll Current scroll instance
+---@return druid.scroll self Current scroll instance
 function M:set_points(points)
 	self.points = points
 
@@ -334,7 +335,7 @@ end
 
 ---Lock or unlock horizontal scroll
 ---@param state boolean True, if horizontal scroll is enabled
----@return druid.scroll Current scroll instance
+---@return druid.scroll self Current scroll instance
 function M:set_horizontal_scroll(state)
 	self._is_horizontal_scroll = state
 	self.drag.can_x = self.available_size.x > 0 and state or false
@@ -344,7 +345,7 @@ end
 
 ---Lock or unlock vertical scroll
 ---@param state boolean True, if vertical scroll is enabled
----@return druid.scroll Current scroll instance
+---@return druid.scroll self Current scroll instance
 function M:set_vertical_scroll(state)
 	self._is_vertical_scroll = state
 	self.drag.can_y = self.available_size.y > 0 and state or false
@@ -395,7 +396,7 @@ end
 ---Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
 ---@param grid druid.grid|nil Druid grid component
----@return druid.scroll Current scroll instance
+---@return druid.scroll self Current scroll instance
 function M:bind_grid(grid)
 	if self._grid_on_change then
 		self._grid_on_change:unsubscribe(self._grid_on_change_callback)

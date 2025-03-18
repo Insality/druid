@@ -65,11 +65,12 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field offset_y number|nil
 ---@field node_size vector3|nil
 
+---The component that handles a rich text display, allows to custom color, size, font, etc. of the parts of the text
 ---@class druid.rich_text: druid.component
----@field root node
----@field text_prefab node
----@field private _last_value string
----@field private _settings table
+---@field root node The root node of the rich text
+---@field text_prefab node The text prefab node
+---@field private _last_value string The last value of the rich text
+---@field private _settings table The settings of the rich text
 local M = component.create("rich_text")
 
 
@@ -145,13 +146,14 @@ function M:set_text(text)
 end
 
 
----Get current text
----@return string text
+---Get the current text of the rich text
+---@return string text The current text of the rich text
 function M:get_text()
 	return self._last_value
 end
 
 
+---@private
 function M:on_remove()
 	gui.set_scale(self.root, self._default_scale)
 	gui.set_size(self.root, self._default_size)
@@ -170,8 +172,8 @@ end
 
 
 ---Get all words, which has a passed tag.
----@param tag string
----@return druid.rich_text.word[] words
+---@param tag string The tag to get the words for
+---@return druid.rich_text.word[] words The words with the passed tag
 function M:tagged(tag)
 	if not self._words then
 		return {}
@@ -181,28 +183,22 @@ function M:tagged(tag)
 end
 
 
----Split a word into it's characters
----@param word druid.rich_text.word
----@return druid.rich_text.word[] characters
-function M:characters(word)
-	return rich_text.characters(word)
-end
-
-
----Get all current words.
+---Get all current created words, each word is a table that contains the information about the word
 ---@return druid.rich_text.word[]
 function M:get_words()
 	return self._words
 end
 
 
----Get current line metrics
-----@return druid.rich_text.lines_metrics
+---Get the current line metrics
+---@return druid.rich_text.lines_metrics lines_metrics The line metrics of the rich text
 function M:get_line_metric()
 	return self._line_metrics
 end
 
 
+---@private
+---@return table settings The settings of the rich text, they are created based on the root node on the GUI scene
 function M:_create_settings()
 	local root_size = gui.get_size(self.root)
 	local scale = gui.get_scale(self.root)

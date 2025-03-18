@@ -7,16 +7,17 @@ local component = require("druid.component")
 ---@field ON_HOVER_CURSOR string|nil Mouse hover style on node hover
 ---@field ON_MOUSE_HOVER_CURSOR string|nil Mouse hover style on node mouse hover
 
+---The component for handling hover events on a node
 ---@class druid.hover: druid.component
----@field node node
----@field on_hover event fun(self: druid.hover, is_hover: boolean)
----@field on_mouse_hover event fun(self: druid.hover, is_hover: boolean)
----@field style druid.hover.style
----@field click_zone node
----@field private _is_hovered boolean|nil
----@field private _is_mouse_hovered boolean|nil
----@field private _is_enabled boolean|nil
----@field private _is_mobile boolean
+---@field node node Gui node
+---@field on_hover event fun(self: druid.hover, is_hover: boolean) Hover event
+---@field on_mouse_hover event fun(self: druid.hover, is_hover: boolean) Mouse hover event
+---@field style druid.hover.style Style of the hover component
+---@field click_zone node Click zone of the hover component
+---@field private _is_hovered boolean|nil True if the node is hovered
+---@field private _is_mouse_hovered boolean|nil True if the node is mouse hovered
+---@field private _is_enabled boolean|nil True if the hover component is enabled
+---@field private _is_mobile boolean True if the platform is mobile
 local M = component.create("hover")
 
 

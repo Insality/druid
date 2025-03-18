@@ -4,12 +4,13 @@ local const  = require("druid.const")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
+---The component that handles a rich text input field, it's a wrapper around the druid.input component
 ---@class druid.rich_input: druid.component
----@field root node
----@field input druid.input
----@field cursor node
----@field cursor_text node
----@field cursor_position vector3
+---@field root node The root node of the rich input
+---@field input druid.input The input component
+---@field cursor node The cursor node
+---@field cursor_text node The cursor text node
+---@field cursor_position vector3 The position of the cursor
 local M = component.create("druid.rich_input")
 
 local DOUBLE_CLICK_TIME = 0.35
@@ -131,7 +132,12 @@ local function on_touch_start_callback(self, touch)
 end
 
 
-
+---@param self druid.rich_input
+---@param dx number The delta x position
+---@param dy number The delta y position
+---@param x number The x position
+---@param y number The y position
+---@param touch table The touch table
 local function on_drag_callback(self, dx, dy, x, y, touch)
 	if not self._last_touch_info.cursor_index then
 		return
@@ -218,6 +224,7 @@ end
 
 ---Set placeholder text
 ---@param placeholder_text string The placeholder text
+---@return druid.rich_input self Current instance
 function M:set_placeholder(placeholder_text)
 	self.placeholder:set_text(placeholder_text)
 	return self
@@ -225,8 +232,10 @@ end
 
 
 ---Select input field
+---@return druid.rich_input self Current instance
 function M:select()
 	self.input:select()
+	return self
 end
 
 
@@ -262,7 +271,7 @@ end
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
 ---@param characters string Regulax exp. for validate user input
----@return druid.rich_input Current instance
+---@return druid.rich_input self Current instance
 function M:set_allowed_characters(characters)
 	self.input:set_allowed_characters(characters)
 

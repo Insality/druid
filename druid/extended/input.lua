@@ -13,16 +13,17 @@ local utf8 = utf8 or utf8_lua
 ---@field on_unselect fun(self: druid.input, button_node: node) Callback on input field unselecting
 ---@field on_input_wrong fun(self: druid.input, button_node: node) Callback on wrong user input
 
+---The component used for managing input fields in basic way
 ---@class druid.input: druid.component
----@field on_input_select event fun(self: druid.input, input: druid.input)
----@field on_input_unselect event fun(self: druid.input, text: string, input: druid.input)
----@field on_input_text event fun(self: druid.input)
----@field on_input_empty event fun(self: druid.input)
----@field on_input_full event fun(self: druid.input)
----@field on_input_wrong event fun(self: druid.input)
----@field on_select_cursor_change event fun(self: druid.input, cursor_index: number, start_index: number, end_index: number)
----@field style table
----@field text druid.text
+---@field on_input_select event fun(self: druid.input, input: druid.input) The event triggered when the input field is selected
+---@field on_input_unselect event fun(self: druid.input, text: string, input: druid.input) The event triggered when the input field is unselected
+---@field on_input_text event fun(self: druid.input) The event triggered when the input field is changed
+---@field on_input_empty event fun(self: druid.input) The event triggered when the input field is empty
+---@field on_input_full event fun(self: druid.input) The event triggered when the input field is full
+---@field on_input_wrong event fun(self: druid.input) The event triggered when the input field is wrong
+---@field on_select_cursor_change event fun(self: druid.input, cursor_index: number, start_index: number, end_index: number) The event triggered when the cursor index is changed
+---@field style druid.input.style The style of the input component
+---@field text druid.text The text component
 local M = component.create("input")
 
 M.ALLOWED_ACTIONS = {
@@ -126,6 +127,9 @@ function M:on_style_change(style)
 end
 
 
+---@param action_id hash|nil The action id
+---@param action action The action
+---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
 	if not (action_id == nil or M.ALLOWED_ACTIONS[action_id]) then
 		return false
@@ -242,9 +246,10 @@ function M:get_text_selected()
 	return utf8.sub(self.value, self.start_index + 1, self.end_index)
 end
 
+
 ---Replace selected text with new text
 ---@param text string The text to replace selected text
----@return string New input text
+---@return string new_text New input text
 function M:get_text_selected_replaced(text)
 	local left_part = utf8.sub(self.value, 1, self.start_index)
 	local right_part = utf8.sub(self.value, self.end_index + 1, utf8.len(self.value))
@@ -350,7 +355,7 @@ end
 
 
 ---Return current input field text
----@return string The current input field text
+---@return string text The current input field text
 function M:get_text()
 	if self.marked_value ~= "" then
 		return self.value .. self.marked_value
@@ -363,7 +368,7 @@ end
 ---Set maximum length for input field.
 -- Pass nil to make input field unliminted (by default)
 ---@param max_length number Maximum length for input text field
----@return druid.input Current input instance
+---@return druid.input self Current input instance
 function M:set_max_length(max_length)
 	self.max_length = max_length
 	return self
@@ -374,7 +379,7 @@ end
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
 ---@param characters string Regulax exp. for validate user input
----@return druid.input Current input instance
+---@return druid.input self Current input instance
 function M:set_allowed_characters(characters)
 	self.allowed_characters = characters
 	return self
@@ -382,7 +387,7 @@ end
 
 
 ---Reset current input selection and return previous value
----@return druid.input Current input instance
+---@return druid.input self Current input instance
 function M:reset_changes()
 	self:set_text(self.previous_value)
 	self:unselect()
@@ -394,7 +399,7 @@ end
 ---@param cursor_index number|nil Cursor index for cursor position, if nil - will be set to the end of the text
 ---@param start_index number|nil Start index for cursor position, if nil - will be set to the end of the text
 ---@param end_index number|nil End index for cursor position, if nil - will be set to the start_index
----@return druid.input Current input instance
+---@return druid.input self Current input instance
 function M:select_cursor(cursor_index, start_index, end_index)
 	local len = utf8.len(self.value)
 
@@ -416,6 +421,7 @@ end
 ---@param delta number side for cursor position, -1 for left, 1 for right
 ---@param is_add_to_selection boolean (Shift key)
 ---@param is_move_to_end boolean (Ctrl key)
+---@return druid.input self Current input instance
 function M:move_selection(delta, is_add_to_selection, is_move_to_end)
 	local len = utf8.len(self.value)
 	local cursor_index = self.cursor_index

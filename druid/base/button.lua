@@ -38,6 +38,7 @@ local component = require("druid.component")
 local M = component.create("button")
 
 
+---The constructor for the button component
 ---@param node_or_node_id node|string Node name or GUI Node itself
 ---@param callback fun()|nil Callback on button click
 ---@param custom_args any|nil Custom args for any Button event
@@ -76,6 +77,7 @@ function M:init(node_or_node_id, callback, custom_args, anim_node)
 end
 
 
+---@private
 ---@param style druid.button.style
 function M:on_style_change(style)
 	self.style = {
@@ -92,7 +94,7 @@ function M:on_style_change(style)
 end
 
 
----@return druid.button self
+---@return druid.button self The current button instance
 function M:set_animations_disabled()
 	self.style.on_click = function() end
 	self.style.on_click_disabled = function() end
@@ -114,9 +116,9 @@ function M:on_late_init()
 end
 
 
----@param action_id hash
----@param action table
----@return boolean
+---@param action_id hash The action id
+---@param action table The action table
+---@return boolean is_consumed True if the input was consumed
 function M:on_input(action_id, action)
 	if not self:_is_input_match(action_id) then
 		return false
@@ -209,7 +211,7 @@ end
 ---The style.on_set_enabled will be triggered.
 ---Disabled button is not clickable.
 ---@param state boolean|nil Enabled state
----@return druid.button self
+---@return druid.button self The current button instance
 function M:set_enabled(state)
 	self.disabled = not state
 	self.hover:set_enabled(state)
@@ -231,7 +233,7 @@ end
 ---Useful to restrict click outside out stencil node or scrollable content.
 ---If button node placed inside stencil node, it will be automatically set to this stencil node.
 ---@param zone node|string|nil Gui node
----@return druid.button self
+---@return druid.button self The current button instance
 function M:set_click_zone(zone)
 	self.click_zone = zone and self:get_node(zone) or nil
 	self.hover:set_click_zone(zone)
@@ -242,7 +244,7 @@ end
 
 ---Set key name to trigger this button by keyboard.
 ---@param key hash|string The action_id of the input key. Example: "key_space"
----@return druid.button self
+---@return druid.button self The current button instance
 function M:set_key_trigger(key)
 	if type(key) == "string" then
 		self.key_trigger = hash(key)
@@ -264,7 +266,7 @@ end
 ---Set function for additional check for button click availability
 ---@param check_function function|nil Should return true or false. If true - button can be pressed.
 ---@param failure_callback function|nil Function will be called on button click, if check function return false
----@return druid.button self
+---@return druid.button self The current button instance
 function M:set_check_function(check_function, failure_callback)
 	self._check_function = check_function
 	self._failure_callback = failure_callback
@@ -280,7 +282,7 @@ end
 ---
 ---If the game is not HTML, html mode will be not enabled
 ---@param is_web_mode boolean|nil If true - button will be called inside html5 callback
----@return druid.button self
+---@return druid.button self The current button instance
 function M:set_web_user_interaction(is_web_mode)
 	self._is_html5_mode = not not (is_web_mode and html5)
 	return self
@@ -288,8 +290,8 @@ end
 
 
 
----@param action_id hash
----@return boolean
+---@param action_id hash The action id
+---@return boolean is_match True if the input matches the button
 function M:_is_input_match(action_id)
 	if action_id == const.ACTION_TOUCH or action_id == const.ACTION_MULTITOUCH then
 		return true
@@ -303,13 +305,13 @@ function M:_is_input_match(action_id)
 end
 
 
----@param hover_state boolean
+---@param hover_state boolean True if the hover state is active
 function M:_on_button_hover(hover_state)
 	self.style.on_hover(self, self.anim_node, hover_state)
 end
 
 
----@param hover_state boolean
+---@param hover_state boolean True if the hover state is active
 function M:_on_button_mouse_hover(hover_state)
 	self.style.on_mouse_hover(self, self.anim_node, hover_state)
 end
@@ -406,7 +408,6 @@ function M:_on_button_release()
 		return true
 	end
 end
-
 
 
 return M

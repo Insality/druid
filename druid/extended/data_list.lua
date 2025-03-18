@@ -3,25 +3,26 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local event = require("event.event")
 
+---The component used for managing a list of data with a scrollable view, used to manage huge list data and render only visible elements
 ---@class druid.data_list: druid.component
----@field scroll druid.scroll
----@field grid druid.grid
----@field on_scroll_progress_change event
----@field on_element_add event
----@field on_element_remove event
----@field top_index number
----@field last_index number
----@field scroll_progress number
----@field private _create_function function
----@field private _is_use_cache boolean
----@field private _cache table
----@field private _data table
----@field private _data_visual table
+---@field scroll druid.scroll The scroll instance for Data List component
+---@field grid druid.grid The StaticGrid or DynamicGrid instance for Data List component
+---@field on_scroll_progress_change event The event triggered when the scroll progress changes
+---@field on_element_add event The event triggered when a new element is added
+---@field on_element_remove event The event triggered when an element is removed
+---@field top_index number The top index of the visible elements
+---@field last_index number The last index of the visible elements
+---@field scroll_progress number The scroll progress
+---@field private _create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
+---@field private _is_use_cache boolean Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
+---@field private _cache table The cache table
+---@field private _data table The data table
+---@field private _data_visual table The data visual table
 local M = component.create("data_list")
 
 
 ---@param scroll druid.scroll The Scroll instance for Data List component
----@param grid druid.grid The StaticGrid} or @{DynamicGrid instance for Data List component
+---@param grid druid.grid The StaticGrid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
 function M:init(scroll, grid, create_function)
 	self.scroll = scroll
@@ -56,9 +57,9 @@ function M:on_remove()
 end
 
 
----Set refresh function for DataList component
----@param is_use_cache boolean Use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
----@return druid.data_list Current DataList instance
+---Set use cache version of DataList. Requires make setup of components in on_element_add callback and clean in on_element_remove
+---@param is_use_cache boolean Use cache version of DataList
+---@return druid.data_list self Current DataList instance
 function M:set_use_cache(is_use_cache)
 	self._is_use_cache = is_use_cache
 	return self
@@ -67,7 +68,7 @@ end
 
 ---Set new data set for DataList component
 ---@param data table The new data array
----@return druid.data_list Current DataList instance
+---@return druid.data_list self Current DataList instance
 function M:set_data(data)
 	self._data = data or {}
 	self:_refresh()
@@ -77,50 +78,62 @@ end
 
 
 ---Return current data from DataList component
----@return table The current data array
+---@return table data The current data array
 function M:get_data()
 	return self._data
 end
 
 
----Add element to DataList. Currenly untested
----@param data table
----@param index number|nil
+---Add element to DataList
+---@param data table The data to add
+---@param index number|nil The index to add the data at
 ---@param shift_policy number|nil The constant from const.SHIFT.*
+---@return druid.data_list self Current DataList instance
 function M:add(data, index, shift_policy)
 	index = index or #self._data + 1
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
 	helper.insert_with_shift(self._data, data, index, shift_policy)
 	self:_refresh()
+
+	return self
 end
 
 
----Remove element from DataList. Currenly untested
----@param index number|nil
+---Remove element from DataList
+---@param index number|nil The index to remove the data at
 ---@param shift_policy number|nil The constant from const.SHIFT.*
+---@return druid.data_list self Current DataList instance
 function M:remove(index, shift_policy)
 	helper.remove_with_shift(self._data, index, shift_policy)
 	self:_refresh()
+
+	return self
 end
 
 
----Remove element from DataList by data value. Currenly untested
----@param data table
+---Remove element from DataList by data value
+---@param data table The data to remove
 ---@param shift_policy number|nil The constant from const.SHIFT.*
+---@return druid.data_list self Current DataList instance
 function M:remove_by_data(data, shift_policy)
 	local index = helper.contains(self._data, data)
 	if index then
 		helper.remove_with_shift(self._data, index, shift_policy)
 		self:_refresh()
 	end
+
+	return self
 end
 
 
 ---Clear the DataList and refresh visuals
+---@return druid.data_list self Current DataList instance
 function M:clear()
 	self._data = {}
 	self:_refresh()
+
+	return self
 end
 
 
@@ -151,7 +164,7 @@ end
 
 
 ---Return all currenly created components in DataList
----@return druid.component[] List of created nodes
+---@return druid.component[] components List of created components
 function M:get_created_components()
 	local components = {}
 
@@ -164,7 +177,7 @@ end
 
 
 ---Instant scroll to element with passed index
----@param index number
+---@param index number The index to scroll to
 function M:scroll_to_index(index)
 	local pos = self.grid:get_pos(index)
 	self.scroll:scroll_to(pos)
@@ -172,7 +185,7 @@ end
 
 
 ---Add element at passed index using cache or create new
----@param index number
+---@param index number The index to add the element at
 ---@private
 function M:_add_at(index)
 	if self._data_visual[index] then
@@ -205,7 +218,7 @@ end
 
 
 ---Remove element from passed index and add it to cache if applicable
----@param index number
+---@param index number The index to remove the element at
 ---@private
 function M:_remove_at(index)
 	self.grid:remove(index, const.SHIFT.NO_SHIFT)

@@ -7,15 +7,16 @@ local component = require("druid.component")
 local M = component.create("blocker")
 
 
----@param node node
+---@param node node|string The node to use as a blocker
 function M:init(node)
 	self.node = self:get_node(node)
 	self._is_enabled = gui.is_enabled(self.node, true)
 end
 
 
----@param action_id string
----@param action table
+---@param action_id string The action id
+---@param action table The action table
+---@return boolean is_consumed True if the input was consumed
 function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and
 		action_id ~= const.ACTION_MULTITOUCH and
@@ -40,8 +41,8 @@ end
 
 
 ---Set blocker enabled state
----@param state boolean
----@return druid.blocker self
+---@param state boolean The new enabled state
+---@return druid.blocker self The blocker instance
 function M:set_enabled(state)
 	self._is_enabled = state
 
@@ -50,7 +51,7 @@ end
 
 
 ---Get blocker enabled state
----@return boolean
+---@return boolean is_enabled True if the blocker is enabled
 function M:is_enabled()
 	return self._is_enabled
 end

@@ -1,12 +1,12 @@
 -- Hello, Defolder! Wish you a good day!
 
-local event = require("event.event")
 local events = require("event.events")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local settings = require("druid.system.settings")
 local druid_component = require("druid.component")
 
+---The Druid Factory used to create components
 ---@class druid.instance
 ---@field components_all druid.component[] All created components
 ---@field components_interest table<string, druid.component[]> All components sorted by interest
@@ -202,18 +202,15 @@ function M.create_druid_instance(context, style)
 	events.subscribe("druid.window_event", self.on_window_event, self)
 	events.subscribe("druid.language_change", self.on_language_change, self)
 
-	-- And we can rid of several bindings by this?
-	--self.on_node_size_changed = event.create()
-
 	return self
 end
 
 
 ---Create new Druid component instance
 ---@generic T: druid.component
----@param component T
----@vararg any
----@return T
+---@param component T The component class to create
+---@vararg any Additional arguments to pass to the component's init function
+---@return T instance The new ready to use component
 function M:new(component, ...)
 	local instance = create(self, component)
 
@@ -251,7 +248,7 @@ end
 -- Component `on_remove` function will be invoked, if exist.
 ---@generic T: druid.component
 ---@param component T Component instance
----@return boolean True if component was removed
+---@return boolean is_removed True if component was removed
 function M:remove(component)
 	if self._is_late_remove_enabled then
 		table.insert(self._late_remove, component)
@@ -300,7 +297,7 @@ end
 
 ---Get a context of Druid instance (usually a self of gui script)
 ---@package
----@return any
+---@return any context The Druid context
 function M:get_context()
 	return self._context
 end
@@ -308,7 +305,7 @@ end
 
 ---Get a style of Druid instance
 ---@package
----@return table
+---@return table style The Druid style table
 function M:get_style()
 	return self._style
 end
@@ -350,7 +347,7 @@ end
 ---Call this in gui_script on_input function.
 ---@param action_id hash Action_id from on_input
 ---@param action table Action from on_input
----@return boolean The boolean value is input was consumed
+---@return boolean is_input_consumed The boolean value is input was consumed
 function M:on_input(action_id, action)
 	self._is_late_remove_enabled = true
 
@@ -402,6 +399,8 @@ function M:on_message(message_id, message, sender)
 end
 
 
+---Called when the window event occurs
+---@param window_event number The window event
 function M:on_window_event(window_event)
 	if window_event == window.WINDOW_EVENT_FOCUS_LOST then
 		local components = self.components_interest[const.ON_FOCUS_LOST]
@@ -438,7 +437,7 @@ end
 ---If whitelist is not empty and component not contains in this list,
 ---component will be not processed on input step
 ---@param whitelist_components table|druid.component[] The array of component to whitelist
----@return druid.instance
+---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
 	if whitelist_components and whitelist_components._component then
 		whitelist_components = { whitelist_components }
@@ -458,7 +457,7 @@ end
 ---If blacklist is not empty and component contains in this list,
 ---component will be not processed on input step DruidInstance
 ---@param blacklist_components table|druid.component[] The array of component to blacklist
----@return druid.instance
+---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
 	if blacklist_components and blacklist_components._component then
 		blacklist_components = { blacklist_components }
@@ -490,11 +489,11 @@ end
 
 ---Create new Druid widget instance
 ---@generic T: druid.component
----@param widget T
+---@param widget T The widget class to create
 ---@param template string|nil The template name used by widget
 ---@param nodes table<hash, node>|node|nil The nodes table from gui.clone_tree or prefab node to use for clone
----@vararg any
----@return T
+---@vararg any Additional arguments to pass to the widget's init function
+---@return T widget The new ready to use widget
 function M:new_widget(widget, template, nodes, ...)
 	local instance = create_widget(self, widget)
 
@@ -521,7 +520,7 @@ local button = require("druid.base.button")
 ---@param callback function|event|nil Button callback
 ---@param params any|nil Button callback params
 ---@param anim_node node|string|nil Button anim node (node, if not provided)
----@return druid.button Button component
+---@return druid.button button The new button component
 function M:new_button(node, callback, params, anim_node)
 	return self:new(button, node, callback, params, anim_node)
 end
@@ -530,7 +529,7 @@ end
 local blocker = require("druid.base.blocker")
 ---Create Blocker component
 ---@param node string|node The node_id or gui.get_node(node_id)
----@return druid.blocker component Blocker component
+---@return druid.blocker blocker The new blocker component
 function M:new_blocker(node)
 	return self:new(blocker, node)
 end
@@ -540,7 +539,7 @@ local back_handler = require("druid.base.back_handler")
 ---Create BackHandler component
 ---@param callback function|nil The callback(self, custom_args) to call on back event
 ---@param params any|nil Callback argument
----@return druid.back_handler component BackHandler component
+---@return druid.back_handler back_handler The new back handler component
 function M:new_back_handler(callback, params)
 	return self:new(back_handler, callback, params)
 end
@@ -551,7 +550,7 @@ local hover = require("druid.base.hover")
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param on_hover_callback function|nil Hover callback
 ---@param on_mouse_hover_callback function|nil Mouse hover callback
----@return druid.hover component Hover component
+---@return druid.hover hover The new hover component
 function M:new_hover(node, on_hover_callback, on_mouse_hover_callback)
 	return self:new(hover, node, on_hover_callback, on_mouse_hover_callback)
 end
@@ -562,7 +561,7 @@ local text = require("druid.base.text")
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param value string|nil Initial text. Default value is node text from GUI scene.
 ---@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
----@return druid.text component Text component
+---@return druid.text text The new text component
 function M:new_text(node, value, adjust_type)
 	return self:new(text, node, value, adjust_type)
 end
@@ -573,7 +572,7 @@ local static_grid = require("druid.base.static_grid")
 ---@param parent_node string|node The node_id or gui.get_node(node_id). Parent of all Grid items.
 ---@param item string|node Item prefab. Required to get grid's item size. Can be adjusted separately.
 ---@param in_row number|nil How many nodes in row can be placed
----@return druid.grid component Grid component
+---@return druid.grid grid The new grid component
 function M:new_grid(parent_node, item, in_row)
 	return self:new(static_grid, parent_node, item, in_row)
 end
@@ -583,7 +582,7 @@ local scroll = require("druid.base.scroll")
 ---Create Scroll component
 ---@param view_node string|node The node_id or gui.get_node(node_id). Will used as user input node.
 ---@param content_node string|node The node_id or gui.get_node(node_id). Will used as scrollable node inside view_node.
----@return druid.scroll component Scroll component
+---@return druid.scroll scroll The new scroll component
 function M:new_scroll(view_node, content_node)
 	return self:new(scroll, view_node, content_node)
 end
@@ -593,7 +592,7 @@ local drag = require("druid.base.drag")
 ---Create Drag component
 ---@param node string|node The node_id or gui.get_node(node_id). Will used as user input node.
 ---@param on_drag_callback function|nil Callback for on_drag_event(self, dx, dy)
----@return druid.drag component Drag component
+---@return druid.drag drag The new drag component
 function M:new_drag(node, on_drag_callback)
 	return self:new(drag, node, on_drag_callback)
 end
@@ -603,7 +602,7 @@ local swipe = require("druid.extended.swipe")
 ---Create Swipe component
 ---@param node string|node The node_id or gui.get_node(node_id). Will used as user input node.
 ---@param on_swipe_callback function|nil Swipe callback for on_swipe_end event
----@return druid.swipe component Swipe component
+---@return druid.swipe swipe The new swipe component
 function M:new_swipe(node, on_swipe_callback)
 	return self:new(swipe, node, on_swipe_callback)
 end
@@ -614,7 +613,7 @@ local lang_text = require("druid.extended.lang_text")
 ---@param node string|node The_node id or gui.get_node(node_id)
 ---@param locale_id string|nil Default locale id or text from node as default
 ---@param adjust_type string|nil Adjust type for text node. Default: const.TEXT_ADJUST.DOWNSCALE
----@return druid.lang_text component LangText component
+---@return druid.lang_text lang_text The new lang text component
 function M:new_lang_text(node, locale_id, adjust_type)
 	return self:new(lang_text, node, locale_id, adjust_type)
 end
@@ -625,7 +624,7 @@ local slider = require("druid.extended.slider")
 ---@param pin_node string|node The_node id or gui.get_node(node_id).
 ---@param end_pos vector3 The end position of slider
 ---@param callback function|nil On slider change callback
----@return druid.slider component Slider component
+---@return druid.slider slider The new slider component
 function M:new_slider(pin_node, end_pos, callback)
 	return self:new(slider, pin_node, end_pos, callback)
 end
@@ -636,7 +635,7 @@ local input = require("druid.extended.input")
 ---@param click_node string|node Button node to enabled input component
 ---@param text_node string|node|druid.text Text node what will be changed on user input
 ---@param keyboard_type number|nil Gui keyboard type for input field
----@return druid.input component Input component
+---@return druid.input input The new input component
 function M:new_input(click_node, text_node, keyboard_type)
 	return self:new(input, click_node, text_node, keyboard_type)
 end
@@ -647,7 +646,7 @@ local data_list = require("druid.extended.data_list")
 ---@param druid_scroll druid.scroll The Scroll instance for Data List component
 ---@param druid_grid druid.grid The Grid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])
----@return druid.data_list component DataList component
+---@return druid.data_list data_list The new data list component
 function M:new_data_list(druid_scroll, druid_grid, create_function)
 	return self:new(data_list, druid_scroll, druid_grid, create_function)
 end
@@ -659,7 +658,7 @@ local timer_component = require("druid.extended.timer")
 ---@param seconds_from number|nil Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
 ---@param callback function|nil Function on timer end
----@return druid.timer component Timer component
+---@return druid.timer timer The new timer component
 function M:new_timer(node, seconds_from, seconds_to, callback)
 	return self:new(timer_component, node, seconds_from, seconds_to, callback)
 end
@@ -670,7 +669,7 @@ local progress = require("druid.extended.progress")
 ---@param node string|node Progress bar fill node or node name
 ---@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
 ---@param init_value number|nil Initial value of progress bar. Default: 1
----@return druid.progress component Progress component
+---@return druid.progress progress The new progress component
 function M:new_progress(node, key, init_value)
 	return self:new(progress, node, key, init_value)
 end
@@ -680,7 +679,7 @@ local layout = require("druid.extended.layout")
 ---Create Layout component
 ---@param node string|node The_node id or gui.get_node(node_id).
 ---@param mode string|nil vertical|horizontal|horizontal_wrap. Default: horizontal
----@return druid.layout component Layout component
+---@return druid.layout layout The new layout component
 function M:new_layout(node, mode)
 	return self:new(layout, node, mode)
 end
@@ -691,7 +690,7 @@ local container = require("druid.extended.container")
 ---@param node string|node The_node id or gui.get_node(node_id).
 ---@param mode string|nil Layout mode
 ---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
----@return druid.container container component
+---@return druid.container container The new container component
 function M:new_container(node, mode, callback)
 	return self:new(container, node, mode, callback)
 end
@@ -702,7 +701,7 @@ local hotkey = require("druid.extended.hotkey")
 ---@param keys_array string|string[] Keys for trigger action. Should contains one action key and any amount of modificator keys
 ---@param callback function|event|nil The callback function
 ---@param callback_argument any|nil The argument to pass into the callback function
----@return druid.hotkey component Hotkey component
+---@return druid.hotkey hotkey The new hotkey component
 function M:new_hotkey(keys_array, callback, callback_argument)
 	return self:new(hotkey, keys_array, callback, callback_argument)
 end
@@ -712,7 +711,7 @@ local rich_text = require("druid.custom.rich_text.rich_text")
 ---Create RichText component.
 ---@param text_node string|node The text node to make Rich Text
 ---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
----@return druid.rich_text component RichText component
+---@return druid.rich_text rich_text The new rich text component
 function M:new_rich_text(text_node, value)
 	return self:new(rich_text, text_node, value)
 end
@@ -723,7 +722,7 @@ local rich_input = require("druid.custom.rich_input.rich_input")
 -- As a template please check rich_input.gui layout.
 ---@param template string The template string name
 ---@param nodes table|nil Nodes table from gui.clone_tree
----@return druid.rich_input component RichInput component
+---@return druid.rich_input rich_input The new rich input component
 function M:new_rich_input(template, nodes)
 	return self:new(rich_input, template, nodes)
 end

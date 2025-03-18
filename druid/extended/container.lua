@@ -30,24 +30,25 @@ local CORNER_PIVOTS = {
 ---@field DRAGGABLE_CORNER_SIZE vector3 Size of box node for debug draggable corners
 ---@field DRAGGABLE_CORNER_COLOR vector4 Color of debug draggable corners
 
+---The component used for managing the size and positions with other containers relations to create a adaptable layouts
 ---@class druid.container: druid.component
----@field node node
----@field druid druid.instance
----@field node_offset vector4
----@field origin_size vector3
----@field size vector3
----@field origin_position vector3
----@field position vector3
----@field pivot_offset vector3
----@field center_offset vector3
----@field mode string
----@field fit_size vector3
----@field min_size_x number|nil
----@field min_size_y number|nil
----@field on_size_changed event fun(self: druid.container, size: vector3)
----@field _parent_container druid.container
----@field _containers table
----@field _draggable_corners table
+---@field node node The gui node
+---@field druid druid.instance The druid instance
+---@field node_offset vector4 The node offset
+---@field origin_size vector3 The origin size
+---@field size vector3 The current size
+---@field origin_position vector3 The origin position
+---@field position vector3 The current position
+---@field pivot_offset vector3 The pivot offset
+---@field center_offset vector3 The center offset
+---@field mode string The layout mode
+---@field fit_size vector3 The fit size
+---@field min_size_x number|nil The minimum size x
+---@field min_size_y number|nil The minimum size y
+---@field on_size_changed event fun(self: druid.container, size: vector3) The event triggered when the size changes
+---@field _parent_container druid.container The parent container
+---@field _containers table The containers
+---@field _draggable_corners table The draggable corners
 local M = component.create("container")
 
 
@@ -106,6 +107,7 @@ function M:on_remove()
 end
 
 
+---Refresh the origins of the container, origins is the size and position of the container when it was created
 function M:refresh_origins()
 	self.origin_size = gui.get_size(self.node)
 	self.origin_position = gui.get_position(self.node)
@@ -113,7 +115,8 @@ function M:refresh_origins()
 end
 
 
----@param pivot constant
+---Set the pivot of the container
+---@param pivot constant The pivot to set
 function M:set_pivot(pivot)
 	gui.set_pivot(self.node, pivot)
 	self.pivot_offset = helper.get_pivot_offset(pivot)
@@ -121,7 +124,8 @@ function M:set_pivot(pivot)
 end
 
 
----@param style druid.container.style
+---Set the style of the container
+---@param style druid.container.style The style to set
 function M:on_style_change(style)
 	self.style = {
 		DRAGGABLE_CORNER_SIZE = style.DRAGGABLE_CORNER_SIZE or vmath.vector3(24, 24, 0),
@@ -131,8 +135,8 @@ end
 
 
 ---Set new size of layout node
----@param width number|nil
----@param height number|nil
+---@param width number|nil The width to set
+---@param height number|nil The height to set
 ---@param anchor_pivot constant|nil If set will keep the corner possition relative to the new size
 ---@return druid.container Container
 function M:set_size(width, height, anchor_pivot)
@@ -174,13 +178,16 @@ function M:set_size(width, height, anchor_pivot)
 end
 
 
+---Get the position of the container
+---@return vector3 position The position of the container
 function M:get_position()
 	return self._position
 end
 
 
----@param pos_x number
----@param pos_y number
+---Set the position of the container
+---@param pos_x number The x position to set
+---@param pos_y number The y position to set
 function M:set_position(pos_x, pos_y)
 	if self._position.x == pos_x and self._position.y == pos_y then
 		return
@@ -192,23 +199,23 @@ function M:set_position(pos_x, pos_y)
 end
 
 
----Get current size of layout node
----@return vector3 size
+---Get the current size of the layout node
+---@return vector3 size The current size of the layout node
 function M:get_size()
 	return vmath.vector3(self.size)
 end
 
 
----Get current scale of layout node
----@return vector3 scale
+---Get the current scale of the layout node
+---@return vector3 scale The current scale of the layout node
 function M:get_scale()
 	return helper.get_scene_scale(self.node, true) --[[@as vector3]]
 end
 
 
 ---Set size for layout node to fit inside it
----@param target_size vector3
----@return druid.container Container
+---@param target_size vector3 The target size to fit into
+---@return druid.container self Current container instance
 function M:fit_into_size(target_size)
 	self.fit_size = target_size
 	self:refresh()
@@ -218,7 +225,7 @@ end
 
 
 ---Set current size for layout node to fit inside it
----@return druid.container Container
+---@return druid.container self Current container instance
 function M:fit_into_window()
 	return self:fit_into_size(vmath.vector3(gui.get_width(), gui.get_height(), 0))
 end
@@ -440,7 +447,7 @@ function M:update_child_containers()
 end
 
 
----@return druid.container Container
+---@return druid.container self Current container instance
 function M:create_draggable_corners()
 	self:clear_draggable_corners()
 
@@ -470,7 +477,7 @@ function M:create_draggable_corners()
 end
 
 
----@return druid.container Container
+---@return druid.container self Current container instance
 function M:clear_draggable_corners()
 	for index = 1, #self._draggable_corners do
 		local drag_component = self._draggable_corners[index]
@@ -523,7 +530,7 @@ end
 
 ---Set node for layout node to fit inside it. Pass nil to reset
 ---@param node string|node The node_id or gui.get_node(node_id)
----@return druid.container Layout
+---@return druid.container self Current container instance
 function M:fit_into_node(node)
 	self._fit_node = self:get_node(node)
 	self:refresh_scale()
@@ -531,8 +538,10 @@ function M:fit_into_node(node)
 end
 
 
----@param min_size_x number|nil
----@param min_size_y number|nil
+---Set the minimum size of the container
+---@param min_size_x number|nil The minimum size x
+---@param min_size_y number|nil The minimum size y
+---@return druid.container self Current container instance
 function M:set_min_size(min_size_x, min_size_y)
 	self.min_size_x = min_size_x or self.min_size_x
 	self.min_size_y = min_size_y or self.min_size_y

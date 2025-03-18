@@ -5,12 +5,13 @@ local component = require("druid.component")
 ---@class druid.hotkey.style
 ---@field MODIFICATORS string[]|hash[] The list of action_id as hotkey modificators
 
+---The component used for managing hotkeys and trigger callbacks when hotkeys are pressed
 ---@class druid.hotkey: druid.component
----@field on_hotkey_pressed event
----@field on_hotkey_released event
----@field style druid.hotkey.style
----@field private _hotkeys table
----@field private _modificators table
+---@field on_hotkey_pressed event fun(self, context, callback_argument) The event triggered when a hotkey is pressed
+---@field on_hotkey_released event fun(self, context, callback_argument) The event triggered when a hotkey is released
+---@field style druid.hotkey.style The style of the hotkey component
+---@field private _hotkeys table The list of hotkeys
+---@field private _modificators table The list of modificators
 local M = component.create("hotkey")
 
 
@@ -51,7 +52,7 @@ end
 ---Add hotkey for component callback
 ---@param keys string[]|hash[]|string|hash that have to be pressed before key pressed to activate
 ---@param callback_argument any|nil The argument to pass into the callback function
----@return druid.hotkey Current instance
+---@return druid.hotkey self Current instance
 function M:add_hotkey(keys, callback_argument)
 	keys = keys or {}
 	if type(keys) == "string" then
@@ -109,9 +110,9 @@ function M:on_focus_gained()
 end
 
 
----@param action_id hash|nil
----@param action action
----@return boolean
+---@param action_id hash|nil The action id
+---@param action action The action
+---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
 	if not action_id then
 		return false
@@ -167,8 +168,8 @@ end
 
 
 ---If true, the callback will be triggered on action.repeated
----@param is_enabled_repeated bool The flag value
----@return druid.hotkey
+---@param is_enabled_repeated boolean The flag value
+---@return druid.hotkey self Current instance
 function M:set_repeat(is_enabled_repeated)
 	self._is_process_repeated = is_enabled_repeated
 	return self

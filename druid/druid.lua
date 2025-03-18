@@ -11,6 +11,7 @@ local default_style = require("druid.styles.default.style")
 ---@class druid
 local M = {}
 
+
 ---Create a new Druid instance for creating GUI components.
 ---@param context table The Druid context. Usually, this is the self of the gui_script. It is passed into all Druid callbacks.
 ---@param style table|nil The Druid style table to override style parameters for this Druid instance.

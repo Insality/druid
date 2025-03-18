@@ -7,35 +7,37 @@ local component = require("druid.component")
 ---@field DRAG_DEADZONE number Distance in pixels to start dragging. Default: 10
 ---@field NO_USE_SCREEN_KOEF boolean If screen aspect ratio affects on drag values. Default: false
 
+---A component that allows you to subscribe to drag events over a node
 ---@class druid.drag: druid.component
----@field node node
----@field on_touch_start event
----@field on_touch_end event
----@field on_drag_start event
----@field on_drag event
----@field on_drag_end event
----@field style druid.drag.style
----@field click_zone node|nil
----@field is_touch boolean
----@field is_drag boolean
----@field can_x boolean
----@field can_y boolean
----@field dx number
----@field dy number
----@field touch_id number
----@field x number
----@field y number
----@field screen_x number
----@field screen_y number
----@field touch_start_pos vector3
----@field private _is_enabled boolean
----@field private _x_koef number
----@field private _y_koef number
+---@field node node The node to subscribe to drag events over
+---@field on_touch_start event fun(self, touch) The event triggered when a touch starts
+---@field on_touch_end event fun(self, touch) The event triggered when a touch ends
+---@field on_drag_start event fun(self, touch) The event triggered when a drag starts
+---@field on_drag event fun(self, touch) The event triggered when a drag occurs
+---@field on_drag_end event fun(self, touch) The event triggered when a drag ends
+---@field style druid.drag.style The style of Drag component
+---@field click_zone node|nil The click zone of Drag component
+---@field is_touch boolean True if a touch is active
+---@field is_drag boolean True if a drag is active
+---@field can_x boolean True if Drag can move horizontally
+---@field can_y boolean True if Drag can move vertically
+---@field dx number The horizontal drag distance
+---@field dy number The vertical drag distance
+---@field touch_id number The touch id
+---@field x number The current x position
+---@field y number The current y position
+---@field screen_x number The current screen x position
+---@field screen_y number The current screen y position
+---@field touch_start_pos vector3 The touch start position
+---@field private _is_enabled boolean True if Drag component is enabled
+---@field private _x_koef number The x koef
+---@field private _y_koef number The y koef
 local M = component.create("drag", const.PRIORITY_INPUT_HIGH)
 
 
----@param node_or_node_id node|string
----@param on_drag_callback function
+---The constructor for Drag component
+---@param node_or_node_id node|string The node to subscribe to drag events over
+---@param on_drag_callback fun(self, touch) The callback to call when a drag occurs
 function M:init(node_or_node_id, on_drag_callback)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node_or_node_id)
@@ -70,7 +72,7 @@ function M:init(node_or_node_id, on_drag_callback)
 end
 
 
----@param style druid.drag.style
+---@param style druid.drag.style The style of Drag component
 function M:on_style_change(style)
 	self.style = {
 		DRAG_DEADZONE = style.DRAG_DEADZONE or 10,
@@ -80,7 +82,7 @@ end
 
 
 ---Set Drag component enabled state.
----@param is_enabled boolean
+---@param is_enabled boolean True if Drag component is enabled
 function M:set_drag_cursors(is_enabled)
 	if defos and is_enabled then
 		self.hover.style.ON_HOVER_CURSOR = defos.CURSOR_CROSSHAIR
@@ -117,8 +119,9 @@ function M:on_input_interrupt()
 end
 
 
----@param action_id hash
----@param action table
+---@param action_id hash Action id from on_input
+---@param action table Action from on_input
+---@return boolean is_consumed True if the input was consumed
 function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
 		return false
@@ -197,7 +200,7 @@ end
 
 
 ---Set Drag click zone
----@param node node|string|nil
+---@param node node|string|nil Node or node id
 ---@return druid.drag self Current instance
 function M:set_click_zone(node)
 	self.click_zone = node and self:get_node(node) or nil
@@ -217,7 +220,7 @@ end
 
 
 ---Check if Drag component is capture input
----@return boolean
+---@return boolean is_enabled True if Drag component is enabled
 function M:is_enabled()
 	return self._is_enabled
 end
@@ -263,7 +266,7 @@ function M:_end_touch(touch)
 end
 
 
----@param touch touch
+---@param touch touch Touch action
 function M:_process_touch(touch)
 	if not self.can_x then
 		self.touch_start_pos.x = touch.x
@@ -287,7 +290,7 @@ end
 ---@param action_id hash Action id from on_input
 ---@param action table Action from on_input
 ---@param touch_id number Touch id
----@return table|nil Touch action
+---@return table|nil touch Touch action
 function M:_find_touch(action_id, action, touch_id)
 	local act = helper.is_mobile() and const.ACTION_MULTITOUCH or const.ACTION_TOUCH
 

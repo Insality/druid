@@ -8,16 +8,17 @@ local component = require("druid.component")
 ---@field SWIPE_THRESHOLD number|nil Minimum distance for swipe trigger. Default: 50
 ---@field SWIPE_TRIGGER_ON_MOVE boolean|nil If true, trigger on swipe moving, not only release action. Default: false
 
+---The component to manage swipe events over a node
 ---@class druid.swipe: druid.component
----@field node node
----@field on_swipe event function(side, dist, dt), side - "left", "right", "up", "down"
----@field style table
----@field click_zone node
----@field private _trigger_on_move boolean
----@field private _swipe_start_time number
----@field private _start_pos vector3
----@field private _is_enabled boolean
----@field private _is_mobile boolean
+---@field node node The node to manage the swipe
+---@field on_swipe event fun(context, side, dist, dt) The event triggered when a swipe is detected
+---@field style druid.swipe.style The style of the swipe
+---@field click_zone node The click zone of the swipe
+---@field private _trigger_on_move boolean True if the swipe should trigger on move
+---@field private _swipe_start_time number The time the swipe started
+---@field private _start_pos vector3 The start position of the swipe
+---@field private _is_enabled boolean True if the swipe is enabled
+---@field private _is_mobile boolean True if the swipe is on a mobile device
 local M = component.create("swipe")
 
 
@@ -55,8 +56,9 @@ function M:on_style_change(style)
 end
 
 
----@param action_id hash
----@param action action
+---@param action_id hash The action id
+---@param action action The action table
+---@return boolean is_consumed True if the input was consumed
 function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false
@@ -93,8 +95,7 @@ function M:on_input_interrupt()
 end
 
 
----Strict swipe click area. Useful for
----restrict events outside stencil node
+---Set the click zone for the swipe, useful for restricting events outside stencil node
 ---@param zone node|string|nil Gui node
 function M:set_click_zone(zone)
 	if not zone then
@@ -107,7 +108,7 @@ end
 
 
 ---Start swipe event
----@param action action
+---@param action action The action table
 function M:_start_swipe(action)
 	self._swipe_start_time = socket.gettime()
 	self._start_pos.x = action.x

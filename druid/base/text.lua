@@ -11,6 +11,7 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 ---@field ADJUST_STEPS number|nil Amount of iterations for text adjust by height. Default: 20
 ---@field ADJUST_SCALE_DELTA number|nil Scale step on each height adjust step. Default: 0.02
 
+---The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
 ---@class druid.text: druid.component
 ---@field node node The text node
 ---@field on_set_text event The event triggered when the text is set, fun(self, text)
@@ -19,7 +20,7 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 ---@field style druid.text.style The style of the text
 ---@field private start_pivot userdata The start pivot of the text
 ---@field private start_scale vector3 The start scale of the text
----@field private scale vector3
+---@field private scale vector3 The current scale of the text
 local M = component.create("text")
 
 
@@ -49,7 +50,6 @@ function M:init(node, value, adjust_type)
 	self.on_update_text_scale = event.create()
 
 	self:set_text(value or gui.get_text(self.node))
-	return self
 end
 
 
@@ -64,16 +64,15 @@ function M:on_style_change(style)
 end
 
 
-
 function M:on_layout_change()
 	self:set_text(self.last_value)
 end
 
 
 ---Calculate text width with font with respect to trailing space
----@param text string|nil
----@return number Width
----@return number Height
+---@param text string|nil The text to calculate the size of, if nil - use current text
+---@return number width The text width
+---@return number height The text height
 function M:get_text_size(text)
 	text = text or self.last_value
 	local font_name = gui.get_font(self.node)
@@ -95,8 +94,8 @@ end
 
 
 ---Get chars count by width
----@param width number
----@return number Chars count
+---@param width number The width to get the chars count of
+---@return number index The chars count
 function M:get_text_index_by_width(width)
 	local text = self.last_value
 	local font_name = gui.get_font(self.node)
@@ -130,7 +129,7 @@ end
 ---Set text to text field
 ---@deprecated
 ---@param set_to string Text for node
----@return druid.text Current text instance
+---@return druid.text self Current text instance
 function M:set_to(set_to)
 	set_to = tostring(set_to or "")
 
@@ -172,7 +171,7 @@ end
 
 ---Set color
 ---@param color vector4 Color for node
----@return druid.text Current text instance
+---@return druid.text self Current text instance
 function M:set_color(color)
 	self.color = color
 	gui.set_color(self.node, color)
@@ -183,7 +182,7 @@ end
 
 ---Set alpha
 ---@param alpha number Alpha for node
----@return druid.text Current text instance
+---@return druid.text self Current text instance
 function M:set_alpha(alpha)
 	self.color.w = alpha
 	gui.set_color(self.node, self.color)
@@ -194,7 +193,7 @@ end
 
 ---Set scale
 ---@param scale vector3 Scale for node
----@return druid.text Current text instance
+---@return druid.text self Current text instance
 function M:set_scale(scale)
 	self.last_scale = scale
 	gui.set_scale(self.node, scale)
@@ -205,7 +204,7 @@ end
 
 ---Set text pivot. Text will re-anchor inside text area
 ---@param pivot userdata The gui.PIVOT_* constant
----@return druid.text Current text instance
+---@return druid.text self Current text instance
 function M:set_pivot(pivot)
 	local prev_pivot = gui.get_pivot(self.node)
 	local prev_offset = const.PIVOTS[prev_pivot]
@@ -252,7 +251,7 @@ end
 
 ---Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
 ---@param minimal_scale number If pass nil - not use minimal scale
----@return druid.text Current text instance
+---@return druid.text self Current text instance
 function M:set_minimal_scale(minimal_scale)
 	self._minimal_scale = minimal_scale
 
@@ -411,6 +410,7 @@ function M:_update_text_with_trim(trim_postfix)
 		gui.set_text(self.node, self.last_value)
 	end
 end
+
 
 ---@private
 ---@param trim_postfix string

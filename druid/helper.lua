@@ -553,7 +553,7 @@ function M.get_full_position(node, root)
 end
 
 
----@class druid.animation_data
+---@class druid.system.animation_data
 ---@field frames table<number, table<string, number>> List of frames with uv coordinates and size
 ---@field width number Width of the animation
 ---@field height number Height of the animation
@@ -564,7 +564,7 @@ end
 
 ---@param node node
 ---@param atlas_path string Path to the atlas
----@return druid.animation_data
+---@return druid.system.animation_data
 function M.get_animation_data_from_node(node, atlas_path)
 	local atlas_data = resource.get_atlas(atlas_path)
 	local tex_info = resource.get_texture_info(atlas_data.texture)

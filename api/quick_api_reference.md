@@ -28,7 +28,8 @@
 
 # API Reference
 
-## Druid
+## [Druid](druid_api.md)
+
 ```lua
 local druid = require("druid.druid")
 
@@ -42,7 +43,7 @@ druid.set_text_function(callback)
 self.druid = druid.new(context, [style])
 ```
 
-## Druid Instance
+## [Druid Instance](druid_instance_api.md)
 ```lua
 -- Lifecycle
 self.druid:final()
@@ -82,7 +83,7 @@ self.druid:set_whitelist(whitelist_components)
 
 ## Components
 
-### Base Component
+### [Base Component](components/base/component_api.md)
 
 Basic methods for all components.
 
@@ -103,7 +104,7 @@ component:set_style([druid_style])
 component:set_template([template])
 ```
 
-### Blocker
+### [Blocker](components/base/blocker_api.md)
 
 ```lua
 local blocker = self.druid:new_blocker(node)
@@ -112,7 +113,7 @@ blocker:is_enabled()
 blocker:set_enabled(state)
 ```
 
-### Button
+### [Button](components/base/button_api.md)
 
 ```lua
 local button = self.druid:new_button(node, [callback], [params], [anim_node])
@@ -126,7 +127,7 @@ button:set_key_trigger(key)
 button:set_web_user_interaction([is_web_mode])
 ```
 
-### Container
+### [Container](components/extended/container_api.md)
 
 ```lua
 local container = self.druid:new_container(node, [mode], [callback])
@@ -153,7 +154,7 @@ container:set_size([width], [height], [anchor_pivot])
 container:update_child_containers()
 ```
 
-### Data List
+### [Data List](components/extended/data_list_api.md)
 
 ```lua
 local data_list = self.druid:new_data_list(druid_scroll, druid_grid, create_function)
@@ -171,7 +172,7 @@ data_list:set_data(data)
 data_list:set_use_cache(is_use_cache)
 ```
 
-### Drag
+### [Drag](components/base/drag_api.md)
 
 ```lua
 local drag = self.druid:new_drag(node, [on_drag_callback])
@@ -183,7 +184,7 @@ drag:set_drag_cursors(is_enabled)
 drag:set_enabled(is_enabled)
 ```
 
-### Grid
+### [Grid](components/base/static_grid_api.md)
 
 ```lua
 local grid = self.druid:new_grid(parent_node, item, [in_row])
@@ -209,7 +210,7 @@ grid:set_position_function(callback)
 grid:sort_nodes(comparator)
 ```
 
-### Hotkey
+### [Hotkey](components/extended/hotkey_api.md)
 
 ```lua
 local hotkey = self.druid:new_hotkey(keys_array, [callback], [callback_argument])
@@ -220,7 +221,7 @@ hotkey:on_focus_gained()
 hotkey:set_repeat(is_enabled_repeated)
 ```
 
-### Hover
+### [Hover](components/base/hover_api.md)
 
 ```lua
 local hover = self.druid:new_hover(node, [on_hover_callback], [on_mouse_hover_callback])
@@ -234,7 +235,7 @@ hover:set_hover([state])
 hover:set_mouse_hover([state])
 ```
 
-### Input
+### [Input](components/extended/input_api.md)
 
 ```lua
 local input = self.druid:new_input(click_node, text_node, [keyboard_type])
@@ -253,7 +254,7 @@ input:set_text(input_text)
 input:unselect()
 ```
 
-### Lang Text
+### [Lang Text](components/extended/lang_text_api.md)
 
 ```lua
 local lang_text = self.druid:new_lang_text(node, [locale_id], [adjust_type])
@@ -265,7 +266,7 @@ lang_text:set_to(text)
 lang_text:translate(locale_id, [a], [b], [c], [d], [e], [f], [g])
 ```
 
-### Layout
+### [Layout](components/extended/layout_api.md)
 
 ```lua
 local layout = self.druid:new_layout(node, [mode])
@@ -290,7 +291,7 @@ layout:set_type(type)
 layout:update()
 ```
 
-### Progress
+### [Progress](components/extended/progress_api.md)
 
 ```lua
 local progress = self.druid:new_progress(node, key, [init_value])
@@ -305,7 +306,7 @@ progress:to(to, [callback])
 progress:update([dt])
 ```
 
-### Rich Input
+### [Rich Input](components/custom/rich_input_api.md)
 
 ```lua
 local rich_input = self.druid:new_rich_input(template, [nodes])
@@ -318,7 +319,7 @@ rich_input:set_placeholder(placeholder_text)
 rich_input:set_text(text)
 ```
 
-### Rich Text
+### [Rich Text](components/custom/rich_text_api.md)
 
 ```lua
 local rich_text = self.druid:new_rich_text(text_node, [value])
@@ -332,7 +333,7 @@ rich_text:set_text([text])
 rich_text:tagged(tag)
 ```
 
-### Scroll
+### [Scroll](components/base/scroll_api.md)
 
 ```lua
 local scroll = self.druid:new_scroll(view_node, content_node)
@@ -357,7 +358,7 @@ scroll:update([dt])
 scroll:update_view_size()
 ```
 
-### Slider
+### [Slider](components/extended/slider_api.md)
 
 ```lua
 local slider = self.druid:new_slider(pin_node, end_pos, [callback])
@@ -369,7 +370,7 @@ slider:set_input_node([input_node])
 slider:set_steps(steps)
 ```
 
-### Swipe
+### [Swipe](components/extended/swipe_api.md)
 
 ```lua
 local swipe = self.druid:new_swipe(node, [on_swipe_callback])
@@ -377,7 +378,7 @@ local swipe = self.druid:new_swipe(node, [on_swipe_callback])
 swipe:set_click_zone([zone])
 ```
 
-### Text
+### [Text](components/base/text_api.md)
 
 ```lua
 local text = self.druid:new_text(node, [value], [no_adjust])
@@ -398,7 +399,7 @@ text:set_text_adjust([adjust_type], [minimal_scale])
 text:set_to(set_to)
 ```
 
-### Timer
+### [Timer](components/extended/timer_api.md)
 
 ```lua
 local timer = self.druid:new_timer(node, [seconds_from], [seconds_to], [callback])
@@ -409,7 +410,7 @@ timer:set_to(set_to)
 timer:update([dt])
 ```
 
-## Helper
+## [Helper](druid_helper_api.md)
 
 ```lua
 local helper = require("druid.helper")
