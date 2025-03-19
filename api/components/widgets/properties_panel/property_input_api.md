@@ -2,15 +2,15 @@
 
 > at /druid/widget/properties_panel/properties/property_input.lua
 
-
 ## Functions
+
 - [init](#init)
 - [set_text_property](#set_text_property)
 - [set_text_value](#set_text_value)
 - [on_change](#on_change)
 
-
 ## Fields
+
 - [root](#root)
 - [container](#container)
 - [text_name](#text_name)

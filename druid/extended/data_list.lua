@@ -3,7 +3,18 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local event = require("event.event")
 
----The component used for managing a list of data with a scrollable view, used to manage huge list data and render only visible elements
+---Druid component to manage a list of data with a scrollable view, used to manage huge list data and render only visible elements.
+---
+---### Setup
+---Create data list component with druid: `data_list = druid:new_data_list(scroll, grid, create_function)`
+---
+---### Notes
+---- Data List uses a scroll component for scrolling and a grid component for layout
+---- Data List only renders visible elements for better performance
+---- Data List supports caching of elements for better performance
+---- Data List supports adding, removing and updating elements
+---- Data List supports scrolling to specific elements
+---- Data List supports custom element creation and cleanup
 ---@class druid.data_list: druid.component
 ---@field scroll druid.scroll The scroll instance for Data List component
 ---@field grid druid.grid The StaticGrid or DynamicGrid instance for Data List component
@@ -21,6 +32,7 @@ local event = require("event.event")
 local M = component.create("data_list")
 
 
+---The DataList constructor
 ---@param scroll druid.scroll The Scroll instance for Data List component
 ---@param grid druid.grid The StaticGrid instance for Data List component
 ---@param create_function function The create function callback(self, data, index, data_list). Function should return (node, [component])

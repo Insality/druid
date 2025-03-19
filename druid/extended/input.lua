@@ -13,7 +13,18 @@ local utf8 = utf8 or utf8_lua
 ---@field on_unselect fun(self: druid.input, button_node: node) Callback on input field unselecting
 ---@field on_input_wrong fun(self: druid.input, button_node: node) Callback on wrong user input
 
----The component used for managing input fields in basic way
+---Basic Druid text input component. Handles user text input via component with button and text.
+---
+---### Setup
+---Create input component with druid: `input = druid:new_input(button_node_name, text_node_name, keyboard_type)`
+---
+---### Notes
+---- Input component handles user text input. Input contains button and text components
+---- Button needed for selecting/unselecting input field
+---- Click outside of button to unselect input field
+---- On focus lost (game minimized) input field will be unselected
+---- You can setup max length of the text
+---- You can setup allowed characters. On add not allowed characters `on_input_wrong` will be called
 ---@class druid.input: druid.component
 ---@field on_input_select event fun(self: druid.input, input: druid.input) The event triggered when the input field is selected
 ---@field on_input_unselect event fun(self: druid.input, text: string, input: druid.input) The event triggered when the input field is unselected

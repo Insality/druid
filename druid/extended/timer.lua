@@ -2,7 +2,15 @@ local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----The component that handles a text to display a seconds timer
+---Druid component to handle timer work on gui text node. Displays time in a formatted way.
+---
+---### Setup
+---Create timer component with druid: `timer = druid:new_timer(text_node, from_seconds, to_seconds, callback)`
+---
+---### Notes
+---- Timer fires callback when timer value equals to _to_seconds_
+---- Timer will set text node with current timer value
+---- Timer uses update function to handle time
 ---@class druid.timer: druid.component
 ---@field on_tick event fun(context, value) The event triggered when the timer ticks
 ---@field on_set_enabled event fun(context, is_on) The event triggered when the timer is enabled
@@ -18,7 +26,7 @@ local M = component.create("timer")
 ---@param node node Gui text node
 ---@param seconds_from number|nil Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
----@param callback function|nil Function on timer end
+---@param callback function|nil Function that triggers when timer value equals to seconds_to
 function M:init(node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
 	seconds_to = math.max(seconds_to or 0, 0)

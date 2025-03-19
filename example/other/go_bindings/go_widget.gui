@@ -1,4 +1,4 @@
-script: "/druid/druid.gui_script"
+script: "/druid/druid_widget.gui_script"
 fonts {
   name: "druid_text_bold"
   font: "/druid/fonts/druid_text_bold.font"

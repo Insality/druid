@@ -5,7 +5,18 @@ local component = require("druid.component")
 ---@class druid.hotkey.style
 ---@field MODIFICATORS string[]|hash[] The list of action_id as hotkey modificators
 
----The component used for managing hotkeys and trigger callbacks when hotkeys are pressed
+---Druid component to manage hotkeys and trigger callbacks when hotkeys are pressed.
+---
+---### Setup
+---Create hotkey component with druid: `hotkey = druid:new_hotkey(keys, callback, callback_argument)`
+---
+---### Notes
+---- Hotkey can be triggered by pressing a single key or a combination of keys
+---- Hotkey supports modificator keys (e.g. Ctrl, Shift, Alt)
+---- Hotkey can be triggered on key press, release or repeat
+---- Hotkey can be added or removed at runtime
+---- Hotkey can be enabled or disabled
+---- Hotkey can be set to repeat on key hold
 ---@class druid.hotkey: druid.component
 ---@field on_hotkey_pressed event fun(self, context, callback_argument) The event triggered when a hotkey is pressed
 ---@field on_hotkey_released event fun(self, context, callback_argument) The event triggered when a hotkey is released

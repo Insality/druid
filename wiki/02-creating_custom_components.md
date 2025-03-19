@@ -16,6 +16,7 @@ Every component is a child of the Basic Druid component. You can call methods of
 ## Custom Components
 
 ### Basic Component Template
+
 A basic custom component template looks like this (you can copy it from `/druid/templates/component.template.lua`):
 
 ```lua
@@ -39,6 +40,7 @@ return M
 ```
 
 Then you can create your custom component with Druid:
+
 ```lua
 local druid = require("druid.druid")
 

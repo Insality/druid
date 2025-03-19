@@ -2,7 +2,7 @@ local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@alias druid.layout.mode "horizontal"|"vertical"|"horizontal_wrap"
+---@alias druid.layout.type "horizontal"|"vertical"|"horizontal_wrap"
 
 ---@class event.on_size_changed: event
 ---@field subscribe fun(_, callback: fun(new_size: vector3), context: any|nil)
@@ -19,11 +19,22 @@ local component = require("druid.component")
 ---@field nodes_height table<node, number>
 ---@field rows druid.layout.row_data[]>
 
----The component used for managing the layout of nodes, placing them inside the node size with respect to the size and pivot of each node
+---Druid component to manage the layout of nodes, placing them inside the node size with respect to the size and pivot of each node.
+---
+---### Setup
+---Create layout component with druid: `layout = druid:new_layout(node, layout_type)`
+---
+---### Notes
+---- Layout can be horizontal, vertical or horizontal with wrapping
+---- Layout can resize parent node to fit content
+---- Layout can justify content
+---- Layout supports margins and padding
+---- Layout automatically updates when nodes are added or removed
+---- Layout can be manually updated by calling set_dirty()
 ---@class druid.layout: druid.component
 ---@field node node The node to manage the layout of
 ---@field rows_data druid.layout.rows_data Last calculated rows data
----@field is_dirty boolean
+---@field is_dirty boolean True if layout needs to be updated
 ---@field entities node[] The entities to manage the layout of
 ---@field margin {x: number, y: number} The margin of the layout
 ---@field padding vector4 The padding of the layout
@@ -35,8 +46,8 @@ local component = require("druid.component")
 local M = component.create("layout")
 
 
----@param node_or_node_id node|string
----@param layout_type druid.layout.mode
+---@param node_or_node_id node|string The node to manage the layout of
+---@param layout_type druid.layout.type The type of layout (horizontal, vertical, horizontal_wrap)
 function M:init(node_or_node_id, layout_type)
 	self.node = self:get_node(node_or_node_id)
 
@@ -138,10 +149,10 @@ function M:set_justify(is_justify)
 end
 
 
----@param type string The layout type: "horizontal", "vertical", "horizontal_wrap"
+---@param layout_type druid.layout.type
 ---@return druid.layout self Current layout instance
-function M:set_type(type)
-	self.type = type
+function M:set_type(layout_type)
+	self.type = layout_type
 	self.is_dirty = true
 
 	return self

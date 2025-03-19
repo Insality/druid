@@ -18,12 +18,29 @@ local component = require("druid.component")
 ---@field WHEEL_SCROLL_INVERTED boolean|nil If true, invert direction for touchpad and mouse wheel scroll. Default: false
 ---@field WHEEL_SCROLL_BY_INERTION boolean|nil If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
 
+---Basic Druid scroll component. Handles all scrolling behavior in Druid GUI.
+---
+---### Setup
+---Create scroll component with druid: `druid:new_scroll(view_node, content_node)`
+---
+---### Notes
+---- View_node is the static part that captures user input and recognizes scrolling touches
+---- Content_node is the dynamic part that will change position according to the scroll system
+---- Initial scroll size will be equal to content_node size
+---- The initial view box will be equal to view_node size
+---- Scroll by default style has inertia and extra size for stretching effect
+---- You can setup "points of interest" to make scroll always center on closest point
+---- Scroll events:
+----   - on_scroll(self, position): On scroll move callback
+----   - on_scroll_to(self, position, is_instant): On scroll_to function callback
+----   - on_point_scroll(self, item_index, position): On scroll_to_index function callback
+---- Multitouch is required for scroll. Scroll correctly handles touch_id swap while dragging
 ---@class druid.scroll: druid.component
 ---@field node node The root node
 ---@field click_zone node|nil Optional click zone to restrict scroll area
----@field on_scroll event Triggered on scroll move with (self, position)
----@field on_scroll_to event Triggered on scroll_to with (self, target, is_instant)
----@field on_point_scroll event Triggered on scroll_to_index with (self, index, point)
+---@field on_scroll event Triggered on scroll move with fun(self, position)
+---@field on_scroll_to event Triggered on scroll_to with fun(self, target, is_instant)
+---@field on_point_scroll event Triggered on scroll_to_index with fun(self, index, point)
 ---@field view_node node The scroll view node (static part)
 ---@field view_border vector4 The scroll view borders
 ---@field content_node node The scroll content node (moving part)
@@ -47,8 +64,9 @@ local M = component.create("scroll")
 
 
 ---The Scroll constructor
----@param view_node string|node GUI view scroll node
----@param content_node string|node GUI content scroll node
+---@param view_node string|node GUI view scroll node - the static part that captures user input
+---@param content_node string|node GUI content scroll node - the dynamic part that will change position
+---@return druid.scroll
 function M:init(view_node, content_node)
 	self.druid = self:get_druid()
 

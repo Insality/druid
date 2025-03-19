@@ -667,7 +667,7 @@ end
 local progress = require("druid.extended.progress")
 ---Create Progress component
 ---@param node string|node Progress bar fill node or node name
----@param key string Progress bar direction: const.SIDE.X or const.SIDE.Y
+---@param key string Progress bar direction: "x" or "y"
 ---@param init_value number|nil Initial value of progress bar. Default: 1
 ---@return druid.progress progress The new progress component
 function M:new_progress(node, key, init_value)

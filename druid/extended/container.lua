@@ -30,7 +30,19 @@ local CORNER_PIVOTS = {
 ---@field DRAGGABLE_CORNER_SIZE vector3 Size of box node for debug draggable corners
 ---@field DRAGGABLE_CORNER_COLOR vector4 Color of debug draggable corners
 
----The component used for managing the size and positions with other containers relations to create a adaptable layouts
+---Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
+---
+---### Setup
+---Create container component with druid: `container = druid:new_container(node, mode, callback)`
+---
+---### Notes
+---- Container can be used to create adaptable layouts that respond to window size changes
+---- Container supports different layout modes: FIT, STRETCH, STRETCH_X, STRETCH_Y
+---- Container can be nested inside other containers
+---- Container supports fixed margins and percentage-based sizing
+---- Container can be positioned using pivot points
+---- Container supports minimum size constraints
+---- Container can be fitted into window or custom size
 ---@class druid.container: druid.component
 ---@field node node The gui node
 ---@field druid druid.instance The druid instance
@@ -52,6 +64,7 @@ local CORNER_PIVOTS = {
 local M = component.create("container")
 
 
+---The Container constructor
 ---@param node node Gui node
 ---@param mode string Layout mode
 ---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
@@ -245,7 +258,7 @@ function M:on_window_resized()
 end
 
 
----@param node_or_container node|string|druid.container|table
+---@param node_or_container node|string|druid.container|table The node or container to add
 ---@param mode string|nil stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
 ---@param on_resize_callback fun(self: userdata, size: vector3)|nil
 ---@return druid.container Container New created layout instance

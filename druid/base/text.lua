@@ -11,12 +11,31 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 ---@field ADJUST_STEPS number|nil Amount of iterations for text adjust by height. Default: 20
 ---@field ADJUST_SCALE_DELTA number|nil Scale step on each height adjust step. Default: 0.02
 
----The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
+---@alias druid.text.adjust_type "downscale"|"trim"|"no_adjust"|"downscale_limited"|"scroll"|"scale_then_scroll"|"trim_left"|"scale_then_trim"|"scale_then_trim_left"
+
+---Basic Druid text component. Text components by default have the text size adjusting.
+---
+---### Setup
+---Create text node with druid: `text = druid:new_text(node_name, [initial_value], [text_adjust_type])`
+---
+---### Notes
+---- Text component by default have auto adjust text sizing. Text never will be bigger, than text node size, which you can setup in GUI scene.
+---- Text pivot can be changed with `text:set_pivot`, and text will save their position inside their text size box
+---- There are several text adjust types:
+----   - **"downscale"** - Change text's scale to fit in the text node size (default)
+----   - **"trim"** - Trim the text with postfix (default - "...") to fit in the text node size
+----   - **"no_adjust"** - No any adjust, like default Defold text node
+----   - **"downscale_limited"** - Change text's scale like downscale, but there is limit for text's scale
+----   - **"scroll"** - Change text's pivot to imitate scrolling in the text box. Use with stencil node for better effect.
+----   - **"scale_then_scroll"** - Combine two modes: first limited downscale, then scroll
+----   - **"trim_left"** - Trim the text with postfix (default - "...") to fit in the text node size
+----   - **"scale_then_trim"** - Combine two modes: first limited downscale, then trim
+----   - **"scale_then_trim_left"** - Combine two modes: first limited downscale, then trim left
 ---@class druid.text: druid.component
 ---@field node node The text node
----@field on_set_text event The event triggered when the text is set, fun(self, text)
----@field on_update_text_scale event The event triggered when the text scale is updated, fun(self, scale, metrics)
----@field on_set_pivot event The event triggered when the text pivot is set, fun(self, pivot)
+---@field on_set_text event fun(self, text) The event triggered when the text is set
+---@field on_update_text_scale event fun(self, scale, metrics) The event triggered when the text scale is updated
+---@field on_set_pivot event fun(self, pivot) The event triggered when the text pivot is set
 ---@field style druid.text.style The style of the text
 ---@field private start_pivot userdata The start pivot of the text
 ---@field private start_scale vector3 The start scale of the text
@@ -27,7 +46,7 @@ local M = component.create("text")
 ---The Text constructor
 ---@param node string|node Node name or GUI Text Node itself
 ---@param value string|nil Initial text. Default value is node text from GUI scene. Default: nil
----@param adjust_type string|nil Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
+---@param adjust_type druid.text.adjust_type|nil Adjust type for text. By default is "downscale". Options: "downscale", "trim", "no_adjust", "downscale_limited", "scroll", "scale_then_scroll", "trim_left", "scale_then_trim", "scale_then_trim_left"
 function M:init(node, value, adjust_type)
 	self.node = self:get_node(node)
 	self.pos = gui.get_position(self.node)

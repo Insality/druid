@@ -3,7 +3,17 @@ local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
----The component to make a draggable node over a line with a progress report
+---Basic Druid slider component. Creates a draggable node over a line with progress reporting.
+---
+---### Setup
+---Create slider component with druid: `slider = druid:new_slider(node_name, end_pos, callback)`
+---
+---### Notes
+---- Pin node should be placed in initial position at zero progress
+---- It will be available to move Pin node between start pos and end pos
+---- You can setup points of interests on slider via `slider:set_steps`. If steps exist, slider values will be only from these steps (notched slider)
+---- Start pos and end pos should be on vertical or horizontal line (their x or y value should be equal)
+---- To catch input across all slider, you can setup input node via `slider:set_input_node`
 ---@class druid.slider: druid.component
 ---@field node node The node to manage the slider
 ---@field on_change_value event The event triggered when the slider value changes

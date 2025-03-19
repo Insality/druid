@@ -6,19 +6,29 @@ local component = require("druid.component")
 ---@field SPEED number|nil Progress bas fill rate. More -> faster. Default: 5
 ---@field MIN_DELTA number|nil Minimum step to fill progress bar. Default: 0.005
 
----The component used to manage a node as a progress bar, changing the size and scale of the node
+---Basic Druid progress bar component. Changes the size or scale of a node to represent progress.
+---
+---### Setup
+---Create progress bar component with druid: `progress = druid:new_progress(node_name, key, init_value)`
+---
+---### Notes
+---- Node should have maximum node size in GUI scene, it's represent the progress bar maximum size
+---- Key is value from druid const: "x" or "y"
+---- Progress works correctly with 9slice nodes, it tries to set size by _set_size_ first, until minimum size is reached, then it sizing via _set_scale_
+---- Progress bar can fill only by vertical or horizontal size. For diagonal progress bar, just rotate node in GUI scene
+---- If you have glitchy or dark texture bugs with progress bar, try to disable mipmaps in your texture profiles
 ---@class druid.progress: druid.component
----@field node node
----@field on_change event
----@field style druid.progress.style
----@field key string
----@field prop hash
+---@field node node The progress bar node
+---@field on_change event Event triggered when progress value changes
+---@field style druid.progress.style Component style parameters
+---@field key string Progress bar direction: "x" or "y"
+---@field prop hash Property for scaling the progress bar
 local M = component.create("progress")
 
 
 ---@param node string|node Node name or GUI Node itself.
 ---@param key string Progress bar direction: "x" or "y"
----@param init_value number|nil Initial value of progress bar. Default: 1
+---@param init_value number|nil Initial value of progress bar (0 to 1). Default: 1
 function M:init(node, key, init_value)
 	assert(key == "x" or key == "y", "Progress bar key should be 'x' or 'y'")
 
