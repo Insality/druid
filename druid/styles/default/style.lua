@@ -1,4 +1,3 @@
-local const = require("druid.const")
 local settings = require("druid.system.settings")
 
 local M = {}

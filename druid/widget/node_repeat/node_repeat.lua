@@ -175,17 +175,17 @@ end
 
 ---@param scale number
 function M:set_scale(scale)
-	local current_scale_x = gui.get(self.node, helper.PROP_SCALE_X)
-	local current_scale_y = gui.get(self.node, helper.PROP_SCALE_Y)
-	local current_size_x = gui.get(self.node, helper.PROP_SIZE_X)
-	local current_size_y = gui.get(self.node, helper.PROP_SIZE_Y)
+	local current_scale_x = gui.get(self.node, M.PROP_SCALE_X)
+	local current_scale_y = gui.get(self.node, M.PROP_SCALE_Y)
+	local current_size_x = gui.get(self.node, M.PROP_SIZE_X)
+	local current_size_y = gui.get(self.node, M.PROP_SIZE_Y)
 
 	local delta_scale_x = scale / current_scale_x
 	local delta_scale_y = scale / current_scale_y
-	gui.set(self.node, helper.PROP_SCALE_X, scale)
-	gui.set(self.node, helper.PROP_SCALE_Y, scale)
-	gui.set(self.node, helper.PROP_SIZE_X, current_size_x / delta_scale_x)
-	gui.set(self.node, helper.PROP_SIZE_Y, current_size_y / delta_scale_y)
+	gui.set(self.node, M.PROP_SCALE_X, scale)
+	gui.set(self.node, M.PROP_SCALE_Y, scale)
+	gui.set(self.node, M.PROP_SIZE_X, current_size_x / delta_scale_x)
+	gui.set(self.node, M.PROP_SIZE_Y, current_size_y / delta_scale_y)
 
 	return self
 end

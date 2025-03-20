@@ -245,6 +245,7 @@ Or refer directly to the [**example folder**](https://github.com/Insality/druid/
 You can find the full **Druid** functions at [Quick API Reference](api/quick_api_reference.md)
 
 To better understand **Druid**, read the following documentation:
+
 - [How To GUI in Defold](https://forum.defold.com/t/how-to-gui-in-defold/73256)
 - [Widgets](wiki/widgets.md)
 - [Create custom components](docs_md/02-creating_custom_components.md)

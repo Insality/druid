@@ -66,7 +66,6 @@ local M = component.create("scroll")
 ---The Scroll constructor
 ---@param view_node string|node GUI view scroll node - the static part that captures user input
 ---@param content_node string|node GUI content scroll node - the dynamic part that will change position
----@return druid.scroll
 function M:init(view_node, content_node)
 	self.druid = self:get_druid()
 
@@ -774,6 +773,9 @@ end
 ---Update vector with next conditions:
 ---Field x have to <= field z
 ---Field y have to <= field w
+---@param vector vector4
+---@param offset vector3
+---@return vector4
 function M:_get_border_vector(vector, offset)
 	if vector.x > vector.z then
 		vector.x, vector.z = vector.z, vector.x
