@@ -77,7 +77,7 @@ end
 function M:on_style_change(style)
 	self.style = {
 		TRIM_POSTFIX = style.TRIM_POSTFIX or "...",
-		DEFAULT_ADJUST = style.DEFAULT_ADJUST or const.TEXT_ADJUST.DOWNSCALE,
+		DEFAULT_ADJUST = style.DEFAULT_ADJUST or "downscale",
 		ADJUST_STEPS = style.ADJUST_STEPS or 20,
 		ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02
 	}
@@ -256,9 +256,7 @@ end
 
 
 ---Set text adjust, refresh the current text visuals, if needed
----Values are: "downscale", "trim", "no_adjust", "downscale_limited",
----"scroll", "scale_then_scroll", "trim_left", "scale_then_trim", "scale_then_trim_left"
----@param adjust_type string|nil See const.TEXT_ADJUST. If pass nil - use current adjust type
+---@param adjust_type druid.text.adjust_type|nil The adjust type to set, values: "downscale", "trim", "no_adjust", "downscale_limited", "scroll", "scale_then_scroll", "trim_left", "scale_then_trim", "scale_then_trim_left"
 ---@param minimal_scale number|nil To remove minimal scale, use `text:set_minimal_scale(nil)`, if pass nil - not change minimal scale
 ---@return druid.text self Current text instance
 function M:set_text_adjust(adjust_type, minimal_scale)
@@ -270,7 +268,7 @@ function M:set_text_adjust(adjust_type, minimal_scale)
 end
 
 
----Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
+---Set minimal scale for "downscale_limited" or "scale_then_scroll" adjust types
 ---@param minimal_scale number If pass nil - not use minimal scale
 ---@return druid.text self Current text instance
 function M:set_minimal_scale(minimal_scale)
@@ -466,42 +464,42 @@ end
 
 ---@private
 function M:_update_adjust()
-	if not self.adjust_type or self.adjust_type == const.TEXT_ADJUST.NO_ADJUST then
+	if not self.adjust_type or self.adjust_type == "no_adjust" then
 		self:_reset_default_scale()
 		return
 	end
 
-	if self.adjust_type == const.TEXT_ADJUST.DOWNSCALE then
+	if self.adjust_type == "downscale" then
 		self:_update_text_area_size()
 	end
 
-	if self.adjust_type == const.TEXT_ADJUST.TRIM then
+	if self.adjust_type == "trim" then
 		self:_update_text_with_trim(self.style.TRIM_POSTFIX)
 	end
 
-	if self.adjust_type == const.TEXT_ADJUST.TRIM_LEFT then
+	if self.adjust_type == "trim_left" then
 		self:_update_text_with_trim_left(self.style.TRIM_POSTFIX)
 	end
 
-	if self.adjust_type == const.TEXT_ADJUST.DOWNSCALE_LIMITED then
+	if self.adjust_type == "downscale_limited" then
 		self:_update_text_area_size()
 	end
 
-	if self.adjust_type == const.TEXT_ADJUST.SCROLL then
+	if self.adjust_type == "scroll" then
 		self:_update_text_with_anchor_shift()
 	end
 
-	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_SCROLL then
+	if self.adjust_type == "scale_then_scroll" then
 		self:_update_text_area_size()
 		self:_update_text_with_anchor_shift()
 	end
 
-	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_TRIM then
+	if self.adjust_type == "scale_then_trim" then
 		self:_update_text_area_size()
 		self:_update_text_with_trim(self.style.TRIM_POSTFIX)
 	end
 
-	if self.adjust_type == const.TEXT_ADJUST.SCALE_THEN_TRIM_LEFT then
+	if self.adjust_type == "scale_then_trim_left" then
 		self:_update_text_area_size()
 		self:_update_text_with_trim_left(self.style.TRIM_POSTFIX)
 	end

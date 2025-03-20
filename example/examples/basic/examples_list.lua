@@ -73,11 +73,11 @@ function M.get_examples()
 
 				local adjust_index = 1
 				local adjust_types = {
-					const.TEXT_ADJUST.DOWNSCALE,
-					const.TEXT_ADJUST.DOWNSCALE_LIMITED,
-					--const.TEXT_ADJUST.SCALE_THEN_SCROLL, -- works bad with container for some reason
-					--const.TEXT_ADJUST.SCROLL, -- works bad with container for some reason
-					const.TEXT_ADJUST.TRIM,
+					"downscale",
+					"downscale_limited",
+					--"scale_then_scroll", -- works bad with container for some reason
+					--"scroll", -- works bad with container for some reason
+					"trim",
 				}
 				properties_panel:add_button("ui_adjust_next", function()
 					adjust_index = adjust_index + 1
@@ -131,11 +131,11 @@ function M.get_examples()
 
 				local adjust_index = 1
 				local adjust_types = {
-					const.TEXT_ADJUST.DOWNSCALE,
-					const.TEXT_ADJUST.DOWNSCALE_LIMITED,
-					--const.TEXT_ADJUST.SCALE_THEN_SCROLL, -- works bad with container for some reason
-					--const.TEXT_ADJUST.SCROLL, -- works bad with container for some reason
-					const.TEXT_ADJUST.TRIM,
+					"downscale",
+					"downscale_limited",
+					--"scale_then_scroll", -- works bad with container for some reason
+					--"scroll", -- works bad with container for some reason
+					"trim",
 				}
 				properties_panel:add_button("ui_adjust_next", function()
 					adjust_index = adjust_index + 1

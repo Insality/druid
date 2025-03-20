@@ -491,12 +491,15 @@ end
 ---@generic T: druid.component
 ---@param widget T The widget class to create
 ---@param template string|nil The template name used by widget
----@param nodes table<hash, node>|node|nil The nodes table from gui.clone_tree or prefab node to use for clone
+---@param nodes table<hash, node>|node|string|nil The nodes table from gui.clone_tree or prefab node to use for clone or node id to clone
 ---@vararg any Additional arguments to pass to the widget's init function
 ---@return T widget The new ready to use widget
 function M:new_widget(widget, template, nodes, ...)
 	local instance = create_widget(self, widget)
 
+	if type(nodes) == "string" then
+		nodes = gui.get_node(nodes)
+	end
 	if type(nodes) == "userdata" then
 		nodes = gui.clone_tree(nodes) --[[@as table<hash, node>]]
 	end
@@ -612,7 +615,7 @@ local lang_text = require("druid.extended.lang_text")
 ---Create LangText component
 ---@param node string|node The_node id or gui.get_node(node_id)
 ---@param locale_id string|nil Default locale id or text from node as default
----@param adjust_type string|nil Adjust type for text node. Default: const.TEXT_ADJUST.DOWNSCALE
+---@param adjust_type string|nil Adjust type for text node. Default: "downscale"
 ---@return druid.lang_text lang_text The new lang text component
 function M:new_lang_text(node, locale_id, adjust_type)
 	return self:new(lang_text, node, locale_id, adjust_type)

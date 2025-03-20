@@ -11,6 +11,7 @@ Let's see a basic custom component template:
 ```lua
 local component = require("druid.component")
 
+---@class my_component: druid.component
 local M = component.create("my_component")
 
 function M:init(template, nodes, output_string)
@@ -25,6 +26,9 @@ end
 Basic components are created with the `druid:new()` function:
 
 ```lua
+local template = "my_component" -- The template name on GUI scene, if nil will take nodes directly by gui.get_node()
+local nodes = gui.clone_tree(gui.get_node("my_component/root")) -- We can clone component nodes and init over cloned nodes
+
 local my_component = druid:new("my_component", template, nodes, "Hello world!")
 ```
 
@@ -64,7 +68,7 @@ Let's start from the beginning. Widgets usually consist of 2 parts:
 1. GUI scene
 2. Widget Lua module
 
-Make a GUI scene of your widget (user portrait avatar panel, shop window, game panel menu, etc). Design it as you wish, but it's recommended to add one `root` node with the name `root` and make all your other nodes children of this node. This makes working with the widget much easier.
+Make a GUI scene of your widget (user portrait avatar panel, shop window, game panel menu, etc). Design it as you wish, but it's recommended to add one `root` node with the id `root` and make all your other nodes children of this node. This makes working with the widget much easier. Also ofter this root will represent the widget size, so it's recommended to set it's size to the desired size of the widget.
 
 Let's create a new widget by creating a new file next to our GUI scene file:
 
@@ -101,8 +105,8 @@ function init(self)
     -- In case we want to clone it and use several times we can pass the nodes table
     local array_of_widgets = {}
     for index = 1, 10 do
-        local nodes = gui.clone_tree(self.my_widget.root)
-        local widget = self.druid:new_widget(my_widget, "my_widget", nodes)
+        -- For widgets now we can use a root node directly instead of manually cloning the nodes
+        local widget = self.druid:new_widget(my_widget, "my_widget", "my_widget/root")
         table.insert(array_of_widgets, widget)
     end
 end

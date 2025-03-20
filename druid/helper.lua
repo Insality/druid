@@ -14,11 +14,6 @@ local POSITION_X = hash("position.x")
 local SCALE_X = hash("scale.x")
 local SIZE_X = hash("size.x")
 
-M.PROP_SIZE_X = hash("size.x")
-M.PROP_SIZE_Y = hash("size.y")
-M.PROP_SCALE_X = hash("scale.x")
-M.PROP_SCALE_Y = hash("scale.y")
-
 local function get_text_width(text_node)
 	if text_node then
 		local text_metrics = M.get_text_metrics_from_node(text_node)

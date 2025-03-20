@@ -8,6 +8,11 @@ local event_queue = require("druid.event_queue")
 ---@field time number
 local M = {}
 
+M.PROP_SIZE_X = hash("size.x")
+M.PROP_SIZE_Y = hash("size.y")
+M.PROP_SCALE_X = hash("scale.x")
+M.PROP_SCALE_Y = hash("scale.y")
+
 function M:init(node)
 	self.node = self:get_node(node)
 	self.animation = nil
@@ -42,10 +47,10 @@ function M:get_repeat()
 	if not self.is_inited then
 		return 1, 1
 	end
-	local size_x = gui.get(self.node, helper.PROP_SIZE_X)
-	local size_y = gui.get(self.node, helper.PROP_SIZE_Y)
-	local scale_x = gui.get(self.node, helper.PROP_SCALE_X)
-	local scale_y = gui.get(self.node, helper.PROP_SCALE_Y)
+	local size_x = gui.get(self.node, M.PROP_SIZE_X)
+	local size_y = gui.get(self.node, M.PROP_SIZE_Y)
+	local scale_x = gui.get(self.node, M.PROP_SCALE_X)
+	local scale_y = gui.get(self.node, M.PROP_SCALE_Y)
 
 	local repeat_x = (size_x / self.animation.width) / scale_x
 	local repeat_y = (size_y / self.animation.height) / scale_y

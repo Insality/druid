@@ -130,7 +130,7 @@ M["input"] = {
 
 M["text"] = {
 	TRIM_POSTFIX = "...",
-	DEFAULT_ADJUST = const.TEXT_ADJUST.DOWNSCALE
+	DEFAULT_ADJUST = "downscale"
 }
 
 
