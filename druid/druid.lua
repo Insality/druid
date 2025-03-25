@@ -112,12 +112,14 @@ end
 
 
 ---Get a binded widget to the current game object.
+---		msg.url(nil, nil, "go_widget") -- current game object
+---		msg.url(nil, object_url, "go_widget") -- other game object
 ---@generic T: druid.widget
 ---@param widget_class T The class of the widget to return
----@param gui_url_string string? GUI url, if nil current gui will be used
+---@param gui_url url GUI url
 ---@return T
-function M.get_widget(widget_class, gui_url_string)
-	local gui_url = msg.url(gui_url_string)
+function M.get_widget(widget_class, gui_url)
+	gui_url = gui_url or msg.url()
 	local guis = REGISTERED_GUI_WIDGETS[gui_url.socket]
 	if not guis then
 		return nil

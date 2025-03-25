@@ -34,6 +34,7 @@
 ---@field upper fun()
 ---@field rep fun()
 
+-- This one should be a part of Defold annotations
 ---@class action
 ---@field value number The amount of input given by the user. This is usually 1 for buttons and 0-1 for analogue inputs. This is not present for mouse movement.
 ---@field pressed boolean If the input was pressed this frame. This is not present for mouse movement.

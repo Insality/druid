@@ -135,8 +135,9 @@ end
 ---@param nodes table<hash, node>|nil
 ---@return druid.instance
 function M:get_druid(template, nodes)
-	local context = { _context = self }
-	local druid_instance = setmetatable(context, { __index = self._meta.druid })
+	local druid_instance = setmetatable({
+		_context = self
+	}, { __index = self._meta.druid })
 
 	if template then
 		self:set_template(template)

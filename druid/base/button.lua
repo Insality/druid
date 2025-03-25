@@ -310,7 +310,6 @@ function M:set_web_user_interaction(is_web_mode)
 end
 
 
-
 ---@param action_id hash The action id
 ---@return boolean is_match True if the input matches the button
 function M:_is_input_match(action_id)

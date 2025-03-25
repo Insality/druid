@@ -8,23 +8,21 @@ local druid_component = require("druid.component")
 
 ---The Druid Factory used to create components
 ---@class druid.instance
----@field components_all druid.component[] All created components
----@field components_interest table<string, druid.component[]> All components sorted by interest
----@field private _context table Druid context, usually a self of gui script
----@field private _style table Druid style table
----@field private _is_late_remove_enabled boolean
----@field private _late_remove druid.component[]
----@field private _input_blacklist druid.component[]|nil
----@field private _input_whitelist druid.component[]|nil
----@field private input_inited boolean
----@field private _late_init_timer_id number
----@field private _input_components druid.component[]
+---@field package input_inited boolean Used to check if input is initialized
+---@field package components_all druid.component[] All created components
+---@field package components_interest table<string, druid.component[]> All components sorted by interest
+---@field package _context table Druid context, usually a self of gui script
+---@field package _style table Druid style table
+---@field package _late_init_timer_id number Timer id for late init
+---@field package _late_remove druid.component[] Components to be removed on late update
+---@field package _is_late_remove_enabled boolean Used to check if components should be removed on late update
+---@field package _input_blacklist druid.component[]|nil Components that should not receive input
+---@field package _input_whitelist druid.component[]|nil Components that should receive input
 local M = {}
 
-local MSG_ADD_FOCUS = hash("acquire_input_focus")
-local MSG_REMOVE_FOCUS = hash("release_input_focus")
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
 local INTERESTS_CACHE = {} -- Cache interests per component class in runtime
+
 
 local function set_input_state(self, is_input_inited)
 	if IS_NO_AUTO_INPUT or (self.input_inited == is_input_inited) then
@@ -32,7 +30,7 @@ local function set_input_state(self, is_input_inited)
 	end
 
 	self.input_inited = is_input_inited
-	msg.post(".", is_input_inited and MSG_ADD_FOCUS or MSG_REMOVE_FOCUS)
+	msg.post(".", is_input_inited and "acquire_input_focus" or "release_input_focus")
 end
 
 
@@ -98,7 +96,7 @@ local function register_interests(self, instance)
 end
 
 
--- Create the Druid component instance
+---Create the Druid component instance
 ---@param self druid.instance
 ---@param instance_class druid.component
 ---@return druid.component
@@ -148,8 +146,8 @@ end
 
 
 ---Check whitelists and blacklists for input components
----@param component druid.component
----@return boolean
+---@param component druid.component The component to check
+---@return boolean is_can_use True if component can be processed on input step
 function M:_can_use_input_component(component)
 	local can_by_whitelist = true
 	local can_by_blacklist = true
@@ -181,7 +179,7 @@ end
 ---Druid class constructor which used to create a Druid's components
 ---@param context table Druid context. Usually it is self of gui script
 ---@param style table? Druid style table
----@return druid.instance
+---@return druid.instance instance The new Druid instance
 function M.create_druid_instance(context, style)
 	local self = setmetatable({}, { __index = M })
 
@@ -244,8 +242,8 @@ end
 
 
 ---Remove created component from Druid instance.
---
--- Component `on_remove` function will be invoked, if exist.
+---
+---Component `on_remove` function will be invoked, if exist.
 ---@generic T: druid.component
 ---@param component T Component instance
 ---@return boolean is_removed True if component was removed
@@ -422,8 +420,8 @@ end
 
 
 ---Calls the on_language_change function in all related components
--- This one called by global druid.on_language_change, but can be
--- call manualy to update all translations
+---This one called by global druid.on_language_change, but can be
+---call manualy to update all translations
 ---@private
 function M:on_language_change()
 	local components = self.components_interest[const.ON_LANGUAGE_CHANGE]
@@ -540,7 +538,7 @@ end
 
 local back_handler = require("druid.base.back_handler")
 ---Create BackHandler component
----@param callback function|nil The callback(self, custom_args) to call on back event
+---@param callback function|event|nil The callback(self, custom_args) to call on back event
 ---@param params any|nil Callback argument
 ---@return druid.back_handler back_handler The new back handler component
 function M:new_back_handler(callback, params)
@@ -722,7 +720,7 @@ end
 
 local rich_input = require("druid.custom.rich_input.rich_input")
 ---Create RichInput component.
--- As a template please check rich_input.gui layout.
+---As a template please check rich_input.gui layout.
 ---@param template string The template string name
 ---@param nodes table|nil Nodes table from gui.clone_tree
 ---@return druid.rich_input rich_input The new rich input component

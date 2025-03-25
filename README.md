@@ -7,7 +7,7 @@
 
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
 
-**Druid** - a powerful, flexible and easy to use **Defold** component UI framework. Contains a wide range of components and features to create stunning and customizable GUIs. Provides a powerful way to create, compose and manage your custom components and scenes.
+**Druid** - a powerful, flexible and easy to use **Defold** component UI framework. Contains a wide range of UI components that you can use to create a beautiful, responsive and customizable GUIs. Provides a powerful way to create, compose and manage your custom components and scenes.
 
 ## Druid Example
 
@@ -15,6 +15,13 @@ Check the [**HTML5 version**](https://insality.github.io/druid/) of the **Druid*
 
 In this example you can inspect a variety of **Druid** components and see how they work. Each example page provides a direct link to the corresponding example code, making it easier for you to understand how to use **Druid**.
 
+## Features
+
+- **Components** - Provides a extensive set of components, from basic buttons to infinity data lists and rich texts
+- **Customizable** - You can customize components appearance and behaviour
+- **Widgets** - Powerful way to create your own reusable components
+- **Input Handling** - Handles input in a stack-based manner and manage input priority
+- **Event Based** - Uses [Defold Event](https://github.com/Insality/defold-event) for components callbacks and communication between components
 
 ## Setup
 
@@ -42,7 +49,7 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 ### Library Size
 
-> **Note:** The library size is calculated based on the build report per platform.
+> **Note:** The library size is calculated based on the build report per platform. Full size contains all components, they can be stripped out in the build process if you don't need them.
 
 | Platform         | Full Size  |
 | ---------------- | ------------- |
@@ -59,11 +66,41 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 ### Basic usage
 
-To utilize **Druid**, begin by creating a **Druid** instance to instantiate components and include the main functions of **Druid**: *update*, *final*, *on_message*, and *on_input*.
+To use **Druid**, begin by creating a **Druid** instance to instantiate components and include the main functions of **Druid**: *update*, *final*, *on_message*, and *on_input*.
 
-When using **Druid** components, provide a node name string as an argument. If you don't have the node name available in some cases, you can pass `gui.get_node()` instead.
+Create a new `*.gui_script` file and add the following code:
 
-All **Druid** and component methods are invoked using the `:` operator, such as `self.druid:new_button()`.
+```lua
+local druid = require("druid.druid")
+
+function init(self)
+	self.druid = druid.new(self)
+end
+
+function final(self)
+	self.druid:final()
+end
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end
+```
+
+Now add this `*.gui_script` as a script to your GUI scene and now you can start creating Druid components.
+
+Always, when you need to pass a node to a component, you can pass a node name string instead of `gui.get_node()` function.
+
+All functions of **Druid** are invoked using the `:` operator, such as `self.druid:new_button()`.
+
+Here is a basic example with a com
 
 ```lua
 local druid = require("druid.druid")
@@ -71,48 +108,13 @@ local druid = require("druid.druid")
 -- All component callbacks pass "self" as first argument
 -- This "self" is a context data passed in `druid.new(context)`
 local function on_button_callback(self)
-    print("The button clicked!")
+	self.text:set_text("The button clicked!")
 end
-
-function init(self)
-    self.druid = druid.new(self)
-    self.button = self.druid:new_button("button_node_name", on_button_callback)
-end
-
--- "final" is a required function for the correct Druid workflow
-function final(self)
-    self.druid:final()
-end
-
--- "update" is used in progress bar, scroll, and timer components
-function update(self, dt)
-    self.druid:update(dt)
-end
-
--- "on_message" is used for specific Druid events, like language change or layout change
-function on_message(self, message_id, message, sender)
-    self.druid:on_message(message_id, message, sender)
-end
-
--- "on_input" is used in almost all Druid components
--- The return value from `druid:on_input` is required!
-function on_input(self, action_id, action)
-    return self.druid:on_input(action_id, action)
-end
-```
-
-For all **Druid** instance functions, [see here](https://insality.github.io/druid/modules/DruidInstance.html).
-
-
-### Default GUI Script
-
-Put the following code in your GUI script to start using **Druid**.
-
-```lua
-local druid = require("druid.druid")
 
 function init(self)
 	self.druid = druid.new(self)
+	self.button = self.druid:new_button("button_node_id", on_button_callback)
+	self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
 end
 
 function final(self)

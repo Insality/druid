@@ -9,7 +9,7 @@ local COLOR_Z = hash("color.z")
 local M = {}
 
 
----Get color color by id
+---Get color color by string (hex or from palette)
 ---@param color_id string
 ---@return vector4
 function M.get(color_id)

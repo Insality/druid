@@ -6,7 +6,8 @@ local druid = require("druid.druid")
 local widget = require("example.other.go_bindings.go_widget")
 
 function init(self)
-	self.go_widget = druid.get_widget(widget, "#go_widget")
+	local gui_url = msg.url(nil, nil, "go_widget")
+	self.go_widget = druid.get_widget(widget, gui_url)
 	self.go_widget:play_animation()
 	self.go_widget:set_position(go.get_position())
 
