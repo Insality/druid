@@ -1,16 +1,10 @@
-local component = require("druid.component")
-
----@class examples.input_password: druid.component
----@field druid druid.instance
+---@class examples.input_password: druid.widget
 ---@field root node
-local M = component.create("input_password")
+---@field input druid.input
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
 	self.input = self.druid:new_input("input/root", "input/text", gui.KEYBOARD_TYPE_PASSWORD)
 	self.input:set_text("")

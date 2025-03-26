@@ -1,17 +1,12 @@
-local component = require("druid.component")
 local event = require("event.event")
 
----@class examples.checkbox: druid.component
----@field druid druid.instance
+---@class examples.checkbox: druid.widget
 ---@field button druid.button
-local M = component.create("checkbox")
+---@field is_enabled boolean
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.button = self.druid:new_button("root", self.on_checkbox_click) -- Button to handle checkbox
 	self.icon = self:get_node("icon") -- Checkbox icon to hide/show
 	self.selected = self:get_node("selected") -- Selected effect to show when checkbox is changed

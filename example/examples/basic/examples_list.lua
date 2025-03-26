@@ -11,7 +11,7 @@ function M.get_examples()
 			template = "basic_button",
 			root = "basic_button/root",
 			code_url = "example/examples/basic/button/basic_button.lua",
-			component_class = require("example.examples.basic.button.basic_button"),
+			widget_class = require("example.examples.basic.button.basic_button"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.basic_button
 
@@ -33,7 +33,7 @@ function M.get_examples()
 			template = "basic_button_double_click",
 			root = "basic_button_double_click/root",
 			code_url = "example/examples/basic/button/basic_button_double_click.lua",
-			component_class = require("example.examples.basic.button.basic_button_double_click"),
+			widget_class = require("example.examples.basic.button.basic_button_double_click"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_button_double_click
 				instance.button.on_click:subscribe(function()
@@ -50,7 +50,7 @@ function M.get_examples()
 			template = "basic_button_hold",
 			root = "basic_button_hold/root",
 			code_url = "example/examples/basic/button/basic_button_hold.lua",
-			component_class = require("example.examples.basic.button.basic_button_hold"),
+			widget_class = require("example.examples.basic.button.basic_button_hold"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_button_hold
 				instance.button.on_click:subscribe(function()
@@ -67,7 +67,7 @@ function M.get_examples()
 			template = "basic_text",
 			root = "basic_text/root",
 			code_url = "example/examples/basic/text/basic_text.lua",
-			component_class = require("example.examples.basic.text.basic_text"),
+			widget_class = require("example.examples.basic.text.basic_text"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.basic_text
 
@@ -125,7 +125,7 @@ function M.get_examples()
 			template = "multiline_text",
 			root = "multiline_text/root",
 			code_url = "example/examples/basic/text/multiline_text.lua",
-			component_class = require("example.examples.basic.text.multiline_text"),
+			widget_class = require("example.examples.basic.text.multiline_text"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.multiline_text
 
@@ -182,7 +182,7 @@ function M.get_examples()
 			template = "hover",
 			root = "hover/root",
 			code_url = "example/examples/basic/hover/hover.lua",
-			component_class = require("example.examples.basic.hover.hover"),
+			widget_class = require("example.examples.basic.hover.hover"),
 		},
 		{
 			name_id = "ui_example_basic_drag",
@@ -190,7 +190,7 @@ function M.get_examples()
 			template = "drag",
 			root = "drag/root",
 			code_url = "example/examples/basic/drag/drag.lua",
-			component_class = require("example.examples.basic.drag.drag"),
+			widget_class = require("example.examples.basic.drag.drag"),
 		},
 		{
 			name_id = "ui_example_basic_drag_to_node",
@@ -198,7 +198,7 @@ function M.get_examples()
 			template = "drag_to_node",
 			root = "drag_to_node/root",
 			code_url = "example/examples/basic/drag/drag_to_node.lua",
-			component_class = require("example.examples.basic.drag.drag_to_node"),
+			widget_class = require("example.examples.basic.drag.drag_to_node"),
 		},
 		{
 			name_id = "ui_example_basic_slider",
@@ -206,7 +206,7 @@ function M.get_examples()
 			template = "basic_slider",
 			root = "basic_slider/root",
 			code_url = "example/examples/basic/slider/basic_slider.lua",
-			component_class = require("example.examples.basic.slider.basic_slider"),
+			widget_class = require("example.examples.basic.slider.basic_slider"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_slider
 				instance.slider.on_change_value:subscribe(function(_, value)
@@ -221,7 +221,7 @@ function M.get_examples()
 			template = "basic_slider_vertical",
 			root = "basic_slider_vertical/root",
 			code_url = "example/examples/basic/slider/basic_slider_vertical.lua",
-			component_class = require("example.examples.basic.slider.basic_slider_vertical"),
+			widget_class = require("example.examples.basic.slider.basic_slider_vertical"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_slider_vertical
 				instance.slider.on_change_value:subscribe(function(_, value)
@@ -236,7 +236,7 @@ function M.get_examples()
 			template = "basic_slider_stepped",
 			root = "basic_slider_stepped/root",
 			code_url = "example/examples/basic/slider/basic_slider_stepped.lua",
-			component_class = require("example.examples.basic.slider.basic_slider_stepped"),
+			widget_class = require("example.examples.basic.slider.basic_slider_stepped"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_slider_stepped
 				instance.slider.on_change_value:subscribe(function(_, value)
@@ -251,7 +251,7 @@ function M.get_examples()
 			template = "basic_progress_bar",
 			root = "basic_progress_bar/root",
 			code_url = "example/examples/basic/progress_bar/basic_progress_bar.lua",
-			component_class = require("example.examples.basic.progress_bar.basic_progress_bar"),
+			widget_class = require("example.examples.basic.progress_bar.basic_progress_bar"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.basic_progress_bar
 				properties_panel:add_slider("ui_value", 1, function(value)
@@ -265,7 +265,7 @@ function M.get_examples()
 			template = "basic_progress_bar_slice9",
 			root = "basic_progress_bar_slice9/root",
 			code_url = "example/examples/basic/progress_bar/basic_progress_bar_slice9.lua",
-			component_class = require("example.examples.basic.progress_bar.basic_progress_bar_slice9"),
+			widget_class = require("example.examples.basic.progress_bar.basic_progress_bar_slice9"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.basic_progress_bar_slice9
 				properties_panel:add_slider("ui_value", 1, function(value)
@@ -279,7 +279,7 @@ function M.get_examples()
 			template = "basic_blocker",
 			root = "basic_blocker/root",
 			code_url = "example/examples/basic/blocker/basic_blocker.lua",
-			component_class = require("example.examples.basic.blocker.basic_blocker"),
+			widget_class = require("example.examples.basic.blocker.basic_blocker"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_blocker
 				instance.button_root.on_click:subscribe(function()
@@ -296,7 +296,7 @@ function M.get_examples()
 			template = "basic_back_handler",
 			root = "basic_back_handler/root",
 			code_url = "example/examples/basic/back_handler/basic_back_handler.lua",
-			component_class = require("example.examples.basic.back_handler.basic_back_handler"),
+			widget_class = require("example.examples.basic.back_handler.basic_back_handler"),
 		},
 		{
 			name_id = "ui_example_basic_timer",
@@ -304,7 +304,7 @@ function M.get_examples()
 			template = "basic_timer",
 			root = "basic_timer/root",
 			code_url = "example/examples/basic/timer/basic_timer.lua",
-			component_class = require("example.examples.basic.timer.basic_timer"),
+			widget_class = require("example.examples.basic.timer.basic_timer"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_timer
 				instance.on_cycle_end:subscribe(function()
@@ -318,7 +318,7 @@ function M.get_examples()
 			template = "basic_hotkey",
 			root = "basic_hotkey/root",
 			code_url = "example/examples/basic/hotkey/basic_hotkey.lua",
-			component_class = require("example.examples.basic.hotkey.basic_hotkey"),
+			widget_class = require("example.examples.basic.hotkey.basic_hotkey"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_hotkey
 				instance.hotkey.on_hotkey_released:subscribe(function()
@@ -332,7 +332,7 @@ function M.get_examples()
 			template = "scroll",
 			root = "scroll/root",
 			code_url = "example/examples/basic/scroll/scroll.lua",
-			component_class = require("example.examples.basic.scroll.scroll"),
+			widget_class = require("example.examples.basic.scroll.scroll"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.scroll
 				instance.button_tutorial.on_click:subscribe(function()
@@ -404,7 +404,7 @@ function M.get_examples()
 			template = "scroll_slider",
 			root = "scroll_slider/root",
 			code_url = "example/examples/basic/scroll_slider/scroll_slider.lua",
-			component_class = require("example.examples.basic.scroll_slider.scroll_slider"),
+			widget_class = require("example.examples.basic.scroll_slider.scroll_slider"),
 			get_debug_info = function(instance)
 				---@cast instance examples.scroll_slider
 				local info = ""
@@ -424,7 +424,7 @@ function M.get_examples()
 			template = "grid",
 			root = "grid/root",
 			code_url = "example/examples/basic/grid/grid.lua",
-			component_class = require("example.examples.basic.grid.grid"),
+			widget_class = require("example.examples.basic.grid.grid"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.grid
 
@@ -512,7 +512,7 @@ function M.get_examples()
 			template = "scroll_bind_grid",
 			root = "scroll_bind_grid/root",
 			code_url = "example/examples/basic/scroll_bind_grid/scroll_bind_grid.lua",
-			component_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid"),
+			widget_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.scroll_bind_grid
 
@@ -565,7 +565,7 @@ function M.get_examples()
 			template = "scroll_bind_grid_horizontal",
 			root = "scroll_bind_grid_horizontal/root",
 			code_url = "example/examples/basic/scroll_bind_grid/scroll_bind_grid_horizontal.lua",
-			component_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid_horizontal"),
+			widget_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid_horizontal"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.scroll_bind_grid_horizontal
 
@@ -619,7 +619,7 @@ function M.get_examples()
 			template = "scroll_bind_grid_points",
 			root = "scroll_bind_grid_points/root",
 			code_url = "example/examples/basic/scroll_bind_grid/scroll_bind_grid_points.lua",
-			component_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid_points"),
+			widget_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid_points"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.scroll_bind_grid_points
 
@@ -672,7 +672,7 @@ function M.get_examples()
 			template = "basic_input",
 			root = "basic_input/root",
 			code_url = "example/examples/basic/input/basic_input.lua",
-			component_class = require("example.examples.basic.input.basic_input"),
+			widget_class = require("example.examples.basic.input.basic_input"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_input
 				instance.input.on_input_select:subscribe(function()
@@ -695,7 +695,7 @@ function M.get_examples()
 			template = "input_password",
 			root = "input_password/root",
 			code_url = "example/examples/basic/input/input_password.lua",
-			component_class = require("example.examples.basic.input.input_password"),
+			widget_class = require("example.examples.basic.input.input_password"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.input_password
 				instance.input.on_input_unselect:subscribe(function(_, text)
@@ -709,7 +709,7 @@ function M.get_examples()
 			template = "basic_rich_input",
 			root = "basic_rich_input/root",
 			code_url = "example/examples/basic/input/rich_input.lua",
-			component_class = require("example.examples.basic.input.rich_input"),
+			widget_class = require("example.examples.basic.input.rich_input"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.rich_input
 				instance.rich_input.input.on_input_unselect:subscribe(function(_, text)
@@ -726,7 +726,7 @@ function M.get_examples()
 			template = "basic_rich_text",
 			root = "basic_rich_text/root",
 			code_url = "example/examples/basic/rich_text/basic_rich_text.lua",
-			component_class = require("example.examples.basic.rich_text.basic_rich_text"),
+			widget_class = require("example.examples.basic.rich_text.basic_rich_text"),
 		},
 		{
 			name_id = "ui_example_rich_text_tags",
@@ -734,7 +734,7 @@ function M.get_examples()
 			template = "rich_text_tags",
 			root = "rich_text_tags/root",
 			code_url = "example/examples/basic/rich_text/rich_text_tags.lua",
-			component_class = require("example.examples.basic.rich_text.rich_text_tags"),
+			widget_class = require("example.examples.basic.rich_text.rich_text_tags"),
 			properties_control = function(instance, properties_panel)
 				local pivot_index = 1
 				local pivot_list = {
@@ -803,7 +803,7 @@ function M.get_examples()
 			template = "basic_swipe",
 			root = "basic_swipe/root",
 			code_url = "example/examples/basic/swipe/basic_swipe.lua",
-			component_class = require("example.examples.basic.swipe.basic_swipe"),
+			widget_class = require("example.examples.basic.swipe.basic_swipe"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.basic_swipe
 				instance.swipe.on_swipe:subscribe(function(_, side, dist, delta_time)
@@ -817,7 +817,7 @@ function M.get_examples()
 			template = "checkbox",
 			root = "checkbox/root",
 			code_url = "example/examples/basic/checkbox/checkbox.lua",
-			component_class = require("example.examples.basic.checkbox.checkbox"),
+			widget_class = require("example.examples.basic.checkbox.checkbox"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.checkbox
 				instance.button.on_click:subscribe(function()
@@ -831,7 +831,7 @@ function M.get_examples()
 			template = "checkbox_group",
 			root = "checkbox_group/root",
 			code_url = "example/examples/basic/checkbox_group/checkbox_group.lua",
-			component_class = require("example.examples.basic.checkbox_group.checkbox_group"),
+			widget_class = require("example.examples.basic.checkbox_group.checkbox_group"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.checkbox_group
 				instance.on_state_changed:subscribe(function(state1, state2, state3)
@@ -845,7 +845,7 @@ function M.get_examples()
 			template = "radio_group",
 			root = "radio_group/root",
 			code_url = "example/examples/basic/radio_group/radio_group.lua",
-			component_class = require("example.examples.basic.radio_group.radio_group"),
+			widget_class = require("example.examples.basic.radio_group.radio_group"),
 			on_create = function(instance, output_log)
 				---@cast instance examples.radio_group
 				instance.on_state_changed:subscribe(function(selected)

@@ -10,7 +10,7 @@ function M.get_examples()
 			template = "window_language",
 			root = "window_language/root",
 			code_url = "example/examples/windows/window_language/window_language.lua",
-			component_class = require("example.examples.windows.window_language.window_language"),
+			widget_class = require("example.examples.windows.window_language.window_language"),
 			on_create = function(instance, output_list)
 				---@cast instance examples.window_language
 				instance.on_language_change:subscribe(function(language)
@@ -24,7 +24,7 @@ function M.get_examples()
 			root = "window_confirmation/root",
 			information_text_id = "ui_example_window_language_description",
 			code_url = "example/examples/windows/window_confirmation/window_confirmation.lua",
-			component_class = require("example.examples.windows.window_confirmation.window_confirmation"),
+			widget_class = require("example.examples.windows.window_confirmation.window_confirmation"),
 			on_create = function(instance, output_list)
 				---@cast instance examples.window_confirmation
 				instance.text_header:translate("ui_confirmation")
@@ -46,7 +46,7 @@ function M.get_examples()
 			root = "window_info/root",
 			information_text_id = "ui_example_window_information_description",
 			code_url = "example/examples/windows/window_info/window_info.lua",
-			component_class = require("example.examples.windows.window_info.window_info"),
+			widget_class = require("example.examples.windows.window_info.window_info"),
 			on_create = function(instance, output_list)
 				---@cast instance examples.window_info
 				instance.text_header:translate("ui_information")

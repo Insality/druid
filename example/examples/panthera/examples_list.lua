@@ -10,7 +10,7 @@ function M.get_examples()
 			template = "basic_animation",
 			root = "basic_animation/root",
 			code_url = "example/examples/panthera/basic_animation/basic_animation.lua",
-			component_class = require("example.examples.panthera.basic_animation.basic_animation"),
+			widget_class = require("example.examples.panthera.basic_animation.basic_animation"),
 		},
 		{
 			name_id = "ui_example_panthera_animation_blend",
@@ -18,7 +18,7 @@ function M.get_examples()
 			template = "animation_blend",
 			root = "animation_blend/root",
 			code_url = "example/examples/panthera/animation_blend/animation_blend.lua",
-			component_class = require("example.examples.panthera.animation_blend.animation_blend"),
+			widget_class = require("example.examples.panthera.animation_blend.animation_blend"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.animation_blend
 				local vertical_time = panthera.get_time(instance.animation_vertical)

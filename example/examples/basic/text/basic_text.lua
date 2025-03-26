@@ -1,16 +1,10 @@
 local helper = require("druid.helper")
-local component = require("druid.component")
 
----@class examples.basic_text: druid.component
----@field druid druid.instance
+---@class examples.basic_text: druid.widget
 ---@field text druid.text
-local M = component.create("basic_text")
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.text = self.druid:new_text("text")
 
 	-- This code is for adjustable text area with mouse

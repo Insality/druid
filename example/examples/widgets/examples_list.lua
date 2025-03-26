@@ -9,7 +9,7 @@ function M.get_examples()
 			template = "hover_hint_example",
 			root = "hover_hint_example/root",
 			code_url = "example/examples/widgets/hover_hint/hover_hint_example.lua",
-			component_class = require("example.examples.widgets.hover_hint.hover_hint_example"),
+			widget_class = require("example.examples.widgets.hover_hint.hover_hint_example"),
 		},
 		{
 			name_id = "ui_example_widget_properties_panel",
@@ -83,7 +83,7 @@ function M.get_examples()
 			template = "property_button",
 			root = "property_button/root",
 			code_url = "example/components/properties_panel/properties/property_button.lua",
-			component_class = require("example.components.properties_panel.properties.property_button"),
+			widget_class = require("example.components.properties_panel.properties.property_button"),
 			on_create = function(instance, output_list)
 				---@cast instance property_button
 				instance.button.on_click:subscribe(function()
@@ -105,7 +105,7 @@ function M.get_examples()
 			template = "property_slider",
 			root = "property_slider/root",
 			code_url = "example/components/properties_panel/properties/property_slider.lua",
-			component_class = require("example.components.properties_panel.properties.property_slider"),
+			widget_class = require("example.components.properties_panel.properties.property_slider"),
 			on_create = function(instance, output_list)
 				---@cast instance property_slider
 				instance.slider.on_change_value:subscribe(function(_, value)
@@ -119,7 +119,7 @@ function M.get_examples()
 			template = "property_checkbox",
 			root = "property_checkbox/root",
 			code_url = "example/components/properties_panel/properties/property_checkbox.lua",
-			component_class = require("example.components.properties_panel.properties.property_checkbox"),
+			widget_class = require("example.components.properties_panel.properties.property_checkbox"),
 			on_create = function(instance, output_list)
 				---@cast instance property_checkbox
 				instance.button.on_click:subscribe(function()

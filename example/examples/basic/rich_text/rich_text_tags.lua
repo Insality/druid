@@ -1,17 +1,16 @@
-local component = require("druid.component")
 local helper = require("druid.helper")
 
----@class examples.rich_text_tags: druid.component
----@field druid druid.instance
----@field rich_text druid.rich_text
-local M = component.create("rich_text_tags")
+---@class examples.rich_text_tags: druid.widget
+---@field rich_text_color druid.rich_text
+---@field rich_text_font druid.rich_text
+---@field rich_text_size druid.rich_text
+---@field rich_text_breaks druid.rich_text
+---@field rich_text_image druid.rich_text
+---@field position table
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.rich_text_color = self.druid:new_rich_text("rich_text_color") --[[@as druid.rich_text]]
 	self.rich_text_color:set_text("Hello, I'm a <color=E48155>Rich Text</color> and it's <color=8ED59E>nested <color=A1D7F5>color</color> tag</color>")
 

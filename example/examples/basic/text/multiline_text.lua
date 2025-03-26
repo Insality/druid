@@ -1,16 +1,10 @@
 local helper = require("druid.helper")
-local component = require("druid.component")
 
----@class examples.multiline_text: druid.component
+---@class examples.multiline_text: druid.widget
 ---@field root node
----@field druid druid.instance
-local M = component.create("multiline_text")
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
 	self.text = self.druid:new_text("text")
 

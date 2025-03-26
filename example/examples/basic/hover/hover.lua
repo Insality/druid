@@ -1,19 +1,12 @@
-local component = require("druid.component")
-
----@class examples.hover: druid.component
----@field druid druid.instance
+---@class examples.hover: druid.widget
 ---@field hover druid.hover
 ---@field hover_pressed druid.hover
-local M = component.create("hover")
+local M = {}
 
 ---Color: #E6DF9F
 local HOVERED_COLOR = vmath.vector4(230/255, 223/255, 159/255, 1.0)
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	-- Default hover callback is `on_hover`, designed for mobile devices
 	-- It's only hover if touch action is above the node
 	self.hover_default = self.druid:new_hover("button_mobile_hover/root", self.on_hover)

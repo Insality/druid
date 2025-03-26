@@ -1,19 +1,11 @@
-local component = require("druid.component")
-
----@class examples.basic_button: druid.component
----@field druid druid.instance
+---@class examples.basic_button: druid.widget
 ---@field button druid.button
-local M = component.create("basic_button")
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.button = self.druid:new_button("button/root", function()
 		print("Button pressed")
 	end)
 end
-
 
 return M

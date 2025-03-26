@@ -1,16 +1,11 @@
 local component = require("druid.component")
 
----@class examples.scroll: druid.component
+---@class examples.scroll: druid.widget
 ---@field root node
 ---@field scroll druid.scroll
----@field druid druid.instance
-local M = component.create("scroll")
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
 
 	self.button_tutorial = self.druid:new_button("button_tutorial/root")

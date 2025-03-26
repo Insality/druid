@@ -10,7 +10,7 @@ function M.get_examples()
 			template = "gamepad_tester",
 			root = "gamepad_tester/root",
 			code_url = "example/examples/gamepad/gamepad_tester/gamepad_tester.lua",
-			component_class = require("example.examples.gamepad.gamepad_tester.gamepad_tester"),
+			widget_class = require("example.examples.gamepad.gamepad_tester.gamepad_tester"),
 			on_create = function(instance, output_list)
 				---@cast instance examples.gamepad_tester
 				instance.button_left.on_click:subscribe(function()
@@ -64,7 +64,7 @@ function M.get_examples()
 			template = "on_screen_control",
 			root = "on_screen_control/root",
 			code_url = "example/examples/gamepad/on_screen_control/on_screen_control.lua",
-			component_class = require("example.examples.gamepad.on_screen_control.on_screen_control"),
+			widget_class = require("example.examples.gamepad.on_screen_control.on_screen_control"),
 		}
 	}
 end

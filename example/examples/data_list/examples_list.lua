@@ -9,7 +9,7 @@ function M.get_examples()
 			template = "data_list_basic",
 			root = "data_list_basic/root",
 			code_url = "example/examples/data_list/basic/data_list_basic.lua",
-			component_class = require("example.examples.data_list.basic.data_list_basic"),
+			widget_class = require("example.examples.data_list.basic.data_list_basic"),
 			on_create = function(instance, output_list)
 				---@cast instance examples.data_list_basic
 				instance.on_item_click:subscribe(function(index)
@@ -57,7 +57,7 @@ function M.get_examples()
 			template = "data_list_horizontal_basic",
 			root = "data_list_horizontal_basic/root",
 			code_url = "example/examples/data_list/basic/data_list_horizontal_basic.lua",
-			component_class = require("example.examples.data_list.basic.data_list_horizontal_basic"),
+			widget_class = require("example.examples.data_list.basic.data_list_horizontal_basic"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.data_list_horizontal_basic
 
@@ -95,7 +95,7 @@ function M.get_examples()
 			template = "data_list_add_remove_clear",
 			root = "data_list_add_remove_clear/root",
 			code_url = "example/examples/data_list/add_remove_clear/data_list_add_remove_clear.lua",
-			component_class = require("example.examples.data_list.add_remove_clear.data_list_add_remove_clear"),
+			widget_class = require("example.examples.data_list.add_remove_clear.data_list_add_remove_clear"),
 			on_create = function(instance, output_list)
 				---@cast instance examples.data_list_add_remove_clear
 				instance.on_item_click:subscribe(function(index)
@@ -156,7 +156,7 @@ function M.get_examples()
 			template = "data_list_cache_with_component",
 			root = "data_list_cache_with_component/root",
 			code_url = "example/examples/data_list/cache_with_component/cache_with_component.lua",
-			component_class = require("example.examples.data_list.cache_with_component.cache_with_component"),
+			widget_class = require("example.examples.data_list.cache_with_component.cache_with_component"),
 			on_create = function(instance, output_list)
 				---@cast instance examples.data_list_cache_with_component
 				instance.on_item_click:subscribe(function(index)

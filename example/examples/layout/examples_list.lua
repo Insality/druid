@@ -10,7 +10,7 @@ function M.get_examples()
 			template = "basic_layout",
 			root = "basic_layout/root",
 			code_url = "example/examples/layout/basic/basic_layout.lua",
-			component_class = require("example.examples.layout.basic.basic_layout"),
+			widget_class = require("example.examples.layout.basic.basic_layout"),
 			properties_control = function(instance, properties_panel)
 				---@cast instance examples.basic_layout
 

@@ -10,7 +10,7 @@ function M.get_examples()
 			template = "intro",
 			root = "intro/root",
 			code_url = "example/examples/intro/intro/intro.lua",
-			component_class = require("example.examples.intro.intro.intro"),
+			widget_class = require("example.examples.intro.intro.intro"),
 		},
 		--{
 		--	name_id = "ui_example_how_to_use_example",
@@ -18,7 +18,7 @@ function M.get_examples()
 		--	template = "how_to_use_example",
 		--	root = "how_to_use_example/root",
 		--	code_url = "example/examples/intro/how_to_use_example/how_to_use_example.lua",
-		--	component_class = require("example.examples.intro.how_to_use_example.how_to_use_example"),
+		--	widget_class = require("example.examples.intro.how_to_use_example.how_to_use_example"),
 		--}
 	}
 end

@@ -1,17 +1,10 @@
-local component = require("druid.component")
-
----@class examples.scroll_slider: druid.component
+---@class examples.scroll_slider: druid.widget
 ---@field root node
 ---@field scroll druid.scroll
 ---@field slider druid.slider
----@field druid druid.instance
-local M = component.create("scroll_slider")
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
 	self.scroll.on_scroll:subscribe(self.on_scroll)
 

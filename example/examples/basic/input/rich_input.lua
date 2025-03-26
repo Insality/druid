@@ -1,15 +1,10 @@
-local component = require("druid.component")
-
----@class examples.rich_input: druid.component
----@field druid druid.instance
+---@class examples.rich_input: druid.widget
 ---@field rich_input druid.rich_input
-local M = component.create("rich_input")
+---@field rich_input_2 druid.rich_input
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
 
+function M:init()
 	self.rich_input = self.druid:new_rich_input("rich_input") --[[@as druid.rich_input]]
 	self.rich_input:set_placeholder("Enter text")
 

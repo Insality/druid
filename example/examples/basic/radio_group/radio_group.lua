@@ -1,20 +1,15 @@
-local component = require("druid.component")
 local event = require("event.event")
 
 -- Require checkbox component from checkbox example
 local checkbox = require("example.examples.basic.checkbox.checkbox")
 
----@class examples.radio_group: druid.component
----@field druid druid.instance
----@field button druid.button
-local M = component.create("radio_group")
+---@class examples.radio_group: druid.widget
+---@field checkboxes examples.checkbox[]
+---@field state boolean[]
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.state = {}
 	self.checkboxes = {
 		self.druid:new(checkbox, "checkbox_1"),

@@ -1,18 +1,10 @@
-local component = require("druid.component")
-
----@class examples.scroll_bind_grid_points: druid.component
+---@class examples.scroll_bind_grid_points: druid.widget
 ---@field scroll druid.scroll
 ---@field grid druid.grid
 ---@field text druid.text
----@field druid druid.instance
-local M = component.create("scroll_bind_grid_points")
+local M = {}
 
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.created_nodes = {}
 
 	self.prefab = self:get_node("prefab")

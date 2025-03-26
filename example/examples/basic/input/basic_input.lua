@@ -1,16 +1,8 @@
-local component = require("druid.component")
-
----@class examples.basic_input: druid.component
----@field druid druid.instance
+---@class examples.basic_input: druid.widget
 ---@field input druid.input
-local M = component.create("basic_input")
+local M = {}
 
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.input = self.druid:new_input("input/root", "input/text")
 
 	self.input_2 = self.druid:new_input("input_2/root", "input_2/text") --[[@as druid.input]]
