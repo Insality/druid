@@ -201,7 +201,7 @@ end
 ---@param y1 number First point y
 ---@param x2 number Second point x
 ---@param y2 number Second point y
----@return number Distance
+---@return number distance
 function M.distance(x1, y1, x2, y2)
 	return math.sqrt((x2 - x1) ^ 2 + (y2 - y1) ^ 2)
 end
@@ -242,6 +242,7 @@ end
 ---Check if value contains in array
 ---@param array any[] Array to check
 ---@param value any Value
+---@return number|nil index Index of value in array or nil if value not found
 function M.contains(array, value)
 	for index = 1, #array do
 		if array[index] == value then
@@ -428,10 +429,10 @@ function M.get_border(node, offset)
 	local pivot_offset = M.get_pivot_offset(pivot)
 	local size = M.get_scaled_size(node)
 	local border = vmath.vector4(
-		-size.x*(0.5 + pivot_offset.x),
-		size.y*(0.5 - pivot_offset.y),
-		size.x*(0.5 - pivot_offset.x),
-		-size.y*(0.5 + pivot_offset.y)
+		-size.x * (0.5 + pivot_offset.x),
+		size.y * (0.5 - pivot_offset.y),
+		size.x * (0.5 - pivot_offset.x),
+		-size.y * (0.5 + pivot_offset.y)
 	)
 
 	if offset then

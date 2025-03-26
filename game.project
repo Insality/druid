@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/other/go_bindings/go_bindings.collectionc
+main_collection = /example/druid.collectionc
 
 [script]
 shared_state = 1

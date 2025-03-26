@@ -74,23 +74,23 @@ Create a new `*.gui_script` file and add the following code:
 local druid = require("druid.druid")
 
 function init(self)
-	self.druid = druid.new(self)
+    self.druid = druid.new(self)
 end
 
 function final(self)
-	self.druid:final()
+    self.druid:final()
 end
 
 function update(self, dt)
-	self.druid:update(dt)
+    self.druid:update(dt)
 end
 
 function on_message(self, message_id, message, sender)
-	self.druid:on_message(message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	return self.druid:on_input(action_id, action)
+    return self.druid:on_input(action_id, action)
 end
 ```
 
@@ -108,29 +108,29 @@ local druid = require("druid.druid")
 -- All component callbacks pass "self" as first argument
 -- This "self" is a context data passed in `druid.new(context)`
 local function on_button_callback(self)
-	self.text:set_text("The button clicked!")
+    self.text:set_text("The button clicked!")
 end
 
 function init(self)
-	self.druid = druid.new(self)
-	self.button = self.druid:new_button("button_node_id", on_button_callback)
-	self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
+    self.druid = druid.new(self)
+    self.button = self.druid:new_button("button_node_id", on_button_callback)
+    self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
 end
 
 function final(self)
-	self.druid:final()
+    self.druid:final()
 end
 
 function update(self, dt)
-	self.druid:update(dt)
+    self.druid:update(dt)
 end
 
 function on_message(self, message_id, message, sender)
-	self.druid:on_message(message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	return self.druid:on_input(action_id, action)
+    return self.druid:on_input(action_id, action)
 end
 ```
 
@@ -146,12 +146,12 @@ Usually this widget lua file is placed nearby with the `GUI` file it belong to a
 local M = {}
 
 function M:init()
-	self.root = self:get_node("root")
-	self.button = self.druid:new_button("button", self.on_click)
+    self.root = self:get_node("root")
+    self.button = self.druid:new_button("button", self.on_click)
 end
 
 function M:on_click()
-	print("Button clicked!")
+    print("Button clicked!")
 end
 
 return M
