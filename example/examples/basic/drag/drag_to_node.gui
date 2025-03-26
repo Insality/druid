@@ -24,6 +24,18 @@ nodes {
   template: "/example/templates/button_text_blue.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "drag/root"
+  parent: "drag"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "drag/text"
+  parent: "drag/root"
+  template_node_child: true
+}
+nodes {
   position {
     y: 300.0
   }

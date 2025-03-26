@@ -34,6 +34,24 @@ nodes {
   template: "/example/examples/widgets/hover_hint/hover_hint.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "hover_hint/root"
+  parent: "hover_hint"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hover_hint/panel_hint"
+  parent: "hover_hint/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "hover_hint/text_hint"
+  parent: "hover_hint/panel_hint"
+  template_node_child: true
+}
+nodes {
   position {
     y: 100.0
   }

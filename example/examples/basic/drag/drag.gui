@@ -19,5 +19,17 @@ nodes {
   inherit_alpha: true
   template: "/example/templates/button_text_blue.gui"
 }
+nodes {
+  type: TYPE_BOX
+  id: "drag/root"
+  parent: "drag"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "drag/text"
+  parent: "drag/root"
+  template_node_child: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
