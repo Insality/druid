@@ -4713,9 +4713,6 @@ nodes {
   template_node_child: true
 }
 nodes {
-  position {
-    x: -200.0
-  }
   type: TYPE_TEMPLATE
   id: "property_input"
   parent: "widgets"
