@@ -1,28 +1,28 @@
 local panthera = require("panthera.panthera")
-local component = require("druid.component")
 local helper = require("druid.helper")
 local event = require("event.event")
 
 local character_animation_blend = require("example.examples.panthera.animation_blend.character_animation_blend")
 
----@class examples.animation_blend: druid.component
+---@class examples.animation_blend: druid.widget
 ---@field root node
----@field druid druid.instance
-local M = component.create("animation_blend")
+---@field root_size vector3
+---@field animation_idle panthera.instance
+---@field animation_vertical panthera.instance
+---@field animation_horizontal panthera.instance
+---@field rich_text druid.rich_text
+---@field on_update event
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
 	self.root_size = gui.get_size(self.root)
 	self.druid:new_lang_text("text_hint", "ui_example_panthera_animation_blend_hint")
 
-	self.animation_idle = panthera.create_gui(character_animation_blend, self:get_template(), nodes)
-	self.animation_vertical = panthera.create_gui(character_animation_blend, self:get_template(), nodes)
-	self.animation_horizontal = panthera.create_gui(character_animation_blend, self:get_template(), nodes)
+	self.animation_idle = panthera.create_gui(character_animation_blend, self:get_template(), self:get_nodes())
+	self.animation_vertical = panthera.create_gui(character_animation_blend, self:get_template(), self:get_nodes())
+	self.animation_horizontal = panthera.create_gui(character_animation_blend, self:get_template(), self:get_nodes())
 
 	panthera.play(self.animation_idle, "idle", {
 		is_loop = true,

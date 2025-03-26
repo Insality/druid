@@ -1,18 +1,17 @@
 local event = require("event.event")
-local component = require("druid.component")
 
 local button_component = require("example.examples.data_list.cache_with_component.button_component")
 
----@class examples.data_list_cache_with_component: druid.component
----@field druid druid.instance
-local M = component.create("data_list_cache_with_component")
+---@class examples.data_list_cache_with_component: druid.widget
+---@field prefab node
+---@field scroll druid.scroll
+---@field grid druid.grid
+---@field data_list druid.data_list
+---@field on_item_click event
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.prefab = self:get_node("button_component/root")
 	gui.set_enabled(self.prefab, false)
 
@@ -39,7 +38,7 @@ end
 function M:create_item_callback(item_data, index)
 	local nodes = gui.clone_tree(self.prefab)
 
-	local instance = self.druid:new(button_component, "button_component", nodes)
+	local instance = self.druid:new_widget(button_component, "button_component", nodes)
 	gui.set_enabled(instance.root, true)
 
 	return instance.root, instance

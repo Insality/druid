@@ -1,11 +1,12 @@
 local helper = require("druid.helper")
-local component = require("druid.component")
 local layout = require("druid.extended.layout")
 
----@class examples.basic_layout: druid.component
----@field druid druid.instance
+---@class examples.basic_layout: druid.widget
 ---@field root node
-local M = component.create("basic_layout")
+---@field layout druid.layout
+---@field prefab node
+---@field nodes table<number, node>
+local M = {}
 
 local PIVOTS = {
 	gui.PIVOT_CENTER,
@@ -20,11 +21,7 @@ local PIVOTS = {
 }
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
 	self.layout = self.druid:new(layout, "layout", "horizontal_wrap")
 

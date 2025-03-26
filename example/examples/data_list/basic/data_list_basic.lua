@@ -1,16 +1,15 @@
 local event = require("event.event")
-local component = require("druid.component")
 
----@class examples.data_list_basic: druid.component
----@field druid druid.instance
-local M = component.create("data_list_basic")
+---@class examples.data_list_basic: druid.widget
+---@field prefab node
+---@field scroll druid.scroll
+---@field grid druid.grid
+---@field data_list druid.data_list
+---@field on_item_click event
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.prefab = self:get_node("prefab")
 	gui.set_enabled(self.prefab, false)
 

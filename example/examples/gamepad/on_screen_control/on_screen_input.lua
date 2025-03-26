@@ -1,22 +1,25 @@
 local const = require("druid.const")
 local event = require("event.event")
 local helper = require("druid.helper")
-local component = require("druid.component")
 
----@class examples.on_screen_input: druid.component
----@field druid druid.instance
+---@class examples.on_screen_input: druid.widget
+---@field button_action node
+---@field on_screen_control node
+---@field stick_root node
+---@field stick_position vector3
 ---@field on_action event @()
 ---@field on_movement event @(x: number, y: number, dt: number) X/Y values are in range -1..1
 ---@field on_movement_stop event @()
-local M = component.create("on_screen_input")
+---@field is_multitouch boolean
+---@field _is_stick_drag boolean|number
+---@field _prev_x number
+---@field _prev_y number
+local M = {}
 
 local STICK_DISTANCE = 80
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
 
+function M:init()
 	self.button_action = self:get_node("on_screen_button")
 	self.on_screen_control = self:get_node("on_screen_stick/root")
 
