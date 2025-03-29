@@ -185,29 +185,6 @@ function M.get_examples()
 			root = "example_tiling_node/root",
 			code_url = "example/examples/widgets/tiling_node/example_tiling_node.lua",
 			widget_class = require("example.examples.widgets.tiling_node.example_tiling_node"),
-			properties_control = function(instance, properties_panel)
-				---@cast instance examples.example_tiling_node
-				properties_panel:add_slider("Repeat X", 0, function(value)
-					local repeat_x = math.floor(value * 10)
-					instance.tiling_node:refresh(repeat_x, nil)
-				end)
-				properties_panel:add_slider("Repeat Y", 0, function(value)
-					local repeat_y = math.floor(value * 10)
-					instance.tiling_node:refresh(nil, repeat_y)
-				end)
-				properties_panel:add_slider("Offset X", 0, function(value)
-					instance.tiling_node:set_offset(value, nil)
-				end)
-				properties_panel:add_slider("Offset Y", 0, function(value)
-					instance.tiling_node:set_offset(nil, value)
-				end)
-				properties_panel:add_slider("Margin X", 0, function(value)
-					instance.tiling_node:set_margin(value, nil)
-				end)
-				properties_panel:add_slider("Margin Y", 0, function(value)
-					instance.tiling_node:set_margin(nil, value)
-				end)
-			end,
 		}
 	}
 end

@@ -46,6 +46,9 @@ function M:init(template, nodes)
 	end)
 end
 
+---@class example_instance: druid.widget
+---@field on_create fun(self: example_instance, output_list: output_list)?
+---@field properties_control fun(self: example_instance, properties_panel: properties_panel)?
 
 ---@param examples druid.examples
 ---@param druid_example druid.example @The main GUI component
@@ -95,7 +98,7 @@ function M:add_example(examples, druid_example)
 			elseif example_data.component_class then -- Keep for backward compatibility
 				instance = druid_example.druid:new(example_data.component_class, example_data.template)
 			end
-			---@cast instance druid.component|druid.widget
+			---@cast instance example_instance
 
 			self.selected_example = {
 				data = example_data,
@@ -106,7 +109,9 @@ function M:add_example(examples, druid_example)
 			item:set_selected(true)
 
 			druid_example.output_list:clear()
-			if example_data.on_create then
+			if instance.on_create then
+				instance:on_create(druid_example.output_list)
+			elseif example_data.on_create then
 				example_data.on_create(instance, druid_example.output_list)
 			end
 
@@ -119,7 +124,11 @@ function M:add_example(examples, druid_example)
 			druid_example.example_scene:set_gui_path(example_data.code_url)
 
 			druid_example.properties_panel:clear()
-			if example_data.properties_control then
+
+			-- First we want to chec
+			if instance.properties_control then
+				instance:properties_control(druid_example.properties_panel)
+			elseif example_data.properties_control then
 				example_data.properties_control(instance, druid_example.properties_panel)
 			end
 

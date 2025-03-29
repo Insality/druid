@@ -15,14 +15,15 @@ nodes {
 }
 nodes {
   size {
-    x: 500.0
-    y: 500.0
+    x: 900.0
+    y: 900.0
   }
   type: TYPE_BOX
   texture: "tiling_texture/pattern_0004"
   id: "tiling_node"
   parent: "root"
   inherit_alpha: true
+  alpha: 0.42
   material: "gui_tiling_node"
 }
 material: "/builtins/materials/gui.material"

@@ -1,18 +1,21 @@
+local component = require("druid.component")
 local helper = require("druid.helper")
 local defer = require("event.defer")
 
----@class druid.tiling_node: druid.widget
+---@class druid.tiling_node: druid.component
 ---@field animation table
 ---@field node node
 ---@field params vector4
 ---@field time number
-local M = {}
+local M = component.create("tiling_node")
 
 M.PROP_SIZE_X = hash("size.x")
 M.PROP_SIZE_Y = hash("size.y")
 M.PROP_SCALE_X = hash("scale.x")
 M.PROP_SCALE_Y = hash("scale.y")
 
+
+---@param node node|string
 function M:init(node)
 	self.node = self:get_node(node)
 	self.animation = nil
