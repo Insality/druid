@@ -25,4 +25,12 @@ function M:on_swipe(swipe_side, dist, delta_time)
 end
 
 
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.swipe.on_swipe:subscribe(function(_, side, dist, delta_time)
+		output_log:add_log_text("Swipe Side: " .. side)
+	end)
+end
+
+
 return M

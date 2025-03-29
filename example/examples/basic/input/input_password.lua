@@ -15,4 +15,12 @@ function M:init()
 end
 
 
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.input.on_input_unselect:subscribe(function(_, text)
+		output_log:add_log_text("Input: " .. text)
+	end)
+end
+
+
 return M

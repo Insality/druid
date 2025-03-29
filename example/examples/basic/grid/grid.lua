@@ -55,4 +55,86 @@ function M:clear()
 end
 
 
+---@param properties_panel properties_panel
+function M:properties_control(properties_panel)
+	local grid = self.grid
+
+	local slider = properties_panel:add_slider("ui_grid_in_row", 0.3, function(value)
+		local in_row_amount = math.ceil(value * 10)
+		in_row_amount = math.max(1, in_row_amount)
+		grid:set_in_row(in_row_amount)
+	end)
+	slider:set_text_function(function(value)
+		return tostring(math.ceil(value * 10))
+	end)
+
+	properties_panel:add_button("ui_add_element", function()
+		if #self.created_nodes >= 36 then
+			return
+		end
+		self:add_element()
+	end)
+
+	properties_panel:add_button("ui_remove_element", function()
+		self:remove_element()
+	end)
+
+	properties_panel:add_button("ui_clear_elements", function()
+		self:clear()
+	end)
+
+	properties_panel:add_checkbox("ui_dynamic_pos", grid.style.IS_DYNAMIC_NODE_POSES, function()
+		grid.style.IS_DYNAMIC_NODE_POSES = not grid.style.IS_DYNAMIC_NODE_POSES
+		grid:refresh()
+	end)
+
+	properties_panel:add_checkbox("ui_align_last_row", grid.style.IS_ALIGN_LAST_ROW, function()
+		grid.style.IS_ALIGN_LAST_ROW = not grid.style.IS_ALIGN_LAST_ROW
+		grid:refresh()
+	end)
+
+	local pivot_index = 1
+	local pivot_list = {
+		gui.PIVOT_CENTER,
+		gui.PIVOT_W,
+		gui.PIVOT_SW,
+		gui.PIVOT_S,
+		gui.PIVOT_SE,
+		gui.PIVOT_E,
+		gui.PIVOT_NE,
+		gui.PIVOT_N,
+		gui.PIVOT_NW,
+	}
+
+	properties_panel:add_button("ui_pivot_next", function()
+		pivot_index = pivot_index + 1
+		if pivot_index > #pivot_list then
+			pivot_index = 1
+		end
+		grid:set_pivot(pivot_list[pivot_index])
+	end)
+
+	local slider_size = properties_panel:add_slider("ui_item_size", 0.5, function(value)
+		local size = 50 + value * 100
+		grid:set_item_size(size, size)
+	end)
+	slider_size:set_text_function(function(value)
+		return tostring(50 + math.ceil(value * 100))
+	end)
+	slider_size:set_value(0.5)
+end
+
+
+---@return string
+function M:get_debug_info()
+	local info = ""
+
+	info = info .. "Grid Items: " .. #self.grid.nodes .. "\n"
+	info = info .. "Grid Item Size: " .. self.grid.node_size.x .. " x " .. self.grid.node_size.y .. "\n"
+	info = info .. "Pivot: " .. tostring(self.grid.pivot)
+
+	return info
+end
+
+
 return M

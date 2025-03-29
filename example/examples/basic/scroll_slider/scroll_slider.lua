@@ -43,4 +43,18 @@ function M:on_slider_back_hover(is_hover)
 end
 
 
+---@return string
+function M:get_debug_info()
+	local info = ""
+
+	local s = self.scroll
+	info = info .. "View Size Y: " .. gui.get(s.view_node, "size.y") .. "\n"
+	info = info .. "Content Size Y: " .. gui.get(s.content_node, "size.y") .. "\n"
+	info = info .. "Content position Y: " .. math.ceil(s.position.y) .. "\n"
+	info = info .. "Content Range Y: " .. s.available_pos.y .. " - " .. s.available_pos.w .. "\n"
+
+	return info
+end
+
+
 return M

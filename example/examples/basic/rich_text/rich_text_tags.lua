@@ -71,4 +71,29 @@ function M:set_pivot(pivot)
 end
 
 
+---@param properties_panel properties_panel
+function M:properties_control(properties_panel)
+	local pivot_index = 1
+	local pivot_list = {
+		gui.PIVOT_CENTER,
+		gui.PIVOT_W,
+		gui.PIVOT_SW,
+		gui.PIVOT_S,
+		gui.PIVOT_SE,
+		gui.PIVOT_E,
+		gui.PIVOT_NE,
+		gui.PIVOT_N,
+		gui.PIVOT_NW,
+	}
+
+	properties_panel:add_button("ui_pivot_next", function()
+		pivot_index = pivot_index + 1
+		if pivot_index > #pivot_list then
+			pivot_index = 1
+		end
+		self:set_pivot(pivot_list[pivot_index])
+	end)
+end
+
+
 return M

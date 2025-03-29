@@ -16,4 +16,12 @@ function M:on_hotkey()
 end
 
 
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.hotkey.on_hotkey_released:subscribe(function()
+		output_log:add_log_text("Hotkey Released")
+	end)
+end
+
+
 return M

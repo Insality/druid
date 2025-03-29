@@ -21,4 +21,12 @@ function M:init()
 end
 
 
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.on_cycle_end:subscribe(function()
+		output_log:add_log_text("Timer Cycle End")
+	end)
+end
+
+
 return M

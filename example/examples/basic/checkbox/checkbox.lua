@@ -42,4 +42,12 @@ function M:get_state()
 end
 
 
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.button.on_click:subscribe(function()
+		output_log:add_log_text("Checkbox Clicked: " .. tostring(self.is_enabled))
+	end)
+end
+
+
 return M

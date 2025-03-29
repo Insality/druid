@@ -16,4 +16,12 @@ function M:set_value(value)
 end
 
 
+---@param properties_panel properties_panel
+function M:properties_control(properties_panel)
+	properties_panel:add_slider("ui_value", 1, function(value)
+		self:set_value(value)
+	end)
+end
+
+
 return M

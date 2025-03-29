@@ -47,4 +47,12 @@ function M:on_checkbox_click()
 end
 
 
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.on_state_changed:subscribe(function(selected)
+		output_log:add_log_text("Selected: " .. selected)
+	end)
+end
+
+
 return M

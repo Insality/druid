@@ -1,3 +1,5 @@
+local helper = require("druid.helper")
+
 ---@class examples.basic_slider: druid.widget
 ---@field root node
 ---@field slider druid.slider
@@ -15,6 +17,15 @@ end
 
 function M:on_slider_change(value)
 	gui.set_text(self.text_value, math.ceil(value * 100) .. "%")
+end
+
+
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.slider.on_change_value:subscribe(function(_, value)
+		value = helper.round(value, 2)
+		output_log:add_log_text("Slider Value: " .. value)
+	end)
 end
 
 

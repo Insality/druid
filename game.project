@@ -107,3 +107,5 @@ path = /example/locales
 langs = en,ru,es,de,fr,ja,pt,it,kr,zh
 default = es
 
+[event]
+use_xpcall = 1

@@ -32,4 +32,12 @@ function M:on_checkbox_click()
 end
 
 
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.on_state_changed:subscribe(function(state1, state2, state3)
+		output_log:add_log_text("State: " .. tostring(state1) .. " " .. tostring(state2) .. " " .. tostring(state3))
+	end)
+end
+
+
 return M
