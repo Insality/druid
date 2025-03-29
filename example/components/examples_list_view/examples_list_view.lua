@@ -47,8 +47,9 @@ function M:init(template, nodes)
 end
 
 ---@class example_instance: druid.widget
----@field on_create fun(self: example_instance, output_list: output_list)?
+---@field on_example_created fun(self: example_instance, output_list: output_list)?
 ---@field properties_control fun(self: example_instance, properties_panel: properties_panel)?
+---@field get_debug_info fun(self: example_instance):string?
 
 ---@param examples druid.examples
 ---@param druid_example druid.example @The main GUI component
@@ -109,8 +110,8 @@ function M:add_example(examples, druid_example)
 			item:set_selected(true)
 
 			druid_example.output_list:clear()
-			if instance.on_create then
-				instance:on_create(druid_example.output_list)
+			if instance.on_example_created then
+				instance:on_example_created(druid_example.output_list)
 			elseif example_data.on_create then
 				example_data.on_create(instance, druid_example.output_list)
 			end
@@ -174,6 +175,13 @@ end
 function M:update_debug_info()
 	if not self.selected_example then
 		self.on_debug_info:trigger("")
+		return
+	end
+
+	local instance = self.selected_example.instance
+	if instance.get_debug_info then
+		local info = instance:get_debug_info()
+		self.on_debug_info:trigger(info)
 		return
 	end
 

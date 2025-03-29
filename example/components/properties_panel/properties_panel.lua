@@ -65,7 +65,7 @@ end
 ---@return property_checkbox
 function M:add_checkbox(text_id, initial_value, on_change_callback)
 	local nodes = gui.clone_tree(self.property_checkbox_prefab)
-	local instance = self.druid:new(property_checkbox, "property_checkbox", nodes) --[[@as property_checkbox]]
+	local instance = self.druid:new_widget(property_checkbox, "property_checkbox", nodes) --[[@as property_checkbox]]
 	instance.text_name:translate(text_id)
 	instance:set_value(initial_value, true)
 	instance.button.on_click:subscribe(function()
@@ -108,7 +108,7 @@ end
 ---@param on_click_callback function
 function M:add_button(text_id, on_click_callback)
 	local nodes = gui.clone_tree(self.property_button_prefab)
-	local instance = self.druid:new(property_button, "property_button", nodes) --[[@as property_button]]
+	local instance = self.druid:new_widget(property_button, "property_button", nodes) --[[@as property_button]]
 	instance.text_name:translate(text_id)
 
 	gui.set_enabled(instance.root, true)

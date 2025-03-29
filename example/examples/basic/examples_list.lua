@@ -12,20 +12,6 @@ function M.get_examples()
 			root = "basic_button/root",
 			code_url = "example/examples/basic/button/basic_button.lua",
 			widget_class = require("example.examples.basic.button.basic_button"),
-			properties_control = function(instance, properties_panel)
-				---@cast instance examples.basic_button
-
-				local checkbox = properties_panel:add_checkbox("ui_enabled", false, function(value)
-					instance.button:set_enabled(value)
-				end)
-				checkbox:set_value(true)
-			end,
-			on_create = function(instance, output_log)
-				---@cast instance examples.basic_button
-				instance.button.on_click:subscribe(function()
-					output_log:add_log_text("Button Clicked")
-				end)
-			end,
 		},
 		{
 			name_id = "ui_example_basic_button_double_click",
@@ -34,15 +20,6 @@ function M.get_examples()
 			root = "basic_button_double_click/root",
 			code_url = "example/examples/basic/button/basic_button_double_click.lua",
 			widget_class = require("example.examples.basic.button.basic_button_double_click"),
-			on_create = function(instance, output_log)
-				---@cast instance examples.basic_button_double_click
-				instance.button.on_click:subscribe(function()
-					output_log:add_log_text("Clicked")
-				end)
-				instance.button.on_double_click:subscribe(function()
-					output_log:add_log_text("Double Clicked")
-				end)
-			end,
 		},
 		{
 			name_id = "ui_example_basic_button_hold",
@@ -51,15 +28,6 @@ function M.get_examples()
 			root = "basic_button_hold/root",
 			code_url = "example/examples/basic/button/basic_button_hold.lua",
 			widget_class = require("example.examples.basic.button.basic_button_hold"),
-			on_create = function(instance, output_log)
-				---@cast instance examples.basic_button_hold
-				instance.button.on_click:subscribe(function()
-					output_log:add_log_text("Clicked")
-				end)
-				instance.button.on_long_click:subscribe(function()
-					output_log:add_log_text("On long click")
-				end)
-			end,
 		},
 		{
 			name_id = "ui_example_basic_text",
@@ -68,56 +36,6 @@ function M.get_examples()
 			root = "basic_text/root",
 			code_url = "example/examples/basic/text/basic_text.lua",
 			widget_class = require("example.examples.basic.text.basic_text"),
-			properties_control = function(instance, properties_panel)
-				---@cast instance examples.basic_text
-
-				local adjust_index = 1
-				local adjust_types = {
-					"downscale",
-					"downscale_limited",
-					--"scale_then_scroll", -- works bad with container for some reason
-					--"scroll", -- works bad with container for some reason
-					"trim",
-				}
-				properties_panel:add_button("ui_adjust_next", function()
-					adjust_index = adjust_index + 1
-					if adjust_index > #adjust_types then
-						adjust_index = 1
-					end
-					instance.text:set_text_adjust(adjust_types[adjust_index], 0.5)
-				end)
-
-				local pivot_index = 1
-				local pivot_list = {
-					gui.PIVOT_CENTER,
-					gui.PIVOT_W,
-					gui.PIVOT_SW,
-					gui.PIVOT_S,
-					gui.PIVOT_SE,
-					gui.PIVOT_E,
-					gui.PIVOT_NE,
-					gui.PIVOT_N,
-					gui.PIVOT_NW,
-				}
-
-				---@cast instance examples.rich_text_tags
-				properties_panel:add_button("ui_pivot_next", function()
-					pivot_index = pivot_index + 1
-					if pivot_index > #pivot_list then
-						pivot_index = 1
-					end
-					instance:set_pivot(pivot_list[pivot_index])
-				end)
-			end,
-			get_debug_info = function(instance)
-				---@cast instance examples.multiline_text
-				local info = ""
-
-				info = info .. "Text Adjust: " .. instance.text.adjust_type .. "\n"
-				info = info .. "Pivot: " .. gui.get_pivot(instance.text.node) .. "\n"
-
-				return info
-			end
 		},
 		{
 			name_id = "ui_example_basic_multiline_text",
