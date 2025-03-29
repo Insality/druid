@@ -30,4 +30,16 @@ function M:on_button_close()
 end
 
 
+---@param output_list output_list
+function M:on_example_created(output_list)
+	self.text_header:translate("ui_information")
+	self.text_button_accept:translate("ui_confirm")
+	self.text_description:translate("ui_example_window_information_text")
+
+	self.button_accept.on_click:subscribe(function()
+		output_list:add_log_text("Information Accepted")
+	end)
+end
+
+
 return M

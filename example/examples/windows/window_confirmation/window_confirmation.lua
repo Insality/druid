@@ -34,4 +34,20 @@ function M:on_button_close()
 end
 
 
+---@param output_list output_list
+function M:on_example_created(output_list)
+	self.text_header:translate("ui_confirmation")
+	self.text_button_accept:translate("ui_confirm")
+	self.text_button_decline:translate("ui_cancel")
+	self.text_description:translate("ui_confirmation_description")
+
+	self.button_accept.on_click:subscribe(function()
+		output_list:add_log_text("Confirmation Accepted")
+	end)
+	self.button_decline.on_click:subscribe(function()
+		output_list:add_log_text("Confirmation Declined")
+	end)
+end
+
+
 return M

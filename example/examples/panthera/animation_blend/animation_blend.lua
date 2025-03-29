@@ -70,4 +70,25 @@ function M:setup_rich_text()
 end
 
 
+---@param properties_panel properties_panel
+function M:properties_control(properties_panel)
+	local vertical_time = panthera.get_time(self.animation_vertical)
+
+	local vertical_slider = properties_panel:add_slider("ui_animation_vertical", vertical_time, function(value)
+		panthera.set_time(self.animation_vertical, "vertical", value)
+	end)
+
+	local horizontal_time = panthera.get_time(self.animation_horizontal)
+
+	local horizontal_slider = properties_panel:add_slider("ui_animation_horizontal", horizontal_time, function(value)
+		panthera.set_time(self.animation_horizontal, "horizontal", value)
+	end)
+
+	self.on_update:subscribe(function()
+		vertical_slider:set_value(panthera.get_time(self.animation_vertical))
+		horizontal_slider:set_value(panthera.get_time(self.animation_horizontal))
+	end)
+end
+
+
 return M

@@ -110,4 +110,12 @@ function M:on_language_button(lang_id)
 end
 
 
+---@param output_list output_list
+function M:on_example_created(output_list)
+	self.on_language_change:subscribe(function(language)
+		output_list:add_log_text("Language changed to " .. language)
+	end)
+end
+
+
 return M
