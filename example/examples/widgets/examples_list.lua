@@ -132,7 +132,7 @@ function M.get_examples()
 			information_text_id = "ui_example_widget_memory_panel_description",
 			template = "memory_panel",
 			root = "memory_panel/root",
-			code_url = "druid.widget.memory_panel.memory_panel.lua",
+			code_url = "druid/widget/memory_panel/memory_panel.lua",
 			widget_class = require("druid.widget.memory_panel.memory_panel"),
 			on_create = function(instance, output_list)
 				---@cast instance druid.widget.memory_panel
@@ -144,7 +144,7 @@ function M.get_examples()
 			information_text_id = "ui_example_widget_fps_panel_description",
 			template = "fps_panel",
 			root = "fps_panel/root",
-			code_url = "druid.widget.fps_panel.fps_panel.lua",
+			code_url = "druid/widget/fps_panel/fps_panel.lua",
 			widget_class = require("druid.widget.fps_panel.fps_panel"),
 			on_create = function(instance, output_list)
 				---@cast instance druid.widget.fps_panel
@@ -156,7 +156,7 @@ function M.get_examples()
 			information_text_id = "ui_example_widget_mini_graph_description",
 			template = "mini_graph",
 			root = "mini_graph/root",
-			code_url = "druid.widget.mini_graph.mini_graph.lua",
+			code_url = "druid/widget/mini_graph/mini_graph.lua",
 			widget_class = require("druid.widget.mini_graph.mini_graph"),
 			on_create = function(instance, output_list)
 				---@cast instance druid.widget.mini_graph
