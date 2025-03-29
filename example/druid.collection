@@ -6,5 +6,9 @@ embedded_instances {
   "  id: \"druid\"\n"
   "  component: \"/example/druid.gui\"\n"
   "}\n"
+  "components {\n"
+  "  id: \"druid1\"\n"
+  "  component: \"/druid/druid.script\"\n"
+  "}\n"
   ""
 }

@@ -3,7 +3,7 @@ local intro_panthera = require("example.examples.intro.intro.intro_panthera")
 
 ---@class examples.intro: druid.widget
 ---@field root node
----@field animation panthera.instance
+---@field animation panthera.animation
 local M = {}
 
 

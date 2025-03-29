@@ -4786,6 +4786,25 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_TEMPLATE
+  id: "example_tiling_node"
+  parent: "widgets"
+  inherit_alpha: true
+  template: "/example/examples/widgets/tiling_node/example_tiling_node.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_tiling_node/root"
+  parent: "example_tiling_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_tiling_node/tiling_node"
+  parent: "example_tiling_node/root"
+  template_node_child: true
+}
+nodes {
   position {
     x: -20.0
     y: -540.0

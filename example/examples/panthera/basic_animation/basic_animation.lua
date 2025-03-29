@@ -3,7 +3,7 @@ local panthera = require("panthera.panthera")
 local basic_animation_panthera = require("example.examples.panthera.basic_animation.basic_animation_panthera")
 
 ---@class examples.basic_animation: druid.widget
----@field animation panthera.instance
+---@field animation panthera.animation
 ---@field button druid.button
 local M = {}
 

@@ -10,7 +10,7 @@ local window_animation_panthera = require("example.examples.windows.window_anima
 ---@field button_close druid.button
 ---@field button_accept druid.button
 ---@field button_decline druid.button
----@field animation panthera.instance
+---@field animation panthera.animation
 local M = {}
 
 

@@ -87,7 +87,7 @@ end
 ---@return property_slider
 function M:add_slider(text_id, initial_value, on_change_callback)
 	local nodes = gui.clone_tree(self.property_slider_prefab)
-	local instance = self.druid:new(property_slider, "property_slider", nodes) --[[@as property_slider]]
+	local instance = self.druid:new_widget(property_slider, "property_slider", nodes) --[[@as property_slider]]
 	instance.text_name:translate(text_id)
 	instance:set_value(initial_value, true)
 

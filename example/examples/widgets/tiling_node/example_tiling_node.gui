@@ -1,0 +1,33 @@
+textures {
+  name: "tiling_texture"
+  texture: "/example/examples/widgets/tiling_node/tiling_texture.atlas"
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 500.0
+    y: 500.0
+  }
+  type: TYPE_BOX
+  texture: "tiling_texture/pattern_0004"
+  id: "tiling_node"
+  parent: "root"
+  inherit_alpha: true
+  material: "gui_tiling_node"
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
+materials {
+  name: "gui_tiling_node"
+  material: "/druid/materials/gui_tiling_node/gui_tiling_node.material"
+}

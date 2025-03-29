@@ -11,7 +11,7 @@ local window_animation_panthera = require("example.examples.windows.window_anima
 ---@field lang_buttons table<string, druid.button>
 ---@field grid druid.grid
 ---@field on_language_change event
----@field animation panthera.instance
+---@field animation panthera.animation
 local M = {}
 
 

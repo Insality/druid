@@ -1,19 +1,12 @@
-local component = require("druid.component")
-
----@class property_slider: druid.component
----@field druid druid.instance
+---@class property_slider: druid.widget
 ---@field root druid.container
 ---@field text_name druid.lang_text
 ---@field text_value druid.text
 ---@field slider druid.slider
-local M = component.create("property_slider")
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self.druid:new_container("root") --[[@as druid.container]]
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)

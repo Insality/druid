@@ -7,9 +7,9 @@ local character_animation_blend = require("example.examples.panthera.animation_b
 ---@class examples.animation_blend: druid.widget
 ---@field root node
 ---@field root_size vector3
----@field animation_idle panthera.instance
----@field animation_vertical panthera.instance
----@field animation_horizontal panthera.instance
+---@field animation_idle panthera.animation
+---@field animation_vertical panthera.animation
+---@field animation_horizontal panthera.animation
 ---@field rich_text druid.rich_text
 ---@field on_update event
 local M = {}

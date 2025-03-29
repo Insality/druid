@@ -110,7 +110,7 @@ end
 
 
 function M:update_components()
-	---@diagnostic disable-next-line: undefined-field
+	---@diagnostic disable-next-line, invisible
 	local components = #self.druid.components_all
 
 	self.text_components_amount:set_text(tostring(components))
