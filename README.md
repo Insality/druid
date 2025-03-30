@@ -66,97 +66,7 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 ### Basic usage
 
-To use **Druid**, begin by creating a **Druid** instance to instantiate components and include the main functions of **Druid**: *update*, *final*, *on_message*, and *on_input*.
-
-Create a new `*.gui_script` file and add the following code:
-
-```lua
-local druid = require("druid.druid")
-
-function init(self)
-    self.druid = druid.new(self)
-end
-
-function final(self)
-    self.druid:final()
-end
-
-function update(self, dt)
-    self.druid:update(dt)
-end
-
-function on_message(self, message_id, message, sender)
-    self.druid:on_message(message_id, message, sender)
-end
-
-function on_input(self, action_id, action)
-    return self.druid:on_input(action_id, action)
-end
-```
-
-Now add this `*.gui_script` as a script to your GUI scene and now you can start creating Druid components.
-
-Always, when you need to pass a node to a component, you can pass a node name string instead of `gui.get_node()` function.
-
-All functions of **Druid** are invoked using the `:` operator, such as `self.druid:new_button()`.
-
-Here is a basic example with a com
-
-```lua
-local druid = require("druid.druid")
-
--- All component callbacks pass "self" as first argument
--- This "self" is a context data passed in `druid.new(context)`
-local function on_button_callback(self)
-    self.text:set_text("The button clicked!")
-end
-
-function init(self)
-    self.druid = druid.new(self)
-    self.button = self.druid:new_button("button_node_id", on_button_callback)
-    self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
-end
-
-function final(self)
-    self.druid:final()
-end
-
-function update(self, dt)
-    self.druid:update(dt)
-end
-
-function on_message(self, message_id, message, sender)
-    self.druid:on_message(message_id, message, sender)
-end
-
-function on_input(self, action_id, action)
-    return self.druid:on_input(action_id, action)
-end
-```
-
-
-### Default Widget Template
-
-Create a new lua file to create a new widget class. This widget can be created with `self.druid:new_widget(widget_class, [template], [nodes])`
-
-Usually this widget lua file is placed nearby with the `GUI` file it belong to and have the same name.
-
-```lua
----@class your_widget_class: druid.widget
-local M = {}
-
-function M:init()
-    self.root = self:get_node("root")
-    self.button = self.druid:new_button("button", self.on_click)
-end
-
-function M:on_click()
-    print("Button clicked!")
-end
-
-return M
-```
-
+Read more in the [Basic Usage](wiki/basic_usage.md)
 
 ### API Documentation
 
@@ -197,8 +107,6 @@ Here is full **Druid** components list.
 | **[Rich Input](https://insality.github.io/druid/modules/RichInput.html)** | Logic over GUI Node and GUI Text (or Text component). Provides rich text input with different styles and text formatting. | [Rich Input Example](https://insality.github.io/druid/?example=ui_example_basic_rich_input) | <img src="media/preview/rich_input.gif" width="200" height="100"> |
 | **[Rich Text](https://insality.github.io/druid/modules/RichText.html)** | Logic over GUI Text. Provides rich text formatting with different styles and text formatting. | [Rich Text Example](https://insality.github.io/druid/?example=ui_example_basic_rich_text) | <img src="media/preview/rich_text.gif" width="200" height="100"> |
 
-For a complete overview, see: ***[components.md](docs_md/01-components.md)***.
-
 
 ## Druid Events
 
@@ -213,7 +121,7 @@ You can subscribe several callbacks to a single event.
 Examples:
 
 ```lua
-button.on_click_event:subscribe(function(self, args)
+button.on_click:subscribe(function(self, args)
 	print("Button clicked!")
 end)
 
@@ -270,9 +178,13 @@ For a complete history of the development of **Druid**, please check the [change
 
 ## 👏 Contributors
 
+Special thanks to all the contributors who have helped make **Druid** better!
+
 <a href="https://github.com/Insality/druid/graphs/contributors">
   <img src="https://contributors-img.web.app/image?repo=insality/druid"/>
 </a>
+
+Read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
 
 
 ## ❤️ Support project ❤️
