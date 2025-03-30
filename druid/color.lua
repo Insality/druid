@@ -1,7 +1,5 @@
----@type table<string, table<string, vector4>>
-local PALETTE_DATA
-local CURRENT_PALETTE = "default"
-local DEFAULT_COLOR = vmath.vector4(1, 1, 1, 1)
+local PALETTE_DATA = {}
+local COLOR_WHITE = vmath.vector4(1, 1, 1, 1)
 local COLOR_X = hash("color.x")
 local COLOR_Y = hash("color.y")
 local COLOR_Z = hash("color.z")
@@ -9,10 +7,10 @@ local COLOR_Z = hash("color.z")
 local M = {}
 
 
----Get color color by string (hex or from palette)
----@param color_id string
+---Get color by string (hex or from palette)
+---@param color_id string Color id from palette or hex color
 ---@return vector4
-function M.get(color_id)
+function M.get_palette_color(color_id)
 	-- Check is it hex: starts with "#" or contains only 3 or 6 hex symbols
 	if type(color_id) == "string" then
 		if string.sub(color_id, 1, 1) == "#" or string.match(color_id, "^[0-9a-fA-F]+$") then
@@ -20,36 +18,25 @@ function M.get(color_id)
 		end
 	end
 
-	return PALETTE_DATA[CURRENT_PALETTE] and PALETTE_DATA[CURRENT_PALETTE][color_id] or DEFAULT_COLOR
+	return PALETTE_DATA[color_id] or COLOR_WHITE
 end
 
 
 ---Add palette to palette data
----@param palette_name string
 ---@param palette_data table<string, vector4>
-function M.add_palette(palette_name, palette_data)
-	PALETTE_DATA[palette_name] = PALETTE_DATA[palette_name] or {}
-	local palette = PALETTE_DATA[palette_name]
-
+function M.add_palette(palette_data)
 	for color_id, color in pairs(palette_data) do
 		if type(color) == "string" then
-			palette[color_id] = M.hex2vector4(color)
+			PALETTE_DATA[color_id] = M.hex2vector4(color)
 		else
-			palette[color_id] = color
+			PALETTE_DATA[color_id] = color
 		end
 	end
 end
 
 
-function M.set_palette(palette_name)
-	if PALETTE_DATA[palette_name] then
-		CURRENT_PALETTE = palette_name
-	end
-end
-
-
 function M.get_palette()
-	return CURRENT_PALETTE
+	return PALETTE_DATA
 end
 
 
@@ -67,12 +54,11 @@ function M.set_color(gui_node, color)
 end
 
 
-function M.get_random_color()
-	return vmath.vector4(math.random(), math.random(), math.random(), 1)
-end
-
-
 ---Lerp colors via color HSB values
+---@param t number Lerp value. 0 - color1, 1 - color2
+---@param color1 vector4 Color 1
+---@param color2 vector4 Color 2
+---@return vector4 result Color between color1 and color2
 function M.lerp(t, color1, color2)
 	local h1, s1, v1 = M.rgb2hsb(color1.x, color1.y, color1.z)
 	local h2, s2, v2 = M.rgb2hsb(color2.x, color2.y, color2.z)
@@ -86,7 +72,10 @@ function M.lerp(t, color1, color2)
 	return vmath.vector4(r, g, b, a)
 end
 
----@param hex string
+
+
+---Convert hex color to rgb values.
+---@param hex string Hex color. #00BBAA or 00BBAA or #0BA or 0BA
 ---@return number, number, number
 function M.hex2rgb(hex)
 	if not hex or #hex < 3 then
@@ -103,8 +92,9 @@ function M.hex2rgb(hex)
 end
 
 
----@param hex string
----@param alpha number|nil
+---Convert hex color to vector4.
+---@param hex string Hex color. #00BBAA or 00BBAA or #0BA or 0BA
+---@param alpha number|nil Alpha value. Default is 1
 ---@return vector4
 function M.hex2vector4(hex, alpha)
 	local r, g, b = M.hex2rgb(hex)
@@ -112,7 +102,7 @@ function M.hex2vector4(hex, alpha)
 end
 
 
----Convert hsb color to rgb color
+---Convert hsb color to rgb colo
 ---@param r number Red value
 ---@param g number Green value
 ---@param b number Blue value
@@ -180,38 +170,5 @@ function M.rgb2hex(red, green, blue)
 	return string.upper((#r == 1 and "0" or "") .. r .. (#g == 1 and "0" or "") .. g .. (#b == 1 and "0" or "") .. b)
 end
 
-
-function M.load_palette()
-	local PALETTE_PATH = sys.get_config_string("druid.palette")
-	if PALETTE_PATH then
-		PALETTE_DATA = M.load_json(PALETTE_PATH) --[[@as table<string, table<string, vector4>>]]
-	end
-	PALETTE_DATA = PALETTE_DATA or {}
-
-	for _, palette_data in pairs(PALETTE_DATA) do
-		for color_id, color in pairs(palette_data) do
-			if type(color) == "string" then
-				palette_data[color_id] = M.hex2vector4(color)
-			end
-		end
-	end
-end
-
-
----Load JSON file from game resources folder (by relative path to game.project)
----Return nil if file not found or error
----@param json_path string
----@return table|nil
-function M.load_json(json_path)
-	local resource, is_error = sys.load_resource(json_path)
-	if is_error or not resource then
-		return nil
-	end
-
-	return json.decode(resource)
-end
-
-
-M.load_palette()
 
 return M
