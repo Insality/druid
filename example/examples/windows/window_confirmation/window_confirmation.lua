@@ -1,23 +1,20 @@
-local component = require("druid.component")
 local panthera = require("panthera.panthera")
 
 local window_animation_panthera = require("example.examples.windows.window_animation_panthera")
 
----@class window_confirmation: druid.base_component
----@field druid druid_instance
+---@class examples.window_confirmation: druid.widget
 ---@field text_header druid.lang_text
 ---@field text_button_accept druid.lang_text
 ---@field text_button_decline druid.lang_text
 ---@field text_description druid.lang_text
 ---@field button_close druid.button
-local M = component.create("window_confirmation")
+---@field button_accept druid.button
+---@field button_decline druid.button
+---@field animation panthera.animation
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.text_header = self.druid:new_lang_text("text_header", "ui_confirmation") --[[@as druid.lang_text]]
 	self.text_button_accept = self.druid:new_lang_text("button_accept/text", "ui_accept") --[[@as druid.lang_text]]
 	self.text_button_decline = self.druid:new_lang_text("button_decline/text", "ui_decline") --[[@as druid.lang_text]]
@@ -27,13 +24,29 @@ function M:init(template, nodes)
 	self.button_accept = self.druid:new_button("button_accept/root")
 	self.button_decline = self.druid:new_button("button_decline/root")
 
-	self.animation = panthera.create_gui(window_animation_panthera, self:get_template(), nodes)
+	self.animation = panthera.create_gui(window_animation_panthera, self:get_template(), self:get_nodes())
 	panthera.play(self.animation, "open")
 end
 
 
 function M:on_button_close()
 	panthera.play(self.animation, "close")
+end
+
+
+---@param output_list output_list
+function M:on_example_created(output_list)
+	self.text_header:translate("ui_confirmation")
+	self.text_button_accept:translate("ui_confirm")
+	self.text_button_decline:translate("ui_cancel")
+	self.text_description:translate("ui_confirmation_description")
+
+	self.button_accept.on_click:subscribe(function()
+		output_list:add_log_text("Confirmation Accepted")
+	end)
+	self.button_decline.on_click:subscribe(function()
+		output_list:add_log_text("Confirmation Declined")
+	end)
 end
 
 

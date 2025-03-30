@@ -1,4 +1,4 @@
---- Container component
+---Container component
 -- Container setup in GUI
 -- parent container - container that contains this container. If not, then it's a window default container or parent node
 -- container pivot - the point of the parent container that will be used as a pivot point for positioning
@@ -15,26 +15,6 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local event = require("event.event")
 
----@class druid.container: druid.base_component
----@field node node
----@field druid druid_instance
----@field node_offset vector4
----@field origin_size vector3
----@field size vector3
----@field origin_position vector3
----@field position vector3
----@field pivot_offset vector3
----@field center_offset vector3
----@field mode string
----@field fit_size vector3
----@field min_size_x number|nil
----@field min_size_y number|nil
----@field on_size_changed event @function on_size_changed(size)
----@field _parent_container druid.container
----@field _containers table
----@field _draggable_corners table
-local M = component.create("container")
-
 local abs = math.abs
 local min = math.min
 local max = math.max
@@ -46,8 +26,45 @@ local CORNER_PIVOTS = {
 	gui.PIVOT_SW,
 }
 
+---@class druid.container.style
+---@field DRAGGABLE_CORNER_SIZE vector3 Size of box node for debug draggable corners
+---@field DRAGGABLE_CORNER_COLOR vector4 Color of debug draggable corners
 
---- The Container init
+---Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
+---
+---### Setup
+---Create container component with druid: `container = druid:new_container(node, mode, callback)`
+---
+---### Notes
+---- Container can be used to create adaptable layouts that respond to window size changes
+---- Container supports different layout modes: FIT, STRETCH, STRETCH_X, STRETCH_Y
+---- Container can be nested inside other containers
+---- Container supports fixed margins and percentage-based sizing
+---- Container can be positioned using pivot points
+---- Container supports minimum size constraints
+---- Container can be fitted into window or custom size
+---@class druid.container: druid.component
+---@field node node The gui node
+---@field druid druid.instance The druid instance
+---@field node_offset vector4 The node offset
+---@field origin_size vector3 The origin size
+---@field size vector3 The current size
+---@field origin_position vector3 The origin position
+---@field position vector3 The current position
+---@field pivot_offset vector3 The pivot offset
+---@field center_offset vector3 The center offset
+---@field mode string The layout mode
+---@field fit_size vector3 The fit size
+---@field min_size_x number|nil The minimum size x
+---@field min_size_y number|nil The minimum size y
+---@field on_size_changed event fun(self: druid.container, size: vector3) The event triggered when the size changes
+---@field _parent_container druid.container The parent container
+---@field _containers table The containers
+---@field _draggable_corners table The draggable corners
+local M = component.create("container")
+
+
+---The Container constructor
 ---@param node node Gui node
 ---@param mode string Layout mode
 ---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
@@ -90,6 +107,7 @@ function M:init(node, mode, callback)
 end
 
 
+---@private
 function M:on_late_init()
 	if not gui.get_parent(self.node) then
 		-- TODO: Scale issue here, in fit into window!
@@ -98,11 +116,13 @@ function M:on_late_init()
 end
 
 
+---@private
 function M:on_remove()
 	self:clear_draggable_corners()
 end
 
 
+---Refresh the origins of the container, origins is the size and position of the container when it was created
 function M:refresh_origins()
 	self.origin_size = gui.get_size(self.node)
 	self.origin_position = gui.get_position(self.node)
@@ -110,7 +130,8 @@ function M:refresh_origins()
 end
 
 
----@param pivot constant
+---Set the pivot of the container
+---@param pivot constant The pivot to set
 function M:set_pivot(pivot)
 	gui.set_pivot(self.node, pivot)
 	self.pivot_offset = helper.get_pivot_offset(pivot)
@@ -118,22 +139,19 @@ function M:set_pivot(pivot)
 end
 
 
---- Component style params.
--- You can override this component styles params in Druid styles table
--- or create your own style
--- @table style
--- @tfield[opt=vector3(24, 24, 0)] vector3 DRAGGABLE_CORNER_SIZE Size of box node for debug draggable corners
--- @tfield[opt=vector4(1)] vector4 DRAGGABLE_CORNER_COLOR Color of debug draggable corners
+---@private
+---@param style druid.container.style
 function M:on_style_change(style)
-	self.style = {}
-	self.style.DRAGGABLE_CORNER_SIZE = style.DRAGGABLE_CORNER_SIZE or vmath.vector3(24, 24, 0)
-	self.style.DRAGGABLE_CORNER_COLOR = style.DRAGGABLE_CORNER_COLOR or vmath.vector4(10)
+	self.style = {
+		DRAGGABLE_CORNER_SIZE = style.DRAGGABLE_CORNER_SIZE or vmath.vector3(24, 24, 0),
+		DRAGGABLE_CORNER_COLOR = style.DRAGGABLE_CORNER_COLOR or vmath.vector4(10)
+	}
 end
 
 
---- Set new size of layout node
----@param width number|nil
----@param height number|nil
+---Set new size of layout node
+---@param width number|nil The width to set
+---@param height number|nil The height to set
 ---@param anchor_pivot constant|nil If set will keep the corner possition relative to the new size
 ---@return druid.container Container
 function M:set_size(width, height, anchor_pivot)
@@ -175,13 +193,16 @@ function M:set_size(width, height, anchor_pivot)
 end
 
 
+---Get the position of the container
+---@return vector3 position The position of the container
 function M:get_position()
 	return self._position
 end
 
 
----@param pos_x number
----@param pos_y number
+---Set the position of the container
+---@param pos_x number The x position to set
+---@param pos_y number The y position to set
 function M:set_position(pos_x, pos_y)
 	if self._position.x == pos_x and self._position.y == pos_y then
 		return
@@ -193,23 +214,23 @@ function M:set_position(pos_x, pos_y)
 end
 
 
----Get current size of layout node
----@return vector3 size
+---Get the current size of the layout node
+---@return vector3 size The current size of the layout node
 function M:get_size()
 	return vmath.vector3(self.size)
 end
 
 
----Get current scale of layout node
----@return vector3 scale
+---Get the current scale of the layout node
+---@return vector3 scale The current scale of the layout node
 function M:get_scale()
 	return helper.get_scene_scale(self.node, true) --[[@as vector3]]
 end
 
 
---- Set size for layout node to fit inside it
----@param target_size vector3
----@return druid.container Container
+---Set size for layout node to fit inside it
+---@param target_size vector3 The target size to fit into
+---@return druid.container self Current container instance
 function M:fit_into_size(target_size)
 	self.fit_size = target_size
 	self:refresh()
@@ -218,13 +239,14 @@ function M:fit_into_size(target_size)
 end
 
 
---- Set current size for layout node to fit inside it
----@return druid.container Container
+---Set current size for layout node to fit inside it
+---@return druid.container self Current container instance
 function M:fit_into_window()
 	return self:fit_into_size(vmath.vector3(gui.get_width(), gui.get_height(), 0))
 end
 
 
+---@private
 function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self.x_koef = x_koef
@@ -236,7 +258,7 @@ function M:on_window_resized()
 end
 
 
----@param node_or_container node|string|druid.container|table
+---@param node_or_container node|string|druid.container|table The node or container to add
 ---@param mode string|nil stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
 ---@param on_resize_callback fun(self: userdata, size: vector3)|nil
 ---@return druid.container Container New created layout instance
@@ -245,13 +267,14 @@ function M:add_container(node_or_container, mode, on_resize_callback)
 	local node = node_or_container
 
 	-- Check it's a container components instead of node
-	if type(node_or_container) == "table" and node_or_container._component then
+	if type(node_or_container) == "table" and node_or_container.add_container then
 		node = node_or_container.node
 		container = node_or_container
 		mode = mode or container.mode
 	end
 
 	-- Covert node_id to node if needed
+	---@cast node node
 	node = self:get_node(node)
 
 	container = container or self.druid:new(M, node, mode)
@@ -387,7 +410,7 @@ function M:refresh()
 				stretch_side_y = parent.size.y - (abs(self.node_offset.y) + abs(self.node_offset.w))
 			end
 
-			---- Size Update (for stretch)
+			----Size Update (for stretch)
 			if self.mode == const.LAYOUT_MODE.STRETCH then
 				self:set_size(
 					abs(stretch_side_x * self.node_fill_x),
@@ -440,7 +463,7 @@ function M:update_child_containers()
 end
 
 
----@return druid.container Container
+---@return druid.container self Current container instance
 function M:create_draggable_corners()
 	self:clear_draggable_corners()
 
@@ -470,7 +493,7 @@ function M:create_draggable_corners()
 end
 
 
----@return druid.container Container
+---@return druid.container self Current container instance
 function M:clear_draggable_corners()
 	for index = 1, #self._draggable_corners do
 		local drag_component = self._draggable_corners[index]
@@ -521,9 +544,9 @@ function M:_on_corner_drag(x, y, corner_offset)
 end
 
 
---- Set node for layout node to fit inside it. Pass nil to reset
+---Set node for layout node to fit inside it. Pass nil to reset
 ---@param node string|node The node_id or gui.get_node(node_id)
----@return druid.container Layout
+---@return druid.container self Current container instance
 function M:fit_into_node(node)
 	self._fit_node = self:get_node(node)
 	self:refresh_scale()
@@ -531,8 +554,10 @@ function M:fit_into_node(node)
 end
 
 
----@param min_size_x number|nil
----@param min_size_y number|nil
+---Set the minimum size of the container
+---@param min_size_x number|nil The minimum size x
+---@param min_size_y number|nil The minimum size y
+---@return druid.container self Current container instance
 function M:set_min_size(min_size_x, min_size_y)
 	self.min_size_x = min_size_x or self.min_size_x
 	self.min_size_y = min_size_y or self.min_size_y

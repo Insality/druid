@@ -1,30 +1,27 @@
 local lang = require("lang.lang")
 local druid = require("druid.druid")
 local event = require("event.event")
-local component = require("druid.component")
 local panthera = require("panthera.panthera")
 
 local window_animation_panthera = require("example.examples.windows.window_animation_panthera")
 
----@class window_language: druid.base_component
+---@class examples.window_language: druid.widget
 ---@field text_header druid.text
 ---@field button_close druid.button
----@field druid druid_instance
 ---@field lang_buttons table<string, druid.button>
 ---@field grid druid.grid
 ---@field on_language_change event
-local M = component.create("window_language")
+---@field animation panthera.animation
+local M = {}
+
 
 ---Color: #F0FBFF
 local DEFAULT_LANGUAGE_COLOR = vmath.vector4(240/255, 251/255, 255/255, 1.0)
 ---Color: #E6DF9F
 local SELECTED_LANGUAGE_COLOR = vmath.vector4(230/255, 223/255, 159/255, 1.0)
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
 
+function M:init()
 	self.lang_buttons = {}
 	self.created_nodes = {}
 	self.prefab = self:get_node("button_prefab")
@@ -110,6 +107,14 @@ function M:on_language_button(lang_id)
 
 	gui.animate(current_lang_button.node, "color", DEFAULT_LANGUAGE_COLOR, gui.EASING_OUTQUAD, 0.2)
 	gui.animate(new_lang_button.node, "color", SELECTED_LANGUAGE_COLOR, gui.EASING_OUTQUAD, 0.2)
+end
+
+
+---@param output_list output_list
+function M:on_example_created(output_list)
+	self.on_language_change:subscribe(function(language)
+		output_list:add_log_text("Language changed to " .. language)
+	end)
 end
 
 

@@ -1,37 +1,42 @@
 -- Place this script nearby with the gui component to able make requests
 -- To the go namespace from GUI with events systems (cross context)
 
-local event_queue = require("druid.event_queue")
+local defer = require("event.defer")
 
----Usage: event_queue.request("druid.get_atlas_path", callback, gui.get_texture(self.node), msg.url())
+---Usage: defer.push("druid.get_atlas_path", {
+---	texture_name = gui.get_texture(self.node),
+---	sender = msg.url(),
+---}, callback, [context])
 ---Pass texture name to get atlas info and sender url to check if the request is valid
 local MESSAGE_GET_ATLAS_PATH = "druid.get_atlas_path"
 
+---@class druid.get_atlas_path_request
+---@field texture_name hash
+---@field sender hash
 
----@param texture_name hash The name from gui.get_texture(node)
----@param sender hash Just msg.url from the caller
-local function get_atlas_path(texture_name, sender)
+---@param request druid.get_atlas_path_request
+---@return string?
+local function get_atlas_path(self, request)
 	local my_url = msg.url()
 	my_url.fragment = nil
 
-	local copy_url = msg.url(sender)
+	local copy_url = msg.url(request.sender)
 	copy_url.fragment = nil
 
 	-- This check should works well
-	local is_my_url = my_url == copy_url
-	if not is_my_url then
+	if my_url ~= copy_url then
 		return nil
 	end
 
-	return go.get(sender, "textures", { key = texture_name })
+	return go.get(request.sender, "textures", { key = request.texture_name })
 end
 
 
 function init(self)
-	event_queue.subscribe(MESSAGE_GET_ATLAS_PATH, get_atlas_path)
+	defer.subscribe(MESSAGE_GET_ATLAS_PATH, get_atlas_path, self)
 end
 
 
 function final(self)
-	event_queue.unsubscribe(MESSAGE_GET_ATLAS_PATH, get_atlas_path)
+	defer.unsubscribe(MESSAGE_GET_ATLAS_PATH, get_atlas_path, self)
 end

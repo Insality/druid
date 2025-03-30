@@ -1,6 +1,6 @@
 local memory_panel = require("druid.widget.memory_panel.memory_panel")
 
----@class widget.example_memory_panel: druid.widget
+---@class examples.example_memory_panel: druid.widget
 local M = {}
 
 

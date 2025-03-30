@@ -1,13 +1,14 @@
 local color = require("druid.color")
 
----@class widget.property_button: druid.widget
+---@class druid.widget.property_button: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field text_name druid.text
 ---@field button druid.button
 ---@field text_button druid.text
----@field druid druid_instance
+---@field druid druid.instance
 local M = {}
+
 
 function M:init()
 	self.root = self:get_node("root")
@@ -35,7 +36,7 @@ end
 
 
 ---@param text string
----@return widget.property_button
+---@return druid.widget.property_button
 function M:set_text_property(text)
 	self.text_name:set_text(text)
 	return self
@@ -43,7 +44,7 @@ end
 
 
 ---@param text string
----@return widget.property_button
+---@return druid.widget.property_button
 function M:set_text_button(text)
 	self.text_button:set_text(text)
 	return self

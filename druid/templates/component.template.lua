@@ -1,4 +1,4 @@
----@class widget.TEMPLATE: druid.widget
+---@class druid.widget.TEMPLATE: druid.widget
 local M = {}
 
 

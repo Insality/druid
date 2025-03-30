@@ -1,9 +1,7 @@
 local helper = require("druid.helper")
 local druid_const = require("druid.const")
-local component = require("druid.component")
 
----@class hover_hint: druid.base_component
----@field druid druid_instance
+---@class examples.hover_hint: druid.widget
 ---@field root node
 ---@field panel_hint node
 ---@field text_hint druid.text
@@ -11,7 +9,7 @@ local component = require("druid.component")
 ---@field is_shown boolean
 ---@field private _hint_text string
 ---@field private _hover_timer_id hash
-local M = component.create("hover_hint")
+local M = {}
 
 local TIMER_DELAY = 0.5
 local MIN_PANEL_WIDTH = 100
@@ -19,10 +17,7 @@ local MIN_PANEL_HEIGHT = 50
 local PANEL_MARGIN = 40
 local HINT_OFFSET = 20
 
----@param template string
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
 	self.panel_hint = self:get_node("panel_hint")
 	self.text_hint = self.druid:new_text("text_hint")

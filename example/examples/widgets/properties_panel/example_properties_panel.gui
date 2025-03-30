@@ -364,5 +364,209 @@ nodes {
   parent: "properties_panel/property_left_right_selector/E_Anchor"
   template_node_child: true
 }
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_vector3"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/root"
+  parent: "properties_panel/property_vector3"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/text_name"
+  parent: "properties_panel/property_vector3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/E_Anchor"
+  parent: "properties_panel/property_vector3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/field_x"
+  parent: "properties_panel/property_vector3/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/text_x"
+  parent: "properties_panel/property_vector3/field_x"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_vector3/rich_input_x"
+  parent: "properties_panel/property_vector3/field_x"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_x/root"
+  parent: "properties_panel/property_vector3/rich_input_x"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_x/button"
+  parent: "properties_panel/property_vector3/rich_input_x/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_x/placeholder_text"
+  parent: "properties_panel/property_vector3/rich_input_x/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_x/input_text"
+  parent: "properties_panel/property_vector3/rich_input_x/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_x/cursor_node"
+  parent: "properties_panel/property_vector3/rich_input_x/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_x/cursor_text"
+  parent: "properties_panel/property_vector3/rich_input_x/cursor_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/selected_x"
+  parent: "properties_panel/property_vector3/field_x"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/field_y"
+  parent: "properties_panel/property_vector3/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/text_y"
+  parent: "properties_panel/property_vector3/field_y"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_vector3/rich_input_y"
+  parent: "properties_panel/property_vector3/field_y"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_y/root"
+  parent: "properties_panel/property_vector3/rich_input_y"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_y/button"
+  parent: "properties_panel/property_vector3/rich_input_y/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_y/placeholder_text"
+  parent: "properties_panel/property_vector3/rich_input_y/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_y/input_text"
+  parent: "properties_panel/property_vector3/rich_input_y/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_y/cursor_node"
+  parent: "properties_panel/property_vector3/rich_input_y/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_y/cursor_text"
+  parent: "properties_panel/property_vector3/rich_input_y/cursor_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/selected_y"
+  parent: "properties_panel/property_vector3/field_y"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/field_z"
+  parent: "properties_panel/property_vector3/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/text_z"
+  parent: "properties_panel/property_vector3/field_z"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_vector3/rich_input_z"
+  parent: "properties_panel/property_vector3/field_z"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_z/root"
+  parent: "properties_panel/property_vector3/rich_input_z"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_z/button"
+  parent: "properties_panel/property_vector3/rich_input_z/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_z/placeholder_text"
+  parent: "properties_panel/property_vector3/rich_input_z/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_z/input_text"
+  parent: "properties_panel/property_vector3/rich_input_z/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_z/cursor_node"
+  parent: "properties_panel/property_vector3/rich_input_z/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_z/cursor_text"
+  parent: "properties_panel/property_vector3/rich_input_z/cursor_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/selected_z"
+  parent: "properties_panel/property_vector3/field_z"
+  template_node_child: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

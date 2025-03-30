@@ -1,19 +1,11 @@
 local event = require("event.event")
 
-local component = require("druid.component")
-
----@class basic_timer: druid.base_component
----@field druid druid_instance
+---@class examples.basic_timer: druid.widget
 ---@field root node
 ---@field text druid.text
-local M = component.create("basic_timer")
+local M = {}
 
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
 	self.timer = self.druid:new_timer("text")
 
@@ -26,6 +18,14 @@ function M:init(template, nodes)
 	end)
 
 	self.on_cycle_end = event.create()
+end
+
+
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.on_cycle_end:subscribe(function()
+		output_log:add_log_text("Timer Cycle End")
+	end)
 end
 
 

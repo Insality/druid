@@ -1,9 +1,10 @@
 local helper = require("druid.helper")
 local mini_graph = require("druid.widget.mini_graph.mini_graph")
 
----@class widget.memory_panel: druid.widget
+---@class druid.widget.memory_panel: druid.widget
 ---@field root node
 local M = {}
+
 
 function M:init()
 	self.root = self:get_node("root")
@@ -38,8 +39,11 @@ function M:init()
 		self:push_next_value()
 	end)
 
-	self.container = self.druid:new_container(self.root)
-	self.container:add_container(self.mini_graph.container)
+	--self.container = self.druid:new_container(self.root)
+	--self.container:add_container(self.mini_graph.container)
+	--local container_content = self.container:add_container("content")
+	--container_content:add_container("text_max_value")
+	--container_content:add_container("text_per_second")
 end
 
 

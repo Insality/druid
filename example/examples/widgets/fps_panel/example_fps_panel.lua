@@ -1,6 +1,6 @@
 local fps_panel = require("druid.widget.fps_panel.fps_panel")
 
----@class widget.example_fps_panel: druid.widget
+---@class examples.example_fps_panel: druid.widget
 local M = {}
 
 

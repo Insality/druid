@@ -5,17 +5,14 @@ local gui_get_node = gui.get_node
 local gui_get = gui.get
 local gui_pick_node = gui.pick_node
 
----@class druid.system.helper
+---The helper module contains various functions that are used in the Druid library.
+---You can use these functions in your projects as well.
+---@class druid.helper
 local M = {}
 
 local POSITION_X = hash("position.x")
 local SCALE_X = hash("scale.x")
 local SIZE_X = hash("size.x")
-
-M.PROP_SIZE_X = hash("size.x")
-M.PROP_SIZE_Y = hash("size.y")
-M.PROP_SCALE_X = hash("scale.x")
-M.PROP_SCALE_Y = hash("scale.y")
 
 local function get_text_width(text_node)
 	if text_node then
@@ -42,15 +39,15 @@ local function is_text_node(node)
 end
 
 
---- Text node or icon node can be nil
+---Text node or icon node can be nil
 local function get_width(node)
 	return is_text_node(node) and get_text_width(node) or get_icon_width(node)
 end
 
 
 ---Center two nodes.
---Nodes will be center around 0 x position
---text_node will be first (at left side)
+---Nodes will be center around 0 x position
+---text_node will be first (at left side)
 ---@param text_node node|nil Gui text node
 ---@param icon_node node|nil Gui box node
 ---@param margin number Offset between nodes
@@ -61,8 +58,8 @@ end
 
 
 ---Center two nodes.
---Nodes will be center around 0 x position
---icon_node will be first (at left side)
+---Nodes will be center around 0 x position
+---icon_node will be first (at left side)
 ---@param icon_node node|nil Gui box node
 ---@param text_node node|nil Gui text node
 ---@param margin number|nil Offset between nodes
@@ -113,8 +110,8 @@ end
 
 
 ---@param node_id string|node
----@param template string|nil @Full Path to the template
----@param nodes table<hash, node>|nil @Nodes what created with gui.clone_tree
+---@param template string|nil Full Path to the template
+---@param nodes table<hash, node>|nil Nodes what created with gui.clone_tree
 ---@return node
 function M.get_node(node_id, template, nodes)
 	if type(node_id) ~= "string" then
@@ -175,7 +172,7 @@ function M.step(current, target, step)
 end
 
 
----Clamp value between min and max
+---Clamp value between min and max. Works with nil values and swap min and max if needed.
 ---@param value number Value
 ---@param v1 number|nil Min value. If nil, value will be clamped to positive infinity
 ---@param v2 number|nil Max value If nil, value will be clamped to negative infinity
@@ -204,7 +201,7 @@ end
 ---@param y1 number First point y
 ---@param x2 number Second point x
 ---@param y2 number Second point y
----@return number Distance
+---@return number distance
 function M.distance(x1, y1, x2, y2)
 	return math.sqrt((x2 - x1) ^ 2 + (y2 - y1) ^ 2)
 end
@@ -245,6 +242,7 @@ end
 ---Check if value contains in array
 ---@param array any[] Array to check
 ---@param value any Value
+---@return number|nil index Index of value in array or nil if value not found
 function M.contains(array, value)
 	for index = 1, #array do
 		if array[index] == value then
@@ -296,7 +294,7 @@ end
 ---@param node node
 ---@param x number
 ---@param y number
----@param node_click_area node|nil
+---@param node_click_area node|nil Additional node to check for click area. If nil, only node will be checked
 ---@local
 function M.pick_node(node, x, y, node_click_area)
 	local is_pick = gui_pick_node(node, x, y)
@@ -369,6 +367,14 @@ function M.get_pivot_offset(pivot_or_node)
 end
 
 
+---Check if device is desktop
+---@return boolean
+function M.is_desktop()
+	return const.CURRENT_SYSTEM_NAME == const.OS.WINDOWS or const.CURRENT_SYSTEM_NAME == const.OS.MAC or const.CURRENT_SYSTEM_NAME == const.OS.LINUX
+end
+
+
+
 ---Check if device is native mobile (Android or iOS)
 ---@return boolean Is mobile
 function M.is_mobile()
@@ -431,10 +437,10 @@ function M.get_border(node, offset)
 	local pivot_offset = M.get_pivot_offset(pivot)
 	local size = M.get_scaled_size(node)
 	local border = vmath.vector4(
-		-size.x*(0.5 + pivot_offset.x),
-		size.y*(0.5 - pivot_offset.y),
-		size.x*(0.5 - pivot_offset.x),
-		-size.y*(0.5 + pivot_offset.y)
+		-size.x * (0.5 + pivot_offset.x),
+		size.y * (0.5 - pivot_offset.y),
+		size.x * (0.5 - pivot_offset.x),
+		-size.y * (0.5 + pivot_offset.y)
 	)
 
 	if offset then
@@ -448,15 +454,20 @@ function M.get_border(node, offset)
 end
 
 
+local TEXT_METRICS_OPTIONS = {
+	line_break = false,
+	tracking = 0,
+	leading = 0,
+	width = 0,
+}
+
 ---Get text metric from GUI node.
 ---@param text_node node
 ---@return GUITextMetrics
 function M.get_text_metrics_from_node(text_node)
-	local font_resource = gui.get_font_resource(gui.get_font(text_node))
-	local options = {
-		tracking = gui.get_tracking(text_node),
-		line_break = gui.get_line_break(text_node),
-	}
+	local options = TEXT_METRICS_OPTIONS
+	options.tracking = gui.get_tracking(text_node)
+	options.line_break = gui.get_line_break(text_node)
 
 	-- Gather other options only if it used in node
 	if options.line_break then
@@ -464,6 +475,7 @@ function M.get_text_metrics_from_node(text_node)
 		options.leading = gui.get_leading(text_node)
 	end
 
+	local font_resource = gui.get_font_resource(gui.get_font(text_node))
 	return resource.get_text_metrics(font_resource, gui.get_text(text_node), options)
 end
 
@@ -545,18 +557,18 @@ function M.get_full_position(node, root)
 end
 
 
----@class druid.animation_data
----@field frames table<number, table<string, number>> @List of frames with uv coordinates and size
----@field width number @Width of the animation
----@field height number @Height of the animation
----@field fps number @Frames per second
----@field current_frame number @Current frame
----@field node node @Node with flipbook animation
----@field v vector4 @Vector with UV coordinates and size
+---@class druid.system.animation_data
+---@field frames table<number, table<string, number>> List of frames with uv coordinates and size
+---@field width number Width of the animation
+---@field height number Height of the animation
+---@field fps number Frames per second
+---@field current_frame number Current frame
+---@field node node Node with flipbook animation
+---@field v vector4 Vector with UV coordinates and size
 
 ---@param node node
----@param atlas_path string @Path to the atlas
----@return druid.animation_data
+---@param atlas_path string Path to the atlas
+---@return druid.system.animation_data
 function M.get_animation_data_from_node(node, atlas_path)
 	local atlas_data = resource.get_atlas(atlas_path)
 	local tex_info = resource.get_texture_info(atlas_data.texture)

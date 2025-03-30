@@ -1,14 +1,9 @@
-local component = require("druid.component")
-local panthera = require("panthera.panthera")
-
----@class how_to_use_example: druid.base_component
+---@class examples.how_to_use_example: druid.widget
 ---@field root node
-local M = component.create("how_to_use_example")
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
+
+function M:init()
 	self.root = self:get_node("root")
 
 	self.druid:new_rich_text("text_hello", "He<color=#E48155>ll</color>o!")

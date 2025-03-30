@@ -3,9 +3,9 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 
 
----@class panel_druid_profiler: druid.base_component
+---@class panel_druid_profiler: druid.component
 ---@field root druid.container
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("panel_druid_profiler")
 local FPS_SAMPLES = 60
 
@@ -110,7 +110,7 @@ end
 
 
 function M:update_components()
-	---@diagnostic disable-next-line: undefined-field
+	---@diagnostic disable-next-line, invisible
 	local components = #self.druid.components_all
 
 	self.text_components_amount:set_text(tostring(components))

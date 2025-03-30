@@ -2,7 +2,7 @@ local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@alias druid.layout.mode "horizontal"|"vertical"|"horizontal_wrap"
+---@alias druid.layout.type "horizontal"|"vertical"|"horizontal_wrap"
 
 ---@class event.on_size_changed: event
 ---@field subscribe fun(_, callback: fun(new_size: vector3), context: any|nil)
@@ -19,24 +19,35 @@ local component = require("druid.component")
 ---@field nodes_height table<node, number>
 ---@field rows druid.layout.row_data[]>
 
----@class druid.layout: druid.base_component
----@field node node
+---Druid component to manage the layout of nodes, placing them inside the node size with respect to the size and pivot of each node.
+---
+---### Setup
+---Create layout component with druid: `layout = druid:new_layout(node, layout_type)`
+---
+---### Notes
+---- Layout can be horizontal, vertical or horizontal with wrapping
+---- Layout can resize parent node to fit content
+---- Layout can justify content
+---- Layout supports margins and padding
+---- Layout automatically updates when nodes are added or removed
+---- Layout can be manually updated by calling set_dirty()
+---@class druid.layout: druid.component
+---@field node node The node to manage the layout of
 ---@field rows_data druid.layout.rows_data Last calculated rows data
----@field is_dirty boolean
----@field entities node[]
----@field margin {x: number, y: number}
----@field padding vector4
----@field type string
----@field is_resize_width boolean
----@field is_resize_height boolean
----@field is_justify boolean
----@field on_size_changed event.on_size_changed
+---@field is_dirty boolean True if layout needs to be updated
+---@field entities node[] The entities to manage the layout of
+---@field margin {x: number, y: number} The margin of the layout
+---@field padding vector4 The padding of the layout
+---@field type string The type of the layout
+---@field is_resize_width boolean True if the layout should resize the width of the node
+---@field is_resize_height boolean True if the layout should resize the height of the node
+---@field is_justify boolean True if the layout should justify the nodes
+---@field on_size_changed event.on_size_changed The event triggered when the size of the layout is changed
 local M = component.create("layout")
 
----Layout component constructor
----@local
----@param node_or_node_id node|string
----@param layout_type druid.layout.mode
+
+---@param node_or_node_id node|string The node to manage the layout of
+---@param layout_type druid.layout.type The type of layout (horizontal, vertical, horizontal_wrap)
 function M:init(node_or_node_id, layout_type)
 	self.node = self:get_node(node_or_node_id)
 
@@ -60,7 +71,6 @@ function M:init(node_or_node_id, layout_type)
 end
 
 
----@local
 function M:update()
 	if not self.is_dirty then
 		return
@@ -70,11 +80,15 @@ function M:update()
 end
 
 
+---@return node[] entities The entities to manage the layout of
 function M:get_entities()
 	return self.entities
 end
 
 
+---@param node node The node to set the index of
+---@param index number The index to set the node to
+---@return druid.layout self for chaining
 function M:set_node_index(node, index)
 	for i = 1, #self.entities do
 		if self.entities[i] == node then
@@ -83,12 +97,15 @@ function M:set_node_index(node, index)
 			break
 		end
 	end
+
+	return self
 end
 
 
----@param margin_x number|nil
----@param margin_y number|nil
----@return druid.layout
+---Set the margin of the layout
+---@param margin_x number|nil The margin x
+---@param margin_y number|nil The margin y
+---@return druid.layout self Current layout instance
 function M:set_margin(margin_x, margin_y)
 	self.margin.x = margin_x or self.margin.x
 	self.margin.y = margin_y or self.margin.y
@@ -98,11 +115,11 @@ function M:set_margin(margin_x, margin_y)
 end
 
 
----@param padding_x number|nil
----@param padding_y number|nil
----@param padding_z number|nil
----@param padding_w number|nil
----@return druid.layout
+---@param padding_x number|nil The padding x
+---@param padding_y number|nil The padding y
+---@param padding_z number|nil The padding z
+---@param padding_w number|nil The padding w
+---@return druid.layout self Current layout instance
 function M:set_padding(padding_x, padding_y, padding_z, padding_w)
 	self.padding.x = padding_x or self.padding.x
 	self.padding.y = padding_y or self.padding.y
@@ -114,7 +131,7 @@ function M:set_padding(padding_x, padding_y, padding_z, padding_w)
 end
 
 
----@return druid.layout
+---@return druid.layout self Current layout instance
 function M:set_dirty()
 	self.is_dirty = true
 
@@ -123,7 +140,7 @@ end
 
 
 ---@param is_justify boolean
----@return druid.layout
+---@return druid.layout self Current layout instance
 function M:set_justify(is_justify)
 	self.is_justify = is_justify
 	self.is_dirty = true
@@ -132,10 +149,10 @@ function M:set_justify(is_justify)
 end
 
 
----@param type string The layout type: "horizontal", "vertical", "horizontal_wrap"
----@return druid.layout
-function M:set_type(type)
-	self.type = type
+---@param layout_type druid.layout.type
+---@return druid.layout self Current layout instance
+function M:set_type(layout_type)
+	self.type = layout_type
 	self.is_dirty = true
 
 	return self
@@ -144,7 +161,7 @@ end
 
 ---@param is_hug_width boolean
 ---@param is_hug_height boolean
----@return druid.layout
+---@return druid.layout self Current layout instance
 function M:set_hug_content(is_hug_width, is_hug_height)
 	self.is_resize_width = is_hug_width or false
 	self.is_resize_height = is_hug_height or false
@@ -156,7 +173,7 @@ end
 
 ---Add node to layout
 ---@param node_or_node_id node|string node_or_node_id
----@return druid.layout
+---@return druid.layout self Current layout instance
 function M:add(node_or_node_id)
 	-- Acquire node from entity or by id
 	local node = node_or_node_id
@@ -209,7 +226,7 @@ function M:get_content_size()
 end
 
 
----@return druid.layout
+---@return druid.layout self Current layout instance
 function M:refresh_layout()
 	local layout_node = self.node
 
@@ -288,7 +305,7 @@ function M:refresh_layout()
 				local new_row_width = width * (0.5 - layout_pivot_offset.x)
 
 				-- Compare with eps due the float loss and element flickering
-				if current_x + node_width - new_row_width > 0.0001 then
+				if current_x + node_width - new_row_width > 0.00001 then
 					current_y = current_y - row.height - margin.y
 
 					if row_index < #rows then
@@ -297,6 +314,7 @@ function M:refresh_layout()
 					end
 
 					current_x = -row.width * (0.5 + layout_pivot_offset.x)
+
 					if is_justify and row.count > 1 then
 						current_x = -max_width * (0.5 + layout_pivot_offset.x)
 					end
@@ -350,7 +368,7 @@ function M:refresh_layout()
 end
 
 
----@return druid.layout
+---@return druid.layout self Current layout instance
 function M:clear_layout()
 	for index = #self.entities, 1, -1 do
 		self.entities[index] = nil
@@ -363,7 +381,8 @@ end
 
 
 ---@param node node
----@return number, number
+---@return number width The width of the node
+---@return number height The height of the node
 function M:get_node_size(node)
 	if not gui.is_enabled(node, false) then
 		return 0, 0

@@ -77,6 +77,18 @@ nodes {
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "button_tutorial/root"
+  parent: "button_tutorial"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button_tutorial/text"
+  parent: "button_tutorial/root"
+  template_node_child: true
+}
+nodes {
   position {
     x: -185.0
   }
@@ -287,6 +299,18 @@ nodes {
   parent: "scroll_content"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_stencil/root"
+  parent: "button_stencil"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button_stencil/text"
+  parent: "button_stencil/root"
+  template_node_child: true
 }
 nodes {
   position {

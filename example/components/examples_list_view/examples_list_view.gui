@@ -106,6 +106,36 @@ nodes {
   inherit_alpha: true
   template: "/example/components/examples_list_view/examples_list_view_item.gui"
 }
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view_item/root"
+  parent: "examples_list_view_item"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view_item/panel_highlight"
+  parent: "examples_list_view_item/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view_item/panel_selected"
+  parent: "examples_list_view_item/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view_item/icon"
+  parent: "examples_list_view_item/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "examples_list_view_item/text"
+  parent: "examples_list_view_item/root"
+  template_node_child: true
+}
 layers {
   name: "druid"
 }

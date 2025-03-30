@@ -1,14 +1,7 @@
-local component = require("druid.component")
+---@class examples.drag_to_node: druid.widget
+local M = {}
 
----@class drag_to_node: druid.base_component
----@field druid druid_instance
-local M = component.create("drag_to_node")
-
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
+function M:init()
 	self.zone = self:get_node("zone")
 	self.counter = 0
 	self.text_counter = self:get_node("text_counter")

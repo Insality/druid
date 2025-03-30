@@ -1,10 +1,10 @@
 local component = require("druid.component")
 
----@class example_scene: druid.base_component
+---@class examples.example_scene: druid.component
 ---@field root druid.container
 ---@field text_debug_info druid.text
 ---@field text_gui_path druid.text
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("example_scene")
 
 

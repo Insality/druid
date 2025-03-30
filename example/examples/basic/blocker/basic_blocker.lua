@@ -1,17 +1,10 @@
-local component = require("druid.component")
-
----@class basic_blocker: druid.base_component
----@field druid druid_instance
+---@class examples.basic_blocker: druid.widget
 ---@field root node
 ---@field blocker druid.blocker
-local M = component.create("basic_blocker")
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
 
 	self.button_root = self.druid:new_button(self.root, self.on_root_click)
@@ -28,6 +21,17 @@ end
 
 function M:on_button_click()
 	print("Button click")
+end
+
+
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.button_root.on_click:subscribe(function()
+		output_log:add_log_text("Root Clicked")
+	end)
+	self.button.on_click:subscribe(function()
+		output_log:add_log_text("Button Clicked")
+	end)
 end
 
 

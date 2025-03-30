@@ -1,16 +1,8 @@
-local component = require("druid.component")
-
----@class basic_progress_bar_slice9: druid.base_component
----@field druid druid_instance
+---@class examples.basic_progress_bar_slice9: druid.widget
 ---@field progress druid.progress
-local M = component.create("basic_progress_bar_slice9")
+local M = {}
 
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.progress = self.druid:new_progress("progress_bar_fill", "x")
 	self.text_value = self:get_node("progress_value")
 
@@ -21,6 +13,14 @@ end
 function M:set_value(value)
 	gui.set_text(self.text_value, math.ceil(value * 100) .. "%")
 	self.progress:set_to(value)
+end
+
+
+---@param properties_panel properties_panel
+function M:properties_control(properties_panel)
+	properties_panel:add_slider("ui_value", 1, function(value)
+		self:set_value(value)
+	end)
 end
 
 

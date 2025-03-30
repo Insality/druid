@@ -1,21 +1,29 @@
-local component = require("druid.component")
-
----@class gamepad_tester: druid.base_component
+---@class examples.gamepad_tester: druid.widget
 ---@field root node
----@field buttons druid.button
----@field buttons_system druid.button
----@field button_left_bump druid.button
----@field button_right_bump druid.button
----@field druid druid_instance
-local M = component.create("gamepad_tester")
+---@field button_left druid.button
+---@field button_right druid.button
+---@field button_up druid.button
+---@field button_down druid.button
+---@field button_x druid.button
+---@field button_b druid.button
+---@field button_y druid.button
+---@field button_a druid.button
+---@field button_l1 druid.button
+---@field button_r1 druid.button
+---@field button_stick_left druid.button
+---@field button_stick_right druid.button
+---@field button_start druid.button
+---@field button_back druid.button
+---@field trigger_l2 druid.progress
+---@field trigger_r2 druid.progress
+---@field stick_left node
+---@field stick_right node
+local M = {}
 
 local STICK_DISTANCE = 50
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
 
+function M:init()
 	self.root = self:get_node("root")
 
 	self.button_left = self.druid:new_button("button_left/button"):set_key_trigger("gamepad_lpad_left")
@@ -80,6 +88,53 @@ function M:on_input(action_id, action)
 	if action_id == hash("gamepad_rstick_down") then
 		gui.set(self.stick_right, "position.y", -action.value * STICK_DISTANCE)
 	end
+end
+
+
+---@param output_list output_list
+function M:on_example_created(output_list)
+	self.button_left.on_click:subscribe(function()
+		output_list:add_log_text("Button Left Clicked")
+	end)
+	self.button_right.on_click:subscribe(function()
+		output_list:add_log_text("Button Right Clicked")
+	end)
+	self.button_up.on_click:subscribe(function()
+		output_list:add_log_text("Button Up Clicked")
+	end)
+	self.button_down.on_click:subscribe(function()
+		output_list:add_log_text("Button Down Clicked")
+	end)
+	self.button_a.on_click:subscribe(function()
+		output_list:add_log_text("Button A Clicked")
+	end)
+	self.button_b.on_click:subscribe(function()
+		output_list:add_log_text("Button B Clicked")
+	end)
+	self.button_x.on_click:subscribe(function()
+		output_list:add_log_text("Button X Clicked")
+	end)
+	self.button_y.on_click:subscribe(function()
+		output_list:add_log_text("Button Y Clicked")
+	end)
+	self.button_back.on_click:subscribe(function()
+		output_list:add_log_text("Button Back Clicked")
+	end)
+	self.button_start.on_click:subscribe(function()
+		output_list:add_log_text("Button Start Clicked")
+	end)
+	self.button_l1.on_click:subscribe(function()
+		output_list:add_log_text("Button L1 Clicked")
+	end)
+	self.button_r1.on_click:subscribe(function()
+		output_list:add_log_text("Button R1 Clicked")
+	end)
+	self.button_stick_left.on_click:subscribe(function()
+		output_list:add_log_text("Button Stick Left Clicked")
+	end)
+	self.button_stick_right.on_click:subscribe(function()
+		output_list:add_log_text("Button Stick Right Clicked")
+	end)
 end
 
 

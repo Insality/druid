@@ -2,31 +2,31 @@ local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class druid.timer: druid.base_component
----@field on_tick event
----@field on_set_enabled event
----@field on_timer_end event
----@field style table
----@field node node
----@field from number
----@field target number
----@field value number
----@field is_on boolean|nil
+---Druid component to handle timer work on gui text node. Displays time in a formatted way.
+---
+---### Setup
+---Create timer component with druid: `timer = druid:new_timer(text_node, from_seconds, to_seconds, callback)`
+---
+---### Notes
+---- Timer fires callback when timer value equals to _to_seconds_
+---- Timer will set text node with current timer value
+---- Timer uses update function to handle time
+---@class druid.timer: druid.component
+---@field on_tick event fun(context, value) The event triggered when the timer ticks
+---@field on_set_enabled event fun(context, is_on) The event triggered when the timer is enabled
+---@field on_timer_end event fun(context) The event triggered when the timer ends
+---@field node node The node to display the timer
+---@field from number The start time of the timer
+---@field target number The target time of the timer
+---@field value number The current value of the timer
+---@field is_on boolean|nil True if the timer is on
 local M = component.create("timer")
 
 
-local function second_string_min(sec)
-	local mins = math.floor(sec / 60)
-	local seconds = math.floor(sec - mins * 60)
-	return string.format("%.2d:%.2d", mins, seconds)
-end
-
-
----The Timer constructor
 ---@param node node Gui text node
 ---@param seconds_from number|nil Start timer value in seconds
 ---@param seconds_to number|nil End timer value in seconds
----@param callback function|nil Function on timer end
+---@param callback function|nil Function that triggers when timer value equals to seconds_to
 function M:init(node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
 	seconds_to = math.max(seconds_to or 0, 0)
@@ -50,6 +50,7 @@ function M:init(node, seconds_from, seconds_to, callback)
 end
 
 
+---@private
 function M:update(dt)
 	if not self.is_on then
 		return
@@ -73,23 +74,26 @@ function M:update(dt)
 end
 
 
+---@private
 function M:on_layout_change()
 	self:set_to(self.last_value)
 end
 
 
+---Set the timer to a specific value
 ---@param set_to number Value in seconds
----@return druid.timer self
+---@return druid.timer self Current timer instance
 function M:set_to(set_to)
 	self.last_value = set_to
-	gui.set_text(self.node, second_string_min(set_to))
+	gui.set_text(self.node, self:_second_string_min(set_to))
 
 	return self
 end
 
 
+---Set the timer to a specific value
 ---@param is_on boolean|nil Timer enable state
----@return druid.timer self
+---@return druid.timer self Current timer instance
 function M:set_state(is_on)
 	self.is_on = is_on
 	self.on_set_enabled:trigger(self:get_context(), is_on)
@@ -98,9 +102,10 @@ function M:set_state(is_on)
 end
 
 
+---Set the timer interval
 ---@param from number Start time in seconds
 ---@param to number Target time in seconds
----@return druid.timer self
+---@return druid.timer self Current timer instance
 function M:set_interval(from, to)
 	self.from = from
 	self.value = from
@@ -110,6 +115,16 @@ function M:set_interval(from, to)
 	self:set_to(from)
 
 	return self
+end
+
+
+---@private
+---@param sec number Seconds to convert
+---@return string The formatted time string
+function M:_second_string_min(sec)
+	local mins = math.floor(sec / 60)
+	local seconds = math.floor(sec - mins * 60)
+	return string.format("%.2d:%.2d", mins, seconds)
 end
 
 

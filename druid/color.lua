@@ -9,7 +9,7 @@ local COLOR_Z = hash("color.z")
 local M = {}
 
 
----Get color color by id
+---Get color color by string (hex or from palette)
 ---@param color_id string
 ---@return vector4
 function M.get(color_id)
@@ -86,32 +86,20 @@ function M.lerp(t, color1, color2)
 	return vmath.vector4(r, g, b, a)
 end
 
-
 ---@param hex string
----@param alpha number|nil
----@return number, number, number, number
-function M.hex2rgb(hex, alpha)
-	alpha = alpha or 1
-	if alpha > 1 then
-		alpha = alpha / 100
+---@return number, number, number
+function M.hex2rgb(hex)
+	if not hex or #hex < 3 then
+		return 0, 0, 0
 	end
 
-	-- Remove leading #
-	if string.sub(hex, 1, 1) == "#" then
-		hex = string.sub(hex, 2)
-	end
-
-	-- Expand 3-digit hex codes to 6 digits
+	hex = hex:gsub("^#", "")
 	if #hex == 3 then
-		hex = string.rep(string.sub(hex, 1, 1), 2) ..
-				string.rep(string.sub(hex, 2, 2), 2) ..
-				string.rep(string.sub(hex, 3, 3), 2)
+		hex = hex:gsub("(.)", "%1%1")
 	end
-
-	local r = tonumber("0x" .. string.sub(hex, 1, 2)) / 255
-	local g = tonumber("0x" .. string.sub(hex, 3, 4)) / 255
-	local b = tonumber("0x" .. string.sub(hex, 5, 6)) / 255
-	return r, g, b, alpha
+	return tonumber("0x" .. hex:sub(1,2)) / 255,
+		   tonumber("0x" .. hex:sub(3,4)) / 255,
+		   tonumber("0x" .. hex:sub(5,6)) / 255
 end
 
 
@@ -119,16 +107,16 @@ end
 ---@param alpha number|nil
 ---@return vector4
 function M.hex2vector4(hex, alpha)
-	local r, g, b, a = M.hex2rgb(hex, alpha)
-	return vmath.vector4(r, g, b, a)
+	local r, g, b = M.hex2rgb(hex)
+	return vmath.vector4(r, g, b, alpha or 1)
 end
 
 
 ---Convert hsb color to rgb color
----@param r number @Red value
----@param g number @Green value
----@param b number @Blue value
----@param alpha number|nil @Alpha value. Default is 1
+---@param r number Red value
+---@param g number Green value
+---@param b number Blue value
+---@param alpha number|nil Alpha value. Default is 1
 function M.rgb2hsb(r, g, b, alpha)
 	alpha = alpha or 1
 	local min, max = math.min(r, g, b), math.max(r, g, b)
@@ -155,10 +143,10 @@ end
 
 
 ---Convert hsb color to rgb color
----@param h number @Hue
----@param s number @Saturation
----@param v number @Value
----@param alpha number|nil @Alpha value. Default is 1
+---@param h number Hue
+---@param s number Saturation
+---@param v number Value
+---@param alpha number|nil Alpha value. Default is 1
 function M.hsb2rgb(h, s, v, alpha)
 	local r, g, b
 	local i = math.floor(h * 6)
@@ -182,9 +170,9 @@ end
 
 
 ---Convert rgb color to hex color
----@param red number @Red value
----@param green number @Green value
----@param blue number @Blue value
+---@param red number Red value
+---@param green number Green value
+---@param blue number Blue value
 function M.rgb2hex(red, green, blue)
 	local r = string.format("%x", math.floor(red * 255))
 	local g = string.format("%x", math.floor(green * 255))
@@ -194,7 +182,7 @@ end
 
 
 function M.load_palette()
-	local PALETTE_PATH = sys.get_config_string("fluid.palette")
+	local PALETTE_PATH = sys.get_config_string("druid.palette")
 	if PALETTE_PATH then
 		PALETTE_DATA = M.load_json(PALETTE_PATH) --[[@as table<string, table<string, vector4>>]]
 	end

@@ -1,11 +1,11 @@
 local lang = require("lang.lang")
 local component = require("druid.component")
 
----@class panel_information: druid.base_component
+---@class panel_information: druid.component
 ---@field root druid.container
 ---@field text_header druid.lang_text
 ---@field rich_text druid.rich_text
----@field druid druid_instance
+---@field druid druid.instance
 local PanelInformation = component.create("panel_information")
 
 ---@param template string

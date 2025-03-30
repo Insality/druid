@@ -1,13 +1,14 @@
 local event = require("event.event")
 local helper = require("druid.helper")
 
----@class widget.property_slider: druid.widget
+---@class druid.widget.property_slider: druid.widget
 ---@field root node
 ---@field container druid.container
----@field druid druid_instance
+---@field druid druid.instance
 ---@field text_name druid.text
 ---@field text_value druid.text
 ---@field slider druid.slider
+---@field on_change_value event fun(value:number)
 local M = {}
 
 
@@ -47,14 +48,14 @@ function M:set_text_function(callback)
 end
 
 
---- Sets the text property of the slider
+---Sets the text property of the slider
 ---@param text string
 function M:set_text_property(text)
 	self.text_name:set_text(text)
 end
 
 
---- Sets the callback function for when the slider value changes
+---Sets the callback function for when the slider value changes
 ---@param callback fun(value:number)
 function M:on_change(callback)
 	self.on_change_value:subscribe(callback)

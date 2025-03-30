@@ -1,17 +1,11 @@
-local component = require("druid.component")
+local helper = require("druid.helper")
 
----@class basic_slider_stepped: druid.base_component
----@field druid druid_instance
+---@class examples.basic_slider_stepped: druid.widget
 ---@field root node
 ---@field slider druid.slider
-local M = component.create("basic_slider_stepped")
+local M = {}
 
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.slider = self.druid:new_slider("slider/slider_pin", vmath.vector3(118, 0, 0), self.on_slider_change) --[[@as druid.slider]]
 
 	-- To add input across all slider widget add a root node to acquire additional input
@@ -25,6 +19,15 @@ end
 
 function M:on_slider_change(value)
 	gui.set_text(self.text_value, math.ceil(value * 100) .. "%")
+end
+
+
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.slider.on_change_value:subscribe(function(_, value)
+		value = helper.round(value, 2)
+		output_log:add_log_text("Slider Value: " .. value)
+	end)
 end
 
 

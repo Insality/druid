@@ -1,8 +1,8 @@
 local event = require("event.event")
 
----@class widget.property_checkbox: druid.widget
+---@class druid.widget.property_checkbox: druid.widget
 ---@field root node
----@field druid druid_instance
+---@field druid druid.instance
 ---@field text_name druid.text
 ---@field button druid.button
 ---@field selected node
@@ -59,14 +59,14 @@ function M:on_click()
 end
 
 
---- Set the text property of the checkbox
+---Set the text property of the checkbox
 ---@param text string
 function M:set_text_property(text)
 	self.text_name:set_text(text)
 end
 
 
---- Set the callback function for when the checkbox value changes
+---Set the callback function for when the checkbox value changes
 ---@param callback function
 function M:on_change(callback)
 	self.on_change_value:subscribe(callback)

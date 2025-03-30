@@ -1,64 +1,17 @@
--- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Druid Rich Input custom component.
--- It's wrapper on Input component with cursor and placeholder text
--- @module RichInput
--- @alias druid.rich_input
-
---- The component druid instance
--- @tfield DruidInstance druid DruidInstance
-
---- Root node
--- @tfield node root
-
---- On input field text change callback(self, input_text)
--- @tfield Input input Input
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield node cursor
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield node cursor_text
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield vector3 cursor_position
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield druid.text input_text
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield druid.drag drag
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield druid.text placeholder
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield vector3 text_position
-
----
-
 local component = require("druid.component")
 local helper = require("druid.helper")
 local const  = require("druid.const")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
----@class druid.rich_input: druid.base_component
----@field root node
----@field input druid.input
----@field cursor node
----@field cursor_text node
----@field cursor_position vector3
+---The component that handles a rich text input field, it's a wrapper around the druid.input component
+---@class druid.rich_input: druid.component
+---@field root node The root node of the rich input
+---@field input druid.input The input component
+---@field cursor node The cursor node
+---@field cursor_text node The cursor text node
+---@field cursor_position vector3 The position of the cursor
 local M = component.create("druid.rich_input")
-
---local SCHEME = {
---	ROOT = "root",
---	BUTTON = "button",
---	PLACEHOLDER = "placeholder_text",
---	INPUT = "input_text",
---	CURSOR = "cursor_node",
---	CURSOR_TEXT = "cursor_text",
---}
 
 local DOUBLE_CLICK_TIME = 0.35
 
@@ -120,7 +73,7 @@ local function on_unselect(self)
 end
 
 
---- Update selection
+---Update selection
 local function update_selection(self)
 	update_text(self)
 end
@@ -179,7 +132,12 @@ local function on_touch_start_callback(self, touch)
 end
 
 
-
+---@param self druid.rich_input
+---@param dx number The delta x position
+---@param dy number The delta y position
+---@param x number The x position
+---@param y number The y position
+---@param touch table The touch table
 local function on_drag_callback(self, dx, dy, x, y, touch)
 	if not self._last_touch_info.cursor_index then
 		return
@@ -233,6 +191,10 @@ function M:init(template, nodes)
 end
 
 
+---@private
+---@param action_id hash Action id from on_input
+---@param action table Action table from on_input
+---@return boolean is_consumed True if input was consumed
 function M:on_input(action_id, action)
 	if action_id == const.ACTION_LSHIFT then
 		if action.pressed then
@@ -261,24 +223,29 @@ function M:on_input(action_id, action)
 			return true
 		end
 	end
+
+	return false
 end
 
 
---- Set placeholder text
+---Set placeholder text
 ---@param placeholder_text string The placeholder text
+---@return druid.rich_input self Current instance
 function M:set_placeholder(placeholder_text)
 	self.placeholder:set_text(placeholder_text)
 	return self
 end
 
 
---- Select input field
+---Select input field
+---@return druid.rich_input self Current instance
 function M:select()
 	self.input:select()
+	return self
 end
 
 
---- Set input field text
+---Set input field text
 ---@param text string The input text
 ---@return druid.rich_input self Current instance
 function M:set_text(text)
@@ -289,7 +256,7 @@ function M:set_text(text)
 end
 
 
---- Set input field font
+---Set input field font
 ---@param font hash The font hash
 ---@return druid.rich_input self Current instance
 function M:set_font(font)
@@ -300,17 +267,17 @@ function M:set_font(font)
 end
 
 
---- Set input field text
+---Set input field text
 function M:get_text()
 	return self.input:get_text()
 end
 
 
---- Set allowed charaters for input field.
+---Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
 ---@param characters string Regulax exp. for validate user input
----@return druid.rich_input Current instance
+---@return druid.rich_input self Current instance
 function M:set_allowed_characters(characters)
 	self.input:set_allowed_characters(characters)
 

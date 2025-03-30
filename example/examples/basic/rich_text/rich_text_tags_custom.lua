@@ -1,18 +1,16 @@
-local component = require("druid.component")
 local helper = require("druid.helper")
 local event = require("event.event")
 
----@class rich_text_tags_custom: druid.base_component
----@field druid druid_instance
----@field rich_text druid.rich_text
-local M = component.create("rich_text_tags_custom")
+---@class examples.rich_text_tags_custom: druid.widget
+---@field rich_text_link druid.rich_text
+---@field rich_text_characters druid.rich_text
+---@field rich_text_custom druid.rich_text
+---@field position table
+---@field on_link_click event
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	do -- Init rich text with links example
 		self.rich_text_link = self.druid:new_rich_text("rich_text_link") --[[@as druid.rich_text]]
 		self.rich_text_link:set_text("Hello, I'm a <custom_link><color=A1D7F5>Custom Link</color></custom_link>")

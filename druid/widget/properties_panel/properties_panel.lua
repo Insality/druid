@@ -6,7 +6,7 @@ local property_text = require("druid.widget.properties_panel.properties.property
 local property_left_right_selector = require("druid.widget.properties_panel.properties.property_left_right_selector")
 local property_vector3 = require("druid.widget.properties_panel.properties.property_vector3")
 
----@class widget.properties_panel: druid.widget
+---@class druid.widget.properties_panel: druid.widget
 ---@field root node
 ---@field scroll druid.scroll
 ---@field layout druid.layout
@@ -14,8 +14,9 @@ local property_vector3 = require("druid.widget.properties_panel.properties.prope
 ---@field container_content druid.container
 ---@field container_scroll_view druid.container
 ---@field contaienr_scroll_content druid.container
+---@field button_hidden druid.button
 ---@field text_header druid.text
----@field paginator widget.property_left_right_selector
+---@field paginator druid.widget.property_left_right_selector
 ---@field properties druid.widget[] List of created properties
 ---@field properties_constructors fun()[] List of properties functions to create a new widget. Used to not spawn non-visible widgets but keep the reference
 local M = {}
@@ -47,8 +48,9 @@ function M:init()
 	self.layout.on_size_changed:subscribe(self.on_size_changed, self)
 
 	self.druid:new_drag("header", self.on_drag_widget)
-	self.druid:new_button("icon_drag", self.toggle_hide)
-		:set_style(nil)
+	self.button_hidden = self.druid:new_button("icon_drag", function()
+		self:set_hidden(not self._is_hidden)
+	end):set_style(nil)
 
 	self.property_checkbox_prefab = self:get_node("property_checkbox/root")
 	gui.set_enabled(self.property_checkbox_prefab, false)
@@ -100,13 +102,16 @@ end
 function M:clear_created_properties()
 	for index = 1, #self.properties do
 		local property = self.properties[index]
+		local root = property.root --[[@as node]]
 
-		-- If prefab used clone nodes we can remove it
-		if property:get_nodes() then
-			gui.delete_node(property.root)
-		else
-			-- Probably we have component placed on scene directly
-			gui.set_enabled(property.root, false)
+		if root then
+			-- If prefab used clone nodes we can remove it
+			if property:get_nodes() then
+				gui.delete_node(root)
+			else
+				-- Probably we have component placed on scene directly
+				gui.set_enabled(root, false)
+			end
 		end
 
 		self.druid:remove(self.properties[index])
@@ -130,15 +135,16 @@ function M:on_size_changed(new_size)
 	self.container_content:set_size(new_size.x, new_size.y, gui.PIVOT_N)
 
 	self.default_size = vmath.vector3(new_size.x, new_size.y + 50, 0)
-	if not self.is_hidden then
+	if not self._is_hidden then
 		self.container:set_size(self.default_size.x, self.default_size.y, gui.PIVOT_N)
 	end
 
 	local width = self.layout:get_size().x - self.layout.padding.x - self.layout.padding.z
 	for index = 1, #self.properties do
 		local property = self.properties[index]
-		if property.container then
-			property.container:set_size(width)
+		local container = property.container --[[@as druid.container]]
+		if container then
+			container:set_size(width)
 		end
 	end
 	self.paginator.container:set_size(width)
@@ -170,47 +176,47 @@ function M:update(dt)
 end
 
 
----@param on_create fun(checkbox: widget.property_checkbox)|nil
----@return widget.properties_panel
+---@param on_create fun(checkbox: druid.widget.property_checkbox)|nil
+---@return druid.widget.properties_panel
 function M:add_checkbox(on_create)
 	return self:add_inner_widget(property_checkbox, "property_checkbox", self.property_checkbox_prefab, on_create)
 end
 
 
----@param on_create fun(slider: widget.property_slider)|nil
----@return widget.properties_panel
+---@param on_create fun(slider: druid.widget.property_slider)|nil
+---@return druid.widget.properties_panel
 function M:add_slider(on_create)
 	return self:add_inner_widget(property_slider, "property_slider", self.property_slider_prefab, on_create)
 end
 
 
----@param on_create fun(button: widget.property_button)|nil
----@return widget.properties_panel
+---@param on_create fun(button: druid.widget.property_button)|nil
+---@return druid.widget.properties_panel
 function M:add_button(on_create)
 	return self:add_inner_widget(property_button, "property_button", self.property_button_prefab, on_create)
 end
 
 
----@param on_create fun(input: widget.property_input)|nil
----@return widget.properties_panel
+---@param on_create fun(input: druid.widget.property_input)|nil
+---@return druid.widget.properties_panel
 function M:add_input(on_create)
 	return self:add_inner_widget(property_input, "property_input", self.property_input_prefab, on_create)
 end
 
 
----@param on_create fun(text: widget.property_text)|nil
+---@param on_create fun(text: druid.widget.property_text)|nil
 function M:add_text(on_create)
 	return self:add_inner_widget(property_text, "property_text", self.property_text_prefab, on_create)
 end
 
 
----@param on_create fun(selector: widget.property_left_right_selector)|nil
+---@param on_create fun(selector: druid.widget.property_left_right_selector)|nil
 function M:add_left_right_selector(on_create)
 	return self:add_inner_widget(property_left_right_selector, "property_left_right_selector", self.property_left_right_selector_prefab, on_create)
 end
 
 
----@param on_create fun(vector3: widget.property_vector3)|nil
+---@param on_create fun(vector3: druid.widget.property_vector3)|nil
 function M:add_vector3(on_create)
 	return self:add_inner_widget(property_vector3, "property_vector3", self.property_vector3_prefab, on_create)
 end
@@ -221,7 +227,7 @@ end
 ---@param template string|nil
 ---@param nodes table<hash, node>|node|nil
 ---@param on_create fun(widget: T)|nil
----@return widget.properties_panel
+---@return druid.widget.properties_panel
 function M:add_inner_widget(widget_class, template, nodes, on_create)
 	table.insert(self.properties_constructors, function()
 		local widget = self.druid:new_widget(widget_class, template, nodes)
@@ -239,7 +245,7 @@ end
 
 
 ---@param create_widget_callback fun(): druid.widget
----@return widget.properties_panel
+---@return druid.widget.properties_panel
 function M:add_widget(create_widget_callback)
 	table.insert(self.properties_constructors, function()
 		local widget = create_widget_callback()
@@ -292,15 +298,19 @@ function M:remove(widget)
 end
 
 
-function M:toggle_hide()
-	self.is_hidden = not self.is_hidden
+function M:set_hidden(is_hidden)
+	self._is_hidden = is_hidden
 	local hidden_size = gui.get_size(self:get_node("header"))
 
-	local new_size = self.is_hidden and hidden_size or self.default_size
+	local new_size = self._is_hidden and hidden_size or self.default_size
 	self.container:set_size(new_size.x, new_size.y, gui.PIVOT_N)
 
-	gui.set_enabled(self.content, not self.is_hidden)
-	return self
+	gui.set_enabled(self.content, not self._is_hidden)
+end
+
+
+function M:is_hidden()
+	return self._is_hidden
 end
 
 

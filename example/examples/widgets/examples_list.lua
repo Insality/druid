@@ -9,7 +9,7 @@ function M.get_examples()
 			template = "hover_hint_example",
 			root = "hover_hint_example/root",
 			code_url = "example/examples/widgets/hover_hint/hover_hint_example.lua",
-			component_class = require("example.examples.widgets.hover_hint.hover_hint_example"),
+			widget_class = require("example.examples.widgets.hover_hint.hover_hint_example"),
 		},
 		{
 			name_id = "ui_example_widget_properties_panel",
@@ -19,7 +19,7 @@ function M.get_examples()
 			code_url = "example/examples/widgets/properties_panel/properties_panel.lua",
 			widget_class = require("druid.widget.properties_panel.properties_panel"),
 			on_create = function(instance, output_list)
-				---@cast instance widget.properties_panel
+				---@cast instance druid.widget.properties_panel
 
 				instance:add_button(function(button)
 					button:set_text_button("Button")
@@ -83,7 +83,7 @@ function M.get_examples()
 			template = "property_button",
 			root = "property_button/root",
 			code_url = "example/components/properties_panel/properties/property_button.lua",
-			component_class = require("example.components.properties_panel.properties.property_button"),
+			widget_class = require("example.components.properties_panel.properties.property_button"),
 			on_create = function(instance, output_list)
 				---@cast instance property_button
 				instance.button.on_click:subscribe(function()
@@ -105,7 +105,7 @@ function M.get_examples()
 			template = "property_slider",
 			root = "property_slider/root",
 			code_url = "example/components/properties_panel/properties/property_slider.lua",
-			component_class = require("example.components.properties_panel.properties.property_slider"),
+			widget_class = require("example.components.properties_panel.properties.property_slider"),
 			on_create = function(instance, output_list)
 				---@cast instance property_slider
 				instance.slider.on_change_value:subscribe(function(_, value)
@@ -119,7 +119,7 @@ function M.get_examples()
 			template = "property_checkbox",
 			root = "property_checkbox/root",
 			code_url = "example/components/properties_panel/properties/property_checkbox.lua",
-			component_class = require("example.components.properties_panel.properties.property_checkbox"),
+			widget_class = require("example.components.properties_panel.properties.property_checkbox"),
 			on_create = function(instance, output_list)
 				---@cast instance property_checkbox
 				instance.button.on_click:subscribe(function()
@@ -132,10 +132,10 @@ function M.get_examples()
 			information_text_id = "ui_example_widget_memory_panel_description",
 			template = "memory_panel",
 			root = "memory_panel/root",
-			code_url = "druid.widget.memory_panel.memory_panel.lua",
+			code_url = "druid/widget/memory_panel/memory_panel.lua",
 			widget_class = require("druid.widget.memory_panel.memory_panel"),
 			on_create = function(instance, output_list)
-				---@cast instance widget.memory_panel
+				---@cast instance druid.widget.memory_panel
 				print("Memory panel created")
 			end,
 		},
@@ -144,10 +144,10 @@ function M.get_examples()
 			information_text_id = "ui_example_widget_fps_panel_description",
 			template = "fps_panel",
 			root = "fps_panel/root",
-			code_url = "druid.widget.fps_panel.fps_panel.lua",
+			code_url = "druid/widget/fps_panel/fps_panel.lua",
 			widget_class = require("druid.widget.fps_panel.fps_panel"),
 			on_create = function(instance, output_list)
-				---@cast instance widget.fps_panel
+				---@cast instance druid.widget.fps_panel
 				print("FPS panel created")
 			end,
 		},
@@ -156,14 +156,14 @@ function M.get_examples()
 			information_text_id = "ui_example_widget_mini_graph_description",
 			template = "mini_graph",
 			root = "mini_graph/root",
-			code_url = "druid.widget.mini_graph.mini_graph.lua",
+			code_url = "druid/widget/mini_graph/mini_graph.lua",
 			widget_class = require("druid.widget.mini_graph.mini_graph"),
 			on_create = function(instance, output_list)
-				---@cast instance widget.mini_graph
+				---@cast instance druid.widget.mini_graph
 				instance:set_samples(50)
 			end,
 			properties_control = function(instance, properties_panel)
-				---@cast instance widget.mini_graph
+				---@cast instance druid.widget.mini_graph
 				properties_panel:add_slider("value", 0.5, function(value)
 					-- Remap to -1, 2
 					value = value * 3 - 1
@@ -177,6 +177,14 @@ function M.get_examples()
 					end
 				end)
 			end,
+		},
+		{
+			name_id = "ui_example_widget_tiling_node",
+			information_text_id = "ui_example_widget_tiling_node_description",
+			template = "example_tiling_node",
+			root = "example_tiling_node/root",
+			code_url = "example/examples/widgets/tiling_node/example_tiling_node.lua",
+			widget_class = require("example.examples.widgets.tiling_node.example_tiling_node"),
 		}
 	}
 end

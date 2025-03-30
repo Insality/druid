@@ -1,133 +1,33 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component to handle component's position by row and columns.
--- <b># Overview #</b>
---
--- The Static Grid component allows for positioning components in rows and columns.
--- It provides a static grid layout with constant node sizes, allowing for pre-calculated
--- node positions and the option to include gaps between nodes.
---
--- <b># Notes #</b>
---
--- • In a static grid, the node size remains constant, enabling the calculation of node
--- positions before placement. If you want add gaps between nodes, increase the root prefab size,
--- including the padding and margin.
---
--- • The static grid can automatically shift elements when nodes are added or removed.
---
--- • When a node is added, the grid will set the node's parent to the specified parent_node.
---
--- • You can obtain an array of positions for each element, which can be used to set
--- points of interest in a scroll component.
---
--- • The size of all elements can be retrieved for setting up the size in a scroll component.
---
--- • The grid can be bound to a scroll component for automatic resizing of the scroll content size.
---
--- • The pivot of the parent_node affects the node placement within the grid.
---
--- • A prefab node is used to determine the node size and anchor.
---
--- • You can specify a position_function for animations using the
--- _static_grid:set_position_function(node, pos) callback. The default position function is gui.set_position().
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_grid" target="_blank"><b>Example Link</b></a>
--- @module StaticGrid
--- @within BaseComponent
--- @alias druid.grid
-
---- On item add callback(self, node, index)
--- @tfield event on_add_item event
-
---- On item remove callback(self, index)
--- @tfield event on_remove_item event
-
---- On item add, remove or change in_row callback(self, index|nil)
--- @tfield event on_change_items event
-
---- On grid clear callback(self)
--- @tfield event on_clear event
-
---- On update item positions callback(self)
--- @tfield event on_update_positions event
-
---- Parent gui node
--- @tfield node parent
-
---- List of all grid nodes
--- @tfield node[] nodes
-
---- The first index of node in grid
--- @tfield number first_index
-
---- The last index of node in grid
--- @tfield number last_index
-
---- Item anchor [0..1]
--- @tfield vector3 anchor
-
---- Item pivot [-0.5..0.5]
--- @tfield vector3 pivot
-
---- Item size
--- @tfield vector3 node_size
-
---- The size of item content
--- @tfield vector4 border
-
----
-
 local const = require("druid.const")
 local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
----@class druid.grid: druid.base_component
----@field on_add_item event
----@field on_remove_item event
----@field on_change_items event
----@field on_clear event
----@field on_update_positions event
----@field parent node
----@field nodes node[]
----@field first_index number
----@field last_index number
----@field anchor vector3
----@field pivot vector3
----@field node_size vector3
----@field border vector4
----@field in_row number
----@field style table
-local M = component.create("static_grid")
+---@class druid.grid.style
+---@field IS_DYNAMIC_NODE_POSES boolean|nil If true, always center grid content as grid pivot sets. Default: false
+---@field IS_ALIGN_LAST_ROW boolean|nil If true, always align last row of the grid as grid pivot sets. Default: false
+
+---The component for manage the nodes position in the grid with various options
+---@class druid.grid: druid.component
+---@field on_add_item event Trigger on add item event, fun(self, item, index)
+---@field on_remove_item event Trigger on remove item event, fun(self, index)
+---@field on_change_items event Trigger on change items event, fun(self, index)
+---@field on_clear event Trigger on clear event, fun(self)
+---@field on_update_positions event Trigger on update positions event, fun(self)
+---@field parent node Parent node
+---@field nodes node[] Nodes array
+---@field first_index number First index
+---@field last_index number Last index
+---@field anchor vector3 Anchor
+---@field pivot vector3 Pivot
+---@field node_size vector3 Node size
+---@field border vector4 Border
+---@field in_row number In row
+---@field style druid.grid.style Style
+local M = component.create("grid")
 
 
-local function _extend_border(border, pos, size, pivot)
-	local left = pos.x - size.x/2 - (size.x * pivot.x)
-	local right = pos.x + size.x/2 - (size.x * pivot.x)
-	local top = pos.y + size.y/2 - (size.y * pivot.y)
-	local bottom = pos.y - size.y/2 - (size.y * pivot.y)
-
-	border.x = math.min(border.x, left)
-	border.y = math.max(border.y, top)
-	border.z = math.max(border.z, right)
-	border.w = math.min(border.w, bottom)
-end
-
-
---- Component style params.
--- You can override this component styles params in druid styles table
--- or create your own style
--- @table style
--- @tfield boolean|nil IS_DYNAMIC_NODE_POSES If true, always center grid content as grid pivot sets. Default: false
--- @tfield boolean|nil IS_ALIGN_LAST_ROW If true, always align last row of the grid as grid pivot sets. Default: false
-function M:on_style_change(style)
-	self.style = {}
-	self.style.IS_DYNAMIC_NODE_POSES = style.IS_DYNAMIC_NODE_POSES or false
-	self.style.IS_ALIGN_LAST_ROW = style.IS_ALIGN_LAST_ROW or false
-end
-
-
---- The StaticGrid constructor
+---The constructor for the grid component
 ---@param parent string|node The GUI Node container, where grid's items will be placed
 ---@param element node Element prefab. Need to get it size
 ---@param in_row number|nil How many nodes in row can be placed. By default 1
@@ -162,10 +62,20 @@ function M:init(parent, element, in_row)
 end
 
 
+---@private
+---@param style druid.grid.style
+function M:on_style_change(style)
+	self.style = {
+		IS_DYNAMIC_NODE_POSES = style.IS_DYNAMIC_NODE_POSES or false,
+		IS_ALIGN_LAST_ROW = style.IS_ALIGN_LAST_ROW or false,
+	}
+end
+
+
 local _temp_pos = vmath.vector3(0)
---- Return pos for grid node index
+---Return pos for grid node index
 ---@param index number The grid element index
----@return vector3 @Node position
+---@return vector3 position Node position
 function M:get_pos(index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
@@ -180,9 +90,9 @@ function M:get_pos(index)
 end
 
 
---- Return index for grid pos
+---Return grid index by position
 ---@param pos vector3 The node position in the grid
----@return number The node index
+---@return number index The node index
 function M:get_index(pos)
 	-- Offset to left-top corner from node pivot
 	local node_offset_x = self.node_size.x * (-0.5 + self.node_pivot.x)
@@ -199,7 +109,7 @@ function M:get_index(pos)
 end
 
 
---- Return grid index by node
+---Return grid index by node
 ---@param node node The gui node in the grid
 ---@return number|nil index The node index
 function M:get_index_by_node(node)
@@ -213,12 +123,13 @@ function M:get_index_by_node(node)
 end
 
 
+---@private
 function M:on_layout_change()
 	self:_update(true)
 end
 
 
---- Set grid anchor. Default anchor is equal to anchor of grid parent node
+---Set grid anchor. Default anchor is equal to anchor of grid parent node
 ---@param anchor vector3 Anchor
 function M:set_anchor(anchor)
 	self.anchor = anchor
@@ -226,23 +137,24 @@ function M:set_anchor(anchor)
 end
 
 
---- Update grid content
+---Instantly update the grid content
+---@return druid.grid self Current grid instance
 function M:refresh()
 	self:_update(true)
+
+	return self
 end
 
 
+---Set grid pivot
+---@param pivot constant The new pivot
+---@return druid.grid self Current grid instance
 function M:set_pivot(pivot)
 	local prev_pivot = helper.get_pivot_offset(gui.get_pivot(self.parent))
 	self.pivot = helper.get_pivot_offset(pivot)
 
 	local width = gui.get(self.parent, "size.x")
 	local height = gui.get(self.parent, "size.y")
-	--local pos_offset = vmath.vector3(
-	--	width * (self.pivot.x - prev_pivot.x),
-	--	height * (self.pivot.y - prev_pivot.y),
-	--	0
-	--)
 
 	local position = gui.get_position(self.parent)
 	position.x = position.x + width * (self.pivot.x - prev_pivot.x)
@@ -260,14 +172,17 @@ function M:set_pivot(pivot)
 	)
 
 	self:_update(true)
+
+	return self
 end
 
 
---- Add new item to the grid
+---Add new item to the grid
 ---@param item node GUI node
 ---@param index number|nil The item position. By default add as last item
 ---@param shift_policy number|nil How shift nodes, if required. Default: const.SHIFT.RIGHT
 ---@param is_instant boolean|nil If true, update node positions instantly
+---@return druid.grid self Current grid instance
 function M:add(item, index, shift_policy, is_instant)
 	index = index or ((self.last_index or 0) + 1)
 
@@ -284,12 +199,15 @@ function M:add(item, index, shift_policy, is_instant)
 
 	self.on_add_item:trigger(self:get_context(), item, index)
 	self.on_change_items:trigger(self:get_context(), index)
+
+	return self
 end
 
 
---- Set new items to the grid. All previous items will be removed
+---Set new items to the grid. All previous items will be removed
 ---@param nodes node[] The new grid nodes
--- @tparam[opt=false] boolean is_instant If true, update node positions instantly
+---@param is_instant boolean|nil If true, update node positions instantly
+---@return druid.grid self Current grid instance
 function M:set_items(nodes, is_instant)
 	self.nodes = nodes
 	for index = 1, #nodes do
@@ -300,14 +218,16 @@ function M:set_items(nodes, is_instant)
 	self:_update(is_instant)
 
 	self.on_change_items:trigger(self:get_context())
+
+	return self
 end
 
 
---- Remove the item from the grid. Note that gui node will be not deleted
+---Remove the item from the grid. Note that gui node will be not deleted
 ---@param index number The grid node index to remove
 ---@param shift_policy number|nil How shift nodes, if required. Default: const.SHIFT.RIGHT
 ---@param is_instant boolean|nil If true, update node positions instantly
----@return node The deleted gui node from grid
+---@return node node The deleted gui node from grid
 function M:remove(index, shift_policy, is_instant)
 	assert(self.nodes[index], "No grid item at given index " .. index)
 
@@ -323,8 +243,8 @@ function M:remove(index, shift_policy, is_instant)
 end
 
 
---- Return grid content size
----@return vector3 The grid content size
+---Return grid content size
+---@return vector3 size The grid content size
 function M:get_size()
 	return vmath.vector3(
 		self.border.z - self.border.x,
@@ -333,6 +253,9 @@ function M:get_size()
 end
 
 
+---Return grid content size for given count of nodes
+---@param count number The count of nodes
+---@return vector3 size The grid content size
 function M:get_size_for(count)
 	if not count or count == 0 then
 		return vmath.vector3(0)
@@ -342,10 +265,10 @@ function M:get_size_for(count)
 
 	local size = self.node_size
 	local pivot = self.node_pivot
-	_extend_border(border, self:get_pos(1), size, pivot)
-	_extend_border(border, self:get_pos(count), size, pivot)
+	self:_extend_border(border, self:get_pos(1), size, pivot)
+	self:_extend_border(border, self:get_pos(count), size, pivot)
 	if count >= self.in_row then
-		_extend_border(border, self:get_pos(self.in_row), size, pivot)
+		self:_extend_border(border, self:get_pos(self.in_row), size, pivot)
 	end
 
 	return vmath.vector3(
@@ -355,15 +278,15 @@ function M:get_size_for(count)
 end
 
 
---- Return grid content borders
----@return vector4 The grid content borders
+---Return grid content borders
+---@return vector4 borders The grid content borders
 function M:get_borders()
 	return self.border
 end
 
 
---- Return array of all node positions
----@return vector3[] All grid node positions
+---Return array of all node positions
+---@return vector3[] positions All grid node positions
 function M:get_all_pos()
 	local result = {}
 	for i, node in pairs(self.nodes) do
@@ -374,10 +297,10 @@ function M:get_all_pos()
 end
 
 
---- Change set position function for grid nodes. It will call on
+---Change set position function for grid nodes. It will call on
 -- update poses on grid elements. Default: gui.set_position
 ---@param callback function Function on node set position
----@return druid.grid Current grid instance
+---@return druid.grid self Current grid instance
 function M:set_position_function(callback)
 	self._set_position_function = callback or gui.set_position
 
@@ -385,9 +308,9 @@ function M:set_position_function(callback)
 end
 
 
---- Clear grid nodes array. GUI nodes will be not deleted!
+---Clear grid nodes array. GUI nodes will be not deleted!
 -- If you want to delete GUI nodes, use static_grid.nodes array before grid:clear
----@return druid.grid Current grid instance
+---@return druid.grid self Current grid instance
 function M:clear()
 	self.border.x = 0
 	self.border.y = 0
@@ -404,8 +327,8 @@ function M:clear()
 end
 
 
---- Return StaticGrid offset, where StaticGrid content starts.
----@return vector3 The StaticGrid offset
+---Return StaticGrid offset, where StaticGrid content starts.
+---@return vector3 offset The StaticGrid offset
 function M:get_offset()
 	local borders = self:get_borders()
 	local size = self:get_size()
@@ -419,9 +342,9 @@ function M:get_offset()
 end
 
 
---- Set new in_row elements for grid
+---Set new in_row elements for grid
 ---@param in_row number The new in_row value
----@return druid.grid Current grid instance
+---@return druid.grid self Current grid instance
 function M:set_in_row(in_row)
 	self.in_row = in_row
 	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
@@ -437,10 +360,10 @@ function M:set_in_row(in_row)
 end
 
 
---- Set new node size for grid
--- @tparam[opt] number width The new node width
--- @tparam[opt] number height The new node height
----@return druid.grid Current grid instance
+---Set new node size for grid
+---@param width number|nil The new node width
+---@param height number|nil The new node height
+---@return druid.grid self Current grid instance
 function M:set_item_size(width, height)
 	if width then
 		self.node_size.x = width
@@ -461,7 +384,7 @@ function M:set_item_size(width, height)
 end
 
 
---- Sort grid nodes by custom comparator function
+---Sort grid nodes by custom comparator function
 ---@param comparator function The comparator function. (a, b) -> boolean
 ---@return druid.grid self Current grid instance
 function M:sort_nodes(comparator)
@@ -472,7 +395,7 @@ function M:sort_nodes(comparator)
 end
 
 
---- Update grid inner state
+---Update grid inner state
 ---@param is_instant boolean|nil If true, node position update instantly, otherwise with set_position_function callback
 ---@private
 function M:_update(is_instant)
@@ -482,7 +405,7 @@ function M:_update(is_instant)
 end
 
 
---- Update first and last indexes of grid nodes
+---Update first and last indexes of grid nodes
 ---@private
 function M:_update_indexes()
 	self.first_index = nil
@@ -497,7 +420,7 @@ function M:_update_indexes()
 end
 
 
---- Update grid content borders, recalculate min and max values
+---Update grid content borders, recalculate min and max values
 ---@private
 function M:_update_borders()
 	if not self.first_index then
@@ -510,12 +433,12 @@ function M:_update_borders()
 	local size = self.node_size
 	local pivot = self.node_pivot
 	for index, node in pairs(self.nodes) do
-		_extend_border(self.border, self:get_pos(index), size, pivot)
+		self:_extend_border(self.border, self:get_pos(index), size, pivot)
 	end
 end
 
 
---- Update grid nodes position
+---Update grid nodes position
 ---@param is_instant boolean|nil If true, node position update instantly, otherwise with set_position_function callback
 ---@private
 function M:_update_pos(is_instant)
@@ -537,8 +460,8 @@ function M:_update_pos(is_instant)
 end
 
 
---- Return elements offset for correct posing nodes. Correct posing at
--- parent pivot node (0:0) with adjusting of node sizes and anchoring
+---Return elements offset for correct posing nodes. Correct posing at
+---parent pivot node (0:0) with adjusting of node sizes and anchoring
 ---@return vector3 The offset vector
 ---@private
 function M:_get_zero_offset()
@@ -555,7 +478,7 @@ function M:_get_zero_offset()
 end
 
 
---- Return offset x for last row in grid. Used to align this row accorting to grid's anchor
+---Return offset x for last row in grid. Used to align this row accorting to grid's anchor
 ---@return number The offset x value
 ---@private
 function M:_get_zero_offset_x(row_index)
@@ -573,6 +496,23 @@ function M:_get_zero_offset_x(row_index)
 	end
 
 	return offset_x
+end
+
+
+---@param border vector4 Will be updated with new border values
+---@param pos vector3
+---@param size vector3
+---@param pivot vector3
+function M:_extend_border(border, pos, size, pivot)
+	local left = pos.x - size.x/2 - (size.x * pivot.x)
+	local right = pos.x + size.x/2 - (size.x * pivot.x)
+	local top = pos.y + size.y/2 - (size.y * pivot.y)
+	local bottom = pos.y - size.y/2 - (size.y * pivot.y)
+
+	border.x = math.min(border.x, left)
+	border.y = math.max(border.y, top)
+	border.z = math.max(border.z, right)
+	border.w = math.min(border.w, bottom)
 end
 
 

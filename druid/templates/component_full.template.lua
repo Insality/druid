@@ -1,6 +1,6 @@
 local component = require("druid.component")
 
----@class new_component: druid.base_component
+---@class new_component: druid.component
 local M = component.create("new_component")
 
 -- Component constructor. Template name and nodes are optional. Pass it if you use it in your component

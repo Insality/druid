@@ -1,7 +1,7 @@
 local helper = require("druid.helper")
 local mini_graph = require("druid.widget.mini_graph.mini_graph")
 
----@class widget.fps_panel: druid.widget
+---@class druid.widget.fps_panel: druid.widget
 ---@field root node
 local M = {}
 
@@ -9,6 +9,7 @@ local TARGET_FPS = sys.get_config_int("display.update_frequency", 60)
 if TARGET_FPS == 0 then
 	TARGET_FPS = 60
 end
+
 
 function M:init()
 	self.root = self:get_node("root")
@@ -40,8 +41,11 @@ function M:init()
 		self:push_fps_value()
 	end)
 
-	self.container = self.druid:new_container(self.root)
-	self.container:add_container(self.mini_graph.container)
+	--self.container = self.druid:new_container(self.root)
+	--self.container:add_container(self.mini_graph.container)
+	--local container_content = self.container:add_container("content")
+	--container_content:add_container("text_min_fps")
+	--container_content:add_container("text_fps")
 end
 
 

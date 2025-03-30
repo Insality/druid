@@ -1,7 +1,12 @@
 local color = require("druid.color")
 local helper = require("druid.helper")
 
----@class widget.mini_graph: druid.widget
+---Widget to display a several lines with different height in a row
+---Init, set amount of samples and max value of value means that the line will be at max height
+---Use `push_line_value` to add a new value to the line
+---Or `set_line_value` to set a value to the line by index
+---Setup colors inside template file (at minimum and maximum)
+---@class druid.widget.mini_graph: druid.widget
 local M = {}
 
 local SIZE_Y = hash("size.y")
@@ -11,6 +16,7 @@ function M:init()
 	self.root = self:get_node("root")
 	self.text_header = self.druid:new_text("text_header")
 
+	self.icon_drag = self:get_node("icon_drag")
 	self.druid:new_drag("header", self.on_drag_widget)
 	self.druid:new_button("icon_drag", self.toggle_hide)
 		:set_style(nil)
@@ -34,7 +40,11 @@ function M:init()
 	self.values = {}
 
 	self.container = self.druid:new_container(self.root)
-	self.container:add_container("header")
+	local container_header = self.container:add_container("header", "stretch_x")
+	container_header:add_container("text_header")
+	container_header:add_container("icon_drag")
+
+	self.container:add_container("content", "stretch_x")
 	self.default_size = self.container:get_size()
 end
 
@@ -75,9 +85,9 @@ end
 
 
 ---Set normalized to control the color of the line
----	for index = 1, mini_graph:get_samples() do
----		mini_graph:set_line_value(index, math.random())
----	end
+---		for index = 1, mini_graph:get_samples() do
+---			mini_graph:set_line_value(index, math.random())
+---		end
 ---@param index number
 ---@param value number The normalized value from 0 to 1
 function M:set_line_value(index, value)
@@ -141,6 +151,10 @@ end
 
 
 function M:on_drag_widget(dx, dy)
+	if not gui.is_enabled(self.icon_drag) then
+		return
+	end
+
 	local position = self.container:get_position()
 	self.container:set_position(position.x + dx, position.y + dy)
 end

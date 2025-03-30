@@ -23,6 +23,7 @@
 	"ui_type_next": "Next Type",
 	"ui_adjust_next": "Next Adjust",
 	"ui_enabled": "Enabled",
+	"ui_item_size": "Item Size",
 
 	"ui_examples_basic": "Basic",
 	"ui_examples_data_list": "Data List",
@@ -183,11 +184,20 @@
 	"ui_example_widget_fps_panel": "FPS Panel",
 	"ui_example_widget_fps_panel_description": "Here is a example of FPS panel usage",
 
+	"ui_example_widget_mini_graph": "Mini Graph",
+	"ui_example_widget_mini_graph_description": "Here is a example of mini graph usage",
+
 	"ui_example_widget_properties_panel": "Properties Panel",
 	"ui_example_widget_properties_panel_description": "Here is a example of properties panel usage",
 
+	"ui_example_widget_property_input": "Property Input",
+	"ui_example_widget_property_input_description": "Here is a example of property input usage",
+
 	"ui_example_gamepad_tester": "Gamepad Tester",
 	"ui_example_gamepad_tester_description": "Test your gamepad here to bind buttons and axes",
+
+	"ui_example_widget_tiling_node": "Tiling Node",
+	"ui_example_widget_tiling_node_description": "Here is a example of tiling node usage",
 
 	"ui_example_on_screen_control": "On Screen Control",
 	"ui_example_on_screen_control_description": "Here is a example of on screen control. The on_screen_input here is a joystick with a callback as Druid component",

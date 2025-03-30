@@ -4,9 +4,9 @@ local storage = require("saver.storage")
 
 local examples_list_view_item = require("example.components.examples_list_view.examples_list_view_item")
 
----@class examples_list_view: druid.base_component
+---@class examples_list_view: druid.component
 ---@field root druid.container
----@field druid druid_instance
+---@field druid druid.instance
 ---@field scroll druid.scroll
 ---@field grid druid.grid
 local M = component.create("examples_list_view")
@@ -46,6 +46,10 @@ function M:init(template, nodes)
 	end)
 end
 
+---@class example_instance: druid.widget
+---@field on_example_created fun(self: example_instance, output_list: output_list)?
+---@field properties_control fun(self: example_instance, properties_panel: properties_panel)?
+---@field get_debug_info fun(self: example_instance):string?
 
 ---@param examples druid.examples
 ---@param druid_example druid.example @The main GUI component
@@ -92,9 +96,10 @@ function M:add_example(examples, druid_example)
 			local instance
 			if example_data.widget_class then
 				instance = druid_example.druid:new_widget(example_data.widget_class, example_data.template)
-			else
+			elseif example_data.component_class then -- Keep for backward compatibility
 				instance = druid_example.druid:new(example_data.component_class, example_data.template)
 			end
+			---@cast instance example_instance
 
 			self.selected_example = {
 				data = example_data,
@@ -105,7 +110,9 @@ function M:add_example(examples, druid_example)
 			item:set_selected(true)
 
 			druid_example.output_list:clear()
-			if example_data.on_create then
+			if instance.on_example_created then
+				instance:on_example_created(druid_example.output_list)
+			elseif example_data.on_create then
 				example_data.on_create(instance, druid_example.output_list)
 			end
 
@@ -118,7 +125,11 @@ function M:add_example(examples, druid_example)
 			druid_example.example_scene:set_gui_path(example_data.code_url)
 
 			druid_example.properties_panel:clear()
-			if example_data.properties_control then
+
+			-- First we want to chec
+			if instance.properties_control then
+				instance:properties_control(druid_example.properties_panel)
+			elseif example_data.properties_control then
 				example_data.properties_control(instance, druid_example.properties_panel)
 			end
 
@@ -164,6 +175,13 @@ end
 function M:update_debug_info()
 	if not self.selected_example then
 		self.on_debug_info:trigger("")
+		return
+	end
+
+	local instance = self.selected_example.instance
+	if instance.get_debug_info then
+		local info = instance:get_debug_info()
+		self.on_debug_info:trigger(info)
 		return
 	end
 

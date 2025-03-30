@@ -1,10 +1,10 @@
 local component = require("druid.component")
 
----@class output_list: druid.base_component
+---@class output_list: druid.component
 ---@field root druid.container
 ---@field text_header druid.text
 ---@field scroll druid.scroll
----@field druid druid_instance
+---@field druid druid.instance
 local M = component.create("output_list")
 
 ---@param template string

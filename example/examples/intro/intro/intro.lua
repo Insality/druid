@@ -1,15 +1,13 @@
-local component = require("druid.component")
 local panthera = require("panthera.panthera")
 local intro_panthera = require("example.examples.intro.intro.intro_panthera")
 
----@class intro: druid.base_component
+---@class examples.intro: druid.widget
 ---@field root node
-local M = component.create("intro")
+---@field animation panthera.animation
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
+
+function M:init()
 	self.root = self:get_node("root")
 
 	self.druid:new_rich_text("text_hello", "He<color=#E48155>ll</color>o!")
@@ -24,7 +22,7 @@ function M:init(template, nodes)
 		:add("sponsor_kofi")
 		:set_margin(8, 0)
 
-	self.animation = panthera.create_gui(intro_panthera, self:get_template(), nodes)
+	self.animation = panthera.create_gui(intro_panthera, self:get_template(), self:get_nodes())
 	panthera.play(self.animation, "idle", { is_loop = true })
 end
 

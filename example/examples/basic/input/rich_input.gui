@@ -20,6 +20,42 @@ nodes {
   template: "/example/templates/rich_input.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "rich_input/root"
+  parent: "rich_input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_input/button"
+  parent: "rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_input/placeholder_text"
+  parent: "rich_input/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_input/input_text"
+  parent: "rich_input/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_input/cursor_node"
+  parent: "rich_input/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_input/cursor_text"
+  parent: "rich_input/cursor_node"
+  template_node_child: true
+}
+nodes {
   position {
     y: -150.0
   }
@@ -28,6 +64,42 @@ nodes {
   parent: "root"
   inherit_alpha: true
   template: "/example/templates/rich_input.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_input_2/root"
+  parent: "rich_input_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_input_2/button"
+  parent: "rich_input_2/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_input_2/placeholder_text"
+  parent: "rich_input_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_input_2/input_text"
+  parent: "rich_input_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_input_2/cursor_node"
+  parent: "rich_input_2/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_input_2/cursor_text"
+  parent: "rich_input_2/cursor_node"
+  template_node_child: true
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

@@ -77,6 +77,18 @@ nodes {
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "button1/root"
+  parent: "button1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button1/text"
+  parent: "button1/root"
+  template_node_child: true
+}
+nodes {
   position {
     y: -300.0
   }
@@ -85,6 +97,18 @@ nodes {
   parent: "scroll_content"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button2/root"
+  parent: "button2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button2/text"
+  parent: "button2/root"
+  template_node_child: true
 }
 nodes {
   position {
@@ -97,6 +121,18 @@ nodes {
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "button3/root"
+  parent: "button3"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button3/text"
+  parent: "button3/root"
+  template_node_child: true
+}
+nodes {
   position {
     y: -700.0
   }
@@ -105,6 +141,18 @@ nodes {
   parent: "scroll_content"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button4/root"
+  parent: "button4"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button4/text"
+  parent: "button4/root"
+  template_node_child: true
 }
 nodes {
   position {
@@ -117,6 +165,18 @@ nodes {
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "button5/root"
+  parent: "button5"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button5/text"
+  parent: "button5/root"
+  template_node_child: true
+}
+nodes {
   position {
     y: -1100.0
   }
@@ -125,6 +185,18 @@ nodes {
   parent: "scroll_content"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button6/root"
+  parent: "button6"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button6/text"
+  parent: "button6/root"
+  template_node_child: true
 }
 nodes {
   position {
@@ -137,6 +209,18 @@ nodes {
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "button7/root"
+  parent: "button7"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button7/text"
+  parent: "button7/root"
+  template_node_child: true
+}
+nodes {
   position {
     y: -1500.0
   }
@@ -145,6 +229,18 @@ nodes {
   parent: "scroll_content"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button8/root"
+  parent: "button8"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button8/text"
+  parent: "button8/root"
+  template_node_child: true
 }
 nodes {
   position {
@@ -157,6 +253,18 @@ nodes {
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "button9/root"
+  parent: "button9"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button9/text"
+  parent: "button9/root"
+  template_node_child: true
+}
+nodes {
   position {
     y: -1900.0
   }
@@ -165,6 +273,18 @@ nodes {
   parent: "scroll_content"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button10/root"
+  parent: "button10"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button10/text"
+  parent: "button10/root"
+  template_node_child: true
 }
 nodes {
   position {
@@ -177,6 +297,18 @@ nodes {
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "button11/root"
+  parent: "button11"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button11/text"
+  parent: "button11/root"
+  template_node_child: true
+}
+nodes {
   position {
     y: -2300.0
   }
@@ -187,6 +319,18 @@ nodes {
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
+  type: TYPE_BOX
+  id: "button12/root"
+  parent: "button12"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button12/text"
+  parent: "button12/root"
+  template_node_child: true
+}
+nodes {
   position {
     y: -2500.0
   }
@@ -195,6 +339,18 @@ nodes {
   parent: "scroll_content"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button13/root"
+  parent: "button13"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "button13/text"
+  parent: "button13/root"
+  template_node_child: true
 }
 nodes {
   position {

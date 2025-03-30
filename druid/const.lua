@@ -79,8 +79,7 @@ M.LAYOUT_MODE = {
 	STRETCH = gui.ADJUST_STRETCH,
 }
 
-M.SYS_INFO = sys.get_sys_info()
-M.CURRENT_SYSTEM_NAME = M.SYS_INFO.system_name
+M.CURRENT_SYSTEM_NAME = sys.get_sys_info().system_name
 
 M.OS = {
 	ANDROID = "Android",
@@ -113,6 +112,5 @@ M.SIDE = {
 	X = "x",
 	Y = "y"
 }
-
 
 return M

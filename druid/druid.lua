@@ -1,9 +1,13 @@
+local event = require("event.event")
 local events = require("event.events")
 local settings = require("druid.system.settings")
 local druid_instance = require("druid.system.druid_instance")
 
 local default_style = require("druid.styles.default.style")
 
+
+---Entry point for Druid UI Framework.
+---Create a new Druid instance and adjust the Druid settings here.
 ---@class druid
 local M = {}
 
@@ -11,16 +15,13 @@ local M = {}
 ---Create a new Druid instance for creating GUI components.
 ---@param context table The Druid context. Usually, this is the self of the gui_script. It is passed into all Druid callbacks.
 ---@param style table|nil The Druid style table to override style parameters for this Druid instance.
----@return druid_instance druid_instance The new Druid instance
+---@return druid.instance druid_instance The new Druid instance
 function M.new(context, style)
 	if settings.default_style == nil then
 		M.set_default_style(default_style)
 	end
 
-	local new_instance = setmetatable({}, { __index = druid_instance })
-	new_instance:initialize(context, style)
-
-	return new_instance
+	return druid_instance.create_druid_instance(context, style)
 end
 
 
@@ -31,6 +32,7 @@ end
 ---The default way to create component is `druid_instance:new(component_class, ...)`.
 ---@param name string Module name
 ---@param module table Lua table with component
+---@deprecated
 function M.register(name, module)
 	druid_instance["new_" .. name] = function(self, ...)
 		return druid_instance.new(self, module, ...)
@@ -80,6 +82,93 @@ end
 ---It will notify all Druid instances to update the lang text components.
 function M.on_language_change()
 	events.trigger("druid.language_change")
+end
+
+
+local REGISTERED_GUI_WIDGETS = {}
+
+---Set a widget to the current game object. The game object can acquire the widget by calling `bindings.get_widget`
+---It wraps with events only top level functions cross-context, so you will have no access to nested widgets functions
+---Only one widget can be set per game object.
+---@param widget druid.widget
+---@return druid.widget
+local function wrap_widget(widget)
+	-- Make a copy of the widget with all functions wrapped in events
+	-- It makes available to call gui functions from game objects
+	local wrapped_widget = setmetatable({}, { __index = widget })
+	local parent_table = getmetatable(widget).__index
+
+	-- Go through all functions and wrap them in events
+	for key, value in pairs(parent_table) do
+		if type(value) == "function" then
+			wrapped_widget[key] = event.create(function(_, ...)
+				return value(widget, ...)
+			end)
+		end
+	end
+
+	return wrapped_widget
+end
+
+
+---Get a binded widget to the current game object.
+---		msg.url(nil, nil, "go_widget") -- current game object
+---		msg.url(nil, object_url, "go_widget") -- other game object
+---@generic T: druid.widget
+---@param widget_class T The class of the widget to return
+---@param gui_url url GUI url
+---@return T
+function M.get_widget(widget_class, gui_url)
+	gui_url = gui_url or msg.url()
+	local guis = REGISTERED_GUI_WIDGETS[gui_url.socket]
+	if not guis then
+		return nil
+	end
+
+	for index = 1, #guis do
+		local gui = guis[index]
+		if gui.fragment == gui_url.fragment and gui.path == gui_url.path then
+			return gui.new_widget:trigger(widget_class)
+		end
+	end
+
+	return nil
+end
+
+
+---Register a widget to the current game object.
+---@param druid druid.instance The druid instance to register
+function M.register_druid_as_widget(druid)
+	local gui_url = msg.url()
+	REGISTERED_GUI_WIDGETS[gui_url.socket] = REGISTERED_GUI_WIDGETS[gui_url.socket] or {}
+	table.insert(REGISTERED_GUI_WIDGETS[gui_url.socket], {
+		path = gui_url.path,
+		fragment = gui_url.fragment,
+		new_widget = event.create(function(widget_class)
+			return wrap_widget(druid:new_widget(widget_class))
+		end),
+	})
+end
+
+
+---Unregister a druid instance from the current game object.
+function M.unregister_druid_as_widget()
+	local gui_url = msg.url()
+	local socket = gui_url.socket
+	local path = gui_url.path
+	local fragment = gui_url.fragment
+
+	for index = 1, #REGISTERED_GUI_WIDGETS[socket] do
+		local gui = REGISTERED_GUI_WIDGETS[socket][index]
+		if gui.path == path and gui.fragment == fragment then
+			table.remove(REGISTERED_GUI_WIDGETS[socket], index)
+			break
+		end
+	end
+
+	if #REGISTERED_GUI_WIDGETS[socket] == 0 then
+		REGISTERED_GUI_WIDGETS[socket] = nil
+	end
 end
 
 
