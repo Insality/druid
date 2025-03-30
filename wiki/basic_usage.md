@@ -1,8 +1,12 @@
 # Basic Usage
 
-To use **Druid**, begin by creating a **Druid** instance to instantiate components and include the main functions of **Druid**: *update*, *final*, *on_message*, and *on_input*.
+This guide will help you get started with **Druid** UI framework. We'll cover the basic setup and usage patterns.
 
-Create a new `*.gui_script` file and add the following code. It's a basic required template for **Druid** to work in your GUI scripts.
+## Initial Setup
+
+To use **Druid**, you need to create a **Druid** instance in your GUI script. This instance will handle all component management and core functionality.
+
+Create a new `*.gui_script` file with the following template:
 
 ```lua
 local druid = require("druid.druid")
@@ -28,13 +32,13 @@ function on_input(self, action_id, action)
 end
 ```
 
-Now add this `*.gui_script` as a script to your GUI scene and now you can start creating **Druid** components.
+Add this script to your GUI scene. Now you can start creating **Druid** components.
 
-Always, when you need to pass a node to a component, you can pass a node name string instead of `gui.get_node()` function.
+> **Note:** When passing nodes to components, you can use node name strings instead of `gui.get_node()` function.
 
-All functions of **Druid** are invoked using the `:` operator, such as `self.druid:new_button()`.
+## Basic Components Example
 
-Here is a basic example with a button and a text components created with **Druid**:
+Here's a simple example showing how to create and use basic **Druid** components:
 
 ```lua
 local druid = require("druid.druid")
@@ -69,16 +73,18 @@ function on_input(self, action_id, action)
 end
 ```
 
+## Widgets
 
-### Widgets
+Widgets are reusable UI components that encapsulate multiple **Druid** components. Read more in the [Widgets](wiki/widgets.md) documentation.
 
-Read more in the [Widgets](wiki/widgets.md)
+### Creating a Widget
 
-Create a new lua file to create a new widget class. This widget can be created with `self.druid:new_widget(widget_class, [template], [nodes])`
+Create a new Lua file for your widget class. This file should be placed near the corresponding GUI file with the same name.
 
-Usually this widget lua file is placed nearby with the `GUI` file it belong to and have the same name.
+Define `init` function to initialize the widget.
 
-Here is a basic example of a widget class, which is the similar that we did in the previous example:
+Here's a basic widget example:
+
 ```lua
 ---@class your_widget_class: druid.widget
 local M = {}
@@ -86,24 +92,25 @@ local M = {}
 function M:init()
     self.root = self:get_node("root")
     self.button = self.druid:new_button("button_node_id", self.on_click)
-	self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
+    self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
 end
 
 function M:on_click()
-	self.text:set_text("The button clicked!")
+    self.text:set_text("The button clicked!")
 end
 
 return M
 ```
 
-Now we have a widget class that we can use in our GUI script instead basic components. It's often used to create a reusable component that can be used in different parts of the GUI.
+### Using Widgets
+
+You can create widgets in your GUI script like this:
 
 ```lua
 local druid = require("druid.druid")
 
 function init(self)
     self.druid = druid.new(self)
-	-- This one is created the button and text inside, taking the same nodes as in the previous example
     self.my_widget = self.druid:new_widget(your_widget_class)
 end
 
@@ -124,58 +131,45 @@ function on_input(self, action_id, action)
 end
 ```
 
-## Widget Template
+## Widget Templates
 
-When you create a widget, you can pass a template to it. This template is a table that contains the nodes that will be used to create the widget.
+Widgets can use templates defined in your GUI scene. Templates are collections of nodes that define the widget's structure.
 
-Usually it's a main workflow. You create a widget lua file near the `GUI` file and pass the template to the widget.
+### Using Templates
 
-So on your GUI scene, if we add the GUI template with template id `my_widget_example` with `button_node_id` and `text_node_id` nodes, we can use it in our script like this:
+If you have a GUI template with ID `my_widget_example` containing `button_node_id` and `text_node_id` nodes, you can use it like this:
 
 ```lua
-...
 function init(self)
-	self.druid = druid.new(self)
-	-- It will take nodes from the template and use it to create the components
-	self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example")
+    self.druid = druid.new(self)
+    self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example")
 
-	-- You also now have access to the nodes from the template
-	self.my_widget.button.on_click:subscribe(function()
-		print("my custom callback")
-	end)
-	self.my_widget.text:set_text("Hello, Widgets!")
+    self.my_widget.button.on_click:subscribe(function()
+        print("my custom callback")
+    end)
+    self.my_widget.text:set_text("Hello, Widgets!")
 end
-...
 ```
 
-## Widgets Nodes
+### Dynamic Templates
 
-If your GUI templates are created dynamically, from the "prefab" you can pass the nodes to the widget.
+For dynamically created GUI templates (from prefabs), you can pass nodes directly to the widget:
 
 ```lua
-...
 function init(self)
-	self.druid = druid.new(self)
-	-- The root is a top level node in the template, we use it to clone the whole template
-	self.prefab = gui.get_node("my_widget_prefab/root")
-	local nodes = gui.clone_tree(self.prefab)
-	self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example", nodes)
-
-	-- Now my_widget created from a copy of template
+    self.druid = druid.new(self)
+    self.prefab = gui.get_node("my_widget_prefab/root")
+    local nodes = gui.clone_tree(self.prefab)
+    self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example", nodes)
 end
-...
-
 ```
 
-You can use the root node id of prefab or the node itself instead of manually cloning the tree. It will do the same thing under the hood.
+You can also use the root node ID or node directly:
 
 ```lua
-...
--- This options the same:
 self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example", "my_widget_prefab/root")
 -- or
 self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example", self.prefab)
-...
 ```
 
 
