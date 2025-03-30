@@ -1,27 +1,25 @@
-local hotkey = require("druid.extended.hotkey")
-
-local component = require("druid.component")
-
----@class basic_hotkey: druid.base_component
----@field druid druid_instance
+---@class examples.basic_hotkey: druid.widget
 ---@field root node
 ---@field text druid.text
-local M = component.create("basic_hotkey")
+local M = {}
 
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
-	self.hotkey = self.druid:new(hotkey, { "key_lshift", "key_x" }, self.on_hotkey)
+	self.hotkey = self.druid:new_hotkey({ "key_lshift", "key_x" }, self.on_hotkey)
 end
 
 
 function M:on_hotkey()
 	gui.animate(self.root, gui.PROP_SCALE, vmath.vector3(1.2), gui.EASING_OUTELASTIC, 0.5, 0, function()
 		gui.animate(self.root, gui.PROP_SCALE, vmath.vector3(1), gui.EASING_OUTELASTIC, 0.5)
+	end)
+end
+
+
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.hotkey.on_hotkey_released:subscribe(function()
+		output_log:add_log_text("Hotkey Released")
 	end)
 end
 

@@ -1,0 +1,33 @@
+name: "go_bindings"
+scale_along_z: 0
+embedded_instances {
+  id: "go"
+  data: "components {\n"
+  "  id: \"go_widget\"\n"
+  "  component: \"/example/other/go_bindings/go_widget.gui\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"go_bindings\"\n"
+  "  component: \"/example/other/go_bindings/go_bindings.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"ui_circle_8\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/druid/druid.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  rotation {\n"
+  "    z: 0.70710677\n"
+  "    w: 0.70710677\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 776.0
+    y: 366.0
+  }
+}

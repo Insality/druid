@@ -31,7 +31,7 @@ def main():
 		texture = node.get_attribute("texture")
 		font = node.get_attribute("font")
 
-		if texture:
+		if texture and texture.value:
 			layer = texture.value.split("/")[0]
 			node.set_attribute("layer", layer)
 

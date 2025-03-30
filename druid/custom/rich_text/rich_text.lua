@@ -1,89 +1,83 @@
--- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Druid Rich Text Custom Component.
--- <b># Overview #</b>
---
--- This custom component is inspired by <a href="https://github.com/britzl/defold-richtext" target="_blank">defold-richtext</a> by britzl.
--- It uses a similar syntax for tags but currently supports fewer tags.
---
--- Create Rich Text on your GUI Text Node. All properties of the text node will be used as default for the text.
---
--- <b># Notes #</b>
---
--- • Nested tags are supported
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=custom_rich_text" target="_blank"><b>Example Link</b></a>
--- @usage
--- local RichText = require("druid.custom.rich_text.rich_text")
--- ...
--- self.rich_text = self.druid:new(RichText, "rich_text")
--- self.rich_text:set_text("Hello, Druid Rich Text!")
--- @usage
--- type druid.rich_text.word = {
---   node: Node,
---   relative_scale: number,
---   color: vector4,
---   position: vector3,
---   offset: vector3,
---   scale: vector3,
---   size: vector3,
---   metrics: druid.rich_text.metrics,
---   pivot: Pivot,
---   text: string,
---   shadow: vector4,
---   outline: vector4,
---   font: string,
---   image: druid.rich_text.image,
---   br: boolean,
---   nobr: boolean,
--- }
---
--- type druid.rich_text.word.image = {
---   texture: string,
---   anim: string,
---   width: number,
---   height: number,
--- }
---
--- type druid.rich_text.lines_metrics = {
---   text_width: number,
---   text_height: number,
---   lines: table<number, druid.rich_text.metrics>,
--- }
---
--- type druid.rich_text.metrics = {
---   width: number,
---   height: number,
---   offset_x: number|nil,
---   offset_y: number|nil,
---   node_size: vector3|nil @For images only,
--- }
--- @module RichText
--- @within BaseComponent
--- @alias druid.rich_text
-
---- The component druid instance
--- @tfield DruidInstance druid @{DruidInstance}
-
---- The root node of the Rich Text
--- @tfield node root
-
---- The text prefab node
--- @tfield node text_prefab
-
---
-
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
 
-local RichText = component.create("rich_text")
+---@class druid.rich_text.settings
+---@field parent node
+---@field size number
+---@field fonts table<string, string>
+---@field scale vector3
+---@field color vector4
+---@field shadow vector4
+---@field outline vector4
+---@field position vector3
+---@field image_pixel_grid_snap boolean
+---@field combine_words boolean
+---@field default_animation string
+---@field text_prefab node
+---@field adjust_scale number
+---@field default_texture string
+---@field is_multiline boolean
+---@field text_leading number
+---@field font hash
+---@field width number
+---@field height number
+
+---@class druid.rich_text.word
+---@field node node
+---@field relative_scale number
+---@field source_text string
+---@field color vector4
+---@field text_color vector4
+---@field position vector3
+---@field offset vector3
+---@field scale vector3
+---@field size vector3
+---@field metrics druid.rich_text.metrics
+---@field pivot userdata
+---@field text string
+---@field shadow vector4
+---@field outline vector4
+---@field font string
+---@field image druid.rich_text.word.image
+---@field br boolean
+---@field nobr boolean
+---@field tags table<string, boolean>
+
+---@class druid.rich_text.word.image
+---@field texture string
+---@field anim string
+---@field width number
+---@field height number
+
+---@class druid.rich_text.style
+---@field COLORS table<string, vector4>
+---@field ADJUST_STEPS number
+---@field ADJUST_SCALE_DELTA number
+
+---@class druid.rich_text.lines_metrics
+---@field text_width number
+---@field text_height number
+---@field lines table<number, druid.rich_text.metrics>
+
+---@class druid.rich_text.metrics
+---@field width number
+---@field height number
+---@field offset_x number|nil
+---@field offset_y number|nil
+---@field node_size vector3|nil
+
+---The component that handles a rich text display, allows to custom color, size, font, etc. of the parts of the text
+---@class druid.rich_text: druid.component
+---@field root node The root node of the rich text
+---@field text_prefab node The text prefab node
+---@field private _last_value string The last value of the rich text
+---@field private _settings table The settings of the rich text
+local M = component.create("rich_text")
 
 
---- The @{RichText} constructor
--- @tparam RichText self @{RichText}
--- @tparam node|string text_node The text node to make Rich Text
--- @tparam string|nil value The initial text value. Default will be gui.get_text(text_node)
-function RichText.init(self, text_node, value)
+---@param text_node node|string The text node to make Rich Text
+---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
+function M:init(text_node, value)
 	self.root = self:get_node(text_node)
 	self.text_prefab = self.root
 
@@ -98,77 +92,57 @@ function RichText.init(self, text_node, value)
 end
 
 
-function RichText.on_layout_change(self)
+---@private
+function M:on_layout_change()
 	if self._last_value then
 		self:set_text(self._last_value)
 	end
 end
 
 
---- Component style params.
--- You can override this component styles params in Druid styles table
--- or create your own style
--- @table style
--- @tfield table|nil COLORS Rich Text color aliases. Default: {}
--- @tfield number|nil ADJUST_STEPS Amount steps of attemps text adjust by height. Default: 20
--- @tfield number|nil ADJUST_SCALE_DELTA Scale step on each height adjust step. Default: 0.02
-function RichText.on_style_change(self, style)
-	self.style = {}
-	self.style.COLORS = style.COLORS or {}
-	self.style.ADJUST_STEPS = style.ADJUST_STEPS or 20
-	self.style.ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02
+---@private
+---@param style druid.rich_text.style
+function M:on_style_change(style)
+	self.style = {
+		COLORS = style.COLORS or {},
+		ADJUST_STEPS = style.ADJUST_STEPS or 20,
+		ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02,
+	}
 end
 
 
---- Set text for Rich Text
--- @tparam RichText self @{RichText}
--- @tparam string|nil text The text to set
--- @treturn druid.rich_text.word[] words
--- @treturn druid.rich_text.lines_metrics line_metrics
--- @usage
--- • color: Change text color
---
--- <color=red>Foobar</color>
--- <color=1.0,0,0,1.0>Foobar</color>
--- <color=#ff0000>Foobar</color>
--- <color=#ff0000ff>Foobar</color>
---
--- • shadow: Change text shadow
---
--- <shadow=red>Foobar</shadow>
--- <shadow=1.0,0,0,1.0>Foobar</shadow>
--- <shadow=#ff0000>Foobar</shadow>
--- <shadow=#ff0000ff>Foobar</shadow>
---
--- • outline: Change text shadow
---
--- <outline=red>Foobar</outline>
--- <outline=1.0,0,0,1.0>Foobar</outline>
--- <outline=#ff0000>Foobar</outline>
--- <outline=#ff0000ff>Foobar</outline>
---
--- • font: Change font
---
--- <font=MyCoolFont>Foobar</font>
---
--- • size: Change text size, relative to default size
---
--- <size=2>Twice as large</size>
---
--- • br: Insert a line break
---
--- <br/>
---
--- • nobr: Prevent the text from breaking
---
--- Words <nobr>inside tag</nobr> won't break
---
--- • img: Display image
---
--- <img=texture:image/>
--- <img=texture:image,size/>
--- <img=texture:image,width,height/>
-function RichText.set_text(self, text)
+---Set text for Rich Text
+---		-- Color
+---		rich_text:set_text("＜color=red＞Foobar＜/color＞")
+---		rich_text:set_text("＜color=1.0,0,0,1.0＞Foobar＜/color＞")
+---		rich_text:set_text("＜color=#ff0000＞Foobar＜/color＞")
+---		rich_text:set_text("＜color=#ff0000ff＞Foobar＜/color＞")
+---		-- Shadow
+---		rich_text:set_text("＜shadow=red＞Foobar＜/shadow＞")
+---		rich_text:set_text("＜shadow=1.0,0,0,1.0＞Foobar＜/shadow＞")
+---		rich_text:set_text("＜shadow=#ff0000＞Foobar＜/shadow＞")
+---		rich_text:set_text("＜shadow=#ff0000ff＞Foobar＜/shadow＞")
+---		-- Outline
+---		rich_text:set_text("＜outline=red＞Foobar＜/outline＞")
+---		rich_text:set_text("＜outline=1.0,0,0,1.0＞Foobar＜/outline＞")
+---		rich_text:set_text("＜outline=#ff0000＞Foobar＜/outline＞")
+---		rich_text:set_text("＜outline=#ff0000ff＞Foobar＜/outline＞")
+---		-- Font
+---		rich_text:set_text("＜font=MyCoolFont＞Foobar＜/font＞")
+---		-- Size
+---		rich_text:set_text("＜size=2＞Twice as large＜/size＞")
+---		-- Line break
+---		rich_text:set_text("＜br/＞Insert a line break")
+---		-- No break
+---		rich_text:set_text("＜nobr＞Prevent the text from breaking")
+---		-- Image
+---		rich_text:set_text("＜img=texture:image＞Display image")
+---		rich_text:set_text("＜img=texture:image,size＞Display image with size")
+---		rich_text:set_text("＜img=texture:image,width,height＞Display image with width and height")
+---@param text string|nil The text to set
+---@return druid.rich_text.word[] words
+---@return druid.rich_text.lines_metrics line_metrics
+function M:set_text(text)
 	text = text or ""
 	self:clear()
 	self._last_value = text
@@ -183,23 +157,23 @@ function RichText.set_text(self, text)
 end
 
 
---- Get current text
--- @tparam RichText self @{RichText}
--- @treturn string text
-function RichText.get_text(self)
+---Get the current text of the rich text
+---@return string text The current text of the rich text
+function M:get_text()
 	return self._last_value
 end
 
 
-function RichText:on_remove()
+---@private
+function M:on_remove()
 	gui.set_scale(self.root, self._default_scale)
 	gui.set_size(self.root, self._default_size)
 	self:clear()
 end
 
 
---- Clear all created words.
-function RichText:clear()
+---Clear all created words.
+function M:clear()
 	if self._words then
 		rich_text.remove(self._words)
 		self._words = nil
@@ -208,43 +182,35 @@ function RichText:clear()
 end
 
 
---- Get all words, which has a passed tag.
--- @tparam RichText self @{RichText}
--- @tparam string tag
--- @treturn druid.rich_text.word[] words
-function RichText.tagged(self, tag)
+---Get all words, which has a passed tag.
+---@param tag string The tag to get the words for
+---@return druid.rich_text.word[] words The words with the passed tag
+function M:tagged(tag)
 	if not self._words then
-		return
+		return {}
 	end
 
 	return rich_text.tagged(self._words, tag)
 end
 
 
----Split a word into it's characters
--- @tparam RichText self @{RichText}
--- @tparam druid.rich_text.word word
--- @treturn druid.rich_text.word[] characters
-function RichText.characters(self, word)
-	return rich_text.characters(word)
-end
-
-
---- Get all current words.
--- @treturn table druid.rich_text.word[]
-function RichText:get_words()
+---Get all current created words, each word is a table that contains the information about the word
+---@return druid.rich_text.word[]
+function M:get_words()
 	return self._words
 end
 
 
---- Get current line metrics
---- @treturn druid.rich_text.lines_metrics
-function RichText:get_line_metric()
+---Get the current line metrics
+---@return druid.rich_text.lines_metrics lines_metrics The line metrics of the rich text
+function M:get_line_metric()
 	return self._line_metrics
 end
 
 
-function RichText:_create_settings()
+---@private
+---@return table settings The settings of the rich text, they are created based on the root node on the GUI scene
+function M:_create_settings()
 	local root_size = gui.get_size(self.root)
 	local scale = gui.get_scale(self.root)
 
@@ -280,4 +246,4 @@ function RichText:_create_settings()
 end
 
 
-return RichText
+return M

@@ -10,7 +10,7 @@ return function()
 
 	describe("Static Grid component", function()
 		local parent = nil
-		---@type druid.static_grid
+		---@type druid.grid
 		local grid = nil
 		local prefab = nil
 
@@ -30,7 +30,7 @@ return function()
 
 			parent = mock_gui.add_box("parent", 0, 0, 50, 50)
 			prefab = mock_gui.add_box("prefab", 50, 50, 25, 25)
-			grid = druid:new_static_grid(parent, prefab, 3)
+			grid = druid:new_grid(parent, prefab, 3)
 		end)
 
 		after(function()

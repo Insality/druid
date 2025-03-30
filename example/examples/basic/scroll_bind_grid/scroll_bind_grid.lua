@@ -1,25 +1,17 @@
-local component = require("druid.component")
-
----@class scroll_bind_grid: druid.base_component
+---@class examples.scroll_bind_grid: druid.widget
 ---@field scroll druid.scroll
----@field grid druid.static_grid
+---@field grid druid.grid
 ---@field text druid.text
----@field druid druid_instance
-local M = component.create("scroll_bind_grid")
+local M = {}
 
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.created_nodes = {}
 
 	self.prefab = self:get_node("prefab")
 	gui.set_enabled(self.prefab, false)
 
 	self.scroll = self.druid:new_scroll("view", "content")
-	self.grid = self.druid:new_static_grid("content", "prefab", 1)
+	self.grid = self.druid:new_grid("content", "prefab", 1)
 	self.scroll:bind_grid(self.grid)
 
 	for index = 1, 20 do
@@ -63,6 +55,53 @@ function M:clear()
 	end
 	self.created_nodes = {}
 	self.grid:clear()
+end
+
+
+---@param properties_panel properties_panel
+function M:properties_control(properties_panel)
+	local view_node = self.scroll.view_node
+	local is_stencil = gui.get_clipping_mode(view_node) == gui.CLIPPING_MODE_STENCIL
+	properties_panel:add_checkbox("ui_clipping", is_stencil, function(value)
+		gui.set_clipping_mode(view_node, value and gui.CLIPPING_MODE_STENCIL or gui.CLIPPING_MODE_NONE)
+	end)
+
+	properties_panel:add_button("ui_add_element", function()
+		if #self.created_nodes >= 100 then
+			return
+		end
+		self:add_element()
+	end)
+
+	properties_panel:add_button("ui_remove_element", function()
+		self:remove_element()
+	end)
+
+	properties_panel:add_button("ui_clear_elements", function()
+		self:clear()
+	end)
+end
+
+
+---@return string
+function M:get_debug_info()
+	local info = ""
+
+	local s = self.scroll
+	local view_node_size = gui.get(s.view_node, "size.y")
+	local scroll_position = -s.position
+	local scroll_bottom_position = vmath.vector3(scroll_position.x, scroll_position.y - view_node_size, scroll_position.z)
+
+	info = info .. "View Size Y: " .. gui.get(s.view_node, "size.y") .. "\n"
+	info = info .. "Content Size Y: " .. gui.get(s.content_node, "size.y") .. "\n"
+	info = info .. "Content position Y: " .. math.ceil(s.position.y) .. "\n"
+	info = info .. "Content Range Y: " .. s.available_pos.y .. " - " .. s.available_pos.w .. "\n"
+	info = info .. "Grid Items: " .. #self.grid.nodes .. "\n"
+	info = info .. "Grid Item Size: " .. self.grid.node_size.x .. " x " .. self.grid.node_size.y .. "\n"
+	info = info .. "Top Scroll Pos Grid Index: " .. self.grid:get_index(scroll_position) .. "\n"
+	info = info .. "Bottm Scroll Pos Grid Index: " .. self.grid:get_index(scroll_bottom_position) .. "\n"
+
+	return info
 end
 
 

@@ -1,19 +1,13 @@
-local component = require("druid.component")
 local panthera = require("panthera.panthera")
 
 local animation = require("example.examples.basic.button.basic_button_hold_panthera")
 
----@class basic_button_hold: druid.base_component
----@field druid druid_instance
+---@class examples.basic_button_hold: druid.widget
 ---@field button druid.button
-local M = component.create("basic_button_hold")
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
-	self.animation = panthera.create_gui(animation, self:get_template(), nodes)
+function M:init()
+	self.animation = panthera.create_gui(animation, self:get_template(), self:get_nodes())
 
 	self.button = self.druid:new_button("button", function()
 		print("Click")
@@ -42,6 +36,17 @@ function M:init(template, nodes)
 
 	self.button.on_click_outside:subscribe(function()
 		panthera.set_time(self.animation, "hold", 0)
+	end)
+end
+
+
+---@param output_log output_list
+function M:on_example_created(output_log)
+	self.button.on_click:subscribe(function()
+		output_log:add_log_text("Clicked")
+	end)
+	self.button.on_long_click:subscribe(function()
+		output_log:add_log_text("On long click")
 	end)
 end
 

@@ -1,11 +1,12 @@
 local helper = require("druid.helper")
-local component = require("druid.component")
 local layout = require("druid.extended.layout")
 
----@class basic_layout: druid.base_component
----@field druid druid_instance
+---@class examples.basic_layout: druid.widget
 ---@field root node
-local M = component.create("basic_layout")
+---@field layout druid.layout
+---@field prefab node
+---@field nodes table<number, node>
+local M = {}
 
 local PIVOTS = {
 	gui.PIVOT_CENTER,
@@ -20,11 +21,7 @@ local PIVOTS = {
 }
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.root = self:get_node("root")
 	self.layout = self.druid:new(layout, "layout", "horizontal_wrap")
 
@@ -70,6 +67,81 @@ function M:on_remove()
 	for _, node in ipairs(self.nodes) do
 		gui.delete_node(node)
 	end
+end
+
+
+---@param properties_panel properties_panel
+function M:properties_control(properties_panel)
+
+	properties_panel:add_slider("ui_padding", 0, function(value)
+		local padding = math.floor((value * 64) * 100) / 100
+		self.layout:set_padding(padding, padding, padding, padding)
+	end)
+
+	properties_panel:add_slider("ui_margin_x", 0, function(value)
+		local margin = math.floor((value * 64) * 100) / 100
+		self.layout:set_margin(margin, nil)
+	end)
+
+	properties_panel:add_slider("ui_margin_y", 0, function(value)
+		local margin = math.floor((value * 64) * 100) / 100
+		self.layout:set_margin(nil, margin)
+	end)
+
+	properties_panel:add_checkbox("ui_justify", false, function(value)
+		self.layout:set_justify(value)
+	end)
+
+	local pivot_index = 1
+	local pivot_list = {
+		gui.PIVOT_CENTER,
+		gui.PIVOT_W,
+		gui.PIVOT_SW,
+		gui.PIVOT_S,
+		gui.PIVOT_SE,
+		gui.PIVOT_E,
+		gui.PIVOT_NE,
+		gui.PIVOT_N,
+		gui.PIVOT_NW,
+	}
+
+	properties_panel:add_button("ui_pivot_next", function()
+		pivot_index = pivot_index + 1
+		if pivot_index > #pivot_list then
+			pivot_index = 1
+		end
+		self:set_pivot(pivot_list[pivot_index])
+	end)
+
+	local type_index = 1
+	local type_list = {
+		"horizontal_wrap",
+		"horizontal",
+		"vertical",
+	}
+
+	properties_panel:add_button("ui_type_next", function()
+		type_index = type_index + 1
+		if type_index > #type_list then
+			type_index = 1
+		end
+		self.layout:set_type(type_list[type_index])
+	end)
+end
+
+
+---@return string
+function M:get_debug_info()
+	local layout = self.layout
+	local p = layout.padding
+	local info = ""
+	info = info .. "Layout: " .. layout.type .. "\n"
+	info = info .. "Padding: " .. math.floor(p.x) .. " " .. math.floor(p.y) .. " " .. math.floor(p.z) .. " " .. math.floor(p.w) .. "\n"
+	info = info .. "Margin: " .. layout.margin.x .. " " .. layout.margin.y .. "\n"
+	info = info .. "Justify: " .. tostring(layout.is_justify) .. "\n"
+	info = info .. "Pivot: " .. tostring(gui.get_pivot(layout.node)) .. "\n"
+
+	return info
 end
 
 

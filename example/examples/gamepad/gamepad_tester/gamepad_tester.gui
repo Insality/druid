@@ -1,6 +1,6 @@
 textures {
-  name: "druid"
-  texture: "/example/assets/druid.atlas"
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
 }
 nodes {
   size {
@@ -8,7 +8,7 @@ nodes {
     y: 1000.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "root"
   inherit_alpha: true
   visible: false
@@ -19,7 +19,7 @@ nodes {
     y: 100.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "gamepad"
   parent: "root"
   inherit_alpha: true
@@ -177,7 +177,7 @@ nodes {
     y: 290.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "dpad"
   parent: "gamepad"
   inherit_alpha: true
@@ -204,10 +204,8 @@ nodes {
   id: "button_left/text"
   parent: "button_left/button"
   overridden_fields: 45
-  overridden_fields: 46
   template_node_child: true
   enabled: false
-  visible: false
 }
 nodes {
   rotation {
@@ -240,10 +238,8 @@ nodes {
   id: "button_up/text"
   parent: "button_up/button"
   overridden_fields: 45
-  overridden_fields: 46
   template_node_child: true
   enabled: false
-  visible: false
 }
 nodes {
   rotation {
@@ -276,10 +272,8 @@ nodes {
   id: "button_right/text"
   parent: "button_right/button"
   overridden_fields: 45
-  overridden_fields: 46
   template_node_child: true
   enabled: false
-  visible: false
 }
 nodes {
   type: TYPE_BOX
@@ -308,10 +302,8 @@ nodes {
   id: "button_down/text"
   parent: "button_down/button"
   overridden_fields: 45
-  overridden_fields: 46
   template_node_child: true
   enabled: false
-  visible: false
 }
 nodes {
   rotation {
@@ -333,7 +325,7 @@ nodes {
     y: 290.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "buttons"
   parent: "gamepad"
   inherit_alpha: true
@@ -474,7 +466,7 @@ nodes {
     y: 290.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "buttons_system"
   parent: "gamepad"
   inherit_alpha: true
@@ -492,7 +484,7 @@ nodes {
 }
 nodes {
   size {
-    x: 180.0
+    x: 170.0
     y: 90.0
   }
   type: TYPE_BOX
@@ -529,7 +521,7 @@ nodes {
 }
 nodes {
   size {
-    x: 180.0
+    x: 170.0
     y: 90.0
   }
   type: TYPE_BOX
@@ -564,7 +556,7 @@ nodes {
     y: 200.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "button_left_bump"
   parent: "gamepad"
   inherit_alpha: true
@@ -582,14 +574,9 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  size {
-    x: 180.0
-    y: 90.0
-  }
   type: TYPE_BOX
   id: "button_l1/button"
   parent: "button_l1"
-  overridden_fields: 4
   template_node_child: true
 }
 nodes {
@@ -648,7 +635,7 @@ nodes {
     y: 200.0
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "button_right_bump"
   parent: "gamepad"
   inherit_alpha: true
@@ -665,14 +652,9 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_button.gui"
 }
 nodes {
-  size {
-    x: 180.0
-    y: 90.0
-  }
   type: TYPE_BOX
   id: "button_r1/button"
   parent: "button_r1"
-  overridden_fields: 4
   template_node_child: true
 }
 nodes {
