@@ -31,6 +31,8 @@
 
 ## [Druid](druid_api.md)
 
+Inspect [API Here](druid_api.md)
+
 ```lua
 local druid = require("druid.druid")
 
@@ -45,6 +47,9 @@ self.druid = druid.new(context, [style])
 ```
 
 ## [Druid Instance](druid_instance_api.md)
+
+Inspect [API Here](druid_instance_api.md)
+
 ```lua
 -- Lifecycle
 self.druid:final()
@@ -88,6 +93,8 @@ self.druid:set_whitelist(whitelist_components)
 
 ### [Base Component](components/base/component_api.md)
 
+Inspect [API Here](components/base/component_api.md)
+
 Basic methods for all components and widgets.
 
 ```lua
@@ -112,6 +119,8 @@ widget.druid
 
 ### [Blocker](components/base/blocker_api.md)
 
+Inspect [API Here](components/base/blocker_api.md)
+
 ```lua
 local blocker = self.druid:new_blocker(node)
 
@@ -120,6 +129,8 @@ blocker:set_enabled(state)
 ```
 
 ### [Button](components/base/button_api.md)
+
+Inspect [API Here](components/base/button_api.md)
 
 ```lua
 local button = require("druid.base.button")
@@ -162,6 +173,8 @@ button.can_action
 
 ### [Container](components/extended/container_api.md)
 
+Inspect [API Here](components/extended/container_api.md)
+
 ```lua
 local container = self.druid:new_container(node, [mode], [callback])
 
@@ -189,6 +202,8 @@ container:update_child_containers()
 
 ### [Data List](components/extended/data_list_api.md)
 
+Inspect [API Here](components/extended/data_list_api.md)
+
 ```lua
 local data_list = self.druid:new_data_list(druid_scroll, druid_grid, create_function)
 
@@ -207,6 +222,8 @@ data_list:set_use_cache(is_use_cache)
 
 ### [Drag](components/base/drag_api.md)
 
+Inspect [API Here](components/base/drag_api.md)
+
 ```lua
 local drag = self.druid:new_drag(node, [on_drag_callback])
 
@@ -218,6 +235,8 @@ drag:set_enabled(is_enabled)
 ```
 
 ### [Grid](components/base/static_grid_api.md)
+
+Inspect [API Here](components/base/static_grid_api.md)
 
 ```lua
 local grid = self.druid:new_grid(parent_node, item, [in_row])
@@ -245,6 +264,8 @@ grid:sort_nodes(comparator)
 
 ### [Hotkey](components/extended/hotkey_api.md)
 
+Inspect [API Here](components/extended/hotkey_api.md)
+
 ```lua
 local hotkey = self.druid:new_hotkey(keys_array, [callback], [callback_argument])
 
@@ -255,6 +276,8 @@ hotkey:set_repeat(is_enabled_repeated)
 ```
 
 ### [Hover](components/base/hover_api.md)
+
+Inspect [API Here](components/base/hover_api.md)
 
 ```lua
 local hover = self.druid:new_hover(node, [on_hover_callback], [on_mouse_hover_callback])
@@ -269,6 +292,8 @@ hover:set_mouse_hover([state])
 ```
 
 ### [Input](components/extended/input_api.md)
+
+Inspect [API Here](components/extended/input_api.md)
 
 ```lua
 local input = self.druid:new_input(click_node, text_node, [keyboard_type])
@@ -289,6 +314,8 @@ input:unselect()
 
 ### [Lang Text](components/extended/lang_text_api.md)
 
+Inspect [API Here](components/extended/lang_text_api.md)
+
 ```lua
 local lang_text = self.druid:new_lang_text(node, [locale_id], [adjust_type])
 
@@ -300,6 +327,8 @@ lang_text:translate(locale_id, [a], [b], [c], [d], [e], [f], [g])
 ```
 
 ### [Layout](components/extended/layout_api.md)
+
+Inspect [API Here](components/extended/layout_api.md)
 
 ```lua
 local layout = self.druid:new_layout(node, [mode])
@@ -326,6 +355,8 @@ layout:update()
 
 ### [Progress](components/extended/progress_api.md)
 
+Inspect [API Here](components/extended/progress_api.md)
+
 ```lua
 local progress = self.druid:new_progress(node, key, [init_value])
 
@@ -341,6 +372,8 @@ progress:update([dt])
 
 ### [Rich Input](components/custom/rich_input_api.md)
 
+Inspect [API Here](components/custom/rich_input_api.md)
+
 ```lua
 local rich_input = self.druid:new_rich_input(template, [nodes])
 
@@ -353,6 +386,8 @@ rich_input:set_text(text)
 ```
 
 ### [Rich Text](components/custom/rich_text_api.md)
+
+Inspect [API Here](components/custom/rich_text_api.md)
 
 ```lua
 local rich_text = self.druid:new_rich_text(text_node, [value])
@@ -367,6 +402,8 @@ rich_text:tagged(tag)
 ```
 
 ### [Scroll](components/base/scroll_api.md)
+
+Inspect [API Here](components/base/scroll_api.md)
 
 ```lua
 local scroll = self.druid:new_scroll(view_node, content_node)
@@ -393,6 +430,8 @@ scroll:update_view_size()
 
 ### [Slider](components/extended/slider_api.md)
 
+Inspect [API Here](components/extended/slider_api.md)
+
 ```lua
 local slider = self.druid:new_slider(pin_node, end_pos, [callback])
 
@@ -405,6 +444,8 @@ slider:set_steps(steps)
 
 ### [Swipe](components/extended/swipe_api.md)
 
+Inspect [API Here](components/extended/swipe_api.md)
+
 ```lua
 local swipe = self.druid:new_swipe(node, [on_swipe_callback])
 
@@ -412,6 +453,8 @@ swipe:set_click_zone([zone])
 ```
 
 ### [Text](components/base/text_api.md)
+
+Inspect [API Here](components/base/text_api.md)
 
 ```lua
 local text = self.druid:new_text(node, [value], [no_adjust])
@@ -434,6 +477,8 @@ text:set_to(set_to)
 
 ### [Timer](components/extended/timer_api.md)
 
+Inspect [API Here](components/extended/timer_api.md)
+
 ```lua
 local timer = self.druid:new_timer(node, [seconds_from], [seconds_to], [callback])
 
@@ -444,6 +489,8 @@ timer:update([dt])
 ```
 
 ## [Helper](druid_helper_api.md)
+
+Inspect [API Here](druid_helper_api.md)
 
 ```lua
 local helper = require("druid.helper")
@@ -483,7 +530,11 @@ helper.table_to_string(t)
 
 ## [Widgets](widgets_api.md)
 
+Inspect [API Here](widgets_api.md)
+
 ### [FPS Panel](widgets/fps_panel_api.md)
+
+Inspect [API Here](widgets/fps_panel_api.md)
 
 ```lua
 local fps_panel = require("druid.widget.fps_panel.fps_panel")
@@ -508,6 +559,8 @@ fps_panel.previous_time
 
 ### [Memory Panel](widgets/memory_panel_api.md)
 
+Inspect [API Here](widgets/memory_panel_api.md)
+
 ```lua
 local memory_panel = require("druid.widget.memory_panel.memory_panel")
 
@@ -531,6 +584,8 @@ memory_panel.timer_id
 ```
 
 ### [Mini Graph](widgets/mini_graph_api.md)
+
+Inspect [API Here](widgets/mini_graph_api.md)
 
 ```lua
 local mini_graph = require("druid.widget.mini_graph.mini_graph")
@@ -568,6 +623,8 @@ mini_graph.samples
 ```
 
 ### [Properties Panel](widgets/properties_panel_api.md)
+
+Inspect [API Here](widgets/properties_panel_api.md)
 
 ```lua
 local properties_panel = require("druid.widget.properties_panel.properties_panel")

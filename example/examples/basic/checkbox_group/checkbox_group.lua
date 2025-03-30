@@ -11,9 +11,9 @@ local M = {}
 
 
 function M:init()
-	self.checkbox_1 = self.druid:new(checkbox, "checkbox_1")
-	self.checkbox_2 = self.druid:new(checkbox, "checkbox_2")
-	self.checkbox_3 = self.druid:new(checkbox, "checkbox_3")
+	self.checkbox_1 = self.druid:new_widget(checkbox, "checkbox_1")
+	self.checkbox_2 = self.druid:new_widget(checkbox, "checkbox_2")
+	self.checkbox_3 = self.druid:new_widget(checkbox, "checkbox_3")
 
 	self.checkbox_1.on_state_changed:subscribe(self.on_checkbox_click, self)
 	self.checkbox_2.on_state_changed:subscribe(self.on_checkbox_click, self)

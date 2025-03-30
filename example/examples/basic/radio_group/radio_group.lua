@@ -12,9 +12,9 @@ local M = {}
 function M:init()
 	self.state = {}
 	self.checkboxes = {
-		self.druid:new(checkbox, "checkbox_1"),
-		self.druid:new(checkbox, "checkbox_2"),
-		self.druid:new(checkbox, "checkbox_3")
+		self.druid:new_widget(checkbox, "checkbox_1"),
+		self.druid:new_widget(checkbox, "checkbox_2"),
+		self.druid:new_widget(checkbox, "checkbox_3")
 	}
 
 	for i = 1, #self.checkboxes do
