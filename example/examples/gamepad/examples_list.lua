@@ -12,7 +12,6 @@ function M.get_examples()
 			code_url = "example/examples/gamepad/gamepad_tester/gamepad_tester.lua",
 			widget_class = require("example.examples.gamepad.gamepad_tester.gamepad_tester"),
 		},
-
 		{
 			name_id = "ui_example_on_screen_control",
 			information_text_id = "ui_example_on_screen_control_description",
