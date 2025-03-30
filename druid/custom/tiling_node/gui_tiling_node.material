@@ -1,7 +1,7 @@
 name: "repeat"
 tags: "gui"
-vertex_program: "/druid/materials/gui_tiling_node/gui_tiling_node.vp"
-fragment_program: "/druid/materials/gui_tiling_node/gui_tiling_node.fp"
+vertex_program: "/druid/custom/tiling_node/gui_tiling_node.vp"
+fragment_program: "/druid/custom/tiling_node/gui_tiling_node.fp"
 vertex_constants {
   name: "view_proj"
   type: CONSTANT_TYPE_VIEWPROJ

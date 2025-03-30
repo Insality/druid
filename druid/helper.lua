@@ -367,6 +367,14 @@ function M.get_pivot_offset(pivot_or_node)
 end
 
 
+---Check if device is desktop
+---@return boolean
+function M.is_desktop()
+	return const.CURRENT_SYSTEM_NAME == const.OS.WINDOWS or const.CURRENT_SYSTEM_NAME == const.OS.MAC or const.CURRENT_SYSTEM_NAME == const.OS.LINUX
+end
+
+
+
 ---Check if device is native mobile (Android or iOS)
 ---@return boolean Is mobile
 function M.is_mobile()

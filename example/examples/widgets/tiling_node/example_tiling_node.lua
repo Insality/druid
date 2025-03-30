@@ -1,4 +1,4 @@
-local tiling_node = require("druid.widget.tiling_node.tiling_node")
+local tiling_node = require("druid.custom.tiling_node.tiling_node")
 
 ---@class examples.example_tiling_node: druid.widget
 local M = {}

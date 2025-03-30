@@ -2,6 +2,7 @@ local lang = require("lang.lang")
 local saver = require("saver.saver")
 local storage = require("saver.storage")
 local druid = require("druid.druid")
+local helper = require("druid.helper")
 
 local druid_logo = require("example.components.druid_logo.druid_logo")
 local panel_information = require("example.components.panel_information.panel_information")
@@ -35,12 +36,16 @@ local druid_examples = require("example.examples.druid_examples")
 ---@field output_list output_list
 
 
+---@param self druid.example
+local function setup_saver(self)
+	saver.init()
+	saver.bind_save_state("lang", lang.state)
+end
+
+
 --- Generic setup that should be done once per application
 ---@param self druid.example
 local function setup_druid(self)
-	saver.init()
-	saver.bind_save_state("lang", lang.state)
-
 	lang.init()
 	lang.set_lang("en") -- Force default start language to EN, switch through the UI to check
 	druid.set_text_function(lang.txp)
@@ -173,7 +178,37 @@ end
 
 
 ---@param self druid.example
+local function setup_defos(self)
+	local is_desktop = helper.is_desktop()
+	local is_debug = sys.get_engine_info().is_debug
+
+	if is_desktop and is_debug then
+		timer.delay(1, true, function()
+			local x, y, w, h = defos.get_window_size()
+			saver.set_value("window.last_state", { x, y, w, h })
+			saver.save_game_state()
+		end)
+
+		-- Restore window size and position
+		local prev_settings = saver.get_value("window.last_state")
+		if prev_settings then
+			---@cast prev_settings number[]
+			local x, y, w, h = unpack(prev_settings)
+			-- Limit size to 300x200
+			x = vmath.clamp(x, 0, 4000)
+			y = vmath.clamp(y, 0, 4000)
+			w = vmath.clamp(w, 300, 4000)
+			h = vmath.clamp(h, 200, 4000)
+			defos.set_window_size(x, y, w, h)
+		end
+	end
+end
+
+
+---@param self druid.example
 function init(self)
+	setup_saver(self)
+	setup_defos(self)
 	setup_druid(self)
 
 	self.druid = druid.new(self)

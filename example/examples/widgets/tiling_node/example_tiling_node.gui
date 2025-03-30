@@ -30,5 +30,5 @@ material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
 materials {
   name: "gui_tiling_node"
-  material: "/druid/materials/gui_tiling_node/gui_tiling_node.material"
+  material: "/druid/custom/tiling_node/gui_tiling_node.material"
 }

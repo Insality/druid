@@ -24,6 +24,10 @@ function M:init(node)
 
 	self.params = gui.get(self.node, "params") --[[@as vector4]]
 
+	self.timer_no_init = timer.delay(0.1, false, function()
+		print("The druid.script is not found, please add it nearby to the GUI collection", msg.url())
+	end)
+
 	defer.push("druid.get_atlas_path", {
 		texture_name = gui.get_texture(self.node),
 		sender = msg.url(),
@@ -31,26 +35,30 @@ function M:init(node)
 end
 
 
+---@param atlas_path string
 function M:on_get_atlas_path(atlas_path)
+	timer.cancel(self.timer_no_init)
 	self.is_inited = self:init_tiling_animation(atlas_path)
-	local repeat_x, repeat_y = self:get_repeat()
-	self:refresh(repeat_x, repeat_y)
+	local repeat_x, repeat_y = self:get_repeat_count_from_node()
+	self:start_animation(repeat_x, repeat_y)
 end
 
 
+---@param node node
+---@param property string
 function M:on_node_property_changed(node, property)
 	if not self.is_inited or node ~= self.node then
 		return
 	end
 
 	if property == "size" or property == "scale" then
-		local repeat_x, repeat_y = self:get_repeat()
+		local repeat_x, repeat_y = self:get_repeat_count_from_node()
 		self:set_repeat(repeat_x, repeat_y)
 	end
 end
 
 
-function M:get_repeat()
+function M:get_repeat_count_from_node()
 	if not self.is_inited then
 		return 1, 1
 	end
@@ -66,6 +74,7 @@ function M:get_repeat()
 end
 
 
+---@param atlas_path string
 ---@return boolean
 function M:init_tiling_animation(atlas_path)
 	if not atlas_path then
@@ -82,21 +91,21 @@ end
 -- Start our repeat shader work
 ---@param repeat_x number X factor
 ---@param repeat_y number Y factor
-function M:refresh(repeat_x, repeat_y)
+function M:start_animation(repeat_x, repeat_y)
 	if not self.is_inited then
 		return
 	end
 
+	self:set_repeat(repeat_x, repeat_y)
+
 	local node = self.node
 	local animation = self.animation
-
 	local frame = animation.frames[1]
 	gui.set(node, "uv_coord", frame.uv_coord)
-	self:set_repeat(repeat_x, repeat_y)
 
 	if #animation.frames > 1 and animation.fps > 0 then
 		animation.handle =
-		timer.delay(1/animation.fps, true, function(self, handle, time_elapsed)
+		timer.delay(1/animation.fps, true, function(_, handle, time_elapsed)
 			local next_rame = animation.frames[animation.current_frame]
 			gui.set(node, "uv_coord", next_rame.uv_coord)
 
@@ -134,6 +143,8 @@ function M:set_repeat(repeat_x, repeat_y)
 end
 
 
+---@param offset_perc_x number? X offset
+---@param offset_perc_y number? Y offset
 function M:set_offset(offset_perc_x, offset_perc_y)
 	self.params.z = offset_perc_x or self.params.z
 	self.params.w = offset_perc_y or self.params.w
@@ -142,6 +153,8 @@ function M:set_offset(offset_perc_x, offset_perc_y)
 end
 
 
+---@param margin_x number? X margin
+---@param margin_y number? Y margin
 function M:set_margin(margin_x, margin_y)
 	self.params.x = margin_x or self.params.x
 	self.params.y = margin_y or self.params.y

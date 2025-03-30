@@ -19,11 +19,11 @@ publisher = Insality
 developer = Maksim Tuprikov
 custom_resources = /example/locales
 dependencies#0 = https://github.com/britzl/deftest/archive/refs/tags/2.8.0.zip
-dependencies#1 = https://github.com/Insality/defold-saver/archive/refs/tags/1.zip
+dependencies#1 = https://github.com/Insality/defold-saver/archive/refs/heads/develop.zip
 dependencies#2 = https://github.com/Insality/defold-tweener/archive/refs/tags/3.zip
 dependencies#3 = https://github.com/Insality/panthera/archive/refs/heads/develop.zip
 dependencies#4 = https://github.com/Insality/defold-lang/archive/refs/tags/3.zip
-dependencies#5 = https://github.com/Insality/defold-event/archive/refs/tags/10.zip
+dependencies#5 = https://github.com/Insality/defold-event/archive/refs/heads/develop.zip
 dependencies#6 = https://github.com/subsoap/defos/archive/refs/tags/v2.8.0.zip
 
 [library]
