@@ -34,6 +34,8 @@ local druid_examples = require("example.examples.druid_examples")
 ---@field examples_list_view examples_list_view
 ---@field properties_panel properties_panel
 ---@field output_list output_list
+---@field next_example druid.hotkey
+---@field previous_example druid.hotkey
 
 
 ---@param self druid.example
@@ -78,6 +80,54 @@ end
 
 
 ---@param self druid.example
+local function on_next_example(self)
+	local current_index = 1
+	local examples = self.examples_list_view.examples
+
+	-- Find current example index
+	for i, example in ipairs(examples) do
+		if example.data.name_id == self.examples_list_view.selected_example.data.name_id then
+			current_index = i
+			break
+		end
+	end
+
+	-- Get next example index (wrap around to first if at end)
+	local next_index = current_index + 1
+	if next_index > #examples then
+		next_index = 1
+	end
+
+	-- Select the next example
+	self.examples_list_view:select_example_by_name_id(examples[next_index].data.name_id)
+end
+
+
+---@param self druid.example
+local function on_previous_example(self)
+	local current_index = 1
+	local examples = self.examples_list_view.examples
+
+	-- Find current example index
+	for i, example in ipairs(examples) do
+		if example.data.name_id == self.examples_list_view.selected_example.data.name_id then
+			current_index = i
+			break
+		end
+	end
+
+	-- Get previous example index (wrap around to last if at start)
+	local prev_index = current_index - 1
+	if prev_index < 1 then
+		prev_index = #examples
+	end
+
+	-- Select the previous example
+	self.examples_list_view:select_example_by_name_id(examples[prev_index].data.name_id)
+end
+
+
+---@param self druid.example
 local function setup_components(self)
 	self.druid_logo = self.druid:new(druid_logo, "druid_logo") --[[@as examples.druid_logo]]
 	self.container_logo:add_container(self.druid_logo.root)
@@ -99,6 +149,9 @@ local function setup_components(self)
 
 	self.output_list = self.druid:new(output_list, "output_list") --[[@as output_list]]
 	self.container_output:add_container(self.output_list.root)
+
+	self.next_example = self.druid:new_hotkey("key_down", on_next_example, self)
+	self.previous_example = self.druid:new_hotkey("key_up", on_previous_example, self)
 
 	do -- Component bindings
 		self.examples_list_view.on_debug_info:subscribe(function(info)
