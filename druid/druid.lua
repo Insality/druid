@@ -111,7 +111,7 @@ local function wrap_widget(widget)
 end
 
 
----Get a binded widget to the current game object.
+---Get a binded widget to the current game object with "go_widget" gui component name.
 ---		msg.url(nil, nil, "go_widget") -- current game object
 ---		msg.url(nil, object_url, "go_widget") -- other game object
 ---@generic T: druid.widget

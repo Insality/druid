@@ -10,7 +10,7 @@ local M = {}
 ---Get color by string (hex or from palette)
 ---@param color_id string Color id from palette or hex color
 ---@return vector4
-function M.get_palette_color(color_id)
+function M.get_color(color_id)
 	-- Check is it hex: starts with "#" or contains only 3 or 6 hex symbols
 	if type(color_id) == "string" then
 		if string.sub(color_id, 1, 1) == "#" or string.match(color_id, "^[0-9a-fA-F]+$") then
@@ -45,7 +45,7 @@ end
 ---@param color vector4|vector3|string Color in vector4, vector3 or color id from palette
 function M.set_color(gui_node, color)
 	if type(color) == "string" then
-		color = M.get(color)
+		color = M.get_color(color)
 	end
 
 	gui.set(gui_node, COLOR_X, color.x)

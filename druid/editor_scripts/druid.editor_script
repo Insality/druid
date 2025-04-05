@@ -23,7 +23,7 @@ end
 function M.get_commands()
 	return {
 		{
-			label = "Assign Layers",
+			label = "[Druid] Assign Layers",
 			locations = { "Edit" },
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
@@ -50,7 +50,7 @@ function M.get_commands()
 		},
 
 		{
-			label = "Create Druid Widget",
+			label = "[Druid] Create Druid Widget",
 			locations = { "Edit", "Assets" },
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
