@@ -588,3 +588,9 @@ Thoughts, wrong decisions, future plans, and how to update correctly:
 - There is room for performance optimization. Memory usage is not optimized, though it can still handle heavy-load GUIs like Panthera.
 - Creating custom components could be made easier.
 - There can be a much less code bindings between elements. Like bind_grid, update_size after some changes etc.
+
+---
+
+**Druid v1.0.1**
+
+- **[Input]** Fixed issues with input component on Mobile devices.

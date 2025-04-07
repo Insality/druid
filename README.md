@@ -21,9 +21,9 @@ In this example you can inspect a variety of **Druid** components and see how th
 
 To integrate the **Druid** extension into your own project, add this project as a [dependency](https://www.defold.com/manuals/libraries/) in your **Defold** game. Open your `game.project` file and add the following line to the dependencies field under the project section:
 
-**Druid v1.0**
+**Druid v1.0.1**
 
-> [https://github.com/Insality/druid/archive/refs/tags/1.0.zip](https://github.com/Insality/druid/archive/refs/tags/1.0.zip)
+> [https://github.com/Insality/druid/archive/refs/tags/1.0.1.zip](https://github.com/Insality/druid/archive/refs/tags/1.0.1.zip)
 
 Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
