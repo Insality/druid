@@ -586,26 +586,35 @@ Hello! Druid 1.1 is here! It's brings a lot of new features and improvements. Le
 
 **Changelog 1.1**
 - Remove external annotations, remove old HTML API page
-- Fully annotated code and new API README page (hope more comfortable to use)
+- Fully annotated code and new API README page
 - Widgets here!
 	- A replacement for `custom_components`. Basically it's the same, but `widgets` contains no boilerplate code and more convinient to use.
 	- Now I can include a kind of `widgets` with Druid and you can use it almost instantly in your project.
-- Removed `druid.register()`. Now all components are available by default and available with `self.druid:new_*` functions
+- Deprecated `druid.register()`. Now all Druid's components are available by default and available with `self.druid:new_*` functions
 	- This means the Druid will be bigger in size, but it's much comfortable to use
-	- In case you want to delete components you not using, you can do it in fork in `druid.lua` file
+	- In case you want to delete components you are not using, you can do it in fork in `druid.lua` file
+	- Read [optimize_druid_size.md](optimize_druid_size.md) to learn how to reduce the size of the Druid library if you need
 	- Any additional widgets, color library will be not included until you use it
-- Remove `druid.event`, replaced with `defold-event` library. Now it required to double dependency to use Druid.
-- Add Druid UI kit, contains atlas so now you can use Druid GUI files in your projects.
+- Remove `druid.event`, replaced with `defold-event` library. Now it required to two dependencies to use Druid.
+	- This allow to make more flexible features, like shaders and sync init between script and gui_script in various cases.
+	- Use 11+ version of `defold-event` library: `https://github.com/Insality/defold-event/archive/refs/tags/11.zip`
+- Add Druid UI Kit, contains atlas so now you can use Druid GUI files in your projects.
 	- Contains mostly basic shapes for the UI and can contains several icons. Atlas is a small, only `128x128` size and will be included in build only if you use it.
+	- A long waited feature which allows try or just use some Druid GUI features almost instantly.
+- [System]: Huge code refactoring and improvements. The goal is to raise maintainability and readability of the code to help people to contribute to the Druid.
+	- Add [CONTRIBUTING.md](/CONTRIBUTING.md) file with various information to help people to contribute to the Druid.
+	- All Druid Examples was migrated to use Widgets instead of Custom Components.
 - [Text]: Add `trim_left` and `scale_then_trim_left` text adjust modes
-- [Text]: Add `set_text` function instead `set_to` (now it deprecated)
+- [Text]: Add `set_text` function instead `set_to` (the `set_to` now deprecated)
 - Add `druid.color` module to work with colors and palettes
 - Add `container` component to handle more complex adaptive layouts
+	- The container component is still in a development and I expected the various changes in the future
 - [Shaders] Add repeat, hard image stencil and world gui materials
 - [Widget] Add widget `mini_graph`
 - [Widget] Add widget `memory_panel`
 - [Widget] Add widget `fps_panel`
 - [Widget] Add widget `properties_panel`
+	- A widget where you can add different properties to the panel to make easy edit/debug panels
 	- Include `property_button` widget
 	- Include `property_checkbox` widget
 	- Include `property_input` widget

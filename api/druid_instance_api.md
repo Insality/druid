@@ -7,7 +7,6 @@ The Druid Factory used to create components
 
 ## Functions
 - [create_druid_instance](#create_druid_instance)
-
 - [new](#new)
 - [final](#final)
 - [remove](#remove)

@@ -14,12 +14,20 @@ local component = require("druid.component")
 ---@class my_component: druid.component
 local M = component.create("my_component")
 
-function M:init(template, nodes, output_string)
+function M:init(template, nodes)
     self:set_template(template)
     self:set_nodes(nodes)
     self.druid = self:get_druid()
 
-    self.druid:new_button("button_node_name", print, output_string)
+    self.druid:new_button("button_node_name", self.on_click)
+end
+
+function M:on_click()
+	print("Current output string: " .. self.output_string)
+end
+
+function M:set_output_string(output_string)
+    self.output_string = output_string
 end
 ```
 
@@ -29,7 +37,8 @@ Basic components are created with the `druid:new()` function:
 local template = "my_component" -- The template name on GUI scene, if nil will take nodes directly by gui.get_node()
 local nodes = gui.clone_tree(gui.get_node("my_component/root")) -- We can clone component nodes and init over cloned nodes
 
-local my_component = druid:new("my_component", template, nodes, "Hello world!")
+local my_component = druid:new("my_component", template, nodes)
+my_component:set_output_string("Hello world!")
 ```
 
 Now, let's see how to do it with widgets:
@@ -38,8 +47,17 @@ Now, let's see how to do it with widgets:
 ---@type my_widget: druid.widget
 local M = {}
 
-function M:init(output_string)
-    self.druid:new_button("button_node_name", print, output_string)
+function M:init()
+    self.druid:new_button("button_node_name", self.on_click)
+	self.output_string = ""
+end
+
+function M:on_click()
+    print("Current output string: " .. self.output_string)
+end
+
+function M:set_output_string(output_string)
+    self.output_string = output_string
 end
 
 return M
@@ -55,7 +73,10 @@ local my_widget = require("widgets.my_widget.my_widget")
 
 function init(self)
     self.druid = druid.new(self)
-    self.my_widget = self.druid:new_widget(my_widget, template, nodes, "Hello world!")
+	local template_id = "my_widget" -- If using a GUI template, set a template id, otherwise set nil
+	local nodes = nil -- If nodes are cloned with gui.clone_tree(), set a nodes table, otherwise set nil
+    self.my_widget = self.druid:new_widget(my_widget, template_id, nodes)
+    self.my_widget:set_output_string("Hello world!")
 end
 ```
 
