@@ -78,15 +78,27 @@ nodes {
   template_node_child: true
 }
 nodes {
+  position {
+    x: -240.0
+  }
   type: TYPE_TEXT
   id: "rich_input_2/placeholder_text"
+  pivot: PIVOT_W
   parent: "rich_input_2/button"
+  overridden_fields: 1
+  overridden_fields: 14
   template_node_child: true
 }
 nodes {
+  position {
+    x: -240.0
+  }
   type: TYPE_TEXT
   id: "rich_input_2/input_text"
+  pivot: PIVOT_W
   parent: "rich_input_2/button"
+  overridden_fields: 1
+  overridden_fields: 14
   template_node_child: true
 }
 nodes {

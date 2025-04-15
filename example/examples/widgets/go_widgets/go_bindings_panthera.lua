@@ -1,0 +1,107 @@
+return {
+    data = {
+        animations = {
+            {
+                animation_id = "default",
+                animation_keys = {
+                    {
+                        duration = 1.305,
+                        easing = "outsine",
+                        end_value = 706,
+                        key_type = "tween",
+                        node_id = "go",
+                        property_id = "position_x",
+                        start_value = 960,
+                    },
+                    {
+                        duration = 3.03,
+                        easing = "outsine",
+                        end_value = 1.2,
+                        key_type = "tween",
+                        node_id = "go",
+                        property_id = "scale_x",
+                        start_value = 1,
+                    },
+                    {
+                        duration = 3.03,
+                        easing = "outsine",
+                        end_value = 1.2,
+                        key_type = "tween",
+                        node_id = "go",
+                        property_id = "scale_y",
+                        start_value = 1,
+                    },
+                    {
+                        duration = 1.689,
+                        easing = "outsine",
+                        end_value = 271,
+                        key_type = "tween",
+                        node_id = "go",
+                        property_id = "position_y",
+                        start_time = 1.305,
+                        start_value = 540,
+                    },
+                    {
+                        duration = 1.665,
+                        easing = "outsine",
+                        end_value = 960,
+                        key_type = "tween",
+                        node_id = "go",
+                        property_id = "position_x",
+                        start_time = 2.995,
+                        start_value = 706,
+                    },
+                    {
+                        duration = 2.97,
+                        easing = "outsine",
+                        end_value = 1,
+                        key_type = "tween",
+                        node_id = "go",
+                        property_id = "scale_x",
+                        start_time = 3.03,
+                        start_value = 1.2,
+                    },
+                    {
+                        duration = 2.97,
+                        easing = "outsine",
+                        end_value = 1,
+                        key_type = "tween",
+                        node_id = "go",
+                        property_id = "scale_y",
+                        start_time = 3.03,
+                        start_value = 1.2,
+                    },
+                    {
+                        duration = 1.353,
+                        easing = "outsine",
+                        end_value = 540,
+                        key_type = "tween",
+                        node_id = "go",
+                        property_id = "position_y",
+                        start_time = 4.647,
+                        start_value = 271,
+                    },
+                },
+                duration = 6,
+            },
+        },
+        metadata = {
+            fps = 60,
+            gizmo_steps = {
+            },
+            gui_path = "/example/examples/widgets/go_widgets/go_widget.collection",
+            layers = {
+            },
+            settings = {
+                font_size = 30,
+            },
+            template_animation_paths = {
+            },
+        },
+        nodes = {
+        },
+    },
+    format = "json",
+    type = "animation_editor",
+    version = 1,
+}

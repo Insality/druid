@@ -37,9 +37,9 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 ---@field on_update_text_scale event fun(self, scale, metrics) The event triggered when the text scale is updated
 ---@field on_set_pivot event fun(self, pivot) The event triggered when the text pivot is set
 ---@field style druid.text.style The style of the text
----@field private start_pivot userdata The start pivot of the text
----@field private start_scale vector3 The start scale of the text
----@field private scale vector3 The current scale of the text
+---@field start_pivot userdata The start pivot of the text
+---@field start_scale vector3 The start scale of the text
+---@field scale vector3 The current scale of the text
 local M = component.create("text")
 
 
