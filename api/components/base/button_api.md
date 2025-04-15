@@ -2,10 +2,25 @@
 
 > at /druid/base/button.lua
 
-Druid component to make clickable node with various interaction callbacks
+Basic Druid input component. Handle input on node and provide different callbacks on touch events.
 
+### Setup
+Create button with druid: `button = druid:new_button(node_name, callback, [params], [animation_node])`
+Where node_name is name of node from GUI scene. You can use `node_name` as input trigger zone and point another node for animation via `animation_node`
+
+### Notes
+- Button callback have next params: (self, params, button_instance)
+-   - **self** - Druid self context
+-   - **params** - Additional params, specified on button creating
+-   - **button_instance** - button itself
+- You can set _params_ on button callback on button creating: `druid:new_button("node_name", callback, params)`.
+- Button have several events like on_click, on_repeated_click, on_long_click, on_hold_click, on_double_click
+- Click event will not trigger if between pressed and released state cursor was outside of node zone
+- Button can have key trigger to use them by key: `button:set_key_trigger`
+-
 
 ## Functions
+
 - [init](#init)
 - [set_animations_disabled](#set_animations_disabled)
 - [set_enabled](#set_enabled)
@@ -16,8 +31,8 @@ Druid component to make clickable node with various interaction callbacks
 - [set_check_function](#set_check_function)
 - [set_web_user_interaction](#set_web_user_interaction)
 
-
 ## Fields
+
 - [on_click](#on_click)
 - [on_pressed](#on_pressed)
 - [on_repeated_click](#on_repeated_click)
@@ -57,8 +72,8 @@ The constructor for the button component
 - **Parameters:**
 	- `node_or_node_id` *(string|node)*: Node name or GUI Node itself
 	- `[callback]` *(fun()|nil)*: Callback on button click
-	- `[custom_args]` *(any)*: Custom args for any Button event
-	- `[anim_node]` *(string|node|nil)*: Node to animate instead of trigger node
+	- `[custom_args]` *(any)*: Custom args for any Button event, will be passed to callbacks
+	- `[anim_node]` *(string|node|nil)*: Node to animate instead of trigger node, useful for animating small icons on big panels
 
 ### set_animations_disabled
 
@@ -189,16 +204,16 @@ If the game is not HTML, html mode will be not enabled
 - **on_pressed** (_event_): function(self, custom_args, button_instance)
 
 <a name="on_repeated_click"></a>
-- **on_repeated_click** (_event_): function(self, custom_args, button_instance, click_count)
+- **on_repeated_click** (_event_): function(self, custom_args, button_instance, click_count) Repeated click callback, while holding the button
 
 <a name="on_long_click"></a>
-- **on_long_click** (_event_): function(self, custom_args, button_instance, hold_time)
+- **on_long_click** (_event_): function(self, custom_args, button_instance, hold_time) Callback on long button tap
 
 <a name="on_double_click"></a>
-- **on_double_click** (_event_): function(self, custom_args, button_instance, click_amount)
+- **on_double_click** (_event_): function(self, custom_args, button_instance, click_amount) Different callback, if tap button 2+ in row
 
 <a name="on_hold_callback"></a>
-- **on_hold_callback** (_event_): function(self, custom_args, button_instance, press_time)
+- **on_hold_callback** (_event_): function(self, custom_args, button_instance, press_time) Hold callback, before long_click trigger
 
 <a name="on_click_outside"></a>
 - **on_click_outside** (_event_): function(self, custom_args, button_instance)

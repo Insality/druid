@@ -2,10 +2,22 @@
 
 > at /druid/extended/container.lua
 
-The component used for managing the size and positions with other containers relations to create a adaptable layouts
+Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
 
+### Setup
+Create container component with druid: `container = druid:new_container(node, mode, callback)`
+
+### Notes
+- Container can be used to create adaptable layouts that respond to window size changes
+- Container supports different layout modes: FIT, STRETCH, STRETCH_X, STRETCH_Y
+- Container can be nested inside other containers
+- Container supports fixed margins and percentage-based sizing
+- Container can be positioned using pivot points
+- Container supports minimum size constraints
+- Container can be fitted into window or custom size
 
 ## Functions
+
 - [init](#init)
 - [refresh_origins](#refresh_origins)
 - [set_pivot](#set_pivot)
@@ -27,8 +39,8 @@ The component used for managing the size and positions with other containers rel
 - [fit_into_node](#fit_into_node)
 - [set_min_size](#set_min_size)
 
-
 ## Fields
+
 - [node](#node)
 - [druid](#druid)
 - [node_offset](#node_offset)
@@ -59,6 +71,8 @@ The component used for managing the size and positions with other containers rel
 ```lua
 container:init(node, mode, [callback])
 ```
+
+The Container constructor
 
 - **Parameters:**
 	- `node` *(node)*: Gui node
@@ -187,7 +201,7 @@ container:add_container(node_or_container, [mode], [on_resize_callback])
 ```
 
 - **Parameters:**
-	- `node_or_container` *(string|table|druid.container|node)*: The component used for managing the size and positions with other containers relations to create a adaptable layouts
+	- `node_or_container` *(string|table|druid.container|node)*: The node or container to add
 	- `[mode]` *(string|nil)*: stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
 	- `[on_resize_callback]` *(fun(self: userdata, size: vector3)|nil)*:
 
@@ -215,7 +229,7 @@ container:set_parent_container([parent_container])
 ```
 
 - **Parameters:**
-	- `[parent_container]` *(druid.container|nil)*: The component used for managing the size and positions with other containers relations to create a adaptable layouts
+	- `[parent_container]` *(druid.container|nil)*: Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
 
 ### refresh
 

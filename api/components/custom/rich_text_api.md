@@ -4,8 +4,8 @@
 
 The component that handles a rich text display, allows to custom color, size, font, etc. of the parts of the text
 
-
 ## Functions
+
 - [init](#init)
 - [set_text](#set_text)
 - [get_text](#get_text)
@@ -14,8 +14,8 @@ The component that handles a rich text display, allows to custom color, size, fo
 - [get_words](#get_words)
 - [get_line_metric](#get_line_metric)
 
-
 ## Fields
+
 - [root](#root)
 - [text_prefab](#text_prefab)
 - [style](#style)
@@ -52,22 +52,30 @@ Set text for Rich Text
 - **Example Usage:**
 
 ```lua
+-- Color
 rich_text:set_text("＜color=red＞Foobar＜/color＞")
 rich_text:set_text("＜color=1.0,0,0,1.0＞Foobar＜/color＞")
 rich_text:set_text("＜color=#ff0000＞Foobar＜/color＞")
 rich_text:set_text("＜color=#ff0000ff＞Foobar＜/color＞")
+-- Shadow
 rich_text:set_text("＜shadow=red＞Foobar＜/shadow＞")
 rich_text:set_text("＜shadow=1.0,0,0,1.0＞Foobar＜/shadow＞")
 rich_text:set_text("＜shadow=#ff0000＞Foobar＜/shadow＞")
 rich_text:set_text("＜shadow=#ff0000ff＞Foobar＜/shadow＞")
+-- Outline
 rich_text:set_text("＜outline=red＞Foobar＜/outline＞")
 rich_text:set_text("＜outline=1.0,0,0,1.0＞Foobar＜/outline＞")
 rich_text:set_text("＜outline=#ff0000＞Foobar＜/outline＞")
 rich_text:set_text("＜outline=#ff0000ff＞Foobar＜/outline＞")
+-- Font
 rich_text:set_text("＜font=MyCoolFont＞Foobar＜/font＞")
+-- Size
 rich_text:set_text("＜size=2＞Twice as large＜/size＞")
+-- Line break
 rich_text:set_text("＜br/＞Insert a line break")
+-- No break
 rich_text:set_text("＜nobr＞Prevent the text from breaking")
+-- Image
 rich_text:set_text("＜img=texture:image＞Display image")
 rich_text:set_text("＜img=texture:image,size＞Display image with size")
 rich_text:set_text("＜img=texture:image,width,height＞Display image with width and height")

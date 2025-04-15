@@ -60,38 +60,77 @@ no_auto_input = 1
 ```
 
 
-## Code Bindings
+## Set Sound Function
 
-Adjust **Druid** settings as needed:
+You can set the sound function to play sounds in the Druid components. Mostly used as a click sound for the buttons.
+
 ```lua
 local druid = require("druid.druid")
 
--- Used for button component and custom components
 -- The callback should play the sound by name: function(sound_id) ... end
 druid.set_sound_function(function(sound_id)
-    -- sound_system.play(sound_id)
+    sound.play("/sounds#" .. sound_id)
 end)
+```
 
--- Used for lang_text component
+
+## Set Text Function
+
+You can set the text function to get the localized string by locale ID.
+
+```lua
+local druid = require("druid.druid")
+
 -- The callback should return the localized string by locale ID: function(locale_id) ... end
 druid.set_text_function(function(locale_id)
-	-- return lang.get(locale_id)
+    -- return lang.get(locale_id)
 end)
+```
 
--- Used to change the default Druid style
-druid.set_default_style(your_style)
 
--- Call this function when the language changes in the game,
--- to retranslate all lang_text components:
-local function on_language_change()
+## Set Default Style
+
+You can set the default style for the Druid components.
+
+```lua
+-- Copy the default style from the Druid folder and modify it as needed
+local my_custom_style = require("my.custom.style")
+local druid = require("druid.druid")
+
+druid.set_default_style(my_custom_style)
+```
+
+
+## On Language Change
+
+You can set the function to be called when the language changes.
+
+```lua
+local lang = require("lang.lang")
+local druid = require("druid.druid")
+
+function M.next_language()
+    lang.set_next_lang()
+	-- When game language changes, call this function to retranslate all Druid components
     druid.on_language_change()
 end
+```
 
--- Call this function inside window.set_listener
--- to capture game focus lost/gained callbacks:
--- window.set_listener(function(self, event, data) druid.on_window_callback(event, data) end))
-local function on_window_callback(self, event, data)
-    druid.on_window_callback(event)
-end
-window.set_listener(on_window_callback)
+
+## On Window Callback
+
+You can set the function to be called when the window event occurs.
+
+```lua
+local druid = require("druid.druid")
+
+-- Initialize the window listener, will override the previous window listener
+druid.init_window_listener()
+
+-- Or call this function inside window.set_listener
+
+-- The callback should be called when the window event occurs: function(event) ... end
+window.set_listener(function(self, event)
+	druid.on_window_callback(event)
+end)
 ```

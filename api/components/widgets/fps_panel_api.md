@@ -2,15 +2,15 @@
 
 > at /druid/widget/fps_panel/fps_panel.lua
 
-
 ## Functions
+
 - [init](#init)
 - [on_remove](#on_remove)
 - [update](#update)
 - [push_fps_value](#push_fps_value)
 
-
 ## Fields
+
 - [root](#root)
 - [delta_time](#delta_time)
 - [collect_time](#collect_time)
@@ -78,16 +78,12 @@ fps_panel:push_fps_value()
 
 <a name="mini_graph"></a>
 - **mini_graph** (_druid.widget.mini_graph_): Widget to display a several lines with different height in a row
-Init, set amount of samples and max value of value means that the line will be at max height
-Use `push_line_value` to add a new value to the line
-Or `set_line_value` to set a value to the line by index
-Setup colors inside template file (at minimum and maximum)
 
 <a name="text_min_fps"></a>
-- **text_min_fps** (_druid.text_): The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
+- **text_min_fps** (_druid.text_): Basic Druid text component. Text components by default have the text size adjusting.
 
 <a name="text_fps"></a>
-- **text_fps** (_druid.text_): The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
+- **text_fps** (_druid.text_): Basic Druid text component. Text components by default have the text size adjusting.
 
 <a name="timer_id"></a>
 - **timer_id** (_unknown_)

@@ -2,20 +2,28 @@
 
 > at /druid/extended/hotkey.lua
 
-The component used for managing hotkeys and trigger callbacks when hotkeys are pressed
+Druid component to manage hotkeys and trigger callbacks when hotkeys are pressed.
 
+### Setup
+Create hotkey component with druid: `hotkey = druid:new_hotkey(keys, callback, callback_argument)`
+
+### Notes
+- Hotkey can be triggered by pressing a single key or a combination of keys
+- Hotkey supports modificator keys (e.g. Ctrl, Shift, Alt)
+- Hotkey can be triggered on key press, release or repeat
+- Hotkey can be added or removed at runtime
+- Hotkey can be enabled or disabled
+- Hotkey can be set to repeat on key hold
 
 ## Functions
+
 - [init](#init)
-- [on_style_change](#on_style_change)
 - [add_hotkey](#add_hotkey)
 - [is_processing](#is_processing)
-- [on_focus_gained](#on_focus_gained)
-- [on_input](#on_input)
 - [set_repeat](#set_repeat)
 
-
 ## Fields
+
 - [on_hotkey_pressed](#on_hotkey_pressed)
 - [on_hotkey_released](#on_hotkey_released)
 - [style](#style)
@@ -36,16 +44,6 @@ The Hotkey constructor
 	- `keys` *(string|string[])*: The keys to be pressed for trigger callback. Should contains one key and any modificator keys
 	- `callback` *(function)*: The callback function
 	- `[callback_argument]` *(any)*: The argument to pass into the callback function
-
-### on_style_change
-
----
-```lua
-hotkey:on_style_change(style)
-```
-
-- **Parameters:**
-	- `style` *(druid.hotkey.style)*:
 
 ### add_hotkey
 
@@ -72,27 +70,6 @@ hotkey:is_processing()
 
 - **Returns:**
 	- `` *(boolean)*:
-
-### on_focus_gained
-
----
-```lua
-hotkey:on_focus_gained()
-```
-
-### on_input
-
----
-```lua
-hotkey:on_input([action_id], action)
-```
-
-- **Parameters:**
-	- `[action_id]` *(hash|nil)*: The action id
-	- `action` *(action)*: The action
-
-- **Returns:**
-	- `is_consume` *(boolean)*: True if the action is consumed
 
 ### set_repeat
 

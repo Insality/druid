@@ -566,6 +566,9 @@ end
 ---@field node node Node with flipbook animation
 ---@field v vector4 Vector with UV coordinates and size
 
+
+---Source: https://github.com/Dragosha/defold-sprite-repeat/blob/main/node_repeat/node_repeat.lua
+---Thanks to Dragosha! ( ・ω・ ) <  Hey friend!
 ---@param node node
 ---@param atlas_path string Path to the atlas
 ---@return druid.system.animation_data

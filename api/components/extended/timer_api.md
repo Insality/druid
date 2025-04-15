@@ -2,17 +2,25 @@
 
 > at /druid/extended/timer.lua
 
-The component that handles a text to display a seconds timer
+Druid component to handle timer work on gui text node. Displays time in a formatted way.
 
+### Setup
+Create timer component with druid: `timer = druid:new_timer(text_node, from_seconds, to_seconds, callback)`
+
+### Notes
+- Timer fires callback when timer value equals to _to_seconds_
+- Timer will set text node with current timer value
+- Timer uses update function to handle time
 
 ## Functions
+
 - [init](#init)
 - [set_to](#set_to)
 - [set_state](#set_state)
 - [set_interval](#set_interval)
 
-
 ## Fields
+
 - [on_tick](#on_tick)
 - [on_set_enabled](#on_set_enabled)
 - [on_timer_end](#on_timer_end)
@@ -37,7 +45,7 @@ timer:init(node, [seconds_from], [seconds_to], [callback])
 	- `node` *(node)*: Gui text node
 	- `[seconds_from]` *(number|nil)*: Start timer value in seconds
 	- `[seconds_to]` *(number|nil)*: End timer value in seconds
-	- `[callback]` *(function|nil)*: Function on timer end
+	- `[callback]` *(function|nil)*: Function that triggers when timer value equals to seconds_to
 
 - **Returns:**
 	- `` *(druid.timer)*:

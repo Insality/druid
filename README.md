@@ -17,8 +17,8 @@ In this example you can inspect a variety of **Druid** components and see how th
 
 ## Features
 
-- **Components** - Provides a extensive set of components, from basic buttons to infinity data lists and rich texts
-- **Customizable** - You can customize components appearance and behaviour
+- **Components Rich** - Provides a extensive set of components, from basic buttons to infinity data lists and rich texts
+- **Customizable** - You can customize components appearance and behaviour with their API and styles
 - **Widgets** - Powerful way to create your own reusable components
 - **Input Handling** - Handles input in a stack-based manner and manage input priority
 - **Event Based** - Uses [Defold Event](https://github.com/Insality/defold-event) for components callbacks and communication between components
@@ -66,7 +66,34 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 ### Basic usage
 
-Read more in the [Basic Usage](wiki/basic_usage.md)
+The basic template for `gui_script` is:
+
+```lua
+local druid = require("druid.druid")
+
+function init(self)
+    self.druid = druid.new(self)
+end
+
+function final(self)
+    self.druid:final()
+end
+
+function update(self, dt)
+    self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+    return self.druid:on_input(action_id, action)
+end
+```
+
+Read the [Basic Usage](wiki/basic_usage.md) to learn how to use **Druid**, how to create your own components and how to use widgets.
+
 
 ### API Documentation
 
@@ -160,8 +187,8 @@ To better understand **Druid**, read the following documentation:
 
 - [How To GUI in Defold](https://forum.defold.com/t/how-to-gui-in-defold/73256)
 - [Widgets](wiki/widgets.md)
-- [Create custom components](docs_md/02-creating_custom_components.md)
-- [Druid styles](docs_md/03-styles.md)
+- [Create custom components](wiki/creating_custom_components.md)
+- [Druid styles](wiki/styles.md)
 
 
 ## Licenses

@@ -32,7 +32,6 @@ end
 ---The default way to create component is `druid_instance:new(component_class, ...)`.
 ---@param name string Module name
 ---@param module table Lua table with component
----@deprecated
 function M.register(name, module)
 	druid_instance["new_" .. name] = function(self, ...)
 		return druid_instance.new(self, module, ...)
@@ -85,11 +84,11 @@ function M.on_language_change()
 end
 
 
+---@type table<userdata, {path: string, fragment: string, new_widget: event}[]>
 local REGISTERED_GUI_WIDGETS = {}
 
 ---Set a widget to the current game object. The game object can acquire the widget by calling `bindings.get_widget`
 ---It wraps with events only top level functions cross-context, so you will have no access to nested widgets functions
----Only one widget can be set per game object.
 ---@param widget druid.widget
 ---@return druid.widget
 local function wrap_widget(widget)
@@ -111,24 +110,27 @@ local function wrap_widget(widget)
 end
 
 
----Get a binded widget to the current game object with "go_widget" gui component name.
----		msg.url(nil, nil, "go_widget") -- current game object
----		msg.url(nil, object_url, "go_widget") -- other game object
+---Create a widget from the binded Druid GUI instance.
+---The widget will be created and all widget functions can be called from Game Object contexts.
+---This allow use only `druid_widget.gui_script` for GUI files and call this widget functions from Game Object script file.
+---Widget class here is a your lua file for the GUI scene (a widgets in Druid)
+---		msg.url(nil, nil, "gui_widget") -- current game object
+---		msg.url(nil, object_url, "gui_widget") -- other game object
 ---@generic T: druid.widget
 ---@param widget_class T The class of the widget to return
 ---@param gui_url url GUI url
----@return T
+---@return T? widget The new created widget,
 function M.get_widget(widget_class, gui_url)
 	gui_url = gui_url or msg.url()
-	local guis = REGISTERED_GUI_WIDGETS[gui_url.socket]
-	if not guis then
+	local registered_druids = REGISTERED_GUI_WIDGETS[gui_url.socket]
+	if not registered_druids then
 		return nil
 	end
 
-	for index = 1, #guis do
-		local gui = guis[index]
-		if gui.fragment == gui_url.fragment and gui.path == gui_url.path then
-			return gui.new_widget:trigger(widget_class)
+	for index = 1, #registered_druids do
+		local druid = registered_druids[index]
+		if druid.fragment == gui_url.fragment and druid.path == gui_url.path then
+			return druid.new_widget:trigger(widget_class)
 		end
 	end
 
@@ -136,7 +138,9 @@ function M.get_widget(widget_class, gui_url)
 end
 
 
----Register a widget to the current game object.
+---Bind a Druid GUI instance to the current game object.
+---This instance now can produce widgets from `druid.get_widget()` function.
+---Only one widget can be set per game object.
 ---@param druid druid.instance The druid instance to register
 function M.register_druid_as_widget(druid)
 	local gui_url = msg.url()
@@ -151,7 +155,7 @@ function M.register_druid_as_widget(druid)
 end
 
 
----Unregister a druid instance from the current game object.
+---Should be called on final, where druid instance is destroyed.
 function M.unregister_druid_as_widget()
 	local gui_url = msg.url()
 	local socket = gui_url.socket

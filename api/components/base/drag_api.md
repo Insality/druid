@@ -4,16 +4,16 @@
 
 A component that allows you to subscribe to drag events over a node
 
-
 ## Functions
+
 - [init](#init)
 - [set_drag_cursors](#set_drag_cursors)
 - [set_click_zone](#set_click_zone)
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
 
-
 ## Fields
+
 - [node](#node)
 - [on_touch_start](#on_touch_start)
 - [on_touch_end](#on_touch_end)

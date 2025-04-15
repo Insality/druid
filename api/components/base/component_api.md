@@ -2,8 +2,8 @@
 
 > at /druid/component.lua
 
-
 ## Functions
+
 - [create](#create)
 - [create_widget](#create_widget)
 
@@ -39,8 +39,8 @@
 - [get_nodes](#get_nodes)
 - [get_childrens](#get_childrens)
 
-
 ## Fields
+
 - [druid](#druid)
 
 

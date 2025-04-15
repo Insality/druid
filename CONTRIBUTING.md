@@ -6,12 +6,6 @@ Finally, there are set of instructions that will help you to contribute to the p
 
 Thanks for your help!
 
-## Update Documentation
-
-If you see any mistakes in the documentation, you can update it by yourself.
-
-You can push changes to the `master` branch directly. In case of small fixes, please also update the relative API `md` files. If there is a lot of changes, I will regenerate them manually.
-
 ## Issue Reporting
 
 If you find any bugs, please report them to the [issue tracker](https://github.com/druid-js/druid/issues).
@@ -26,6 +20,17 @@ You fix should contains only changes, which are related to the issue. Also pleas
 
 Thanks <3
 
+## Update Documentation
+
+If you see any mistakes in the documentation, you can update it by yourself with the following steps:
+
+- Fork Druid repository
+- Create a new branch for your changes
+- Make your changes and commit them
+- Push your changes to your fork
+- Create a pull request to the Druid repository `develop` branch
+
+
 ## Add or Update Examples
 
 Examples contains a GUI scene, a Druid widget for this GUI. This GUI is included to the `examples.gui` and the information about examples are added in `examples_list.lua` file
@@ -34,4 +39,12 @@ You can add new examples or update existing ones.
 
 To add new example, you need to create a new folder in the `examples` directory.
 
+On your repo fork:
+
+- Create a gui file with the example inside `/example/examples` directory
+- Add the example info to the `examples_list.lua` file.
+- Add this GUI template to the `/example/druid.gui` file
+	- GUI should be placed inside relative example parent, e.g. `root -> container_center -> examples -> widgets`
+- Test the example by running the game
+- Create a pull request to the `develop` branch
 

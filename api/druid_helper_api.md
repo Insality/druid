@@ -5,8 +5,8 @@
 The helper module contains various functions that are used in the Druid library.
 You can use these functions in your projects as well.
 
-
 ## Functions
+
 - [centrate_text_with_icon](#centrate_text_with_icon)
 - [centrate_icon_with_text](#centrate_icon_with_text)
 - [centrate_nodes](#centrate_nodes)
@@ -27,6 +27,7 @@ You can use these functions in your projects as well.
 - [get_scene_scale](#get_scene_scale)
 - [get_closest_stencil_node](#get_closest_stencil_node)
 - [get_pivot_offset](#get_pivot_offset)
+- [is_desktop](#is_desktop)
 - [is_mobile](#is_mobile)
 - [is_web](#is_web)
 - [is_web_mobile](#is_web_mobile)
@@ -38,13 +39,6 @@ You can use these functions in your projects as well.
 - [remove_with_shift](#remove_with_shift)
 - [get_full_position](#get_full_position)
 - [get_animation_data_from_node](#get_animation_data_from_node)
-
-
-## Fields
-- [PROP_SIZE_X](#PROP_SIZE_X)
-- [PROP_SIZE_Y](#PROP_SIZE_Y)
-- [PROP_SCALE_X](#PROP_SCALE_X)
-- [PROP_SCALE_Y](#PROP_SCALE_Y)
 
 
 
@@ -194,7 +188,7 @@ Calculate distance between two points
 	- `y2` *(number)*: Second point y
 
 - **Returns:**
-	- `Distance` *(number)*:
+	- `distance` *(number)*:
 
 ### sign
 
@@ -258,7 +252,7 @@ Check if value contains in array
 	- `[value]` *(any)*: Value
 
 - **Returns:**
-	- `` *(integer|nil)*:
+	- `index` *(number|nil)*: Index of value in array or nil if value not found
 
 ### deepcopy
 
@@ -370,6 +364,18 @@ Offset shown in [-0.5 .. 0.5] range, where -0.5 is left or bottom, 0.5 is right 
 
 - **Returns:**
 	- `offset` *(vector3)*: The pivot offset
+
+### is_desktop
+
+---
+```lua
+helper.is_desktop()
+```
+
+Check if device is desktop
+
+- **Returns:**
+	- `` *(boolean)*:
 
 ### is_mobile
 
@@ -531,18 +537,4 @@ helper.get_animation_data_from_node(node, atlas_path)
 
 - **Returns:**
 	- `` *(druid.system.animation_data)*:
-
-
-## Fields
-<a name="PROP_SIZE_X"></a>
-- **PROP_SIZE_X** (_unknown_)
-
-<a name="PROP_SIZE_Y"></a>
-- **PROP_SIZE_Y** (_unknown_)
-
-<a name="PROP_SCALE_X"></a>
-- **PROP_SCALE_X** (_unknown_)
-
-<a name="PROP_SCALE_Y"></a>
-- **PROP_SCALE_Y** (_unknown_)
 

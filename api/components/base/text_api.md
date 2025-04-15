@@ -2,10 +2,27 @@
 
 > at /druid/base/text.lua
 
-The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
+Basic Druid text component. Text components by default have the text size adjusting.
 
+### Setup
+Create text node with druid: `text = druid:new_text(node_name, [initial_value], [text_adjust_type])`
+
+### Notes
+- Text component by default have auto adjust text sizing. Text never will be bigger, than text node size, which you can setup in GUI scene.
+- Text pivot can be changed with `text:set_pivot`, and text will save their position inside their text size box
+- There are several text adjust types:
+-   - **"downscale"** - Change text's scale to fit in the text node size (default)
+-   - **"trim"** - Trim the text with postfix (default - "...") to fit in the text node size
+-   - **"no_adjust"** - No any adjust, like default Defold text node
+-   - **"downscale_limited"** - Change text's scale like downscale, but there is limit for text's scale
+-   - **"scroll"** - Change text's pivot to imitate scrolling in the text box. Use with stencil node for better effect.
+-   - **"scale_then_scroll"** - Combine two modes: first limited downscale, then scroll
+-   - **"trim_left"** - Trim the text with postfix (default - "...") to fit in the text node size
+-   - **"scale_then_trim"** - Combine two modes: first limited downscale, then trim
+-   - **"scale_then_trim_left"** - Combine two modes: first limited downscale, then trim left
 
 ## Functions
+
 - [init](#init)
 - [get_text_size](#get_text_size)
 - [get_text_index_by_width](#get_text_index_by_width)
@@ -22,8 +39,8 @@ The component to handle text behaviour over a GUI Text node, mainly used to auto
 - [set_minimal_scale](#set_minimal_scale)
 - [get_text_adjust](#get_text_adjust)
 
-
 ## Fields
+
 - [node](#node)
 - [on_set_text](#on_set_text)
 - [on_update_text_scale](#on_update_text_scale)
@@ -44,15 +61,27 @@ The component to handle text behaviour over a GUI Text node, mainly used to auto
 
 ---
 ```lua
-text:init(node, [value], [adjust_type])
+text:init(node, [value], adjust_type)
 ```
 
 The Text constructor
+```lua
+adjust_type:
+    | "downscale"
+    | "trim"
+    | "no_adjust"
+    | "downscale_limited"
+    | "scroll"
+    | "scale_then_scroll"
+    | "trim_left"
+    | "scale_then_trim"
+    | "scale_then_trim_left"
+```
 
 - **Parameters:**
 	- `node` *(string|node)*: Node name or GUI Text Node itself
 	- `[value]` *(string|nil)*: Initial text. Default value is node text from GUI scene. Default: nil
-	- `[adjust_type]` *(string|nil)*: Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference. Default: DOWNSCALE
+	- `adjust_type` *("downscale"|"downscale_limited"|"no_adjust"|"scale_then_scroll"|"scale_then_trim"...(+5))*: Adjust type for text. By default is "downscale". Options: "downscale", "trim", "no_adjust", "downscale_limited", "scroll", "scale_then_scroll", "trim_left", "scale_then_trim", "scale_then_trim_left"
 
 ### get_text_size
 
@@ -214,15 +243,25 @@ Return true, if text with line break
 
 ---
 ```lua
-text:set_text_adjust([adjust_type], [minimal_scale])
+text:set_text_adjust(adjust_type, [minimal_scale])
 ```
 
 Set text adjust, refresh the current text visuals, if needed
-Values are: "downscale", "trim", "no_adjust", "downscale_limited",
-"scroll", "scale_then_scroll", "trim_left", "scale_then_trim", "scale_then_trim_left"
+```lua
+adjust_type:
+    | "downscale"
+    | "trim"
+    | "no_adjust"
+    | "downscale_limited"
+    | "scroll"
+    | "scale_then_scroll"
+    | "trim_left"
+    | "scale_then_trim"
+    | "scale_then_trim_left"
+```
 
 - **Parameters:**
-	- `[adjust_type]` *(string|nil)*: See const.TEXT_ADJUST. If pass nil - use current adjust type
+	- `adjust_type` *("downscale"|"downscale_limited"|"no_adjust"|"scale_then_scroll"|"scale_then_trim"...(+5))*: The adjust type to set, values: "downscale", "trim", "no_adjust", "downscale_limited", "scroll", "scale_then_scroll", "trim_left", "scale_then_trim", "scale_then_trim_left"
 	- `[minimal_scale]` *(number|nil)*: To remove minimal scale, use `text:set_minimal_scale(nil)`, if pass nil - not change minimal scale
 
 - **Returns:**
@@ -235,7 +274,7 @@ Values are: "downscale", "trim", "no_adjust", "downscale_limited",
 text:set_minimal_scale(minimal_scale)
 ```
 
-Set minimal scale for DOWNSCALE_LIMITED or SCALE_THEN_SCROLL adjust types
+Set minimal scale for "downscale_limited" or "scale_then_scroll" adjust types
 
 - **Parameters:**
 	- `minimal_scale` *(number)*: If pass nil - not use minimal scale
@@ -261,13 +300,13 @@ Return current text adjust type
 - **node** (_node_): The text node
 
 <a name="on_set_text"></a>
-- **on_set_text** (_event_): The event triggered when the text is set, fun(self, text)
+- **on_set_text** (_event_): fun(self, text) The event triggered when the text is set
 
 <a name="on_update_text_scale"></a>
-- **on_update_text_scale** (_event_): The event triggered when the text scale is updated, fun(self, scale, metrics)
+- **on_update_text_scale** (_event_): fun(self, scale, metrics) The event triggered when the text scale is updated
 
 <a name="on_set_pivot"></a>
-- **on_set_pivot** (_event_): The event triggered when the text pivot is set, fun(self, pivot)
+- **on_set_pivot** (_event_): fun(self, pivot) The event triggered when the text pivot is set
 
 <a name="style"></a>
 - **style** (_druid.text.style_): The style of the text
@@ -285,7 +324,7 @@ Return current text adjust type
 - **text_area** (_unknown_)
 
 <a name="adjust_type"></a>
-- **adjust_type** (_string|nil_)
+- **adjust_type** (_string|"downscale"|"downscale_limited"|"no_adjust"|"scale_then_scroll"...(+6)_)
 
 <a name="color"></a>
 - **color** (_unknown_)

@@ -4,13 +4,13 @@
 
 The component to manage swipe events over a node
 
-
 ## Functions
+
 - [init](#init)
 - [set_click_zone](#set_click_zone)
 
-
 ## Fields
+
 - [node](#node)
 - [on_swipe](#on_swipe)
 - [style](#style)

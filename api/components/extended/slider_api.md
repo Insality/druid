@@ -2,23 +2,29 @@
 
 > at /druid/extended/slider.lua
 
-The component to make a draggable node over a line with a progress report
+Basic Druid slider component. Creates a draggable node over a line with progress reporting.
 
+### Setup
+Create slider component with druid: `slider = druid:new_slider(node_name, end_pos, callback)`
+
+### Notes
+- Pin node should be placed in initial position at zero progress
+- It will be available to move Pin node between start pos and end pos
+- You can setup points of interests on slider via `slider:set_steps`. If steps exist, slider values will be only from these steps (notched slider)
+- Start pos and end pos should be on vertical or horizontal line (their x or y value should be equal)
+- To catch input across all slider, you can setup input node via `slider:set_input_node`
 
 ## Functions
+
 - [init](#init)
-- [on_layout_change](#on_layout_change)
-- [on_remove](#on_remove)
-- [on_window_resized](#on_window_resized)
-- [on_input](#on_input)
 - [set](#set)
 - [set_steps](#set_steps)
 - [set_input_node](#set_input_node)
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
 
-
 ## Fields
+
 - [node](#node)
 - [on_change_value](#on_change_value)
 - [style](#style)
@@ -38,41 +44,6 @@ The Slider constructor
 	- `node` *(node)*: GUI node to drag as a slider
 	- `end_pos` *(vector3)*: The end position of slider, should be on the same axis as the node
 	- `[callback]` *(function|nil)*: On slider change callback
-
-### on_layout_change
-
----
-```lua
-slider:on_layout_change()
-```
-
-### on_remove
-
----
-```lua
-slider:on_remove()
-```
-
-### on_window_resized
-
----
-```lua
-slider:on_window_resized()
-```
-
-### on_input
-
----
-```lua
-slider:on_input(action_id, action)
-```
-
-- **Parameters:**
-	- `action_id` *(number)*: The action id
-	- `action` *(action)*: The action table
-
-- **Returns:**
-	- `is_consumed` *(boolean)*: True if the input was consumed
 
 ### set
 

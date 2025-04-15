@@ -2,8 +2,8 @@
 
 > at /druid/widget/properties_panel/properties_panel.lua
 
-
 ## Functions
+
 - [properties_constructors](#properties_constructors)
 - [init](#init)
 - [on_remove](#on_remove)
@@ -27,8 +27,8 @@
 - [set_properties_per_page](#set_properties_per_page)
 - [set_page](#set_page)
 
-
 ## Fields
+
 - [root](#root)
 - [scroll](#scroll)
 - [layout](#layout)
@@ -299,28 +299,28 @@ properties_panel:set_page([page])
 - **root** (_node_)
 
 <a name="scroll"></a>
-- **scroll** (_druid.scroll_)
+- **scroll** (_druid.scroll_): Basic Druid scroll component. Handles all scrolling behavior in Druid GUI.
 
 <a name="layout"></a>
-- **layout** (_druid.layout_): The component used for managing the layout of nodes, placing them inside the node size with respect to the size and pivot of each node
+- **layout** (_druid.layout_): Druid component to manage the layout of nodes, placing them inside the node size with respect to the size and pivot of each node.
 
 <a name="container"></a>
-- **container** (_druid.container_): The component used for managing the size and positions with other containers relations to create a adaptable layouts
+- **container** (_druid.container_): Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
 
 <a name="container_content"></a>
-- **container_content** (_druid.container_): The component used for managing the size and positions with other containers relations to create a adaptable layouts
+- **container_content** (_druid.container_): Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
 
 <a name="container_scroll_view"></a>
-- **container_scroll_view** (_druid.container_): The component used for managing the size and positions with other containers relations to create a adaptable layouts
+- **container_scroll_view** (_druid.container_): Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
 
 <a name="contaienr_scroll_content"></a>
-- **contaienr_scroll_content** (_druid.container_): The component used for managing the size and positions with other containers relations to create a adaptable layouts
+- **contaienr_scroll_content** (_druid.container_): Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
 
 <a name="button_hidden"></a>
-- **button_hidden** (_druid.button_): Druid component to make clickable node with various interaction callbacks
+- **button_hidden** (_druid.button_): Basic Druid input component. Handle input on node and provide different callbacks on touch events.
 
 <a name="text_header"></a>
-- **text_header** (_druid.text_): The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
+- **text_header** (_druid.text_): Basic Druid text component. Text components by default have the text size adjusting.
 
 <a name="paginator"></a>
 - **paginator** (_druid.widget.property_left_right_selector_)

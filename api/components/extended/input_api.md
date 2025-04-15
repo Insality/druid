@@ -2,13 +2,22 @@
 
 > at /druid/extended/input.lua
 
-The component used for managing input fields in basic way
+Basic Druid text input component. Handles user text input via component with button and text.
 
+### Setup
+Create input component with druid: `input = druid:new_input(button_node_name, text_node_name, keyboard_type)`
+
+### Notes
+- Input component handles user text input. Input contains button and text components
+- Button needed for selecting/unselecting input field
+- Click outside of button to unselect input field
+- On focus lost (game minimized) input field will be unselected
+- You can setup max length of the text
+- You can setup allowed characters. On add not allowed characters `on_input_wrong` will be called
 
 ## Functions
+
 - [init](#init)
-- [on_focus_lost](#on_focus_lost)
-- [on_input_interrupt](#on_input_interrupt)
 - [get_text_selected](#get_text_selected)
 - [get_text_selected_replaced](#get_text_selected_replaced)
 - [set_text](#set_text)
@@ -21,8 +30,8 @@ The component used for managing input fields in basic way
 - [select_cursor](#select_cursor)
 - [move_selection](#move_selection)
 
-
 ## Fields
+
 - [on_input_select](#on_input_select)
 - [on_input_unselect](#on_input_unselect)
 - [on_input_text](#on_input_text)
@@ -31,9 +40,8 @@ The component used for managing input fields in basic way
 - [on_input_wrong](#on_input_wrong)
 - [on_select_cursor_change](#on_select_cursor_change)
 - [style](#style)
-- [text](#text)
-- [ALLOWED_ACTIONS](#ALLOWED_ACTIONS)
 - [druid](#druid)
+- [text](#text)
 - [is_selected](#is_selected)
 - [value](#value)
 - [previous_value](#previous_value)
@@ -64,21 +72,7 @@ input:init(click_node, text_node, [keyboard_type])
 - **Parameters:**
 	- `click_node` *(node)*: Node to enabled input component
 	- `text_node` *(druid.text|node)*: Text node what will be changed on user input. You can pass text component instead of text node name Text
-	- `[keyboard_type]` *(number|nil)*: Gui keyboard type for input field
-
-### on_focus_lost
-
----
-```lua
-input:on_focus_lost()
-```
-
-### on_input_interrupt
-
----
-```lua
-input:on_input_interrupt()
-```
+	- `[keyboard_type]` *(constant|nil)*: Gui keyboard type for input field
 
 ### get_text_selected
 
@@ -109,13 +103,13 @@ Replace selected text with new text
 
 ---
 ```lua
-input:set_text(input_text)
+input:set_text([input_text])
 ```
 
 Set text for input field
 
 - **Parameters:**
-	- `input_text` *(string)*: The string to apply for input field
+	- `[input_text]` *(string?)*: The string to apply for input field, if nil - will be set to empty string
 
 ### select
 
@@ -155,7 +149,7 @@ input:set_max_length(max_length)
 ```
 
 Set maximum length for input field.
- Pass nil to make input field unliminted (by default)
+Pass nil to make input field unliminted (by default)
 
 - **Parameters:**
 	- `max_length` *(number)*: Maximum length for input text field
@@ -171,11 +165,13 @@ input:set_allowed_characters(characters)
 ```
 
 Set allowed charaters for input field.
- See: https://defold.com/ref/stable/string/
- ex: [%a%d] for alpha and numeric
+See: https://defold.com/ref/stable/string/
+ex: [%a%d] for alpha and numeric
+ex: [abcdef] to allow only these characters
+ex: [^%s] to allow only non-space characters
 
 - **Parameters:**
-	- `characters` *(string)*: Regulax exp. for validate user input
+	- `characters` *(string)*: Regular expression for validate user input
 
 - **Returns:**
 	- `self` *(druid.input)*: Current input instance
@@ -252,14 +248,11 @@ Change cursor position by delta
 <a name="style"></a>
 - **style** (_druid.input.style_): The style of the input component
 
-<a name="text"></a>
-- **text** (_druid.text_): The text component
-
-<a name="ALLOWED_ACTIONS"></a>
-- **ALLOWED_ACTIONS** (_table_)
-
 <a name="druid"></a>
 - **druid** (_druid.instance_): The Druid Factory used to create components
+
+<a name="text"></a>
+- **text** (_druid.text|node_): Basic Druid text component. Text components by default have the text size adjusting.
 
 <a name="is_selected"></a>
 - **is_selected** (_boolean_)
@@ -304,10 +297,10 @@ Change cursor position by delta
 - **allowed_characters** (_nil_)
 
 <a name="keyboard_type"></a>
-- **keyboard_type** (_number_)
+- **keyboard_type** (_constant_)
 
 <a name="button"></a>
-- **button** (_druid.button_): Druid component to make clickable node with various interaction callbacks
+- **button** (_druid.button_): Basic Druid input component. Handle input on node and provide different callbacks on touch events.
 
 <a name="marked_text_width"></a>
 - **marked_text_width** (_number_)

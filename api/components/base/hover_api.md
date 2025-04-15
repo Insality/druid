@@ -4,8 +4,8 @@
 
 The component for handling hover events on a node
 
-
 ## Functions
+
 - [init](#init)
 - [set_hover](#set_hover)
 - [is_hovered](#is_hovered)
@@ -15,8 +15,8 @@ The component for handling hover events on a node
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
 
-
 ## Fields
+
 - [node](#node)
 - [on_hover](#on_hover)
 - [on_mouse_hover](#on_mouse_hover)

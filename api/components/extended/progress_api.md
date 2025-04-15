@@ -2,14 +2,21 @@
 
 > at /druid/extended/progress.lua
 
-The component used to manage a node as a progress bar, changing the size and scale of the node
+Basic Druid progress bar component. Changes the size or scale of a node to represent progress.
 
+### Setup
+Create progress bar component with druid: `progress = druid:new_progress(node_name, key, init_value)`
+
+### Notes
+- Node should have maximum node size in GUI scene, it's represent the progress bar maximum size
+- Key is value from druid const: "x" or "y"
+- Progress works correctly with 9slice nodes, it tries to set size by _set_size_ first, until minimum size is reached, then it sizing via _set_scale_
+- Progress bar can fill only by vertical or horizontal size. For diagonal progress bar, just rotate node in GUI scene
+- If you have glitchy or dark texture bugs with progress bar, try to disable mipmaps in your texture profiles
 
 ## Functions
+
 - [init](#init)
-- [on_style_change](#on_style_change)
-- [on_layout_change](#on_layout_change)
-- [on_remove](#on_remove)
 - [update](#update)
 - [fill](#fill)
 - [empty](#empty)
@@ -19,8 +26,8 @@ The component used to manage a node as a progress bar, changing the size and sca
 - [to](#to)
 - [set_max_size](#set_max_size)
 
-
 ## Fields
+
 - [node](#node)
 - [on_change](#on_change)
 - [style](#style)
@@ -49,31 +56,7 @@ progress:init(node, key, [init_value])
 - **Parameters:**
 	- `node` *(string|node)*: Node name or GUI Node itself.
 	- `key` *(string)*: Progress bar direction: "x" or "y"
-	- `[init_value]` *(number|nil)*: Initial value of progress bar. Default: 1
-
-### on_style_change
-
----
-```lua
-progress:on_style_change(style)
-```
-
-- **Parameters:**
-	- `style` *(druid.progress.style)*:
-
-### on_layout_change
-
----
-```lua
-progress:on_layout_change()
-```
-
-### on_remove
-
----
-```lua
-progress:on_remove()
-```
+	- `[init_value]` *(number|nil)*: Initial value of progress bar (0 to 1). Default: 1
 
 ### update
 
@@ -186,19 +169,19 @@ Set progress bar max node size
 
 ## Fields
 <a name="node"></a>
-- **node** (_node_)
+- **node** (_node_): The progress bar node
 
 <a name="on_change"></a>
-- **on_change** (_event_)
+- **on_change** (_event_): Event triggered when progress value changes
 
 <a name="style"></a>
-- **style** (_druid.progress.style_)
+- **style** (_druid.progress.style_): Component style parameters
 
 <a name="key"></a>
-- **key** (_string_)
+- **key** (_string_): Progress bar direction: "x" or "y"
 
 <a name="prop"></a>
-- **prop** (_hash_)
+- **prop** (_hash_): Property for scaling the progress bar
 
 <a name="scale"></a>
 - **scale** (_unknown_)

@@ -2,12 +2,22 @@
 
 > at /druid/extended/data_list.lua
 
-The component used for managing a list of data with a scrollable view, used to manage huge list data and render only visible elements
+Druid component to manage a list of data with a scrollable view, used to manage huge list data and render only visible elements.
 
+### Setup
+Create data list component with druid: `data_list = druid:new_data_list(scroll, grid, create_function)`
+
+### Notes
+- Data List uses a scroll component for scrolling and a grid component for layout
+- Data List only renders visible elements for better performance
+- Data List supports caching of elements for better performance
+- Data List supports adding, removing and updating elements
+- Data List supports scrolling to specific elements
+- Data List supports custom element creation and cleanup
 
 ## Functions
+
 - [init](#init)
-- [on_remove](#on_remove)
 - [set_use_cache](#set_use_cache)
 - [set_data](#set_data)
 - [get_data](#get_data)
@@ -20,8 +30,8 @@ The component used for managing a list of data with a scrollable view, used to m
 - [get_created_components](#get_created_components)
 - [scroll_to_index](#scroll_to_index)
 
-
 ## Fields
+
 - [scroll](#scroll)
 - [grid](#grid)
 - [on_scroll_progress_change](#on_scroll_progress_change)
@@ -40,19 +50,12 @@ The component used for managing a list of data with a scrollable view, used to m
 data_list:init(scroll, grid, create_function)
 ```
 
+The DataList constructor
+
 - **Parameters:**
 	- `scroll` *(druid.scroll)*: The Scroll instance for Data List component
 	- `grid` *(druid.grid)*: The StaticGrid instance for Data List component
 	- `create_function` *(function)*: The create function callback(self, data, index, data_list). Function should return (node, [component])
-
-### on_remove
-
----
-```lua
-data_list:on_remove()
-```
-
-Druid System on_remove function
 
 ### set_use_cache
 

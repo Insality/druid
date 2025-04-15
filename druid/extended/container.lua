@@ -368,6 +368,7 @@ end
 
 -- Glossary
 -- Center Offset - vector from node position to visual center of node
+
 function M:refresh()
 	local x_koef, y_koef = self.x_koef, self.y_koef
 	self:refresh_scale()

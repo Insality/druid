@@ -2,10 +2,21 @@
 
 > at /druid/extended/layout.lua
 
-The component used for managing the layout of nodes, placing them inside the node size with respect to the size and pivot of each node
+Druid component to manage the layout of nodes, placing them inside the node size with respect to the size and pivot of each node.
 
+### Setup
+Create layout component with druid: `layout = druid:new_layout(node, layout_type)`
+
+### Notes
+- Layout can be horizontal, vertical or horizontal with wrapping
+- Layout can resize parent node to fit content
+- Layout can justify content
+- Layout supports margins and padding
+- Layout automatically updates when nodes are added or removed
+- Layout can be manually updated by calling set_dirty()
 
 ## Functions
+
 - [init](#init)
 - [update](#update)
 - [get_entities](#get_entities)
@@ -26,8 +37,8 @@ The component used for managing the layout of nodes, placing them inside the nod
 - [calculate_rows_data](#calculate_rows_data)
 - [set_node_position](#set_node_position)
 
-
 ## Fields
+
 - [node](#node)
 - [rows_data](#rows_data)
 - [is_dirty](#is_dirty)
@@ -58,8 +69,8 @@ layout_type:
 ```
 
 - **Parameters:**
-	- `node_or_node_id` *(string|node)*:
-	- `layout_type` *("horizontal"|"horizontal_wrap"|"vertical")*:
+	- `node_or_node_id` *(string|node)*: The node to manage the layout of
+	- `layout_type` *("horizontal"|"horizontal_wrap"|"vertical")*: The type of layout (horizontal, vertical, horizontal_wrap)
 
 ### update
 
@@ -151,11 +162,18 @@ layout:set_justify(is_justify)
 
 ---
 ```lua
-layout:set_type(type)
+layout:set_type(layout_type)
+```
+
+```lua
+layout_type:
+    | "horizontal"
+    | "vertical"
+    | "horizontal_wrap"
 ```
 
 - **Parameters:**
-	- `type` *(string)*: The layout type: "horizontal", "vertical", "horizontal_wrap"
+	- `layout_type` *("horizontal"|"horizontal_wrap"|"vertical")*:
 
 - **Returns:**
 	- `self` *(druid.layout)*: Current layout instance
@@ -295,7 +313,7 @@ layout:set_node_position(node, x, y)
 - **rows_data** (_druid.layout.rows_data_): Last calculated rows data
 
 <a name="is_dirty"></a>
-- **is_dirty** (_boolean_)
+- **is_dirty** (_boolean_): True if layout needs to be updated
 
 <a name="entities"></a>
 - **entities** (_node[]_): The entities to manage the layout of

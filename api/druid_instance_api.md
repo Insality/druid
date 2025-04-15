@@ -4,9 +4,10 @@
 
 The Druid Factory used to create components
 
-
 ## Functions
+
 - [create_druid_instance](#create_druid_instance)
+
 - [new](#new)
 - [final](#final)
 - [remove](#remove)
@@ -39,11 +40,6 @@ The Druid Factory used to create components
 - [new_rich_input](#new_rich_input)
 
 
-## Fields
-- [components_all](#components_all)
-- [components_interest](#components_interest)
-
-
 
 ### create_druid_instance
 
@@ -59,7 +55,7 @@ Druid class constructor which used to create a Druid's components
 	- `[style]` *(table?)*: Druid style table
 
 - **Returns:**
-	- `` *(druid.instance)*:
+	- `instance` *(druid.instance)*: The new Druid instance
 
 ### new
 
@@ -94,7 +90,7 @@ instance:remove(component)
 ```
 
 Remove created component from Druid instance.
- Component `on_remove` function will be invoked, if exist.
+Component `on_remove` function will be invoked, if exist.
 
 - **Parameters:**
 	- `component` *(<T:druid.component>)*: Component instance
@@ -202,7 +198,7 @@ Create new Druid widget instance
 - **Parameters:**
 	- `widget` *(<T:druid.component>)*: The widget class to create
 	- `[template]` *(string|nil)*: The template name used by widget
-	- `[nodes]` *(node|table<hash, node>|nil)*: The nodes table from gui.clone_tree or prefab node to use for clone
+	- `[nodes]` *(string|node|table<hash, node>|nil)*: The nodes table from gui.clone_tree or prefab node to use for clone or node id to clone
 	- `...` *(...)*: vararg
 
 - **Returns:**
@@ -251,7 +247,7 @@ instance:new_back_handler([callback], [params])
 Create BackHandler component
 
 - **Parameters:**
-	- `[callback]` *(function|nil)*: The callback(self, custom_args) to call on back event
+	- `[callback]` *(function|event|nil)*: The callback(self, custom_args) to call on back event
 	- `[params]` *(any)*: Callback argument
 
 - **Returns:**
@@ -284,7 +280,7 @@ instance:new_text(node, [value], [adjust_type])
 Create Text component
 
 - **Parameters:**
-	- `node` *(string|node)*: The node_id or gui.get_node(node_id)
+	- `node` *(string|druid.text|node)*: The node_id or gui.get_node(node_id)
 	- `[value]` *(string|nil)*: Initial text. Default value is node text from GUI scene.
 	- `[adjust_type]` *(string|nil)*: Adjust type for text. By default is DOWNSCALE. Look const.TEXT_ADJUST for reference
 
@@ -368,7 +364,7 @@ Create LangText component
 - **Parameters:**
 	- `node` *(string|node)*: The_node id or gui.get_node(node_id)
 	- `[locale_id]` *(string|nil)*: Default locale id or text from node as default
-	- `[adjust_type]` *(string|nil)*: Adjust type for text node. Default: const.TEXT_ADJUST.DOWNSCALE
+	- `[adjust_type]` *(string|nil)*: Adjust type for text node. Default: "downscale"
 
 - **Returns:**
 	- `lang_text` *(druid.lang_text)*: The new lang text component
@@ -453,7 +449,7 @@ Create Progress component
 
 - **Parameters:**
 	- `node` *(string|node)*: Progress bar fill node or node name
-	- `key` *(string)*: Progress bar direction: const.SIDE.X or const.SIDE.Y
+	- `key` *(string)*: Progress bar direction: "x" or "y"
 	- `[init_value]` *(number|nil)*: Initial value of progress bar. Default: 1
 
 - **Returns:**
@@ -533,7 +529,7 @@ instance:new_rich_input(template, [nodes])
 ```
 
 Create RichInput component.
- As a template please check rich_input.gui layout.
+As a template please check rich_input.gui layout.
 
 - **Parameters:**
 	- `template` *(string)*: The template string name
@@ -541,12 +537,4 @@ Create RichInput component.
 
 - **Returns:**
 	- `rich_input` *(druid.rich_input)*: The new rich input component
-
-
-## Fields
-<a name="components_all"></a>
-- **components_all** (_druid.component[]_): All created components
-
-<a name="components_interest"></a>
-- **components_interest** (_table<string, druid.component[]>_): All components sorted by interest
 

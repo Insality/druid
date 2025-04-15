@@ -51,7 +51,7 @@ end
 
 function init(self)
     self.druid = druid.new(self)
-	-- We can use the node_id instead of gui.get_node():
+    -- We can use the node_id instead of gui.get_node():
     self.button = self.druid:new_button("button_node_id", on_button_callback)
     self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
 end
@@ -79,39 +79,57 @@ Widgets are reusable UI components that encapsulate multiple **Druid** component
 
 ### Creating a Widget
 
-Create a new Lua file for your widget class. This file should be placed near the corresponding GUI file with the same name.
+Create a new Lua file for your widget class. This file better to be placed near the corresponding GUI file with the same name.
 
 Define `init` function to initialize the widget.
 
 Here's a basic widget example:
 
 ```lua
----@class your_widget_class: druid.widget
+---@class best_widget_in_the_world: druid.widget
 local M = {}
 
 function M:init()
     self.root = self:get_node("root")
+
+    -- Create a button and a text components inside your widget
     self.button = self.druid:new_button("button_node_id", self.on_click)
     self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
+
+    -- They are now accessible by self.button and self.text outside
 end
 
+---The "self" will be invoked correctly inside Druid's callbacks
 function M:on_click()
     self.text:set_text("The button clicked!")
 end
+
+
+---Add your own functions to the widget
+function M:say_hello()
+    self.text:set_text("Hello, Druid!")
+end
+
 
 return M
 ```
 
 ### Using Widgets
 
-You can create widgets in your GUI script like this:
+You can create widgets in your GUI script:
 
 ```lua
 local druid = require("druid.druid")
+local best_widget_in_the_world = require("widgets.best_widget_in_the_world")
 
 function init(self)
     self.druid = druid.new(self)
-    self.my_widget = self.druid:new_widget(your_widget_class)
+
+    local my_widget_template_id_on_gui_scene = "best_widget_in_the_world"
+    self.my_widget = self.druid:new_widget(best_widget_in_the_world, my_widget_template_id_on_gui_scene)
+
+    -- Now you can use the widget functions
+    self.my_widget:say_hello()
 end
 
 function final(self)
@@ -137,12 +155,12 @@ Widgets can use templates defined in your GUI scene. Templates are collections o
 
 ### Using Templates
 
-If you have a GUI template with ID `my_widget_example` containing `button_node_id` and `text_node_id` nodes, you can use it like this:
+If you have a GUI template with ID `best_widget_in_the_world` containing `button_node_id` and `text_node_id` nodes, you can use it like this:
 
 ```lua
 function init(self)
     self.druid = druid.new(self)
-    self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example")
+    self.my_widget = self.druid:new_widget(best_widget_in_the_world, "best_widget_in_the_world")
 
     self.my_widget.button.on_click:subscribe(function()
         print("my custom callback")
@@ -158,18 +176,18 @@ For dynamically created GUI templates (from prefabs), you can pass nodes directl
 ```lua
 function init(self)
     self.druid = druid.new(self)
-    self.prefab = gui.get_node("my_widget_prefab/root")
+    self.prefab = gui.get_node("best_widget_in_the_world/root")
     local nodes = gui.clone_tree(self.prefab)
-    self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example", nodes)
+    self.my_widget = self.druid:new_widget(best_widget_in_the_world, "best_widget_in_the_world", nodes)
 end
 ```
 
-You can also use the root node ID or node directly:
+You can also use the root node ID or node directly, it will be cloned and used as a template:
 
 ```lua
-self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example", "my_widget_prefab/root")
+self.my_widget = self.druid:new_widget(best_widget_in_the_world, "best_widget_in_the_world", "best_widget_in_the_world/root")
 -- or
-self.my_widget = self.druid:new_widget(your_widget_class, "my_widget_example", self.prefab)
+self.my_widget = self.druid:new_widget(best_widget_in_the_world, "best_widget_in_the_world", self.prefab)
 ```
 
 

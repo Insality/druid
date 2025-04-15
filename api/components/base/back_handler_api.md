@@ -2,14 +2,21 @@
 
 > at /druid/base/back_handler.lua
 
-The component that handles the back handler action, like backspace or android back button
+Component to handle back button. It handles Android back button and Backspace key.
 
+### Setup
+Create back handler component with druid: `druid:new_back_handler(callback)`
+
+### Notes
+- Key triggers in `input.binding` should be setup for correct working
+- It uses a key_back and key_backspace action ids
 
 ## Functions
+
 - [init](#init)
 
-
 ## Fields
+
 - [on_back](#on_back)
 - [params](#params)
 
@@ -21,6 +28,8 @@ The component that handles the back handler action, like backspace or android ba
 ```lua
 back_handler:init([callback], [params])
 ```
+
+The Back Handler constructor
 
 - **Parameters:**
 	- `[callback]` *(function|nil)*: The callback to call when the back handler is triggered

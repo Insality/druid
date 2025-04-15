@@ -114,6 +114,7 @@ component:set_style([druid_style])
 component:set_template([template])
 
 -- All widgets goes with created Druid instance
+-- All other component's functions also exists
 widget.druid
 ```
 
@@ -152,23 +153,6 @@ button.on_long_click
 button.on_double_click
 button.on_hold_callback
 button.on_click_outside
-button.node
-button.node_id
-button.anim_node
-button.params
-button.hover
-button.click_zone
-button.start_scale
-button.start_pos
-button.disabled
-button.key_trigger
-button.style
-button.druid
-button.is_repeated_started
-button.last_pressed_time
-button.last_released_time
-button.click_in_row
-button.can_action
 ```
 
 ### [Container](components/extended/container_api.md)
@@ -198,6 +182,8 @@ container:set_pivot(pivot)
 container:set_position(pos_x, pos_y)
 container:set_size([width], [height], [anchor_pivot])
 container:update_child_containers()
+
+container.on_size_changeed
 ```
 
 ### [Data List](components/extended/data_list_api.md)
@@ -218,6 +204,10 @@ data_list:remove_by_data(data, [shift_policy])
 data_list:scroll_to_index(index)
 data_list:set_data(data)
 data_list:set_use_cache(is_use_cache)
+
+data_list.on_scroll_progress_change
+data_list.on_element_add
+data_list.on_element_remove
 ```
 
 ### [Drag](components/base/drag_api.md)
@@ -232,6 +222,12 @@ drag:on_window_resized()
 drag:set_click_zone([node])
 drag:set_drag_cursors(is_enabled)
 drag:set_enabled(is_enabled)
+
+drag.on_touch_start
+drag.on_touch_end
+drag.on_drag_start
+drag.on_drag
+drag.on_drag_end
 ```
 
 ### [Grid](components/base/static_grid_api.md)
@@ -260,6 +256,12 @@ grid:set_items(nodes, [is_instant])
 grid:set_pivot([pivot])
 grid:set_position_function(callback)
 grid:sort_nodes(comparator)
+
+grid.on_add_item
+grid.on_remove_item
+grid.on_change_items
+grid.on_clear
+grid.on_update_positions
 ```
 
 ### [Hotkey](components/extended/hotkey_api.md)
@@ -273,6 +275,9 @@ hotkey:add_hotkey(keys, [callback_argument])
 hotkey:is_processing()
 hotkey:on_focus_gained()
 hotkey:set_repeat(is_enabled_repeated)
+
+hotkey.on_hotkey_pressed
+hotkey.on_hotkey_released
 ```
 
 ### [Hover](components/base/hover_api.md)
@@ -289,6 +294,9 @@ hover:set_click_zone([zone])
 hover:set_enabled([state])
 hover:set_hover([state])
 hover:set_mouse_hover([state])
+
+hover.on_hover
+hover.on_mouse_hover
 ```
 
 ### [Input](components/extended/input_api.md)
@@ -310,6 +318,14 @@ input:set_allowed_characters(characters)
 input:set_max_length(max_length)
 input:set_text(input_text)
 input:unselect()
+
+input.on_input_select
+input.on_input_unselect
+input.on_input_text
+input.on_input_empty
+input.on_input_full
+input.on_input_wrong
+input.on_select_cursor_change
 ```
 
 ### [Lang Text](components/extended/lang_text_api.md)
@@ -324,6 +340,8 @@ lang_text:on_language_change()
 lang_text:set_text(text)
 lang_text:set_to(text)
 lang_text:translate(locale_id, [a], [b], [c], [d], [e], [f], [g])
+
+lang_text.on_change
 ```
 
 ### [Layout](components/extended/layout_api.md)
@@ -351,6 +369,8 @@ layout:set_node_position(node, x, y)
 layout:set_padding([padding_x], [padding_y], [padding_z], [padding_w])
 layout:set_type(type)
 layout:update()
+
+layout.on_size_changed
 ```
 
 ### [Progress](components/extended/progress_api.md)
@@ -368,6 +388,8 @@ progress:set_steps(steps, callback)
 progress:set_to(to)
 progress:to(to, [callback])
 progress:update([dt])
+
+progress.on_change
 ```
 
 ### [Rich Input](components/custom/rich_input_api.md)
@@ -426,6 +448,10 @@ scroll:set_vertical_scroll(state)
 scroll:set_view_size(size)
 scroll:update([dt])
 scroll:update_view_size()
+
+scroll.on_scroll
+scroll.on_scroll_to
+scroll.on_point_scroll
 ```
 
 ### [Slider](components/extended/slider_api.md)
@@ -440,6 +466,8 @@ slider:set(value, [is_silent])
 slider:set_enabled(is_enabled)
 slider:set_input_node([input_node])
 slider:set_steps(steps)
+
+slider.on_change_value
 ```
 
 ### [Swipe](components/extended/swipe_api.md)
@@ -450,6 +478,8 @@ Inspect [API Here](components/extended/swipe_api.md)
 local swipe = self.druid:new_swipe(node, [on_swipe_callback])
 
 swipe:set_click_zone([zone])
+
+swipe.on_swipe
 ```
 
 ### [Text](components/base/text_api.md)
@@ -473,6 +503,10 @@ text:set_size(size)
 text:set_text([new_text])
 text:set_text_adjust([adjust_type], [minimal_scale])
 text:set_to(set_to)
+
+text.on_set_text
+text.on_update_text_scale
+text.on_set_pivot
 ```
 
 ### [Timer](components/extended/timer_api.md)
@@ -486,6 +520,10 @@ timer:set_interval(from, to)
 timer:set_state([is_on])
 timer:set_to(set_to)
 timer:update([dt])
+
+timer.on_tick
+timer.on_set_enabled
+timer.on_timer_end
 ```
 
 ## [Helper](druid_helper_api.md)
@@ -540,21 +578,7 @@ Inspect [API Here](widgets/fps_panel_api.md)
 local fps_panel = require("druid.widget.fps_panel.fps_panel")
 
 fps_panel:init()
-fps_panel:on_remove()
-fps_panel:update([dt])
 fps_panel:push_fps_value()
-
-fps_panel.root
-fps_panel.delta_time
-fps_panel.collect_time
-fps_panel.collect_time_counter
-fps_panel.graph_samples
-fps_panel.fps_samples
-fps_panel.mini_graph
-fps_panel.text_min_fps
-fps_panel.text_fps
-fps_panel.timer_id
-fps_panel.previous_time
 ```
 
 ### [Memory Panel](widgets/memory_panel_api.md)
@@ -565,22 +589,9 @@ Inspect [API Here](widgets/memory_panel_api.md)
 local memory_panel = require("druid.widget.memory_panel.memory_panel")
 
 memory_panel:init()
-memory_panel:on_remove()
 memory_panel:set_low_memory_limit([limit])
 memory_panel:push_next_value()
 memory_panel:update_text_memory()
-
-memory_panel.root
-memory_panel.delta_time
-memory_panel.samples_count
-memory_panel.memory_limit
-memory_panel.mini_graph
-memory_panel.max_value
-memory_panel.text_per_second
-memory_panel.text_memory
-memory_panel.memory
-memory_panel.memory_samples
-memory_panel.timer_id
 ```
 
 ### [Mini Graph](widgets/mini_graph_api.md)
@@ -590,8 +601,6 @@ Inspect [API Here](widgets/mini_graph_api.md)
 ```lua
 local mini_graph = require("druid.widget.mini_graph.mini_graph")
 
-mini_graph:init()
-mini_graph:on_remove()
 mini_graph:clear()
 mini_graph:set_samples([samples])
 mini_graph:get_samples()
@@ -602,24 +611,7 @@ mini_graph:set_max_value([max_value])
 mini_graph:set_line_height([index])
 mini_graph:get_lowest_value()
 mini_graph:get_highest_value()
-mini_graph:on_drag_widget([dx], [dy])
 mini_graph:toggle_hide()
-
-mini_graph.root
-mini_graph.text_header
-mini_graph.icon_drag
-mini_graph.content
-mini_graph.layout
-mini_graph.prefab_line
-mini_graph.color_zero
-mini_graph.color_one
-mini_graph.is_hidden
-mini_graph.max_value
-mini_graph.lines
-mini_graph.values
-mini_graph.container
-mini_graph.default_size
-mini_graph.samples
 ```
 
 ### [Properties Panel](widgets/properties_panel_api.md)
@@ -631,12 +623,8 @@ local properties_panel = require("druid.widget.properties_panel.properties_panel
 
 properties_panel:properties_constructors()
 properties_panel:init()
-properties_panel:on_remove()
-properties_panel:on_drag_widget([dx], [dy])
 properties_panel:clear_created_properties()
 properties_panel:clear()
-properties_panel:on_size_changed([new_size])
-properties_panel:update([dt])
 properties_panel:add_checkbox([on_create])
 properties_panel:add_slider([on_create])
 properties_panel:add_button([on_create])
@@ -651,28 +639,4 @@ properties_panel:set_hidden([is_hidden])
 properties_panel:is_hidden()
 properties_panel:set_properties_per_page(properties_per_page)
 properties_panel:set_page([page])
-
-properties_panel.root
-properties_panel.scroll
-properties_panel.layout
-properties_panel.container
-properties_panel.container_content
-properties_panel.container_scroll_view
-properties_panel.contaienr_scroll_content
-properties_panel.button_hidden
-properties_panel.text_header
-properties_panel.paginator
-properties_panel.properties
-properties_panel.content
-properties_panel.default_size
-properties_panel.current_page
-properties_panel.properties_per_page
-properties_panel.property_checkbox_prefab
-properties_panel.property_slider_prefab
-properties_panel.property_button_prefab
-properties_panel.property_input_prefab
-properties_panel.property_text_prefab
-properties_panel.property_left_right_selector_prefab
-properties_panel.property_vector3_prefab
-properties_panel.is_dirty
 ```

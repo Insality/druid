@@ -48,6 +48,23 @@ function init(self)
 end
 ```
 
+## Adjust styles in place
+
+You can adjust styles params right after the component creation.
+
+```lua
+local druid = require("druid.druid")
+
+function init(self)
+	self.druid = druid.new(self)
+	self.grid = self.druid:new_grid("node", "prefab", 1)
+	self.grid.style.IS_ALIGN_LAST_ROW = true
+
+	self.drag = self.druid:new_drag("node")
+	self.drag.style.DRAG_DEADZONE = 0
+end
+```
+
 
 ## Create your own styles
 

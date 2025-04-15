@@ -2,8 +2,26 @@
 
 > at /druid/base/scroll.lua
 
+Basic Druid scroll component. Handles all scrolling behavior in Druid GUI.
+
+### Setup
+Create scroll component with druid: `druid:new_scroll(view_node, content_node)`
+
+### Notes
+- View_node is the static part that captures user input and recognizes scrolling touches
+- Content_node is the dynamic part that will change position according to the scroll system
+- Initial scroll size will be equal to content_node size
+- The initial view box will be equal to view_node size
+- Scroll by default style has inertia and extra size for stretching effect
+- You can setup "points of interest" to make scroll always center on closest point
+- Scroll events:
+-   - on_scroll(self, position): On scroll move callback
+-   - on_scroll_to(self, position, is_instant): On scroll_to function callback
+-   - on_point_scroll(self, item_index, position): On scroll_to_index function callback
+- Multitouch is required for scroll. Scroll correctly handles touch_id swap while dragging
 
 ## Functions
+
 - [init](#init)
 - [scroll_to](#scroll_to)
 - [scroll_to_index](#scroll_to_index)
@@ -23,8 +41,8 @@
 - [bind_grid](#bind_grid)
 - [set_click_zone](#set_click_zone)
 
-
 ## Fields
+
 - [node](#node)
 - [click_zone](#click_zone)
 - [on_scroll](#on_scroll)
@@ -60,8 +78,8 @@ scroll:init(view_node, content_node)
 The Scroll constructor
 
 - **Parameters:**
-	- `view_node` *(string|node)*: GUI view scroll node
-	- `content_node` *(string|node)*: GUI content scroll node
+	- `view_node` *(string|node)*: GUI view scroll node - the static part that captures user input
+	- `content_node` *(string|node)*: GUI content scroll node - the dynamic part that will change position
 
 ### scroll_to
 
@@ -316,13 +334,13 @@ Strict drag scroll area. Useful for
 - **click_zone** (_node_): Optional click zone to restrict scroll area
 
 <a name="on_scroll"></a>
-- **on_scroll** (_event_): Triggered on scroll move with (self, position)
+- **on_scroll** (_event_): Triggered on scroll move with fun(self, position)
 
 <a name="on_scroll_to"></a>
-- **on_scroll_to** (_event_): Triggered on scroll_to with (self, target, is_instant)
+- **on_scroll_to** (_event_): Triggered on scroll_to with fun(self, target, is_instant)
 
 <a name="on_point_scroll"></a>
-- **on_point_scroll** (_event_): Triggered on scroll_to_index with (self, index, point)
+- **on_point_scroll** (_event_): Triggered on scroll_to_index with fun(self, index, point)
 
 <a name="view_node"></a>
 - **view_node** (_node_): The scroll view node (static part)
@@ -370,7 +388,7 @@ Strict drag scroll area. Useful for
 - **points** (_table_)
 
 <a name="available_pos_extra"></a>
-- **available_pos_extra** (_unknown_)
+- **available_pos_extra** (_vector4_)
 
 <a name="available_size_extra"></a>
 - **available_size_extra** (_vector3_)

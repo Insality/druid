@@ -8,8 +8,8 @@ Use `push_line_value` to add a new value to the line
 Or `set_line_value` to set a value to the line by index
 Setup colors inside template file (at minimum and maximum)
 
-
 ## Functions
+
 - [init](#init)
 - [on_remove](#on_remove)
 - [clear](#clear)
@@ -25,8 +25,8 @@ Setup colors inside template file (at minimum and maximum)
 - [on_drag_widget](#on_drag_widget)
 - [toggle_hide](#toggle_hide)
 
-
 ## Fields
+
 - [root](#root)
 - [text_header](#text_header)
 - [icon_drag](#icon_drag)
@@ -190,7 +190,7 @@ mini_graph:toggle_hide()
 - **root** (_node_)
 
 <a name="text_header"></a>
-- **text_header** (_druid.text_): The component to handle text behaviour over a GUI Text node, mainly used to automatically adjust text size to fit the text area
+- **text_header** (_druid.text_): Basic Druid text component. Text components by default have the text size adjusting.
 
 <a name="icon_drag"></a>
 - **icon_drag** (_node_)
@@ -199,7 +199,7 @@ mini_graph:toggle_hide()
 - **content** (_node_)
 
 <a name="layout"></a>
-- **layout** (_druid.layout_): The component used for managing the layout of nodes, placing them inside the node size with respect to the size and pivot of each node
+- **layout** (_druid.layout_): Druid component to manage the layout of nodes, placing them inside the node size with respect to the size and pivot of each node.
 
 <a name="prefab_line"></a>
 - **prefab_line** (_node_)
@@ -223,7 +223,7 @@ mini_graph:toggle_hide()
 - **values** (_table_)
 
 <a name="container"></a>
-- **container** (_druid.container_): The component used for managing the size and positions with other containers relations to create a adaptable layouts
+- **container** (_druid.container_): Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
 
 <a name="default_size"></a>
 - **default_size** (_vector3_)

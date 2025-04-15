@@ -132,3 +132,39 @@ function init(self)
     end
 end
 ```
+
+
+## Using Widgets without GUI templates
+
+It's a possible to use widgets without GUI templates. This widget can pick nodes from the parent instance.
+
+```lua
+-- my_widget.lua
+local event = require("event.event")
+
+local M = {}
+
+function M:init()
+    self.on_close = event.create()
+    self.druid:new_hotkey("key_backspace", self.on_close)
+end
+
+return M
+```
+
+```lua
+-- gui_script
+local druid = require("druid.druid")
+local my_widget = require("widgets.my_widget.my_widget")
+
+local function on_close()
+	print("Widget closed")
+end
+
+function init(self)
+    self.druid = druid.new(self)
+    self.my_widget = self.druid:new_widget(my_widget)
+	self.my_widget.on_close:subscribe(on_close, self)
+end
+```
+
