@@ -175,7 +175,6 @@ end)
 - Druid automatically calls `acquire_input_focus` if you have input components. Therefore, manual calling of `acquire_input_focus` is not required.
 - When deleting a **Druid** component node, make sure to remove it using `druid:remove(component)`.
 
-
 ## Examples
 
 Try the [**HTML5 version**](https://insality.github.io/druid/) of the **Druid** example app.
@@ -196,6 +195,7 @@ To better understand **Druid**, read the following documentation:
 - [Druid styles](wiki/styles.md)
 - [Advanced Setup](wiki/advanced-setup.md)
 - [Optimize Druid Size](wiki/optimize_druid_size.md)
+- [Creating Custom Components](wiki/creating_custom_components.md)
 - [Changelog](wiki/changelog.md)
 
 
