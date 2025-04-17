@@ -95,25 +95,20 @@ return function()
 			druid:on_input(mock_input.click_pressed(50, 25))
 			druid:on_input(mock_input.click_released(50, 25))
 
-			-- Simulate typing "Hello"
-			local function trigger_text_input(text)
-				return druid:on_input(hash("text"), {text = text})
-			end
-
 			-- Type "H"
-			trigger_text_input("H")
+			druid:on_input(mock_input.input_text("H"))
 			assert(input:get_text() == "H")
 			assert(on_input_text_calls == 1)
 
 			-- Type "e"
-			trigger_text_input("e")
+			druid:on_input(mock_input.input_text("e"))
 			assert(input:get_text() == "He")
 			assert(on_input_text_calls == 2)
 
 			-- Type "llo"
-			trigger_text_input("l")
-			trigger_text_input("l")
-			trigger_text_input("o")
+			druid:on_input(mock_input.input_text("l"))
+			druid:on_input(mock_input.input_text("l"))
+			druid:on_input(mock_input.input_text("o"))
 
 			assert(input:get_text() == "Hello")
 			assert(on_input_text_calls == 5)
@@ -134,17 +129,12 @@ return function()
 			druid:on_input(mock_input.click_pressed(50, 25))
 			druid:on_input(mock_input.click_released(50, 25))
 
-			-- Simulate backspace key
-			local function trigger_backspace()
-				return druid:on_input(hash("key_backspace"), {pressed = true})
-			end
-
 			-- Delete one letter
-			assert(trigger_backspace() == true)
+			druid:on_input(hash("key_backspace"), {pressed = true})
 			assert(input:get_text() == "Hell")
 
 			-- Delete another letter
-			assert(trigger_backspace() == true)
+			druid:on_input(hash("key_backspace"), {pressed = true})
 			assert(input:get_text() == "Hel")
 
 			druid:remove(input)
@@ -171,18 +161,23 @@ return function()
 			druid:on_input(mock_input.click_pressed(50, 25))
 			druid:on_input(mock_input.click_released(50, 25))
 
-			-- Simulate typing text
-			local function trigger_text_input(text)
-				return druid:on_input(hash("text"), {text = text})
-			end
-
 			-- Type "Hello"
-			assert(trigger_text_input("Hello") == true)
+			druid:on_input(mock_input.input_text("H"))
+			druid:on_input(mock_input.input_text("e"))
+			druid:on_input(mock_input.input_text("l"))
+			druid:on_input(mock_input.input_text("l"))
+			druid:on_input(mock_input.input_text("o"))
+
 			assert(input:get_text() == "Hello")
 			assert(on_input_full_calls == 1)
 
 			-- Try to type "World" - should truncate
-			assert(trigger_text_input("World") == true)
+			druid:on_input(mock_input.input_text("W"))
+			druid:on_input(mock_input.input_text("o"))
+			druid:on_input(mock_input.input_text("r"))
+			druid:on_input(mock_input.input_text("l"))
+			druid:on_input(mock_input.input_text("d"))
+
 			assert(input:get_text() == "Hello")
 
 			druid:remove(input)
@@ -209,20 +204,21 @@ return function()
 			druid:on_input(mock_input.click_pressed(50, 25))
 			druid:on_input(mock_input.click_released(50, 25))
 
-			-- Simulate typing text
-			local function trigger_text_input(text)
-				return druid:on_input(hash("text"), {text = text})
-			end
-
 			-- Type valid input "123"
-			assert(trigger_text_input("123") == true)
+			druid:on_input(mock_input.input_text("1"))
+			druid:on_input(mock_input.input_text("2"))
+			druid:on_input(mock_input.input_text("3"))
+
 			assert(input:get_text() == "123")
 			assert(on_input_wrong_calls == 0)
 
 			-- Type invalid input "abc" - should be rejected
-			assert(trigger_text_input("abc") == true)
+			druid:on_input(mock_input.input_text("a"))
+			druid:on_input(mock_input.input_text("b"))
+			druid:on_input(mock_input.input_text("c"))
+
 			assert(input:get_text() == "123")
-			assert(on_input_wrong_calls == 1)
+			assert(on_input_wrong_calls == 3)
 
 			druid:remove(input)
 			gui.delete_node(button_node)
@@ -241,12 +237,11 @@ return function()
 			druid:on_input(mock_input.click_pressed(50, 25))
 			druid:on_input(mock_input.click_released(50, 25))
 
-			-- Simulate typing "Hello"
-			local function trigger_text_input(text)
-				return druid:on_input(hash("text"), {text = text})
-			end
-
-			assert(trigger_text_input("Hello") == true)
+			druid:on_input(mock_input.input_text("H"))
+			druid:on_input(mock_input.input_text("e"))
+			druid:on_input(mock_input.input_text("l"))
+			druid:on_input(mock_input.input_text("l"))
+			druid:on_input(mock_input.input_text("o"))
 
 			-- Raw text should be "Hello"
 			assert(input:get_text() == "Hello")

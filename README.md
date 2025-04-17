@@ -23,6 +23,12 @@ In this example you can inspect a variety of **Druid** components and see how th
 - **Input Handling** - Handles input in a stack-based manner and manage input priority
 - **Event Based** - Uses [Defold Event](https://github.com/Insality/defold-event) for components callbacks and communication between components
 
+## Quick Links
+
+- [Basic Usage](wiki/basic_usage.md)
+- [Quick API Reference](api/quick_api_reference.md)
+- [List of Components](#druid-components)
+- [Contributors](#contributors)
 ## Setup
 
 ### [Dependency](https://defold.com/manuals/libraries/#setting-up-library-dependencies)
@@ -121,7 +127,7 @@ Here is full **Druid** components list.
 | **[Back Handler](/api/components/base/back_handler_api.md)** | Call callback on user "Back" action. It's a Android back button or keyboard backspace key | [Back Handler Example](https://insality.github.io/druid/?example=ui_example_basic_back_handler) | <img src="media/preview/back_handler.gif" width="200" height="100"> |
 | **[Static Grid](/api/components/base/static_grid_api.md)** | Logic over GUI Node. Component to manage node positions with all equal node sizes. | [Static Gid Example](https://insality.github.io/druid/?example=ui_example_basic_grid) | <img src="media/preview/static_grid.gif" width="200" height="100"> |
 | **[Hover](/api/components/base/hover_api.md)** | Logic over GUI Node. Handle hover action over node. For both: mobile touch and mouse cursor. | [Hover Example](https://insality.github.io/druid/?example=ui_example_basic_hover) | <img src="media/preview/hover.gif" width="200" height="100"> |
-| **[Swipe](/api/components/base/swipe_api.md)** | Logic over GUI Node. Handle swipe gestures over node. | [Swipe Example](https://insality.github.io/druid/?example=ui_example_basic_swipe) | <img src="media/preview/swipe.gif" width="200" height="100"> |
+| **[Swipe](/api/components/extended/swipe_api.md)** | Logic over GUI Node. Handle swipe gestures over node. | [Swipe Example](https://insality.github.io/druid/?example=ui_example_basic_swipe) | <img src="media/preview/swipe.gif" width="200" height="100"> |
 | **[Drag](/api/components/base/drag_api.md)** | Logic over GUI Node. Handle drag input actions. Can be useful to make on screen controlls. | [Drag Example](https://insality.github.io/druid/?example=ui_example_basic_drag) | <img src="media/preview/drag.gif" width="200" height="100"> |
 | **[Data List](/api/components/extended/data_list_api.md)** | Logic over Scroll and Grid components. Create only visible GUI nodes or components to make "infinity" scroll befaviour | [Data List Example](https://insality.github.io/druid/?example=ui_example_data_list_basic) | <img src="media/preview/data_list.gif" width="200" height="100"> |
 | **[Input](/api/components/extended/input_api.md)** | Logic over GUI Node and GUI Text (or Text component). Provides basic user text input. | [Input Example](https://insality.github.io/druid/?example=ui_example_basic_input) | <img src="media/preview/input.gif" width="200" height="100"> |
@@ -137,7 +143,7 @@ Here is full **Druid** components list.
 
 ## Druid Events
 
-All **Druid** components using [Defold Event](https://github.com/Insality/defold-event) for components callbacks. In component API ([button example](https://insality.github.io/druid/modules/Button.html#on_click)) pointed list of component events. You can manually subscribe to these events with the following API:
+All **Druid** components using [Defold Event](https://github.com/Insality/defold-event) for components callbacks. In component API ([button example](/api/components/base/button_api.md#fields)) pointed list of component events. You can manually subscribe to these events with the following API:
 
 - **event:subscribe**(callback)
 
@@ -187,8 +193,10 @@ To better understand **Druid**, read the following documentation:
 
 - [How To GUI in Defold](https://forum.defold.com/t/how-to-gui-in-defold/73256)
 - [Widgets](wiki/widgets.md)
-- [Create custom components](wiki/creating_custom_components.md)
 - [Druid styles](wiki/styles.md)
+- [Advanced Setup](wiki/advanced-setup.md)
+- [Optimize Druid Size](wiki/optimize_druid_size.md)
+- [Changelog](wiki/changelog.md)
 
 
 ## Licenses
@@ -198,16 +206,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Issues and suggestions
 
-If you have any issues, questions or suggestions please [create an issue](https://github.com/Insality/druid/issues) or contact me: [insality@gmail.com](mailto:insality@gmail.com)
+If you have any issues, questions or suggestions please [create an issue](https://github.com/Insality/druid/issues)
 
 
 ## History
 For a complete history of the development of **Druid**, please check the [changelog](docs_md/changelog.md).
 
 
-## 👏 Contributors
+## Contributors
 
-Original idea by [AGulev](https://github.com/AGulev)
+Original Druid idea by [AGulev](https://github.com/AGulev)
 
 Special thanks to all the contributors who have helped make **Druid** better!
 
