@@ -3,5 +3,9 @@ fonts {
   name: "druid_text_bold"
   font: "/druid/fonts/druid_text_bold.font"
 }
+textures {
+  name: "druid"
+  texture: "/druid/druid.atlas"
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_DISABLED
