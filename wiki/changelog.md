@@ -436,7 +436,7 @@ And yeah, the new **Druid** logo is here!
 	- Add two events: `on_element_add` and `on_element_remove`
 	- Add `data_list:get_data()` to access all current data in DataList
 	- Add `data_list:get_created_nodes()` to access currently visual nodes in DataList
-	- Add `data_list:get_created_components()` to access currenly visual component in DataList (if created)
+	- Add `data_list:get_created_components()` to access currently visual component in DataList (if created)
 - **#190** [Progress] Add `progress:set_max_size` function to change max size of progress bar
 - **#188** [Drag] Add two values passed to on_drag callback. Now it is `on_drag(self, dx, dy, total_x, total_y)` to check the overral drag distance
 - **#195** [Drag] Add `drag:is_enabled` and `drag:set_enabled` to enable/disable drag input component

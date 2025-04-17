@@ -1,3 +1,7 @@
 script: "/test/test.gui_script"
+fonts {
+  name: "druid_text_bold"
+  font: "/druid/fonts/druid_text_bold.font"
+}
 material: "/builtins/materials/gui.material"
-adjust_reference: ADJUST_REFERENCE_PARENT
+adjust_reference: ADJUST_REFERENCE_DISABLED

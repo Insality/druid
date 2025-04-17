@@ -176,7 +176,7 @@ local function schedule_late_init(self)
 end
 
 
----Druid class constructor which used to create a Druid's components
+---Druid class constructor which used to create Druid components
 ---@param context table Druid context. Usually it is self of gui script
 ---@param style table? Druid style table
 ---@return druid.instance instance The new Druid instance
@@ -420,8 +420,7 @@ end
 
 
 ---Calls the on_language_change function in all related components
----This one called by global druid.on_language_change, but can be
----call manualy to update all translations
+---This one called by global druid.on_language_change, but can be called manually to update all translations
 ---@private
 function M:on_language_change()
 	local components = self.components_interest[const.ON_LANGUAGE_CHANGE]
@@ -433,7 +432,7 @@ end
 
 ---Set whitelist components for input processing.
 ---If whitelist is not empty and component not contains in this list,
----component will be not processed on input step
+---component will be not processed on the input step
 ---@param whitelist_components table|druid.component[] The array of component to whitelist
 ---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
@@ -452,8 +451,8 @@ end
 
 
 ---Set blacklist components for input processing.
----If blacklist is not empty and component contains in this list,
----component will be not processed on input step DruidInstance
+---If blacklist is not empty and component is contained in this list,
+---component will be not processed on the input step DruidInstance
 ---@param blacklist_components table|druid.component[] The array of component to blacklist
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
@@ -572,7 +571,7 @@ local static_grid = require("druid.base.static_grid")
 ---Create Grid component
 ---@param parent_node string|node The node_id or gui.get_node(node_id). Parent of all Grid items.
 ---@param item string|node Item prefab. Required to get grid's item size. Can be adjusted separately.
----@param in_row number|nil How many nodes in row can be placed
+---@param in_row number|nil How many nodes can be placed in a row
 ---@return druid.grid grid The new grid component
 function M:new_grid(parent_node, item, in_row)
 	return self:new(static_grid, parent_node, item, in_row)
@@ -581,8 +580,8 @@ end
 
 local scroll = require("druid.base.scroll")
 ---Create Scroll component
----@param view_node string|node The node_id or gui.get_node(node_id). Will used as user input node.
----@param content_node string|node The node_id or gui.get_node(node_id). Will used as scrollable node inside view_node.
+---@param view_node string|node The node_id or gui.get_node(node_id). Will be used as user input node.
+---@param content_node string|node The node_id or gui.get_node(node_id). Will be used as scrollable node inside view_node.
 ---@return druid.scroll scroll The new scroll component
 function M:new_scroll(view_node, content_node)
 	return self:new(scroll, view_node, content_node)
@@ -591,7 +590,7 @@ end
 
 local drag = require("druid.base.drag")
 ---Create Drag component
----@param node string|node The node_id or gui.get_node(node_id). Will used as user input node.
+---@param node string|node The node_id or gui.get_node(node_id). Will be used as user input node.
 ---@param on_drag_callback function|nil Callback for on_drag_event(self, dx, dy)
 ---@return druid.drag drag The new drag component
 function M:new_drag(node, on_drag_callback)
@@ -601,7 +600,7 @@ end
 
 local swipe = require("druid.extended.swipe")
 ---Create Swipe component
----@param node string|node The node_id or gui.get_node(node_id). Will used as user input node.
+---@param node string|node The node_id or gui.get_node(node_id). Will be used as user input node.
 ---@param on_swipe_callback function|nil Swipe callback for on_swipe_end event
 ---@return druid.swipe swipe The new swipe component
 function M:new_swipe(node, on_swipe_callback)
@@ -611,7 +610,7 @@ end
 
 local lang_text = require("druid.extended.lang_text")
 ---Create LangText component
----@param node string|node The_node id or gui.get_node(node_id)
+---@param node string|node The node_id or gui.get_node(node_id)
 ---@param locale_id string|nil Default locale id or text from node as default
 ---@param adjust_type string|nil Adjust type for text node. Default: "downscale"
 ---@return druid.lang_text lang_text The new lang text component
@@ -622,7 +621,7 @@ end
 
 local slider = require("druid.extended.slider")
 ---Create Slider component
----@param pin_node string|node The_node id or gui.get_node(node_id).
+---@param pin_node string|node The node_id or gui.get_node(node_id).
 ---@param end_pos vector3 The end position of slider
 ---@param callback function|nil On slider change callback
 ---@return druid.slider slider The new slider component
@@ -633,8 +632,8 @@ end
 
 local input = require("druid.extended.input")
 ---Create Input component
----@param click_node string|node Button node to enabled input component
----@param text_node string|node|druid.text Text node what will be changed on user input
+---@param click_node string|node Button node to enable input component
+---@param text_node string|node|druid.text Text node that will be changed on user input
 ---@param keyboard_type number|nil Gui keyboard type for input field
 ---@return druid.input input The new input component
 function M:new_input(click_node, text_node, keyboard_type)
@@ -678,7 +677,7 @@ end
 
 local layout = require("druid.extended.layout")
 ---Create Layout component
----@param node string|node The_node id or gui.get_node(node_id).
+---@param node string|node The node_id or gui.get_node(node_id).
 ---@param mode string|nil vertical|horizontal|horizontal_wrap. Default: horizontal
 ---@return druid.layout layout The new layout component
 function M:new_layout(node, mode)
@@ -688,7 +687,7 @@ end
 
 local container = require("druid.extended.container")
 ---Create Container component
----@param node string|node The_node id or gui.get_node(node_id).
+---@param node string|node The node_id or gui.get_node(node_id).
 ---@param mode string|nil Layout mode
 ---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
 ---@return druid.container container The new container component

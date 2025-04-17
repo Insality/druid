@@ -123,7 +123,7 @@ Set allowed charaters for input field.
  ex: [%a%d] for alpha and numeric
 
 - **Parameters:**
-	- `characters` *(string)*: Regulax exp. for validate user input
+	- `characters` *(string)*: Regular expression for validate user input
 
 - **Returns:**
 	- `self` *(druid.rich_input)*: Current instance

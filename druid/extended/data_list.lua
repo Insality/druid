@@ -162,7 +162,7 @@ function M:get_index(data)
 end
 
 
----Return all currenly created nodes in DataList
+---Return all currently created nodes in DataList
 ---@return node[] List of created nodes
 function M:get_created_nodes()
 	local nodes = {}
@@ -175,7 +175,7 @@ function M:get_created_nodes()
 end
 
 
----Return all currenly created components in DataList
+---Return all currently created components in DataList
 ---@return druid.component[] components List of created components
 function M:get_created_components()
 	local components = {}

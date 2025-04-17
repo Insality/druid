@@ -289,7 +289,7 @@ end
 ---Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
----@param characters string Regulax exp. for validate user input
+---@param characters string Regular expression for validate user input
 ---@return druid.rich_input self Current instance
 function M:set_allowed_characters(characters)
 	self.input:set_allowed_characters(characters)

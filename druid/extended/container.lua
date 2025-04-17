@@ -152,7 +152,7 @@ end
 ---Set new size of layout node
 ---@param width number|nil The width to set
 ---@param height number|nil The height to set
----@param anchor_pivot constant|nil If set will keep the corner possition relative to the new size
+---@param anchor_pivot constant|nil If set will keep the corner position relative to the new size
 ---@return druid.container Container
 function M:set_size(width, height, anchor_pivot)
 	width = width or self.size.x

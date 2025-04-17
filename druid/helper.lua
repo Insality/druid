@@ -51,6 +51,7 @@ end
 ---@param text_node node|nil Gui text node
 ---@param icon_node node|nil Gui box node
 ---@param margin number Offset between nodes
+---@return number width Total width of the centrated elements
 ---@local
 function M.centrate_text_with_icon(text_node, icon_node, margin)
 	return M.centrate_nodes(margin, text_node, icon_node)
@@ -63,6 +64,7 @@ end
 ---@param icon_node node|nil Gui box node
 ---@param text_node node|nil Gui text node
 ---@param margin number|nil Offset between nodes
+---@return number width Total width of the centrated elements
 ---@local
 function M.centrate_icon_with_text(icon_node, text_node, margin)
 	return M.centrate_nodes(margin, icon_node, text_node)
@@ -75,6 +77,7 @@ end
 ---The centrate will be around 0 x position.
 ---@param margin number|nil Offset between nodes
 ---@param ... node Nodes to centrate
+---@return number width Total width of the centrated elements
 function M.centrate_nodes(margin, ...)
 	margin = margin or 0
 
@@ -109,10 +112,11 @@ function M.centrate_nodes(margin, ...)
 end
 
 
----@param node_id string|node
----@param template string|nil Full Path to the template
----@param nodes table<hash, node>|nil Nodes what created with gui.clone_tree
----@return node
+---Get GUI node from string name, node itself, or template/nodes structure
+---@param node_id string|node The node name or node itself
+---@param template string|nil Full path to the template
+---@param nodes table<hash, node>|nil Nodes created with gui.clone_tree
+---@return node The requested node
 function M.get_node(node_id, template, nodes)
 	if type(node_id) ~= "string" then
 		-- Assume it's already node from gui.get_node
@@ -152,6 +156,7 @@ end
 
 ---Get current GUI scale for each side
 ---@return number scale_x
+---@return number scale_y
 function M.get_gui_scale()
 	local window_x, window_y = window.get_size()
 	return math.min(window_x / gui.get_width(), window_y / gui.get_height())

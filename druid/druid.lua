@@ -110,10 +110,10 @@ local function wrap_widget(widget)
 end
 
 
----Create a widget from the binded Druid GUI instance.
+---Create a widget from the bound Druid GUI instance.
 ---The widget will be created and all widget functions can be called from Game Object contexts.
----This allow use only `druid_widget.gui_script` for GUI files and call this widget functions from Game Object script file.
----Widget class here is a your lua file for the GUI scene (a widgets in Druid)
+---This allows using only `druid_widget.gui_script` for GUI files and call this widget functions from Game Object script file.
+---Widget class here is your lua file for the GUI scene (widgets in Druid)
 ---		msg.url(nil, nil, "gui_widget") -- current game object
 ---		msg.url(nil, object_url, "gui_widget") -- other game object
 ---@generic T: druid.widget

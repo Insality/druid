@@ -112,7 +112,7 @@ Set new size of layout node
 - **Parameters:**
 	- `[width]` *(number|nil)*: The width to set
 	- `[height]` *(number|nil)*: The height to set
-	- `[anchor_pivot]` *(constant|nil)*: If set will keep the corner possition relative to the new size
+	- `[anchor_pivot]` *(constant|nil)*: If set will keep the corner position relative to the new size
 
 - **Returns:**
 	- `Container` *(druid.container)*:

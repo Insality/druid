@@ -182,7 +182,7 @@ Return index for data value
 data_list:get_created_nodes()
 ```
 
-Return all currenly created nodes in DataList
+Return all currently created nodes in DataList
 
 - **Returns:**
 	- `List` *(node[])*: of created nodes
@@ -194,7 +194,7 @@ Return all currenly created nodes in DataList
 data_list:get_created_components()
 ```
 
-Return all currenly created components in DataList
+Return all currently created components in DataList
 
 - **Returns:**
 	- `components` *(druid.component[])*: List of created components
