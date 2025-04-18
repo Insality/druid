@@ -131,7 +131,7 @@ return function()
 			local on_drag_calls = 0
 			local function on_drag() on_drag_calls = on_drag_calls + 1 end
 			local instance = create_drag_instance(on_drag)
-			local zone = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(10, 10, 0))
+			local zone = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(20, 20, 0))
 			instance:set_click_zone(zone)
 
 			druid:on_input(mock_input.click_pressed(20, 20))
@@ -149,6 +149,7 @@ return function()
 			assert(instance.is_touch == true)
 
 			druid:on_input(mock_input.input_empty(5, 5))
+			druid:on_input(mock_input.click_released(5, 5))
 			assert(on_drag_calls == 1)
 		end)
 

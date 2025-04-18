@@ -26,7 +26,7 @@ return function()
 		end)
 
 		it("Should consume input", function()
-			local button_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 100, 0))
+			local button_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(150, 150, 0))
 			local blocker_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(20, 20, 0))
 			local on_click_calls = 0
 
@@ -35,8 +35,8 @@ return function()
 			end)
 			druid:new_blocker(blocker_node)
 
-			druid:on_input(mock_input.click_pressed(40, 40))
-			druid:on_input(mock_input.click_released(40, 40))
+			druid:on_input(mock_input.click_pressed(20, 20))
+			druid:on_input(mock_input.click_released(20, 20))
 			assert(on_click_calls == 1)
 
 			-- Click should been consumed by blocker component

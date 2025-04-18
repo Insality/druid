@@ -55,7 +55,10 @@ return {
   -- Nothing will be excluded if nothing is listed.
   -- Do not include the '.lua' extension. Path separator is always '/'.
   -- Overrules `include`.
-  exclude = { "^test%/.+$" },
+  exclude = {
+    "^test%/.+$",
+	"^druid/system/utf8.lua$",
+  },
 
   --- Table mapping names of modules to be included to their filenames.
   -- Has no effect if empty.

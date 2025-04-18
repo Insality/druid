@@ -178,6 +178,7 @@ return function()
 
 			local drag = druid_instance:new_drag(button_node, on_drag)
 			drag.style.DRAG_DEADZONE = 0
+			drag.style.NO_USE_SCREEN_KOEF = true
 
 			assert(drag ~= nil)
 			assert(drag.node == button_node)
@@ -187,7 +188,6 @@ return function()
 			druid_instance:on_input(mock_input.input_empty(60, 35))
 			druid_instance:on_input(mock_input.click_released(60, 35))
 
-			print(drag_dx, drag_dy)
 			assert(on_drag_calls == 1)
 			assert(math.floor(drag_dx) == 10)
 			assert(math.floor(drag_dy) == 10)

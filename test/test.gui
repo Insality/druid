@@ -9,3 +9,4 @@ textures {
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_DISABLED
+max_nodes: 2048

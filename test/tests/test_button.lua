@@ -330,8 +330,8 @@ return function()
 		end)
 
 		it("Should work with click zone", function()
-			local button = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
-			local zone = gui.new_box_node(vmath.vector3(50, 50, 0), vmath.vector3(50, 50, 0))
+			local button = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(200, 200, 0))
+			local zone = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(50, 50, 0))
 			local button_params = {}
 
 			local on_click_calls = 0
@@ -341,12 +341,13 @@ return function()
 
 			local instance = druid:new_button(button, on_click, button_params)
 			instance:set_click_zone(zone)
-			druid:on_input(mock_input.click_pressed(10, 10))
-			druid:on_input(mock_input.click_released(10, 10))
+
+			druid:on_input(mock_input.click_pressed(70, 70))
+			druid:on_input(mock_input.click_released(70, 70))
 			assert(on_click_calls == 0)
 
-			druid:on_input(mock_input.click_pressed(50, 50))
-			druid:on_input(mock_input.click_released(50, 50))
+			druid:on_input(mock_input.click_pressed(10, 10))
+			druid:on_input(mock_input.click_released(10, 10))
 			assert(on_click_calls == 1)
 		end)
 
