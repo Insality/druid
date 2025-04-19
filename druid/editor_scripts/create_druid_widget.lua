@@ -9,8 +9,8 @@ local function to_camel_case(snake_str)
 end
 
 
-function M.create_druid_widget(opts)
-	local gui_filepath = editor.get(opts.selection, "path")
+function M.create_druid_widget(selection)
+	local gui_filepath = editor.get(selection, "path")
 	local filename = gui_filepath:match("([^/]+)%.gui$")
 	print("Create Druid widget for", gui_filepath)
 

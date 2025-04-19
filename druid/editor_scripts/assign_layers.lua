@@ -60,12 +60,11 @@ end
 ---Remove a backup file
 ---@param backup_path string - The path of the backup file to remove
 local function remove_backup(backup_path)
-	print("Removing backup file:", backup_path)
-	local success, err = os.remove(backup_path)
-	if not success then
-		print("Warning: Could not remove backup file:", err)
-		print("You may want to manually remove it:", backup_path)
-	else
+	-- Check file exists and remove it
+	local file = io.open(backup_path, "r")
+	if file then
+		file:close()
+		os.remove(backup_path)
 		print("Backup file removed successfully")
 	end
 end

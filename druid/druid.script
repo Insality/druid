@@ -1,5 +1,7 @@
 -- Place this script nearby with the gui component to able make requests
 -- To the go namespace from GUI with events systems (cross context)
+-- This one is a required to make a unified "Shaders" pipeline in the GUI scripts
+-- This required to grab a texture data with `go.get` function
 
 local defer = require("event.defer")
 
