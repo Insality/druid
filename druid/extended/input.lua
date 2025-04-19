@@ -182,7 +182,7 @@ function M:on_input(action_id, action)
 			if self.max_length then
 				self.marked_value = utf8.sub(self.marked_value, 1, self.max_length)
 			end
-			is_marked_text_changed = true
+			is_marked_text_changed = self.marked_value ~= ""
 		end
 
 		if action_id == const.ACTION_BACKSPACE and (action.pressed or action.repeated) then
@@ -222,7 +222,7 @@ function M:on_input(action_id, action)
 		end
 
 		if input_text or is_marked_text_changed then
-			self:set_text(input_text)
+			self:set_text(input_text or self.value)
 
 			if cursor_shift_indexes then
 				self:select_cursor(self.cursor_index + cursor_shift_indexes)
@@ -244,12 +244,6 @@ end
 ---@private
 function M:on_focus_lost()
 	self:unselect()
-end
-
-
----@private
-function M:on_input_interrupt()
-	--self:unselect()
 end
 
 
