@@ -64,8 +64,7 @@ end
 ---@param on_change_callback function
 ---@return property_checkbox
 function M:add_checkbox(text_id, initial_value, on_change_callback)
-	local nodes = gui.clone_tree(self.property_checkbox_prefab)
-	local instance = self.druid:new_widget(property_checkbox, "property_checkbox", nodes) --[[@as property_checkbox]]
+	local instance = self.druid:new_widget(property_checkbox, "property_checkbox", self.property_checkbox_prefab) --[[@as property_checkbox]]
 	instance.text_name:translate(text_id)
 	instance:set_value(initial_value, true)
 	instance.button.on_click:subscribe(function()
@@ -86,8 +85,7 @@ end
 ---@param on_change_callback function
 ---@return property_slider
 function M:add_slider(text_id, initial_value, on_change_callback)
-	local nodes = gui.clone_tree(self.property_slider_prefab)
-	local instance = self.druid:new_widget(property_slider, "property_slider", nodes) --[[@as property_slider]]
+	local instance = self.druid:new_widget(property_slider, "property_slider", self.property_slider_prefab) --[[@as property_slider]]
 	instance.text_name:translate(text_id)
 	instance:set_value(initial_value, true)
 
@@ -107,8 +105,7 @@ end
 ---@param text_id string
 ---@param on_click_callback function
 function M:add_button(text_id, on_click_callback)
-	local nodes = gui.clone_tree(self.property_button_prefab)
-	local instance = self.druid:new_widget(property_button, "property_button", nodes) --[[@as property_button]]
+	local instance = self.druid:new_widget(property_button, "property_button", self.property_button_prefab) --[[@as property_button]]
 	instance.text_name:translate(text_id)
 
 	gui.set_enabled(instance.root, true)

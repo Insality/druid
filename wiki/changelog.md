@@ -576,22 +576,51 @@ Please support me if you like this project! It will help me keep engaged to upda
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
 
 
+
 ### Druid 1.1
 
-Hello! Druid 1.1 is here! It's brings a lot of new features and improvements. Let's dive in!
+Hello there, Druid users!
+
+The wait is over - **Druid 1.1** has arrived! This update brings substantial improvements and exciting new features that make building UI in Defold easier and more powerful than ever.
+
+## Highlights
+
+- **Widgets** are here! This is the evolution of custom components, but with no boilerplate code and far more convenient usage. All Druid examples have been migrated to use widgets.
+
+- **Experimental features** like shader pipeline in GUI and widget usage in GO scripts. Curious Defolders can find examples of these features and try them out.
+
+- **No more calling `druid.register()`!** All Druid components are now available by default with `self.druid:new_*` functions, making getting started simpler than ever.
+
+- **Druid UI Kit** brings fonts, atlas, and ready-to-use GUI templates right out of the box - a long-requested feature that lets you use Druid UI elements instantly in your projects. I think now it's a possible to create a external dependency with a set of GUI and Druid's widgets to make a ready to use UI kit for projects!
+
+- **Completely reworked documentation** with full code annotations. Start with the Quick API Reference to get familiar with Druid.
+
+## Breaking Changes
+
+- `druid.event` has been replaced with the `defold-event` library, requiring a small migration in your code if you were using events directly.
+
+## Improved Workflow
+
+The editor scripts have been updated too. Now they use pure Lua instead of Python, meaning there's no additional setup required to start using them!
+
+---
+
+This release represents a major step forward in making Druid more maintainable, readable, and powerful. Check out the full changelog for all the details!
+
+Thank you for using Druid and please share your feedback!
+
 
 ---
 
 **Milestone**:
 
 **Changelog 1.1**
-- Remove external annotations, remove old HTML API page
-- Fully annotated code and new API README page
-- [Yeay!] No need for the `druid.register()`! Now all Druid's components are available by default and available with `self.druid:new_*` functions
-	- This means the Druid will be bigger in size, but it's much comfortable to use
-	- In case you want to delete components you are not using, you can do it in fork in `druid.lua` file
-	- Read [optimize_druid_size.md](optimize_druid_size.md) to learn how to reduce the size of the Druid library if you need
-	- Any additional new widgets, utilities files will be not included until you use it
+- [Docs] Reworked all documentation pages
+	- The code now is fully annotated
+	- The old API website is removed
+	- The API now placed as a markdown files in the `api` folder
+	- Start with [Quick API Reference](/api/quick_api_reference.md) to learn how to use Druid
+	- All documentation pages are updated
 - [BREAKING] Remove `druid.event`, replaced with `defold-event` library. Now it required to two dependencies to use Druid.
 	- This allow to make more flexible features, like shaders and sync init functions between script and gui_script in various cases.
 	- You need to migrate from `require("druid.event")` to `require("event.event")` if you are using it in your project
@@ -599,21 +628,52 @@ Hello! Druid 1.1 is here! It's brings a lot of new features and improvements. Le
 	- Use 11+ version of `defold-event` library: `https://github.com/Insality/defold-event/archive/refs/tags/11.zip`
 	- Read [defold-event](https://github.com/Insality/defold-event) to learn more about the library
 - [UI Kit] Add Druid UI Kit, contains `druid.atlas`, `druid_text_bold.font`, `druid_text_regular.font` so now you can use Druid GUI files in your projects.
-	- Contains mostly basic shapes for the UI and can contains several icons. Atlas is a small, only `128x128` size and will be included in build only if you use it.
-	- A long waited feature which allows try or just use some Druid GUI features almost instantly.
-	- Now GUI files from Druid can be added inside your project.
+	- Contains mostly basic shapes for the UI and can contains several icons. Atlas is a small, only `128x128` size and will be included in build only if you use it. Probably will grow a little bit in future.
+	- A long waited feature which allows try or just use some **Druid** GUI features almost instantly.
+	- Now GUI files from **Druid** can be added inside your project.
 	- This allow to include `Default Widgets` - ready to use GUI templates
 - [Widgets] Widgets here!
 	- A replacement for Druid's `custom_components`. Basically it's the same, but `widgets` contains no boilerplate code and more convinient to use.
 	- Now I can include a kind of `widgets` with Druid and you can use it almost instantly in your project.
 	- All Druid Examples was migrated to use Widgets instead of Custom Components.
+- [Widgets] Widgets can be used in GO `script` files. It's a kind of experimental feature, but looks fun to check.
+	- Added the `druid_widget.gui_script` which can register a Druid instance for this GUI scene.
+	- You can use `druid.get_widget(class, url)` to get a Druid instance in GO context.
+	- All top level functions from widget are available in GO context.
+	- It uses an `defold-event` library, so wrapping have a costs.
+- [Tada!] No need for the `druid.register()`! Now all Druid's components are available by default and available with `self.druid:new_*` functions
+	- This means the Druid will be bigger in size, but it's much comfortable to use
+	- In case you want to delete components you are not using, you can do it in fork in `druid.lua` file
+	- Read [optimize_druid_size.md](optimize_druid_size.md) to learn how to reduce the size of the Druid library if you need
+	- Any additional new widgets, utilities files will be not included until you use it
+	- You still can register your custom components to make a aliases for them. Widgets are not supported here.
+- [BREAKING] Removed old `druid.no_stencil_check` and `druid.no_auto_template` flags. Now it's always disabled
 - [System]: Huge code refactoring and improvements. The goal is to raise maintainability and readability of the code to help people to contribute to the Druid.
-	- Add [CONTRIBUTING.md](/CONTRIBUTING.md) file with various information to help people to contribute to the Druid.
+	- Add [CONTRIBUTING](/CONTRIBUTING) file with various information to help people to contribute to the Druid.
+- [Editor Scripts]: Updated editor scripts
+	- Add "[Druid] Create Druid Widget" instead of "Create Custom Component"
+	- The "[Druid] Assign Layers" now works purely in lua (before it was a python)
+	- Add the "[Druid] Settings" with a widget template settings and links to documentation
 - [Text]: Add `trim_left` and `scale_then_trim_left` text adjust modes
 - [Text]: Add `set_text` function instead `set_to` (the `set_to` now deprecated)
-- [Color] Add `druid.color` module to work with colors and palettes
 - [Widget] Add widget `mini_graph`
-- [Widget] Add widget `memory_panel`
-- [Widget] Add widget `fps_panel`
+- [Widget] Add widget `memory_panel` (works over `mini_graph` widget)
+- [Widget] Add widget `fps_panel` (works over `mini_graph` widget)
 - [Widget] Add widget `properties_panel`
-- Removed old `druid.no_stencil_check` and `druid.no_auto_template` flags. Now it's always disabled
+- [Unit Tests] Updated Unit tests
+	- Now it's cover more cases and more code, which is great!
+
+
+A big thanks to the my Github supporters:
+- [Defold Foundation](https://defold.com)
+- [Pawel](https://forum.defold.com/u/pawel/summary)
+- [Ragetto](https://forum.defold.com/u/ragetto)
+- [Ekharkunov](https://forum.defold.com/u/ekharkunov/summary)
+
+And all my other supporters! Very appreciated!
+
+❤️ Support ❤️
+
+Please support me if you like this project! It will help me keep engaged to update **Druid** and make it even better!
+
+[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)

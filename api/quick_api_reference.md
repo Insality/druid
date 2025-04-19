@@ -570,9 +570,9 @@ helper.table_to_string(t)
 
 Inspect [API Here](widgets_api.md)
 
-### [FPS Panel](widgets/fps_panel_api.md)
+### [FPS Panel](/api/components/widgets/fps_panel_api.md)
 
-Inspect [API Here](widgets/fps_panel_api.md)
+Inspect [API Here](/api/components/widgets/fps_panel_api.md)
 
 ```lua
 local fps_panel = require("druid.widget.fps_panel.fps_panel")
@@ -581,9 +581,9 @@ fps_panel:init()
 fps_panel:push_fps_value()
 ```
 
-### [Memory Panel](widgets/memory_panel_api.md)
+### [Memory Panel](/api/components/widgets/memory_panel_api.md)
 
-Inspect [API Here](widgets/memory_panel_api.md)
+Inspect [API Here](/api/components/widgets/memory_panel_api.md)
 
 ```lua
 local memory_panel = require("druid.widget.memory_panel.memory_panel")
@@ -594,9 +594,9 @@ memory_panel:push_next_value()
 memory_panel:update_text_memory()
 ```
 
-### [Mini Graph](widgets/mini_graph_api.md)
+### [Mini Graph](/api/components/widgets/mini_graph_api.md)
 
-Inspect [API Here](widgets/mini_graph_api.md)
+Inspect [API Here](/api/components/widgets/mini_graph_api.md)
 
 ```lua
 local mini_graph = require("druid.widget.mini_graph.mini_graph")
@@ -614,9 +614,9 @@ mini_graph:get_highest_value()
 mini_graph:toggle_hide()
 ```
 
-### [Properties Panel](widgets/properties_panel_api.md)
+### [Properties Panel](/api/components/widgets/properties_panel_api.md)
 
-Inspect [API Here](widgets/properties_panel_api.md)
+Inspect [API Here](/api/components/widgets/properties_panel_api.md)
 
 ```lua
 local properties_panel = require("druid.widget.properties_panel.properties_panel")

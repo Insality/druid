@@ -36,9 +36,7 @@ end
 ---@param index number
 ---@return node, druid.component
 function M:create_item_callback(item_data, index)
-	local nodes = gui.clone_tree(self.prefab)
-
-	local instance = self.druid:new_widget(button_component, "button_component", nodes)
+	local instance = self.druid:new_widget(button_component, "button_component", self.prefab)
 	gui.set_enabled(instance.root, true)
 
 	return instance.root, instance
