@@ -14,7 +14,7 @@ function M:init()
 	self.druid:new_hover("slider_back", nil, self.on_slider_back_hover)
 
 	for index = 1, 13 do
-		self.druid:new_button("button" .. index .. "/root", self.on_button_click)
+		self.druid:new_button("button" .. index .. "/root", self.on_button_click, index)
 	end
 end
 
@@ -30,8 +30,10 @@ function M:on_slider(value)
 end
 
 
+---@param params any
 ---@param button druid.button
-function M:on_button_click(_, button)
+function M:on_button_click(params, button)
+	print("on_button_click", params, button)
 	local node = button.node
 	self.scroll:scroll_to(gui.get_position(node))
 end

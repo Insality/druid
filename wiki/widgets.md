@@ -168,3 +168,16 @@ function init(self)
 end
 ```
 
+## Create Druid Widget Editor Script
+
+Druid provides an editor script to assist you in creating Lua files for your GUI scenes. You can find the commands under the menu `Edit -> Create Druid Widget` when working with *.gui scenes.
+
+This script will create a new widget lua file with the same name and basic template for the widget.
+
+The Druid provides two templates:
+
+- `/druid/templates/widget.lua.template` - Basic template for the widget.
+- `/druid/templates/widget_full.lua.template` - Full template for the widget.
+
+You can change the path to the template in the `[Druid] Settings` option in the `Edit` menu.
+

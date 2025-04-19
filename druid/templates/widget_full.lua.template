@@ -13,6 +13,7 @@ function M:init()
 	-- self.druid:new_button([node_id], [callback])
 	-- self.druid:new_text([node_id], [text])
 	-- And all functions from component.lua file
+
 	self.root = self:get_node("root")
 	self.button = self.druid:new_button("button", self.on_button, self)
 end

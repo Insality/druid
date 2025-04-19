@@ -1,25 +1,24 @@
+local assign_layers = require("druid.editor_scripts.assign_layers")
+local create_druid_widget = require("druid.editor_scripts.create_druid_widget")
+local druid_settings = require("druid.editor_scripts.druid_settings")
+
 local M = {}
 
+local DEFAULT_WIDGET_TEMPLATE_PATH = "/druid/templates/widget_full.lua.template"
 
-local function ends_with(str, ending)
-	return ending == "" or str:sub(-#ending) == ending
+
+---Define preferences schema
+function M.get_prefs_schema()
+	return {
+		["druid.widget_template_path"] = editor.prefs.schema.string({
+			default = DEFAULT_WIDGET_TEMPLATE_PATH,
+			scope = editor.prefs.SCOPE.PROJECT
+		})
+	}
 end
 
 
-local function save_file_from_dependency(dependency_file_path, output_file_path)
-	local content = editor.get(dependency_file_path, "text")
-	local file, err = io.open(output_file_path, "w")
-	if not file then
-		print("Error:", err)
-		return false
-	end
-	file:write(content)
-	file:close()
-	print("Write file at", output_file_path)
-	return true
-end
-
-
+---Define the editor commands
 function M.get_commands()
 	return {
 		{
@@ -28,24 +27,10 @@ function M.get_commands()
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
 				local path = editor.get(opts.selection, "path")
-				return ends_with(path, ".gui")
+				return path:match("%.gui$") ~= nil
 			end,
 			run = function(opts)
-				local file = opts.selection
-				print("Run script for", editor.get(file, "path"))
-				save_file_from_dependency('/druid/editor_scripts/run_python_script_on_gui.sh', "./build/run_python_script_on_gui.sh")
-				save_file_from_dependency('/druid/editor_scripts/setup_layers.py', "./build/setup_layers.py")
-				return {
-					{
-						action = "shell",
-						command = {
-							"bash",
-							"./build/run_python_script_on_gui.sh",
-							"./build/setup_layers.py",
-							"." .. editor.get(file, "path")
-						}
-					}
-				}
+				return assign_layers.assign_layers(opts.selection)
 			end
 		},
 
@@ -55,25 +40,18 @@ function M.get_commands()
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
 				local path = editor.get(opts.selection, "path")
-				return ends_with(path, ".gui")
+				return path:match("%.gui$") ~= nil
 			end,
 			run = function(opts)
-				local file = opts.selection
-				print("Run script for", editor.get(file, "path"))
-				save_file_from_dependency('/druid/editor_scripts/run_python_script_on_gui.sh', "./build/run_python_script_on_gui.sh")
-				save_file_from_dependency('/druid/editor_scripts/create_druid_component.py', "./build/create_druid_component.py")
-				save_file_from_dependency('/druid/editor_scripts/widget.lua_template', "./build/widget.lua_template")
-				return {
-					{
-						action = "shell",
-						command = {
-							"bash",
-							"./build/run_python_script_on_gui.sh",
-							"./build/create_druid_component.py",
-							"." .. editor.get(file, "path")
-						}
-					}
-				}
+				return create_druid_widget.create_druid_widget(opts.selection)
+			end
+		},
+
+		{
+			label = "[Druid] Settings",
+			locations = { "Edit" },
+			run = function()
+				return druid_settings.open_settings()
 			end
 		}
 	}

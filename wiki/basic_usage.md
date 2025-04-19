@@ -79,7 +79,7 @@ Widgets are reusable UI components that encapsulate multiple **Druid** component
 
 ### Creating a Widget
 
-Create a new Lua file for your widget class. This file better to be placed near the corresponding GUI file with the same name.
+Create a new Lua file for your widget class. This file better to be placed near the corresponding GUI file with the same name. You can use the Druid's editor script to create a widget by right-clicking on the GUI file in the editor or in "Edit" menu panel, while GUI file is opened.
 
 Define `init` function to initialize the widget.
 

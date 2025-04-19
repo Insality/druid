@@ -5,6 +5,8 @@ Custom compomnents from 1.1 release are deprecated. Now we have a new way to cre
 
 Custom components are will exists for more system things like basic components. You don't have to migrate to widgets.
 
+The editor script for creating custom components is removed. Now you can create widgets with the new editor script.
+
 Read more about widgets in [widgets.md](widgets.md)
 
 ## Overview
@@ -17,7 +19,7 @@ Every component is a child of the Basic Druid component. You can call methods of
 
 ### Basic Component Template
 
-A basic custom component template looks like this (you can copy it from `/druid/templates/component.template.lua`):
+A basic custom component template looks like this (you can copy it from `/druid/templates/component.lua.template`):
 
 ```lua
 local component = require("druid.component")
@@ -58,7 +60,7 @@ end
 
 ### Full Component Template
 
-A full custom component template looks like this (you can copy it from `/druid/templates/component_full.template.lua`):
+A full custom component template looks like this (you can copy it from `/druid/templates/component_full.lua.template`):
 
 ```lua
 local component =  require("druid.component")
@@ -137,29 +139,6 @@ function init(self)
     self.my_component = self.druid:new_my_component(template, nodes)
 end
 ```
-
-## Create Druid Component Editor Script
-
-Druid provides an editor script to assist you in creating Lua files for your GUI scenes. You can find the commands under the menu `Edit -> Create Druid Component` when working with *.gui scenes.
-
-The script analyzes the current GUI scene and generates a Lua file with stubs for all Druid components found. The output file is named after the current GUI scene and placed in the same directory. Note that the script does not override any existing *.lua files. If you want to regenerate a file, delete the previous version first.
-
-The script requires `python` with `deftree` installed. If `deftree` is not installed, the instructions will be displayed in the console.
-
-### Auto-Layout Components
-
-The generator script also checks the current GUI scene for Druid components and creates stubs for them. If a node name starts with a specific keyword, the script generates component stubs in the Lua file. For example, nodes named `button` and `button_exit` will result in the generation of two Druid Button components with callback stubs.
-
-Available keywords:
-- `button`: Adds a [Druid Button](01-components.md#button) component and generates the callback stub.
-- `text`: Adds a [Druid Text](01-components.md#text) component.
-- `lang_text`: Adds a [Druid Lang Text](01-components.md#lang-text) component.
-- `grid` or `static_grid`: Adds a [Druid Static Grid](01-components.md#static-grid) component. You should set up the Grid prefab for this component after generating the file.
-- `scroll_view`: Adds a [Druid Scroll](01-components.md#scroll) component. It also adds a `scroll_content` node with the same postfix. Ensure that it's the correct node.
-- `blocker`: Adds a [Druid Blocker](01-components.md#blocker) component.
-- `slider`: Adds a [Druid Slider](01-components.md#slider) component. You should adjust the end position of the Slider after generating the file.
-- `progress`: Adds a [Druid Progress](01-components.md#progress) component.
-- `timer`: Adds a [Druid Timer](01-components.md#timer) component.
 
 ## The Power of Using Templates
 
