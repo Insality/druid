@@ -24,8 +24,10 @@ nodes {
 }
 nodes {
   type: TYPE_TEXT
+  text: "Click Me!"
   id: "button/text"
   parent: "button/root"
+  overridden_fields: 8
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"

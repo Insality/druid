@@ -27,8 +27,10 @@ nodes {
 }
 nodes {
   type: TYPE_TEXT
+  text: "Drag Me"
   id: "drag/text"
   parent: "drag/root"
+  overridden_fields: 8
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"
