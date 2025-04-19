@@ -16,7 +16,7 @@ function M.get_examples()
 			information_text_id = "ui_example_widget_properties_panel_description",
 			template = "properties_panel",
 			root = "properties_panel/root",
-			code_url = "example/examples/widgets/properties_panel/properties_panel.lua",
+			code_url = "example/examples/widgets/examples_list.lua",
 			widget_class = require("druid.widget.properties_panel.properties_panel"),
 			on_create = function(instance, output_list)
 				---@cast instance druid.widget.properties_panel
@@ -96,7 +96,7 @@ function M.get_examples()
 			information_text_id = "ui_example_widget_property_input_description",
 			template = "property_input",
 			root = "property_input/root",
-			code_url = "druid/widget/properties_panel/properties/property_input.lua",
+			code_url = "example/examples/widgets/examples_list.lua",
 			widget_class = require("druid.widget.properties_panel.properties.property_input"),
 		},
 		{

@@ -1,6 +1,6 @@
 local panthera = require("panthera.panthera")
 
-local animation = require("example.examples.widgets.go_widgets.go_bindings_panthera")
+local animation = require("example.examples.widgets.go_widgets.go_with_widget_panthera")
 
 local druid = require("druid.druid")
 local widget = require("example.examples.widgets.go_widgets.go_widget")
@@ -8,6 +8,7 @@ local widget = require("example.examples.widgets.go_widgets.go_widget")
 function init(self)
 	local gui_url = msg.url(nil, nil, "go_widget")
 	self.go_widget = druid.get_widget(widget, gui_url)
+
 	self.go_widget:play_animation()
 	self.go_widget:set_position(go.get_position())
 

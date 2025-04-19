@@ -89,7 +89,7 @@ return {
             fps = 60,
             gizmo_steps = {
             },
-            gui_path = "/example/examples/widgets/go_widgets/go_widget.collection",
+            gui_path = "/example/examples/widgets/go_widgets/go_with_widget.collection",
             layers = {
             },
             settings = {

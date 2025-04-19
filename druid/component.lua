@@ -107,9 +107,16 @@ end
 
 
 ---Set current component nodes, returned from `gui.clone_tree` function.
----@param nodes table<hash, node>
+---@param nodes table<hash, node>|node|string|nil The nodes table from gui.clone_tree or prefab node to use for clone or node id to clone
 ---@return druid.component
 function M:set_nodes(nodes)
+	if type(nodes) == "string" then
+		nodes = self:get_node(nodes)
+	end
+	if type(nodes) == "userdata" then
+		nodes = gui.clone_tree(nodes) --[[@as table<hash, node>]]
+	end
+
 	self._meta.nodes = nodes
 	return self
 end
@@ -132,7 +139,7 @@ end
 
 ---Get Druid instance for inner component creation.
 ---@param template string|nil
----@param nodes table<hash, node>|nil
+---@param nodes table<hash, node>|node|string|nil The nodes table from gui.clone_tree or prefab node to use for clone or node id to clone
 ---@return druid.instance
 function M:get_druid(template, nodes)
 	local druid_instance = setmetatable({
@@ -396,7 +403,11 @@ function M.create_widget(self, widget_class, context)
 		default_input_priority = const.PRIORITY_INPUT,
 		_is_input_priority_changed = true, -- Default true for sort once time after GUI init
 	}
-	instance._meta = {
+
+	-- I'll hide a meta fields under metatable to hide this tables from pprint output
+	-- cause it's leads to recursive pprint's from (druid = self)
+	-- Wish this to be better, since it can reduce a memory usage
+	instance._meta = setmetatable({}, { __index = {
 		druid = self,
 		template = "",
 		nodes = nil,
@@ -406,7 +417,7 @@ function M.create_widget(self, widget_class, context)
 		children = {},
 		parent = type(context) ~= "userdata" and context or nil,
 		instance_class = widget_class
-	}
+	}})
 
 	-- Register
 	if instance._meta.parent then

@@ -494,13 +494,6 @@ end
 function M:new_widget(widget, template, nodes, ...)
 	local instance = create_widget(self, widget)
 
-	if type(nodes) == "string" then
-		nodes = gui.get_node(nodes)
-	end
-	if type(nodes) == "userdata" then
-		nodes = gui.clone_tree(nodes) --[[@as table<hash, node>]]
-	end
-
 	instance.druid = instance:get_druid(template, nodes)
 
 	if instance.init then

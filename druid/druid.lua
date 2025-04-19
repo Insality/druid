@@ -33,8 +33,16 @@ end
 ---@param name string Module name
 ---@param module table Lua table with component
 function M.register(name, module)
-	druid_instance["new_" .. name] = function(self, ...)
-		return druid_instance.new(self, module, ...)
+	local is_custom_component = getmetatable(module) ~= nil
+	if is_custom_component then
+		druid_instance["new_" .. name] = function(self, ...)
+			return druid_instance.new(self, module, ...)
+		end
+	else
+		-- Just for some compatability. But better to use direct druid_instance:new_widget(module, ...) function
+		druid_instance["new_" .. name] = function(self, template, nodes, ...)
+			return druid_instance.new_widget(self, module, template, nodes, ...)
+		end
 	end
 end
 

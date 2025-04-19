@@ -18,7 +18,7 @@ Please, open PR against the `develop` branch. Very nice to have an issue, which 
 
 You fix should contains only changes, which are related to the issue. Also please keep the code style the same!
 
-Thanks <3
+❤️ Thanks ❤️
 
 ## Update Documentation
 
@@ -48,3 +48,20 @@ On your repo fork:
 - Test the example by running the game
 - Create a pull request to the `develop` branch
 
+
+## Add or Update Unit Tests
+
+The unit tests was updated to cover more Druid's source code. So now I have more examples how to run and check some parts of the code.
+
+In case you face issue and want to reproduce it, you also can starts from the unit tests:
+
+All tests placed in the `/test/tests` directory.
+
+To run tests you need to set the bootstrap collection to `/test/test.collection` and run it.
+
+So the flow will be the similar:
+
+- Create a new branch for your changes
+- Make your changes and commit them
+- Push your changes to your fork
+- Create a pull request to the Druid repository `develop` branch
