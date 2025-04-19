@@ -1,15 +1,7 @@
-local component = require("druid.component")
+---@class examples.drag: druid.widget
+local M = {}
 
----@class drag: druid.base_component
----@field druid druid_instance
-local M = component.create("drag")
-
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	-- Init drag and move the drag node on drag callback
 	self.drag = self.druid:new_drag("drag/root", function(_, dx, dy)
 		local position_x = gui.get(self.drag.node, "position.x")
@@ -24,6 +16,5 @@ function M:init(template, nodes)
 		gui.animate(self.drag.node, "position", self.start_position, gui.EASING_OUTBACK, 0.3)
 	end)
 end
-
 
 return M

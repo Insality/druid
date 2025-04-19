@@ -3,8 +3,8 @@ fonts {
   font: "/example/assets/fonts/text_bold.font"
 }
 textures {
-  name: "druid"
-  texture: "/example/assets/druid.atlas"
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
 }
 nodes {
   size {
@@ -27,7 +27,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "scroll_view"
   parent: "root"
   inherit_alpha: true
@@ -53,7 +53,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/empty"
+  texture: "druid_example/empty"
   id: "scroll_content"
   pivot: PIVOT_N
   parent: "scroll_view"
@@ -84,10 +84,8 @@ nodes {
 }
 nodes {
   type: TYPE_TEXT
-  text: "I do nothing!"
   id: "button_tutorial/text"
   parent: "button_tutorial/root"
-  overridden_fields: 8
   template_node_child: true
 }
 nodes {
@@ -309,23 +307,9 @@ nodes {
   template_node_child: true
 }
 nodes {
-  scale {
-    x: 0.8
-    y: 0.8
-  }
-  size {
-    x: 300.0
-    y: 50.0
-  }
   type: TYPE_TEXT
-  text: "Click outside stencil node"
   id: "button_stencil/text"
-  line_break: true
   parent: "button_stencil/root"
-  overridden_fields: 3
-  overridden_fields: 4
-  overridden_fields: 8
-  overridden_fields: 18
   template_node_child: true
 }
 nodes {

@@ -7,8 +7,8 @@ textures {
   texture: "/example/examples/panthera/animation_blend/assets/animation_blend.atlas"
 }
 textures {
-  name: "druid"
-  texture: "/example/assets/druid.atlas"
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
 }
 nodes {
   size {
@@ -21,7 +21,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "root"
   inherit_alpha: true
   slice9 {

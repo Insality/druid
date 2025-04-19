@@ -1,0 +1,108 @@
+script: "/druid/druid_widget.gui_script"
+fonts {
+  name: "druid_text_bold"
+  font: "/example/assets/fonts/gui_world/druid_gui_world_text_bold.font"
+}
+textures {
+  name: "druid"
+  texture: "/druid/druid.atlas"
+}
+nodes {
+  type: TYPE_BOX
+  texture: "druid/empty"
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: 150.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "group"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 400.0
+    y: 40.0
+  }
+  color {
+    x: 0.886
+    y: 0.518
+    z: 0.518
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "circle"
+  parent: "group"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: -200.0
+  }
+  size {
+    x: 400.0
+    y: 40.0
+  }
+  color {
+    x: 0.447
+    y: 0.784
+    z: 0.522
+  }
+  type: TYPE_BOX
+  texture: "druid/ui_circle_32"
+  id: "green"
+  pivot: PIVOT_W
+  parent: "circle"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  size {
+    x: 400.0
+    y: 40.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_TEXT
+  text: "20"
+  font: "druid_text_bold"
+  id: "text"
+  parent: "group"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/druid/materials/gui_world/gui_world.material"
+adjust_reference: ADJUST_REFERENCE_DISABLED
+materials {
+  name: "gui_tiling_node"
+  material: "/druid/custom/tiling_node/gui_tiling_node.material"
+}
+materials {
+  name: "gui_stencil"
+  material: "/druid/materials/stencil/gui_stencil.material"
+}

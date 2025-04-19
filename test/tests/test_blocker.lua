@@ -1,101 +1,93 @@
 return function()
-	local mock_gui = nil
-	local mock_time = nil
-	local mock_input = nil
-	local test_helper = nil
-	local druid_system = nil
-
-	local druid = nil
-	local context = nil
-
 	describe("Blocker component", function()
+		local mock_time
+		local mock_input
+		local druid_system
+
+		local druid ---@type druid.instance
+		local context
+
 		before(function()
-			mock_gui = require("deftest.mock.gui")
 			mock_time = require("deftest.mock.time")
 			mock_input = require("test.helper.mock_input")
-			test_helper = require("test.helper.test_helper")
 			druid_system = require("druid.druid")
 
-			mock_gui.mock()
 			mock_time.mock()
-			mock_time.set(60)
+			mock_time.set(0)
 
-			context = test_helper.get_context()
+			context = vmath.vector3()
 			druid = druid_system.new(context)
 		end)
 
 		after(function()
-			mock_gui.unmock()
 			mock_time.unmock()
-			druid:final(context)
+			druid:final()
 			druid = nil
 		end)
 
 		it("Should consume input", function()
-			local button_node = mock_gui.add_box("button", 0, 0, 100, 50)
-			local blocker_node = mock_gui.add_box("blocker", 20, 20, 20, 20)
-			local on_click, on_click_mock = test_helper.get_function()
+			local button_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(150, 150, 0))
+			local blocker_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(20, 20, 0))
+			local on_click_calls = 0
 
-			druid:new_button(button_node, on_click)
+			druid:new_button(button_node, function()
+				on_click_calls = on_click_calls + 1
+			end)
 			druid:new_blocker(blocker_node)
 
-			druid:on_input(mock_input.click_pressed(10, 10))
-			druid:on_input(mock_input.click_released(10, 10))
-			assert(on_click_mock.calls == 1)
+			druid:on_input(mock_input.click_pressed(20, 20))
+			druid:on_input(mock_input.click_released(20, 20))
+			assert(on_click_calls == 1)
 
 			-- Click should been consumed by blocker component
-			druid:on_input(mock_input.click_pressed(20, 20))
-			druid:on_input(mock_input.click_released(20, 20))
-			assert(on_click_mock.calls == 1)
+			druid:on_input(mock_input.click_pressed(0, 0))
+			druid:on_input(mock_input.click_released(0, 0))
+			assert(on_click_calls == 1)
 
 			-- If move from button to blocker, should consume too
-			druid:on_input(mock_input.click_pressed(10, 10))
-			druid:on_input(mock_input.click_released(20, 20))
-			assert(on_click_mock.calls == 1)
+			druid:on_input(mock_input.click_pressed(40, 40))
+			druid:on_input(mock_input.click_released(0, 0))
+			assert(on_click_calls == 1)
 
 			-- And from blocker to button too
-			druid:on_input(mock_input.click_pressed(20, 20))
-			druid:on_input(mock_input.click_released(10, 10))
-			assert(on_click_mock.calls == 1)
+			druid:on_input(mock_input.click_pressed(0, 0))
+			druid:on_input(mock_input.click_released(40, 40))
+			assert(on_click_calls == 1)
+
+			-- Usual click after that should work
+			druid:on_input(mock_input.click_pressed(40, 40))
+			druid:on_input(mock_input.click_released(40, 40))
+			assert(on_click_calls == 2)
 		end)
 
-		it("Should be disabled via node or set_enabled", function()
-			local button_node = mock_gui.add_box("button", 0, 0, 100, 50)
-			local blocker_node = mock_gui.add_box("blocker", 20, 20, 20, 20)
-			local on_click, on_click_mock = test_helper.get_function()
+		it("Should be disabled via set_enabled", function()
+			local button_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 100, 0))
+			local blocker_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(20, 20, 0))
+			local on_click_calls = 0
 
-			druid:new_button(button_node, on_click)
+			druid:new_button(button_node, function()
+				on_click_calls = on_click_calls + 1
+			end)
 			local blocker = druid:new_blocker(blocker_node)
 
 			-- Click should been consumed by blocker component
-			druid:on_input(mock_input.click_pressed(20, 20))
-			druid:on_input(mock_input.click_released(20, 20))
-			assert(on_click_mock.calls == 0)
+			druid:on_input(mock_input.click_pressed(0, 0))
+			druid:on_input(mock_input.click_released(0, 0))
+			assert(on_click_calls == 0)
 
 			-- Disable blocker component
 			blocker:set_enabled(false)
-			druid:on_input(mock_input.click_pressed(20, 20))
-			druid:on_input(mock_input.click_released(20, 20))
-			assert(gui.is_enabled(blocker_node) == true)
+			druid:on_input(mock_input.click_pressed(0, 0))
+			druid:on_input(mock_input.click_released(0, 0))
 			assert(blocker:is_enabled() == false)
-			assert(on_click_mock.calls == 1)
+			assert(on_click_calls == 1)
 
-			-- Disable blocker node component
+			-- Enable blocker component again
 			blocker:set_enabled(true)
-			gui.set_enabled(blocker_node, false)
-			druid:on_input(mock_input.click_pressed(20, 20))
-			druid:on_input(mock_input.click_released(20, 20))
-			assert(gui.is_enabled(blocker_node) == false)
+			druid:on_input(mock_input.click_pressed(0, 0))
+			druid:on_input(mock_input.click_released(0, 0))
 			assert(blocker:is_enabled() == true)
-			assert(on_click_mock.calls == 2)
-
-			-- Return state
-			gui.set_enabled(blocker_node, true)
-			druid:on_input(mock_input.click_pressed(20, 20))
-			druid:on_input(mock_input.click_released(20, 20))
-			assert(gui.is_enabled(blocker_node) == true)
-			assert(blocker:is_enabled() == true)
-			assert(on_click_mock.calls == 2)
+			assert(on_click_calls == 1)
 		end)
 	end)
 end

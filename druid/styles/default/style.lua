@@ -1,6 +1,3 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
-local const = require("druid.const")
 local settings = require("druid.system.settings")
 
 local M = {}
@@ -63,7 +60,7 @@ M["hover"] = {
 }
 
 M["drag"] = {
-	DRAG_DEADZONE = 10, -- Size in pixels of drag deadzone
+	DRAG_DEADZONE = 4, -- Size in pixels of drag deadzone
 	NO_USE_SCREEN_KOEF = false,
 }
 
@@ -132,7 +129,7 @@ M["input"] = {
 
 M["text"] = {
 	TRIM_POSTFIX = "...",
-	DEFAULT_ADJUST = const.TEXT_ADJUST.DOWNSCALE
+	DEFAULT_ADJUST = "downscale"
 }
 
 

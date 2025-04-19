@@ -1,0 +1,67 @@
+# Contribution Guidelines
+
+Hello, Defolder! Thanks for your interest in contributing to the **Druid** project. It's a massive project that has been around for a long time, and it's still growing. This project has a lot of places where you can help!
+
+Finally, there are set of instructions that will help you to contribute to the project.
+
+Thanks for your help!
+
+## Issue Reporting
+
+If you find any bugs, please report them to the [issue tracker](https://github.com/druid-js/druid/issues).
+
+## Pull Requests
+
+Any pull requests are welcome!
+
+Please, open PR against the `develop` branch. Very nice to have an issue, which this PR fixes.
+
+You fix should contains only changes, which are related to the issue. Also please keep the code style the same!
+
+❤️ Thanks ❤️
+
+## Update Documentation
+
+If you see any mistakes in the documentation, you can update it by yourself with the following steps:
+
+- Fork Druid repository
+- Create a new branch for your changes
+- Make your changes and commit them
+- Push your changes to your fork
+- Create a pull request to the Druid repository `develop` branch
+
+
+## Add or Update Examples
+
+Examples contains a GUI scene, a Druid widget for this GUI. This GUI is included to the `examples.gui` and the information about examples are added in `examples_list.lua` file
+
+You can add new examples or update existing ones.
+
+To add new example, you need to create a new folder in the `examples` directory.
+
+On your repo fork:
+
+- Create a gui file with the example inside `/example/examples` directory
+- Add the example info to the `examples_list.lua` file.
+- Add this GUI template to the `/example/druid.gui` file
+	- GUI should be placed inside relative example parent, e.g. `root -> container_center -> examples -> widgets`
+- Test the example by running the game
+- Create a pull request to the `develop` branch
+
+
+## Add or Update Unit Tests
+
+The unit tests was updated to cover more Druid's source code. So now I have more examples how to run and check some parts of the code.
+
+In case you face issue and want to reproduce it, you also can starts from the unit tests:
+
+All tests placed in the `/test/tests` directory.
+
+To run tests you need to set the bootstrap collection to `/test/test.collection` and run it.
+
+So the flow will be the similar:
+
+- Create a new branch for your changes
+- Make your changes and commit them
+- Push your changes to your fork
+- Create a pull request to the Druid repository `develop` branch

@@ -9,9 +9,6 @@ nodes {
   visible: false
 }
 nodes {
-  position {
-    y: 445.0
-  }
   type: TYPE_TEMPLATE
   id: "input"
   parent: "root"
@@ -32,7 +29,7 @@ nodes {
 }
 nodes {
   position {
-    y: 332.0
+    y: -150.0
   }
   type: TYPE_TEMPLATE
   id: "input_2"
@@ -50,8 +47,6 @@ nodes {
   type: TYPE_TEXT
   id: "input_2/text"
   parent: "input_2/root"
-  overridden_fields: 1
-  overridden_fields: 14
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"

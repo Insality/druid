@@ -1,10 +1,7 @@
+---@diagnostic disable: inject-field
 -- Source: https://github.com/britzl/defold-richtext version 5.19.0
 -- Author: Britzl
 -- Modified by: Insality
-
---- RT
--- @module rich_text.rt
--- @local
 
 local helper = require("druid.helper")
 local parser = require("druid.custom.rich_text.module.rt_parse")
@@ -54,10 +51,10 @@ local function compare_words(one, two)
 end
 
 
---- Get the length of a text ignoring any tags except image tags
--- which are treated as having a length of 1
--- @param text String with text or a list of words (from richtext.create)
--- @return Length of text
+---Get the length of a text ignoring any tags except image tags
+---which are treated as having a length of 1
+---@param text string|table<string, any> String with text or a list of words (from richtext.create)
+---@return number Length of text
 function M.length(text)
 	assert(text)
 	if type(text) == "string" then
@@ -156,12 +153,12 @@ end
 
 
 -- Create rich text gui nodes from text
---- @param text string The text to create rich text nodes from
---- @param settings table Optional settings table (refer to documentation for details)
---- @param style druid.rich_text.style
---- @return druid.rich_text.word[]
---- @return druid.rich_text.settings
---- @return druid.rich_text.lines_metrics
+---@param text string The text to create rich text nodes from
+---@param settings table Optional settings table (refer to documentation for details)
+---@param style druid.rich_text.style
+---@return druid.rich_text.word[]
+---@return druid.rich_text.settings
+---@return druid.rich_text.lines_metrics
 function M.create(text, settings, style)
 	assert(text, "You must provide a text")
 
@@ -185,7 +182,7 @@ function M.create(text, settings, style)
 		outline = settings.outline,
 		font = gui.get_font(settings.text_prefab),
 		-- Image params
-		---@type druid.rich_text.image
+		---@type druid.rich_text.word.image
 		image = nil,
 		-- Tags
 		br = nil,
@@ -526,10 +523,10 @@ function M.is_fit_info_area(lines, settings)
 end
 
 
---- Get all words with a specific tag
--- @param words The words to search (as received from richtext.create)
--- @param tag The tag to search for. Nil to search for words without a tag
--- @return Words matching the tag
+---Get all words with a specific tag
+---@param words druid.rich_text.word[] The words to search (as received from richtext.create)
+---@param tag string|nil The tag to search for. Nil to search for words without a tag
+---@return druid.rich_text.word[] Words matching the tag
 function M.tagged(words, tag)
 	local tagged = {}
 	for i = 1, #words do

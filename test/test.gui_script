@@ -1,22 +1,21 @@
 local deftest = require("deftest.deftest")
 
-local tests = {
-	-- Test list
-	require("test.tests.test_button"),
-	require("test.tests.test_hover"),
-	require("test.tests.test_drag"),
-	require("test.tests.test_back_handler"),
-	require("test.tests.test_blocker"),
-	--require("test.tests.test_static_grid"),
-}
-
-
 function init(self)
-	print('[DefTest]: Init of DefTest')
-	for i = 1, #tests do
-		deftest.add(tests[i])
-	end
+	deftest.add(require("test.tests.test_druid_instance"))
+	deftest.add(require("test.tests.test_back_handler"))
+	deftest.add(require("test.tests.test_blocker"))
+	deftest.add(require("test.tests.test_button"))
+	deftest.add(require("test.tests.test_container"))
+	deftest.add(require("test.tests.test_drag"))
+	deftest.add(require("test.tests.test_grid"))
+	deftest.add(require("test.tests.test_helper"))
+	deftest.add(require("test.tests.test_hover"))
+	deftest.add(require("test.tests.test_input"))
+	deftest.add(require("test.tests.test_layout"))
+	deftest.add(require("test.tests.test_rich_text"))
+	deftest.add(require("test.tests.test_scroll"))
+	deftest.add(require("test.tests.test_text"))
 
-	local is_report = (sys.get_config("test.report") == "1")
+	local is_report = (sys.get_config_int("test.report", 0) == 1)
 	deftest.run({ coverage = { enabled = is_report } })
 end

@@ -1,28 +1,20 @@
-local component = require("druid.component")
-local slider = require("druid.extended.slider")
-
----@class scroll_slider: druid.base_component
+---@class examples.scroll_slider: druid.widget
 ---@field root node
 ---@field scroll druid.scroll
 ---@field slider druid.slider
----@field druid druid_instance
-local M = component.create("scroll_slider")
+local M = {}
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-
+function M:init()
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
 	self.scroll.on_scroll:subscribe(self.on_scroll)
 
-	self.slider = self.druid:new(slider, "slider_pin", vmath.vector3(-8, -976, 0), self.on_slider) --[[@as druid.slider]]
+	self.slider = self.druid:new_slider("slider_pin", vmath.vector3(-8, -976, 0), self.on_slider) --[[@as druid.slider]]
 	self.slider:set_input_node("slider_back")
 
 	self.druid:new_hover("slider_back", nil, self.on_slider_back_hover)
 
 	for index = 1, 13 do
-		self.druid:new_button("button" .. index .. "/root", self.on_button_click)
+		self.druid:new_button("button" .. index .. "/root", self.on_button_click, index)
 	end
 end
 
@@ -38,8 +30,10 @@ function M:on_slider(value)
 end
 
 
+---@param params any
 ---@param button druid.button
-function M:on_button_click(_, button)
+function M:on_button_click(params, button)
+	print("on_button_click", params, button)
 	local node = button.node
 	self.scroll:scroll_to(gui.get_position(node))
 end
@@ -48,6 +42,20 @@ end
 function M:on_slider_back_hover(is_hover)
 	local node = self:get_node("slider_pin")
 	gui.animate(node, "color.w", is_hover and 1.5 or 1, gui.EASING_OUTSINE, 0.2)
+end
+
+
+---@return string
+function M:get_debug_info()
+	local info = ""
+
+	local s = self.scroll
+	info = info .. "View Size Y: " .. gui.get(s.view_node, "size.y") .. "\n"
+	info = info .. "Content Size Y: " .. gui.get(s.content_node, "size.y") .. "\n"
+	info = info .. "Content position Y: " .. math.ceil(s.position.y) .. "\n"
+	info = info .. "Content Range Y: " .. s.available_pos.y .. " - " .. s.available_pos.w .. "\n"
+
+	return info
 end
 
 

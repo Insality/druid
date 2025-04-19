@@ -1,0 +1,572 @@
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel"
+  parent: "root"
+  inherit_alpha: true
+  template: "/druid/widget/properties_panel/properties_panel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/root"
+  parent: "properties_panel"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/header"
+  parent: "properties_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/text_header"
+  parent: "properties_panel/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/icon_drag"
+  parent: "properties_panel/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/content"
+  parent: "properties_panel/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/scroll_view"
+  parent: "properties_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/scroll_content"
+  parent: "properties_panel/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/propeties"
+  parent: "properties_panel/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_slider"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/root"
+  parent: "properties_panel/property_slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_slider/text_name"
+  parent: "properties_panel/property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/E_Anchor"
+  parent: "properties_panel/property_slider/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/slider"
+  parent: "properties_panel/property_slider/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/slider_back"
+  parent: "properties_panel/property_slider/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/slider_pin"
+  parent: "properties_panel/property_slider/slider"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/button"
+  parent: "properties_panel/property_slider/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_slider/selected"
+  parent: "properties_panel/property_slider/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_slider/text_value"
+  parent: "properties_panel/property_slider/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_checkbox"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_checkbox/root"
+  parent: "properties_panel/property_checkbox"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_checkbox/text_name"
+  parent: "properties_panel/property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_checkbox/E_Anchor"
+  parent: "properties_panel/property_checkbox/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_checkbox/button"
+  parent: "properties_panel/property_checkbox/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_checkbox/icon"
+  parent: "properties_panel/property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_checkbox/selected"
+  parent: "properties_panel/property_checkbox/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_button"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button/root"
+  parent: "properties_panel/property_button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_button/text_name"
+  parent: "properties_panel/property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button/E_Anchor"
+  parent: "properties_panel/property_button/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button/button"
+  parent: "properties_panel/property_button/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button/selected"
+  parent: "properties_panel/property_button/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_button/text_button"
+  parent: "properties_panel/property_button/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_input"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_input/root"
+  parent: "properties_panel/property_input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_input/text_name"
+  parent: "properties_panel/property_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_input/E_Anchor"
+  parent: "properties_panel/property_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_input/rich_input"
+  parent: "properties_panel/property_input/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_input/rich_input/root"
+  parent: "properties_panel/property_input/rich_input"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_input/rich_input/button"
+  parent: "properties_panel/property_input/rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_input/rich_input/placeholder_text"
+  parent: "properties_panel/property_input/rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_input/rich_input/input_text"
+  parent: "properties_panel/property_input/rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_input/rich_input/cursor_node"
+  parent: "properties_panel/property_input/rich_input/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_input/rich_input/cursor_text"
+  parent: "properties_panel/property_input/rich_input/cursor_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_input/selected"
+  parent: "properties_panel/property_input/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_text"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_text/root"
+  parent: "properties_panel/property_text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_text/text_name"
+  parent: "properties_panel/property_text/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_text/text_right"
+  parent: "properties_panel/property_text/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_left_right_selector"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_left_right_selector/root"
+  parent: "properties_panel/property_left_right_selector"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_left_right_selector/text_name"
+  parent: "properties_panel/property_left_right_selector/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_left_right_selector/E_Anchor"
+  parent: "properties_panel/property_left_right_selector/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_left_right_selector/button_left"
+  parent: "properties_panel/property_left_right_selector/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_left_right_selector/icon_left"
+  parent: "properties_panel/property_left_right_selector/button_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_left_right_selector/button_right"
+  parent: "properties_panel/property_left_right_selector/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_left_right_selector/icon_right"
+  parent: "properties_panel/property_left_right_selector/button_right"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_left_right_selector/selected"
+  parent: "properties_panel/property_left_right_selector/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_left_right_selector/text_value"
+  parent: "properties_panel/property_left_right_selector/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_vector3"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/root"
+  parent: "properties_panel/property_vector3"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/text_name"
+  parent: "properties_panel/property_vector3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/E_Anchor"
+  parent: "properties_panel/property_vector3/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/field_x"
+  parent: "properties_panel/property_vector3/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/text_x"
+  parent: "properties_panel/property_vector3/field_x"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_vector3/rich_input_x"
+  parent: "properties_panel/property_vector3/field_x"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_x/root"
+  parent: "properties_panel/property_vector3/rich_input_x"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_x/button"
+  parent: "properties_panel/property_vector3/rich_input_x/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_x/placeholder_text"
+  parent: "properties_panel/property_vector3/rich_input_x/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_x/input_text"
+  parent: "properties_panel/property_vector3/rich_input_x/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_x/cursor_node"
+  parent: "properties_panel/property_vector3/rich_input_x/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_x/cursor_text"
+  parent: "properties_panel/property_vector3/rich_input_x/cursor_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/selected_x"
+  parent: "properties_panel/property_vector3/field_x"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/field_y"
+  parent: "properties_panel/property_vector3/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/text_y"
+  parent: "properties_panel/property_vector3/field_y"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_vector3/rich_input_y"
+  parent: "properties_panel/property_vector3/field_y"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_y/root"
+  parent: "properties_panel/property_vector3/rich_input_y"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_y/button"
+  parent: "properties_panel/property_vector3/rich_input_y/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_y/placeholder_text"
+  parent: "properties_panel/property_vector3/rich_input_y/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_y/input_text"
+  parent: "properties_panel/property_vector3/rich_input_y/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_y/cursor_node"
+  parent: "properties_panel/property_vector3/rich_input_y/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_y/cursor_text"
+  parent: "properties_panel/property_vector3/rich_input_y/cursor_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/selected_y"
+  parent: "properties_panel/property_vector3/field_y"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/field_z"
+  parent: "properties_panel/property_vector3/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/text_z"
+  parent: "properties_panel/property_vector3/field_z"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_vector3/rich_input_z"
+  parent: "properties_panel/property_vector3/field_z"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_z/root"
+  parent: "properties_panel/property_vector3/rich_input_z"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_z/button"
+  parent: "properties_panel/property_vector3/rich_input_z/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_z/placeholder_text"
+  parent: "properties_panel/property_vector3/rich_input_z/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_z/input_text"
+  parent: "properties_panel/property_vector3/rich_input_z/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/rich_input_z/cursor_node"
+  parent: "properties_panel/property_vector3/rich_input_z/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_vector3/rich_input_z/cursor_text"
+  parent: "properties_panel/property_vector3/rich_input_z/cursor_node"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_vector3/selected_z"
+  parent: "properties_panel/property_vector3/field_z"
+  template_node_child: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

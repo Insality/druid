@@ -1,25 +1,24 @@
-local component = require("druid.component")
 local on_screen_input = require("example.examples.gamepad.on_screen_control.on_screen_input")
 
----@class on_screen_control: druid.base_component
----@field druid druid_instance
----@field on_screen_input on_screen_input
-local M = component.create("on_screen_control")
+---@class examples.on_screen_control: druid.widget
+---@field on_screen_input examples.on_screen_input
+---@field character node
+---@field character_position vector3
+---@field character_eye_left node
+---@field character_eye_right node
+local M = {}
 
 local CHARACTER_SPEED = 700
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
 
+function M:init()
 	self.character = self:get_node("character")
 	self.character_position = gui.get_position(self.character)
 
 	self.character_eye_left = self:get_node("eye_left")
 	self.character_eye_right = self:get_node("eye_right")
 
-	self.on_screen_input = self.druid:new(on_screen_input, "on_screen_input") --[[@as on_screen_input]]
+	self.on_screen_input = self.druid:new_widget(on_screen_input, "on_screen_input")
 
 	self.on_screen_input.on_action:subscribe(self.on_action_button, self)
 	self.on_screen_input.on_movement:subscribe(self.on_movement, self)

@@ -1,10 +1,4 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Druid constants
--- @local
--- @module DruidConst
--- @alias druid_const
-
+---@class druid.system.const
 local M = {}
 
 M.ACTION_TEXT = hash(sys.get_config_string("druid.input_text", "text"))
@@ -23,9 +17,6 @@ M.ACTION_LSHIFT = hash(sys.get_config_string("druid.input_key_lshift", "key_lshi
 M.ACTION_LCTRL = hash(sys.get_config_string("druid.input_key_lctrl", "key_lctrl"))
 M.ACTION_LCMD = hash(sys.get_config_string("druid.input_key_lsuper", "key_lsuper"))
 
-M.IS_STENCIL_CHECK = not (sys.get_config_int("druid.no_stencil_check", 0) == 1)
-
-
 M.ON_INPUT = "on_input"
 M.ON_UPDATE = "update"
 M.ON_MESSAGE = "on_message"
@@ -33,22 +24,27 @@ M.ON_LATE_INIT = "on_late_init"
 M.ON_FOCUS_LOST = "on_focus_lost"
 M.ON_FOCUS_GAINED = "on_focus_gained"
 M.ON_LAYOUT_CHANGE = "on_layout_change"
-M.ON_MESSAGE_INPUT = "on_message_input"
 M.ON_WINDOW_RESIZED = "on_window_resized"
 M.ON_LANGUAGE_CHANGE = "on_language_change"
+
+M.ALL_INTERESTS = {
+	M.ON_INPUT,
+	M.ON_UPDATE,
+	M.ON_MESSAGE,
+	M.ON_LATE_INIT,
+	M.ON_FOCUS_LOST,
+	M.ON_FOCUS_GAINED,
+	M.ON_LAYOUT_CHANGE,
+	M.ON_WINDOW_RESIZED,
+	M.ON_LANGUAGE_CHANGE,
+}
+
+M.MSG_LAYOUT_CHANGED = hash("layout_changed")
 
 -- Components with higher priority value processed first
 M.PRIORITY_INPUT = 10
 M.PRIORITY_INPUT_HIGH = 20
 M.PRIORITY_INPUT_MAX = 100
-
-M.MESSAGE_INPUT = {
-	BUTTON_CLICK = "button_click",
-	BUTTON_LONG_CLICK = "button_long_click",
-	BUTTON_DOUBLE_CLICK = "button_double_click",
-	BUTTON_REPEATED_CLICK = "button_repeated_click",
-	TEXT_SET = "text_set",
-}
 
 M.PIVOTS = {
 	[gui.PIVOT_CENTER] = vmath.vector3(0),
@@ -83,9 +79,7 @@ M.LAYOUT_MODE = {
 	STRETCH = gui.ADJUST_STRETCH,
 }
 
-M.VECTOR_ZERO = vmath.vector3(0)
-M.SYS_INFO = sys.get_sys_info()
-M.CURRENT_SYSTEM_NAME = M.SYS_INFO.system_name
+M.CURRENT_SYSTEM_NAME = sys.get_sys_info().system_name
 
 M.OS = {
 	ANDROID = "Android",
@@ -104,10 +98,13 @@ M.SHIFT = {
 
 M.TEXT_ADJUST = {
 	DOWNSCALE = "downscale",
-	TRIM = "trim",
 	NO_ADJUST = "no_adjust",
 	DOWNSCALE_LIMITED = "downscale_limited",
 	SCROLL = "scroll",
+	TRIM = "trim",
+	TRIM_LEFT = "trim_left",
+	SCALE_THEN_TRIM = "scale_then_trim",
+	SCALE_THEN_TRIM_LEFT = "scale_then_trim_left",
 	SCALE_THEN_SCROLL = "scale_then_scroll",
 }
 
@@ -115,18 +112,5 @@ M.SIDE = {
 	X = "x",
 	Y = "y"
 }
-
-M.SWIPE = {
-	UP = "up",
-	DOWN = "down",
-	LEFT = "left",
-	RIGHT = "right",
-}
-
-M.ERRORS = {
-	GRID_DYNAMIC_ANCHOR = "The pivot of dynamic grid node should be West, East, South or North"
-}
-
-M.EMPTY_FUNCTION = function() end
 
 return M
