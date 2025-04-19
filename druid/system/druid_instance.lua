@@ -22,7 +22,7 @@ local M = {}
 
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
 local INTERESTS_CACHE = {} -- Cache interests per component class in runtime
-
+local DRUID_INSTANCE_METATABLE = { __index = M }
 
 local function set_input_state(self, is_input_inited)
 	if IS_NO_AUTO_INPUT or (self.input_inited == is_input_inited) then
@@ -181,7 +181,7 @@ end
 ---@param style table? Druid style table
 ---@return druid.instance instance The new Druid instance
 function M.create_druid_instance(context, style)
-	local self = setmetatable({}, { __index = M })
+	local self = setmetatable({}, DRUID_INSTANCE_METATABLE)
 
 	self._context = context
 	self._style = style or settings.default_style
