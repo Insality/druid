@@ -15,7 +15,7 @@ local settings = require("druid.system.settings")
 ---@class druid.lang_text: druid.component
 ---@field text druid.text The text component
 ---@field node node The node of the text component
----@field on_change event The event triggered when the text is changed
+---@field on_change event fun(self: druid.lang_text) The event triggered when the text is changed
 ---@field private last_locale_args table The last locale arguments
 ---@field private last_locale string The last locale
 local M = component.create("lang_text")

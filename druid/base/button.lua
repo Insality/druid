@@ -32,13 +32,13 @@ local component = require("druid.component")
 ---- Button can have key trigger to use them by key: `button:set_key_trigger`
 ----
 ---@class druid.button: druid.component
----@field on_click event function(self, custom_args, button_instance)
----@field on_pressed event function(self, custom_args, button_instance)
----@field on_repeated_click event function(self, custom_args, button_instance, click_count) Repeated click callback, while holding the button
----@field on_long_click event function(self, custom_args, button_instance, hold_time) Callback on long button tap
----@field on_double_click event function(self, custom_args, button_instance, click_amount) Different callback, if tap button 2+ in row
----@field on_hold_callback event function(self, custom_args, button_instance, press_time) Hold callback, before long_click trigger
----@field on_click_outside event function(self, custom_args, button_instance)
+---@field on_click event fun(self, custom_args, button_instance)
+---@field on_pressed event fun(self, custom_args, button_instance)
+---@field on_repeated_click event fun(self, custom_args, button_instance, click_count) Repeated click callback, while holding the button
+---@field on_long_click event fun(self, custom_args, button_instance, hold_time) Callback on long button tap
+---@field on_double_click event fun(self, custom_args, button_instance, click_amount) Different callback, if tap button 2+ in row
+---@field on_hold_callback event fun(self, custom_args, button_instance, press_time) Hold callback, before long_click trigger
+---@field on_click_outside event fun(self, custom_args, button_instance)
 ---@field node node Clickable node
 ---@field node_id hash Node id
 ---@field anim_node node Animation node. In default case equals to clickable node

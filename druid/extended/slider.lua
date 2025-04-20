@@ -16,7 +16,7 @@ local component = require("druid.component")
 ---- To catch input across all slider, you can setup input node via `slider:set_input_node`
 ---@class druid.slider: druid.component
 ---@field node node The node to manage the slider
----@field on_change_value event The event triggered when the slider value changes
+---@field on_change_value event fun(self: druid.slider, value: number) The event triggered when the slider value changes
 ---@field style table The style of the slider
 ---@field private start_pos vector3 The start position of the slider
 ---@field private pos vector3 The current position of the slider

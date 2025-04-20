@@ -38,7 +38,7 @@ The Back Handler constructor
 
 ## Fields
 <a name="on_back"></a>
-- **on_back** (_event_): Trigger on back handler action, fun(self, params)
+- **on_back** (_event_): fun(self: druid.back_handler, params: any?) Trigger on back handler action
 
 <a name="params"></a>
 - **params** (_any_): Custom args to pass in the callback

@@ -577,13 +577,13 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 
 
-### Druid 1.1
+### Druid 1.1.0
 
 Hello there, Druid users!
 
 The wait is over - **Druid 1.1** has arrived! This update brings substantial improvements and exciting new features that make building UI in Defold easier and more powerful than ever.
 
-By the way, the PR number of this release is #300. Sounds veeery hude and long journey for me!
+By the way, the PR number of this release is #300. Sounds veeery huge and long journey for me!
 
 ## Highlights
 
@@ -619,7 +619,7 @@ Thank you for using Druid and please share your feedback!
 
 **Milestone**:
 
-**Changelog 1.1**
+**Changelog 1.1.0**
 - [Docs] Reworked all documentation pages
 	- The code now is fully annotated
 	- The old API website is removed

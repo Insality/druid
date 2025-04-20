@@ -11,8 +11,8 @@ local component = require("druid.component")
 ---- Key triggers in `input.binding` should be setup for correct working
 ---- It uses a key_back and key_backspace action ids
 ---@class druid.back_handler: druid.component
----@field on_back event Trigger on back handler action, fun(self, params)
----@field params any|nil Custom args to pass in the callback
+---@field on_back event fun(self: druid.back_handler, params: any?) Trigger on back handler action
+---@field params any? Custom args to pass in the callback
 local M = component.create("back_handler")
 
 

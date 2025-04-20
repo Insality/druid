@@ -19,7 +19,7 @@ local component = require("druid.component")
 ---- If you have glitchy or dark texture bugs with progress bar, try to disable mipmaps in your texture profiles
 ---@class druid.progress: druid.component
 ---@field node node The progress bar node
----@field on_change event Event triggered when progress value changes
+---@field on_change event fun(self: druid.progress, value: number) Event triggered when progress value changes
 ---@field style druid.progress.style Component style parameters
 ---@field key string Progress bar direction: "x" or "y"
 ---@field prop hash Property for scaling the progress bar

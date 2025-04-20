@@ -243,13 +243,13 @@ Get full template name.
 
 ---
 ```lua
-component:set_nodes(nodes)
+component:set_nodes([nodes])
 ```
 
 Set current component nodes, returned from `gui.clone_tree` function.
 
 - **Parameters:**
-	- `nodes` *(table<hash, node>)*:
+	- `[nodes]` *(string|node|table<hash, node>|nil)*: The nodes table from gui.clone_tree or prefab node to use for clone or node id to clone
 
 - **Returns:**
 	- `` *(druid.component)*:
@@ -292,7 +292,7 @@ Get Druid instance for inner component creation.
 
 - **Parameters:**
 	- `[template]` *(string|nil)*:
-	- `[nodes]` *(table<hash, node>|nil)*:
+	- `[nodes]` *(string|node|table<hash, node>|nil)*: The nodes table from gui.clone_tree or prefab node to use for clone or node id to clone
 
 - **Returns:**
 	- `` *(druid.instance)*:

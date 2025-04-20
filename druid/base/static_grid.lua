@@ -9,11 +9,11 @@ local component = require("druid.component")
 
 ---The component for manage the nodes position in the grid with various options
 ---@class druid.grid: druid.component
----@field on_add_item event Trigger on add item event, fun(self, item, index)
----@field on_remove_item event Trigger on remove item event, fun(self, index)
----@field on_change_items event Trigger on change items event, fun(self, index)
----@field on_clear event Trigger on clear event, fun(self)
----@field on_update_positions event Trigger on update positions event, fun(self)
+---@field on_add_item event fun(self: druid.grid, item: node, index: number) Trigger on add item event
+---@field on_remove_item event fun(self: druid.grid, index: number) Trigger on remove item event
+---@field on_change_items event fun(self: druid.grid, index: number) Trigger on change items event
+---@field on_clear event fun(self: druid.grid) Trigger on clear event
+---@field on_update_positions event fun(self: druid.grid) Trigger on update positions event
 ---@field parent node Parent node
 ---@field nodes node[] Nodes array
 ---@field first_index number First index

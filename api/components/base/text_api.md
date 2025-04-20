@@ -46,6 +46,9 @@ Create text node with druid: `text = druid:new_text(node_name, [initial_value], 
 - [on_update_text_scale](#on_update_text_scale)
 - [on_set_pivot](#on_set_pivot)
 - [style](#style)
+- [start_pivot](#start_pivot)
+- [start_scale](#start_scale)
+- [scale](#scale)
 - [pos](#pos)
 - [node_id](#node_id)
 - [start_size](#start_size)
@@ -300,16 +303,25 @@ Return current text adjust type
 - **node** (_node_): The text node
 
 <a name="on_set_text"></a>
-- **on_set_text** (_event_): fun(self, text) The event triggered when the text is set
+- **on_set_text** (_event_): fun(self: druid.text, text: string) The event triggered when the text is set
 
 <a name="on_update_text_scale"></a>
-- **on_update_text_scale** (_event_): fun(self, scale, metrics) The event triggered when the text scale is updated
+- **on_update_text_scale** (_event_): fun(self: druid.text, scale: vector3, metrics: table) The event triggered when the text scale is updated
 
 <a name="on_set_pivot"></a>
-- **on_set_pivot** (_event_): fun(self, pivot) The event triggered when the text pivot is set
+- **on_set_pivot** (_event_): fun(self: druid.text, pivot: userdata) The event triggered when the text pivot is set
 
 <a name="style"></a>
 - **style** (_druid.text.style_): The style of the text
+
+<a name="start_pivot"></a>
+- **start_pivot** (_userdata_): The start pivot of the text
+
+<a name="start_scale"></a>
+- **start_scale** (_vector3_): The start scale of the text
+
+<a name="scale"></a>
+- **scale** (_vector3_): The current scale of the text
 
 <a name="pos"></a>
 - **pos** (_unknown_)

@@ -14,7 +14,7 @@ update_frequency = 60
 
 [project]
 title = Druid
-version = 1.1
+version = 1.1.0
 publisher = Insality
 developer = Maksim Tuprikov
 custom_resources = /example/locales
@@ -58,7 +58,7 @@ cssfile = /builtins/manifests/web/dark_theme.css
 show_console_banner = 0
 
 [native_extension]
-app_manifest = 
+app_manifest =
 
 [graphics]
 texture_profiles = /builtins/graphics/default.texture_profiles

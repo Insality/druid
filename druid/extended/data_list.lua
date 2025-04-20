@@ -18,9 +18,9 @@ local event = require("event.event")
 ---@class druid.data_list: druid.component
 ---@field scroll druid.scroll The scroll instance for Data List component
 ---@field grid druid.grid The StaticGrid or DynamicGrid instance for Data List component
----@field on_scroll_progress_change event The event triggered when the scroll progress changes
----@field on_element_add event The event triggered when a new element is added
----@field on_element_remove event The event triggered when an element is removed
+---@field on_scroll_progress_change event fun(self: druid.data_list, progress: number) The event triggered when the scroll progress changes
+---@field on_element_add event fun(self: druid.data_list, index: number, node: node, instance: druid.component, data: table) The event triggered when a new element is added
+---@field on_element_remove event fun(self: druid.data_list, index: number, node: node, instance: druid.component, data: table) The event triggered when an element is removed
 ---@field top_index number The top index of the visible elements
 ---@field last_index number The last index of the visible elements
 ---@field scroll_progress number The scroll progress

@@ -115,7 +115,7 @@ Format string with new text params on localized text. Keeps the current locale b
 - **node** (_node_): The node of the text component
 
 <a name="on_change"></a>
-- **on_change** (_event_): The event triggered when the text is changed
+- **on_change** (_event_): fun(self: druid.lang_text) The event triggered when the text is changed
 
 <a name="druid"></a>
 - **druid** (_druid.instance_): The Druid Factory used to create components

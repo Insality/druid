@@ -220,13 +220,13 @@ Instant scroll to element with passed index
 - **grid** (_druid.grid_): The StaticGrid or DynamicGrid instance for Data List component
 
 <a name="on_scroll_progress_change"></a>
-- **on_scroll_progress_change** (_event_): The event triggered when the scroll progress changes
+- **on_scroll_progress_change** (_event_): fun(self: druid.data_list, progress: number) The event triggered when the scroll progress changes
 
 <a name="on_element_add"></a>
-- **on_element_add** (_event_): The event triggered when a new element is added
+- **on_element_add** (_event_): fun(self: druid.data_list, index: number, node: node, instance: druid.component, data: table) The event triggered when a new element is added
 
 <a name="on_element_remove"></a>
-- **on_element_remove** (_event_): The event triggered when an element is removed
+- **on_element_remove** (_event_): fun(self: druid.data_list, index: number, node: node, instance: druid.component, data: table) The event triggered when an element is removed
 
 <a name="top_index"></a>
 - **top_index** (_number_): The top index of the visible elements

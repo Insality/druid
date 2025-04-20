@@ -334,13 +334,13 @@ Strict drag scroll area. Useful for
 - **click_zone** (_node_): Optional click zone to restrict scroll area
 
 <a name="on_scroll"></a>
-- **on_scroll** (_event_): Triggered on scroll move with fun(self, position)
+- **on_scroll** (_event_): fun(self: druid.scroll, position: vector3) Triggered on scroll move
 
 <a name="on_scroll_to"></a>
-- **on_scroll_to** (_event_): Triggered on scroll_to with fun(self, target, is_instant)
+- **on_scroll_to** (_event_): fun(self: druid.scroll, target: vector3, is_instant: boolean) Triggered on scroll_to
 
 <a name="on_point_scroll"></a>
-- **on_point_scroll** (_event_): Triggered on scroll_to_index with fun(self, index, point)
+- **on_point_scroll** (_event_): fun(self: druid.scroll, index: number, point: vector3) Triggered on scroll_to_index
 
 <a name="view_node"></a>
 - **view_node** (_node_): The scroll view node (static part)

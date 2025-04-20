@@ -38,9 +38,9 @@ local component = require("druid.component")
 ---@class druid.scroll: druid.component
 ---@field node node The root node
 ---@field click_zone node|nil Optional click zone to restrict scroll area
----@field on_scroll event Triggered on scroll move with fun(self, position)
----@field on_scroll_to event Triggered on scroll_to with fun(self, target, is_instant)
----@field on_point_scroll event Triggered on scroll_to_index with fun(self, index, point)
+---@field on_scroll event fun(self: druid.scroll, position: vector3) Triggered on scroll move
+---@field on_scroll_to event fun(self: druid.scroll, target: vector3, is_instant: boolean) Triggered on scroll_to
+---@field on_point_scroll event fun(self: druid.scroll, index: number, point: vector3) Triggered on scroll_to_index
 ---@field view_node node The scroll view node (static part)
 ---@field view_border vector4 The scroll view borders
 ---@field content_node node The scroll content node (moving part)

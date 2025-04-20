@@ -337,7 +337,7 @@ layout:set_node_position(node, x, y)
 - **is_justify** (_boolean_): True if the layout should justify the nodes
 
 <a name="on_size_changed"></a>
-- **on_size_changed** (_event.on_size_changed_): The event triggered when the size of the layout is changed
+- **on_size_changed** (_event.on_size_changed_): fun(self: druid.layout, size: vector3) The event triggered when the size of the layout is changed
 
 <a name="size"></a>
 - **size** (_unknown_)

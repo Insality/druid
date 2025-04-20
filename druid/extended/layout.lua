@@ -42,7 +42,7 @@ local component = require("druid.component")
 ---@field is_resize_width boolean True if the layout should resize the width of the node
 ---@field is_resize_height boolean True if the layout should resize the height of the node
 ---@field is_justify boolean True if the layout should justify the nodes
----@field on_size_changed event.on_size_changed The event triggered when the size of the layout is changed
+---@field on_size_changed event.on_size_changed fun(self: druid.layout, size: vector3) The event triggered when the size of the layout is changed
 local M = component.create("layout")
 
 

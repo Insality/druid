@@ -33,9 +33,9 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 ----   - **"scale_then_trim_left"** - Combine two modes: first limited downscale, then trim left
 ---@class druid.text: druid.component
 ---@field node node The text node
----@field on_set_text event fun(self, text) The event triggered when the text is set
----@field on_update_text_scale event fun(self, scale, metrics) The event triggered when the text scale is updated
----@field on_set_pivot event fun(self, pivot) The event triggered when the text pivot is set
+---@field on_set_text event fun(self: druid.text, text: string) The event triggered when the text is set
+---@field on_update_text_scale event fun(self: druid.text, scale: vector3, metrics: table) The event triggered when the text scale is updated
+---@field on_set_pivot event fun(self: druid.text, pivot: userdata) The event triggered when the text pivot is set
 ---@field style druid.text.style The style of the text
 ---@field start_pivot userdata The start pivot of the text
 ---@field start_scale vector3 The start scale of the text

@@ -112,10 +112,10 @@ button:is_enabled()
 ```
 
 Get button enabled state.
-By default all Buttons is enabled on creating.
+By default all Buttons are enabled on creating.
 
 - **Returns:**
-	- `is_enabled` *(boolean)*: True, if button is enabled now, False overwise
+	- `is_enabled` *(boolean)*: True, if button is enabled now, False otherwise
 
 ### set_click_zone
 
@@ -125,7 +125,7 @@ button:set_click_zone([zone])
 ```
 
 Set additional button click area.
-Useful to restrict click outside out stencil node or scrollable content.
+Useful to restrict click outside of stencil node or scrollable content.
 If button node placed inside stencil node, it will be automatically set to this stencil node.
 
 - **Parameters:**
@@ -168,11 +168,11 @@ Get current key name to trigger this button.
 button:set_check_function([check_function], [failure_callback])
 ```
 
-Set function for additional check for button click availability
+Set function for additional check for button click availability.
 
 - **Parameters:**
 	- `[check_function]` *(function|nil)*: Should return true or false. If true - button can be pressed.
-	- `[failure_callback]` *(function|nil)*: Function will be called on button click, if check function return false
+	- `[failure_callback]` *(function|nil)*: Function will be called on button click, if check function returns false
 
 - **Returns:**
 	- `self` *(druid.button)*: The current button instance
@@ -186,7 +186,7 @@ button:set_web_user_interaction([is_web_mode])
 
 Set Button mode to work inside user HTML5 interaction event.
 It's required to make protected things like copy & paste text, show mobile keyboard, etc
-The HTML5 button's doesn't call any events except on_click event.
+The HTML5 button doesn't call any events except on_click event.
 If the game is not HTML, html mode will be not enabled
 
 - **Parameters:**
@@ -198,25 +198,25 @@ If the game is not HTML, html mode will be not enabled
 
 ## Fields
 <a name="on_click"></a>
-- **on_click** (_event_): function(self, custom_args, button_instance)
+- **on_click** (_event_): fun(self, custom_args, button_instance)
 
 <a name="on_pressed"></a>
-- **on_pressed** (_event_): function(self, custom_args, button_instance)
+- **on_pressed** (_event_): fun(self, custom_args, button_instance)
 
 <a name="on_repeated_click"></a>
-- **on_repeated_click** (_event_): function(self, custom_args, button_instance, click_count) Repeated click callback, while holding the button
+- **on_repeated_click** (_event_): fun(self, custom_args, button_instance, click_count) Repeated click callback, while holding the button
 
 <a name="on_long_click"></a>
-- **on_long_click** (_event_): function(self, custom_args, button_instance, hold_time) Callback on long button tap
+- **on_long_click** (_event_): fun(self, custom_args, button_instance, hold_time) Callback on long button tap
 
 <a name="on_double_click"></a>
-- **on_double_click** (_event_): function(self, custom_args, button_instance, click_amount) Different callback, if tap button 2+ in row
+- **on_double_click** (_event_): fun(self, custom_args, button_instance, click_amount) Different callback, if tap button 2+ in row
 
 <a name="on_hold_callback"></a>
-- **on_hold_callback** (_event_): function(self, custom_args, button_instance, press_time) Hold callback, before long_click trigger
+- **on_hold_callback** (_event_): fun(self, custom_args, button_instance, press_time) Hold callback, before long_click trigger
 
 <a name="on_click_outside"></a>
-- **on_click_outside** (_event_): function(self, custom_args, button_instance)
+- **on_click_outside** (_event_): fun(self, custom_args, button_instance)
 
 <a name="node"></a>
 - **node** (_node_): Clickable node

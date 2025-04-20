@@ -128,7 +128,7 @@ Check if Slider component is enabled
 - **node** (_node_): The node to manage the slider
 
 <a name="on_change_value"></a>
-- **on_change_value** (_event_): The event triggered when the slider value changes
+- **on_change_value** (_event_): fun(self: druid.slider, value: number) The event triggered when the slider value changes
 
 <a name="style"></a>
 - **style** (_table_): The style of the slider

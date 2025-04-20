@@ -238,9 +238,6 @@ container:set_parent_container([parent_container])
 container:refresh()
 ```
 
- Glossary
- Center Offset - vector from node position to visual center of node
-
 ### refresh_scale
 
 ---
