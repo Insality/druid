@@ -445,6 +445,33 @@ function M:bind_grid(grid)
 end
 
 
+---Bind the layout component to recalculate
+-- scroll size on layout changes
+---@param layout druid.layout|nil Druid layout component
+---@return druid.scroll self Current scroll instance
+function M:bind_layout(layout)
+	if self._layout_on_change then
+		self._layout_on_change:unsubscribe(self._layout_on_change_callback)
+
+		self._layout_on_change = nil
+		self._layout_on_change_callback = nil
+	end
+
+	if not layout then
+		return self
+	end
+
+	self._layout_on_change = layout.on_size_changed
+	self._layout_on_change_callback = function(size)
+		self:set_size(size)
+	end
+	self._layout_on_change:subscribe(self._layout_on_change_callback)
+	self:set_size(layout:get_size())
+
+	return self
+end
+
+
 ---Strict drag scroll area. Useful for
 -- restrict events outside stencil node
 ---@param node node|string Gui node

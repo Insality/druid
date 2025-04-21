@@ -243,6 +243,13 @@ function M:remove(index, shift_policy, is_instant)
 end
 
 
+---Return items count in grid
+---@return number count The items count in grid
+function M:get_items_count()
+	return #self.nodes
+end
+
+
 ---Return grid content size
 ---@return vector3 size The grid content size
 function M:get_size()

@@ -56,9 +56,11 @@ function M:init(node_or_node_id, layout_type)
 	self.size = gui.get_size(self.node)
 
 	self.padding = gui.get_slice9(self.node)
-	-- Grab default margins from slice9 z/w values
+	-- Margin X is a Slice9 R Value
+	-- Margin Y is a Slice9 B Value
 	self.margin = { x = self.padding.z, y = self.padding.w }
-	-- Use symmetrical padding from x/z
+	-- Padding X is a Slice9 L Value
+	-- Padding Y is a Slice9 T Value
 	self.padding.z = self.padding.x
 	self.padding.w = self.padding.y
 
@@ -83,6 +85,12 @@ end
 ---@return node[] entities The entities to manage the layout of
 function M:get_entities()
 	return self.entities
+end
+
+
+---@return number count The count of entities in layout
+function M:get_entities_count()
+	return #self.entities
 end
 
 

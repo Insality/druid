@@ -589,13 +589,12 @@ By the way, the PR number of this release is #300. Sounds veeery huge and long j
 
 - **Widgets** are here! This is the evolution of custom components, but with no boilerplate code and far more convenient usage. All Druid examples have been migrated to use widgets. Widgets are now a default way to create a new custom components (basically any of your GUI element on the screen).
 
-- **Experimental features** like shader pipeline in GUI and widget usage in GO scripts. Curious Defolders can find examples of these features and try them out.
-
 - **No more calling `druid.register()`!** All Druid components are now available by default with `self.druid:new_*` functions, making getting started simpler than ever.
 
 - **Druid UI Kit** brings fonts, atlas, and ready-to-use GUI templates right out of the box - a long-requested feature that lets you use Druid UI elements instantly in your projects. I think now it's a possible to create a external dependencies with a set of GUI templates and Druid's widgets to make a ready to use UI kit for projects! The flow to init widgets always now from two steps:
 	- Add GUI template to your GUI scene
 	- Call `self.widget = self.druid:new_widget(widget_file, "template_id")` to init widget
+	- Call `self.widget = self.druid:new_widget(widget_file, "template_id", "tempalate_id/root")` to clone root node from template and init widget from it
 
 
 - **Completely reworked documentation** with full code annotations. Start with the [Quick API Reference](/api/quick_api_reference.md) to get familiar with **Druid**. Any documentation are generated from the code annotations, so in case to update documentation, you need to update annotations in the code.

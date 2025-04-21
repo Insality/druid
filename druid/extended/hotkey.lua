@@ -23,6 +23,7 @@ local component = require("druid.component")
 ---@field style druid.hotkey.style The style of the hotkey component
 ---@field private _hotkeys table The list of hotkeys
 ---@field private _modificators table The list of modificators
+---@field private _node node|nil The node to bind the hotkey to
 local M = component.create("hotkey")
 
 
@@ -35,7 +36,7 @@ function M:init(keys, callback, callback_argument)
 
 	self._hotkeys = {}
 	self._modificators = {}
-
+	self._node = nil
 	self.on_hotkey_pressed = event.create()
 	self.on_hotkey_released = event.create(callback)
 
@@ -134,6 +135,10 @@ function M:on_input(action_id, action)
 		return false
 	end
 
+	if self._node and not gui.is_enabled(self._node, true) then
+		return false
+	end
+
 	if self._modificators[action_id] ~= nil and action.pressed then
 		self._modificators[action_id] = true
 	end
@@ -188,6 +193,16 @@ end
 ---@return druid.hotkey self Current instance
 function M:set_repeat(is_enabled_repeated)
 	self._is_process_repeated = is_enabled_repeated
+	return self
+end
+
+
+---If node is provided, the hotkey can be disabled, if the node is disabled
+---@param node node|nil The node to bind the hotkey to. Nil to unbind the node
+---@return druid.hotkey self Current instance
+function M:bind_node(node)
+	self._node = node
+
 	return self
 end
 
