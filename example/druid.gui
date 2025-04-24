@@ -4805,6 +4805,200 @@ nodes {
   template_node_child: true
 }
 nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "container"
+  parent: "examples"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "container_anchors"
+  parent: "container"
+  inherit_alpha: true
+  template: "/example/examples/container/container_anchors/container_anchors.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/root"
+  parent: "container_anchors"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "container_anchors/text"
+  parent: "container_anchors/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/parent_container"
+  parent: "container_anchors/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/anchor_ne"
+  parent: "container_anchors/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/anchor_e"
+  parent: "container_anchors/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/anchor_n"
+  parent: "container_anchors/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/anchor_se"
+  parent: "container_anchors/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/anchor_s"
+  parent: "container_anchors/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/anchor_sw"
+  parent: "container_anchors/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/anchor_w"
+  parent: "container_anchors/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/anchor_nw"
+  parent: "container_anchors/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_anchors/anchor_center"
+  parent: "container_anchors/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "container_resize"
+  parent: "container"
+  inherit_alpha: true
+  template: "/example/examples/container/container_resize/container_resize.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/root"
+  parent: "container_resize"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "container_resize/text"
+  parent: "container_resize/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/parent_container"
+  parent: "container_resize/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/panel_left"
+  parent: "container_resize/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/panel_right"
+  parent: "container_resize/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/panel_bot"
+  parent: "container_resize/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/panel_content"
+  parent: "container_resize/parent_container"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/anchor_ne"
+  parent: "container_resize/panel_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/anchor_s"
+  parent: "container_resize/panel_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/anchor_sw"
+  parent: "container_resize/panel_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/anchor_center"
+  parent: "container_resize/panel_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/anchor_n"
+  parent: "container_resize/panel_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/anchor_e"
+  parent: "container_resize/panel_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/anchor_nw"
+  parent: "container_resize/panel_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/anchor_w"
+  parent: "container_resize/panel_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "container_resize/anchor_se"
+  parent: "container_resize/panel_content"
+  template_node_child: true
+}
+nodes {
   position {
     x: -20.0
     y: -540.0

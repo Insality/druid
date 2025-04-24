@@ -93,8 +93,8 @@ function M:init(node, mode, callback)
 	self.position = gui.get_position(self.node)
 	self.origin_position = gui.get_position(self.node)
 
-	local adjust_mode = gui.get_adjust_mode(self.node)
-	self.mode = mode or (adjust_mode == gui.ADJUST_FIT) and const.LAYOUT_MODE.FIT or const.LAYOUT_MODE.STRETCH
+	self._initial_adjust_mode = gui.get_adjust_mode(self.node)
+	self.mode = mode or (self._initial_adjust_mode == gui.ADJUST_FIT) and const.LAYOUT_MODE.FIT or const.LAYOUT_MODE.STRETCH
 
 	gui.set_size_mode(self.node, gui.SIZE_MODE_MANUAL)
 	gui.set_adjust_mode(self.node, gui.ADJUST_FIT)
@@ -119,6 +119,7 @@ end
 ---@private
 function M:on_remove()
 	self:clear_draggable_corners()
+	gui.set_adjust_mode(self.node, self._initial_adjust_mode)
 end
 
 

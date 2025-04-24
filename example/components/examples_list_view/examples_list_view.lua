@@ -90,54 +90,17 @@ function M:add_example(examples, druid_example)
 				self.selected_example = nil
 			end
 
-			local root = gui.get_node(example_data.root)
-			gui.set_enabled(root, true)
+			-- This one helps only to help with a select the same example
+			-- Cause the nodes can't be returned to initial state SO fast, need a little brake here
+			timer.delay(0, false, function()
+				self:on_example_click(druid_example, example_data, item)
 
-			local instance
-			if example_data.widget_class then
-				instance = druid_example.druid:new_widget(example_data.widget_class, example_data.template)
-			elseif example_data.component_class then -- Keep for backward compatibility
-				instance = druid_example.druid:new(example_data.component_class, example_data.template)
-			end
-			---@cast instance example_instance
-
-			self.selected_example = {
-				data = example_data,
-				list_item = item,
-				instance = instance,
-				root = root
-			}
-			item:set_selected(true)
-
-			druid_example.output_list:clear()
-			if instance.on_example_created then
-				instance:on_example_created(druid_example.output_list)
-			elseif example_data.on_create then
-				example_data.on_create(instance, druid_example.output_list)
-			end
-
-			if example_data.information_text_id then
-				self.on_set_information(example_data.information_text_id)
-			else
-				self.on_set_information("")
-			end
-
-			druid_example.example_scene:set_gui_path(example_data.code_url)
-
-			druid_example.properties_panel:clear()
-
-			-- First we want to chec
-			if instance.properties_control then
-				instance:properties_control(druid_example.properties_panel)
-			elseif example_data.properties_control then
-				example_data.properties_control(instance, druid_example.properties_panel)
-			end
-
-			storage.set("last_selected_example", example_data.name_id)
-			if html5 then
-				local command = string.format('window.history.replaceState(null, null, "?example=%s")', example_data.name_id)
-				html5.run(command)
-			end
+				storage.set("last_selected_example", example_data.name_id)
+				if html5 then
+					local command = string.format('window.history.replaceState(null, null, "?example=%s")', example_data.name_id)
+					html5.run(command)
+				end
+			end)
 		end)
 
 		self.grid:add(item.root.node)
@@ -145,6 +108,55 @@ function M:add_example(examples, druid_example)
 			data = example_data,
 			list_item = item
 		})
+	end
+end
+
+
+---@param druid_example druid.example
+---@param example_data druid.example.data
+---@param item examples_list_view_item
+function M:on_example_click(druid_example, example_data, item)
+	local root = gui.get_node(example_data.root)
+	gui.set_enabled(root, true)
+
+	local instance
+	if example_data.widget_class then
+		instance = druid_example.druid:new_widget(example_data.widget_class, example_data.template)
+	elseif example_data.component_class then -- Keep for backward compatibility
+		instance = druid_example.druid:new(example_data.component_class, example_data.template)
+	end
+	---@cast instance example_instance
+
+	self.selected_example = {
+		data = example_data,
+		list_item = item,
+		instance = instance,
+		root = root
+	}
+	item:set_selected(true)
+
+	druid_example.output_list:clear()
+	if instance.on_example_created then
+		instance:on_example_created(druid_example.output_list)
+	elseif example_data.on_create then
+		example_data.on_create(instance, druid_example.output_list)
+	end
+
+	if example_data.information_text_id then
+		self.on_set_information(example_data.information_text_id)
+	else
+		self.on_set_information("")
+	end
+
+	druid_example.example_scene:set_gui_path(example_data.code_url)
+
+	druid_example.properties_panel:clear()
+
+	-- First we want to chec
+	if instance.properties_control then
+		instance:properties_control(druid_example.properties_panel)
+	elseif example_data.properties_control then
+		example_data.properties_control(instance, druid_example.properties_panel)
 	end
 end
 

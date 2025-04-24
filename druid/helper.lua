@@ -154,9 +154,8 @@ function M.get_screen_aspect_koef()
 end
 
 
----Get current GUI scale for each side
----@return number scale_x
----@return number scale_y
+---Get current GUI scale
+---@return number scale
 function M.get_gui_scale()
 	local window_x, window_y = window.get_size()
 	return math.min(window_x / gui.get_width(), window_y / gui.get_height())
