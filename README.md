@@ -223,7 +223,7 @@ Special thanks to all the contributors who have helped make **Druid** better!
   <img src="https://contributors-img.web.app/image?repo=insality/druid"/>
 </a>
 
-Read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
+Read the [CONTRIBUTING](CONTRIBUTING) file for more information.
 
 
 ## ❤️ Support project ❤️

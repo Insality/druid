@@ -9,6 +9,9 @@ nodes {
   visible: false
 }
 nodes {
+  position {
+    y: 301.0
+  }
   type: TYPE_TEMPLATE
   id: "input"
   parent: "root"
@@ -29,7 +32,7 @@ nodes {
 }
 nodes {
   position {
-    y: -150.0
+    y: 151.0
   }
   type: TYPE_TEMPLATE
   id: "input_2"

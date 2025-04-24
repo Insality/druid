@@ -13,6 +13,9 @@ nodes {
   visible: false
 }
 nodes {
+  position {
+    y: 309.0
+  }
   type: TYPE_TEMPLATE
   id: "rich_input"
   parent: "root"
@@ -57,7 +60,7 @@ nodes {
 }
 nodes {
   position {
-    y: -150.0
+    y: 159.0
   }
   type: TYPE_TEMPLATE
   id: "rich_input_2"
