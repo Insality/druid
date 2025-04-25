@@ -3,7 +3,7 @@
 Welcome to the Druid FAQ! Here are answers to some common questions you may have:
 
 ### Q: How do I remove a Druid component instance?
-**A:** To remove a created Druid component, use the `druid:remove` function. You can find more information in the [API reference](https://insality.github.io/druid/modules/druid_instance.html#druid:remove).
+**A:** To remove a created Druid component, use the `druid:remove` function. You can find more information in the [API reference](https://insality.github.io/druid/modules/DruidInstance.html#remove).
 
 ### Q: How does Druid process input?
 **A:** Input processing in Druid follows a Last-In-First-Out (LIFO) queue. Buttons added later have higher priority than those added earlier. To ensure correct button behavior, place your buttons from back to front in most cases.
