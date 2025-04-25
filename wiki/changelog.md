@@ -583,96 +583,116 @@ Hello there, Druid users!
 
 The wait is over - **Druid 1.1** has arrived! This update brings substantial improvements and exciting new features that make building UI in Defold easier and more powerful than ever.
 
-By the way, the PR number of this release is #300. Sounds veeery huge and long journey for me!
+By the way, the PR number of this release is #300. It's sounds ve-eery huge and the long journey for me!
 
 ## Highlights
 
-- **Widgets** are here! This is the evolution of custom components, but with no boilerplate code and far more convenient usage. All Druid examples have been migrated to use widgets. Widgets are now a default way to create a new custom components (basically any of your GUI element on the screen).
+- **Widgets** are here! This is the evolution of custom components, but Widgets with totally no boilerplate code and far more convenient usage. All Druid examples have been migrated to use widgets. Widgets are now a default way to create a new user custom components.
+
+The widget code is simple as:
+```lua
+---@class my_widget: druid.widget
+local M = {}
+
+function M:init()
+	-- Druid is available now
+	self.button = self.druid:new_button("button")
+end
+
+return M
+```
+
+To instantiate a widget, you need to call
+```lua
+local my_widget = require("widgets.my_widget.my_widget")
+self.widget = self.druid:new_widget(my_widget, "widget_template_id")
+```
+
+To create a widget with a even more fast way, now you always can right click on GUI file and select `Create Druid Widget` to create a widget file for current GUI file nearby.
 
 - **No more calling `druid.register()`!** All Druid components are now available by default with `self.druid:new_*` functions, making getting started simpler than ever.
 
-- **Druid UI Kit** brings fonts, atlas, and ready-to-use GUI templates right out of the box - a long-requested feature that lets you use Druid UI elements instantly in your projects. I think now it's a possible to create a external dependencies with a set of GUI templates and Druid's widgets to make a ready to use UI kit for projects! The flow to init widgets always now from two steps:
+- **Druid UI Kit** brings fonts, atlas, and ready-to-use GUI templates right out of the box - a long-requested feature that lets you use Druid UI elements instantly in your projects. I think now it's a possible to create even a external dependencies with a set of GUI templates and Druid's widgets to make a ready to use UI kit for projects! The flow to init widgets always now from two steps:
 	- Add GUI template to your GUI scene
 	- Call `self.widget = self.druid:new_widget(widget_file, "template_id")` to init widget
-	- Call `self.widget = self.druid:new_widget(widget_file, "template_id", "tempalate_id/root")` to clone root node from template and init widget from it
+	- or Call `self.widget = self.druid:new_widget(widget_file, "template_id", "tempalate_id/root")` to clone root node from template and init widget from it
 
 
-- **Completely reworked documentation** with full code annotations. Start with the [Quick API Reference](/api/quick_api_reference.md) to get familiar with **Druid**. Any documentation are generated from the code annotations, so in case to update documentation, you need to update annotations in the code.
+- **Completely reworked documentation** with full code annotations. Let's check the new brand [Quick API Reference](/api/quick_api_reference.md) to get familiar with **Druid**. Any documentation are generated from the code annotations, so in case to update documentation, you need to update annotations in the code directly.
 
 ## Breaking Changes
 
-- `druid.event` has been replaced with the [defold-event](https://github.com/Insality/defold-event) library, requiring a small migration in your code if you were using events directly. Double dependencies are now required to use Druid.
-
-## Improved Workflow
-
-The editor scripts have been updated too. Now they use pure **Lua** instead of **Python**, meaning there's no additional setup required to start using them! This is a "Create Druid Widget" and "Assign Layers" editor scripts at the moment.
+- `druid.event` has been replaced with the [defold-event](https://github.com/Insality/defold-event) library, requiring a small migration in your code if you were using Druid events directly before. Double dependencies: `defold-event` and `druid` are now required to use **Druid**.
 
 ---
 
-This release represents a major step forward in making Druid more maintainable, readable, and powerful. Check out the full changelog for all the details! The [contributing guide](/CONTRIBUTING) is created for people who want to contribute to the Druid.
+This release represents a major step forward in making Druid more maintainable, readable, and powerful. Check out the full changelog for all the details!
+
+The [contributing guide](CONTRIBUTING.md) is created for people who want to contribute to the Druid.
 
 Thank you for using Druid and please share your feedback!
 
 
 ---
 
-**Milestone**:
-
 **Changelog 1.1.0**
-- [Docs] Reworked all documentation pages
+- **[Docs]** Reworked all documentation pages
 	- The code now is fully annotated
 	- The old API website is removed
-	- The API now placed as a markdown files in the `api` folder
+	- The API now placed as a markdown files in the `api` folder of the repository
 	- Start with [Quick API Reference](/api/quick_api_reference.md) to learn how to use Druid
-- [BREAKING] Remove `druid.event`, replaced with `defold-event` library. Now it required to two dependencies to use Druid.
+- **[BREAKING]** Remove `druid.event`, replaced with `defold-event` library. Now it required to two dependencies to use Druid.
 	- This allow to make more flexible features, like shaders and sync init functions between script and gui_script in various cases.
 	- You need to migrate from `require("druid.event")` to `require("event.event")` if you are using it in your project
 	- If you are used `event.is_exist()` now, you should use `#event > 0` or `not event:is_empty()` instead
 	- Use 11+ version of `defold-event` library: `https://github.com/Insality/defold-event/archive/refs/tags/11.zip`
 	- Read [defold-event](https://github.com/Insality/defold-event) to learn more about the library
-- [UI Kit] Add Druid UI Kit, contains `druid.atlas`, `druid_text_bold.font`, `druid_text_regular.font` so now you can use Druid GUI files in your projects.
+- **[UI Kit]** Add Druid UI Kit, contains `druid.atlas`, `druid_text_bold.font`, `druid_text_regular.font` so now you can use Druid GUI files in your projects.
 	- Contains mostly basic shapes for the UI and can contains several icons. Atlas is a small, only `128x128` size and will be included in build only if you use it. Probably will grow a little bit in future.
 	- A long waited feature which allows try or just use some **Druid** GUI features almost instantly.
 	- No more "rich_input" template is not working! Should be good for now.
 	- Now GUI files from **Druid** can be added inside your project.
 	- This allow to include `Default Widgets` - ready to use GUI templates
-- [Widgets] Widgets here!
+	- Two fonts will keep in the UI Kit: `druid_text_bold.font` and `druid_text_regular.font`. They each of them `~100KB`, already contains extended characters set, with font size of `40`.
+- **[Widgets]** **Widgets here!**
 	- A replacement for Druid's `custom_components`. Basically it's the same, but `widgets` contains no boilerplate code and more convinient to use.
 	- Now I can include a kind of `widgets` with Druid and you can use it almost instantly in your project.
 	- All Druid Examples was migrated to use Widgets instead of Custom Components.
-- [Widgets] Widgets can be used in GO `script` files. It's a kind of experimental feature, but looks fun to check.
+- **[Widgets]** Widgets can be used in GO `script` files.
+	- It's a kind of experimental feature, but looks fun to check.
 	- Added the `druid_widget.gui_script` which can register a Druid instance for this GUI scene.
 	- You can use `druid.get_widget(class, url)` to get a Druid instance in GO context.
 	- All top level functions from widget are available in GO context.
 	- It uses an `defold-event` library, so wrapping have a costs.
-- [System] 🎉 No need for the `druid.register()`! Now all Druid's components are available by default and available with `self.druid:new_*` functions
+- **[System]** 🎉 No need for the `druid.register()`! Now all Druid's components are available by default and available with `self.druid:new_*` functions
 	- This means the Druid will be bigger in size, but it's much comfortable to use
 	- In case you want to delete components you are not using, you can do it in fork in `druid.lua` file
-	- Read [optimize_druid_size.md](optimize_druid_size.md) to learn how to reduce the size of the Druid library if you need
+	- Read [optimize_druid_size.md](optimize_druid_size.md) to learn how to reduce the size of the Druid library if you interested
 	- Any additional new widgets, utilities files will be not included until you use it
 	- You still can register your custom components to make a aliases for them. Widgets are not supported here.
-- [BREAKING] Removed old `druid.no_stencil_check` and `druid.no_auto_template` flags. Now it's always disabled
-- [System]: Huge code refactoring and improvements. The goal is to raise maintainability and readability of the code to help people to contribute to the Druid.
-	- Add [CONTRIBUTING](/CONTRIBUTING) file with various information to help people to contribute to the Druid.
-- [Editor Scripts]: Updated editor scripts
-	- Add "[Druid] Create Druid Widget" instead of "Create Custom Component"
-	- The "[Druid] Assign Layers" now works purely in lua (before it was a python)
-	- Add the "[Druid] Settings" with a widget template settings and links to documentation
-- [Text]: Add `trim_left` and `scale_then_trim_left` text adjust modes
-- [Text]: Add `set_text` function instead `set_to` (the `set_to` now deprecated)
-- [Widget] Add widget `mini_graph`
-- [Widget] Add widget `memory_panel` (works over `mini_graph` widget)
-- [Widget] Add widget `fps_panel` (works over `mini_graph` widget)
-- [Widget] Add widget `properties_panel`
-- [Unit Tests] Updated Unit tests
+- **[BREAKING]** Removed old `druid.no_stencil_check` and `druid.no_auto_template` flags. Now it's always disabled
+- **[System]** Huge code refactoring and improvements. The goal is to raise maintainability and readability of the code to help people to contribute.
+- **[Docs]** Add [CONTRIBUTING.md](/CONTRIBUTING.md) file with various information to help people to contribute to the Druid.
+- **[Editor Scripts]** Updated editor scripts
+- **[Editor Scripts]** Add "[Druid] Create Druid Widget" instead of "Create Custom Component"
+- **[Editor Scripts]** Add "[Druid] Settings" editor dialog
+	- Contains different documentation links
+	- You can adjust the widget template path to use your own templates in "Create Druid Widget" editor script
+- **[Text]** Add `trim_left` and `scale_then_trim_left` text adjust modes
+- **[Text]** Add `set_text` function instead `set_to` (the `set_to` now deprecated)
+- **[Widget]** Add widget `mini_graph`
+- **[Widget]** Add widget `memory_panel` (works over `mini_graph` widget)
+- **[Widget]** Add widget `fps_panel` (works over `mini_graph` widget)
+- **[Widget]** Add widget `properties_panel`
+- **[Unit Tests]** Updated Unit tests
 	- Now it's cover more cases and more code, which is great!
 
 
 A big thanks to the my Github supporters:
 - [Defold Foundation](https://defold.com)
-- [Pawel](https://forum.defold.com/u/pawel/summary)
+- [Pawel](https://forum.defold.com/u/pawel)
 - [Ragetto](https://forum.defold.com/u/ragetto)
-- [Ekharkunov](https://forum.defold.com/u/ekharkunov/summary)
+- [Ekharkunov](https://forum.defold.com/u/ekharkunov)
 
 And all my other supporters! Very appreciated!
 

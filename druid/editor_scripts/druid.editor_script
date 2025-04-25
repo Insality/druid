@@ -1,17 +1,22 @@
 local assign_layers = require("druid.editor_scripts.assign_layers")
 local create_druid_widget = require("druid.editor_scripts.create_druid_widget")
+local create_druid_gui_script = require("druid.editor_scripts.create_druid_gui_script")
 local druid_settings = require("druid.editor_scripts.druid_settings")
 
 local M = {}
 
 local DEFAULT_WIDGET_TEMPLATE_PATH = "/druid/templates/widget_full.lua.template"
-
+local DEFAULT_GUI_SCRIPT_TEMPLATE_PATH = "/druid/templates/druid.gui_script.template"
 
 ---Define preferences schema
 function M.get_prefs_schema()
 	return {
 		["druid.widget_template_path"] = editor.prefs.schema.string({
 			default = DEFAULT_WIDGET_TEMPLATE_PATH,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
+		["druid.gui_script_template_path"] = editor.prefs.schema.string({
+			default = DEFAULT_GUI_SCRIPT_TEMPLATE_PATH,
 			scope = editor.prefs.SCOPE.PROJECT
 		})
 	}
@@ -44,6 +49,19 @@ function M.get_commands()
 			end,
 			run = function(opts)
 				return create_druid_widget.create_druid_widget(opts.selection)
+			end
+		},
+
+		{
+			label = "[Druid] Create Druid GUI Script",
+			locations = { "Edit", "Assets" },
+			query = { selection = {type = "resource", cardinality = "one"} },
+			active = function(opts)
+				local path = editor.get(opts.selection, "path")
+				return path:match("%.gui$") ~= nil
+			end,
+			run = function(opts)
+				return create_druid_gui_script.create_druid_gui_script(opts.selection)
 			end
 		},
 

@@ -151,7 +151,9 @@ local function setup_components(self)
 	self.container_output:add_container(self.output_list.root)
 
 	self.next_example = self.druid:new_hotkey("key_down", on_next_example, self)
+		:add_hotkey("key_s")
 	self.previous_example = self.druid:new_hotkey("key_up", on_previous_example, self)
+		:add_hotkey("key_w")
 
 	do -- Component bindings
 		self.examples_list_view.on_debug_info:subscribe(function(info)

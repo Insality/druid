@@ -6,7 +6,7 @@ local helper = require("druid.helper")
 local M = {}
 
 function M:init()
-	self.slider = self.druid:new_slider("slider/slider_pin", vmath.vector3(0, -118, 0), self.on_slider_change) --[[@as druid.slider]]
+	self.slider = self.druid:new_slider("slider/slider_pin", vmath.vector3(0, 118, 0), self.on_slider_change) --[[@as druid.slider]]
 
 	-- To add input across all slider widget add a root node to acquire additional input
 	self.slider:set_input_node("slider/root")

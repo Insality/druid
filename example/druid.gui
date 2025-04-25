@@ -4999,6 +4999,13 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_TEMPLATE
+  id: "use_widgets"
+  parent: "container"
+  inherit_alpha: true
+  template: "/example/examples/container/use_widgets/use_widgets.gui"
+}
+nodes {
   position {
     x: -20.0
     y: -540.0

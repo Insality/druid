@@ -18,7 +18,7 @@ function M.get_examples()
 			root = "container_resize/root",
 			code_url = "example/examples/container/container_resize/container_resize.lua",
 			widget_class = require("example.examples.container.container_resize.container_resize"),
-		},
+		}
 	}
 end
 

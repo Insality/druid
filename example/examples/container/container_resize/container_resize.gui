@@ -40,7 +40,7 @@ nodes {
     y: 100.0
   }
   type: TYPE_TEXT
-  text: "Can be used as relative anchors"
+  text: "Can be resized with different rules"
   font: "text_bold"
   id: "text"
   parent: "root"
@@ -204,6 +204,7 @@ nodes {
     z: 16.0
     w: 16.0
   }
+  alpha: 0.25
 }
 nodes {
   position {
@@ -230,6 +231,7 @@ nodes {
     z: 16.0
     w: 16.0
   }
+  alpha: 0.25
 }
 nodes {
   position {
@@ -257,6 +259,7 @@ nodes {
     z: 16.0
     w: 16.0
   }
+  alpha: 0.25
 }
 nodes {
   size {
@@ -279,6 +282,7 @@ nodes {
     z: 16.0
     w: 16.0
   }
+  alpha: 0.25
 }
 nodes {
   position {
@@ -305,6 +309,7 @@ nodes {
     z: 16.0
     w: 16.0
   }
+  alpha: 0.25
 }
 nodes {
   position {
@@ -331,6 +336,7 @@ nodes {
     z: 16.0
     w: 16.0
   }
+  alpha: 0.25
 }
 nodes {
   position {
@@ -358,6 +364,7 @@ nodes {
     z: 16.0
     w: 16.0
   }
+  alpha: 0.25
 }
 nodes {
   position {
@@ -384,6 +391,7 @@ nodes {
     z: 16.0
     w: 16.0
   }
+  alpha: 0.25
 }
 nodes {
   position {
@@ -411,6 +419,7 @@ nodes {
     z: 16.0
     w: 16.0
   }
+  alpha: 0.25
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

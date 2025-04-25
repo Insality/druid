@@ -57,7 +57,7 @@ nodes {
 }
 nodes {
   position {
-    y: 118.0
+    y: -118.0
   }
   type: TYPE_BOX
   id: "slider/slider_pin"

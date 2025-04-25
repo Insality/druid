@@ -52,29 +52,8 @@ function M:init()
 		self:set_hidden(not self._is_hidden)
 	end):set_style(nil)
 
-	self.property_checkbox_prefab = self:get_node("property_checkbox/root")
-	gui.set_enabled(self.property_checkbox_prefab, false)
-
-	self.property_slider_prefab = self:get_node("property_slider/root")
-	gui.set_enabled(self.property_slider_prefab, false)
-
-	self.property_button_prefab = self:get_node("property_button/root")
-	gui.set_enabled(self.property_button_prefab, false)
-
-	self.property_input_prefab = self:get_node("property_input/root")
-	gui.set_enabled(self.property_input_prefab, false)
-
-	self.property_text_prefab = self:get_node("property_text/root")
-	gui.set_enabled(self.property_text_prefab, false)
-
-	self.property_left_right_selector_prefab = self:get_node("property_left_right_selector/root")
-	gui.set_enabled(self.property_left_right_selector_prefab, false)
-
-	self.property_vector3_prefab = self:get_node("property_vector3/root")
-	gui.set_enabled(self.property_vector3_prefab, false)
-
 	-- We not using as a part of properties, since it handled in a way to be paginable
-	self.paginator = self.druid:new_widget(property_left_right_selector, "property_left_right_selector", self.property_left_right_selector_prefab)
+	self.paginator = self.druid:new_widget(property_left_right_selector, "property_left_right_selector", "root")
 	self.paginator:set_text("Page")
 	self.paginator:set_number_type(1, 1, true)
 	self.paginator:set_value(self.current_page)
@@ -85,6 +64,14 @@ function M:init()
 	self.paginator.container:set_size(width)
 
 	gui.set_enabled(self.paginator.root, false)
+
+	gui.set_enabled(self:get_node("property_checkbox/root"), false)
+	gui.set_enabled(self:get_node("property_slider/root"), false)
+	gui.set_enabled(self:get_node("property_button/root"), false)
+	gui.set_enabled(self:get_node("property_input/root"), false)
+	gui.set_enabled(self:get_node("property_text/root"), false)
+	gui.set_enabled(self:get_node("property_left_right_selector/root"), false)
+	gui.set_enabled(self:get_node("property_vector3/root"), false)
 end
 
 
@@ -179,53 +166,53 @@ end
 ---@param on_create fun(checkbox: druid.widget.property_checkbox)|nil
 ---@return druid.widget.properties_panel
 function M:add_checkbox(on_create)
-	return self:add_inner_widget(property_checkbox, "property_checkbox", self.property_checkbox_prefab, on_create)
+	return self:add_inner_widget(property_checkbox, "property_checkbox", "root", on_create)
 end
 
 
 ---@param on_create fun(slider: druid.widget.property_slider)|nil
 ---@return druid.widget.properties_panel
 function M:add_slider(on_create)
-	return self:add_inner_widget(property_slider, "property_slider", self.property_slider_prefab, on_create)
+	return self:add_inner_widget(property_slider, "property_slider", "root", on_create)
 end
 
 
 ---@param on_create fun(button: druid.widget.property_button)|nil
 ---@return druid.widget.properties_panel
 function M:add_button(on_create)
-	return self:add_inner_widget(property_button, "property_button", self.property_button_prefab, on_create)
+	return self:add_inner_widget(property_button, "property_button", "root", on_create)
 end
 
 
 ---@param on_create fun(input: druid.widget.property_input)|nil
 ---@return druid.widget.properties_panel
 function M:add_input(on_create)
-	return self:add_inner_widget(property_input, "property_input", self.property_input_prefab, on_create)
+	return self:add_inner_widget(property_input, "property_input", "root", on_create)
 end
 
 
 ---@param on_create fun(text: druid.widget.property_text)|nil
 function M:add_text(on_create)
-	return self:add_inner_widget(property_text, "property_text", self.property_text_prefab, on_create)
+	return self:add_inner_widget(property_text, "property_text", "root", on_create)
 end
 
 
 ---@param on_create fun(selector: druid.widget.property_left_right_selector)|nil
 function M:add_left_right_selector(on_create)
-	return self:add_inner_widget(property_left_right_selector, "property_left_right_selector", self.property_left_right_selector_prefab, on_create)
+	return self:add_inner_widget(property_left_right_selector, "property_left_right_selector", "root", on_create)
 end
 
 
 ---@param on_create fun(vector3: druid.widget.property_vector3)|nil
 function M:add_vector3(on_create)
-	return self:add_inner_widget(property_vector3, "property_vector3", self.property_vector3_prefab, on_create)
+	return self:add_inner_widget(property_vector3, "property_vector3", "root", on_create)
 end
 
 
 ---@generic T: druid.widget
 ---@param widget_class T
 ---@param template string|nil
----@param nodes table<hash, node>|node|nil
+---@param nodes table<hash, node>|string|node|nil
 ---@param on_create fun(widget: T)|nil
 ---@return druid.widget.properties_panel
 function M:add_inner_widget(widget_class, template, nodes, on_create)

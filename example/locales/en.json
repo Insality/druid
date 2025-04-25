@@ -212,6 +212,12 @@
 	"ui_example_panthera_animation_blend_description": "Here is a example of Panthera Animation Blend.",
 	"ui_example_panthera_animation_blend_hint": "Hover mouse over this area",
 
+	"ui_example_container_anchors": "Container: Anchors",
+	"ui_example_container_anchors_description": "Here is a example of container anchors.",
+
+	"ui_example_container_resize": "Container: Resize",
+	"ui_example_container_resize_description": "Here is a example of container resize.",
+
 	"ui_animation_vertical": "Vertical",
 	"ui_animation_horizontal": "Horizontal",
 

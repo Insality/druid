@@ -6,8 +6,6 @@ function M.open_settings()
 
 	local dialog_component = editor.ui.component(function(props)
 		local template_path, set_template_path = editor.ui.use_state(editor.prefs.get("druid.widget_template_path"))
-
-		-- Check if the template path is valid
 		local path_valid = editor.ui.use_memo(function(path)
 			-- Use resource_exists to check if the resource exists
 			local exists = false
@@ -18,6 +16,16 @@ function M.open_settings()
 			end)
 			return exists
 		end, template_path)
+
+		local gui_script_template_path, set_gui_script_template_path = editor.ui.use_state(editor.prefs.get("druid.gui_script_template_path"))
+		local gui_script_template_path_valid = editor.ui.use_memo(function(path)
+			local exists = false
+			pcall(function()
+				local content = editor.get(path, "text")
+				exists = content ~= nil
+			end)
+			return exists
+		end, gui_script_template_path)
 
 		return editor.ui.dialog({
 			title = "Druid Settings",
@@ -35,6 +43,20 @@ function M.open_settings()
 						padding = editor.ui.PADDING.SMALL
 					}),
 					not path_valid and editor.ui.label({
+						text = "Warning: Path not found!",
+						color = editor.ui.COLOR.WARNING
+					}) or nil,
+
+					editor.ui.label({
+						text = "GUI Script Template Path:"
+					}),
+					editor.ui.resource_field({
+						value = gui_script_template_path,
+						on_value_changed = set_gui_script_template_path,
+						extensions = {"lua", "template"},
+						padding = editor.ui.PADDING.SMALL
+					}),
+					not gui_script_template_path_valid and editor.ui.label({
 						text = "Warning: Path not found!",
 						color = editor.ui.COLOR.WARNING
 					}) or nil,
