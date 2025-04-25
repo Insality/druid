@@ -79,11 +79,15 @@ end)
 You can set the text function to get the localized string by locale ID.
 
 ```lua
+local lang = require("lang.lang")
 local druid = require("druid.druid")
 
--- The callback should return the localized string by locale ID: function(locale_id) ... end
+-- You can use lang.txp function to get the localized string by locale ID
+druid.set_text_function(lang.txp)
+
+-- or custom function with your own logic
 druid.set_text_function(function(locale_id)
-    -- return lang.get(locale_id)
+    return my_lang_table[locale_id] or locale_id
 end)
 ```
 

@@ -1,4 +1,5 @@
 ---Container component
+---Experimental, not tested well, main idea is working
 -- Container setup in GUI
 -- parent container - container that contains this container. If not, then it's a window default container or parent node
 -- container pivot - the point of the parent container that will be used as a pivot point for positioning

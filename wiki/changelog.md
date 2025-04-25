@@ -617,7 +617,6 @@ To create a widget with a even more fast way, now you always can right click on 
 	- Call `self.widget = self.druid:new_widget(widget_file, "template_id")` to init widget
 	- or Call `self.widget = self.druid:new_widget(widget_file, "template_id", "tempalate_id/root")` to clone root node from template and init widget from it
 
-
 - **Completely reworked documentation** with full code annotations. Let's check the new brand [Quick API Reference](/api/quick_api_reference.md) to get familiar with **Druid**. Any documentation are generated from the code annotations, so in case to update documentation, you need to update annotations in the code directly.
 
 ## Breaking Changes
@@ -628,7 +627,7 @@ To create a widget with a even more fast way, now you always can right click on 
 
 This release represents a major step forward in making Druid more maintainable, readable, and powerful. Check out the full changelog for all the details!
 
-The [contributing guide](CONTRIBUTING.md) is created for people who want to contribute to the Druid.
+The [contributing guide](https://github.com/Insality/druid/blob/develop/CONTRIBUTING.md) is created for people who want to contribute to the Druid.
 
 Thank you for using Druid and please share your feedback!
 
@@ -640,7 +639,7 @@ Thank you for using Druid and please share your feedback!
 	- The code now is fully annotated
 	- The old API website is removed
 	- The API now placed as a markdown files in the `api` folder of the repository
-	- Start with [Quick API Reference](/api/quick_api_reference.md) to learn how to use Druid
+	- Start with [Quick API Reference](https://github.com/Insality/druid/blob/develop/api/quick_api_reference.md) to learn how to use Druid
 - **[BREAKING]** Remove `druid.event`, replaced with `defold-event` library. Now it required to two dependencies to use Druid.
 	- This allow to make more flexible features, like shaders and sync init functions between script and gui_script in various cases.
 	- You need to migrate from `require("druid.event")` to `require("event.event")` if you are using it in your project
@@ -667,12 +666,12 @@ Thank you for using Druid and please share your feedback!
 - **[System]** 🎉 No need for the `druid.register()`! Now all Druid's components are available by default and available with `self.druid:new_*` functions
 	- This means the Druid will be bigger in size, but it's much comfortable to use
 	- In case you want to delete components you are not using, you can do it in fork in `druid.lua` file
-	- Read [optimize_druid_size.md](optimize_druid_size.md) to learn how to reduce the size of the Druid library if you interested
+	- Read [optimize_druid_size.md](https://github.com/Insality/druid/blob/develop/wiki/optimize_druid_size.md) to learn how to reduce the size of the Druid library if you interested
 	- Any additional new widgets, utilities files will be not included until you use it
 	- You still can register your custom components to make a aliases for them. Widgets are not supported here.
 - **[BREAKING]** Removed old `druid.no_stencil_check` and `druid.no_auto_template` flags. Now it's always disabled
 - **[System]** Huge code refactoring and improvements. The goal is to raise maintainability and readability of the code to help people to contribute.
-- **[Docs]** Add [CONTRIBUTING.md](/CONTRIBUTING.md) file with various information to help people to contribute to the Druid.
+- **[Docs]** Add [CONTRIBUTING.md](https://github.com/Insality/druid/blob/develop/CONTRIBUTING.md) file with various information to help people to contribute to the Druid.
 - **[Editor Scripts]** Updated editor scripts
 - **[Editor Scripts]** Add "[Druid] Create Druid Widget" instead of "Create Custom Component"
 - **[Editor Scripts]** Add "[Druid] Settings" editor dialog
