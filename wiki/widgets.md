@@ -126,8 +126,8 @@ function init(self)
     -- In case we want to clone it and use several times we can pass the nodes table
     local array_of_widgets = {}
     for index = 1, 10 do
-        -- For widgets now we can use a root node directly instead of manually cloning the nodes
-        local widget = self.druid:new_widget(my_widget, "my_widget", "my_widget/root")
+        -- For widgets now we can use a root node inside my_widget directly instead of manually cloning the nodes
+        local widget = self.druid:new_widget(my_widget, "my_widget", "root")
         table.insert(array_of_widgets, widget)
     end
 end

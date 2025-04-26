@@ -185,7 +185,7 @@ end
 You can also use the root node ID or node directly, it will be cloned and used as a template:
 
 ```lua
-self.my_widget = self.druid:new_widget(best_widget_in_the_world, "best_widget_in_the_world", "best_widget_in_the_world/root")
+self.my_widget = self.druid:new_widget(best_widget_in_the_world, "best_widget_in_the_world", "root")
 -- or
 self.my_widget = self.druid:new_widget(best_widget_in_the_world, "best_widget_in_the_world", self.prefab)
 ```
