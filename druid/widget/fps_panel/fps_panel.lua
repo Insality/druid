@@ -63,8 +63,8 @@ function M:update(dt)
 	local current_time = socket.gettime()
 	local delta_time = current_time - self.previous_time
 	self.previous_time = current_time
-	self.collect_time_counter = self.collect_time_counter + delta_time
 
+	self.collect_time_counter = self.collect_time_counter + delta_time
 	table.insert(self.fps_samples, 1, delta_time)
 
 	while self.collect_time_counter > self.collect_time do

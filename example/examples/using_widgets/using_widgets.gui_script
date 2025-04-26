@@ -1,10 +1,10 @@
 local druid = require("druid.druid")
 
-local memory_panel = require("druid.widget.memory_panel.memory_panel")
+local fps_panel = require("druid.widget.fps_panel.fps_panel")
 
 function init(self)
     self.druid = druid.new(self)
-    self.memory_panel = self.druid:new_widget(memory_panel, "memory_panel")
+    self.fps_panel = self.druid:new_widget(fps_panel, "fps_panel")
 end
 
 function final(self)

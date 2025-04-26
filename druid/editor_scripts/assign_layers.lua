@@ -182,6 +182,9 @@ function M.assign_layers(gui_resource)
 			name = layer_name,
 		})
 	end
+	if #gui_data.layers == 0 then
+		gui_data.layers = nil
+	end
 
 	-- Create a lookup table for faster matching - include both existing and new layers
 	local layer_lookup = {}

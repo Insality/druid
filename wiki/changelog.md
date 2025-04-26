@@ -674,6 +674,7 @@ Thank you for using Druid and please share your feedback!
 - **[Docs]** Add [CONTRIBUTING.md](https://github.com/Insality/druid/blob/develop/CONTRIBUTING.md) file with various information to help people to contribute to the Druid.
 - **[Editor Scripts]** Updated editor scripts
 - **[Editor Scripts]** Add "[Druid] Create Druid Widget" instead of "Create Custom Component"
+- **[Editor Scripts]** Add "[Druid] Create Druid GUI Script"
 - **[Editor Scripts]** Add "[Druid] Settings" editor dialog
 	- Contains different documentation links
 	- You can adjust the widget template path to use your own templates in "Create Druid Widget" editor script
