@@ -503,7 +503,7 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 
 
-### Druid 1.0
+### Druid 1.0.0
 
 **Description**
 
@@ -537,7 +537,7 @@ Druid’s annotations were originally created when there were no Lua language se
 
 **Milestone**: https://github.com/Insality/druid/milestone/12
 
-**Changelog 1.0**
+**Changelog 1.0.0**
 
 - New Druid logo!
 - **[Example]** New Example Page with 40+ examples.
