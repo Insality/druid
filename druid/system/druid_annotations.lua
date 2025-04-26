@@ -1,0 +1,66 @@
+---@class druid.widget: druid.component
+---@field druid druid.instance Ready to use druid instance
+
+---@class druid.logger
+---@field trace fun(message: string, context: any)
+---@field debug fun(message: string, context: any)
+---@field info fun(message: string, context: any)
+---@field warn fun(message: string, context: any)
+---@field error fun(message: string, context: any)
+
+---@class GUITextMetrics
+---@field width number
+---@field height number
+---@field max_ascent number
+---@field max_descent number
+---@field offset_x number
+---@field offset_y number
+
+---@class utf8
+---@field len fun(s: string):number
+---@field sub fun(s: string, start_index: number, length: number)
+---@field reverse fun()
+---@field char fun()
+---@field unicode fun()
+---@field gensub fun()
+---@field byte fun()
+---@field find fun()
+---@field match fun(s: string, m: string)
+---@field gmatch fun(s: string, m: string)
+---@field gsub fun()
+---@field dump fun()
+---@field format fun()
+---@field lower fun()
+---@field upper fun()
+---@field rep fun()
+
+-- This one should be a part of Defold annotations
+---@class action
+---@field value number The amount of input given by the user. This is usually 1 for buttons and 0-1 for analogue inputs. This is not present for mouse movement.
+---@field pressed boolean If the input was pressed this frame. This is not present for mouse movement.
+---@field released boolean If the input was released this frame. This is not present for mouse movement.
+---@field repeated boolean If the input was repeated this frame. This is similar to how a key on a keyboard is repeated when you hold it down. This is not present for mouse movement.
+---@field x number The x value of a pointer device, if present.
+---@field y number The y value of a pointer device, if present.
+---@field screen_x number The screen space x value of a pointer device, if present.
+---@field screen_y number The screen space y value of a pointer device, if present.
+---@field dx number The change in x value of a pointer device, if present.
+---@field dy number The change in y value of a pointer device, if present.
+---@field screen_dx number The change in screen space x value of a pointer device, if present.
+---@field screen_dy number The change in screen space y value of a pointer device, if present.
+---@field gamepad number The index of the gamepad device that provided the input.
+---@field touch touch[] List of touch input, one element per finger, if present. See table below about touch input
+---@field text string The text input.
+
+---@class touch
+---@field id number A number identifying the touch input during its duration.
+---@field pressed boolean True if the finger was pressed this frame.
+---@field released boolean True if the finger was released this frame.
+---@field tap_count number Number of taps, one for single, two for double-tap, etc
+---@field x number The x touch location.
+---@field y number The y touch location.
+---@field dx number The change in x value.
+---@field dy number The change in y value.
+---@field acc_x number|nil Accelerometer x value (if present).
+---@field acc_y number|nil Accelerometer y value (if present).
+---@field acc_z number|nil Accelerometer z value (if present).

@@ -1,14 +1,7 @@
-local component = require("druid.component")
+---@class examples.basic_back_handler: druid.widget
+local M = {}
 
----@class basic_back_handler: druid.base_component
----@field druid druid_instance
-local M = component.create("basic_back_handler")
-
-
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
+function M:init()
 	self.druid:new_back_handler(self.on_back)
 end
 

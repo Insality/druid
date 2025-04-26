@@ -1,0 +1,308 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+fonts {
+  name: "text_regular"
+  font: "/example/assets/fonts/text_regular.font"
+}
+textures {
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
+}
+nodes {
+  size {
+    x: 1000.0
+    y: 1000.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_64"
+  id: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 32.0
+    y: 32.0
+    z: 32.0
+    w: 32.0
+  }
+}
+nodes {
+  position {
+    y: 455.0
+  }
+  size {
+    x: 900.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Can be used as relative anchors"
+  font: "text_bold"
+  id: "text"
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  size {
+    x: 840.0
+    y: 840.0
+  }
+  color {
+    x: 0.129
+    y: 0.141
+    z: 0.157
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "parent_container"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: 400.0
+    y: 400.0
+  }
+  size {
+    x: 96.0
+    y: 96.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "anchor_ne"
+  pivot: PIVOT_NE
+  parent: "parent_container"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: 400.0
+  }
+  size {
+    x: 96.0
+    y: 96.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "anchor_e"
+  pivot: PIVOT_E
+  parent: "parent_container"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    y: 400.0
+  }
+  size {
+    x: 96.0
+    y: 96.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "anchor_n"
+  pivot: PIVOT_N
+  parent: "parent_container"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: 400.0
+    y: -400.0
+  }
+  size {
+    x: 96.0
+    y: 96.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "anchor_se"
+  pivot: PIVOT_SE
+  parent: "parent_container"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    y: -400.0
+  }
+  size {
+    x: 96.0
+    y: 96.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "anchor_s"
+  pivot: PIVOT_S
+  parent: "parent_container"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: -400.0
+    y: -400.0
+  }
+  size {
+    x: 96.0
+    y: 96.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "anchor_sw"
+  pivot: PIVOT_SW
+  parent: "parent_container"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: -400.0
+  }
+  size {
+    x: 96.0
+    y: 96.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "anchor_w"
+  pivot: PIVOT_W
+  parent: "parent_container"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: -400.0
+    y: 400.0
+  }
+  size {
+    x: 96.0
+    y: 96.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "anchor_nw"
+  pivot: PIVOT_NW
+  parent: "parent_container"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  size {
+    x: 96.0
+    y: 96.0
+  }
+  color {
+    x: 0.902
+    y: 0.875
+    z: 0.624
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "anchor_center"
+  parent: "parent_container"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

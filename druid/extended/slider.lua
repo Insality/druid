@@ -1,67 +1,39 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Druid slider component
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_sliders" target="_blank"><b>Example Link</b></a>
--- @module Slider
--- @within BaseComponent
--- @alias druid.slider
-
---- On change value callback(self, value)
--- @tfield DruidEvent on_change_value @{DruidEvent}
-
---- Slider pin node
--- @tfield node node
-
---- Start pin node position
--- @tfield vector3 start_pos
-
---- Current pin node position
--- @tfield vector3 pos
-
---- Targer pin node position
--- @tfield vector3 target_pos
-
---- End pin node position
--- @tfield vector3 end_pos
-
---- Length between start and end position
--- @tfield vector3 dist
-
---- Current drag state
--- @tfield boolean is_drag
-
---- Current slider value
--- @tfield number value
-
----
-
-
-local Event = require("druid.event")
+local event = require("event.event")
 local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local Slider = component.create("slider", const.PRIORITY_INPUT_HIGH)
+---Basic Druid slider component. Creates a draggable node over a line with progress reporting.
+---
+---### Setup
+---Create slider component with druid: `slider = druid:new_slider(node_name, end_pos, callback)`
+---
+---### Notes
+---- Pin node should be placed in initial position at zero progress
+---- It will be available to move Pin node between start pos and end pos
+---- You can setup points of interests on slider via `slider:set_steps`. If steps exist, slider values will be only from these steps (notched slider)
+---- Start pos and end pos should be on vertical or horizontal line (their x or y value should be equal)
+---- To catch input across all slider, you can setup input node via `slider:set_input_node`
+---@class druid.slider: druid.component
+---@field node node The node to manage the slider
+---@field on_change_value event fun(self: druid.slider, value: number) The event triggered when the slider value changes
+---@field style table The style of the slider
+---@field private start_pos vector3 The start position of the slider
+---@field private pos vector3 The current position of the slider
+---@field private target_pos vector3 The target position of the slider
+---@field private end_pos vector3 The end position of the slider
+---@field private dist vector3 The distance between the start and end positions of the slider
+---@field private is_drag boolean True if the slider is being dragged
+---@field private value number The current value of the slider
+---@field private steps number[] The steps of the slider
+local M = component.create("slider", const.PRIORITY_INPUT_HIGH)
 
 
-local function on_change_value(self)
-	self.on_change_value:trigger(self:get_context(), self.value)
-end
-
-
-local function set_position(self, value)
-	value = helper.clamp(value, 0, 1)
-	gui.set_position(self.node, self.start_pos + self.dist * value)
-end
-
-
---- The @{Slider} constructor
--- @tparam Slider self @{Slider}
--- @tparam node node Gui pin node
--- @tparam vector3 end_pos The end position of slider
--- @tparam function|nil callback On slider change callback
-function Slider.init(self, node, end_pos, callback)
+---The Slider constructor
+---@param node node GUI node to drag as a slider
+---@param end_pos vector3 The end position of slider, should be on the same axis as the node
+---@param callback function|nil On slider change callback
+function M:init(node, end_pos, callback)
 	self.node = self:get_node(node)
 
 	self.start_pos = gui.get_position(self.node)
@@ -74,25 +46,28 @@ function Slider.init(self, node, end_pos, callback)
 	self.is_drag = false
 	self.value = 0
 
-	self.on_change_value = Event(callback)
+	self.on_change_value = event.create(callback)
 	self:on_window_resized()
 
 	assert(self.dist.x == 0 or self.dist.y == 0, "Slider for now can be only vertical or horizontal")
 end
 
 
-function Slider.on_layout_change(self)
+---@private
+function M:on_layout_change()
 	self:set(self.value)
 end
 
 
-function Slider.on_remove(self)
+---@private
+function M:on_remove()
 	-- Return pin to start position
 	gui.set_position(self.node, self.start_pos)
 end
 
 
-function Slider.on_window_resized(self)
+---@private
+function M:on_window_resized()
 	local x_koef, y_koef = helper.get_screen_aspect_koef()
 	self._x_koef = x_koef
 	self._y_koef = y_koef
@@ -100,7 +75,11 @@ function Slider.on_window_resized(self)
 end
 
 
-function Slider.on_input(self, action_id, action)
+---@private
+---@param action_id hash Action id from on_input
+---@param action table Action table from on_input
+---@return boolean is_consumed True if input was consumed
+function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH then
 		return false
 	end
@@ -169,11 +148,11 @@ function Slider.on_input(self, action_id, action)
 			end
 
 			if prev_value ~= self.value then
-				on_change_value(self)
+				self:_on_change_value()
 			end
 		end
 
-		set_position(self, self.value)
+		self:_set_position(self.value)
 	end
 
 	if action.released then
@@ -184,59 +163,77 @@ function Slider.on_input(self, action_id, action)
 end
 
 
---- Set value for slider
--- @tparam Slider self @{Slider}
--- @tparam number value Value from 0 to 1
--- @tparam boolean|nil is_silent Don't trigger event if true
-function Slider.set(self, value, is_silent)
+---Set value for slider
+---@param value number Value from 0 to 1
+---@param is_silent boolean|nil Don't trigger event if true
+---@return druid.slider self Current slider instance
+function M:set(value, is_silent)
 	value = helper.clamp(value, 0, 1)
-	set_position(self, value)
+	self:_set_position(value)
 	self.value = value
 	if not is_silent then
-		on_change_value(self)
+		self:_on_change_value()
 	end
+
+	return self
 end
 
 
---- Set slider steps. Pin node will
--- apply closest step position
--- @tparam Slider self @{Slider}
--- @tparam number[] steps Array of steps
--- @usage slider:set_steps({0, 0.2, 0.6, 1})
--- @treturn Slider @{Slider}
-function Slider.set_steps(self, steps)
+---Set slider steps. Pin node will
+---apply closest step position
+---@param steps number[] Array of steps
+---@return druid.slider self Current slider instance
+function M:set_steps(steps)
 	self.steps = steps
 	return self
 end
 
 
---- Set input zone for slider.
--- User can touch any place of node, pin instantly will
--- move at this position and node drag will start.
--- This function require the Defold version 1.3.0+
--- @tparam Slider self @{Slider}
--- @tparam node|string|nil input_node
--- @treturn Slider @{Slider}
-function Slider.set_input_node(self, input_node)
+---Set input zone for slider.
+---User can touch any place of node, pin instantly will
+---move at this position and node drag will start.
+---This function require the Defold version 1.3.0+
+---@param input_node node|string|nil
+---@return druid.slider self Current slider instance
+function M:set_input_node(input_node)
+	if not input_node then
+		self._input_node = nil
+		return self
+	end
+
 	self._input_node = self:get_node(input_node)
 	return self
 end
 
 
---- Set Slider input enabled or disabled
--- @tparam Slider self @{Slider}
--- @tparam boolean is_enabled
-function Slider.set_enabled(self, is_enabled)
+---Set Slider input enabled or disabled
+---@param is_enabled boolean True if slider is enabled
+---@return druid.slider self Current slider instance
+function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
+
+	return self
 end
 
 
---- Check if Slider component is enabled
--- @tparam Slider self @{Slider}
--- @treturn boolean
-function Slider.is_enabled(self)
+---Check if Slider component is enabled
+---@return boolean is_enabled True if slider is enabled
+function M:is_enabled()
 	return self._is_enabled
 end
 
 
-return Slider
+---@private
+function M:_on_change_value()
+	self.on_change_value:trigger(self:get_context(), self.value)
+end
+
+
+---@private
+function M:_set_position(value)
+	value = helper.clamp(value, 0, 1)
+	gui.set_position(self.node, self.start_pos + self.dist * value)
+end
+
+
+return M

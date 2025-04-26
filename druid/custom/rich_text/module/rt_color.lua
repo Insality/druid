@@ -34,7 +34,7 @@ function M.parse_decimal(dec)
 
 	local r,g,b,a = dec:match("(%d*%.?%d*),(%d*%.?%d*),(%d*%.?%d*),(%d*%.?%d*)")
 	if r and g and b and a then
-		local color = vmath.vector4(tonumber(r), tonumber(g), tonumber(b), tonumber(a))
+		local color = vmath.vector4(tonumber(r) or 0, tonumber(g) or 0, tonumber(b) or 0, tonumber(a) or 1)
 		cache[dec] = color
 		return color
 	end

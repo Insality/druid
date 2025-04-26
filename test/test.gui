@@ -1,10 +1,12 @@
 script: "/test/test.gui_script"
-background_color {
-  x: 0.0
-  y: 0.0
-  z: 0.0
-  w: 0.0
+fonts {
+  name: "druid_text_bold"
+  font: "/druid/fonts/druid_text_bold.font"
+}
+textures {
+  name: "druid"
+  texture: "/druid/druid.atlas"
 }
 material: "/builtins/materials/gui.material"
-adjust_reference: ADJUST_REFERENCE_PARENT
-max_nodes: 512
+adjust_reference: ADJUST_REFERENCE_DISABLED
+max_nodes: 2048

@@ -1,6 +1,6 @@
 textures {
-  name: "druid"
-  texture: "/example/assets/druid.atlas"
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
 }
 nodes {
   size {
@@ -13,7 +13,7 @@ nodes {
     z: 0.204
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "root"
   inherit_alpha: true
   slice9 {
@@ -34,7 +34,7 @@ nodes {
     z: 0.624
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_64"
+  texture: "druid_example/ui_circle_64"
   id: "character"
   parent: "root"
   inherit_alpha: true
@@ -56,7 +56,7 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "eye_left"
   parent: "character"
   inherit_alpha: true
@@ -72,7 +72,7 @@ nodes {
     y: 0.984
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_8"
+  texture: "druid_example/ui_circle_8"
   id: "eye_left_blick"
   parent: "eye_left"
   inherit_alpha: true
@@ -89,7 +89,7 @@ nodes {
     z: 0.157
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_32"
+  texture: "druid_example/ui_circle_32"
   id: "eye_right"
   parent: "character"
   inherit_alpha: true
@@ -105,7 +105,7 @@ nodes {
     y: 0.984
   }
   type: TYPE_BOX
-  texture: "druid/ui_circle_8"
+  texture: "druid_example/ui_circle_8"
   id: "eye_right_blick"
   parent: "eye_right"
   inherit_alpha: true

@@ -2,8 +2,8 @@ local lang = require("lang.lang")
 local saver = require("saver.saver")
 local storage = require("saver.storage")
 local druid = require("druid.druid")
+local helper = require("druid.helper")
 
-local container = require("example.components.container.container")
 local druid_logo = require("example.components.druid_logo.druid_logo")
 local panel_information = require("example.components.panel_information.panel_information")
 local example_scene = require("example.components.example_scene.example_scene")
@@ -15,7 +15,7 @@ local output_list = require("example.components.output_list.output_list")
 local druid_examples = require("example.examples.druid_examples")
 
 ---@class druid.example
----@field druid druid_instance
+---@field druid druid.instance
 ---@field container_root druid.container
 ---@field container_left druid.container
 ---@field container_logo druid.container
@@ -27,21 +27,27 @@ local druid_examples = require("example.examples.druid_examples")
 ---@field container_output druid.container
 ---@field container_center druid.container
 ---@field container_status druid.container
----@field druid_logo druid_logo
+---@field druid_logo examples.druid_logo
 ---@field panel_information panel_information
----@field example_scene example_scene
+---@field example_scene examples.example_scene
 ---@field panel_druid_profiler panel_druid_profiler
 ---@field examples_list_view examples_list_view
 ---@field properties_panel properties_panel
 ---@field output_list output_list
+---@field next_example druid.hotkey
+---@field previous_example druid.hotkey
+
+
+---@param self druid.example
+local function setup_saver(self)
+	saver.init()
+	saver.bind_save_state("lang", lang.state)
+end
 
 
 --- Generic setup that should be done once per application
 ---@param self druid.example
 local function setup_druid(self)
-	saver.init()
-	saver.bind_save_state("lang", lang.state)
-
 	lang.init()
 	lang.set_lang("en") -- Force default start language to EN, switch through the UI to check
 	druid.set_text_function(lang.txp)
@@ -56,7 +62,7 @@ end
 --- This allow easily move components in the GUI scene and change the size of each section
 ---@param self druid.example
 local function setup_layout(self)
-	self.container_root = self.druid:new(container, "root") --[[@as druid.container]]
+	self.container_root = self.druid:new_container("root") --[[@as druid.container]]
 	self.container_left = self.container_root:add_container("container_left", "stretch_y")
 	self.container_logo = self.container_left:add_container("container_logo")
 	self.container_examples = self.container_left:add_container("container_examples")
@@ -74,14 +80,62 @@ end
 
 
 ---@param self druid.example
+local function on_next_example(self)
+	local current_index = 1
+	local examples = self.examples_list_view.examples
+
+	-- Find current example index
+	for i, example in ipairs(examples) do
+		if example.data.name_id == self.examples_list_view.selected_example.data.name_id then
+			current_index = i
+			break
+		end
+	end
+
+	-- Get next example index (wrap around to first if at end)
+	local next_index = current_index + 1
+	if next_index > #examples then
+		next_index = 1
+	end
+
+	-- Select the next example
+	self.examples_list_view:select_example_by_name_id(examples[next_index].data.name_id)
+end
+
+
+---@param self druid.example
+local function on_previous_example(self)
+	local current_index = 1
+	local examples = self.examples_list_view.examples
+
+	-- Find current example index
+	for i, example in ipairs(examples) do
+		if example.data.name_id == self.examples_list_view.selected_example.data.name_id then
+			current_index = i
+			break
+		end
+	end
+
+	-- Get previous example index (wrap around to last if at start)
+	local prev_index = current_index - 1
+	if prev_index < 1 then
+		prev_index = #examples
+	end
+
+	-- Select the previous example
+	self.examples_list_view:select_example_by_name_id(examples[prev_index].data.name_id)
+end
+
+
+---@param self druid.example
 local function setup_components(self)
-	self.druid_logo = self.druid:new(druid_logo, "druid_logo") --[[@as druid_logo]]
+	self.druid_logo = self.druid:new(druid_logo, "druid_logo") --[[@as examples.druid_logo]]
 	self.container_logo:add_container(self.druid_logo.root)
 
 	self.panel_information = self.druid:new(panel_information, "panel_information") --[[@as panel_information]]
 	self.container_info:add_container(self.panel_information.root)
 
-	self.example_scene = self.druid:new(example_scene, "example_scene") --[[@as example_scene]]
+	self.example_scene = self.druid:new(example_scene, "example_scene") --[[@as examples.example_scene]]
 	self.container_center:add_container(self.example_scene.root)
 
 	self.panel_druid_profiler = self.druid:new(panel_druid_profiler, "panel_druid_profiler") --[[@as panel_druid_profiler]]
@@ -90,11 +144,16 @@ local function setup_components(self)
 	self.examples_list_view = self.druid:new(examples_list_view, "examples_list_view") --[[@as examples_list_view]]
 	self.container_examples:add_container(self.examples_list_view.root)
 
-	self.properties_panel = self.druid:new(properties_panel, "properties_panel") --[[@as properties_panel]]
+	self.properties_panel = self.druid:new(properties_panel, "example_properties_panel") --[[@as properties_panel]]
 	self.container_settings:add_container(self.properties_panel.root)
 
 	self.output_list = self.druid:new(output_list, "output_list") --[[@as output_list]]
 	self.container_output:add_container(self.output_list.root)
+
+	self.next_example = self.druid:new_hotkey("key_down", on_next_example, self)
+		:add_hotkey("key_s")
+	self.previous_example = self.druid:new_hotkey("key_up", on_previous_example, self)
+		:add_hotkey("key_w")
 
 	do -- Component bindings
 		self.examples_list_view.on_debug_info:subscribe(function(info)
@@ -131,7 +190,7 @@ local function select_start_example(self)
 		-- Try load example from URL
 		local example_name = html5.run("new URLSearchParams(window.location.search).get('example')")
 		if example_name then
-			local is_selected self.examples_list_view:select_example_by_name_id(example_name)
+			local is_selected = self.examples_list_view:select_example_by_name_id(example_name)
 			if is_selected then
 				return
 			end
@@ -174,7 +233,37 @@ end
 
 
 ---@param self druid.example
+local function setup_defos(self)
+	local is_desktop = helper.is_desktop()
+	local is_debug = sys.get_engine_info().is_debug
+
+	if is_desktop and is_debug then
+		timer.delay(1, true, function()
+			local x, y, w, h = defos.get_window_size()
+			saver.set_value("window.last_state", { x, y, w, h })
+			saver.save_game_state()
+		end)
+
+		-- Restore window size and position
+		local prev_settings = saver.get_value("window.last_state")
+		if prev_settings then
+			---@cast prev_settings number[]
+			local x, y, w, h = unpack(prev_settings)
+			-- Limit size to 300x200
+			x = vmath.clamp(x, 0, 4000)
+			y = vmath.clamp(y, 0, 4000)
+			w = vmath.clamp(w, 300, 4000)
+			h = vmath.clamp(h, 200, 4000)
+			defos.set_window_size(x, y, w, h)
+		end
+	end
+end
+
+
+---@param self druid.example
 function init(self)
+	setup_saver(self)
+	setup_defos(self)
 	setup_druid(self)
 
 	self.druid = druid.new(self)

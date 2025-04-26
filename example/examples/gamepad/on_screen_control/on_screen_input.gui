@@ -1,6 +1,6 @@
 textures {
-  name: "druid"
-  texture: "/example/assets/druid.atlas"
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
 }
 nodes {
   size {
@@ -23,14 +23,9 @@ nodes {
   template: "/example/examples/gamepad/gamepad_tester/templates/gamepad_stick.gui"
 }
 nodes {
-  size {
-    x: 400.0
-    y: 400.0
-  }
   type: TYPE_BOX
   id: "on_screen_stick/root"
   parent: "on_screen_stick"
-  overridden_fields: 4
   template_node_child: true
 }
 nodes {

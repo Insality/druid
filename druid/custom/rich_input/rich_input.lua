@@ -1,59 +1,17 @@
--- Copyright (c) 2022 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Druid Rich Input custom component.
--- It's wrapper on Input component with cursor and placeholder text
--- @module RichInput
--- @alias druid.rich_input
-
---- The component druid instance
--- @tfield DruidInstance druid @{DruidInstance}
-
---- Root node
--- @tfield node root
-
---- On input field text change callback(self, input_text)
--- @tfield Input input @{Input}
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield node cursor
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield node cursor_text
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield vector3 cursor_position
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield druid.text input_text
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield druid.drag drag
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield druid.text placeholder
-
---- On input field text change to empty string callback(self, input_text)
--- @tfield vector3 text_position
-
----
-
 local component = require("druid.component")
 local helper = require("druid.helper")
 local const  = require("druid.const")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
-local input = require("druid.extended.input")
-local RichInput = component.create("druid.rich_input")
-
-local SCHEME = {
-	ROOT = "root",
-	BUTTON = "button",
-	PLACEHOLDER = "placeholder_text",
-	INPUT = "input_text",
-	CURSOR = "cursor_node",
-	CURSOR_TEXT = "cursor_text",
-}
+---The component that handles a rich text input field, it's a wrapper around the druid.input component
+---@class druid.rich_input: druid.component
+---@field root node The root node of the rich input
+---@field input druid.input The input component
+---@field cursor node The cursor node
+---@field cursor_text node The cursor text node
+---@field cursor_position vector3 The position of the cursor
+local M = component.create("druid.rich_input")
 
 local DOUBLE_CLICK_TIME = 0.35
 
@@ -76,8 +34,21 @@ local function set_selection_width(self, selection_width)
 end
 
 
+---@param self druid.rich_input
 local function update_text(self)
-	local left_text_part = utf8.sub(self.input:get_text(), 0, self.input.cursor_index)
+	local full_text = self.input:get_text()
+	local visible_text = self.input.text:get_text()
+
+	local is_truncated = visible_text ~= full_text
+	local cursor_index = self.input.cursor_index
+	if is_truncated then
+		-- If text is truncated, we need to adjust the cursor index
+		-- to the last visible character
+		cursor_index = utf8.len(visible_text)
+
+	end
+
+	local left_text_part = utf8.sub(self.input:get_text(), 0, cursor_index)
 	local selected_text_part = utf8.sub(self.input:get_text(), self.input.start_index + 1, self.input.end_index)
 
 	local left_part_width = self.input.text:get_text_size(left_text_part)
@@ -86,7 +57,7 @@ local function update_text(self)
 	local pivot_text = gui.get_pivot(self.input.text.node)
 	local pivot_offset = helper.get_pivot_offset(pivot_text)
 
-	self.cursor_position.x = self.text_position.x - self.input.total_width * (0.5 + pivot_offset.x) + left_part_width
+	self.cursor_position.x = self.text_position.x - self.input.text_width * (0.5 + pivot_offset.x) + left_part_width
 
 	gui.set_position(self.cursor, self.cursor_position)
 	gui.set_scale(self.cursor, self.input.text.scale)
@@ -115,7 +86,7 @@ local function on_unselect(self)
 end
 
 
---- Update selection
+---Update selection
 local function update_selection(self)
 	update_text(self)
 end
@@ -174,7 +145,12 @@ local function on_touch_start_callback(self, touch)
 end
 
 
-
+---@param self druid.rich_input
+---@param dx number The delta x position
+---@param dy number The delta y position
+---@param x number The x position
+---@param y number The y position
+---@param touch table The touch table
 local function on_drag_callback(self, dx, dy, x, y, touch)
 	if not self._last_touch_info.cursor_index then
 		return
@@ -189,13 +165,11 @@ local function on_drag_callback(self, dx, dy, x, y, touch)
 end
 
 
---- The @{RichInput} constructor
--- @tparam RichInput self @{RichInput}
--- @tparam string template The template string name
--- @tparam table nodes Nodes table from gui.clone_tree
-function RichInput.init(self, template, nodes)
+---@param template string The template string name
+---@param nodes table Nodes table from gui.clone_tree
+function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
-	self.root = self:get_node(SCHEME.ROOT)
+	self.root = self:get_node("root")
 
 	self._last_touch_info = {
 		cursor_index = nil,
@@ -204,20 +178,20 @@ function RichInput.init(self, template, nodes)
 	self.is_lshift = false
 	self.is_lctrl = false
 
-	self.input = self.druid:new(input, self:get_node(SCHEME.BUTTON), self:get_node(SCHEME.INPUT))
+	self.input = self.druid:new_input("button", "input_text")
 	self.is_button_input_enabled = gui.is_enabled(self.input.button.node)
 
-	self.cursor = self:get_node(SCHEME.CURSOR)
+	self.cursor = self:get_node("cursor_node")
 	self.cursor_position = gui.get_position(self.cursor)
-	self.cursor_text = self:get_node(SCHEME.CURSOR_TEXT)
+	self.cursor_text = self:get_node("cursor_text")
 
-	self.drag = self.druid:new_drag(self:get_node(SCHEME.BUTTON), on_drag_callback)
+	self.drag = self.druid:new_drag("button", on_drag_callback)
 	self.drag.on_touch_start:subscribe(on_touch_start_callback)
 	self.drag:set_input_priority(const.PRIORITY_INPUT_MAX + 1)
 	self.drag:set_enabled(false)
 
 	self.input:set_text("")
-	self.placeholder = self.druid:new_text(self:get_node(SCHEME.PLACEHOLDER))
+	self.placeholder = self.druid:new_text("placeholder_text")
 	self.text_position = gui.get_position(self.input.text.node)
 
 	self.input.on_input_text:subscribe(update_text)
@@ -230,7 +204,11 @@ function RichInput.init(self, template, nodes)
 end
 
 
-function RichInput.on_input(self, action_id, action)
+---@private
+---@param action_id hash Action id from on_input
+---@param action table Action table from on_input
+---@return boolean is_consumed True if input was consumed
+function M:on_input(action_id, action)
 	if action_id == const.ACTION_LSHIFT then
 		if action.pressed then
 			self.is_lshift = true
@@ -247,37 +225,43 @@ function RichInput.on_input(self, action_id, action)
 		end
 	end
 
-	if action_id == const.ACTION_LEFT and (action.pressed or action.repeated) then
-		self.input:move_selection(-1, self.is_lshift, self.is_lctrl)
+	if self.input.is_selected then
+		if action_id == const.ACTION_LEFT and (action.pressed or action.repeated) then
+			self.input:move_selection(-1, self.is_lshift, self.is_lctrl)
+			return true
+		end
+
+		if action_id == const.ACTION_RIGHT and (action.pressed or action.repeated) then
+			self.input:move_selection(1, self.is_lshift, self.is_lctrl)
+			return true
+		end
 	end
 
-	if action_id == const.ACTION_RIGHT and (action.pressed or action.repeated) then
-		self.input:move_selection(1, self.is_lshift, self.is_lctrl)
-	end
+	return false
 end
 
 
---- Set placeholder text
--- @tparam RichInput self @{RichInput}
--- @tparam string placeholder_text The placeholder text
-function RichInput.set_placeholder(self, placeholder_text)
-	self.placeholder:set_to(placeholder_text)
+---Set placeholder text
+---@param placeholder_text string The placeholder text
+---@return druid.rich_input self Current instance
+function M:set_placeholder(placeholder_text)
+	self.placeholder:set_text(placeholder_text)
 	return self
 end
 
 
---- Select input field
--- @tparam RichInput self @{RichInput}
-function RichInput.select(self)
+---Select input field
+---@return druid.rich_input self Current instance
+function M:select()
 	self.input:select()
+	return self
 end
 
 
---- Set input field text
--- @tparam RichInput self @{RichInput}
--- @treturn druid.input Current input instance
--- @tparam string text The input text
-function RichInput.set_text(self, text)
+---Set input field text
+---@param text string The input text
+---@return druid.rich_input self Current instance
+function M:set_text(text)
 	self.input:set_text(text)
 	gui.set_enabled(self.placeholder.node, true and #self.input:get_text() == 0)
 
@@ -285,11 +269,10 @@ function RichInput.set_text(self, text)
 end
 
 
---- Set input field font
--- @tparam RichInput self @{RichInput}
--- @tparam hash font The font hash
--- @treturn druid.input Current input instance
-function RichInput.set_font(self, font)
+---Set input field font
+---@param font hash The font hash
+---@return druid.rich_input self Current instance
+function M:set_font(font)
 	gui.set_font(self.input.text.node, font)
 	gui.set_font(self.placeholder.node, font)
 
@@ -297,24 +280,22 @@ function RichInput.set_font(self, font)
 end
 
 
---- Set input field text
--- @tparam RichInput self @{RichInput}
-function RichInput.get_text(self)
+---Set input field text
+function M:get_text()
 	return self.input:get_text()
 end
 
 
---- Set allowed charaters for input field.
+---Set allowed charaters for input field.
 -- See: https://defold.com/ref/stable/string/
 -- ex: [%a%d] for alpha and numeric
--- @tparam RichInput self @{RichInput}
--- @tparam string characters Regulax exp. for validate user input
--- @treturn RichInput Current instance
-function RichInput.set_allowed_characters(self, characters)
+---@param characters string Regular expression for validate user input
+---@return druid.rich_input self Current instance
+function M:set_allowed_characters(characters)
 	self.input:set_allowed_characters(characters)
 
 	return self
 end
 
 
-return RichInput
+return M

@@ -1,62 +1,39 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component to handle GUI timers.
--- Timer updating by game delta time. If game is not focused -
--- timer will be not updated.
--- @module Timer
--- @within BaseComponent
--- @alias druid.timer
-
---- On timer tick. Fire every second callback(self, value)
--- @tfield DruidEvent on_tick @{DruidEvent}
-
---- On timer change enabled state callback(self, is_enabled)
--- @tfield DruidEvent on_set_enabled @{DruidEvent}
-
---- On timer end callback
--- @tfield DruidEvent on_timer_end(self, Timer) @{DruidEvent}
-
---- Trigger node
--- @tfield node node
-
---- Initial timer value
--- @tfield number from
-
---- Target timer value
--- @tfield number target
-
---- Current timer value
--- @tfield number value
-
----
-
-local Event = require("druid.event")
+local event = require("event.event")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Timer = component.create("timer")
+---Druid component to handle timer work on gui text node. Displays time in a formatted way.
+---
+---### Setup
+---Create timer component with druid: `timer = druid:new_timer(text_node, from_seconds, to_seconds, callback)`
+---
+---### Notes
+---- Timer fires callback when timer value equals to _to_seconds_
+---- Timer will set text node with current timer value
+---- Timer uses update function to handle time
+---@class druid.timer: druid.component
+---@field on_tick event fun(context, value) The event triggered when the timer ticks
+---@field on_set_enabled event fun(context, is_on) The event triggered when the timer is enabled
+---@field on_timer_end event fun(context) The event triggered when the timer ends
+---@field node node The node to display the timer
+---@field from number The start time of the timer
+---@field target number The target time of the timer
+---@field value number The current value of the timer
+---@field is_on boolean|nil True if the timer is on
+local M = component.create("timer")
 
 
-local function second_string_min(sec)
-	local mins = math.floor(sec / 60)
-	local seconds = math.floor(sec - mins * 60)
-	return string.format("%.2d:%.2d", mins, seconds)
-end
-
-
---- The @{Timer} constructor
--- @tparam Timer self @{Timer}
--- @tparam node node Gui text node
--- @tparam number|nil seconds_from Start timer value in seconds
--- @tparam number|nil seconds_to End timer value in seconds
--- @tparam function|nil callback Function on timer end
-function Timer.init(self, node, seconds_from, seconds_to, callback)
+---@param node node Gui text node
+---@param seconds_from number|nil Start timer value in seconds
+---@param seconds_to number|nil End timer value in seconds
+---@param callback function|nil Function that triggers when timer value equals to seconds_to
+function M:init(node, seconds_from, seconds_to, callback)
 	self.node = self:get_node(node)
 	seconds_to = math.max(seconds_to or 0, 0)
 
-	self.on_tick = Event()
-	self.on_set_enabled = Event()
-	self.on_timer_end = Event(callback)
+	self.on_tick = event.create()
+	self.on_set_enabled = event.create()
+	self.on_timer_end = event.create(callback)
 
 	if seconds_from then
 		seconds_from = math.max(seconds_from, 0)
@@ -73,7 +50,8 @@ function Timer.init(self, node, seconds_from, seconds_to, callback)
 end
 
 
-function Timer.update(self, dt)
+---@private
+function M:update(dt)
 	if not self.is_on then
 		return
 	end
@@ -96,42 +74,58 @@ function Timer.update(self, dt)
 end
 
 
-function Timer.on_layout_change(self)
+---@private
+function M:on_layout_change()
 	self:set_to(self.last_value)
 end
 
 
---- Set text to text field
--- @tparam Timer self @{Timer}
--- @tparam number set_to Value in seconds
-function Timer.set_to(self, set_to)
+---Set the timer to a specific value
+---@param set_to number Value in seconds
+---@return druid.timer self Current timer instance
+function M:set_to(set_to)
 	self.last_value = set_to
-	gui.set_text(self.node, second_string_min(set_to))
+	gui.set_text(self.node, self:_second_string_min(set_to))
+
+	return self
 end
 
 
---- Called when update
--- @tparam Timer self @{Timer}
--- @tparam boolean|nil is_on Timer enable state
-function Timer.set_state(self, is_on)
+---Set the timer to a specific value
+---@param is_on boolean|nil Timer enable state
+---@return druid.timer self Current timer instance
+function M:set_state(is_on)
 	self.is_on = is_on
-
 	self.on_set_enabled:trigger(self:get_context(), is_on)
+
+	return self
 end
 
 
---- Set time interval
--- @tparam Timer self @{Timer}
--- @tparam number from Start time in seconds
--- @tparam number to Target time in seconds
-function Timer.set_interval(self, from, to)
+---Set the timer interval
+---@param from number Start time in seconds
+---@param to number Target time in seconds
+---@return druid.timer self Current timer instance
+function M:set_interval(from, to)
 	self.from = from
 	self.value = from
 	self.temp = 0
 	self.target = to
 	self:set_state(true)
 	self:set_to(from)
+
+	return self
 end
 
 
-return Timer
+---@private
+---@param sec number Seconds to convert
+---@return string The formatted time string
+function M:_second_string_min(sec)
+	local mins = math.floor(sec / 60)
+	local seconds = math.floor(sec - mins * 60)
+	return string.format("%.2d:%.2d", mins, seconds)
+end
+
+
+return M

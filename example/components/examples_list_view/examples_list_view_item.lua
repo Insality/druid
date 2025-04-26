@@ -1,12 +1,10 @@
 local component = require("druid.component")
-local container = require("example.components.container.container")
-local lang_text = require("druid.extended.lang_text")
 
----@class examples_list_view_item: druid.base_component
+---@class examples_list_view_item: druid.component
 ---@field root druid.container
 ---@field text druid.lang_text
----@field druid druid_instance
----@field on_click druid.event
+---@field druid druid.instance
+---@field on_click event
 local M = component.create("examples_list_view_item")
 
 ---@param template string
@@ -14,8 +12,8 @@ local M = component.create("examples_list_view_item")
 function M:init(template, nodes)
 	self.druid = self:get_druid(template, nodes)
 
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
-	self.text = self.druid:new(lang_text, "text") --[[ @as druid.lang_text]]
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
+	self.text = self.druid:new_lang_text("text") --[[ @as druid.lang_text]]
 	self.icon = self:get_node("icon")
 	self.selected = self:get_node("panel_selected")
 	self.highlight = self:get_node("panel_highlight")

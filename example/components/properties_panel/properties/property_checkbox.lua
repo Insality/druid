@@ -1,21 +1,13 @@
-local component = require("druid.component")
-local container = require("example.components.container.container")
-local lang_text = require("druid.extended.lang_text")
-
----@class property_checkbox: druid.base_component
----@field druid druid_instance
+---@class property_checkbox: druid.widget
 ---@field root druid.container
 ---@field text_name druid.lang_text
 ---@field button druid.button
 ---@field selected node
-local M = component.create("property_checkbox")
+local M = {}
 
 
----@param template string
----@param nodes table<hash, node>
-function M:init(template, nodes)
-	self.druid = self:get_druid(template, nodes)
-	self.root = self.druid:new(container, "root") --[[@as druid.container]]
+function M:init()
+	self.root = self.druid:new_container("root") --[[@as druid.container]]
 
 	self.icon = self:get_node("icon")
 	gui.set_enabled(self.icon, false)
@@ -23,7 +15,7 @@ function M:init(template, nodes)
 	self.selected = self:get_node("selected")
 	gui.set_alpha(self.selected, 0)
 
-	self.text_name = self.druid:new(lang_text, "text_name") --[[@as druid.lang_text]]
+	self.text_name = self.druid:new_lang_text("text_name") --[[@as druid.lang_text]]
 
 	self.button = self.druid:new_button("button", self.on_click)
 end

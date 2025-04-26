@@ -58,5 +58,11 @@ function M.input_empty_action_nil(x, y)
 end
 
 
+function M.input_text(text)
+	return hash("text"), {
+		text = text,
+	}
+end
+
 
 return M

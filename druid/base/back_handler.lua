@@ -1,70 +1,36 @@
--- Copyright (c) 2023 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component with event on back and backspace button.
--- <b># Overview #</b>
---
--- Back Handler is recommended to put in every game window to close it
--- or in main screen to call settings window.
---
--- <b># Notes #</b>
---
--- • Back Handler inheritance @{BaseComponent}, you can use all of its methods in addition to those described here.
---
--- • Back Handler react on release action ACTION_BACK or ACTION_BACKSPACE
--- @usage
--- local callback = function(self, params) ... end
---
--- local params = {}
--- local back_handler = self.druid:new_back_handler(callback, [params])
--- @module BackHandler
--- @within BaseComponent
--- @alias druid.back_handler
-
---- The @{DruidEvent} Event on back handler action.
---
--- Trigger on input action ACTION_BACK or ACTION_BACKSPACE
--- @usage
--- -- Subscribe additional callbacks:
--- back_handler.on_back:subscribe(callback)
--- @tfield DruidEvent on_back @{DruidEvent}
-
---- Custom args to pass in the callback
--- @usage
--- -- Replace params on runtime:
--- back_handler.params = { ... }
--- @tfield any|nil params
-
----
-
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local component = require("druid.component")
 
-local BackHandler = component.create("back_handler")
+---Component to handle back button. It handles Android back button and Backspace key.
+---
+---### Setup
+---Create back handler component with druid: `druid:new_back_handler(callback)`
+---
+---### Notes
+---- Key triggers in `input.binding` should be setup for correct working
+---- It uses a key_back and key_backspace action ids
+---@class druid.back_handler: druid.component
+---@field on_back event fun(self: druid.back_handler, params: any?) Trigger on back handler action
+---@field params any? Custom args to pass in the callback
+local M = component.create("back_handler")
 
 
---- The @{BackHandler} constructor
--- @tparam BackHandler self @{BackHandler}
--- @tparam function callback @The callback(self, custom_args) to call on back event
--- @tparam any|nil custom_args Button events custom arguments
--- @local
-function BackHandler.init(self, callback, custom_args)
-	self.params = custom_args
-	self.on_back = Event(callback)
+---The Back Handler constructor
+---@param callback function|nil The callback to call when the back handler is triggered
+---@param params any? Custom args to pass in the callback
+function M:init(callback, params)
+	self.params = params
+	self.on_back = event.create(callback)
 end
 
 
---- Component input handler
--- @tparam BackHandler self @{BackHandler}
--- @tparam string action_id on_input action id
--- @tparam table action on_input action
--- @local
-function BackHandler.on_input(self, action_id, action)
-	if not action.released then
-		return false
-	end
-
-	if action_id == const.ACTION_BACK or action_id == const.ACTION_BACKSPACE then
+---@private
+---@param action_id hash The action id
+---@param action table The action table
+---@return boolean is_consumed True if the input was consumed
+function M:on_input(action_id, action)
+	if action.released and (action_id == const.ACTION_BACK or action_id == const.ACTION_BACKSPACE) then
 		self.on_back:trigger(self:get_context(), self.params)
 		return true
 	end
@@ -73,4 +39,4 @@ function BackHandler.on_input(self, action_id, action)
 end
 
 
-return BackHandler
+return M

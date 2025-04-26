@@ -1,144 +1,112 @@
--- Copyright (c) 2021 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component to handle scroll content.
--- <b># Overview #</b>
---
--- The Scroll component is designed to handle scrollable content and consists of two nodes: the scroll parent and the scroll input.
---
--- The scroll input represents the user input zone and remains static.
---
--- The scroll parent is the movable part of the scroll and changes its position.
---
--- The initial scroll size can be set by adjusting the size of the scroll parent.
--- If the size of the scroll parent is smaller than the scroll input size, scrolling is not available.
---
--- <b># Notes #</b>
---
--- • By default, the scroll style includes inertia and extra size for a stretching effect.
--- These settings can be adjusted using the scroll style settings.
--- For more details, refer to the scroll style settings.
---
--- • "Points of interest" can be set up for the scroll.
--- The scroll will always be centered on the closest point of interest.
--- This feature allows creating a slider without inertia and with points of interest on each scroll element.
---
--- • The scroll content size can be adjusted using the scroll:set_size(node_size) method.
--- This method sets a new size for the _content node.
---
--- • Inertial scrolling mode can be enabled or disabled using the scroll:set_inert(state) method.
---
--- • The extra stretch size can be adjusted using the scroll:set_extra_stretch_size method.
---
--- • Multitouch is required for scrolling. The scroll component correctly handles
--- touch ID swaps while dragging the scroll.
---
--- <a href="https://insality.github.io/druid/druid/index.html?example=general_scroll" target="_blank"><b>Example Link</b></a>
--- @module Scroll
--- @within BaseComponent
--- @alias druid.scroll
-
-
---- On scroll move callback(self, position)
--- @tfield DruidEvent on_scroll @{DruidEvent}
-
---- On scroll_to function callback(self, target, is_instant)
--- @tfield DruidEvent on_scroll_to @{DruidEvent}
-
---- On scroll_to_index function callback(self, index, point)
--- @tfield DruidEvent on_point_scroll @{DruidEvent}
-
---- Scroll view node
--- @tfield node view_node
-
---- Scroll view size
--- @tfield vector3 view_size
-
---- Scroll content node
--- @tfield node content_node
-
---- Flag, if scroll now moving by inertion
--- @tfield boolean _is_inert
-
---- Current inert speed
--- @tfield vector3 inertion
-
---- Current scroll posisition
--- @tfield vector3 position
-
---- Current scroll target position
--- @tfield vector3 target_position
-
---- Available position for content node: (min_x, max_y, max_x, min_y)
--- @tfield vector4 available_pos
-
---- Size of available positions: (width, height, 0)
--- @tfield vector3 available_size
-
---- Drag Druid component
--- @tfield Drag drag @{Drag}
-
---- Current index of points of interests
--- @tfield number|nil selected
-
---- Flag, if scroll now animating by gui.animate
--- @tfield boolean is_animate
-
----
-
-local Event = require("druid.event")
+local event = require("event.event")
 local const = require("druid.const")
 local helper = require("druid.helper")
 local component = require("druid.component")
 
-local Scroll = component.create("scroll")
+---Scroll style parameters
+---@class druid.scroll.style
+---@field FRICT number|nil Multiplier for free inertion. Default: 0
+---@field FRICT_HOLD number|nil Multiplier for inertion, while touching. Default: 0
+---@field INERT_THRESHOLD number|nil Scroll speed to stop inertion. Default: 3
+---@field INERT_SPEED number|nil Multiplier for inertion speed. Default: 30
+---@field POINTS_DEADZONE number|nil Speed to check points of interests in no_inertion mode. Default: 20
+---@field BACK_SPEED number|nil Scroll back returning lerp speed. Default: 35
+---@field ANIM_SPEED number|nil Scroll gui.animation speed for scroll_to function. Default: 2
+---@field EXTRA_STRETCH_SIZE number|nil extra size in pixels outside of scroll (stretch effect). Default: 0
+---@field SMALL_CONTENT_SCROLL boolean|nil If true, content node with size less than view node size can be scrolled. Default: false
+---@field WHEEL_SCROLL_SPEED number|nil The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
+---@field WHEEL_SCROLL_INVERTED boolean|nil If true, invert direction for touchpad and mouse wheel scroll. Default: false
+---@field WHEEL_SCROLL_BY_INERTION boolean|nil If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
+
+---Basic Druid scroll component. Handles all scrolling behavior in Druid GUI.
+---
+---### Setup
+---Create scroll component with druid: `druid:new_scroll(view_node, content_node)`
+---
+---### Notes
+---- View_node is the static part that captures user input and recognizes scrolling touches
+---- Content_node is the dynamic part that will change position according to the scroll system
+---- Initial scroll size will be equal to content_node size
+---- The initial view box will be equal to view_node size
+---- Scroll by default style has inertia and extra size for stretching effect
+---- You can setup "points of interest" to make scroll always center on closest point
+---- Scroll events:
+----   - on_scroll(self, position): On scroll move callback
+----   - on_scroll_to(self, position, is_instant): On scroll_to function callback
+----   - on_point_scroll(self, item_index, position): On scroll_to_index function callback
+---- Multitouch is required for scroll. Scroll correctly handles touch_id swap while dragging
+---@class druid.scroll: druid.component
+---@field node node The root node
+---@field click_zone node|nil Optional click zone to restrict scroll area
+---@field on_scroll event fun(self: druid.scroll, position: vector3) Triggered on scroll move
+---@field on_scroll_to event fun(self: druid.scroll, target: vector3, is_instant: boolean) Triggered on scroll_to
+---@field on_point_scroll event fun(self: druid.scroll, index: number, point: vector3) Triggered on scroll_to_index
+---@field view_node node The scroll view node (static part)
+---@field view_border vector4 The scroll view borders
+---@field content_node node The scroll content node (moving part)
+---@field view_size vector3 Size of the view node
+---@field position vector3 Current scroll position
+---@field target_position vector3 Target scroll position for animations
+---@field available_pos vector4 Available content position (min_x, max_y, max_x, min_y)
+---@field available_size vector3 Size of available positions (width, height, 0)
+---@field drag druid.drag The drag component instance
+---@field selected number|nil Current selected point of interest index
+---@field is_animate boolean True if scroll is animating
+---@field style druid.scroll.style Component style parameters
+---@field private _is_inert boolean True if inertial scrolling is enabled
+---@field private inertion vector3 Current inertial movement vector
+---@field private _is_horizontal_scroll boolean True if horizontal scroll enabled
+---@field private _is_vertical_scroll boolean True if vertical scroll enabled
+---@field private _grid_on_change event Grid items change event
+---@field private _grid_on_change_callback function Grid change callback
+---@field private _offset vector3 Content start offset
+local M = component.create("scroll")
 
 
-local function inverse_lerp(min, max, current)
-	return helper.clamp((current - min) / (max - min), 0, 1)
+---The Scroll constructor
+---@param view_node string|node GUI view scroll node - the static part that captures user input
+---@param content_node string|node GUI content scroll node - the dynamic part that will change position
+function M:init(view_node, content_node)
+	self.druid = self:get_druid()
+
+	self.view_node = self:get_node(view_node)
+	self.view_border = helper.get_border(self.view_node)
+	self.content_node = self:get_node(content_node)
+
+	self.view_size = helper.get_scaled_size(self.view_node)
+
+	self.position = gui.get_position(self.content_node)
+	self.target_position = vmath.vector3(self.position)
+	self.inertion = vmath.vector3(0)
+
+	self.drag = self.druid:new_drag(view_node, self._on_scroll_drag)
+	self.drag.on_touch_start:subscribe(self._on_touch_start)
+	self.drag.on_touch_end:subscribe(self._on_touch_end)
+
+	self.hover = self.druid:new_hover(view_node)
+	self.hover.on_mouse_hover:subscribe(self._on_mouse_hover)
+	self._is_mouse_hover = false
+
+	self.on_scroll = event.create()
+	self.on_scroll_to = event.create()
+	self.on_point_scroll = event.create()
+
+	self.selected = nil
+	self.is_animate = false
+
+	self._offset = vmath.vector3(0)
+	self._is_horizontal_scroll = true
+	self._is_vertical_scroll = true
+	self._grid_on_change = nil
+	self._grid_on_change_callback = nil
+
+	self:_update_size()
 end
 
 
---- Update vector with next conditions:
--- Field x have to <= field z
--- Field y have to <= field w
-local function get_border_vector(vector, offset)
-	if vector.x > vector.z then
-		vector.x, vector.z = vector.z, vector.x
-	end
-	if vector.y > vector.w then
-		vector.y, vector.w = vector.w, vector.y
-	end
-	vector.x = vector.x - offset.x
-	vector.z = vector.z - offset.x
-	vector.y = vector.y - offset.y
-	vector.w = vector.w - offset.y
-	return vector
-end
-
-
---- Return size from scroll border vector4
-local function get_size_vector(vector)
-	return vmath.vector3(vector.z - vector.x, vector.w - vector.y, 0)
-end
-
-
---- Component style params.
--- You can override this component styles params in druid styles table
--- or create your own style
--- @table style
--- @tfield number|nil FRICT Multiplier for free inertion. Default: 0
--- @tfield number|nil FRICT_HOLD Multiplier for inertion, while touching. Default: 0
--- @tfield number|nil INERT_THRESHOLD Scroll speed to stop inertion. Default: 3
--- @tfield number|nil INERT_SPEED Multiplier for inertion speed. Default: 30
--- @tfield number|nil POINTS_DEADZONE Speed to check points of interests in no_inertion mode. Default: 20
--- @tfield number|nil BACK_SPEED Scroll back returning lerp speed. Default: 35
--- @tfield number|nil ANIM_SPEED Scroll gui.animation speed for scroll_to function. Default: 2
--- @tfield number|nil EXTRA_STRETCH_SIZE extra size in pixels outside of scroll (stretch effect). Default: 0
--- @tfield boolean|nil SMALL_CONTENT_SCROLL If true, content node with size less than view node size can be scrolled. Default: false
--- @tfield boolean|nil WHEEL_SCROLL_SPEED The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
--- @tfield boolean|nil WHEEL_SCROLL_INVERTED If true, invert direction for touchpad and mouse wheel scroll. Default: false
--- @tfield boolean|nil WHEEL_SCROLL_BY_INERTION If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
-function Scroll.on_style_change(self, style)
+---@private
+---@param style druid.scroll.style
+function M:on_style_change(style)
 	self.style = {}
 	self.style.EXTRA_STRETCH_SIZE = style.EXTRA_STRETCH_SIZE or 0
 	self.style.ANIM_SPEED = style.ANIM_SPEED or 0.2
@@ -161,50 +129,9 @@ function Scroll.on_style_change(self, style)
 end
 
 
---- The @{Scroll} constructor
--- @tparam Scroll self @{Scroll}
--- @tparam string|node view_node GUI view scroll node
--- @tparam string|node content_node GUI content scroll node
-function Scroll.init(self, view_node, content_node)
-	self.druid = self:get_druid()
-
-	self.view_node = self:get_node(view_node)
-	self.view_border = helper.get_border(self.view_node)
-	self.content_node = self:get_node(content_node)
-
-	self.view_size = helper.get_scaled_size(self.view_node)
-
-	self.position = gui.get_position(self.content_node)
-	self.target_position = vmath.vector3(self.position)
-	self.inertion = vmath.vector3(0)
-
-	self.drag = self.druid:new_drag(view_node, self._on_scroll_drag)
-	self.drag.on_touch_start:subscribe(self._on_touch_start)
-	self.drag.on_touch_end:subscribe(self._on_touch_end)
-
-	self.hover = self.druid:new_hover(view_node)
-	self.hover.on_mouse_hover:subscribe(self._on_mouse_hover)
-	self._is_mouse_hover = false
-
-	self.on_scroll = Event()
-	self.on_scroll_to = Event()
-	self.on_point_scroll = Event()
-
-	self.selected = nil
-	self.is_animate = false
-
-	self._offset = vmath.vector3(0)
-	self._is_horizontal_scroll = true
-	self._is_vertical_scroll = true
-	self._grid_on_change = nil
-	self._grid_on_change_callback = nil
-
-	self:_update_size()
-end
-
-
-function Scroll.on_late_init(self)
-	if not self.click_zone and const.IS_STENCIL_CHECK then
+---@private
+function M:on_late_init()
+	if not self.click_zone then
 		local stencil_node = helper.get_closest_stencil_node(self.node)
 		if stencil_node then
 			self:set_click_zone(stencil_node)
@@ -213,15 +140,17 @@ function Scroll.on_late_init(self)
 end
 
 
-function Scroll.on_layout_change(self)
+---@private
+function M:on_layout_change()
 	gui.set_position(self.content_node, self.position)
 end
 
 
-function Scroll.update(self, dt)
+---@private
+function M:update(dt)
 	if self.is_animate then
-		self.position.x = gui.get(self.content_node, "position.x")
-		self.position.y = gui.get(self.content_node, "position.y")
+		self.position.x = gui.get(self.content_node, "position.x") --[[@as number]]
+		self.position.y = gui.get(self.content_node, "position.y") --[[@as number]]
 		self.on_scroll:trigger(self:get_context(), self.position)
 	end
 
@@ -233,23 +162,22 @@ function Scroll.update(self, dt)
 end
 
 
-function Scroll.on_input(self, action_id, action)
+---@private
+function M:on_input(action_id, action)
 	return self:_process_scroll_wheel(action_id, action)
 end
 
 
-function Scroll.on_remove(self)
+---@private
+function M:on_remove()
 	self:bind_grid(nil)
 end
 
 
---- Start scroll to target point.
--- @tparam Scroll self @{Scroll}
--- @tparam vector3 point Target point
--- @tparam boolean|nil is_instant Instant scroll flag
--- @usage scroll:scroll_to(vmath.vector3(0, 50, 0))
--- @usage scroll:scroll_to(vmath.vector3(0), true)
-function Scroll.scroll_to(self, point, is_instant)
+---Start scroll to target point.
+---@param point vector3 Target point
+---@param is_instant boolean|nil Instant scroll flag
+function M:scroll_to(point, is_instant)
 	local b = self.available_pos
 	local target = vmath.vector3(
 		self._is_horizontal_scroll and -point.x or self.target_position.x,
@@ -277,11 +205,10 @@ function Scroll.scroll_to(self, point, is_instant)
 end
 
 
---- Scroll to item in scroll by point index.
--- @tparam Scroll self @{Scroll}
--- @tparam number index Point index
--- @tparam boolean|nil skip_cb If true, skip the point callback
-function Scroll.scroll_to_index(self, index, skip_cb)
+---Scroll to item in scroll by point index.
+---@param index number Point index
+---@param skip_cb boolean|nil If true, skip the point callback
+function M:scroll_to_index(index, skip_cb)
 	if not self.points then
 		return
 	end
@@ -300,12 +227,10 @@ function Scroll.scroll_to_index(self, index, skip_cb)
 end
 
 
---- Start scroll to target scroll percent
--- @tparam Scroll self @{Scroll}
--- @tparam vector3 percent target percent
--- @tparam boolean|nil is_instant instant scroll flag
--- @usage scroll:scroll_to_percent(vmath.vector3(0.5, 0, 0))
-function Scroll.scroll_to_percent(self, percent, is_instant)
+---Start scroll to target scroll percent
+---@param percent vector3 target percent
+---@param is_instant boolean|nil instant scroll flag
+function M:scroll_to_percent(percent, is_instant)
 	local border = self.available_pos
 
 	local pos = vmath.vector3(
@@ -325,25 +250,23 @@ function Scroll.scroll_to_percent(self, percent, is_instant)
 end
 
 
---- Return current scroll progress status.
+---Return current scroll progress status.
 -- Values will be in [0..1] interval
--- @tparam Scroll self @{Scroll}
--- @treturn vector3 New vector with scroll progress values
-function Scroll.get_percent(self)
-	local x_perc = 1 - inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
-	local y_perc = inverse_lerp(self.available_pos.w, self.available_pos.y, self.position.y)
+---@return vector3 New vector with scroll progress values
+function M:get_percent()
+	local x_perc = 1 - self:_inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
+	local y_perc = self:_inverse_lerp(self.available_pos.w, self.available_pos.y, self.position.y)
 
 	return vmath.vector3(x_perc, y_perc, 0)
 end
 
 
---- Set scroll content size.
+---Set scroll content size.
 -- It will change content gui node size
--- @tparam Scroll self @{Scroll}
--- @tparam vector3 size The new size for content node
--- @tparam vector3|nil offset Offset value to set, where content is starts
--- @treturn druid.scroll Current scroll instance
-function Scroll.set_size(self, size, offset)
+---@param size vector3 The new size for content node
+---@param offset vector3|nil Offset value to set, where content is starts
+---@return druid.scroll self Current scroll instance
+function M:set_size(size, offset)
 	if offset then
 		self._offset = offset
 	end
@@ -354,11 +277,10 @@ function Scroll.set_size(self, size, offset)
 end
 
 
---- Set new scroll view size in case the node size was changed.
--- @tparam Scroll self @{Scroll}
--- @tparam vector3 size The new size for view node
--- @treturn druid.scroll Current scroll instance
-function Scroll.set_view_size(self, size)
+---Set new scroll view size in case the node size was changed.
+---@param size vector3 The new size for view node
+---@return druid.scroll self Current scroll instance
+function M:set_view_size(size)
 	gui.set_size(self.view_node, size)
 	self.view_size = size
 	self.view_border = helper.get_border(self.view_node)
@@ -368,9 +290,9 @@ function Scroll.set_view_size(self, size)
 end
 
 
---- Refresh scroll view size
--- @tparam Scroll self @{Scroll}
-function Scroll.update_view_size(self)
+---Refresh scroll view size, used when view node size is changed
+---@return druid.scroll self Current scroll instance
+function M:update_view_size()
 	self.view_size = helper.get_scaled_size(self.view_node)
 	self.view_border = helper.get_border(self.view_node)
 	self:_update_size()
@@ -379,33 +301,30 @@ function Scroll.update_view_size(self)
 end
 
 
---- Enable or disable scroll inert.
+---Enable or disable scroll inert
 -- If disabled, scroll through points (if exist)
 -- If no points, just simple drag without inertion
--- @tparam Scroll self @{Scroll}
--- @tparam boolean|nil state Inert scroll state
--- @treturn druid.scroll Current scroll instance
-function Scroll.set_inert(self, state)
+---@param state boolean Inert scroll state
+---@return druid.scroll self Current scroll instance
+function M:set_inert(state)
 	self._is_inert = state
 
 	return self
 end
 
 
---- Return if scroll have inertion.
--- @tparam Scroll self @{Scroll}
--- @treturn boolean @If scroll have inertion
-function Scroll.is_inert(self)
+---Return if scroll have inertion
+---@return boolean is_inert If scroll have inertion
+function M:is_inert()
 	return self._is_inert
 end
 
 
---- Set extra size for scroll stretching.
+---Set extra size for scroll stretching
 -- Set 0 to disable stretching effect
--- @tparam Scroll self @{Scroll}
--- @tparam number|nil stretch_size Size in pixels of additional scroll area
--- @treturn druid.scroll Current scroll instance
-function Scroll.set_extra_stretch_size(self, stretch_size)
+---@param stretch_size number|nil Size in pixels of additional scroll area
+---@return druid.scroll self Current scroll instance
+function M:set_extra_stretch_size(stretch_size)
 	self.style.EXTRA_STRETCH_SIZE = stretch_size or 0
 	self:_update_size()
 
@@ -413,20 +332,18 @@ function Scroll.set_extra_stretch_size(self, stretch_size)
 end
 
 
---- Return vector of scroll size with width and height.
--- @tparam Scroll self @{Scroll}
--- @treturn vector3 Available scroll size
-function Scroll.get_scroll_size(self)
+---Return vector of scroll size with width and height.
+---@return vector3 Available scroll size
+function M:get_scroll_size()
 	return self.available_size
 end
 
 
---- Set points of interest.
+---Set points of interest.
 -- Scroll will always centered on closer points
--- @tparam Scroll self @{Scroll}
--- @tparam table points Array of vector3 points
--- @treturn druid.scroll Current scroll instance
-function Scroll.set_points(self, points)
+---@param points table Array of vector3 points
+---@return druid.scroll self Current scroll instance
+function M:set_points(points)
 	self.points = points
 
 	table.sort(self.points, function(a, b)
@@ -439,34 +356,31 @@ function Scroll.set_points(self, points)
 end
 
 
---- Lock or unlock horizontal scroll
--- @tparam Scroll self @{Scroll}
--- @tparam boolean|nil state True, if horizontal scroll is enabled
--- @treturn druid.scroll Current scroll instance
-function Scroll.set_horizontal_scroll(self, state)
+---Lock or unlock horizontal scroll
+---@param state boolean True, if horizontal scroll is enabled
+---@return druid.scroll self Current scroll instance
+function M:set_horizontal_scroll(state)
 	self._is_horizontal_scroll = state
-	self.drag.can_x = self.available_size.x > 0 and state
+	self.drag.can_x = self.available_size.x > 0 and state or false
 	return self
 end
 
 
---- Lock or unlock vertical scroll
--- @tparam Scroll self @{Scroll}
--- @tparam boolean|nil state True, if vertical scroll is enabled
--- @treturn druid.scroll Current scroll instance
-function Scroll.set_vertical_scroll(self, state)
+---Lock or unlock vertical scroll
+---@param state boolean True, if vertical scroll is enabled
+---@return druid.scroll self Current scroll instance
+function M:set_vertical_scroll(state)
 	self._is_vertical_scroll = state
-	self.drag.can_y = self.available_size.y > 0 and state
+	self.drag.can_y = self.available_size.y > 0 and state or false
 	return self
 end
 
 
---- Check node if it visible now on scroll.
+---Check node if it visible now on scroll.
 -- Extra border is not affected. Return true for elements in extra scroll zone
--- @tparam Scroll self @{Scroll}
--- @tparam node node The node to check
--- @treturn boolean True if node in visible scroll area
-function Scroll.is_node_in_view(self, node)
+---@param node node The node to check
+---@return boolean True if node in visible scroll area
+function M:is_node_in_view(node)
 	local node_offset_for_view = gui.get_position(node)
 	local parent = gui.get_parent(node)
 	local is_parent_of_view = false
@@ -502,12 +416,11 @@ function Scroll.is_node_in_view(self, node)
 end
 
 
---- Bind the grid component (Static or Dynamic) to recalculate
+---Bind the grid component (Static or Dynamic) to recalculate
 -- scroll size on grid changes
--- @tparam Scroll self @{Scroll}
--- @tparam StaticGrid grid Druid grid component
--- @treturn druid.scroll Current scroll instance
-function Scroll.bind_grid(self, grid)
+---@param grid druid.grid|nil Druid grid component
+---@return druid.scroll self Current scroll instance
+function M:bind_grid(grid)
 	if self._grid_on_change then
 		self._grid_on_change:unsubscribe(self._grid_on_change_callback)
 
@@ -516,31 +429,58 @@ function Scroll.bind_grid(self, grid)
 	end
 
 	if not grid then
-		return
+		return self
 	end
 
 	self._grid_on_change = grid.on_change_items
-	self._grid_on_change_callback = self._grid_on_change:subscribe(function()
+	self._grid_on_change_callback = function()
 		local size = grid:get_size()
 		local offset = grid:get_offset()
 		self:set_size(size, offset)
-	end)
+	end
+	self._grid_on_change:subscribe(self._grid_on_change_callback)
 	self:set_size(grid:get_size(), grid:get_offset())
 
 	return self
 end
 
 
---- Strict drag scroll area. Useful for
+---Bind the layout component to recalculate
+-- scroll size on layout changes
+---@param layout druid.layout|nil Druid layout component
+---@return druid.scroll self Current scroll instance
+function M:bind_layout(layout)
+	if self._layout_on_change then
+		self._layout_on_change:unsubscribe(self._layout_on_change_callback)
+
+		self._layout_on_change = nil
+		self._layout_on_change_callback = nil
+	end
+
+	if not layout then
+		return self
+	end
+
+	self._layout_on_change = layout.on_size_changed
+	self._layout_on_change_callback = function(size)
+		self:set_size(size)
+	end
+	self._layout_on_change:subscribe(self._layout_on_change_callback)
+	self:set_size(layout:get_size())
+
+	return self
+end
+
+
+---Strict drag scroll area. Useful for
 -- restrict events outside stencil node
--- @tparam Drag self
--- @tparam node|string node Gui node
-function Scroll.set_click_zone(self, node)
+---@param node node|string Gui node
+function M:set_click_zone(node)
 	self.drag:set_click_zone(node)
 end
 
 
-function Scroll._on_scroll_drag(self, dx, dy)
+function M:_on_scroll_drag(dx, dy)
 	local t = self.target_position
 	local b = self.available_pos
 	local eb = self.available_pos_extra
@@ -552,11 +492,11 @@ function Scroll._on_scroll_drag(self, dx, dy)
 
 	-- Right border (minimum x)
 	if t.x < b.x and dx < 0 then
-		x_perc = inverse_lerp(eb.x, b.x, t.x)
+		x_perc = self:_inverse_lerp(eb.x, b.x, t.x)
 	end
 	-- Left border (maximum x)
 	if t.x > b.z and dx > 0 then
-		x_perc = inverse_lerp(eb.z, b.z, t.x)
+		x_perc = self:_inverse_lerp(eb.z, b.z, t.x)
 	end
 	-- Disable x scroll
 	if not self.drag.can_x then
@@ -565,11 +505,11 @@ function Scroll._on_scroll_drag(self, dx, dy)
 
 	-- Top border (minimum y)
 	if t.y < b.y and dy < 0 then
-		y_perc = inverse_lerp(eb.y, b.y, t.y)
+		y_perc = self:_inverse_lerp(eb.y, b.y, t.y)
 	end
 	-- Bot border (maximum y)
 	if t.y > b.w and dy > 0 then
-		y_perc = inverse_lerp(eb.w, b.w, t.y)
+		y_perc = self:_inverse_lerp(eb.w, b.w, t.y)
 	end
 	-- Disable y scroll
 	if not self.drag.can_y then
@@ -581,7 +521,7 @@ function Scroll._on_scroll_drag(self, dx, dy)
 end
 
 
-function Scroll._check_soft_zone(self)
+function M:_check_soft_zone()
 	local target = self.target_position
 	local border = self.available_pos
 	local speed = self.style.BACK_SPEED
@@ -610,7 +550,7 @@ end
 
 
 -- Cancel animation on other animation or input touch
-function Scroll._cancel_animate(self)
+function M:_cancel_animate()
 	self.inertion.x = 0
 	self.inertion.y = 0
 
@@ -624,7 +564,7 @@ function Scroll._cancel_animate(self)
 end
 
 
-function Scroll._set_scroll_position(self, position_x, position_y)
+function M:_set_scroll_position(position_x, position_y)
 	local available_extra = self.available_pos_extra
 	position_x = helper.clamp(position_x, available_extra.x, available_extra.z)
 	position_y = helper.clamp(position_y, available_extra.w, available_extra.y)
@@ -639,11 +579,11 @@ function Scroll._set_scroll_position(self, position_x, position_y)
 end
 
 
---- Find closer point of interest
+---Find closer point of interest
 -- if no inert, scroll to next point by scroll direction
 -- if inert, find next point by scroll director
--- @local
-function Scroll._check_points(self)
+---@private
+function M:_check_points()
 	if not self.points then
 		return
 	end
@@ -699,7 +639,7 @@ function Scroll._check_points(self)
 end
 
 
-function Scroll._check_threshold(self)
+function M:_check_threshold()
 	local is_stopped = false
 
 	if self.drag.can_x and math.abs(self.inertion.x) < self.style.INERT_THRESHOLD then
@@ -717,7 +657,7 @@ function Scroll._check_threshold(self)
 end
 
 
-function Scroll._update_free_scroll(self, dt)
+function M:_update_free_scroll(dt)
 	if self.is_animate then
 		return
 	end
@@ -742,7 +682,7 @@ function Scroll._update_free_scroll(self, dt)
 end
 
 
-function Scroll._update_hand_scroll(self, dt)
+function M:_update_hand_scroll(dt)
 	if self.is_animate then
 		self:_cancel_animate()
 	end
@@ -757,7 +697,7 @@ function Scroll._update_hand_scroll(self, dt)
 end
 
 
-function Scroll._on_touch_start(self)
+function M:_on_touch_start()
 	self.inertion.x = 0
 	self.inertion.y = 0
 	self.target_position.x = self.position.x
@@ -765,17 +705,17 @@ function Scroll._on_touch_start(self)
 end
 
 
-function Scroll._on_touch_end(self)
+function M:_on_touch_end()
 	self:_check_threshold()
 end
 
 
-function Scroll._update_size(self)
+function M:_update_size()
 	local content_border = helper.get_border(self.content_node)
 	local content_size = helper.get_scaled_size(self.content_node)
 
-	self.available_pos = get_border_vector(self.view_border - content_border, self._offset)
-	self.available_size = get_size_vector(self.available_pos)
+	self.available_pos = self:_get_border_vector(self.view_border - content_border, self._offset)
+	self.available_size = self:_get_size_vector(self.available_pos)
 
 	self.drag.can_x = self.available_size.x > 0 and self._is_horizontal_scroll
 	self.drag.can_y = self.available_size.y > 0 and self._is_vertical_scroll
@@ -799,16 +739,18 @@ function Scroll._update_size(self)
 		self.drag.can_y = content_size.y > self.view_size.y and self._is_vertical_scroll
 	end
 
-	self.available_pos_extra = get_border_vector(self.view_border - content_border_extra, self._offset)
-	self.available_size_extra = get_size_vector(self.available_pos_extra)
+	self.available_pos_extra = self:_get_border_vector(self.view_border - content_border_extra, self._offset)
+	self.available_size_extra = self:_get_size_vector(self.available_pos_extra)
 
 	self:_set_scroll_position(self.position.x, self.position.y)
 	self.target_position.x = self.position.x
 	self.target_position.y = self.position.y
+
+	self.drag:set_drag_cursors(self.drag.can_x or self.drag.can_y)
 end
 
 
-function Scroll._process_scroll_wheel(self, action_id, action)
+function M:_process_scroll_wheel(action_id, action)
 	if not self._is_mouse_hover or self.style.WHEEL_SCROLL_SPEED == 0 then
 		return false
 	end
@@ -845,9 +787,43 @@ function Scroll._process_scroll_wheel(self, action_id, action)
 end
 
 
-function Scroll._on_mouse_hover(self, state)
+function M:_on_mouse_hover(state)
 	self._is_mouse_hover = state
 end
 
 
-return Scroll
+function M:_inverse_lerp(min, max, current)
+	return helper.clamp((current - min) / (max - min), 0, 1)
+end
+
+
+---Update vector with next conditions:
+---Field x have to <= field z
+---Field y have to <= field w
+---@param vector vector4
+---@param offset vector3
+---@return vector4
+function M:_get_border_vector(vector, offset)
+	if vector.x > vector.z then
+		vector.x, vector.z = vector.z, vector.x
+	end
+	if vector.y > vector.w then
+		vector.y, vector.w = vector.w, vector.y
+	end
+	vector.x = vector.x - offset.x
+	vector.z = vector.z - offset.x
+	vector.y = vector.y - offset.y
+	vector.w = vector.w - offset.y
+	return vector
+end
+
+
+---Return size from scroll border vector4
+---@param vector vector4
+---@return vector3
+function M:_get_size_vector(vector)
+	return vmath.vector3(vector.z - vector.x, vector.w - vector.y, 0)
+end
+
+
+return M

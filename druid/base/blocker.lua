@@ -1,50 +1,34 @@
--- Copyright (c) 2023 Maksim Tuprikov <insality@gmail.com>. This code is licensed under MIT license
-
---- Component to consume input in special zone defined by GUI node.
--- <b># Overview #</b>
---
--- <b># Notes #</b>
---
--- Blocker consume input if `gui.pick_node` works on it.
---
--- • Blocker inheritance @{BaseComponent}, you can use all of its methods in addition to those described here.
---
--- • Blocker initial enabled state is `gui.is_enabled(node, true)`
---
--- • The Blocker node should be enabled to capture the input
--- @usage
--- local node = gui.get_node("blocker_node")
--- local blocker = self.druid:new_blocker(node)
--- @module Blocker
--- @within BaseComponent
--- @alias druid.blocker
-
----Blocker node
--- @tfield node node
-
----
-
 local const = require("druid.const")
 local component = require("druid.component")
 
-local Blocker = component.create("blocker")
+---Druid component for block input. Use it to block input in special zone.
+---
+---### Setup
+---Create blocker component with druid: `druid:new_blocker(node_name)`
+---
+---### Notes
+---- Blocker can be used to create safe zones, where you have big buttons
+---- Blocker will capture all input events that hit the node, preventing them from reaching other components
+---- Blocker works placed as usual component in stack, so any other component can be placed on top of it and will work as usual
+---@class druid.blocker: druid.component
+---@field node node The node that will block input
+---@field private _is_enabled boolean Whether blocker is enabled
+local M = component.create("blocker")
 
 
---- The @{Blocker} constructor
--- @tparam Blocker self @{Blocker}
--- @tparam node node Gui node
-function Blocker.init(self, node)
+---The Blocker constructor
+---@param node node|string The node to use as a blocker
+function M:init(node)
 	self.node = self:get_node(node)
 	self._is_enabled = gui.is_enabled(self.node, true)
 end
 
 
---- Component input handler
--- @tparam Blocker self @{Blocker}
--- @tparam string action_id on_input action id
--- @tparam table action on_input action
--- @local
-function Blocker.on_input(self, action_id, action)
+---@private
+---@param action_id string The action id
+---@param action table The action table
+---@return boolean is_consumed True if the input was consumed
+function M:on_input(action_id, action)
 	if action_id ~= const.ACTION_TOUCH and
 		action_id ~= const.ACTION_MULTITOUCH and
 		action_id ~= nil then
@@ -67,22 +51,21 @@ function Blocker.on_input(self, action_id, action)
 end
 
 
---- Set enabled blocker component state.
---
--- Don't change node enabled state itself.
--- @tparam Blocker self @{Blocker}
--- @tparam boolean|nil state Enabled state
-function Blocker.set_enabled(self, state)
+---Set blocker enabled state
+---@param state boolean The new enabled state
+---@return druid.blocker self The blocker instance
+function M:set_enabled(state)
 	self._is_enabled = state
+
+	return self
 end
 
 
---- Return blocker enabled state
--- @tparam Blocker self @{Blocker}
--- @treturn boolean @True, if blocker is enabled
-function Blocker.is_enabled(self)
+---Get blocker enabled state
+---@return boolean is_enabled True if the blocker is enabled
+function M:is_enabled()
 	return self._is_enabled
 end
 
 
-return Blocker
+return M

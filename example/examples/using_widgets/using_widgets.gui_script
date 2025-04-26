@@ -1,0 +1,24 @@
+local druid = require("druid.druid")
+
+local fps_panel = require("druid.widget.fps_panel.fps_panel")
+
+function init(self)
+    self.druid = druid.new(self)
+    self.fps_panel = self.druid:new_widget(fps_panel, "fps_panel")
+end
+
+function final(self)
+    self.druid:final()
+end
+
+function update(self, dt)
+    self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+    return self.druid:on_input(action_id, action)
+end

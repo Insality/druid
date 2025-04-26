@@ -6,6 +6,7 @@ local gamepad_examples = require("example.examples.gamepad.examples_list")
 local window_examples = require("example.examples.windows.examples_list")
 local widgets_examples = require("example.examples.widgets.examples_list")
 local panthera_examples = require("example.examples.panthera.examples_list")
+local container_examples = require("example.examples.container.examples_list")
 
 local M = {}
 
@@ -18,10 +19,11 @@ local M = {}
 ---@field root string
 ---@field template string|nil
 ---@field code_url string|nil @URL to the source code
----@field component_class druid.base_component
----@field on_create fun(instance: druid.base_component, output_list: output_list)|nil
----@field get_debug_info (fun(instance: druid.base_component):string)|nil
----@field properties_control (fun(instance: druid.base_component, properties_panel: properties_panel))|nil
+---@field component_class druid.component|nil
+---@field widget_class druid.widget|nil New way to create components
+---@field on_create fun(instance: druid.component|druid.widget, output_list: output_list)|nil
+---@field get_debug_info (fun(instance: druid.component):string)|nil
+---@field properties_control (fun(instance: druid.component, properties_panel: properties_panel))|nil
 ---@field information_text_id string|nil
 
 
@@ -44,7 +46,7 @@ function M.get_examples()
 	add_examples(examples, "ui_examples_window", window_examples.get_examples())
 	add_examples(examples, "ui_examples_panthera", panthera_examples.get_examples())
 	add_examples(examples, "ui_examples_widgets", widgets_examples.get_examples())
-
+	add_examples(examples, "ui_examples_container", container_examples.get_examples())
 	return examples
 end
 
