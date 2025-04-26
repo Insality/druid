@@ -7,7 +7,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>druid 1.0</title>
+	<title>Druid 1.1.0</title>
 	<style type='text/css'>
 	/* Disable user selection to avoid strange bug in Chrome on Windows:
 	* Selecting a text outside the canvas, then clicking+draging would
@@ -143,14 +143,17 @@
 	</div>
 	<!-- -->
 	<script id='engine-loader' type='text/javascript' src="dmloader.js"></script>
-
+	<script id='engine-setup' type='text/javascript'>
+		// From here you can configure game startup parameters via the CUSTOM_PARAMETERS object,
+		// override ProgressView to create your own loader. See dmloader.js for more details.
+	</script>
 	<script id='engine-start' type='text/javascript'>
 		var runningFromFileWarning = document.getElementById("running-from-file-warning");
 		if (window.location.href.startsWith("file://")) {
 			runningFromFileWarning.style.display = "block";
 		}
 		else {
-			EngineLoader.load("canvas", "druid");
+			EngineLoader.load("canvas", "Druid");
 			runningFromFileWarning.parentNode.removeChild(runningFromFileWarning);
 		}
 	</script>

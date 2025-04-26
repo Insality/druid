@@ -1,14 +1,14 @@
 [project]
-title = druid
-version = 1.0
+title = Druid
+version = 1.1.0
 write_log = 0
+minimum_log_level = 1
 compress_archive = 1
 publisher = Insality
 developer = Maksim Tuprikov
 custom_resources = /example/locales
-commit_sha = 13fb109ef09e1590fc14a96c2c4d2c900fb517cc
-build_date = 2024-10-19T08:21:03Z
-title_as_file_name = druid
+commit_sha = 9fe8763c7f6f272421fb8b4c14edcfb9db880b4c
+title_as_file_name = Druid
 
 [display]
 width = 1920
@@ -16,7 +16,7 @@ height = 1080
 high_dpi = 1
 samples = 0
 fullscreen = 0
-update_frequency = 0
+update_frequency = 60
 swap_interval = 1
 vsync = 1
 display_profiles = /builtins/render/default.display_profilesc
@@ -27,7 +27,7 @@ display_device_info = 0
 clear_color_red = 0
 clear_color_green = 0
 clear_color_blue = 0
-clear_color_alpha = 0
+clear_color_alpha = 1
 
 [physics]
 type = 2D
@@ -64,6 +64,8 @@ max_font_batches = 128
 max_debug_vertices = 10000
 texture_profiles = /builtins/graphics/default.texture_profiles
 verify_graphics_calls = 0
+opengl_version_hint = 33
+opengl_core_profile_hint = true
 memory_size = 512
 
 [shader]
@@ -123,39 +125,39 @@ max_count = 16
 launch_screen = /builtins/manifests/ios/LaunchScreen.storyboardc
 pre_renderered_icons = 0
 bundle_identifier = example.unnamed
-bundle_name =
+bundle_name = 
 infoplist = /builtins/manifests/ios/Info.plist
 privacymanifest = /builtins/manifests/ios/PrivacyInfo.xcprivacy
 default_language = en
 localizations = en
 
 [android]
-version_code = 817
+version_code = 968
 minimum_sdk_version = 19
-target_sdk_version = 34
+target_sdk_version = 35
 package = com.insality.druid
-gcm_sender_id =
+gcm_sender_id = 
 manifest = /builtins/manifests/android/AndroidManifest.xml
 iap_provider = GooglePlay
 input_method = HiddenInputField
 immersive_mode = 0
 display_cutout = 1
 debuggable = 0
-proguard =
+proguard = 
 extract_native_libs = 1
 
 [osx]
-app_icon =
+app_icon = 
 infoplist = /builtins/manifests/osx/Info.plist
 privacymanifest = /builtins/manifests/osx/PrivacyInfo.xcprivacy
 bundle_identifier = example.unnamed
-bundle_name =
+bundle_name = 
 bundle_version = 1
 default_language = en
 localizations = en
 
 [windows]
-app_icon =
+app_icon = 
 
 [html5]
 custom_heap_size = 0
@@ -164,13 +166,14 @@ htmlfile = /builtins/manifests/web/engine_template.html
 cssfile = /builtins/manifests/web/dark_theme.css
 splash_image = /media/druid_logo.png
 archive_location_prefix = archive
-archive_location_suffix =
+archive_location_suffix = 
 engine_arguments = --verify-graphics-calls=false
 wasm_streaming = 0
 show_fullscreen_button = 0
 show_made_with_defold = 0
 show_console_banner = 0
 scale_mode = stretch
+transparent_graphics_context = 0
 
 [particle_fx]
 max_count = 0
@@ -179,7 +182,7 @@ max_particle_count = 0
 
 [network]
 http_timeout = 0
-ssl_certificates =
+ssl_certificates = 
 http_thread_count = 4
 http_cache_enabled = 1
 
@@ -225,7 +228,7 @@ input_scroll_up = mouse_wheel_up
 input_scroll_down = mouse_wheel_down
 
 [native_extension]
-app_manifest =
+app_manifest = 
 
 [saver]
 autosave_timer = 2
@@ -234,4 +237,7 @@ autosave_timer = 2
 path = /example/locales
 langs = en,ru,es,de,fr,ja,pt,it,kr,zh
 default = es
+
+[event]
+use_xpcall = 1
 
