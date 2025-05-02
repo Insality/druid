@@ -2,6 +2,15 @@
 
 > at /druid/widget/properties_panel/properties_panel.lua
 
+# Properties API:
+- [property_button](properties_panel/property_button_api.md)
+- [property_checkbox](properties_panel/property_checkbox_api.md)
+- [property_slider](properties_panel/property_slider_api.md)
+- [property_input](properties_panel/property_input_api.md)
+- [property_text](properties_panel/property_text_api.md)
+- [property_left_right_selector](properties_panel/property_left_right_selector_api.md)
+- [property_vector3](properties_panel/property_vector3_api.md)
+
 ## Functions
 
 - [properties_constructors](#properties_constructors)
@@ -130,6 +139,8 @@ properties_panel:update([dt])
 properties_panel:add_checkbox([on_create])
 ```
 
+Inspect Property Checkbox API [here](properties_panel/property_checkbox_api.md)
+
 - **Parameters:**
 	- `[on_create]` *(fun(checkbox: druid.widget.property_checkbox)|nil)*:
 
@@ -142,6 +153,8 @@ properties_panel:add_checkbox([on_create])
 ```lua
 properties_panel:add_slider([on_create])
 ```
+
+Inspect Property Slider API [here](properties_panel/property_slider_api.md)
 
 - **Parameters:**
 	- `[on_create]` *(fun(slider: druid.widget.property_slider)|nil)*:
@@ -156,6 +169,8 @@ properties_panel:add_slider([on_create])
 properties_panel:add_button([on_create])
 ```
 
+Inspect Property Button API [here](properties_panel/property_button_api.md)
+
 - **Parameters:**
 	- `[on_create]` *(fun(button: druid.widget.property_button)|nil)*:
 
@@ -168,6 +183,8 @@ properties_panel:add_button([on_create])
 ```lua
 properties_panel:add_input([on_create])
 ```
+
+Inspect Property Input API [here](properties_panel/property_input_api.md)
 
 - **Parameters:**
 	- `[on_create]` *(fun(input: druid.widget.property_input)|nil)*:
@@ -182,6 +199,8 @@ properties_panel:add_input([on_create])
 properties_panel:add_text([on_create])
 ```
 
+Inspect Property Text API [here](properties_panel/property_text_api.md)
+
 - **Parameters:**
 	- `[on_create]` *(fun(text: druid.widget.property_text)|nil)*:
 
@@ -195,6 +214,8 @@ properties_panel:add_text([on_create])
 properties_panel:add_left_right_selector([on_create])
 ```
 
+Inspect Property Left Right Selector API [here](properties_panel/property_left_right_selector_api.md)
+
 - **Parameters:**
 	- `[on_create]` *(fun(selector: druid.widget.property_left_right_selector)|nil)*:
 
@@ -207,6 +228,8 @@ properties_panel:add_left_right_selector([on_create])
 ```lua
 properties_panel:add_vector3([on_create])
 ```
+
+Inspect Property Vector3 API [here](properties_panel/property_vector3_api.md)
 
 - **Parameters:**
 	- `[on_create]` *(fun(vector3: druid.widget.property_vector3)|nil)*:
