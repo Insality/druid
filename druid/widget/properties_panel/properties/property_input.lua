@@ -1,9 +1,12 @@
+local event = require("event.event")
+
 ---@class druid.widget.property_input: druid.widget
 ---@field root node
 ---@field container druid.container
 ---@field text_name druid.text
 ---@field button druid.button
 ---@field druid druid.instance
+---@field on_change_value event fun(text: string)
 local M = {}
 
 function M:init()
@@ -19,6 +22,12 @@ function M:init()
 	self.container = self.druid:new_container(self.root)
 	self.container:add_container("text_name")
 	self.container:add_container("E_Anchor")
+
+	self.on_change_value = event.create()
+
+	self.rich_input.input.on_input_unselect:subscribe(function(_, text)
+		self.on_change_value:trigger(text)
+	end)
 end
 
 

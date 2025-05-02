@@ -18,6 +18,7 @@
 - [druid](#druid)
 - [selected](#selected)
 - [rich_input](#rich_input)
+- [on_change_value](#on_change_value)
 
 
 
@@ -88,3 +89,5 @@ property_input:on_change(callback, [callback_context])
 <a name="rich_input"></a>
 - **rich_input** (_druid.rich_input_): The component that handles a rich text input field, it's a wrapper around the druid.input component
 
+<a name="on_change_value"></a>
+- **on_change_value** (_event.event_): fun(text) Event triggered when the value of the input changes.
