@@ -41,6 +41,8 @@ return function()
             assert(container.mode == const.LAYOUT_MODE.FIT)
             assert(container.min_size_x == 0)
             assert(container.min_size_y == 0)
+            assert(container.max_size_x == nil)
+            assert(container.max_size_y == nil)
             assert(container._containers ~= nil)
             assert(#container._containers == 0)
 
@@ -137,6 +139,34 @@ return function()
             gui.delete_node(container_node)
         end)
 
+        it("Should set max size", function()
+            local container_node = gui.new_box_node(vmath.vector3(50, 50, 0), vmath.vector3(100, 100, 0))
+            local container = druid:new_container(container_node)
+
+            assert(container.max_size_x == nil)
+            assert(container.max_size_y == nil)
+
+            container:set_max_size(150, 200)
+
+            assert(container.max_size_x == 150)
+            assert(container.max_size_y == 200)
+
+            -- Should respect max size when setting larger size
+            container:set_size(300, 300)
+            local size = container:get_size()
+            assert(size.x == 150)
+            assert(size.y == 200)
+
+            -- Should allow smaller size
+            container:set_size(100, 100)
+            size = container:get_size()
+            assert(size.x == 100)
+            assert(size.y == 100)
+
+            druid:remove(container)
+            gui.delete_node(container_node)
+        end)
+        
         it("Should fire on_size_changed event", function()
             local container_node = gui.new_box_node(vmath.vector3(50, 50, 0), vmath.vector3(100, 100, 0))
             local container = druid:new_container(container_node)
