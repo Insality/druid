@@ -58,6 +58,8 @@ local CORNER_PIVOTS = {
 ---@field fit_size vector3 The fit size
 ---@field min_size_x number|nil The minimum size x
 ---@field min_size_y number|nil The minimum size y
+---@field max_size_x number|nil The maximum size x
+---@field max_size_y number|nil The maximum size y
 ---@field on_size_changed event fun(self: druid.container, size: vector3) The event triggered when the size changes
 ---@field _parent_container druid.container The parent container
 ---@field _containers table The containers
@@ -75,6 +77,8 @@ function M:init(node, mode, callback)
 
 	self.min_size_x = 0
 	self.min_size_y = 0
+	self.max_size_x = nil
+	self.max_size_y = nil
 	self._containers = {}
 	self._draggable_corners = {}
 	self.node_offset = vmath.vector4(0)
@@ -166,7 +170,13 @@ function M:set_size(width, height, anchor_pivot)
 	if self.min_size_y then
 		height = max(height, self.min_size_y)
 	end
-
+	if self.max_size_x then
+		width = min(width, self.max_size_x)
+	end
+	if self.max_size_y then
+		height = min(height, self.max_size_y)
+	end
+	
 	if (width and width ~= self.size.x) or (height and height ~= self.size.y) then
 		self.center_offset.x = -width * self.pivot_offset.x
 		self.center_offset.y = -height * self.pivot_offset.y
@@ -522,6 +532,12 @@ function M:_on_corner_drag(x, y, corner_offset)
 	if self.min_size_y and size.y + y < self.min_size_y then
 		y = self.min_size_y - size.y
 	end
+	if self.max_size_x and size.x + x > self.max_size_x then
+		x = self.max_size_x - size.x
+	end
+	if self.max_size_y and size.y + y > self.max_size_y then
+		y = self.max_size_y - size.y
+	end	
 
 	if corner_offset.x < 0 then
 		self.node_offset.x = self.node_offset.x - x
@@ -564,6 +580,19 @@ end
 function M:set_min_size(min_size_x, min_size_y)
 	self.min_size_x = min_size_x or self.min_size_x
 	self.min_size_y = min_size_y or self.min_size_y
+	self:refresh()
+
+	return self
+end
+
+
+---Set the maximum size of the container
+---@param max_size_x number|nil The maximum size x
+---@param max_size_y number|nil The maximum size y
+---@return druid.container self Current container instance
+function M:set_max_size(max_size_x, max_size_y)
+	self.max_size_x = max_size_x or self.max_size_x
+	self.max_size_y = max_size_y or self.max_size_y
 	self:refresh()
 
 	return self

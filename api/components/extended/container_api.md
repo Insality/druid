@@ -38,6 +38,7 @@ Create container component with druid: `container = druid:new_container(node, mo
 - [clear_draggable_corners](#clear_draggable_corners)
 - [fit_into_node](#fit_into_node)
 - [set_min_size](#set_min_size)
+- [set_max_size](#set_max_size)
 
 ## Fields
 
@@ -54,6 +55,8 @@ Create container component with druid: `container = druid:new_container(node, mo
 - [fit_size](#fit_size)
 - [min_size_x](#min_size_x)
 - [min_size_y](#min_size_y)
+- [max_size_x](#max_size_x)
+- [max_size_y](#max_size_y)
 - [on_size_changed](#on_size_changed)
 - [node_fill_x](#node_fill_x)
 - [node_fill_y](#node_fill_y)
@@ -303,6 +306,21 @@ Set the minimum size of the container
 - **Returns:**
 	- `self` *(druid.container)*: Current container instance
 
+### set_max_size
+
+---
+```lua
+container:set_max_size([max_size_x], [max_size_y])
+```
+
+Set the maximum size of the container
+
+- **Parameters:**
+	- `[max_size_x]` *(number|nil)*: The maximum size x
+	- `[max_size_y]` *(number|nil)*: The maximum size y
+
+- **Returns:**
+	- `self` *(druid.container)*: Current container instance
 
 ## Fields
 <a name="node"></a>
@@ -343,6 +361,12 @@ Set the minimum size of the container
 
 <a name="min_size_y"></a>
 - **min_size_y** (_number_): The minimum size y
+
+<a name="max_size_x"></a>
+- **max_size_x** (_number_): The maximum size x
+
+<a name="max_size_y"></a>
+- **max_size_y** (_number_): The maximum size y
 
 <a name="on_size_changed"></a>
 - **on_size_changed** (_event_): fun(self: druid.container, size: vector3) The event triggered when the size changes
