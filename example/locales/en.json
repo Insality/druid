@@ -147,6 +147,9 @@
 	"ui_example_data_list_horizontal_basic": "Data List Horizontal Basic",
 	"ui_example_data_list_horizontal_basic_description": "How to make a horizontal data list",
 
+	"ui_example_data_list_matrix_basic": "Data List Matrix Basic",
+	"ui_example_data_list_matrix_basic_description": "How to make a matrix data list",
+
 	"ui_example_data_list_add_remove_clear": "Data List Add Remove Clear",
 	"ui_example_data_list_add_remove_clear_description": "How the add, remove and clear functions work in the data list",
 

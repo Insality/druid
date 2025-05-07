@@ -1,0 +1,117 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
+}
+nodes {
+  type: TYPE_BOX
+  texture: "druid_example/empty"
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    y: 350.0
+  }
+  size {
+    x: 400.0
+    y: 700.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid_example/pixel"
+  id: "view"
+  pivot: PIVOT_N
+  parent: "root"
+  inherit_alpha: true
+  clipping_mode: CLIPPING_MODE_STENCIL
+}
+nodes {
+  size {
+    x: 400.0
+    y: 700.0
+  }
+  type: TYPE_BOX
+  texture: "druid_example/empty"
+  id: "content"
+  pivot: PIVOT_N
+  parent: "view"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    y: -350.0
+  }
+  size {
+    x: 100.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "prefab"
+  parent: "content"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  size {
+    x: 90.0
+    y: 90.0
+  }
+  color {
+    x: 0.631
+    y: 0.843
+    z: 0.961
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "panel"
+  parent: "prefab"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_TEXT
+  text: "1"
+  font: "text_bold"
+  id: "text"
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "prefab"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
