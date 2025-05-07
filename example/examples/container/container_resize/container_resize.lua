@@ -1,4 +1,4 @@
----@class widget.container_anchors: druid.widget
+---@class widget.container_resize: druid.widget
 local M = {}
 
 
