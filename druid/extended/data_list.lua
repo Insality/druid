@@ -267,10 +267,17 @@ function M:_refresh()
 	local start_index = self.grid:get_index(start_pos)
 	start_index = math.max(1, start_index)
 
-	local pivot = helper.get_pivot_offset(gui.get_pivot(self.scroll.view_node))
-	local offset_x = self.scroll.view_size.x * (0.5 - pivot.x)
-	local offset_y = self.scroll.view_size.y * (0.5 + pivot.y)
+	local offset_x = self.scroll.view_size.x
+	local offset_y = self.scroll.view_size.y
 	local end_pos = vmath.vector3(start_pos.x + offset_x, start_pos.y - offset_y, 0)
+
+	local max_offset_x = (self.grid.in_row - 1) * self.grid.node_size.x
+	end_pos.x = math.min(end_pos.x, start_pos.x + max_offset_x)
+
+	if #self._data <= self.grid.in_row then
+		end_pos.y = start_pos.y
+	end
+
 	local end_index = self.grid:get_index(end_pos)
 	end_index = math.min(#self._data, end_index)
 
