@@ -22,6 +22,15 @@ function M.get_examples()
 		},
 
 		{
+			name_id = "ui_example_data_list_matrix_basic",
+			information_text_id = "ui_example_data_list_matrix_basic_description",
+			template = "data_list_matrix_basic",
+			root = "data_list_matrix_basic/root",
+			code_url = "example/examples/data_list/basic/data_list_matrix_basic.lua",
+			widget_class = require("example.examples.data_list.basic.data_list_matrix_basic"),
+		},
+
+		{
 			name_id = "ui_example_data_list_add_remove_clear",
 			information_text_id = "ui_example_data_list_add_remove_clear_description",
 			template = "data_list_add_remove_clear",

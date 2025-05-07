@@ -2864,6 +2864,49 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_TEMPLATE
+  id: "data_list_matrix_basic"
+  parent: "data_list"
+  inherit_alpha: true
+  template: "/example/examples/data_list/basic/data_list_matrix_basic.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_matrix_basic/root"
+  parent: "data_list_matrix_basic"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_matrix_basic/view"
+  parent: "data_list_matrix_basic/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_matrix_basic/content"
+  parent: "data_list_matrix_basic/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_matrix_basic/prefab"
+  parent: "data_list_matrix_basic/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "data_list_matrix_basic/panel"
+  parent: "data_list_matrix_basic/prefab"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "data_list_matrix_basic/text"
+  parent: "data_list_matrix_basic/prefab"
+  template_node_child: true
+}
+nodes {
   type: TYPE_BOX
   texture: "druid_example/empty"
   id: "gamepad"
