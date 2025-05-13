@@ -117,7 +117,17 @@ function M:set_nodes(nodes)
 		nodes = gui.clone_tree(nodes) --[[@as table<hash, node>]]
 	end
 
+	-- When we use gui.clone_tree in inner template (template inside other template)
+	-- this nodes have no id. We have table: hash(correct_id) : hash("") or hash("_nodeX"
+	-- It's wrong and we use this hack to fix this
+	if nodes then
+		for id, node in pairs(nodes) do
+			gui.set_id(node, id)
+		end
+	end
+
 	self._meta.nodes = nodes
+
 	return self
 end
 

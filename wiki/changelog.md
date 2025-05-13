@@ -709,3 +709,6 @@ Please support me if you like this project! It will help me keep engaged to upda
 #### Druid 1.1.2
 - [#310] Add data list matrix example (Grid 4 in row)
 - [Data List] Fix for data list element amounts issue
+
+#### Druid 1.1.3
+- Fix for node_id of cloned nodes with `gui.clone_tree`
