@@ -55,12 +55,13 @@ function M:init(node_or_node_id, layout_type)
 	self.entities = {}
 	self.size = gui.get_size(self.node)
 
+	-- Padding X is a Slice9 L Value
+	-- Padding Y is a Slice9 T Value
 	self.padding = gui.get_slice9(self.node)
 	-- Margin X is a Slice9 R Value
 	-- Margin Y is a Slice9 B Value
 	self.margin = { x = self.padding.z, y = self.padding.w }
-	-- Padding X is a Slice9 L Value
-	-- Padding Y is a Slice9 T Value
+
 	self.padding.z = self.padding.x
 	self.padding.w = self.padding.y
 
@@ -123,10 +124,10 @@ function M:set_margin(margin_x, margin_y)
 end
 
 
----@param padding_x number|nil The padding x
----@param padding_y number|nil The padding y
----@param padding_z number|nil The padding z
----@param padding_w number|nil The padding w
+---@param padding_x number|nil From Left
+---@param padding_y number|nil From Top
+---@param padding_z number|nil From Right
+---@param padding_w number|nil From Bottom
 ---@return druid.layout self Current layout instance
 function M:set_padding(padding_x, padding_y, padding_z, padding_w)
 	self.padding.x = padding_x or self.padding.x
