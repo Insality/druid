@@ -205,6 +205,59 @@ function M:scroll_to(point, is_instant)
 end
 
 
+function M:scroll_to_make_node_visible(node, is_instant)
+	-- Can be any node not only directly at scroll content
+	local screen_position = gui.get_screen_position(node)
+	local local_position = gui.screen_to_local(self.content_node, screen_position)
+
+	-- Get the node borders in content node space
+	local node_border = helper.get_border(node, local_position)
+
+	-- Calculate how much we need to scroll to make the node visible
+	local scroll_position = vmath.vector3(self.position)
+	local view_border = self.view_border
+
+	-- Convert content position to view position
+	local node_in_view_x = node_border.x + scroll_position.x
+	local node_in_view_y = node_border.y + scroll_position.y
+	local node_in_view_z = node_border.z + scroll_position.x
+	local node_in_view_w = node_border.w + scroll_position.y
+
+	local target_position = vmath.vector3(scroll_position)
+
+	-- Check if node is outside view horizontally
+	if self._is_horizontal_scroll then
+		-- If the node is too far to the right (left side not visible)
+		if node_in_view_x < view_border.x then
+			target_position.x = scroll_position.x + (view_border.x - node_in_view_x)
+		end
+		-- If the node is too far to the left (right side not visible)
+		if node_in_view_z > view_border.z then
+			target_position.x = scroll_position.x - (node_in_view_z - view_border.z)
+		end
+	end
+
+	-- Check if node is outside view vertically
+	if self._is_vertical_scroll then
+		-- If the node is too far up (bottom side not visible)
+		if node_in_view_w < view_border.w then
+			target_position.y = scroll_position.y + (view_border.w - node_in_view_w)
+		end
+		-- If the node is too far down (top side not visible)
+		if node_in_view_y > view_border.y then
+			target_position.y = scroll_position.y - (node_in_view_y - view_border.y)
+		end
+	end
+
+	-- If we need to scroll, do it
+	if target_position.x ~= scroll_position.x or target_position.y ~= scroll_position.y then
+		-- Convert to scroll_to expected format (content position, not scroll position)
+		local scroll_to_position = vmath.vector3(-target_position.x, -target_position.y, 0)
+		self:scroll_to(scroll_to_position, is_instant)
+	end
+end
+
+
 ---Scroll to item in scroll by point index.
 ---@param index number Point index
 ---@param skip_cb boolean|nil If true, skip the point callback
