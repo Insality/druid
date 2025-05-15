@@ -141,16 +141,23 @@ end
 ---@return number stretch_x
 ---@return number stretch_y
 function M.get_screen_aspect_koef()
-	local window_x, window_y = window.get_size()
+	local gui_width = gui.get_width()
+	local gui_height = gui.get_height()
+	local gui_r = gui_width / gui_height
 
-	local stretch_x = window_x / gui.get_width()
-	local stretch_y = window_y / gui.get_height()
-	local stretch_koef = math.min(stretch_x, stretch_y)
+	local window_width, window_height = window.get_size()
+	local window_r = window_width / window_height
 
-	local koef_x = window_x / (stretch_koef * sys.get_config_int("display.width"))
-	local koef_y = window_y / (stretch_koef * sys.get_config_int("display.height"))
+	local w_s = 1
+	local h_s = 1
 
-	return koef_x, koef_y
+	if gui_r < window_r then
+		w_s = window_r / gui_r
+	else
+		h_s = gui_r / window_r
+	end
+
+	return w_s, h_s
 end
 
 
