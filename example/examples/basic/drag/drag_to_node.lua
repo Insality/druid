@@ -11,6 +11,12 @@ function M:init()
 	self.drag = self.druid:new_drag("drag/root", self.on_drag)
 	self.drag.on_drag_end:subscribe(self.on_drag_end)
 
+	self.druid:new_button("drag/root", function()
+		self.counter = self.counter - 1
+		gui.set_text(self.text_counter, self.counter)
+		self:on_drop_to_zone()
+	end)
+
 	-- Save start position for animation
 	self.start_position = gui.get_position(self.drag.node)
 end
