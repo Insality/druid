@@ -11,6 +11,10 @@ local M = {}
 ---@param color_id string Color id from palette or hex color
 ---@return vector4
 function M.get_color(color_id)
+	if PALETTE_DATA[color_id] then
+		return PALETTE_DATA[color_id]
+	end
+
 	-- Check is it hex: starts with "#" or contains only 3 or 6 hex symbols
 	if type(color_id) == "string" then
 		if string.sub(color_id, 1, 1) == "#" or string.match(color_id, "^[0-9a-fA-F]+$") then
@@ -18,7 +22,7 @@ function M.get_color(color_id)
 		end
 	end
 
-	return PALETTE_DATA[color_id] or COLOR_WHITE
+	return COLOR_WHITE
 end
 
 
@@ -168,6 +172,24 @@ function M.rgb2hex(red, green, blue)
 	local g = string.format("%x", math.floor(green * 255))
 	local b = string.format("%x", math.floor(blue * 255))
 	return string.upper((#r == 1 and "0" or "") .. r .. (#g == 1 and "0" or "") .. g .. (#b == 1 and "0" or "") .. b)
+end
+
+
+local load_palette_from_json = function(path)
+	local data = sys.load_resource(path)
+	if not data then
+		return
+	end
+
+	return json.decode(data)
+end
+
+local DEFAULT_PALETTE_PATH = sys.get_config_string("druid.palette_path")
+if DEFAULT_PALETTE_PATH then
+	local loaded_palette = load_palette_from_json(DEFAULT_PALETTE_PATH)
+	if loaded_palette and loaded_palette["default"] then
+		M.add_palette(loaded_palette["default"])
+	end
 end
 
 
