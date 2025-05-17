@@ -61,6 +61,10 @@ function M:init()
 	end)
 	gui.set_enabled(self.button_back.node, false)
 
+	self.button_refresh = self.druid:new_button("icon_refresh", function()
+		self.is_dirty = true
+	end)
+
 	-- We not using as a part of properties, since it handled in a way to be paginable
 	self.paginator = self.druid:new_widget(property_left_right_selector, "property_left_right_selector", "root")
 	self.paginator:set_text("Page")
@@ -388,8 +392,7 @@ function M:render_lua_table(data)
 
 	for i = 1, #component_order do
 		local component_id = component_order[i]
-		local component = data[component_id]
-		self:add_property_component(component_id, component, data)
+		self:add_property_component(component_id, data)
 	end
 
 	local metatable = getmetatable(data)
@@ -403,7 +406,7 @@ function M:render_lua_table(data)
 		for i = 1, #metatable_order do
 			local component_id = metatable_order[i]
 			local component = metatable.__index[component_id]
-			self:add_property_component("M:" .. component_id, component, data)
+			self:add_property_component("M:" .. component_id, data)
 		end
 	end
 end
@@ -411,32 +414,32 @@ end
 
 ---@private
 ---@param component_id string
----@param component table
----@param context table
-function M:add_property_component(component_id, component, context)
+---@param data table
+function M:add_property_component(component_id, data)
+	local component = data[component_id]
 	local component_type = type(component)
 
 	if component_type == "table" then
-		local is_empty = next(component) == nil
-		local is_array = component[1] ~= nil
-		local name = "Inspect"
-		if is_empty then
-			name = "Inspect (Empty)"
-		end
-		if is_array then
-			name = "Inspect (" .. #component .. ")"
-		end
-
-		local button_name = component_id
-		-- If it's a number or array, try to get the id/name/prefab_id from the component
-		if type(component) == "table" and type(component_id) == "number" then
-			local extracted_id = component.name or component.prefab_id or component.node_id or component.id
-			if extracted_id then
-				button_name = component_id .. ". " .. extracted_id
-			end
-		end
-
 		self:add_button(function(button)
+			local is_empty = next(component) == nil
+			local is_array = component[1] ~= nil
+			local name = "Inspect"
+			if is_empty then
+				name = "Inspect (Empty)"
+			end
+			if is_array then
+				name = "Inspect (" .. #component .. ")"
+			end
+
+			local button_name = component_id
+			-- If it's a number or array, try to get the id/name/prefab_id from the component
+			if type(component) == "table" and type(component_id) == "number" then
+				local extracted_id = component.name or component.prefab_id or component.node_id or component.id
+				if extracted_id then
+					button_name = component_id .. ". " .. extracted_id
+				end
+			end
+
 			button:set_text_property(button_name)
 			button:set_text_button(name)
 			button.button.on_click:subscribe(function()
@@ -450,9 +453,9 @@ function M:add_property_component(component_id, component, context)
 	if component_type == "string" then
 		self:add_input(function(input)
 			input:set_text_property(tostring(component_id))
-			input:set_text_value(tostring(component))
+			input:set_text_value(tostring(data[component_id]))
 			input:on_change(function(_, value)
-				context[component_id] = value
+				data[component_id] = value
 			end)
 		end)
 	end
@@ -460,9 +463,9 @@ function M:add_property_component(component_id, component, context)
 	if component_type == "number" then
 		self:add_input(function(input)
 			input:set_text_property(tostring(component_id))
-			input:set_text_value(tostring(helper.round(component, 3)))
+			input:set_text_value(tostring(helper.round(data[component_id], 3)))
 			input:on_change(function(_, value)
-				context[component_id] = tonumber(value)
+				data[component_id] = tonumber(value)
 			end)
 		end)
 	end
@@ -470,9 +473,9 @@ function M:add_property_component(component_id, component, context)
 	if component_type == "boolean" then
 		self:add_checkbox(function(checkbox)
 			checkbox:set_text_property(tostring(component_id))
-			checkbox:set_value(component)
+			checkbox:set_value(data[component_id])
 			checkbox:on_change(function(value)
-				context[component_id] = value
+				data[component_id] = value
 			end)
 		end)
 	end
@@ -482,17 +485,17 @@ function M:add_property_component(component_id, component, context)
 			---@cast component vector3
 			self:add_vector3(function(vector3)
 				vector3:set_text_property(tostring(component_id))
-				vector3:set_value(component.x, component.y, component.z)
+				vector3:set_value(data[component_id].x, data[component_id].y, data[component_id].z)
 				vector3.on_change:subscribe(function(value)
-					component.x = value.x
-					component.y = value.y
-					component.z = value.z
+					data[component_id].x = value.x
+					data[component_id].y = value.y
+					data[component_id].z = value.z
 				end)
 			end)
 		else
 			self:add_text(function(text)
 				text:set_text_property(tostring(component_id))
-				text:set_text_value(tostring(component))
+				text:set_text_value(tostring(data[component_id]))
 			end)
 		end
 	end
@@ -502,7 +505,7 @@ function M:add_property_component(component_id, component, context)
 			button:set_text_property(tostring(component_id))
 			button:set_text_button("Call")
 			button.button.on_click:subscribe(function()
-				component(context)
+				component(data)
 			end)
 		end)
 	end
