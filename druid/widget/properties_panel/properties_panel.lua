@@ -1,3 +1,4 @@
+local helper = require("druid.helper")
 local property_checkbox = require("druid.widget.properties_panel.properties.property_checkbox")
 local property_slider = require("druid.widget.properties_panel.properties.property_slider")
 local property_button = require("druid.widget.properties_panel.properties.property_button")
@@ -34,6 +35,9 @@ function M:init()
 
 	self.default_size = self.container:get_size()
 
+	-- To have ability to go back to previous scene, collections of all properties to rebuild
+	self.scenes = {}
+
 	self.properties = {}
 	self.properties_constructors = {}
 	self.current_page = 1
@@ -51,6 +55,11 @@ function M:init()
 	self.button_hidden = self.druid:new_button("icon_drag", function()
 		self:set_hidden(not self._is_hidden)
 	end):set_style(nil)
+
+	self.button_back = self.druid:new_button("icon_back", function()
+		self:previous_scene()
+	end)
+	gui.set_enabled(self.button_back.node, false)
 
 	-- We not using as a part of properties, since it handled in a way to be paginable
 	self.paginator = self.druid:new_widget(property_left_right_selector, "property_left_right_selector", "root")
@@ -109,6 +118,37 @@ function M:clear_created_properties()
 
 	-- Use paginator as "pinned" widget
 	self.layout:add(self.paginator.root)
+end
+
+
+function M:next_scene()
+	local scene = {
+		header = self.text_header:get_text(),
+		current_page = self.current_page,
+	}
+
+	helper.add_array(scene, self.properties_constructors)
+	table.insert(self.scenes, scene)
+
+	self:clear()
+
+	self.is_dirty = true
+
+	gui.set_enabled(self.button_back.node, #self.scenes > 0)
+end
+
+
+function M:previous_scene()
+	local scene = table.remove(self.scenes)
+	self:clear()
+	helper.add_array(self.properties_constructors, scene)
+
+	self.text_header:set_text(scene.header)
+	self.current_page = scene.current_page
+
+	self.is_dirty = true
+
+	gui.set_enabled(self.button_back.node, #self.scenes > 0)
 end
 
 
@@ -301,16 +341,173 @@ function M:is_hidden()
 end
 
 
+function M:load_previous_page()
+	self.current_page = self.current_page - 1
+	self.is_dirty = true
+end
+
+
 ---@param properties_per_page number
 function M:set_properties_per_page(properties_per_page)
 	self.properties_per_page = properties_per_page
 end
 
 
+---Set a page of current scene
+---@param page number
 function M:set_page(page)
 	self.current_page = page
 	self.is_dirty = true
 end
+
+
+---Set a text at left top corner of the properties panel
+---@param header string
+function M:set_header(header)
+	self.text_header:set_text(header)
+end
+
+
+---@param data table
+function M:render_lua_table(data)
+	local component_order = {}
+	for component_id in pairs(data) do
+		table.insert(component_order, component_id)
+	end
+	table.sort(component_order, function(a, b)
+		local a_type = type(data[a])
+		local b_type = type(data[b])
+		if a_type ~= b_type then
+			return a_type < b_type
+		end
+		if type(a) == "number" and type(b) == "number" then
+			return a < b
+		end
+		return tostring(a) < tostring(b)
+	end)
+
+	for i = 1, #component_order do
+		local component_id = component_order[i]
+		local component = data[component_id]
+		self:add_property_component(component_id, component, data)
+	end
+
+	local metatable = getmetatable(data)
+	if metatable and metatable.__index and type(metatable.__index) == "table" then
+		local metatable_order = {}
+		for key in pairs(metatable.__index) do
+			table.insert(metatable_order, key)
+		end
+		table.sort(metatable_order)
+
+		for i = 1, #metatable_order do
+			local component_id = metatable_order[i]
+			local component = metatable.__index[component_id]
+			self:add_property_component("M:" .. component_id, component, data)
+		end
+	end
+end
+
+
+---@private
+---@param component_id string
+---@param component table
+---@param context table
+function M:add_property_component(component_id, component, context)
+	local component_type = type(component)
+
+	if component_type == "table" then
+		local is_empty = next(component) == nil
+		local is_array = component[1] ~= nil
+		local name = "Inspect"
+		if is_empty then
+			name = "Inspect (Empty)"
+		end
+		if is_array then
+			name = "Inspect (" .. #component .. ")"
+		end
+
+		local button_name = component_id
+		-- If it's a number or array, try to get the id/name/prefab_id from the component
+		if type(component) == "table" and type(component_id) == "number" then
+			local extracted_id = component.name or component.prefab_id or component.node_id or component.id
+			if extracted_id then
+				button_name = component_id .. ". " .. extracted_id
+			end
+		end
+
+		self:add_button(function(button)
+			button:set_text_property(button_name)
+			button:set_text_button(name)
+			button.button.on_click:subscribe(function()
+				self:next_scene()
+				self:set_header(button_name)
+				self:render_lua_table(component)
+			end)
+		end)
+	end
+
+	if component_type == "string" then
+		self:add_input(function(input)
+			input:set_text_property(tostring(component_id))
+			input:set_text_value(tostring(component))
+			input:on_change(function(_, value)
+				context[component_id] = value
+			end)
+		end)
+	end
+
+	if component_type == "number" then
+		self:add_input(function(input)
+			input:set_text_property(tostring(component_id))
+			input:set_text_value(tostring(helper.round(component, 3)))
+			input:on_change(function(_, value)
+				context[component_id] = tonumber(value)
+			end)
+		end)
+	end
+
+	if component_type == "boolean" then
+		self:add_checkbox(function(checkbox)
+			checkbox:set_text_property(tostring(component_id))
+			checkbox:set_value(component)
+			checkbox:on_change(function(value)
+				context[component_id] = value
+			end)
+		end)
+	end
+
+	if component_type == "userdata" then
+		if types.is_vector3(component) then
+			---@cast component vector3
+			self:add_vector3(function(vector3)
+				vector3:set_text_property(tostring(component_id))
+				vector3:set_value(component.x, component.y, component.z)
+				vector3.on_change:subscribe(function(value)
+					component.x = value.x
+					component.y = value.y
+					component.z = value.z
+				end)
+			end)
+		else
+			self:add_text(function(text)
+				text:set_text_property(tostring(component_id))
+				text:set_text_value(tostring(component))
+			end)
+		end
+	end
+
+	if component_type == "function" then
+		self:add_button(function(button)
+			button:set_text_property(tostring(component_id))
+			button:set_text_button("Call")
+			button.button.on_click:subscribe(function()
+				component(context)
+			end)
+		end)
+	end
+end
+
 
 
 return M
