@@ -50,6 +50,14 @@ function M:set_text_button(text)
 end
 
 
+---@param enabled boolean
+---@return druid.widget.property_button
+function M:set_enabled(enabled)
+	self.button:set_enabled(enabled)
+	return self
+end
+
+
 function M:set_color(color_value)
 	color.set_color(self:get_node("button"), color_value)
 end

@@ -329,6 +329,12 @@ function M:remove(widget)
 end
 
 
+---Force to refresh properties next update
+function M:set_dirty()
+	self.is_dirty = true
+end
+
+
 function M:set_hidden(is_hidden)
 	self._is_hidden = is_hidden
 	local hidden_size = gui.get_size(self:get_node("header"))
