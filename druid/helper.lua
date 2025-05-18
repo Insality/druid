@@ -473,6 +473,9 @@ function M.get_text_metrics_from_node(text_node)
 	options.tracking = gui.get_tracking(text_node)
 	options.line_break = gui.get_line_break(text_node)
 
+	options.width = 0
+	options.leading = 0
+
 	-- Gather other options only if it used in node
 	if options.line_break then
 		options.width = gui.get_size(text_node).x
