@@ -14,7 +14,7 @@ update_frequency = 60
 
 [project]
 title = Druid
-version = 1.1.3
+version = 1.1.4
 publisher = Insality
 developer = Maksim Tuprikov
 custom_resources = /example/locales

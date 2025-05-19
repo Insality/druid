@@ -712,3 +712,6 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 #### Druid 1.1.3
 - Fix for node_id of cloned nodes with `gui.clone_tree`
+
+#### Druid 1.1.4
+- [#312] Fix for text metrics issue if returned height is 0 sometimes
