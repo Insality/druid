@@ -114,6 +114,12 @@ local function wrap_widget(widget)
 		end
 	end
 
+	for key, value in pairs(widget) do
+		if event.is_event(value) then
+			wrapped_widget[key] = value
+		end
+	end
+
 	return wrapped_widget
 end
 
@@ -127,22 +133,21 @@ end
 ---@generic T: druid.widget
 ---@param widget_class T The class of the widget to return
 ---@param gui_url url GUI url
----@return T? widget The new created widget,
-function M.get_widget(widget_class, gui_url)
+---@param params any|nil Additional parameters to pass to the widget's init function
+---@return T widget The new created widget,
+function M.get_widget(widget_class, gui_url, params)
 	gui_url = gui_url or msg.url()
 	local registered_druids = REGISTERED_GUI_WIDGETS[gui_url.socket]
-	if not registered_druids then
-		return nil
-	end
+	assert(registered_druids, "Druid widget not registered for this game object")
 
 	for index = 1, #registered_druids do
 		local druid = registered_druids[index]
 		if druid.fragment == gui_url.fragment and druid.path == gui_url.path then
-			return druid.new_widget:trigger(widget_class)
+			return druid.new_widget:trigger(widget_class, nil, nil, params)
 		end
 	end
 
-	return nil
+	error("Druid widget not found for this game object: " .. gui_url)
 end
 
 
@@ -156,8 +161,8 @@ function M.register_druid_as_widget(druid)
 	table.insert(REGISTERED_GUI_WIDGETS[gui_url.socket], {
 		path = gui_url.path,
 		fragment = gui_url.fragment,
-		new_widget = event.create(function(widget_class)
-			return wrap_widget(druid:new_widget(widget_class))
+		new_widget = event.create(function(widget_class, template, nodes, params)
+			return wrap_widget(druid:new_widget(widget_class, template, nodes, params))
 		end),
 	})
 end

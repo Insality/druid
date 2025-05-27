@@ -13,6 +13,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field image_pixel_grid_snap boolean
 ---@field combine_words boolean
 ---@field default_animation string
+---@field split_by_character boolean
 ---@field text_prefab node
 ---@field adjust_scale number
 ---@field default_texture string
@@ -194,6 +195,15 @@ function M:tagged(tag)
 end
 
 
+---Set if the rich text should split to characters, not words
+---@param value boolean
+---@return druid.rich_text self
+function M:set_split_to_characters(value)
+	self._settings.split_to_characters = value
+	return self
+end
+
+
 ---Get all current created words, each word is a table that contains the information about the word
 ---@return druid.rich_text.word[]
 function M:get_words()
@@ -239,6 +249,7 @@ function M:_create_settings()
 		outline = gui.get_outline(self.root),
 		text_leading = gui.get_leading(self.root),
 		is_multiline = gui.get_line_break(self.root),
+		split_to_characters = false,
 
 		-- Image settings
 		image_pixel_grid_snap = false, -- disabled now

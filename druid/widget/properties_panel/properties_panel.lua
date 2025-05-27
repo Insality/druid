@@ -343,6 +343,11 @@ function M:set_hidden(is_hidden)
 	self.container:set_size(new_size.x, new_size.y, gui.PIVOT_N)
 
 	gui.set_enabled(self.content, not self._is_hidden)
+	gui.set_enabled(self.button_refresh.node, not self._is_hidden)
+
+	if not self._is_hidden then
+		self.is_dirty = true
+	end
 end
 
 

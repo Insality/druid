@@ -2,7 +2,8 @@
 -- Author: Britzl
 -- Modified by: Insality
 
-local color = require("druid.custom.rich_text.module.rt_color")
+--local color = require("druid.custom.rich_text.module.rt_color")
+local color = require("druid.color")
 
 local M = {}
 local tags = {}
@@ -44,19 +45,19 @@ end
 -- Example: <color=FF0000>Rich Text</color>
 M.register("color", function(params, settings, style)
 	params = style.COLORS[params] or params
-	settings.color = color.parse(params)
+	settings.color = color.get_color(params)
 end)
 
 
 M.register("shadow", function(params, settings, style)
 	params = style.COLORS[params] or params
-	settings.shadow = color.parse(params)
+	settings.shadow = color.get_color(params)
 end)
 
 
 M.register("outline", function(params, settings, style)
 	params = style.COLORS[params] or params
-	settings.outline = color.parse(params)
+	settings.outline = color.get_color(params)
 end)
 
 
