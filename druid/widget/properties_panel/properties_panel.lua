@@ -1,3 +1,6 @@
+local event = require("event.event")
+
+local color = require("druid.color")
 local helper = require("druid.helper")
 local property_checkbox = require("druid.widget.properties_panel.properties.property_checkbox")
 local property_slider = require("druid.widget.properties_panel.properties.property_slider")
@@ -22,6 +25,8 @@ local property_vector3 = require("druid.widget.properties_panel.properties.prope
 ---@field properties_constructors fun()[] List of properties functions to create a new widget. Used to not spawn non-visible widgets but keep the reference
 local M = {}
 
+local COLOR_BUTTON = "#4E4F50"
+local COLOR_REFRESH_ACTIVE = "#8BD092"
 
 function M:init()
 	self.root = self:get_node("root")
@@ -62,7 +67,7 @@ function M:init()
 	gui.set_enabled(self.button_back.node, false)
 
 	self.button_refresh = self.druid:new_button("icon_refresh", function()
-		self.is_dirty = true
+		self:toggle_auto_refresh()
 	end)
 
 	-- We not using as a part of properties, since it handled in a way to be paginable
@@ -90,6 +95,23 @@ end
 
 function M:on_remove()
 	self:clear()
+end
+
+
+function M:toggle_auto_refresh()
+	self._is_auto_refresh = not self._is_auto_refresh
+
+	if self._is_auto_refresh then
+		self.is_dirty = true
+		color.set_color(self.button_refresh.node, COLOR_REFRESH_ACTIVE)
+		self._timer_refresh = timer.delay(1, true, function()
+			self.is_dirty = true
+		end)
+	else
+		color.set_color(self.button_refresh.node, COLOR_BUTTON)
+		timer.cancel(self._timer_refresh)
+		self._timer_refresh = nil
+	end
 end
 
 
@@ -431,34 +453,45 @@ function M:add_property_component(component_id, data)
 	local component_type = type(component)
 
 	if component_type == "table" then
-		self:add_button(function(button)
-			local is_empty = next(component) == nil
-			local is_array = component[1] ~= nil
-			local name = "Inspect"
-			if is_empty then
-				name = "Inspect (Empty)"
-			end
-			if is_array then
-				name = "Inspect (" .. #component .. ")"
-			end
-
-			local button_name = component_id
-			-- If it's a number or array, try to get the id/name/prefab_id from the component
-			if type(component) == "table" and type(component_id) == "number" then
-				local extracted_id = component.name or component.prefab_id or component.node_id or component.id
-				if extracted_id then
-					button_name = component_id .. ". " .. extracted_id
-				end
-			end
-
-			button:set_text_property(button_name)
-			button:set_text_button(name)
-			button.button.on_click:subscribe(function()
-				self:next_scene()
-				self:set_header(button_name)
-				self:render_lua_table(component)
+		local is_event = event.is_event(component)
+		if is_event then
+			self:add_button(function(button)
+				button:set_text_property(tostring(component_id))
+				button:set_text_button("Call Event (" .. #component .. ")")
+				button.button.on_click:subscribe(function()
+					component:trigger()
+				end)
 			end)
-		end)
+		else
+			self:add_button(function(button)
+				local is_empty = next(component) == nil
+				local is_array = component[1] ~= nil
+				local name = "Inspect"
+				if is_empty then
+					name = "Inspect (Empty)"
+				end
+				if is_array then
+					name = "Inspect (" .. #component .. ")"
+				end
+
+				local button_name = component_id
+				-- If it's a number or array, try to get the id/name/prefab_id from the component
+				if type(component) == "table" and type(component_id) == "number" then
+					local extracted_id = component.name or component.prefab_id or component.node_id or component.id
+					if extracted_id then
+						button_name = component_id .. ". " .. extracted_id
+					end
+				end
+
+				button:set_text_property(button_name)
+				button:set_text_button(name)
+				button.button.on_click:subscribe(function()
+					self:next_scene()
+					self:set_header(button_name)
+					self:render_lua_table(component)
+				end)
+			end)
+		end
 	end
 
 	if component_type == "string" then
