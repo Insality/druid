@@ -205,26 +205,28 @@ end
 
 
 function M:update(dt)
-	if self.is_dirty then
-		self.is_dirty = false
+	if not self.is_dirty then
+		return
+	end
 
-		self:clear_created_properties()
+	self.is_dirty = false
 
-		local properties_count = #self.properties_constructors
+	self:clear_created_properties()
 
-		-- Render all current properties
-		local start_index = (self.current_page - 1) * self.properties_per_page + 1
-		local end_index = start_index + self.properties_per_page - 1
-		end_index = math.min(end_index, properties_count)
+	local properties_count = #self.properties_constructors
 
-		local is_paginator_visible = properties_count > self.properties_per_page
-		gui.set_enabled(self.paginator.root, is_paginator_visible)
-		self.paginator:set_number_type(1, math.ceil(properties_count / self.properties_per_page), true)
-		self.paginator.text_value:set_text(self.current_page .. " / " .. math.ceil(properties_count / self.properties_per_page))
+	-- Render all current properties
+	local start_index = (self.current_page - 1) * self.properties_per_page + 1
+	local end_index = start_index + self.properties_per_page - 1
+	end_index = math.min(end_index, properties_count)
 
-		for index = start_index, end_index do
-			self.properties_constructors[index]()
-		end
+	local is_paginator_visible = properties_count > self.properties_per_page
+	gui.set_enabled(self.paginator.root, is_paginator_visible)
+	self.paginator:set_number_type(1, math.ceil(properties_count / self.properties_per_page), true)
+	self.paginator.text_value:set_text(self.current_page .. " / " .. math.ceil(properties_count / self.properties_per_page))
+
+	for index = start_index, end_index do
+		self.properties_constructors[index]()
 	end
 end
 

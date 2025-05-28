@@ -51,7 +51,6 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field height number
 
 ---@class druid.rich_text.style
----@field COLORS table<string, vector4>
 ---@field ADJUST_STEPS number
 ---@field ADJUST_SCALE_DELTA number
 
@@ -105,7 +104,6 @@ end
 ---@param style druid.rich_text.style
 function M:on_style_change(style)
 	self.style = {
-		COLORS = style.COLORS or {},
 		ADJUST_STEPS = style.ADJUST_STEPS or 20,
 		ADJUST_SCALE_DELTA = style.ADJUST_SCALE_DELTA or 0.02,
 	}
