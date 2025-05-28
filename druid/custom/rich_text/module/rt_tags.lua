@@ -44,19 +44,16 @@ end
 -- Format: <color={COLOR_NAME}>{Text}</color>
 -- Example: <color=FF0000>Rich Text</color>
 M.register("color", function(params, settings, style)
-	params = style.COLORS[params] or params
 	settings.color = color.get_color(params)
 end)
 
 
 M.register("shadow", function(params, settings, style)
-	params = style.COLORS[params] or params
 	settings.shadow = color.get_color(params)
 end)
 
 
 M.register("outline", function(params, settings, style)
-	params = style.COLORS[params] or params
 	settings.outline = color.get_color(params)
 end)
 

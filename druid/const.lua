@@ -73,10 +73,8 @@ M.REVERSE_PIVOTS = {
 M.LAYOUT_MODE = {
 	STRETCH_X = "stretch_x",
 	STRETCH_Y = "stretch_y",
-	ZOOM_MIN = "zoom_min",
-	ZOOM_MAX = "zoom_max",
-	FIT = gui.ADJUST_FIT,
-	STRETCH = gui.ADJUST_STRETCH,
+	FIT = "fit",
+	STRETCH = "stretch",
 }
 
 M.CURRENT_SYSTEM_NAME = sys.get_sys_info().system_name
