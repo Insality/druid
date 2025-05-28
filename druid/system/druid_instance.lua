@@ -681,7 +681,7 @@ end
 local container = require("druid.extended.container")
 ---Create Container component
 ---@param node string|node The node_id or gui.get_node(node_id).
----@param mode string|nil Layout mode
+---@param mode druid.container.mode|nil Layout mode. Default Fit or Stretch depends from node adjust mode from GUI scene
 ---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
 ---@return druid.container container The new container component
 function M:new_container(node, mode, callback)

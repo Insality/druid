@@ -103,6 +103,45 @@ nodes {
 }
 nodes {
   position {
+    x: 152.0
+    y: -4.0
+  }
+  color {
+    x: 0.306
+    y: 0.31
+    z: 0.314
+  }
+  type: TYPE_BOX
+  texture: "druid/icon_refresh"
+  id: "icon_refresh"
+  pivot: PIVOT_NE
+  parent: "header"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 112.0
+    y: -4.0
+  }
+  scale {
+    x: -1.0
+  }
+  color {
+    x: 0.306
+    y: 0.31
+    z: 0.314
+  }
+  type: TYPE_BOX
+  texture: "druid/icon_arrow"
+  id: "icon_back"
+  pivot: PIVOT_NW
+  parent: "header"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
     y: -50.0
   }
   size {

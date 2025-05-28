@@ -181,6 +181,7 @@ function M.create(text, settings, style)
 		shadow = settings.shadow,
 		outline = settings.outline,
 		font = gui.get_font(settings.text_prefab),
+		split_to_characters = settings.split_to_characters,
 		-- Image params
 		---@type druid.rich_text.word.image
 		image = nil,

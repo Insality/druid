@@ -28,4 +28,7 @@ images {
 images {
   image: "/druid/images/icons/icon_arrow.png"
 }
+images {
+  image: "/druid/images/icons/icon_refresh.png"
+}
 extrude_borders: 2

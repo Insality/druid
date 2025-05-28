@@ -29,6 +29,7 @@ local function add_word(text, settings, words)
 	end
 
 	words[#words + 1] = data
+	return data
 end
 
 
@@ -44,7 +45,16 @@ local function split_line(line, settings, words)
 	else
 		local wi = #words
 		for word in trimmed_text:gmatch("%S+") do
-			add_word(word .. " ", settings, words)
+			if settings.split_to_characters then
+				for i = 1, #word do
+					local symbol = utf8.sub(word, i, i)
+					local w = add_word(symbol, settings, words)
+					w.nobr = true
+				end
+				add_word(" ", settings, words)
+			else
+				add_word(word .. " ", settings, words)
+			end
 		end
 		local first = words[wi + 1]
 		first.text = ws_start .. first.text
