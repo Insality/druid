@@ -715,3 +715,15 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 #### Druid 1.1.4
 - [#312] Fix for text metrics issue if returned height is 0 sometimes
+
+### Druid 1.2.0
+- Fix for blocker internal enabled state depends from GUI node
+- Move to druid colors for rich text
+- Fix for container stretch mode (stretch and fit is not worked in init function)
+- Add split_to_characters in rich text for making fancy text
+- Druid GO Widgets now can wrap an events to (before only top level functions)
+- Ability to pass params to Druid GO Widgets
+- Update properties panel:
+	- Add "scenes" to manage a list of properties with back button support
+	- Add "refresh" button, which active a 1-sec refresh for current page
+	- Add "Render lua table" to easily render your lua tables with a various types support (any simple types and vector, functions, events etc)

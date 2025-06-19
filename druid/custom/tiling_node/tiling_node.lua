@@ -1,6 +1,6 @@
 local component = require("druid.component")
 local helper = require("druid.helper")
-local defer = require("event.defer")
+local queues = require("event.queues")
 
 ---@class druid.tiling_node: druid.component
 ---@field animation table
@@ -28,7 +28,7 @@ function M:init(node)
 		print("The druid.script is not found, please add it nearby to the GUI collection", msg.url())
 	end)
 
-	defer.push("druid.get_atlas_path", {
+	queues.push("druid.get_atlas_path", {
 		texture_name = gui.get_texture(self.node),
 		sender = msg.url(),
 	}, self.on_get_atlas_path, self)

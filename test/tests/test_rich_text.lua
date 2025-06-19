@@ -81,7 +81,7 @@ return function()
             local rich_text = druid:new_rich_text(text_node)
 
             -- Test color tag with named color
-            local words = rich_text:set_text("<color=red>Colored Text</color>")
+            local words = rich_text:set_text("<color=#FF0000>Colored Text</color>")
 
             assert(#words > 0)
             -- Word should have a tags field with color tag
@@ -104,7 +104,7 @@ return function()
             local rich_text = druid:new_rich_text(text_node)
 
             -- Test shadow tag with named color
-            local words = rich_text:set_text("<shadow=black>Shadowed Text</shadow>")
+            local words = rich_text:set_text("<shadow=#000000>Shadowed Text</shadow>")
 
             assert(#words > 0)
             assert(words[1].shadow ~= nil)
@@ -129,7 +129,7 @@ return function()
             local rich_text = druid:new_rich_text(text_node)
 
             -- Test outline tag with named color
-            local words = rich_text:set_text("<outline=black>Outlined Text</outline>")
+            local words = rich_text:set_text("<outline=#000000>Outlined Text</outline>")
 
             assert(#words > 0)
             assert(words[1].outline ~= nil)
@@ -228,7 +228,7 @@ return function()
             local rich_text = druid:new_rich_text(text_node)
 
             -- Test combined tags
-            local words = rich_text:set_text("<color=red><size=2>Big Red Text</size></color>")
+            local words = rich_text:set_text("<color=#FF0000><size=2>Big Red Text</size></color>")
 
             assert(#words > 0)
             assert(words[1].tags.color)
@@ -236,7 +236,7 @@ return function()
             assert(words[1].relative_scale == 2)
 
             -- Test nested tags
-            words = rich_text:set_text("<color=red>Red <size=2>Big Red</size> Red</color>")
+            words = rich_text:set_text("<color=#FF0000>Red <size=2>Big Red</size> Red</color>")
 
             assert(#words >= 3)
             -- All words should have color tag

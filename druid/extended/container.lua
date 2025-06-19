@@ -31,6 +31,8 @@ local CORNER_PIVOTS = {
 ---@field DRAGGABLE_CORNER_SIZE vector3 Size of box node for debug draggable corners
 ---@field DRAGGABLE_CORNER_COLOR vector4 Color of debug draggable corners
 
+---@alias druid.container.mode "stretch" | "fit" | "stretch_x" | "stretch_y"
+
 ---Druid component to manage the size and positions with other containers relations to create a adaptable layouts.
 ---
 ---### Setup
@@ -54,7 +56,7 @@ local CORNER_PIVOTS = {
 ---@field position vector3 The current position
 ---@field pivot_offset vector3 The pivot offset
 ---@field center_offset vector3 The center offset
----@field mode string The layout mode
+---@field mode druid.container.mode The layout mode
 ---@field fit_size vector3 The fit size
 ---@field min_size_x number|nil The minimum size x
 ---@field min_size_y number|nil The minimum size y
@@ -176,7 +178,7 @@ function M:set_size(width, height, anchor_pivot)
 	if self.max_size_y then
 		height = min(height, self.max_size_y)
 	end
-	
+
 	if (width and width ~= self.size.x) or (height and height ~= self.size.y) then
 		self.center_offset.x = -width * self.pivot_offset.x
 		self.center_offset.y = -height * self.pivot_offset.y
@@ -537,7 +539,7 @@ function M:_on_corner_drag(x, y, corner_offset)
 	end
 	if self.max_size_y and size.y + y > self.max_size_y then
 		y = self.max_size_y - size.y
-	end	
+	end
 
 	if corner_offset.x < 0 then
 		self.node_offset.x = self.node_offset.x - x

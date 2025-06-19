@@ -1,5 +1,5 @@
 ---@class druid.widget: druid.component
----@field druid druid.instance Ready to use druid instance
+---@field protected druid druid.instance Ready to use druid instance
 
 ---@class druid.logger
 ---@field trace fun(message: string, context: any)

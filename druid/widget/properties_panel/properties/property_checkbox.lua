@@ -73,4 +73,11 @@ function M:on_change(callback)
 end
 
 
+---Set the enabled state of the checkbox
+---@param enabled boolean
+function M:set_enabled(enabled)
+	self.button:set_enabled(enabled)
+end
+
+
 return M
