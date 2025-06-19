@@ -11,7 +11,7 @@ local M = {}
 ---@param color_id string|vector4 Color id from palette or hex color
 ---@return vector4
 function M.get_color(color_id)
-	if type(color_id) == "vector4" then
+	if type(color_id) ~= "string" then
 		return color_id
 	end
 
