@@ -716,6 +716,9 @@ Please support me if you like this project! It will help me keep engaged to upda
 #### Druid 1.1.4
 - [#312] Fix for text metrics issue if returned height is 0 sometimes
 
+#### Druid 1.1.5
+- Update for using `defold-event` library v12
+
 ### Druid 1.2.0
 - Fix for blocker internal enabled state depends from GUI node
 - Move to druid colors for rich text
@@ -727,3 +730,4 @@ Please support me if you like this project! It will help me keep engaged to upda
 	- Add "scenes" to manage a list of properties with back button support
 	- Add "refresh" button, which active a 1-sec refresh for current page
 	- Add "Render lua table" to easily render your lua tables with a various types support (any simple types and vector, functions, events etc)
+

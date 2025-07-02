@@ -5,7 +5,7 @@
 
 local queues = require("event.queues")
 
----Usage: defer.push("druid.get_atlas_path", {
+---Usage: queues.push("druid.get_atlas_path", {
 ---	texture_name = gui.get_texture(self.node),
 ---	sender = msg.url(),
 ---}, callback, [context])
