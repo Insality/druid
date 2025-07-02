@@ -33,7 +33,8 @@
 	"Lua.runtime.version": "Lua 5.1",
 	"Lua.workspace.library": [
 		"~/Library/Application Support/Cursor/User/globalStorage/astronachos.defold",
-		"~/Library/Application Support/Cursor/User/workspaceStorage/1446075a23c89451a63f0e82b2291def/astronachos.defold"
+		"~/Library/Application Support/Cursor/User/workspaceStorage/1446075a23c89451a63f0e82b2291def/astronachos.defold",
+		"~/Library/Application Support/Cursor/User/workspaceStorage/7975bec62a9fa9724d190779fa01ec63/astronachos.defold"
 	],
 	"files.exclude": {
 		"**/*.gui": true

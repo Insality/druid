@@ -23,7 +23,7 @@ dependencies#1 = https://github.com/Insality/defold-saver/archive/refs/tags/5.zi
 dependencies#2 = https://github.com/Insality/defold-tweener/archive/refs/tags/3.zip
 dependencies#3 = https://github.com/Insality/panthera/archive/refs/tags/runtime.4.zip
 dependencies#4 = https://github.com/Insality/defold-lang/archive/refs/tags/3.zip
-dependencies#5 = https://github.com/Insality/defold-event/archive/refs/tags/11.zip
+dependencies#5 = https://github.com/Insality/defold-event/archive/refs/tags/12.zip
 dependencies#6 = https://github.com/subsoap/defos/archive/refs/tags/v2.8.0.zip
 
 [library]
@@ -58,7 +58,7 @@ cssfile = /builtins/manifests/web/dark_theme.css
 show_console_banner = 0
 
 [native_extension]
-app_manifest =
+app_manifest = 
 
 [graphics]
 texture_profiles = /builtins/graphics/default.texture_profiles
