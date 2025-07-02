@@ -181,6 +181,7 @@ end
 function M:clear()
 	self:clear_created_properties()
 	self.properties_constructors = {}
+	self.current_page = 1
 end
 
 
