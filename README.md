@@ -39,7 +39,7 @@ Open your `game.project` file and add the following lines to the dependencies fi
 **[Druid](https://github.com/Insality/druid/)**
 
 ```
-https://github.com/Insality/druid/archive/refs/tags/1.1.4.zip
+https://github.com/Insality/druid/archive/refs/tags/1.1.5.zip
 ```
 
 **[Defold Event](https://github.com/Insality/defold-event)**
