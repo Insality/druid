@@ -20,7 +20,7 @@ local M = component.create("blocker")
 ---@param node node|string The node to use as a blocker
 function M:init(node)
 	self.node = self:get_node(node)
-	self._is_enabled = gui.is_enabled(self.node, true)
+	self._is_enabled = true
 end
 
 
