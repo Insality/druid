@@ -69,6 +69,7 @@ function M:init(node_or_node_id, layout_type)
 	self.is_resize_width = false
 	self.is_resize_height = false
 	self.is_justify = false
+	self._set_position_function = gui.set_position
 
 	self.on_size_changed = event.create() --[[@as event.on_size_changed]]
 end
@@ -79,7 +80,7 @@ function M:update()
 		return
 	end
 
-	self:refresh_layout()
+	self:refresh_layout(false)
 end
 
 
@@ -235,8 +236,9 @@ function M:get_content_size()
 end
 
 
+---@param is_instant boolean|nil If true, node position update instantly, otherwise with set_position_function callback
 ---@return druid.layout self Current layout instance
-function M:refresh_layout()
+function M:refresh_layout(is_instant)
 	local layout_node = self.node
 
 	local entities = self.entities
@@ -354,7 +356,7 @@ function M:refresh_layout()
 				end
 			end
 
-			self:set_node_position(node, position_x, position_y)
+			self:set_node_position(node, position_x, position_y, is_instant)
 		end
 	end
 
@@ -499,12 +501,26 @@ local TEMP_VECTOR = vmath.vector3(0, 0, 0)
 ---@param x number
 ---@param y number
 ---@return node
-function M:set_node_position(node, x, y)
+function M:set_node_position(node, x, y, is_instant)
 	TEMP_VECTOR.x = x
 	TEMP_VECTOR.y = y
-	gui.set_position(node, TEMP_VECTOR)
+
+	if is_instant then
+		gui.set_position(node, TEMP_VECTOR)
+	else
+		self._set_position_function(node, TEMP_VECTOR)
+	end
 
 	return node
+end
+
+
+---Set custom position function for layout nodes. It will call on update poses on layout elements. Default: gui.set_position
+---@param callback function
+---@return druid.layout self Current layout instance
+function M:set_position_function(callback)
+	self._set_position_function = callback or gui.set_position
+	return self
 end
 
 
