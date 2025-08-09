@@ -39,6 +39,7 @@ function M:init()
 	self.contaienr_scroll_content = self.container_scroll_view:add_container("scroll_content")
 
 	self.default_size = self.container:get_size()
+	self.header_size = gui.get_size(self:get_node("header"))
 
 	-- To have ability to go back to previous scene, collections of all properties to rebuild
 	self.scenes = {}
@@ -362,11 +363,18 @@ end
 
 function M:set_hidden(is_hidden)
 	self._is_hidden = is_hidden
-	local hidden_size = gui.get_size(self:get_node("header"))
+	local node_header = self:get_node("header")
 
-	local new_size = self._is_hidden and hidden_size or self.default_size
+	local new_size = self._is_hidden and self.header_size or self.default_size
 	self.container:set_size(new_size.x, new_size.y, gui.PIVOT_N)
 
+	local hidden_width = self.header_size.y + 8
+	gui.set(node_header, "size.x", self._is_hidden and hidden_width or self.header_size.x)
+
+	gui.set_visible(node_header, self._is_hidden)
+	gui.set_visible(self.root, not self._is_hidden)
+
+	gui.set_enabled(self.text_header.node, not self._is_hidden)
 	gui.set_enabled(self.content, not self._is_hidden)
 	gui.set_enabled(self.button_refresh.node, not self._is_hidden)
 
