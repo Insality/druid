@@ -1,3 +1,4 @@
+---@diagnostic disable: invisible
 -- Hello, Defolder! Wish you a good day!
 
 local events = require("event.events")

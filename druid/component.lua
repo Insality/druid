@@ -374,7 +374,6 @@ end
 
 
 ---Сreate a new component class, which will inherit from the base Druid component.
----@protected
 ---@param name string|nil The name of the component
 ---@param input_priority number|nil The input priority. The bigger number processed first. Default value: 10
 ---@return druid.component
