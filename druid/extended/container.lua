@@ -273,7 +273,7 @@ end
 
 
 ---@param node_or_container node|string|druid.container|table The node or container to add
----@param mode string|nil stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
+---@param mode druid.container.mode|nil stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
 ---@param on_resize_callback fun(self: userdata, size: vector3)|nil
 ---@return druid.container Container New created layout instance
 function M:add_container(node_or_container, mode, on_resize_callback)

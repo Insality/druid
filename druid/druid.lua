@@ -132,10 +132,14 @@ end
 ---		msg.url(nil, object_url, "gui_widget") -- other game object
 ---@generic T: druid.widget
 ---@param widget_class T The class of the widget to return
----@param gui_url url GUI url
+---@param gui_url url|string GUI url or string of component name near current script
 ---@param params any|nil Additional parameters to pass to the widget's init function
 ---@return T widget The new created widget,
 function M.get_widget(widget_class, gui_url, params)
+	if type(gui_url) == "string" then
+		gui_url = msg.url(nil, nil, gui_url)
+	end
+
 	gui_url = gui_url or msg.url()
 	local registered_druids = REGISTERED_GUI_WIDGETS[gui_url.socket]
 	assert(registered_druids, "Druid widget not registered for this game object")
