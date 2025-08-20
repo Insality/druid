@@ -17,3 +17,7 @@ manifest.private.der
 manifest.public.der
 /.editor_settings
 /.deployer_cache
+
+# Example and documentation files (not part of core library)
+example_color_api_usage.lua
+DRUID_COLOR_API_IMPROVEMENTS.md
