@@ -55,12 +55,13 @@ function M:init(node_or_node_id, layout_type)
 	self.entities = {}
 	self.size = gui.get_size(self.node)
 
+	-- Padding X is a Slice9 L Value
+	-- Padding Y is a Slice9 T Value
 	self.padding = gui.get_slice9(self.node)
 	-- Margin X is a Slice9 R Value
 	-- Margin Y is a Slice9 B Value
 	self.margin = { x = self.padding.z, y = self.padding.w }
-	-- Padding X is a Slice9 L Value
-	-- Padding Y is a Slice9 T Value
+
 	self.padding.z = self.padding.x
 	self.padding.w = self.padding.y
 
@@ -68,6 +69,7 @@ function M:init(node_or_node_id, layout_type)
 	self.is_resize_width = false
 	self.is_resize_height = false
 	self.is_justify = false
+	self._set_position_function = gui.set_position
 
 	self.on_size_changed = event.create() --[[@as event.on_size_changed]]
 end
@@ -78,7 +80,7 @@ function M:update()
 		return
 	end
 
-	self:refresh_layout()
+	self:refresh_layout(false)
 end
 
 
@@ -123,10 +125,10 @@ function M:set_margin(margin_x, margin_y)
 end
 
 
----@param padding_x number|nil The padding x
----@param padding_y number|nil The padding y
----@param padding_z number|nil The padding z
----@param padding_w number|nil The padding w
+---@param padding_x number|nil From Left
+---@param padding_y number|nil From Top
+---@param padding_z number|nil From Right
+---@param padding_w number|nil From Bottom
 ---@return druid.layout self Current layout instance
 function M:set_padding(padding_x, padding_y, padding_z, padding_w)
 	self.padding.x = padding_x or self.padding.x
@@ -234,8 +236,9 @@ function M:get_content_size()
 end
 
 
+---@param is_instant boolean|nil If true, node position update instantly, otherwise with set_position_function callback
 ---@return druid.layout self Current layout instance
-function M:refresh_layout()
+function M:refresh_layout(is_instant)
 	local layout_node = self.node
 
 	local entities = self.entities
@@ -353,7 +356,7 @@ function M:refresh_layout()
 				end
 			end
 
-			self:set_node_position(node, position_x, position_y)
+			self:set_node_position(node, position_x, position_y, is_instant)
 		end
 	end
 
@@ -498,12 +501,26 @@ local TEMP_VECTOR = vmath.vector3(0, 0, 0)
 ---@param x number
 ---@param y number
 ---@return node
-function M:set_node_position(node, x, y)
+function M:set_node_position(node, x, y, is_instant)
 	TEMP_VECTOR.x = x
 	TEMP_VECTOR.y = y
-	gui.set_position(node, TEMP_VECTOR)
+
+	if is_instant then
+		gui.set_position(node, TEMP_VECTOR)
+	else
+		self._set_position_function(node, TEMP_VECTOR)
+	end
 
 	return node
+end
+
+
+---Set custom position function for layout nodes. It will call on update poses on layout elements. Default: gui.set_position
+---@param callback function
+---@return druid.layout self Current layout instance
+function M:set_position_function(callback)
+	self._set_position_function = callback or gui.set_position
+	return self
 end
 
 

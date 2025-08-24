@@ -33,21 +33,34 @@ nodes {
   }
 }
 nodes {
+  position {
+    x: 200.0
+  }
   size {
     x: 400.0
     y: 40.0
   }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
   type: TYPE_BOX
+  texture: "druid/ui_circle_16"
   id: "header"
-  pivot: PIVOT_N
+  pivot: PIVOT_NE
   parent: "root"
   inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
+  slice9 {
+    x: 8.0
+    y: 8.0
+    z: 8.0
+    w: 8.0
+  }
 }
 nodes {
   position {
-    x: -192.0
+    x: -392.0
     y: -8.0
   }
   scale {
@@ -85,7 +98,7 @@ nodes {
 }
 nodes {
   position {
-    x: 192.0
+    x: -8.0
     y: -4.0
   }
   color {
@@ -97,6 +110,45 @@ nodes {
   texture: "druid/icon_drag"
   id: "icon_drag"
   pivot: PIVOT_NE
+  parent: "header"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -48.0
+    y: -4.0
+  }
+  color {
+    x: 0.306
+    y: 0.31
+    z: 0.314
+  }
+  type: TYPE_BOX
+  texture: "druid/icon_refresh"
+  id: "icon_refresh"
+  pivot: PIVOT_NE
+  parent: "header"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: -88.0
+    y: -4.0
+  }
+  scale {
+    x: -1.0
+  }
+  color {
+    x: 0.306
+    y: 0.31
+    z: 0.314
+  }
+  type: TYPE_BOX
+  texture: "druid/icon_arrow"
+  id: "icon_back"
+  pivot: PIVOT_NW
   parent: "header"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO

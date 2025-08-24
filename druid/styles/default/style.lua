@@ -148,12 +148,4 @@ M["hotkey"] = {
 }
 
 
-M["rich_text"] = {
-	COLORS = {
-		white = "#FFFFFF",
-		black = "#000000"
-	}
-}
-
-
 return M

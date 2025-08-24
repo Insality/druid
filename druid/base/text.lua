@@ -37,7 +37,7 @@ local utf8 = utf8 or utf8_lua --[[@as utf8]]
 ---@field on_update_text_scale event fun(self: druid.text, scale: vector3, metrics: table) The event triggered when the text scale is updated
 ---@field on_set_pivot event fun(self: druid.text, pivot: userdata) The event triggered when the text pivot is set
 ---@field style druid.text.style The style of the text
----@field start_pivot userdata The start pivot of the text
+---@field start_pivot number The start pivot of the text
 ---@field start_scale vector3 The start scale of the text
 ---@field scale vector3 The current scale of the text
 local M = component.create("text")
@@ -224,7 +224,7 @@ end
 
 
 ---Set text pivot. Text will re-anchor inside text area
----@param pivot userdata The gui.PIVOT_* constant
+---@param pivot number The gui.PIVOT_* constant
 ---@return druid.text self Current text instance
 function M:set_pivot(pivot)
 	local prev_pivot = gui.get_pivot(self.node)
