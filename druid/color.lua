@@ -1,3 +1,5 @@
+---@alias color vector4|vector3|string
+
 local PALETTE_DATA = {}
 local COLOR_WHITE = vmath.vector4(1, 1, 1, 1)
 local COLOR_X = hash("color.x")

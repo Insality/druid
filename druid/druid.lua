@@ -147,7 +147,7 @@ function M.get_widget(widget_class, gui_url, params)
 	for index = 1, #registered_druids do
 		local druid = registered_druids[index]
 		if druid.fragment == gui_url.fragment and druid.path == gui_url.path then
-			return druid.new_widget:trigger(widget_class, nil, nil, params)
+			return druid.new_widget(widget_class, nil, nil, params)
 		end
 	end
 

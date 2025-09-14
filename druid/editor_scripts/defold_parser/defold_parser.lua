@@ -1,7 +1,7 @@
 --- Defold Text Proto format encoder/decoder to lua table
 
 local config = require("druid.editor_scripts.defold_parser.system.config")
-local system = require("druid.editor_scripts.defold_parser.system.system")
+local parser_internal = require("druid.editor_scripts.defold_parser.system.parser_internal")
 
 local M = {}
 
@@ -17,7 +17,7 @@ function M.decode_defold_object(text)
 
 	-- For each line in the text, we go through the following steps:
 	for raw_line in text:gmatch("[^\r\n]+") do
-		system.parse_line(raw_line, stack)
+		parser_internal.parse_line(raw_line, stack)
 	end
 
 	return root
@@ -39,8 +39,8 @@ function M.encode_defold_object(obj, spaces, data_level, extension)
 	end
 
 	table.sort(keys, function(a, b)
-		local index_a = system.contains(key_order, a) or 0
-		local index_b = system.contains(key_order, b) or 0
+		local index_a = parser_internal.contains(key_order, a) or 0
+		local index_b = parser_internal.contains(key_order, b) or 0
 		return index_a < index_b
 	end)
 
@@ -63,7 +63,7 @@ function M.encode_defold_object(obj, spaces, data_level, extension)
 						result = result .. tabString .. key .. ': "' .. encodedChild .. '"\n'
 					elseif item_type == "number" or item_type == "boolean" then
 						local is_contains_dot = string.find(key, "%.")
-						if item_type == "number" and (system.contains(config.with_dot_params, key) and not is_contains_dot) then
+						if item_type == "number" and (parser_internal.contains(config.with_dot_params, key) and not is_contains_dot) then
 							result = result .. tabString .. key .. ': ' .. string.format("%.1f", array_item) .. '\n'
 						else
 							result = result .. tabString .. key .. ': ' .. tostring(array_item) .. '\n'
@@ -94,7 +94,7 @@ function M.encode_defold_object(obj, spaces, data_level, extension)
 			-- Handle scalar values (string, number, boolean)
 			if value_type == "number" or value_type == "boolean" then
 				local is_contains_dot = string.find(key, "%.")
-				if value_type == "number" and (system.contains(config.with_dot_params, key) and not is_contains_dot) then
+				if value_type == "number" and (parser_internal.contains(config.with_dot_params, key) and not is_contains_dot) then
 					result = result .. tabString .. key .. ': ' .. string.format("%.1f", value) .. '\n'
 				else
 					result = result .. tabString .. key .. ': ' .. tostring(value) .. '\n'
@@ -125,7 +125,7 @@ end
 ---@param file_path string
 ---@return table|nil, string|nil
 function M.load_from_file(file_path)
-	local content, reason = system.read_file(file_path)
+	local content, reason = parser_internal.read_file(file_path)
 	if not content then
 		return nil, reason
 	end
@@ -146,7 +146,7 @@ function M.save_to_file(file_path, lua_table)
 
 	local encoded_object = M.encode_defold_object(lua_table, nil, nil, defold_format_name)
 
-	return system.write_file(file_path, encoded_object)
+	return parser_internal.write_file(file_path, encoded_object)
 end
 
 

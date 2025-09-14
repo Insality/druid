@@ -65,7 +65,7 @@ end
 ---@param widget_resource_path string The path to the GUI script to link
 function M.link_gui_script(selection, widget_resource_path)
 	local defold_parser = require("druid.editor_scripts.defold_parser.defold_parser")
-	local system = require("druid.editor_scripts.defold_parser.system.system")
+	local system = require("druid.editor_scripts.defold_parser.system.parser_internal")
 
 	local gui_filepath = editor.get(selection, "path")
 	print("Linking GUI script to", gui_filepath)
