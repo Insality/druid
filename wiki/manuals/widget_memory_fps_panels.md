@@ -1,8 +1,8 @@
 # Memory and FPS Panel Widgets
 
-The `Druid 1.1` comes with widgets and two included widgets are `Memory Panel` and `FPS Panel` which allow you to monitor memory and FPS in your game.
+The `Druid 1.1` comes with two included widgets: `Memory Panel` and `FPS Panel`, which allow you to monitor memory and FPS in your game.
 
-Widgets in Druid usually consists from two files: GUI, which is used to placed as a template on your GUI scene and Lua script, which is used to be created with Druid.
+Widgets in Druid usually consist of two files: GUI, which is used to place as a template on your GUI scene and Lua script, which is used to be create with Druid.
 
 <!-- Video -->
 

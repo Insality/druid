@@ -720,14 +720,23 @@ Please support me if you like this project! It will help me keep engaged to upda
 - Update for using `defold-event` library v12
 
 ### Druid 1.2.0
-- Fix for blocker internal enabled state depends from GUI node
-- Move to druid colors for rich text
-- Fix for container stretch mode (stretch and fit is not worked in init function)
-- Add split_to_characters in rich text for making fancy text
-- Druid GO Widgets now can wrap an events to (before only top level functions)
-- Ability to pass params to Druid GO Widgets
-- Update properties panel:
-	- Add "scenes" to manage a list of properties with back button support
-	- Add "refresh" button, which active a 1-sec refresh for current page
-	- Add "Render lua table" to easily render your lua tables with a various types support (any simple types and vector, functions, events etc)
+- [Blocker] Fix for internal is_enabled state
+- [Button] expose all click functions for the button
+- [Scroll] Add `scroll_to_make_node_visible` function
+- [Palette] Add Druid Color module
+	- Manage color palettes
+	- Color convertations
+	- Convenient usage
+- [Container] Fix for container stretch mode (stretch and fit is not worked in init function)
+- [Rich Text] Using color names from the palette
+- [Rich Text] Add `rich_text:set_split_to_characters(true)` to split each letter node separately
+	- Weird implementation, but nice to have
+- [Rich Text] Add `set_width` and `set_height` functions
+- [GO Widgets] Now passes events and functions from the widget to the GO context
+- [Layout] Add `set_position_function` function, similar to the Grid component
+- [Properties Panel] Update with deep navigation support
+	- Add "Scenes" to manage a list of properties with back button support
+	- Add "Pages" to manage a a big lists of properties with paginations support
+	- Add `properties_panel:render_lua_table` to easily render your lua tables with a various types support (any simple types and vector, functions, events etc)
+	- Add "Refresh" button, which active a 1-sec refresh for current page
 
