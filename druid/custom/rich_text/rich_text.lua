@@ -34,7 +34,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field scale vector3
 ---@field size vector3
 ---@field metrics druid.rich_text.metrics
----@field pivot userdata
+---@field pivot constant
 ---@field text string
 ---@field shadow vector4
 ---@field outline vector4
@@ -68,7 +68,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 
 ---The component that handles a rich text display, allows to custom color, size, font, etc. of the parts of the text
 ---@class druid.rich_text: druid.component
----@field root node The root node of the rich text
+---@field root node The root text node of the rich text
 ---@field text_prefab node The text prefab node
 ---@field private _last_value string The last value of the rich text
 ---@field private _settings table The settings of the rich text
@@ -252,6 +252,20 @@ function M:_create_settings()
 		-- Image settings
 		image_pixel_grid_snap = false, -- disabled now
 	}
+end
+
+
+---Set the width of the rich text, not affects the size of current spawned words
+---@param width number
+function M:set_width(width)
+	self._settings.width = width
+end
+
+
+---Set the height of the rich text, not affects the size of current spawned words
+---@param height number
+function M:set_height(height)
+	self._settings.height = height
 end
 
 

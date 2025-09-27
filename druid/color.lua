@@ -5,6 +5,7 @@ local COLOR_WHITE = vmath.vector4(1, 1, 1, 1)
 local COLOR_X = hash("color.x")
 local COLOR_Y = hash("color.y")
 local COLOR_Z = hash("color.z")
+local ALPHA = hash("color.w")
 
 local M = {}
 
@@ -81,7 +82,6 @@ function M.lerp(t, color1, color2)
 	a = a or 1
 	return vmath.vector4(r, g, b, a)
 end
-
 
 
 ---Convert hex color to rgb values.
