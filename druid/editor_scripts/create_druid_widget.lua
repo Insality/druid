@@ -26,7 +26,7 @@ function M.create_druid_widget(selection)
 	if f then
 		f:close()
 		print("Widget file already exists at " .. new_widget_absolute_path)
-		print("Creation aborted to prevent overwriting")
+		error("Creation aborted to prevent overwriting")
 		return
 	end
 
@@ -37,7 +37,7 @@ function M.create_druid_widget(selection)
 	local template_content = editor.get(template_path, "text")
 	if not template_content then
 		print("Error: Could not load template from", template_path)
-		print("Check the template path in [Druid] Settings")
+		error("Check the template path in [Druid] Settings")
 		return
 	end
 
