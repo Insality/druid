@@ -12,7 +12,7 @@ end
 function M.create_druid_gui_script(selection)
 	local gui_filepath = editor.get(selection, "path")
 	local filename = gui_filepath:match("([^/]+)%.gui$")
-	print("Create Druid GUI Script for", gui_filepath)
+	print("Create GUI script for", gui_filepath)
 
 	local absolute_project_path = editor.external_file_attributes(".").path
 	local widget_resource_path = gui_filepath:gsub("%.gui$", ".gui_script")
@@ -25,8 +25,8 @@ function M.create_druid_gui_script(selection)
 	local f = io.open(new_widget_absolute_path, "r")
 	if f then
 		f:close()
-		print("Widget file already exists at " .. new_widget_absolute_path)
-		print("Creation aborted to prevent overwriting")
+		print("GUI script file already exists at " .. new_widget_absolute_path)
+		error("Creation aborted to prevent overwriting")
 		return
 	end
 
@@ -37,7 +37,7 @@ function M.create_druid_gui_script(selection)
 	local template_content = editor.get(template_path, "text")
 	if not template_content then
 		print("Error: Could not load template from", template_path)
-		print("Check the template path in [Druid] Settings")
+		error("Check the template path in [Druid] Settings")
 		return
 	end
 
@@ -54,21 +54,12 @@ function M.create_druid_gui_script(selection)
 	file:write(template_content)
 	file:close()
 
-	print("Widget created at " .. widget_resource_path)
-
-	M.link_gui_script(selection, widget_resource_path)
-end
-
-
----Links a GUI script to a GUI file by updating the script property
----@param selection string The local GUI resource to modify
----@param widget_resource_path string The path to the GUI script to link
-function M.link_gui_script(selection, widget_resource_path)
-	local gui_filepath = editor.get(selection, "path")
-	print("Linking ", gui_filepath, "to", widget_resource_path)
+	print("Widget created: " .. widget_resource_path)
 	editor.transact({
 		editor.tx.set(selection, "script", widget_resource_path)
 	})
+	editor.save()
+
 end
 
 
