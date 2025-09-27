@@ -61,83 +61,14 @@ end
 
 
 ---Links a GUI script to a GUI file by updating the script property
----@param selection string The GUI resource to modify
+---@param selection string The local GUI resource to modify
 ---@param widget_resource_path string The path to the GUI script to link
 function M.link_gui_script(selection, widget_resource_path)
-	local defold_parser = require("druid.editor_scripts.defold_parser.defold_parser")
-	local system = require("druid.editor_scripts.defold_parser.system.system")
-
 	local gui_filepath = editor.get(selection, "path")
-	print("Linking GUI script to", gui_filepath)
-
-	-- Get the absolute path to the file
-	local absolute_project_path = editor.external_file_attributes(".").path
-	if not absolute_project_path:match("[\\/]$") then
-		absolute_project_path = absolute_project_path .. "/"
-	end
-	local clean_gui_path = gui_filepath
-	if clean_gui_path:sub(1, 1) == "/" then
-		clean_gui_path = clean_gui_path:sub(2)
-	end
-	local gui_absolute_path = absolute_project_path .. clean_gui_path
-
-	-- Create a backup
-	local backup_path = gui_absolute_path .. ".backup"
-	print("Creating backup at:", backup_path)
-
-	-- Read and write backup
-	local content, err_read = system.read_file(gui_absolute_path)
-	if not content then
-		print("Error reading original file for backup:", err_read)
-		return
-	end
-
-	local success, err_write = system.write_file(backup_path, content)
-	if not success then
-		print("Error creating backup file:", err_write)
-		return
-	end
-
-	-- Parse the GUI file
-	print("Parsing GUI file...")
-	local gui_data = defold_parser.load_from_file(gui_absolute_path)
-	if not gui_data then
-		print("Error: Failed to parse GUI file")
-		return
-	end
-
-	-- Update the script property
-	print("Setting script property to:", widget_resource_path)
-	gui_data.script = widget_resource_path
-
-	-- Write the updated GUI file
-	print("Writing updated GUI file...")
-	local save_success = defold_parser.save_to_file(gui_absolute_path, gui_data)
-
-	if not save_success then
-		print("Error: Failed to save GUI file")
-		print("Attempting to restore from backup...")
-
-		-- Restore from backup on failure
-		local backup_content, backup_err_read = system.read_file(backup_path)
-		if not backup_content then
-			print("Error reading backup file:", backup_err_read)
-			return
-		end
-
-		local restore_success, restore_err_write = system.write_file(gui_absolute_path, backup_content)
-		if not restore_success then
-			print("Critical: Failed to restore from backup:", restore_err_write)
-			return
-		end
-
-		print("Restored successfully from backup")
-		return
-	end
-
-	-- Remove backup on success
-	os.remove(backup_path)
-	print("Successfully linked GUI script to:", gui_filepath)
+	print("Linking ", gui_filepath, "to", widget_resource_path)
+	editor.transact({
+		editor.tx.set(selection, "script", widget_resource_path)
+	})
 end
 
 
