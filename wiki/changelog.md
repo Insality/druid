@@ -718,3 +718,6 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 #### Druid 1.1.5
 - Update for using `defold-event` library v12
+
+#### Druid 1.1.6
+- [#326] Fix for Editor Scripts corrupt file issue
