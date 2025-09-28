@@ -719,7 +719,14 @@ Please support me if you like this project! It will help me keep engaged to upda
 #### Druid 1.1.5
 - Update for using `defold-event` library v12
 
+#### Druid 1.1.6
+- [#326] Fix for Editor Scripts corrupt file issue
+
 ### Druid 1.2.0
+- [Image] Add image component
+	- Create with `druid:new_image(node_or_node_id)`
+	- Currently used to load image from resource path, absolute path or URL
+	- Can be fit inside (keeping aspect ratio) stretched to the node area, depends on the GUI adjust mode
 - [Blocker] Fix for internal is_enabled state
 - [Button] expose all click functions for the button
 - [Scroll] Add `scroll_to_make_node_visible` function
@@ -739,4 +746,3 @@ Please support me if you like this project! It will help me keep engaged to upda
 	- Add "Pages" to manage a a big lists of properties with paginations support
 	- Add `properties_panel:render_lua_table` to easily render your lua tables with a various types support (any simple types and vector, functions, events etc)
 	- Add "Refresh" button, which active a 1-sec refresh for current page
-
