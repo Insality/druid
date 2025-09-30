@@ -102,17 +102,22 @@ function M:on_input(action_id, action)
         return not btn.disabled and is_consume
     end
 
+    local is_left = action_id == const.ACTION_LEFT
+    local is_right = action_id == const.ACTION_RIGHT
+    local is_up = action_id == const.ACTION_UP
+    local is_down = action_id == const.ACTION_DOWN
+
     if action.pressed then
         ---@type druid.component|nil
         local component = nil
 
-        if action_id == const.ACTION_UP then
+        if is_up then
             component = self:_find_next_button("up")
-        elseif action_id == const.ACTION_DOWN then
+        elseif is_down then
             component = self:_find_next_button("down")
-        elseif action_id == const.ACTION_LEFT then
+        elseif is_left then
             component = self:_find_next_button("left")
-        elseif action_id == const.ACTION_RIGHT then
+        elseif is_right then
             component = self:_find_next_button("right")
         end
 
@@ -124,23 +129,37 @@ function M:on_input(action_id, action)
     -- Handle chaning slider values when pressing left or right keys.
     if (action.pressed or action.repeated)
         and self:_selected_is_slider()
-        and (action_id == const.ACTION_LEFT or action_id == const.ACTION_RIGHT)
     then
+        local is_directional = is_left or is_right or is_up or is_down
+
+        -- The action_id was not one of the directions so go no further.
+        if not is_directional then
+            return false
+        end
+
         ---@type druid.slider
         local slider = self._selected_component
         local value = slider.value
         local new_value = 0.01
+        local is_horizontal = slider.dist.x > 0
+        local negative_value = is_left or is_down
+        local positive_value = is_right or is_up
+
+        -- Reteurn if a navigation should happen instead of a value change.
+        if is_horizontal and (is_up or is_down) then
+            return false
+        elseif not is_horizontal and (is_left or is_right) then
+            return false
+        end
 
         -- Speedup when holding the button.
         if action.repeated and not action.pressed then
             new_value = 0.05
         end
 
-        if action_id == const.ACTION_LEFT then
-            -- Decrease value.
+        if negative_value then
             value = value - new_value
-        elseif action_id == const.ACTION_RIGHT then
-            -- Increase value.
+        elseif positive_value then
             value = value + new_value
         end
 
@@ -379,7 +398,17 @@ function M:_on_new_select(new)
 
     --- SLIDER
     if new._component.name == "slider" then
-        self:set_deselect_directions({ "up", "down" })
+        -- Check if the slider is horizontal, if so then
+        -- the next component should be above or below of this one.
+        if new.dist.x > 0 then
+            self:set_deselect_directions({ "up", "down" })
+        end
+
+        -- Check if the slider is vertical, if so then
+        -- the next component should be left or right of this one.
+        if new.dist.y > 0 then
+            self:set_deselect_directions({ "left, right" })
+        end
     end
 
     --- EVENT
