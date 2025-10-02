@@ -94,6 +94,8 @@ end
 
 ---@private
 function M:on_layout_change()
+	gui.set_text(self.root, "")
+
 	if self._last_value then
 		self:set_text(self._last_value)
 	end
