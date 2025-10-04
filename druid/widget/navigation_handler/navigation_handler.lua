@@ -54,34 +54,6 @@ local M = {}
 local COMPONENTS = { "button", "slider" }
 
 
----Helper method for checking if the given direction is valid.
----@param dirs table<string>
----@param dir string
----@return boolean
-local function valid_direction(dirs, dir)
-    for _index, value in ipairs(dirs) do
-        if value == dir then
-            return true
-        end
-    end
-    return false
-end
-
----Helper method for checking iterating through components.
----Returns true if the given component is in the table of valid components.
----@param input_component druid.component
----@return boolean
-local function valid_component(input_component)
-    local component_name = input_component._component.name
-    for _index, component in ipairs(COMPONENTS) do
-        if component_name == component then
-            return true
-        end
-    end
-    return false
-end
-
-
 ---The constructor for the navigation_handler widget.
 function M:init()
     self._weight = 10
@@ -318,7 +290,7 @@ end
 function M:_find_next_button(dir)
     -- Check if the deselect direction is set and
     -- the direction is different from it.
-    if next(self._deselect_directions) ~= nil and not valid_direction(self._deselect_directions, dir) then
+    if next(self._deselect_directions) ~= nil and not M._valid_direction(self._deselect_directions, dir) then
         return nil
     end
 
@@ -342,7 +314,7 @@ function M:_find_next_button(dir)
         end
 
         -- Only check components that are supported.
-        if input_component ~= self._selected_component and valid_component(input_component) then
+        if input_component ~= self._selected_component and M._valid_component(input_component) then
             local pos = gui.get_screen_position(node)
             local dx, dy = pos.x - screen_pos.x, pos.y - screen_pos.y
             local valid = false
@@ -440,6 +412,37 @@ function M:_on_new_select(new)
     --- EVENT
     self.on_select:trigger(self:get_context(), new, current)
 
+    return false
+end
+
+
+---Helper method for checking if the given direction is valid.
+---@private
+---@param dirs table<string>
+---@param dir string
+---@return boolean
+function M._valid_direction(dirs, dir)
+    for _index, value in ipairs(dirs) do
+        if value == dir then
+            return true
+        end
+    end
+    return false
+end
+
+
+---Helper method for checking iterating through components.
+---Returns true if the given component is in the table of valid components.
+---@private
+---@param input_component druid.component
+---@return boolean
+function M._valid_component(input_component)
+    local component_name = input_component._component.name
+    for _index, component in ipairs(COMPONENTS) do
+        if component_name == component then
+            return true
+        end
+    end
     return false
 end
 
