@@ -1,44 +1,55 @@
+-- Title: Navigation Handler
+-- Description: Adds support for navigating with keyboard and gamepad.
+-- Author: NaakkaDev <https://github.com/NaakkaDev>
+-- Widget: navigation_handler
+-- Tags: input
+-- Version: 1
+
+
 local event = require("event.event")
 local const = require("druid.const")
-local component = require("druid.component")
 
 
----Navigation handler style params.
----You can override this component styles params in Druid styles table or create your own style
----@class druid.navigation_handler.style
----@field on_select fun(self, node, hover_state)|nil Currently only used for when a slider component is selected. For buttons use its own on_hover style.
-
-
----Component to handle GUI navigation via keyboard/gamepad.
+---Widget force handling GUI navigation via keyboard/gamepad.
 ---
 ---### Setup
----Create navigation handler component with druid: `druid:new_navigation_handler(button)`
+---Loads the widget module:
+---`local navigation_handler = require("druid.widgets.navigation_handler.navigation_handler")`
+---
+---Create the new widget instance:
+---`self.nav = self.druid:new_widget(navigation_handler, self.my_button)`
+---
+---
+---### Example using the `on_select` event
+---```
+---local function on_select_btn(self, new, current)
+---    gui.play_flipbook(new.node, "button_selected")
+---    gui.play_flipbook(current.node, "button")
+---end
+---```
+---With `self.nav.on_select:subscribe(on_select_btn)`
+---
 ---
 ---### Notes
----- Key triggers in `input.binding` should match your setup
----- Used `action_id`'s are:' key_up, key_down, key_left and key_right
----@class druid.navigation_handler: druid.component
----@field COMPONENTS table<string> Table of component names navigation handler can handle.
----@field on_select event fun(self, button_instance, button_instance) Triggers when a new button is selected. The first button_instance is for the newly selected and the second for the previous button.
+---- `on_select` event callback params: (self, component_instance, component_instance).
+----   - **self** - Druid self context.
+----   - **new** - The component that will be selected next.
+----   - **current** - The component that is about to be de-selected.
+---- Key triggers in `input.binding` should match your setup.
+---- Used `action_id`'s are:' `key_up`, `key_down`, `key_left` and `key_right`.
+---@class druid.widget.navigation_handler: druid.widget
+---@field on_select event fun(self, component_instance, component_instance) Triggers when a new component is selected. The first component is for the newly selected and the second is for the previous component.
 ---@field private _weight number The value used to control of the next button diagonal finding logic strictness.
 ---@field private _tolerance number Determines how lenient the next button finding logic is. Set larger value for further diagonal navigation.
 ---@field private _select_trigger hash Select trigger for the current component. Defaults to `druid.const.ACTION_SPACE`.
 ---@field private _selected_triggers table Table of action_ids that can trigger the selected component. Valid only for the current button when set.
 ---@field private _selected_component druid.component|druid.button|druid.slider Currently selected button instance.
 ---@field private _deselect_directions table<string> The valid "escape" direction of the current selection.
-local M = component.create("navigation_handler")
+local M = {}
 
+-- Components that support navigation.
+local COMPONENTS = { "button", "slider" }
 
-M.COMPONENTS = { "button", "slider" }
-
-
----@private
----@param style druid.navigation_handler.style
-function M:on_style_change(style)
-    self.style = {
-        on_select = style.on_select or function(_, node, state) end,
-    }
-end
 
 ---The constructor for the navigation_handler component.
 ---@param component druid.component Current druid component that starts as selected.
@@ -46,8 +57,10 @@ end
 function M:init(component, tolerance)
     -- Set default tolerance if not given.
     if tolerance == nil then
-        tolerance = 200
+        tolerance = 250
     end
+
+    pprint(component._component.name)
 
     self._weight = 10
     self._tolerance = tolerance
@@ -63,10 +76,8 @@ function M:init(component, tolerance)
 
     -- Events
     self.on_select = event.create()
-
-    -- Set style for the initial component.
-    self.style.on_select(self, component.node, true)
 end
+
 
 ---@private
 ---@param action_id hash Action id from on_input.
@@ -169,25 +180,28 @@ function M:on_input(action_id, action)
     return false
 end
 
+
 ---Sets a new weight value which affects the next button diagonal finding logic.
 ---@param new_value number
----@return druid.navigation_handler
+---@return druid.widget.navigation_handler self
 function M:set_weight(new_value)
     self._weight = new_value
     return self
 end
 
+
 ---Sets a new tolerance value. Can be useful when scale or window size changes.
 ---@param new_value number How far to allow misalignment on the perpendicular axis when finding the next button.
----@return druid.navigation_handler self The current navigation handler instance.
+---@return druid.widget.navigation_handler self The current navigation handler instance.
 function M:set_tolerance(new_value)
     self._tolerance = new_value
     return self
 end
 
+
 ---Set input action_id name to trigger selected component by keyboard/gamepad.
 ---@param key hash|string The action_id of the input key. Example: "key_space".
----@return druid.navigation_handler self The current navigation handler instance.
+---@return druid.widget.navigation_handler self The current navigation handler instance.
 function M:set_select_trigger(key)
     if type(key) == "string" then
         self._select_trigger = hash(key)
@@ -198,15 +212,17 @@ function M:set_select_trigger(key)
     return self
 end
 
+
 ---Get current the trigger key for currently selected component.
 ---@return hash _select_trigger The action_id of the input key.
 function M:get_select_trigger()
     return self._select_trigger
 end
 
+
 ---Set the trigger keys for the selected component. Stays valid until the selected component changes.
 ---@param keys table|string|hash Supports multiple action_ids if the given value is a table with the action_id hashes or strings.
----@return druid.navigation_handler self The current navigation handler instance.
+---@return druid.widget.navigation_handler self The current navigation handler instance.
 function M:set_temporary_select_triggers(keys)
     if type(keys) == "table" then
         for index, value in ipairs(keys) do
@@ -224,16 +240,18 @@ function M:set_temporary_select_triggers(keys)
     return self
 end
 
+
 ---Get the currently selected component.
 ---@return druid.component _selected_component Selected component, which often is a `druid.button`.
 function M:get_selected_component()
     return self._selected_component
 end
 
+
 ---Set the de-select direction for the selected button. If this is set
 ---then the next button can only be in that direction.
 ---@param dir string|table Valid directions: "up", "down", "left", "right". Can take multiple values as a table of strings.
----@return druid.navigation_handler self The current navigation handler instance.
+---@return druid.widget.navigation_handler self The current navigation handler instance.
 function M:set_deselect_directions(dir)
     if type(dir) == "table" then
         self._deselect_directions = dir
@@ -244,6 +262,7 @@ function M:set_deselect_directions(dir)
     return self
 end
 
+
 ---Returns true if the currently selected `druid.component` is a `druid.button`.
 ---@private
 ---@return boolean
@@ -251,12 +270,14 @@ function M:_selected_is_button()
     return self._selected_component._component.name == "button"
 end
 
+
 ---Returns true if the currently selected `druid.component` is a `druid.slider`.
 ---@private
 ---@return boolean
 function M:_selected_is_slider()
     return self._selected_component._component.name == "slider"
 end
+
 
 ---Find the best next button based on the direction from the currently selected button.
 ---@private
@@ -282,7 +303,7 @@ function M:_find_next_button(dir)
     ---@return boolean
     local function valid_component(input_component)
         local component_name = input_component._component.name
-        for _index, component in ipairs(M.COMPONENTS) do
+        for _index, component in ipairs(COMPONENTS) do
             if component_name == component then
                 return true
             end
@@ -346,6 +367,7 @@ function M:_find_next_button(dir)
     return best_component
 end
 
+
 ---De-select the current selected component.
 ---@private
 function M:_deselect_current()
@@ -361,6 +383,7 @@ function M:_deselect_current()
     end
 end
 
+
 ---Check if the supplied action_id can trigger the selected component.
 ---@private
 ---@param action_id hash
@@ -375,6 +398,7 @@ function M:_action_id_is_trigger(action_id)
     return action_id == self._select_trigger
 end
 
+
 ---Handle new selection.
 ---@private
 ---@param new druid.component Instance of the selected component.
@@ -382,9 +406,6 @@ end
 function M:_on_new_select(new)
     ---@type druid.component
     local current = self._selected_component
-
-    self.style.on_select(self, current.node, false)
-    self.style.on_select(self, new.node, true)
 
     -- De-select the current component.
     self:_deselect_current()
@@ -412,9 +433,10 @@ function M:_on_new_select(new)
     end
 
     --- EVENT
-    self.on_select:trigger(new, current)
+    self.on_select:trigger(self:get_context(), new, current)
 
     return false
 end
+
 
 return M

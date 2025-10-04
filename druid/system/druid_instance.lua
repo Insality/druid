@@ -163,6 +163,7 @@ function M:_can_use_input_component(component)
 	return can_by_blacklist and can_by_whitelist
 end
 
+
 local function schedule_late_init(self)
 	if self._late_init_timer_id then
 		return
@@ -202,6 +203,7 @@ function M.create_druid_instance(context, style)
 	return self
 end
 
+
 ---Create new Druid component instance
 ---@generic T: druid.component
 ---@param component T The component class to create
@@ -221,6 +223,7 @@ function M:new(component, ...)
 	return instance
 end
 
+
 ---Call this in gui_script final function.
 function M:final()
 	local components = self.components_all
@@ -236,6 +239,7 @@ function M:final()
 	events.unsubscribe("druid.window_event", self.on_window_event, self)
 	events.unsubscribe("druid.language_change", self.on_language_change, self)
 end
+
 
 ---Remove created component from Druid instance.
 ---
@@ -288,6 +292,7 @@ function M:remove(component)
 	return is_removed
 end
 
+
 ---Get a context of Druid instance (usually a self of gui script)
 ---@package
 ---@return any context The Druid context
@@ -295,12 +300,14 @@ function M:get_context()
 	return self._context
 end
 
+
 ---Get a style of Druid instance
 ---@package
 ---@return table style The Druid style table
 function M:get_style()
 	return self._style
 end
+
 
 ---Druid late update function called after initialization and before the regular update step.
 ---This function is used to check the GUI state and perform actions after all components and nodes have been created.
@@ -319,6 +326,7 @@ function M:late_init()
 	end
 end
 
+
 ---Call this in gui_script update function.
 ---@param dt number Delta time
 function M:update(dt)
@@ -332,6 +340,7 @@ function M:update(dt)
 	self._is_late_remove_enabled = false
 	self:_clear_late_remove()
 end
+
 
 ---Call this in gui_script on_input function.
 ---@param action_id hash Action_id from on_input
@@ -366,6 +375,7 @@ function M:on_input(action_id, action)
 	return is_input_consumed
 end
 
+
 ---Call this in gui_script on_message function.
 ---@param message_id hash Message_id from on_message
 ---@param message table Message from on_message
@@ -385,6 +395,7 @@ function M:on_message(message_id, message, sender)
 		end
 	end
 end
+
 
 ---Called when the window event occurs
 ---@param window_event number The window event
@@ -407,6 +418,7 @@ function M:on_window_event(window_event)
 	end
 end
 
+
 ---Calls the on_language_change function in all related components
 ---This one called by global druid.on_language_change, but can be called manually to update all translations
 ---@private
@@ -416,6 +428,7 @@ function M:on_language_change()
 		components[i]:on_language_change()
 	end
 end
+
 
 ---Set whitelist components for input processing.
 ---If whitelist is not empty and component not contains in this list,
@@ -436,6 +449,7 @@ function M:set_whitelist(whitelist_components)
 	return self
 end
 
+
 ---Set blacklist components for input processing.
 ---If blacklist is not empty and component is contained in this list,
 ---component will be not processed on the input step DruidInstance
@@ -455,6 +469,7 @@ function M:set_blacklist(blacklist_components)
 	return self
 end
 
+
 ---Remove all components on late remove step DruidInstance
 ---@private
 function M:_clear_late_remove()
@@ -467,6 +482,7 @@ function M:_clear_late_remove()
 	end
 	self._late_remove = {}
 end
+
 
 ---Create new Druid widget instance
 ---@generic T: druid.component
@@ -490,6 +506,7 @@ function M:new_widget(widget, template, nodes, ...)
 	return instance
 end
 
+
 local button = require("druid.base.button")
 ---Create Button component
 ---@param node string|node The node_id or gui.get_node(node_id)
@@ -501,6 +518,7 @@ function M:new_button(node, callback, params, anim_node)
 	return self:new(button, node, callback, params, anim_node)
 end
 
+
 local blocker = require("druid.base.blocker")
 ---Create Blocker component
 ---@param node string|node The node_id or gui.get_node(node_id)
@@ -508,6 +526,7 @@ local blocker = require("druid.base.blocker")
 function M:new_blocker(node)
 	return self:new(blocker, node)
 end
+
 
 local back_handler = require("druid.base.back_handler")
 ---Create BackHandler component
@@ -517,6 +536,7 @@ local back_handler = require("druid.base.back_handler")
 function M:new_back_handler(callback, params)
 	return self:new(back_handler, callback, params)
 end
+
 
 local hover = require("druid.base.hover")
 ---Create Hover component
@@ -528,14 +548,6 @@ function M:new_hover(node, on_hover_callback, on_mouse_hover_callback)
 	return self:new(hover, node, on_hover_callback, on_mouse_hover_callback)
 end
 
-local navigation_handler = require("druid.base.navigation_handler")
----Create NavigationHandler component
----@param button druid.button The button that should be selected on start.
----@param tolerance number|nil How far to allow misalignment on the perpendicular axis when finding the next button.
----@return druid.navigation_handler navigation_handler The new navigation handler component.
-function M:new_navigation_handler(button, tolerance)
-	return self:new(navigation_handler, button, tolerance)
-end
 
 local text = require("druid.base.text")
 ---Create Text component
@@ -547,6 +559,7 @@ function M:new_text(node, value, adjust_type)
 	return self:new(text, node, value, adjust_type)
 end
 
+
 local static_grid = require("druid.base.static_grid")
 ---Create Grid component
 ---@param parent_node string|node The node_id or gui.get_node(node_id). Parent of all Grid items.
@@ -557,6 +570,7 @@ function M:new_grid(parent_node, item, in_row)
 	return self:new(static_grid, parent_node, item, in_row)
 end
 
+
 local scroll = require("druid.base.scroll")
 ---Create Scroll component
 ---@param view_node string|node The node_id or gui.get_node(node_id). Will be used as user input node.
@@ -565,6 +579,7 @@ local scroll = require("druid.base.scroll")
 function M:new_scroll(view_node, content_node)
 	return self:new(scroll, view_node, content_node)
 end
+
 
 local drag = require("druid.base.drag")
 ---Create Drag component
@@ -575,6 +590,7 @@ function M:new_drag(node, on_drag_callback)
 	return self:new(drag, node, on_drag_callback)
 end
 
+
 local swipe = require("druid.extended.swipe")
 ---Create Swipe component
 ---@param node string|node The node_id or gui.get_node(node_id). Will be used as user input node.
@@ -583,6 +599,7 @@ local swipe = require("druid.extended.swipe")
 function M:new_swipe(node, on_swipe_callback)
 	return self:new(swipe, node, on_swipe_callback)
 end
+
 
 local lang_text = require("druid.extended.lang_text")
 ---Create LangText component
@@ -594,6 +611,7 @@ function M:new_lang_text(node, locale_id, adjust_type)
 	return self:new(lang_text, node, locale_id, adjust_type)
 end
 
+
 local slider = require("druid.extended.slider")
 ---Create Slider component
 ---@param pin_node string|node The node_id or gui.get_node(node_id).
@@ -603,6 +621,7 @@ local slider = require("druid.extended.slider")
 function M:new_slider(pin_node, end_pos, callback)
 	return self:new(slider, pin_node, end_pos, callback)
 end
+
 
 local input = require("druid.extended.input")
 ---Create Input component
@@ -614,6 +633,7 @@ function M:new_input(click_node, text_node, keyboard_type)
 	return self:new(input, click_node, text_node, keyboard_type)
 end
 
+
 local data_list = require("druid.extended.data_list")
 ---Create DataList component
 ---@param druid_scroll druid.scroll The Scroll instance for Data List component
@@ -623,6 +643,7 @@ local data_list = require("druid.extended.data_list")
 function M:new_data_list(druid_scroll, druid_grid, create_function)
 	return self:new(data_list, druid_scroll, druid_grid, create_function)
 end
+
 
 local timer_component = require("druid.extended.timer")
 ---Create Timer component
@@ -635,6 +656,7 @@ function M:new_timer(node, seconds_from, seconds_to, callback)
 	return self:new(timer_component, node, seconds_from, seconds_to, callback)
 end
 
+
 local progress = require("druid.extended.progress")
 ---Create Progress component
 ---@param node string|node Progress bar fill node or node name
@@ -645,6 +667,7 @@ function M:new_progress(node, key, init_value)
 	return self:new(progress, node, key, init_value)
 end
 
+
 local layout = require("druid.extended.layout")
 ---Create Layout component
 ---@param node string|node The node_id or gui.get_node(node_id).
@@ -653,6 +676,7 @@ local layout = require("druid.extended.layout")
 function M:new_layout(node, mode)
 	return self:new(layout, node, mode)
 end
+
 
 local container = require("druid.extended.container")
 ---Create Container component
@@ -664,6 +688,7 @@ function M:new_container(node, mode, callback)
 	return self:new(container, node, mode, callback)
 end
 
+
 local hotkey = require("druid.extended.hotkey")
 ---Create Hotkey component
 ---@param keys_array string|string[] Keys for trigger action. Should contains one action key and any amount of modificator keys
@@ -674,6 +699,7 @@ function M:new_hotkey(keys_array, callback, callback_argument)
 	return self:new(hotkey, keys_array, callback, callback_argument)
 end
 
+
 local rich_text = require("druid.custom.rich_text.rich_text")
 ---Create RichText component.
 ---@param text_node string|node The text node to make Rich Text
@@ -682,6 +708,7 @@ local rich_text = require("druid.custom.rich_text.rich_text")
 function M:new_rich_text(text_node, value)
 	return self:new(rich_text, text_node, value)
 end
+
 
 local rich_input = require("druid.custom.rich_input.rich_input")
 ---Create RichInput component.
@@ -692,5 +719,6 @@ local rich_input = require("druid.custom.rich_input.rich_input")
 function M:new_rich_input(template, nodes)
 	return self:new(rich_input, template, nodes)
 end
+
 
 return M
