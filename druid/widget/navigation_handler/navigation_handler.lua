@@ -17,7 +17,10 @@ local const = require("druid.const")
 ---`local navigation_handler = require("druid.widgets.navigation_handler.navigation_handler")`
 ---
 ---Create the new widget instance:
----`self.nav = self.druid:new_widget(navigation_handler, self.my_button)`
+---`self.nav = self.druid:new_widget(navigation_handler)`
+---
+---Set the first component instance (likely a button) to be selected. This is **required**.
+---`self.nav:select_component(self.my_button)`
 ---
 ---
 ---### Example using the `on_select` event
@@ -51,28 +54,42 @@ local M = {}
 local COMPONENTS = { "button", "slider" }
 
 
----The constructor for the navigation_handler component.
----@param component druid.component Current druid component that starts as selected.
----@param tolerance number|nil How far to allow misalignment on the perpendicular axis when finding the next component.
-function M:init(component, tolerance)
-    -- Set default tolerance if not given.
-    if tolerance == nil then
-        tolerance = 250
+---Helper method for checking if the given direction is valid.
+---@param dirs table<string>
+---@param dir string
+---@return boolean
+local function valid_direction(dirs, dir)
+    for _index, value in ipairs(dirs) do
+        if value == dir then
+            return true
+        end
     end
+    return false
+end
 
-    pprint(component._component.name)
+---Helper method for checking iterating through components.
+---Returns true if the given component is in the table of valid components.
+---@param input_component druid.component
+---@return boolean
+local function valid_component(input_component)
+    local component_name = input_component._component.name
+    for _index, component in ipairs(COMPONENTS) do
+        if component_name == component then
+            return true
+        end
+    end
+    return false
+end
 
+
+---The constructor for the navigation_handler widget.
+function M:init()
     self._weight = 10
-    self._tolerance = tolerance
+    self._tolerance = 250
     self._select_trigger = const.ACTION_SPACE
     self._selected_triggers = {}
-    self._selected_component = component
+    self._selected_component = nil
     self._deselect_directions = {}
-
-    -- Select the component if it's a button.
-    if component.hover then
-        component.hover:set_hover(true)
-    end
 
     -- Events
     self.on_select = event.create()
@@ -84,6 +101,11 @@ end
 ---@param action table Action from on_input.
 ---@return boolean is_consumed True if the input was consumed.
 function M:on_input(action_id, action)
+    -- Do nothing if the selected component is not set.
+    if not self._selected_component then
+        return
+    end
+
     -- Trigger an action with the selected component, e.g. button click.
     if self:_action_id_is_trigger(action_id) and self:_selected_is_button() then
         ---@type druid.button
@@ -181,6 +203,21 @@ function M:on_input(action_id, action)
 end
 
 
+---Set the given `druid.component` as selected component.
+---@param component druid.component Current druid component that starts as selected.
+---@return druid.widget.navigation_handler self
+function M:select_component(component)
+    self._selected_component = component
+
+    -- Select the component if it's a button.
+    if component.hover then
+        component.hover:set_hover(true)
+    end
+
+    return self
+end
+
+
 ---Sets a new weight value which affects the next button diagonal finding logic.
 ---@param new_value number
 ---@return druid.widget.navigation_handler self
@@ -200,15 +237,10 @@ end
 
 
 ---Set input action_id name to trigger selected component by keyboard/gamepad.
----@param key hash|string The action_id of the input key. Example: "key_space".
+---@param key hash The action_id of the input key. Example: "key_space".
 ---@return druid.widget.navigation_handler self The current navigation handler instance.
 function M:set_select_trigger(key)
-    if type(key) == "string" then
-        self._select_trigger = hash(key)
-    else
-        self._select_trigger = key
-    end
-
+    self._select_trigger = key
     return self
 end
 
@@ -242,7 +274,7 @@ end
 
 
 ---Get the currently selected component.
----@return druid.component _selected_component Selected component, which often is a `druid.button`.
+---@return druid.component|nil _selected_component Selected component, which often is a `druid.button`.
 function M:get_selected_component()
     return self._selected_component
 end
@@ -284,33 +316,6 @@ end
 ---@param dir string Valid directions: "top", "bottom", "left", "right".
 ---@return druid.component|nil
 function M:_find_next_button(dir)
-    ---Helper method for checking if the given direction is valid.
-    ---@param dirs table<string>
-    ---@param dir string
-    ---@return boolean
-    local function valid_direction(dirs, dir)
-        for _index, value in ipairs(dirs) do
-            if value == dir then
-                return true
-            end
-        end
-        return false
-    end
-
-    ---Helper method for checking iterating through components.
-    ---Returns true if the given component is in the table of valid components.
-    ---@param input_component druid.component
-    ---@return boolean
-    local function valid_component(input_component)
-        local component_name = input_component._component.name
-        for _index, component in ipairs(COMPONENTS) do
-            if component_name == component then
-                return true
-            end
-        end
-        return false
-    end
-
     -- Check if the deselect direction is set and
     -- the direction is different from it.
     if next(self._deselect_directions) ~= nil and not valid_direction(self._deselect_directions, dir) then
