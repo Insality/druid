@@ -72,6 +72,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field text_prefab node The text prefab node
 ---@field private _last_value string The last value of the rich text
 ---@field private _settings table The settings of the rich text
+---@field private _split_to_characters boolean The split to characters flag
 local M = component.create("rich_text")
 
 
@@ -83,6 +84,7 @@ function M:init(text_node, value)
 
 	self._last_value = value or gui.get_text(self.text_prefab)
 	self._settings = self:_create_settings()
+	self._split_to_characters = false
 
 	gui.set_text(self.root, "")
 
@@ -95,6 +97,7 @@ end
 ---@private
 function M:on_layout_change()
 	gui.set_text(self.root, "")
+	self._settings = self:_create_settings()
 
 	if self._last_value then
 		self:set_text(self._last_value)
@@ -148,6 +151,8 @@ function M:set_text(text)
 	self:clear()
 	self._last_value = text
 
+	self._settings.split_to_characters = self._split_to_characters
+
 	local words, settings, line_metrics = rich_text.create(text, self._settings, self.style)
 	line_metrics = rich_text.adjust_to_area(words, settings, line_metrics, self.style)
 
@@ -199,7 +204,7 @@ end
 ---@param value boolean
 ---@return druid.rich_text self
 function M:set_split_to_characters(value)
-	self._settings.split_to_characters = value
+	self._split_to_characters = value
 	return self
 end
 
