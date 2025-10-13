@@ -73,7 +73,7 @@ M["static_grid"] = {
 
 M["scroll"] = {
 	ANIM_SPEED = 0.2, -- gui.animation speed to point
-	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
+	BACK_SPEED = 0.1, -- Lerp speed of return to soft position
 	FRICT = 0.93, -- mult for free inert
 	FRICT_HOLD = 0.79, -- mult. for inert, while touching
 	INERT_THRESHOLD = 2.5, -- speed to stop inertion

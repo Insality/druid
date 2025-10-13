@@ -578,34 +578,34 @@ function M:_check_soft_zone()
 	local target = self.target_position
 	local border = self.available_pos
 	local speed = self.style.BACK_SPEED
-	local affected = false
+	local is_changed = false
 
 	-- Right border (minimum x)
 	if target.x < border.x then
 		local step = math.max(math.abs(target.x - border.x) * speed, 1)
-        target.x = helper.step(target.x, border.x, step)
-		affected = true
+		target.x = helper.step(target.x, border.x, step)
+		is_changed = true
 	end
 	-- Left border (maximum x)
 	if target.x > border.z then
 		local step = math.max(math.abs(target.x - border.z) * speed, 1)
 		target.x = helper.step(target.x, border.z, step)
-		affected = true
+		is_changed = true
 	end
 	-- Top border (maximum y)
 	if target.y < border.y then
 		local step = math.max(math.abs(target.y - border.y) * speed, 1)
 		target.y = helper.step(target.y, border.y, step)
-		affected = true
+		is_changed = true
 	end
 	-- Bot border (minimum y)
 	if target.y > border.w then
 		local step = math.max(math.abs(target.y - border.w) * speed, 1)
 		target.y = helper.step(target.y, border.w, step)
-		affected = true
+		is_changed = true
 	end
 
-	return affected
+	return is_changed
 end
 
 
@@ -735,9 +735,10 @@ function M:_update_free_scroll(dt)
 	-- Inertion friction
 	self.inertion = self.inertion * self.style.FRICT
 
-	local affected = self:_check_soft_zone()
-	if affected then
-		self.inertion = vmath.vector3(0, 0, 0)
+	local is_changed = self:_check_soft_zone()
+	if is_changed then
+		self.inertion.x = 0
+		self.inertion.y = 0
 	end
 	if self.position.x ~= target.x or self.position.y ~= target.y then
 		self:_set_scroll_position(target.x, target.y)
