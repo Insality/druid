@@ -264,15 +264,19 @@ end
 
 ---Set the width of the rich text, not affects the size of current spawned words
 ---@param width number
+---@return druid.rich_text self
 function M:set_width(width)
 	self._settings.width = width
+	return self
 end
 
 
 ---Set the height of the rich text, not affects the size of current spawned words
 ---@param height number
+---@return druid.rich_text self
 function M:set_height(height)
 	self._settings.height = height
+	return self
 end
 
 
