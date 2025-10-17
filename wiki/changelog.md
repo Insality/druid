@@ -746,3 +746,4 @@ Please support me if you like this project! It will help me keep engaged to upda
 	- Add "Pages" to manage a a big lists of properties with paginations support
 	- Add `properties_panel:render_lua_table` to easily render your lua tables with a various types support (any simple types and vector, functions, events etc)
 	- Add "Refresh" button, which active a 1-sec refresh for current page
+- [#329](https://github.com/Insality/druid/issues/329) Allow numeric characters in RichText tags

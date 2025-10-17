@@ -30,6 +30,7 @@ local COLOR_REFRESH_ACTIVE = "#8BD092"
 
 function M:init()
 	self.root = self:get_node("root")
+	self.scale_root = gui.get_scale(self.root)
 	self.content = self:get_node("content")
 
 	self.container = self.druid:new_container(self.root)
@@ -118,7 +119,7 @@ end
 
 function M:on_drag_widget(dx, dy)
 	local position = self.container:get_position()
-	self.container:set_position(position.x + dx, position.y + dy)
+	self.container:set_position(position.x + dx * self.scale_root.x, position.y + dy * self.scale_root.y)
 end
 
 

@@ -182,21 +182,13 @@ end
 ---@param v2 number|nil Max value If nil, value will be clamped to negative infinity
 ---@return number value Clamped value
 function M.clamp(value, v1, v2)
-	if v1 and v2 then
-		if v1 > v2 then
-			v1, v2 = v2, v1
-		end
+	v1 = v1 or -math.huge
+	v2 = v2 or math.huge
+	if v1 > v2 then
+		v1, v2 = v2, v1
 	end
 
-	if v1 and value < v1 then
-		return v1
-	end
-
-	if v2 and value > v2 then
-		return v2
-	end
-
-	return value
+	return math.max(v1, math.min(value, v2))
 end
 
 

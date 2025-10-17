@@ -4083,6 +4083,18 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
+  id: "properties_panel/icon_refresh"
+  parent: "properties_panel/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/icon_back"
+  parent: "properties_panel/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
   id: "properties_panel/content"
   parent: "properties_panel/root"
   template_node_child: true
