@@ -2,6 +2,7 @@ local assign_layers = require("druid.editor_scripts.assign_layers")
 local create_druid_widget = require("druid.editor_scripts.create_druid_widget")
 local create_druid_gui_script = require("druid.editor_scripts.create_druid_gui_script")
 local druid_settings = require("druid.editor_scripts.druid_settings")
+local asset_store = require("druid.editor_scripts.core.asset_store")
 
 local M = {}
 
@@ -17,6 +18,10 @@ function M.get_prefs_schema()
 		}),
 		["druid.gui_script_template_path"] = editor.prefs.schema.string({
 			default = DEFAULT_GUI_SCRIPT_TEMPLATE_PATH,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
+		["druid.asset_install_folder"] = editor.prefs.schema.string({
+			default = "/widget",
 			scope = editor.prefs.SCOPE.PROJECT
 		})
 	}
@@ -62,6 +67,14 @@ function M.get_commands()
 			end,
 			run = function(opts)
 				return create_druid_gui_script.create_druid_gui_script(opts.selection)
+			end
+		},
+
+		{
+			label = "[Druid] Asset Store",
+			locations = { "Edit" },
+			run = function()
+				return asset_store.open_asset_store()
 			end
 		},
 
