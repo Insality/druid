@@ -1,92 +1,83 @@
+local base64 = require("druid.editor_scripts.core.base64")
 --- Module for handling widget installation from zip files
 --- Downloads zip files and extracts them to the specified folder
 
 local M = {}
 
-local DEFAULT_INSTALL_FOLDER = "/widget"
+local DEFAULT_INSTALL_FOLDER = "./widget"
+
+---@class druid.core.item_info
+---@field id string
+---@field version string
+---@field title string
+---@field author string
+---@field description string
+---@field api string
+---@field author_url string
+---@field image string
+---@field manifest_url string
+---@field zip_url string
+---@field json_zip_url string
+---@field sha256 string
+---@field size number
+---@field depends string[]
+---@field tags string[]
 
 
 ---Download a file from URL
 ---@param url string - The URL to download from
----@return string|nil, string|nil - Downloaded content or nil, error message or nil
-local function download_file(url)
-    print("Downloading from:", url)
+---@return string|nil, string|nil - Downloaded content or nil, filename or nil
+local function download_file_zip_json(url)
+	local response = http.request(url, { as = "json" })
 
-    -- Try different approaches for downloading binary data
-    local success, response = pcall(function()
-        -- First try without specifying 'as' parameter
-        return http.request(url)
-    end)
+	if response.status ~= 200 then
+		print("Failed to download file. HTTP status: " .. response.status)
+		return nil
+	end
 
-    -- If that fails, try with 'as = "string"'
-    if not success or not response or not response.body then
-        print("First attempt failed, trying with as='string'")
-        success, response = pcall(function()
-            return http.request(url, {
-                as = "string"
-            })
-        end)
-    end
+	local data = response.body
 
-    if not success then
-        print("HTTP request failed:", response)
-        return nil, "HTTP request failed: " .. tostring(response)
-    end
-
-    if not response then
-        print("No response received")
-        return nil, "No response received from server"
-    end
-
-    print("Response status:", response.status)
-    print("Response body type:", type(response.body))
-    print("Response body length:", response.body and #response.body or "nil")
-    if response.headers then
-        print("Response headers:", response.headers["content-type"] or "unknown")
-        print("Content length header:", response.headers["content-length"] or "unknown")
-    end
-
-    if response.status ~= 200 then
-        return nil, "Failed to download file. HTTP status: " .. tostring(response.status)
-    end
-
-    if not response.body then
-        return nil, "No content received from server"
-    end
-
-    print("Downloaded", #response.body, "bytes")
-    return response.body, nil
+	return base64.decode(data.data), data.filename
 end
 
 
 ---Install a widget from a zip URL
----@param item table - Widget item data containing zip_url and id
+---@param item druid.core.item_info - Widget item data containing zip_url and id
 ---@param install_folder string - Target folder to install to
 ---@return boolean, string - Success status and message
 function M.install_widget(item, install_folder)
-    if not item.zip_url or not item.id then
-        return false, "Invalid widget data: missing zip_url or id"
-    end
+	if not item.json_zip_url or not item.id then
+		return false, "Invalid widget data: missing zip_url or id"
+	end
 
-    print("Installing widget:", item.id)
-    print("Download URL:", item.zip_url)
-    print("Target folder:", install_folder)
+	-- Download the zip file
+	local zip_data, filename = download_file_zip_json(item.json_zip_url)
+	if not zip_data or not filename then
+		return false, "Failed to download widget: " .. filename
+	end
 
-    -- Download the zip file
-    local zip_data, download_error = download_file(item.zip_url)
-    if not zip_data then
-        return false, "Failed to download widget: " .. download_error
-    end
 
-    -- Create a simple success message for now
-    local success = true
-    local message = "Widget '" .. item.id .. "' downloaded successfully!"
-    message = message .. "\nDownload URL: " .. item.zip_url
-    message = message .. "\nSize: " .. tostring(#zip_data) .. " bytes"
-    message = message .. "\nTarget folder: " .. install_folder
+	local zip_file_path = install_folder .. "/" .. filename
+	local zip_file = io.open(zip_file_path, "wb")
+	if not zip_file then
+		return false, "Failed to open zip file: " .. zip_file_path
+	end
 
-    print("Successfully downloaded widget:", item.id)
-    return success, message
+	zip_file:write(zip_data)
+	zip_file:close()
+	print("Zip written to file: " .. zip_file_path)
+
+	-- Unzip the zip file
+	local folder_name = item.id .. "-" .. item.version
+	zip.unpack(zip_file_path, install_folder .. "/" .. folder_name)
+	print("Widget unpacked successfully")
+
+	-- Remove the zip file
+	os.remove(zip_file_path)
+	print("Zip file removed successfully")
+
+
+	return true, "Widget installed successfully"
 end
 
 
@@ -95,15 +86,15 @@ end
 ---@param install_folder string - Install folder to check in
 ---@return boolean - True if widget is already installed
 function M.is_widget_installed(item, install_folder)
-    -- For now, assume widgets are not installed to avoid path issues
-    return false
+	-- For now, assume widgets are not installed to avoid path issues
+	return false
 end
 
 
 ---Get default installation folder
 ---@return string - Default installation folder path
 function M.get_default_install_folder()
-    return DEFAULT_INSTALL_FOLDER
+	return DEFAULT_INSTALL_FOLDER
 end
 
 
