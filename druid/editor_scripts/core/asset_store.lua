@@ -134,7 +134,7 @@ function M.open_asset_store()
     end
 
     local dialog_component = editor.ui.component(function(props)
-		editor.prefs.set("druid.asset_install_folder", "./widget")
+		editor.prefs.set("druid.asset_install_folder", "/widget")
         -- State management
         local items, set_items = editor.ui.use_state(initial_items)
         local loading, set_loading = editor.ui.use_state(initial_loading)

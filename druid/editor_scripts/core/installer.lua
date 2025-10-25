@@ -1,10 +1,11 @@
 local base64 = require("druid.editor_scripts.core.base64")
+local path_replacer = require("druid.editor_scripts.core.path_replacer")
 --- Module for handling widget installation from zip files
 --- Downloads zip files and extracts them to the specified folder
 
 local M = {}
 
-local DEFAULT_INSTALL_FOLDER = "./widget"
+local DEFAULT_INSTALL_FOLDER = "/widget"
 
 ---@class druid.core.item_info
 ---@field id string
@@ -57,7 +58,7 @@ function M.install_widget(item, install_folder)
 	end
 
 
-	local zip_file_path = install_folder .. "/" .. filename
+	local zip_file_path = "." .. install_folder .. "/" .. filename
 	local zip_file = io.open(zip_file_path, "wb")
 	if not zip_file then
 		return false, "Failed to open zip file: " .. zip_file_path
@@ -68,13 +69,22 @@ function M.install_widget(item, install_folder)
 	print("Zip written to file: " .. zip_file_path)
 
 	-- Unzip the zip file
-	local folder_name = item.id .. "-" .. item.version
-	zip.unpack(zip_file_path, install_folder .. "/" .. folder_name)
+	local folder_path = "." .. install_folder .. "/" .. item.id
+
+	zip.unpack(zip_file_path, folder_path)
 	print("Widget unpacked successfully")
 
 	-- Remove the zip file
 	os.remove(zip_file_path)
 	print("Zip file removed successfully")
+
+	-- Process paths within the extracted widget
+	local files_in_folder = path_replacer.get_all_files(folder_path)
+	pprint(files_in_folder)
+
+	--if not path_replacer.process_widget_paths(install_folder .. "/" .. folder_name, new_base_path) then
+	--	return false, "Failed to process widget paths"
+	--end
 
 
 	return true, "Widget installed successfully"
