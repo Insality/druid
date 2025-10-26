@@ -1,6 +1,9 @@
 --- Module for reusable UI components in the asset store
 --- Contains component builders for filters, widget items, and lists
 
+local internal = require("druid.editor_scripts.core.asset_store_internal")
+local installer = require("druid.editor_scripts.core.installer")
+
 local M = {}
 
 
@@ -143,9 +146,8 @@ end
 ---@param item table - Widget item data
 ---@param is_installed boolean - Whether widget is already installed
 ---@param on_install function - Callback for install button
----@param on_open_api function - Callback for API docs button
 ---@return userdata - UI component
-function M.create_widget_item(item, is_installed, on_install, on_open_api)
+function M.create_widget_item(item, is_installed, on_install)
 	local size_text = item.size and format_size(item.size) or "Unknown size"
 	local version_text = item.version and "v" .. item.version or "Unknown version"
 
@@ -158,7 +160,7 @@ function M.create_widget_item(item, is_installed, on_install, on_open_api)
 	-- Create dependencies display
 	local deps_text = ""
 	if item.depends and #item.depends > 0 then
-		deps_text = "Depends on: " .. table.concat(item.depends, ", ")
+		deps_text = "Depends: " .. table.concat(item.depends, ", ")
 	end
 
 	return editor.ui.horizontal({
@@ -185,18 +187,18 @@ function M.create_widget_item(item, is_installed, on_install, on_open_api)
 						children = {
 							editor.ui.label({
 								text = item.title or item.id,
-								color = editor.ui.COLOR.TEXT
+								color = editor.ui.COLOR.OVERRIDE
 							}),
 							editor.ui.label({
-								text = version_text .. " • ",
+								text = version_text,
+								color = editor.ui.COLOR.WARNING
+							}),
+							editor.ui.label({
+								text = "• by " .. (item.author or "Unknown"),
 								color = editor.ui.COLOR.HINT
 							}),
 							editor.ui.label({
-								text = "by " .. (item.author or "Unknown"),
-								color = editor.ui.COLOR.HINT
-							}),
-							editor.ui.label({
-								text = " • " .. size_text,
+								text = "• " .. size_text,
 								color = editor.ui.COLOR.HINT
 							}),
 						}
@@ -217,7 +219,7 @@ function M.create_widget_item(item, is_installed, on_install, on_open_api)
 					-- Dependencies
 					deps_text ~= "" and editor.ui.label({
 						text = deps_text,
-						color = editor.ui.COLOR.WARNING
+						color = editor.ui.COLOR.HINT
 					}) or nil,
 
 					-- Installation status
@@ -240,7 +242,7 @@ function M.create_widget_item(item, is_installed, on_install, on_open_api)
 					}),
 					editor.ui.button({
 						text = "API",
-						on_pressed = on_open_api,
+						on_pressed = function() internal.open_url(item.api) end,
 						enabled = item.api ~= nil
 					})
 				}
@@ -252,20 +254,17 @@ end
 
 ---Create a scrollable list of widget items
 ---@param items table - List of widget items to display
----@param is_installed_func function - Function to check if widget is installed
 ---@param on_install function - Callback for install button
----@param on_open_api function - Callback for API docs button
 ---@return userdata - UI component
-function M.create_widget_list(items, is_installed_func, on_install, on_open_api)
+function M.create_widget_list(items, on_install)
 	local widget_items = {}
+	local install_folder = installer.get_install_folder()
 
 	for index = 1, 9 do
 		for _, item in ipairs(items) do
-			local is_installed = is_installed_func and is_installed_func(item) or false
-
+			local is_installed = installer.is_widget_installed(item, install_folder)
 			table.insert(widget_items, M.create_widget_item(item, is_installed,
-				function() on_install(item) end,
-				function() on_open_api(item) end
+				function() on_install(item) end
 			))
 		end
 	end

@@ -28,18 +28,6 @@ local function handle_install(item, install_folder, on_success, on_error)
 end
 
 
----Handle opening API documentation
----@param item table - Widget item
-local function handle_open_api(item)
-	if item.api then
-		print("Opening API documentation:", item.api)
-		editor.browse(item.api)
-	else
-		print("No API documentation available for:", item.id)
-	end
-end
-
-
 ---Show installation status dialog
 ---@param success boolean - Whether installation was successful
 ---@param message string - Status message
@@ -71,6 +59,7 @@ local function show_install_status(success, message)
 end
 
 
+
 ---Open the asset store dialog
 function M.open_asset_store(store_url)
 	print("Opening Druid Asset Store from:", store_url)
@@ -86,15 +75,11 @@ function M.open_asset_store(store_url)
 	local initial_items = store_data.items
 	local dialog_component = editor.ui.component(function(props)
 		-- State management
-		local items, set_items = editor.ui.use_state(initial_items)
-		local install_folder, set_install_folder = editor.ui.use_state(editor.prefs.get("druid.asset_install_folder") or installer.get_default_install_folder())
+		local all_items = editor.ui.use_state(initial_items)
+		local filtered_items, set_filtered_items = editor.ui.use_state(initial_items)
+		local install_folder, set_install_folder = editor.ui.use_state(installer.get_install_folder())
 		local search_query, set_search_query = editor.ui.use_state("")
 		local install_status, set_install_status = editor.ui.use_state("")
-
-		-- Installation status check function
-		local function is_widget_installed(item)
-			return installer.is_widget_installed(item, install_folder)
-		end
 
 		-- Installation handlers
 		local function on_install(item)
@@ -108,10 +93,6 @@ function M.open_asset_store(store_url)
 					show_install_status(false, message)
 				end
 			)
-		end
-
-		local function on_open_api(item)
-			handle_open_api(item)
 		end
 
 		-- Build UI content
@@ -146,7 +127,10 @@ function M.open_asset_store(store_url)
 				}),
 				editor.ui.string_field({
 					value = search_query,
-					on_value_changed = set_search_query,
+					on_value_changed = function(new_query)
+						set_search_query(new_query)
+						set_filtered_items(internal.filter_items(all_items, new_query))
+					end,
 					title = "Search:",
 					tooltip = "Search for widgets by title, author, or description",
 				})
@@ -154,16 +138,17 @@ function M.open_asset_store(store_url)
 		}))
 
 		-- Main content area
-		if #items == 0 then
+		if #filtered_items == 0 then
+			local message = search_query ~= "" and
+				"No widgets found matching '" .. search_query .. "'." or
+				"No widgets found matching the current filters."
 			table.insert(content_children, editor.ui.label({
-				text = "No widgets found matching the current filters.",
+				text = message,
 				color = editor.ui.COLOR.HINT,
 				alignment = editor.ui.ALIGNMENT.CENTER
 			}))
 		else
-			table.insert(content_children, ui_components.create_widget_list(
-				items, is_widget_installed, on_install, on_open_api
-			))
+			table.insert(content_children, ui_components.create_widget_list(filtered_items, on_install))
 		end
 
 		-- Install status message

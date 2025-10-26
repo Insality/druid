@@ -100,10 +100,10 @@ function M.is_widget_installed(item, install_folder)
 end
 
 
----Get default installation folder
----@return string - Default installation folder path
-function M.get_default_install_folder()
-	return DEFAULT_INSTALL_FOLDER
+---Get installation folder
+---@return string - Installation folder path
+function M.get_install_folder()
+	return editor.prefs.get("druid.asset_install_folder") or DEFAULT_INSTALL_FOLDER
 end
 
 
