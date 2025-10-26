@@ -42,6 +42,18 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
+  id: "properties_panel/icon_refresh"
+  parent: "properties_panel/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/icon_back"
+  parent: "properties_panel/header"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
   id: "properties_panel/content"
   parent: "properties_panel/root"
   template_node_child: true
@@ -566,6 +578,48 @@ nodes {
   type: TYPE_BOX
   id: "properties_panel/property_vector3/selected_z"
   parent: "properties_panel/property_vector3/field_z"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "properties_panel/property_button_small"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button_small/root"
+  parent: "properties_panel/property_button_small"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_button_small/text_name"
+  parent: "properties_panel/property_button_small/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button_small/E_Anchor"
+  parent: "properties_panel/property_button_small/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button_small/button"
+  parent: "properties_panel/property_button_small/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button_small/selected"
+  parent: "properties_panel/property_button_small/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_button_small/text_button"
+  parent: "properties_panel/property_button_small/button"
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"
