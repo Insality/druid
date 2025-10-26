@@ -756,6 +756,7 @@ nodes {
   parent: "propeties"
   inherit_alpha: true
   template: "/druid/widget/properties_panel/properties/property_button.gui"
+  enabled: false
 }
 nodes {
   type: TYPE_BOX
