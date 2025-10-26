@@ -3,53 +3,9 @@
 
 local installer = require("druid.editor_scripts.core.installer")
 local ui_components = require("druid.editor_scripts.core.ui_components")
+local internal = require("druid.editor_scripts.core.asset_store_internal")
 
 local M = {}
-
-local STORE_URL = "https://insality.github.io/core/druid_widget_store.json"
-
-
----Fetch widget data from the remote store
----@return table|nil, string|nil - Store data or nil, error message or nil
-local function fetch_store_data()
-	print("Fetching widget data from:", STORE_URL)
-
-	local response = http.request(STORE_URL, {
-		as = "json"
-	})
-
-	if response.status ~= 200 then
-		return nil, "Failed to fetch store data. HTTP status: " .. response.status
-	end
-
-	if not response.body or not response.body.items then
-		return nil, "Invalid store data format"
-	end
-
-	print("Successfully fetched", #response.body.items, "widgets")
-	return response.body, nil
-end
-
-
----Filter items based on author and tag filters
----@param items table - List of widget items
----@param author_filter string - Author filter value
----@param tag_filter string - Tag filter value
----@return table - Filtered list of items
-local function filter_items(items, author_filter, tag_filter)
-	local filtered = {}
-
-	for _, item in ipairs(items) do
-		local author_match = author_filter == "All Authors" or item.author == author_filter
-		local tag_match = tag_filter == "All Categories" or (item.tags and table.concat(item.tags, ","):find(tag_filter))
-
-		if author_match and tag_match then
-			table.insert(filtered, item)
-		end
-	end
-
-	return filtered
-end
 
 
 ---Handle widget installation
@@ -116,36 +72,24 @@ end
 
 
 ---Open the asset store dialog
-function M.open_asset_store()
-	print("Opening Druid Asset Store")
+function M.open_asset_store(store_url)
+	print("Opening Druid Asset Store from:", store_url)
 
 	-- Fetch data synchronously before creating the dialog
-	local store_data, fetch_error = fetch_store_data()
-	local initial_items = {}
-	local initial_loading = false
-	local initial_error = nil
-
-	if store_data then
-		initial_items = store_data.items
-		print("Successfully loaded", #initial_items, "widgets")
-	else
-		initial_error = fetch_error
+	local store_data, fetch_error = internal.download_json(store_url)
+	if not store_data then
 		print("Failed to load widgets:", fetch_error)
+		return
 	end
+	print("Successfully loaded", #store_data.items, "widgets")
 
+	local initial_items = store_data.items
 	local dialog_component = editor.ui.component(function(props)
-		editor.prefs.set("druid.asset_install_folder", "/widget")
 		-- State management
 		local items, set_items = editor.ui.use_state(initial_items)
-		local loading, set_loading = editor.ui.use_state(initial_loading)
-		local error_message, set_error_message = editor.ui.use_state(initial_error)
 		local install_folder, set_install_folder = editor.ui.use_state(editor.prefs.get("druid.asset_install_folder") or installer.get_default_install_folder())
-		local author_filter, set_author_filter = editor.ui.use_state("All Authors")
-		local tag_filter, set_tag_filter = editor.ui.use_state("All Categories")
+		local search_query, set_search_query = editor.ui.use_state("")
 		local install_status, set_install_status = editor.ui.use_state("")
-
-		-- Filter items
-		local filtered_items = editor.ui.use_memo(filter_items, items, author_filter, tag_filter)
 
 		-- Installation status check function
 		local function is_widget_installed(item)
@@ -174,27 +118,43 @@ function M.open_asset_store()
 		local content_children = {}
 
 		-- Settings section
-		table.insert(content_children, editor.ui.label({
+		table.insert(content_children, editor.ui.horizontal({
 			spacing = editor.ui.SPACING.MEDIUM,
-			text = "Installation Folder: " .. install_folder,
-			color = editor.ui.COLOR.TEXT
+			children = {
+				editor.ui.label({
+					spacing = editor.ui.SPACING.MEDIUM,
+					text = "Installation Folder:",
+					color = editor.ui.COLOR.TEXT
+				}),
+
+				editor.ui.string_field({
+					value = install_folder,
+					on_value_changed = set_install_folder,
+					title = "Installation Folder:",
+					tooltip = "The folder to install the assets to",
+				}),
+			}
 		}))
 
-		-- Filter section (only show if we have items)
-		if #items > 0 then
-			table.insert(content_children, editor.ui.label({
-				spacing = editor.ui.SPACING.MEDIUM,
-				text = "Filters: Author: " .. author_filter .. ", Category: " .. tag_filter,
-				color = editor.ui.COLOR.TEXT
-			}))
-		end
+		-- Search section
+		table.insert(content_children, editor.ui.horizontal({
+			spacing = editor.ui.SPACING.MEDIUM,
+			children = {
+				editor.ui.label({
+					text = "Search:",
+					color = editor.ui.COLOR.TEXT
+				}),
+				editor.ui.string_field({
+					value = search_query,
+					on_value_changed = set_search_query,
+					title = "Search:",
+					tooltip = "Search for widgets by title, author, or description",
+				})
+			},
+		}))
 
 		-- Main content area
-		if loading then
-			table.insert(content_children, ui_components.create_loading_indicator("Loading widget store..."))
-		elseif error_message then
-			table.insert(content_children, ui_components.create_error_message(error_message))
-		elseif #filtered_items == 0 then
+		if #items == 0 then
 			table.insert(content_children, editor.ui.label({
 				text = "No widgets found matching the current filters.",
 				color = editor.ui.COLOR.HINT,
@@ -202,7 +162,7 @@ function M.open_asset_store()
 			}))
 		else
 			table.insert(content_children, ui_components.create_widget_list(
-				filtered_items, is_widget_installed, on_install, on_open_api
+				items, is_widget_installed, on_install, on_open_api
 			))
 		end
 
@@ -219,7 +179,7 @@ function M.open_asset_store()
 			title = "Druid Asset Store",
 			content = editor.ui.vertical({
 				spacing = editor.ui.SPACING.SMALL,
-				padding = editor.ui.PADDING.NONE,
+				padding = editor.ui.PADDING.SMALL,
 				children = content_children
 			}),
 			buttons = {
@@ -231,11 +191,7 @@ function M.open_asset_store()
 		})
 	end)
 
-	local result = editor.ui.show_dialog(dialog_component({}))
-
-	-- Save the install folder preference (this will be handled by the state management in the dialog)
-
-	return result
+	return editor.ui.show_dialog(dialog_component({}))
 end
 
 

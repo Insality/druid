@@ -162,9 +162,12 @@ function M.create_widget_item(item, is_installed, on_install, on_open_api)
 	end
 
 	return editor.ui.horizontal({
-		spacing = editor.ui.SPACING.MEDIUM,
-		padding = editor.ui.PADDING.MEDIUM,
+		spacing = editor.ui.SPACING.NONE,
+		padding = editor.ui.PADDING.SMALL,
 		children = {
+			editor.ui.separator({
+				orientation = editor.ui.ORIENTATION.HORIZONTAL,
+			}),
 			-- Widget icon placeholder
 			editor.ui.label({
 				text = "📦",
@@ -227,12 +230,13 @@ function M.create_widget_item(item, is_installed, on_install, on_open_api)
 
 			-- Action buttons
 			editor.ui.vertical({
-				spacing = editor.ui.SPACING.SMALL,
+				spacing = editor.ui.SPACING.MEDIUM,
 				children = {
 					editor.ui.button({
-						text = is_installed and "Reinstall" or "Install",
+
+						text = "Install",
 						on_pressed = on_install,
-						enabled = true
+						enabled = is_installed == false
 					}),
 					editor.ui.button({
 						text = "API",
@@ -240,7 +244,7 @@ function M.create_widget_item(item, is_installed, on_install, on_open_api)
 						enabled = item.api ~= nil
 					})
 				}
-			})
+			}),
 		}
 	})
 end
@@ -270,42 +274,6 @@ function M.create_widget_list(items, is_installed_func, on_install, on_open_api)
 		content = editor.ui.vertical({
 			children = widget_items
 		})
-	})
-end
-
-
----Create a loading indicator
----@param message string - Loading message
----@return userdata - UI component
-function M.create_loading_indicator(message)
-	return editor.ui.vertical({
-		spacing = editor.ui.SPACING.MEDIUM,
-		alignment = editor.ui.ALIGNMENT.CENTER,
-		children = {
-			editor.ui.label({
-				text = message or "Loading...",
-				color = editor.ui.COLOR.TEXT,
-				alignment = editor.ui.ALIGNMENT.CENTER
-			})
-		}
-	})
-end
-
-
----Create an error message display
----@param message string - Error message
----@return userdata - UI component
-function M.create_error_message(message)
-	return editor.ui.vertical({
-		spacing = editor.ui.SPACING.MEDIUM,
-		alignment = editor.ui.ALIGNMENT.CENTER,
-		children = {
-			editor.ui.label({
-				text = "Error: " .. message,
-				color = editor.ui.COLOR.ERROR,
-				alignment = editor.ui.ALIGNMENT.CENTER
-			})
-		}
 	})
 end
 

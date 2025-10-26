@@ -74,7 +74,7 @@ function M.get_commands()
 			label = "[Druid] Asset Store",
 			locations = { "Edit" },
 			run = function()
-				return asset_store.open_asset_store()
+				return asset_store.open_asset_store("https://insality.github.io/core/druid_widget_store.json")
 			end
 		},
 
