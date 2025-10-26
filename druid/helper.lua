@@ -366,7 +366,8 @@ end
 ---Check if device is desktop
 ---@return boolean
 function M.is_desktop()
-	return const.CURRENT_SYSTEM_NAME == const.OS.WINDOWS or const.CURRENT_SYSTEM_NAME == const.OS.MAC or const.CURRENT_SYSTEM_NAME == const.OS.LINUX
+	local name = const.CURRENT_SYSTEM_NAME
+	return name == const.OS.WINDOWS or name == const.OS.MAC or name == const.OS.LINUX
 end
 
 

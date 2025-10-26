@@ -24,6 +24,7 @@ nodes {
   texture: "druid/ui_circle_16"
   id: "root"
   pivot: PIVOT_N
+  layer: "druid"
   inherit_alpha: true
   slice9 {
     x: 8.0
@@ -50,6 +51,7 @@ nodes {
   id: "header"
   pivot: PIVOT_NE
   parent: "root"
+  layer: "druid"
   inherit_alpha: true
   slice9 {
     x: 8.0
@@ -92,6 +94,7 @@ nodes {
     z: 1.0
   }
   parent: "header"
+  layer: "druid_text_regular"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
@@ -111,6 +114,7 @@ nodes {
   id: "icon_drag"
   pivot: PIVOT_NE
   parent: "header"
+  layer: "druid"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
@@ -129,6 +133,7 @@ nodes {
   id: "icon_refresh"
   pivot: PIVOT_NE
   parent: "header"
+  layer: "druid"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
@@ -150,6 +155,7 @@ nodes {
   id: "icon_back"
   pivot: PIVOT_NW
   parent: "header"
+  layer: "druid"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
@@ -184,8 +190,8 @@ nodes {
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "content"
+  layer: "druid"
   inherit_alpha: true
-  clipping_mode: CLIPPING_MODE_STENCIL
 }
 nodes {
   size {
@@ -198,6 +204,7 @@ nodes {
   pivot: PIVOT_NW
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "scroll_view"
+  layer: "druid"
   inherit_alpha: true
   slice9 {
     x: 8.0
@@ -214,6 +221,7 @@ nodes {
   texture: "druid/empty"
   id: "propeties"
   parent: "content"
+  layer: "druid"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
   visible: false
@@ -824,6 +832,12 @@ nodes {
   overridden_fields: 4
   overridden_fields: 8
   template_node_child: true
+}
+layers {
+  name: "druid"
+}
+layers {
+  name: "druid_text_regular"
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

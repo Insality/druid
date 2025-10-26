@@ -15,6 +15,7 @@ nodes {
   texture: "druid/empty"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
+  layer: "druid"
   inherit_alpha: true
   visible: false
 }
@@ -51,6 +52,7 @@ nodes {
     z: 1.0
   }
   parent: "root"
+  layer: "druid_text_bold"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
@@ -89,6 +91,7 @@ nodes {
   texture: "druid/empty"
   id: "slider"
   parent: "E_Anchor"
+  layer: "druid"
   inherit_alpha: true
 }
 nodes {
@@ -105,6 +108,7 @@ nodes {
   texture: "druid/ui_circle_8"
   id: "slider_back"
   parent: "slider"
+  layer: "druid"
   inherit_alpha: true
   slice9 {
     x: 4.0
@@ -130,6 +134,7 @@ nodes {
   texture: "druid/ui_circle_8"
   id: "slider_pin"
   parent: "slider"
+  layer: "druid"
   inherit_alpha: true
   slice9 {
     x: 4.0
@@ -153,6 +158,7 @@ nodes {
   id: "button"
   pivot: PIVOT_E
   parent: "E_Anchor"
+  layer: "druid"
   inherit_alpha: true
   slice9 {
     x: 4.0
@@ -180,6 +186,7 @@ nodes {
   pivot: PIVOT_SE
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "button"
+  layer: "druid"
   inherit_alpha: true
 }
 nodes {
@@ -214,9 +221,16 @@ nodes {
     z: 1.0
   }
   parent: "button"
+  layer: "druid_text_bold"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
+}
+layers {
+  name: "druid"
+}
+layers {
+  name: "druid_text_bold"
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
