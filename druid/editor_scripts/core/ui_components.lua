@@ -185,11 +185,15 @@ function M.create_widget_item(item, is_installed, on_install, on_open_api)
 								color = editor.ui.COLOR.TEXT
 							}),
 							editor.ui.label({
+								text = version_text .. " • ",
+								color = editor.ui.COLOR.HINT
+							}),
+							editor.ui.label({
 								text = "by " .. (item.author or "Unknown"),
 								color = editor.ui.COLOR.HINT
 							}),
 							editor.ui.label({
-								text = version_text .. " • " .. size_text,
+								text = " • " .. size_text,
 								color = editor.ui.COLOR.HINT
 							}),
 						}
@@ -262,9 +266,10 @@ function M.create_widget_list(items, is_installed_func, on_install, on_open_api)
 		end
 	end
 
-	return editor.ui.vertical({
-		spacing = editor.ui.SPACING.SMALL,
-		children = widget_items
+	return editor.ui.scroll({
+		content = editor.ui.vertical({
+			children = widget_items
+		})
 	})
 end
 
