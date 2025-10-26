@@ -27,7 +27,7 @@ nodes {
     y: 0.5
   }
   size {
-    x: 360.0
+    x: 700.0
     y: 40.0
   }
   color {
@@ -60,7 +60,7 @@ nodes {
     x: 200.0
   }
   size {
-    x: 200.0
+    x: 40.0
     y: 40.0
   }
   type: TYPE_BOX
@@ -73,7 +73,7 @@ nodes {
 }
 nodes {
   position {
-    x: -180.0
+    x: -20.0
   }
   size {
     x: 40.0

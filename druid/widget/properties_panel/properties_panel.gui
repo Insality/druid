@@ -747,5 +747,82 @@ nodes {
   parent: "property_vector3/field_z"
   template_node_child: true
 }
+nodes {
+  position {
+    y: -100.0
+  }
+  type: TYPE_TEMPLATE
+  id: "property_button_small"
+  parent: "propeties"
+  inherit_alpha: true
+  template: "/druid/widget/properties_panel/properties/property_button.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "property_button_small/root"
+  parent: "property_button_small"
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 700.0
+    y: 40.0
+  }
+  type: TYPE_TEXT
+  id: "property_button_small/text_name"
+  parent: "property_button_small/root"
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 40.0
+    y: 40.0
+  }
+  type: TYPE_BOX
+  id: "property_button_small/E_Anchor"
+  parent: "property_button_small/root"
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -20.0
+  }
+  size {
+    x: 40.0
+    y: 40.0
+  }
+  type: TYPE_BOX
+  id: "property_button_small/button"
+  parent: "property_button_small/E_Anchor"
+  overridden_fields: 1
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 40.0
+    y: 4.0
+  }
+  type: TYPE_BOX
+  id: "property_button_small/selected"
+  parent: "property_button_small/button"
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 40.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: ">"
+  id: "property_button_small/text_button"
+  parent: "property_button_small/button"
+  overridden_fields: 4
+  overridden_fields: 8
+  template_node_child: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

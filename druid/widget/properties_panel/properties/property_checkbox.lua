@@ -77,6 +77,7 @@ end
 ---@param enabled boolean
 function M:set_enabled(enabled)
 	self.button:set_enabled(enabled)
+	gui.set_alpha(self.button.node, enabled and 1 or 0.75)
 end
 
 

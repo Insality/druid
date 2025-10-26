@@ -88,6 +88,7 @@ function M:init()
 	gui.set_enabled(self:get_node("property_checkbox/root"), false)
 	gui.set_enabled(self:get_node("property_slider/root"), false)
 	gui.set_enabled(self:get_node("property_button/root"), false)
+	gui.set_enabled(self:get_node("property_button_small/root"), false)
 	gui.set_enabled(self:get_node("property_input/root"), false)
 	gui.set_enabled(self:get_node("property_text/root"), false)
 	gui.set_enabled(self:get_node("property_left_right_selector/root"), false)
@@ -254,6 +255,12 @@ function M:add_button(on_create)
 	return self:add_inner_widget(property_button, "property_button", "root", on_create)
 end
 
+---@param on_create fun(button: druid.widget.property_button)|nil
+---@return druid.widget.properties_panel
+function M:add_button_small(on_create)
+	return self:add_inner_widget(property_button, "property_button_small", "root", on_create)
+end
+
 
 ---@param on_create fun(input: druid.widget.property_input)|nil
 ---@return druid.widget.properties_panel
@@ -378,6 +385,7 @@ function M:set_hidden(is_hidden)
 	gui.set_enabled(self.text_header.node, not self._is_hidden)
 	gui.set_enabled(self.content, not self._is_hidden)
 	gui.set_enabled(self.button_refresh.node, not self._is_hidden)
+	gui.set_visible(self.button_back.node, not self._is_hidden)
 
 	if not self._is_hidden then
 		self.is_dirty = true
