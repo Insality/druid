@@ -15,6 +15,7 @@ nodes {
   texture: "druid/empty"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
+  layer: "druid"
   inherit_alpha: true
   visible: false
 }
@@ -27,7 +28,7 @@ nodes {
     y: 0.5
   }
   size {
-    x: 360.0
+    x: 700.0
     y: 40.0
   }
   color {
@@ -51,6 +52,7 @@ nodes {
     z: 1.0
   }
   parent: "root"
+  layer: "druid_text_bold"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
@@ -60,7 +62,7 @@ nodes {
     x: 200.0
   }
   size {
-    x: 200.0
+    x: 40.0
     y: 40.0
   }
   type: TYPE_BOX
@@ -73,7 +75,7 @@ nodes {
 }
 nodes {
   position {
-    x: -180.0
+    x: -20.0
   }
   size {
     x: 40.0
@@ -88,6 +90,7 @@ nodes {
   texture: "druid/rect_round2_width2"
   id: "button"
   parent: "E_Anchor"
+  layer: "druid"
   inherit_alpha: true
   slice9 {
     x: 5.0
@@ -106,6 +109,7 @@ nodes {
   texture: "druid/ui_circle_16"
   id: "icon"
   parent: "button"
+  layer: "druid"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
@@ -128,7 +132,14 @@ nodes {
   pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "button"
+  layer: "druid"
   inherit_alpha: true
+}
+layers {
+  name: "druid"
+}
+layers {
+  name: "druid_text_bold"
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

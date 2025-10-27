@@ -19,6 +19,7 @@ nodes {
   texture: "druid/empty"
   id: "root"
   adjust_mode: ADJUST_MODE_STRETCH
+  layer: "druid"
   inherit_alpha: true
   visible: false
 }
@@ -55,6 +56,7 @@ nodes {
     z: 1.0
   }
   parent: "root"
+  layer: "druid_text_bold"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
@@ -113,6 +115,7 @@ nodes {
   font: "druid_text_regular"
   id: "text_x"
   parent: "field_x"
+  layer: "druid_text_regular"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
@@ -167,7 +170,7 @@ nodes {
     y: 50.0
   }
   type: TYPE_TEXT
-  text: "20.0"
+  text: "20"
   id: "rich_input_x/input_text"
   parent: "rich_input_x/root"
   overridden_fields: 4
@@ -210,6 +213,7 @@ nodes {
   pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "field_x"
+  layer: "druid"
   inherit_alpha: true
 }
 nodes {
@@ -250,6 +254,7 @@ nodes {
   font: "druid_text_regular"
   id: "text_y"
   parent: "field_y"
+  layer: "druid_text_regular"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
@@ -304,7 +309,7 @@ nodes {
     y: 50.0
   }
   type: TYPE_TEXT
-  text: "20.0"
+  text: "20"
   id: "rich_input_y/input_text"
   parent: "rich_input_y/root"
   overridden_fields: 4
@@ -347,6 +352,7 @@ nodes {
   pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "field_y"
+  layer: "druid"
   inherit_alpha: true
 }
 nodes {
@@ -387,6 +393,7 @@ nodes {
   font: "druid_text_regular"
   id: "text_z"
   parent: "field_z"
+  layer: "druid_text_regular"
   inherit_alpha: true
   outline_alpha: 0.0
   shadow_alpha: 0.0
@@ -441,7 +448,7 @@ nodes {
     y: 50.0
   }
   type: TYPE_TEXT
-  text: "20.0"
+  text: "20"
   id: "rich_input_z/input_text"
   parent: "rich_input_z/root"
   overridden_fields: 4
@@ -484,7 +491,17 @@ nodes {
   pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_STRETCH
   parent: "field_z"
+  layer: "druid"
   inherit_alpha: true
+}
+layers {
+  name: "druid"
+}
+layers {
+  name: "druid_text_bold"
+}
+layers {
+  name: "druid_text_regular"
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

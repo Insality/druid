@@ -727,14 +727,16 @@ Please support me if you like this project! It will help me keep engaged to upda
 	- Create with `druid:new_image(node_or_node_id)`
 	- Currently used to load image from resource path, absolute path or URL
 	- Can be fit inside (keeping aspect ratio) stretched to the node area, depends on the GUI adjust mode
-- [Blocker] Fix for internal is_enabled state
-- [Button] expose all click functions for the button
+- [Blocker] Fix for internal `is_enabled` state
+- [Button] Expose all click functions for the button
 - [Scroll] Add `scroll_to_make_node_visible` function
 - [Palette] Add Druid Color module
+	- Use `local color = require("druid.color")` to access the module
 	- Manage color palettes
-	- Color convertations
+	- Color conversions
 	- Convenient usage
-- [Container] Fix for container stretch mode (stretch and fit is not worked in init function)
+- [Container] Fix for container stretch mode
+	- `stretch` and `fit` was not init correctly in the `init` function arguments
 - [Rich Text] Using color names from the palette
 - [Rich Text] Add `rich_text:set_split_to_characters(true)` to split each letter node separately
 	- Weird implementation, but nice to have

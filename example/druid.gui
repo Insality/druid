@@ -4623,6 +4623,48 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
+  id: "properties_panel/property_button_small"
+  parent: "properties_panel/propeties"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button_small/root"
+  parent: "properties_panel/property_button_small"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_button_small/text_name"
+  parent: "properties_panel/property_button_small/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button_small/E_Anchor"
+  parent: "properties_panel/property_button_small/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button_small/button"
+  parent: "properties_panel/property_button_small/E_Anchor"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "properties_panel/property_button_small/selected"
+  parent: "properties_panel/property_button_small/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "properties_panel/property_button_small/text_button"
+  parent: "properties_panel/property_button_small/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
   id: "memory_panel"
   parent: "widgets"
   inherit_alpha: true
