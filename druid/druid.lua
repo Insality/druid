@@ -2,6 +2,7 @@ local event = require("event.event")
 local events = require("event.events")
 local settings = require("druid.system.settings")
 local druid_instance = require("druid.system.druid_instance")
+local logger = require("druid.system.druid_logger")
 
 local default_style = require("druid.styles.default.style")
 
@@ -190,6 +191,27 @@ function M.unregister_druid_as_widget()
 	if #REGISTERED_GUI_WIDGETS[socket] == 0 then
 		REGISTERED_GUI_WIDGETS[socket] = nil
 	end
+end
+
+
+---@param logger_instance druid.logger|table|nil
+function M.set_logger(logger_instance)
+	logger.set_logger(logger_instance)
+end
+
+
+---@param name string?
+---@param level string|nil
+---@return druid.logger
+function M.get_logger(name, level)
+	if not name then
+		local current_script_path = debug.getinfo(3).short_src
+		local basename = string.match(current_script_path, "([^/\\]+)$")
+		basename = string.match(basename, "(.*)%..*$")
+		name = basename
+	end
+
+	return setmetatable({ name = name, level = level }, { __index = logger })
 end
 
 
