@@ -28,38 +28,6 @@ local function handle_install(item, install_folder, on_success, on_error)
 end
 
 
----Show installation status dialog
----@param success boolean - Whether installation was successful
----@param message string - Status message
-local function show_install_status(success, message)
-	local dialog_component = editor.ui.component(function()
-		return editor.ui.dialog({
-			title = success and "Installation Successful" or "Installation Failed",
-			content = editor.ui.vertical({
-				spacing = editor.ui.SPACING.MEDIUM,
-				padding = editor.ui.PADDING.MEDIUM,
-				children = {
-					editor.ui.label({
-						text = message,
-						color = success and editor.ui.COLOR.TEXT or editor.ui.COLOR.ERROR,
-						alignment = editor.ui.ALIGNMENT.LEFT
-					})
-				}
-			}),
-			buttons = {
-				editor.ui.dialog_button({
-					text = "OK",
-					default = true
-				})
-			}
-		})
-	end)
-
-	editor.ui.show_dialog(dialog_component({}))
-end
-
-
-
 ---Open the asset store dialog
 function M.open_asset_store(store_url)
 	print("Opening Druid Asset Store from:", store_url)
@@ -86,11 +54,9 @@ function M.open_asset_store(store_url)
 			handle_install(item, install_folder,
 				function(message)
 					set_install_status("Success: " .. message)
-					show_install_status(true, message)
 				end,
 				function(message)
 					set_install_status("Error: " .. message)
-					show_install_status(false, message)
 				end
 			)
 		end

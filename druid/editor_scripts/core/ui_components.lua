@@ -163,13 +163,65 @@ function M.create_widget_item(item, is_installed, on_install)
 		deps_text = "Depends: " .. table.concat(item.depends, ", ")
 	end
 
+	local widget_details_children = {
+		editor.ui.horizontal({
+			spacing = editor.ui.SPACING.SMALL,
+			children = {
+				editor.ui.label({
+					text = item.title or item.id,
+					color = editor.ui.COLOR.OVERRIDE
+				}),
+				editor.ui.label({
+					text = version_text,
+					color = editor.ui.COLOR.WARNING
+				}),
+				editor.ui.label({
+					text = "• by " .. (item.author or "Unknown"),
+					color = editor.ui.COLOR.HINT
+				}),
+				editor.ui.label({
+					text = "• " .. size_text,
+					color = editor.ui.COLOR.HINT
+				}),
+			}
+		}),
+
+		-- Description
+		editor.ui.paragraph({
+			text = item.description or "No description available",
+			color = editor.ui.COLOR.TEXT
+		}),
+	}
+
+	if tags_text ~= "" then
+		table.insert(widget_details_children, editor.ui.label({
+			text = tags_text,
+			color = editor.ui.COLOR.HINT
+		}))
+	end
+
+	if deps_text ~= "" then
+		table.insert(widget_details_children, editor.ui.label({
+			text = deps_text,
+			color = editor.ui.COLOR.HINT
+		}))
+	end
+
+	if is_installed then
+		table.insert(widget_details_children, editor.ui.label({
+			text = "✓ Already installed",
+			color = editor.ui.COLOR.WARNING
+		}))
+	end
+
+	table.insert(widget_details_children, editor.ui.separator({
+		orientation = editor.ui.ORIENTATION.HORIZONTAL,
+	}))
+
 	return editor.ui.horizontal({
 		spacing = editor.ui.SPACING.NONE,
 		padding = editor.ui.PADDING.SMALL,
 		children = {
-			editor.ui.separator({
-				orientation = editor.ui.ORIENTATION.HORIZONTAL,
-			}),
 			-- Widget icon placeholder
 			editor.ui.label({
 				text = "📦",
@@ -180,54 +232,7 @@ function M.create_widget_item(item, is_installed, on_install)
 			editor.ui.vertical({
 				spacing = editor.ui.SPACING.SMALL,
 				grow = true,
-				children = {
-					-- Title and author
-					editor.ui.horizontal({
-						spacing = editor.ui.SPACING.SMALL,
-						children = {
-							editor.ui.label({
-								text = item.title or item.id,
-								color = editor.ui.COLOR.OVERRIDE
-							}),
-							editor.ui.label({
-								text = version_text,
-								color = editor.ui.COLOR.WARNING
-							}),
-							editor.ui.label({
-								text = "• by " .. (item.author or "Unknown"),
-								color = editor.ui.COLOR.HINT
-							}),
-							editor.ui.label({
-								text = "• " .. size_text,
-								color = editor.ui.COLOR.HINT
-							}),
-						}
-					}),
-
-					-- Description
-					editor.ui.label({
-						text = item.description or "No description available",
-						color = editor.ui.COLOR.TEXT
-					}),
-
-					-- Tags
-					tags_text ~= "" and editor.ui.label({
-						text = tags_text,
-						color = editor.ui.COLOR.HINT
-					}) or nil,
-
-					-- Dependencies
-					deps_text ~= "" and editor.ui.label({
-						text = deps_text,
-						color = editor.ui.COLOR.HINT
-					}) or nil,
-
-					-- Installation status
-					is_installed and editor.ui.label({
-						text = "✓ Already installed",
-						color = editor.ui.COLOR.HINT
-					}) or nil
-				}
+				children = widget_details_children
 			}),
 
 			-- Action buttons
@@ -235,10 +240,9 @@ function M.create_widget_item(item, is_installed, on_install)
 				spacing = editor.ui.SPACING.MEDIUM,
 				children = {
 					editor.ui.button({
-
 						text = "Install",
 						on_pressed = on_install,
-						enabled = is_installed == false
+						enabled = not is_installed
 					}),
 					editor.ui.button({
 						text = "API",
@@ -260,13 +264,11 @@ function M.create_widget_list(items, on_install)
 	local widget_items = {}
 	local install_folder = installer.get_install_folder()
 
-	for index = 1, 9 do
-		for _, item in ipairs(items) do
-			local is_installed = installer.is_widget_installed(item, install_folder)
-			table.insert(widget_items, M.create_widget_item(item, is_installed,
-				function() on_install(item) end
-			))
-		end
+	for _, item in ipairs(items) do
+		local is_installed = installer.is_widget_installed(item, install_folder)
+		table.insert(widget_items, M.create_widget_item(item, is_installed,
+			function() on_install(item) end
+		))
 	end
 
 	return editor.ui.scroll({
