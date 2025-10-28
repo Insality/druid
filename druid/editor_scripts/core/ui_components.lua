@@ -176,10 +176,6 @@ function M.create_widget_item(item, is_installed, on_install)
 					color = editor.ui.COLOR.WARNING
 				}),
 				editor.ui.label({
-					text = "• by " .. (item.author or "Unknown"),
-					color = editor.ui.COLOR.HINT
-				}),
-				editor.ui.label({
 					text = "• " .. size_text,
 					color = editor.ui.COLOR.HINT
 				}),
@@ -214,11 +210,8 @@ function M.create_widget_item(item, is_installed, on_install)
 		}))
 	end
 
-	table.insert(widget_details_children, editor.ui.separator({
-		orientation = editor.ui.ORIENTATION.HORIZONTAL,
-	}))
-
-	local widget_buttons = {
+	-- Create button row at the bottom
+	local button_children = {
 		editor.ui.button({
 			text = "Install",
 			on_pressed = on_install,
@@ -227,7 +220,7 @@ function M.create_widget_item(item, is_installed, on_install)
 	}
 
 	if item.api ~= nil then
-		table.insert(widget_buttons, editor.ui.button({
+		table.insert(button_children, editor.ui.button({
 			text = "API",
 			on_pressed = function() internal.open_url(item.api) end,
 			enabled = item.api ~= nil
@@ -235,20 +228,33 @@ function M.create_widget_item(item, is_installed, on_install)
 	end
 
 	if item.example_url ~= nil then
-		table.insert(widget_buttons, editor.ui.button({
+		table.insert(button_children, editor.ui.button({
 			text = "Example",
 			on_pressed = function() internal.open_url(item.example_url) end,
 			enabled = item.example_url ~= nil
 		}))
 	end
 
+	-- Add spacer to push Author button to the right
+	table.insert(button_children, editor.ui.horizontal({ grow = true }))
+
 	if item.author_url ~= nil then
-		table.insert(widget_buttons, editor.ui.button({
+		table.insert(button_children, editor.ui.label({
 			text = "Author",
+			color = editor.ui.COLOR.HINT
+		}))
+		table.insert(button_children, editor.ui.button({
+			text = item.author or "Author",
 			on_pressed = function() internal.open_url(item.author_url) end,
 			enabled = item.author_url ~= nil
 		}))
 	end
+
+	-- Add button row to widget details
+	table.insert(widget_details_children, editor.ui.horizontal({
+		spacing = editor.ui.SPACING.SMALL,
+		children = button_children
+	}))
 
 	return editor.ui.horizontal({
 		spacing = editor.ui.SPACING.NONE,
@@ -256,7 +262,7 @@ function M.create_widget_item(item, is_installed, on_install)
 		children = {
 			-- Widget icon placeholder
 			editor.ui.label({
-				text = "📦",
+				text = "•••",
 				color = editor.ui.COLOR.HINT
 			}),
 
@@ -265,13 +271,6 @@ function M.create_widget_item(item, is_installed, on_install)
 				spacing = editor.ui.SPACING.SMALL,
 				grow = true,
 				children = widget_details_children
-			}),
-
-			-- Action buttons
-			editor.ui.vertical({
-				spacing = editor.ui.SPACING.MEDIUM,
-				grow = true,
-				children = widget_buttons
 			}),
 		}
 	})
@@ -284,7 +283,7 @@ end
 ---@return userdata - UI component
 function M.create_widget_list(items, on_install)
 	local widget_items = {}
-	local install_folder = installer.get_install_folder()
+	local install_folder = editor.prefs.get("druid.asset_install_folder") or installer.get_install_folder()
 
 	for _, item in ipairs(items) do
 		local is_installed = installer.is_widget_installed(item, install_folder)

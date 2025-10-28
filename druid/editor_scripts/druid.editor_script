@@ -8,6 +8,7 @@ local M = {}
 
 local DEFAULT_WIDGET_TEMPLATE_PATH = "/druid/templates/widget_full.lua.template"
 local DEFAULT_GUI_SCRIPT_TEMPLATE_PATH = "/druid/templates/druid.gui_script.template"
+local DEFAULT_ASSET_INSTALL_FOLDER = "/widget"
 
 ---Define preferences schema
 function M.get_prefs_schema()
@@ -21,7 +22,7 @@ function M.get_prefs_schema()
 			scope = editor.prefs.SCOPE.PROJECT
 		}),
 		["druid.asset_install_folder"] = editor.prefs.schema.string({
-			default = "/widget",
+			default = DEFAULT_ASSET_INSTALL_FOLDER,
 			scope = editor.prefs.SCOPE.PROJECT
 		})
 	}

@@ -45,7 +45,7 @@ function M.open_asset_store(store_url)
 		-- State management
 		local all_items = editor.ui.use_state(initial_items)
 		local filtered_items, set_filtered_items = editor.ui.use_state(initial_items)
-		local install_folder, set_install_folder = editor.ui.use_state(installer.get_install_folder())
+		local install_folder, set_install_folder = editor.ui.use_state(editor.prefs.get("druid.asset_install_folder") or installer.get_install_folder())
 		local search_query, set_search_query = editor.ui.use_state("")
 		local install_status, set_install_status = editor.ui.use_state("")
 
@@ -76,7 +76,10 @@ function M.open_asset_store(store_url)
 
 				editor.ui.string_field({
 					value = install_folder,
-					on_value_changed = set_install_folder,
+					on_value_changed = function(new_folder)
+						set_install_folder(new_folder)
+						editor.prefs.set("druid.asset_install_folder", new_folder)
+					end,
 					title = "Installation Folder:",
 					tooltip = "The folder to install the assets to",
 				}),
@@ -99,6 +102,7 @@ function M.open_asset_store(store_url)
 					end,
 					title = "Search:",
 					tooltip = "Search for widgets by title, author, or description",
+					grow = true
 				})
 			},
 		}))
@@ -135,6 +139,10 @@ function M.open_asset_store(store_url)
 			}),
 			buttons = {
 				editor.ui.dialog_button({
+					text = "Info",
+					result = "info_assets_store",
+				}),
+				editor.ui.dialog_button({
 					text = "Close",
 					cancel = true
 				})
@@ -142,7 +150,13 @@ function M.open_asset_store(store_url)
 		})
 	end)
 
-	return editor.ui.show_dialog(dialog_component({}))
+	local result = editor.ui.show_dialog(dialog_component({}))
+
+	if result and result == "info_assets_store" then
+		editor.browse("https://github.com/Insality/core/blob/main/druid_widget_store.md")
+	end
+
+	return {}
 end
 
 

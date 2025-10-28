@@ -5,8 +5,6 @@ local base64 = require("druid.editor_scripts.core.base64")
 
 local M = {}
 
-local DEFAULT_INSTALL_FOLDER = "/widget"
-
 ---@class druid.core.item_info
 ---@field id string
 ---@field version string
@@ -103,7 +101,7 @@ end
 ---Get installation folder
 ---@return string - Installation folder path
 function M.get_install_folder()
-	return editor.prefs.get("druid.asset_install_folder") or DEFAULT_INSTALL_FOLDER
+	return editor.prefs.get("druid.asset_install_folder")
 end
 
 
