@@ -218,6 +218,38 @@ function M.create_widget_item(item, is_installed, on_install)
 		orientation = editor.ui.ORIENTATION.HORIZONTAL,
 	}))
 
+	local widget_buttons = {
+		editor.ui.button({
+			text = "Install",
+			on_pressed = on_install,
+			enabled = not is_installed
+		}),
+	}
+
+	if item.api ~= nil then
+		table.insert(widget_buttons, editor.ui.button({
+			text = "API",
+			on_pressed = function() internal.open_url(item.api) end,
+			enabled = item.api ~= nil
+		}))
+	end
+
+	if item.example_url ~= nil then
+		table.insert(widget_buttons, editor.ui.button({
+			text = "Example",
+			on_pressed = function() internal.open_url(item.example_url) end,
+			enabled = item.example_url ~= nil
+		}))
+	end
+
+	if item.author_url ~= nil then
+		table.insert(widget_buttons, editor.ui.button({
+			text = "Author",
+			on_pressed = function() internal.open_url(item.author_url) end,
+			enabled = item.author_url ~= nil
+		}))
+	end
+
 	return editor.ui.horizontal({
 		spacing = editor.ui.SPACING.NONE,
 		padding = editor.ui.PADDING.SMALL,
@@ -238,18 +270,8 @@ function M.create_widget_item(item, is_installed, on_install)
 			-- Action buttons
 			editor.ui.vertical({
 				spacing = editor.ui.SPACING.MEDIUM,
-				children = {
-					editor.ui.button({
-						text = "Install",
-						on_pressed = on_install,
-						enabled = not is_installed
-					}),
-					editor.ui.button({
-						text = "API",
-						on_pressed = function() internal.open_url(item.api) end,
-						enabled = item.api ~= nil
-					})
-				}
+				grow = true,
+				children = widget_buttons
 			}),
 		}
 	})
