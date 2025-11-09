@@ -2,6 +2,7 @@
 --- Downloads zip files and extracts them to the specified folder
 
 local base64 = require("druid.editor_scripts.core.base64")
+local path_replacer = require("druid.editor_scripts.core.path_replacer")
 
 local M = {}
 
@@ -25,7 +26,7 @@ local M = {}
 
 ---Download a file from URL
 ---@param url string - The URL to download from
----@return string|nil, string|nil - Downloaded content or nil, filename or nil
+---@return string|nil, string|nil, table|nil - Downloaded content or nil, filename or nil, content list or nil
 local function download_file_zip_json(url)
 	local response = http.request(url, { as = "json" })
 
@@ -35,8 +36,9 @@ local function download_file_zip_json(url)
 	end
 
 	local data = response.body
+	local content_list = data.content -- Array of file paths from zip
 
-	return base64.decode(data.data), data.filename
+	return base64.decode(data.data), data.filename, content_list
 end
 
 
@@ -50,9 +52,15 @@ function M.install_widget(item, install_folder)
 	end
 
 	-- Download the zip file
-	local zip_data, filename = download_file_zip_json(item.json_zip_url)
+	local zip_data, filename, content_list = download_file_zip_json(item.json_zip_url)
 	if not zip_data or not filename then
 		return false, "Failed to download widget: " .. filename
+	end
+
+	if content_list then
+		print("Got file list from JSON:", #content_list, "files")
+	else
+		print("Warning: No content list in JSON data")
 	end
 
 
@@ -79,12 +87,15 @@ function M.install_widget(item, install_folder)
 	print("Zip file removed successfully")
 
 	-- Process paths within the extracted widget
-	--local files_in_folder = path_replacer.get_all_files(folder_path)
-	--pprint(files_in_folder)
-
-	--if not path_replacer.process_widget_paths(install_folder .. "/" .. folder_name, new_base_path) then
-	--	return false, "Failed to process widget paths"
-	--end
+	if content_list and #content_list > 0 then
+		local success, err = path_replacer.process_widget_paths(folder_path, install_folder, item.id, item.author, content_list)
+		if not success then
+			print("Warning: Path replacement failed:", err)
+			-- Don't fail installation if path replacement fails, just warn
+		end
+	else
+		print("Warning: No file list available, skipping path replacement")
+	end
 
 	return true, "Widget installed successfully"
 end
