@@ -1,3 +1,5 @@
+local installer = require("druid.editor_scripts.core.installer")
+
 local M = {}
 
 ---Download a JSON file from a URL
@@ -65,6 +67,108 @@ function M.filter_items(items, query)
 		if matches then
 			table.insert(filtered, item)
 		end
+	end
+
+	return filtered
+end
+
+
+---Extract unique authors from items list
+---@param items table - List of widget items
+---@return table - Sorted list of unique authors
+function M.extract_authors(items)
+	local authors = {}
+	local author_set = {}
+
+	for _, item in ipairs(items) do
+		if item.author and not author_set[item.author] then
+			author_set[item.author] = true
+			table.insert(authors, item.author)
+		end
+	end
+
+	table.sort(authors)
+	return authors
+end
+
+
+---Extract unique tags from items list
+---@param items table - List of widget items
+---@return table - Sorted list of unique tags
+function M.extract_tags(items)
+	local tags = {}
+	local tag_set = {}
+
+	for _, item in ipairs(items) do
+		if item.tags then
+			for _, tag in ipairs(item.tags) do
+				if not tag_set[tag] then
+					tag_set[tag] = true
+					table.insert(tags, tag)
+				end
+			end
+		end
+	end
+
+	table.sort(tags)
+	return tags
+end
+
+
+---Filter items based on all filters (search, type, author, tag)
+---@param items table - List of widget items
+---@param search_query string - Search query
+---@param filter_type string - Type filter: "All", "Installed", "Not Installed"
+---@param filter_author string - Author filter: "All Authors" or specific author
+---@param filter_tag string - Tag filter: "All Tags" or specific tag
+---@param install_folder string - Installation folder to check installed status
+---@return table - Filtered items
+function M.filter_items_by_filters(items, search_query, filter_type, filter_author, filter_tag, install_folder)
+	local filtered = items
+
+	-- Filter by search query
+	if search_query and search_query ~= "" then
+		filtered = M.filter_items(filtered, search_query)
+	end
+
+	-- Filter by type (Installed/Not Installed)
+	if filter_type and filter_type ~= "All" then
+		local type_filtered = {}
+		for _, item in ipairs(filtered) do
+			local is_installed = installer.is_widget_installed(item, install_folder)
+			if (filter_type == "Installed" and is_installed) or
+			   (filter_type == "Not Installed" and not is_installed) then
+				table.insert(type_filtered, item)
+			end
+		end
+		filtered = type_filtered
+	end
+
+	-- Filter by author
+	if filter_author and filter_author ~= "All Authors" then
+		local author_filtered = {}
+		for _, item in ipairs(filtered) do
+			if item.author == filter_author then
+				table.insert(author_filtered, item)
+			end
+		end
+		filtered = author_filtered
+	end
+
+	-- Filter by tag
+	if filter_tag and filter_tag ~= "All Tags" then
+		local tag_filtered = {}
+		for _, item in ipairs(filtered) do
+			if item.tags then
+				for _, tag in ipairs(item.tags) do
+					if tag == filter_tag then
+						table.insert(tag_filtered, item)
+						break
+					end
+				end
+			end
+		end
+		filtered = tag_filtered
 	end
 
 	return filtered

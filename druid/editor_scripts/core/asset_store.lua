@@ -8,6 +8,37 @@ local internal = require("druid.editor_scripts.core.asset_store_internal")
 local M = {}
 
 
+---Build type options array
+---@return table
+local function build_type_options()
+	return {"All", "Installed", "Not Installed"}
+end
+
+
+---Build author options array
+---@param authors table
+---@return table
+local function build_author_options(authors)
+	local options = {"All Authors"}
+	for _, author in ipairs(authors) do
+		table.insert(options, author)
+	end
+	return options
+end
+
+
+---Build tag options array
+---@param tags table
+---@return table
+local function build_tag_options(tags)
+	local options = {"All Tags"}
+	for _, tag in ipairs(tags) do
+		table.insert(options, tag)
+	end
+	return options
+end
+
+
 ---Handle widget installation
 ---@param item table - Widget item to install
 ---@param install_folder string - Installation folder
@@ -44,10 +75,43 @@ function M.open_asset_store(store_url)
 	local dialog_component = editor.ui.component(function(props)
 		-- State management
 		local all_items = editor.ui.use_state(initial_items)
-		local filtered_items, set_filtered_items = editor.ui.use_state(initial_items)
 		local install_folder, set_install_folder = editor.ui.use_state(editor.prefs.get("druid.asset_install_folder") or installer.get_install_folder())
 		local search_query, set_search_query = editor.ui.use_state("")
+		local filter_type, set_filter_type = editor.ui.use_state("All")
+		local filter_author, set_filter_author = editor.ui.use_state("All Authors")
+		local filter_tag, set_filter_tag = editor.ui.use_state("All Tags")
 		local install_status, set_install_status = editor.ui.use_state("")
+
+		-- Extract unique authors and tags for dropdown options
+		local authors = editor.ui.use_memo(internal.extract_authors, all_items)
+		local tags = editor.ui.use_memo(internal.extract_tags, all_items)
+
+		-- Build dropdown options (memoized to avoid recreation on each render)
+		local type_options = editor.ui.use_memo(build_type_options)
+		local author_options = editor.ui.use_memo(build_author_options, authors)
+		local tag_options = editor.ui.use_memo(build_tag_options, tags)
+
+		-- Debug output
+		if #type_options > 0 then
+			print("Type options count:", #type_options, "first:", type_options[1])
+		end
+		if #author_options > 0 then
+			print("Author options count:", #author_options, "first:", author_options[1])
+		end
+		if #tag_options > 0 then
+			print("Tag options count:", #tag_options, "first:", tag_options[1])
+		end
+
+		-- Filter items based on all filters
+		local filtered_items = editor.ui.use_memo(
+			internal.filter_items_by_filters,
+			all_items,
+			search_query,
+			filter_type,
+			filter_author,
+			filter_tag,
+			install_folder
+		)
 
 		-- Installation handlers
 		local function on_install(item)
@@ -86,6 +150,58 @@ function M.open_asset_store(store_url)
 			}
 		}))
 
+		-- Filter dropdowns section
+		table.insert(content_children, editor.ui.horizontal({
+			spacing = editor.ui.SPACING.MEDIUM,
+			children = {
+				-- Type filter dropdown
+				editor.ui.horizontal({
+					spacing = editor.ui.SPACING.SMALL,
+					children = {
+						editor.ui.label({
+							text = "Type:",
+							color = editor.ui.COLOR.TEXT
+						}),
+						editor.ui.select_box({
+							value = filter_type,
+							options = type_options,
+							on_value_changed = set_filter_type
+						})
+					}
+				}),
+				-- Author filter dropdown
+				editor.ui.horizontal({
+					spacing = editor.ui.SPACING.SMALL,
+					children = {
+						editor.ui.label({
+							text = "Author:",
+							color = editor.ui.COLOR.TEXT
+						}),
+						editor.ui.select_box({
+							value = filter_author,
+							options = author_options,
+							on_value_changed = set_filter_author
+						})
+					}
+				}),
+				-- Tag filter dropdown
+				editor.ui.horizontal({
+					spacing = editor.ui.SPACING.SMALL,
+					children = {
+						editor.ui.label({
+							text = "Tag:",
+							color = editor.ui.COLOR.TEXT
+						}),
+						editor.ui.select_box({
+							value = filter_tag,
+							options = tag_options,
+							on_value_changed = set_filter_tag
+						})
+					}
+				})
+			}
+		}))
+
 		-- Search section
 		table.insert(content_children, editor.ui.horizontal({
 			spacing = editor.ui.SPACING.MEDIUM,
@@ -96,10 +212,7 @@ function M.open_asset_store(store_url)
 				}),
 				editor.ui.string_field({
 					value = search_query,
-					on_value_changed = function(new_query)
-						set_search_query(new_query)
-						set_filtered_items(internal.filter_items(all_items, new_query))
-					end,
+					on_value_changed = set_search_query,
 					title = "Search:",
 					tooltip = "Search for widgets by title, author, or description",
 					grow = true
@@ -133,8 +246,9 @@ function M.open_asset_store(store_url)
 		return editor.ui.dialog({
 			title = "Druid Asset Store",
 			content = editor.ui.vertical({
-				spacing = editor.ui.SPACING.SMALL,
+				spacing = editor.ui.SPACING.MEDIUM,
 				padding = editor.ui.PADDING.SMALL,
+				grow = true,
 				children = content_children
 			}),
 			buttons = {
