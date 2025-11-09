@@ -59,7 +59,9 @@ function M.install_widget(item, install_folder)
 	local zip_file_path = "." .. install_folder .. "/" .. filename
 	local zip_file = io.open(zip_file_path, "wb")
 	if not zip_file then
-		return false, "Failed to open zip file: " .. zip_file_path
+		print("Directory does not exist: " .. install_folder)
+		print("Please create the directory manually and try again.")
+		return false, "Directory does not exist: " .. install_folder
 	end
 
 	zip_file:write(zip_data)

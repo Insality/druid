@@ -205,7 +205,7 @@ function M.create_widget_item(item, is_installed, on_install)
 
 	if is_installed then
 		table.insert(widget_details_children, editor.ui.label({
-			text = "✓ Already installed",
+			text = "✓ Installed",
 			color = editor.ui.COLOR.WARNING
 		}))
 	end
