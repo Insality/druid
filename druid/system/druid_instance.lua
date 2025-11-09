@@ -357,7 +357,7 @@ function M:on_input(action_id, action)
 
 	for i = #components, 1, -1 do
 		local component = components[i]
-		local input_enabled = component:get_input_enabled()
+		local input_enabled = component._meta.input_enabled
 
 		if input_enabled and self:_can_use_input_component(component) then
 			if not is_input_consumed then

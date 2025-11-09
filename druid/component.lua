@@ -410,7 +410,7 @@ local WIDGET_METATABLE = { __index = M }
 function M.create_widget(self, widget_class, context)
 	local instance = setmetatable({}, {
 		__index = setmetatable(widget_class, WIDGET_METATABLE)
-	})
+	}) --[[@as druid.widget]]
 
 	instance._component = {
 		_uid = M.create_uid(),
@@ -440,7 +440,6 @@ function M.create_widget(self, widget_class, context)
 		instance._meta.parent:__add_child(instance)
 	end
 
-	---@cast instance druid.widget
 	return instance
 end
 
