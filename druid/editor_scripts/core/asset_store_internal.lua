@@ -20,6 +20,19 @@ function M.download_json(json_url)
 end
 
 
+local function is_unlisted_visible(item, lower_query)
+	if not item.unlisted then
+		return true
+	end
+
+	if not lower_query or lower_query == "" or not item.id then
+		return false
+	end
+
+	return string.lower(item.id) == lower_query
+end
+
+
 ---Filter items based on search query
 ---Filter items based on search query
 ---@param items table - List of widget items
@@ -36,7 +49,9 @@ function M.filter_items(items, query)
 	for _, item in ipairs(items) do
 		-- Search in title, author, description
 		local matches = false
-		if item.title and string.find(string.lower(item.title), lower_query, 1, true) then
+		if item.id and string.find(string.lower(item.id), lower_query, 1, true) then
+			matches = true
+		elseif item.title and string.find(string.lower(item.title), lower_query, 1, true) then
 			matches = true
 		elseif item.author and string.find(string.lower(item.author), lower_query, 1, true) then
 			matches = true
@@ -81,7 +96,7 @@ function M.extract_authors(items)
 	local author_set = {}
 
 	for _, item in ipairs(items) do
-		if item.author and not author_set[item.author] then
+		if not item.unlisted and item.author and not author_set[item.author] then
 			author_set[item.author] = true
 			table.insert(authors, item.author)
 		end
@@ -100,7 +115,7 @@ function M.extract_tags(items)
 	local tag_set = {}
 
 	for _, item in ipairs(items) do
-		if item.tags then
+		if not item.unlisted and item.tags then
 			for _, tag in ipairs(item.tags) do
 				if not tag_set[tag] then
 					tag_set[tag] = true
@@ -124,7 +139,19 @@ end
 ---@param install_folder string - Installation folder to check installed status
 ---@return table - Filtered items
 function M.filter_items_by_filters(items, search_query, filter_type, filter_author, filter_tag, install_folder)
-	local filtered = items
+	local lower_query = nil
+	if search_query and search_query ~= "" then
+		lower_query = string.lower(search_query)
+	end
+
+	local visible_items = {}
+	for _, item in ipairs(items) do
+		if is_unlisted_visible(item, lower_query) then
+			table.insert(visible_items, item)
+		end
+	end
+
+	local filtered = visible_items
 
 	-- Filter by search query
 	if search_query and search_query ~= "" then
