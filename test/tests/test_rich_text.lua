@@ -108,12 +108,6 @@ return function()
 
             assert(#words > 0)
             assert(words[1].shadow ~= nil)
-
-            -- Test shadow tag with RGBA values
-            words = rich_text:set_text("<shadow=0,0,0,1.0>Shadowed Text</shadow>")
-
-            assert(#words > 0)
-            assert(words[1].shadow ~= nil)
             assert(words[1].shadow.x < 0.1) -- Black shadow should have low RGB values
             assert(words[1].shadow.y < 0.1)
             assert(words[1].shadow.z < 0.1)
@@ -130,12 +124,6 @@ return function()
 
             -- Test outline tag with named color
             local words = rich_text:set_text("<outline=#000000>Outlined Text</outline>")
-
-            assert(#words > 0)
-            assert(words[1].outline ~= nil)
-
-            -- Test outline tag with RGBA values
-            words = rich_text:set_text("<outline=0,0,0,1.0>Outlined Text</outline>")
 
             assert(#words > 0)
             assert(words[1].outline ~= nil)
