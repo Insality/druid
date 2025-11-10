@@ -6,29 +6,15 @@ local system = require("druid.editor_scripts.defold_parser.system.parser_interna
 local M = {}
 
 
----Detect the original path structure from item data
----Builds widget/author/widget_id path
----@param author string|nil - Author name
----@param widget_id string - Widget ID
----@return string|nil - Original path prefix (e.g., "widget/Insality/fps_panel") or nil
-local function detect_original_path_from_item(author, widget_id)
-	if not author or not widget_id then
-		return nil
-	end
-
-	local original_path = "widget/" .. author .. "/" .. widget_id
-	print("Detected original path from item:", original_path)
-	return original_path
-end
 
 
 ---Replace paths in file content
 ---@param content string - File content
----@param original_path string - Original path to replace (e.g., "widget/Insality/fps_panel")
----@param target_path string - Target path (e.g., "widget/fps_panel")
+---@param author string - Author name (e.g., "Insality")
+---@param install_folder string - Installation folder (e.g., "widget")
 ---@return string - Modified content
-local function replace_paths_in_content(content, original_path, target_path)
-	if not content or not original_path or not target_path then
+local function replace_paths_in_content(content, author, install_folder)
+	if not content or not author then
 		return content
 	end
 
@@ -37,15 +23,28 @@ local function replace_paths_in_content(content, original_path, target_path)
 		return str:gsub("[%^%$%(%)%%%.%[%]%*%+%-%?]", "%%%0")
 	end
 
-	-- Replace paths with forward slashes: widget/Insality/fps_panel -> widget/fps_panel
-	local escaped_original = escape_pattern(original_path)
-	content = content:gsub(escaped_original, target_path)
+	-- Remove leading / from install_folder if present
+	local clean_install_folder = install_folder
+	if clean_install_folder:sub(1, 1) == "/" then
+		clean_install_folder = clean_install_folder:sub(2)
+	end
 
-	-- Replace require statements with dots: widget.Insality.fps_panel -> widget.fps_panel
-	local original_dots = original_path:gsub("/", ".")
-	local target_dots = target_path:gsub("/", ".")
-	local escaped_original_dots = escape_pattern(original_dots)
-	content = content:gsub(escaped_original_dots, target_dots)
+	-- Replace all paths with author: widget/Insality/* -> widget/*
+	local author_path_pattern = escape_pattern(clean_install_folder .. "/" .. author .. "/")
+	local target_path_prefix = clean_install_folder .. "/"
+	content = content:gsub(author_path_pattern, target_path_prefix)
+
+	-- Replace all require statements with dots: widget.Insality.* -> widget.*
+	local author_dots_pattern = escape_pattern(clean_install_folder .. "." .. author .. ".")
+	local target_dots_prefix = clean_install_folder .. "."
+	content = content:gsub(author_dots_pattern, target_dots_prefix)
+
+	-- Also replace paths that start with author directly: Insality/widget -> widget
+	-- But only if they're in require statements or paths
+	local author_start_pattern = escape_pattern(author .. "/")
+	content = content:gsub(author_start_pattern, "")
+	local author_start_dots_pattern = escape_pattern(author .. ".")
+	content = content:gsub(author_start_dots_pattern, "")
 
 	return content
 end
@@ -61,31 +60,12 @@ end
 function M.process_widget_paths(folder_path, install_folder, widget_id, author, file_list)
 	print("Processing widget paths in:", folder_path)
 
-	-- Detect original path structure from item data
-	local original_path = detect_original_path_from_item(author, widget_id)
-
-	if not original_path then
-		print("Warning: Could not detect original path structure (missing author or widget_id), skipping path replacement")
+	if not author then
+		print("Warning: Missing author, skipping path replacement")
 		return true, nil
 	end
 
-	-- Construct target path
-	-- Remove leading / from install_folder if present
-	local clean_install_folder = install_folder
-	if clean_install_folder:sub(1, 1) == "/" then
-		clean_install_folder = clean_install_folder:sub(2)
-	end
-
-	local target_path = clean_install_folder
-	if widget_id then
-		if target_path ~= "" then
-			target_path = target_path .. "/" .. widget_id
-		else
-			target_path = widget_id
-		end
-	end
-
-	print("Replacing paths from:", original_path, "to:", target_path)
+	print("Replacing all paths with author:", author, "in install folder:", install_folder)
 
 	-- Get absolute project path
 	local absolute_project_path = editor.external_file_attributes(".").path
@@ -120,8 +100,8 @@ function M.process_widget_paths(folder_path, install_folder, widget_id, author, 
 		if not content then
 			print("Warning: Could not read file:", file_path, err)
 		else
-			-- Replace paths
-			local modified_content = replace_paths_in_content(content, original_path, target_path)
+			-- Replace all paths with author
+			local modified_content = replace_paths_in_content(content, author, install_folder)
 			if modified_content ~= content then
 				-- Write modified content back
 				local success, write_err = system.write_file(absolute_file_path, modified_content)
@@ -141,4 +121,3 @@ end
 
 
 return M
-

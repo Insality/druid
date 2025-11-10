@@ -42,12 +42,13 @@ end
 ---Handle widget installation
 ---@param item table - Widget item to install
 ---@param install_folder string - Installation folder
+---@param all_items table - List of all widgets for dependency resolution
 ---@param on_success function - Success callback
 ---@param on_error function - Error callback
-local function handle_install(item, install_folder, on_success, on_error)
+local function handle_install(item, install_folder, all_items, on_success, on_error)
 	print("Installing widget:", item.id)
 
-	local success, message = installer.install_widget(item, install_folder)
+	local success, message = installer.install_widget(item, install_folder, all_items)
 
 	if success then
 		print("Installation successful:", message)
@@ -115,7 +116,7 @@ function M.open_asset_store(store_url)
 
 		-- Installation handlers
 		local function on_install(item)
-			handle_install(item, install_folder,
+			handle_install(item, install_folder, all_items,
 				function(message)
 					set_install_status("Success: " .. message)
 				end,
