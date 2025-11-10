@@ -2,41 +2,86 @@
 --- Handles fetching widget data, displaying the store interface, and managing installations
 
 local installer = require("druid.editor_scripts.core.installer")
-local ui_components = require("druid.editor_scripts.core.ui_components")
-local internal = require("druid.editor_scripts.core.asset_store_internal")
+local internal = require("druid.editor_scripts.core.asset_store.data")
+local dialog_ui = require("druid.editor_scripts.core.asset_store.ui.dialog")
+local filters_ui = require("druid.editor_scripts.core.asset_store.ui.filters")
+local search_ui = require("druid.editor_scripts.core.asset_store.ui.search")
+local settings_ui = require("druid.editor_scripts.core.asset_store.ui.settings")
+local widget_list_ui = require("druid.editor_scripts.core.asset_store.ui.widget_list")
 
 local M = {}
 
+local INFO_RESULT = "asset_store_open_info"
+local DEFAULT_INSTALL_PREF_KEY = "druid.asset_install_folder"
+local DEFAULT_INSTALL_FOLDER = "/widget"
+local DEFAULT_TITLE = "Asset Store"
+local DEFAULT_INFO_BUTTON = "Info"
+local DEFAULT_CLOSE_BUTTON = "Close"
+local DEFAULT_EMPTY_SEARCH_MESSAGE = "No widgets found matching '%s'."
+local DEFAULT_EMPTY_FILTER_MESSAGE = "No widgets found matching the current filters."
+local DEFAULT_SEARCH_LABELS = {
+	search_tooltip = "Search for widgets by title, author, or description"
+}
 
----Build type options array
----@return table
-local function build_type_options()
-	return {"All", "Installed", "Not Installed"}
-end
 
-
----Build author options array
----@param authors table
----@return table
-local function build_author_options(authors)
-	local options = {"All Authors"}
-	for _, author in ipairs(authors) do
-		table.insert(options, author)
+local function normalize_config(input)
+	if type(input) == "string" then
+		input = { store_url = input }
 	end
-	return options
-end
 
+	assert(type(input) == "table", "asset_store.open expects a string URL or config table")
+	assert(input.store_url, "asset_store.open requires a store_url")
 
----Build tag options array
----@param tags table
----@return table
-local function build_tag_options(tags)
-	local options = {"All Tags"}
-	for _, tag in ipairs(tags) do
-		table.insert(options, tag)
+	local config = {
+		store_url = input.store_url,
+		info_url = input.info_url,
+		title = input.title or DEFAULT_TITLE,
+		info_button_label = input.info_button_label or DEFAULT_INFO_BUTTON,
+		close_button_label = input.close_button_label or DEFAULT_CLOSE_BUTTON,
+		empty_search_message = input.empty_search_message or DEFAULT_EMPTY_SEARCH_MESSAGE,
+		empty_filter_message = input.empty_filter_message or DEFAULT_EMPTY_FILTER_MESSAGE,
+		install_prefs_key = input.install_prefs_key,
+		default_install_folder = input.default_install_folder or DEFAULT_INSTALL_FOLDER,
+		labels = input.labels or {},
+		info_action = input.info_action,
+	}
+
+	if config.install_prefs_key == nil then
+		config.install_prefs_key = DEFAULT_INSTALL_PREF_KEY
+	elseif config.install_prefs_key == false then
+		config.install_prefs_key = nil
 	end
-	return options
+
+	config.labels.search = config.labels.search or {}
+	for key, value in pairs(DEFAULT_SEARCH_LABELS) do
+		if config.labels.search[key] == nil then
+			config.labels.search[key] = value
+		end
+	end
+
+	return config
 end
+
+
+
+local function get_initial_install_folder(config)
+	if not config.install_prefs_key then
+		return config.default_install_folder
+	end
+
+	return editor.prefs.get(config.install_prefs_key) or config.default_install_folder
+end
+
+
+
+local function persist_install_folder(config, folder)
+	if not config.install_prefs_key then
+		return
+	end
+
+	editor.prefs.set(config.install_prefs_key, folder)
+end
+
 
 
 ---Handle widget installation
@@ -60,50 +105,38 @@ local function handle_install(item, install_folder, all_items, on_success, on_er
 end
 
 
----Open the asset store dialog
-function M.open_asset_store(store_url)
-	print("Opening Druid Asset Store from:", store_url)
+function M.open(config_input)
+	local config = normalize_config(config_input)
 
-	-- Fetch data synchronously before creating the dialog
-	local store_data, fetch_error = internal.download_json(store_url)
+	print("Opening " .. config.title .. " from:", config.store_url)
+
+	local store_data, fetch_error = internal.download_json(config.store_url)
 	if not store_data then
-		print("Failed to load widgets:", fetch_error)
+		print("Failed to load store items:", fetch_error)
 		return
 	end
-	print("Successfully loaded", #store_data.items, "widgets")
+	print("Successfully loaded", #store_data.items, "items")
 
 	local initial_items = store_data.items
+	local initial_install_folder = get_initial_install_folder(config)
+	local filter_overrides = config.labels.filters and { labels = config.labels.filters } or nil
+
 	local dialog_component = editor.ui.component(function(props)
-		-- State management
 		local all_items = editor.ui.use_state(initial_items)
-		local install_folder, set_install_folder = editor.ui.use_state(editor.prefs.get("druid.asset_install_folder") or installer.get_install_folder())
+		local install_folder, set_install_folder = editor.ui.use_state(initial_install_folder)
 		local search_query, set_search_query = editor.ui.use_state("")
 		local filter_type, set_filter_type = editor.ui.use_state("All")
 		local filter_author, set_filter_author = editor.ui.use_state("All Authors")
 		local filter_tag, set_filter_tag = editor.ui.use_state("All Tags")
 		local install_status, set_install_status = editor.ui.use_state("")
 
-		-- Extract unique authors and tags for dropdown options
 		local authors = editor.ui.use_memo(internal.extract_authors, all_items)
 		local tags = editor.ui.use_memo(internal.extract_tags, all_items)
 
-		-- Build dropdown options (memoized to avoid recreation on each render)
-		local type_options = editor.ui.use_memo(build_type_options)
-		local author_options = editor.ui.use_memo(build_author_options, authors)
-		local tag_options = editor.ui.use_memo(build_tag_options, tags)
+		local type_options = editor.ui.use_memo(filters_ui.build_type_options, filter_overrides)
+		local author_options = editor.ui.use_memo(filters_ui.build_author_options, authors, filter_overrides)
+		local tag_options = editor.ui.use_memo(filters_ui.build_tag_options, tags, filter_overrides)
 
-		-- Debug output
-		if #type_options > 0 then
-			print("Type options count:", #type_options, "first:", type_options[1])
-		end
-		if #author_options > 0 then
-			print("Author options count:", #author_options, "first:", author_options[1])
-		end
-		if #tag_options > 0 then
-			print("Tag options count:", #tag_options, "first:", tag_options[1])
-		end
-
-		-- Filter items based on all filters
 		local filtered_items = editor.ui.use_memo(
 			internal.filter_items_by_filters,
 			all_items,
@@ -114,7 +147,6 @@ function M.open_asset_store(store_url)
 			install_folder
 		)
 
-		-- Installation handlers
 		local function on_install(item)
 			handle_install(item, install_folder, all_items,
 				function(message)
@@ -126,116 +158,57 @@ function M.open_asset_store(store_url)
 			)
 		end
 
-		-- Build UI content
 		local content_children = {}
 
-		-- Settings section
-		table.insert(content_children, editor.ui.horizontal({
-			spacing = editor.ui.SPACING.MEDIUM,
-			children = {
-				editor.ui.label({
-					spacing = editor.ui.SPACING.MEDIUM,
-					text = "Installation Folder:",
-					color = editor.ui.COLOR.TEXT
-				}),
-
-				editor.ui.string_field({
-					value = install_folder,
-					on_value_changed = function(new_folder)
-						set_install_folder(new_folder)
-						editor.prefs.set("druid.asset_install_folder", new_folder)
-					end,
-					title = "Installation Folder:",
-					tooltip = "The folder to install the assets to",
-				}),
-			}
+		table.insert(content_children, settings_ui.create({
+			install_folder = install_folder,
+			on_install_folder_changed = function(new_folder)
+				set_install_folder(new_folder)
+				persist_install_folder(config, new_folder)
+			end,
+			labels = config.labels.settings
 		}))
 
-		-- Filter dropdowns section
-		table.insert(content_children, editor.ui.horizontal({
-			spacing = editor.ui.SPACING.MEDIUM,
-			children = {
-				-- Type filter dropdown
-				editor.ui.horizontal({
-					spacing = editor.ui.SPACING.SMALL,
-					children = {
-						editor.ui.label({
-							text = "Type:",
-							color = editor.ui.COLOR.TEXT
-						}),
-						editor.ui.select_box({
-							value = filter_type,
-							options = type_options,
-							on_value_changed = set_filter_type
-						})
-					}
-				}),
-				-- Author filter dropdown
-				editor.ui.horizontal({
-					spacing = editor.ui.SPACING.SMALL,
-					children = {
-						editor.ui.label({
-							text = "Author:",
-							color = editor.ui.COLOR.TEXT
-						}),
-						editor.ui.select_box({
-							value = filter_author,
-							options = author_options,
-							on_value_changed = set_filter_author
-						})
-					}
-				}),
-				-- Tag filter dropdown
-				editor.ui.horizontal({
-					spacing = editor.ui.SPACING.SMALL,
-					children = {
-						editor.ui.label({
-							text = "Tag:",
-							color = editor.ui.COLOR.TEXT
-						}),
-						editor.ui.select_box({
-							value = filter_tag,
-							options = tag_options,
-							on_value_changed = set_filter_tag
-						})
-					}
-				})
-			}
+		table.insert(content_children, filters_ui.create({
+			filter_type = filter_type,
+			filter_author = filter_author,
+			filter_tag = filter_tag,
+			type_options = type_options,
+			author_options = author_options,
+			tag_options = tag_options,
+			on_type_change = set_filter_type,
+			on_author_change = set_filter_author,
+			on_tag_change = set_filter_tag,
+			labels = config.labels.filters,
 		}))
 
-		-- Search section
-		table.insert(content_children, editor.ui.horizontal({
-			spacing = editor.ui.SPACING.MEDIUM,
-			children = {
-				editor.ui.label({
-					text = "Search:",
-					color = editor.ui.COLOR.TEXT
-				}),
-				editor.ui.string_field({
-					value = search_query,
-					on_value_changed = set_search_query,
-					title = "Search:",
-					tooltip = "Search for widgets by title, author, or description",
-					grow = true
-				})
-			},
+		table.insert(content_children, search_ui.create({
+			search_query = search_query,
+			on_search = set_search_query,
+			labels = config.labels.search,
 		}))
 
-		-- Main content area
 		if #filtered_items == 0 then
-			local message = search_query ~= "" and
-				"No widgets found matching '" .. search_query .. "'." or
-				"No widgets found matching the current filters."
+			local message = config.empty_filter_message
+			if search_query ~= "" then
+				message = string.format(config.empty_search_message, search_query)
+			end
 			table.insert(content_children, editor.ui.label({
 				text = message,
 				color = editor.ui.COLOR.HINT,
 				alignment = editor.ui.ALIGNMENT.CENTER
 			}))
 		else
-			table.insert(content_children, ui_components.create_widget_list(filtered_items, on_install))
+			table.insert(content_children, widget_list_ui.create(filtered_items, {
+				on_install = on_install,
+				open_url = internal.open_url,
+				is_installed = function(item)
+					return installer.is_widget_installed(item, install_folder)
+				end,
+				labels = config.labels.widget_card,
+			}))
 		end
 
-		-- Install status message
 		if install_status ~= "" then
 			table.insert(content_children, editor.ui.label({
 				text = install_status,
@@ -244,31 +217,33 @@ function M.open_asset_store(store_url)
 			}))
 		end
 
-		return editor.ui.dialog({
-			title = "Druid Asset Store",
-			content = editor.ui.vertical({
-				spacing = editor.ui.SPACING.MEDIUM,
-				padding = editor.ui.PADDING.SMALL,
-				grow = true,
-				children = content_children
-			}),
-			buttons = {
-				editor.ui.dialog_button({
-					text = "Info",
-					result = "info_assets_store",
-				}),
-				editor.ui.dialog_button({
-					text = "Close",
-					cancel = true
-				})
-			}
+		local buttons = {}
+		if config.info_url or config.info_action then
+			table.insert(buttons, editor.ui.dialog_button({
+				text = config.info_button_label,
+				result = INFO_RESULT,
+			}))
+		end
+		table.insert(buttons, editor.ui.dialog_button({
+			text = config.close_button_label,
+			cancel = true
+		}))
+
+		return dialog_ui.build({
+			title = config.title,
+			children = content_children,
+			buttons = buttons
 		})
 	end)
 
 	local result = editor.ui.show_dialog(dialog_component({}))
 
-	if result and result == "info_assets_store" then
-		editor.browse("https://github.com/Insality/core/blob/main/druid_widget_store.md")
+	if result and result == INFO_RESULT then
+		if config.info_action then
+			config.info_action()
+		elseif config.info_url then
+			internal.open_url(config.info_url)
+		end
 	end
 
 	return {}
