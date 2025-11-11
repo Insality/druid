@@ -1,4 +1,4 @@
-local installer = require("druid.editor_scripts.core.installer")
+local installer = require("druid.editor_scripts.core.asset_store.installer")
 
 
 local M = {}

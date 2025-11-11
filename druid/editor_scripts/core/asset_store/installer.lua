@@ -1,8 +1,8 @@
 --- Module for handling widget installation from zip files
 --- Downloads zip files and extracts them to the specified folder
 
-local base64 = require("druid.editor_scripts.core.base64")
-local path_replacer = require("druid.editor_scripts.core.path_replacer")
+local base64 = require("druid.editor_scripts.core.asset_store.base64")
+local path_replacer = require("druid.editor_scripts.core.asset_store.path_replacer")
 
 local M = {}
 

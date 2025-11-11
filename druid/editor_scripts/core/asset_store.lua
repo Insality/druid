@@ -1,8 +1,8 @@
 --- Main asset store module for Druid widgets
 --- Handles fetching widget data, displaying the store interface, and managing installations
 
-local installer = require("druid.editor_scripts.core.installer")
-local internal = require("druid.editor_scripts.core.asset_store.data")
+local installer = require("druid.editor_scripts.core.asset_store.installer")
+local internal = require("druid.editor_scripts.core.asset_store.asset_store_internal")
 local dialog_ui = require("druid.editor_scripts.core.asset_store.ui.dialog")
 local filters_ui = require("druid.editor_scripts.core.asset_store.ui.filters")
 local search_ui = require("druid.editor_scripts.core.asset_store.ui.search")
