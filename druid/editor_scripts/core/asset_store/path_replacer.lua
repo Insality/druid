@@ -6,8 +6,6 @@ local system = require("druid.editor_scripts.defold_parser.system.parser_interna
 local M = {}
 
 
-
-
 ---Replace paths in file content
 ---@param content string - File content
 ---@param author string - Author name (e.g., "Insality")

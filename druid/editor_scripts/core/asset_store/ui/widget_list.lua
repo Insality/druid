@@ -8,7 +8,6 @@ local function noop(...)
 end
 
 
-
 local function build_context(overrides)
 	return {
 		on_install = overrides.on_install or noop,
@@ -16,7 +15,6 @@ local function build_context(overrides)
 		labels = overrides.labels,
 	}
 end
-
 
 
 function M.create(items, overrides)
@@ -48,4 +46,3 @@ end
 
 
 return M
-

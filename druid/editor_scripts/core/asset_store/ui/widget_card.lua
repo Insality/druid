@@ -45,7 +45,6 @@ local function build_labels(overrides)
 end
 
 
-
 function M.create(item, context)
 	local labels = build_labels(context and context.labels)
 	local open_url = context and context.open_url or function(_) end
@@ -164,4 +163,3 @@ end
 
 
 return M
-
