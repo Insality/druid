@@ -2,7 +2,6 @@ local assign_layers = require("druid.editor_scripts.assign_layers")
 local create_druid_widget = require("druid.editor_scripts.create_druid_widget")
 local create_druid_gui_script = require("druid.editor_scripts.create_druid_gui_script")
 local druid_settings = require("druid.editor_scripts.druid_settings")
-local asset_store = require("druid.editor_scripts.core.asset_store")
 -- Reuse tip: copy the snippet below into another editor script to open a custom store.
 -- asset_store.open({
 -- 	store_url = "https://example.com/store.json",
@@ -76,20 +75,6 @@ function M.get_commands()
 			end,
 			run = function(opts)
 				return create_druid_gui_script.create_druid_gui_script(opts.selection)
-			end
-		},
-
-		{
-			label = "[Druid] Asset Store",
-			locations = { "Edit" },
-			run = function()
-				return asset_store.open({
-					store_url = "https://insality.github.io/core/druid_widget_store.json",
-					info_url = "https://github.com/Insality/core/blob/main/druid_widget_store.md",
-					title = "Druid Asset Store",
-					install_prefs_key = "druid.asset_install_folder",
-					default_install_folder = DEFAULT_ASSET_INSTALL_FOLDER,
-				})
 			end
 		},
 

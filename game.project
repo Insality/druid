@@ -25,6 +25,7 @@ dependencies#3 = https://github.com/Insality/panthera/archive/refs/tags/runtime.
 dependencies#4 = https://github.com/Insality/defold-lang/archive/refs/tags/3.zip
 dependencies#5 = https://github.com/Insality/defold-event/archive/refs/tags/13.zip
 dependencies#6 = https://github.com/subsoap/defos/archive/refs/tags/v2.8.0.zip
+dependencies#7 = https://github.com/Insality/core/archive/refs/heads/main.zip
 
 [library]
 include_dirs = druid
