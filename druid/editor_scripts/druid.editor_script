@@ -2,20 +2,11 @@ local assign_layers = require("druid.editor_scripts.assign_layers")
 local create_druid_widget = require("druid.editor_scripts.create_druid_widget")
 local create_druid_gui_script = require("druid.editor_scripts.create_druid_gui_script")
 local druid_settings = require("druid.editor_scripts.druid_settings")
--- Reuse tip: copy the snippet below into another editor script to open a custom store.
--- asset_store.open({
--- 	store_url = "https://example.com/store.json",
--- 	info_url = "https://example.com/docs",
--- 	title = "My Library Store",
--- 	install_prefs_key = "my_lib.asset_install_folder",
--- 	default_install_folder = "/my_widgets",
--- })
 
 local M = {}
 
 local DEFAULT_WIDGET_TEMPLATE_PATH = "/druid/templates/widget_full.lua.template"
 local DEFAULT_GUI_SCRIPT_TEMPLATE_PATH = "/druid/templates/druid.gui_script.template"
-local DEFAULT_ASSET_INSTALL_FOLDER = "/widget"
 
 ---Define preferences schema
 function M.get_prefs_schema()
@@ -28,10 +19,6 @@ function M.get_prefs_schema()
 			default = DEFAULT_GUI_SCRIPT_TEMPLATE_PATH,
 			scope = editor.prefs.SCOPE.PROJECT
 		}),
-		["druid.asset_install_folder"] = editor.prefs.schema.string({
-			default = DEFAULT_ASSET_INSTALL_FOLDER,
-			scope = editor.prefs.SCOPE.PROJECT
-		})
 	}
 end
 
