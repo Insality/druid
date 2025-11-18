@@ -18,7 +18,7 @@ function M.get_prefs_schema()
 		["druid.gui_script_template_path"] = editor.prefs.schema.string({
 			default = DEFAULT_GUI_SCRIPT_TEMPLATE_PATH,
 			scope = editor.prefs.SCOPE.PROJECT
-		})
+		}),
 	}
 end
 
