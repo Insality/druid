@@ -48,8 +48,18 @@ end
 --- Generic setup that should be done once per application
 ---@param self druid.example
 local function setup_druid(self)
-	lang.init()
-	lang.set_lang("en") -- Force default start language to EN, switch through the UI to check
+	lang.init({
+		{ id = "en", path = "/example/locales/en.json" },
+		{ id = "ru", path = "/example/locales/ru.json" },
+		{ id = "es", path = "/example/locales/es.json" },
+		{ id = "de", path = "/example/locales/de.json" },
+		{ id = "fr", path = "/example/locales/fr.json" },
+		{ id = "ja", path = "/example/locales/ja.json" },
+		{ id = "pt", path = "/example/locales/pt.json" },
+		{ id = "it", path = "/example/locales/it.json" },
+		{ id = "kr", path = "/example/locales/kr.json" },
+		{ id = "zh", path = "/example/locales/zh.json" },
+	}, "en")
 	druid.set_text_function(lang.txp)
 
 	window.set_listener(function(_, event)

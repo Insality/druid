@@ -191,6 +191,7 @@ You can find the full **Druid** functions at [Quick API Reference](api/quick_api
 To better understand **Druid**, read the following documentation:
 
 - [How To GUI in Defold](https://forum.defold.com/t/how-to-gui-in-defold/73256)
+- [Druid Workshop](https://youtu.be/qF19qpjZe9c)
 - [Widgets](wiki/widgets.md)
 - [Druid styles](wiki/styles.md)
 - [Advanced Setup](wiki/advanced-setup.md)
