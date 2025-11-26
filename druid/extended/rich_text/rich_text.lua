@@ -1,5 +1,5 @@
 local component = require("druid.component")
-local rich_text = require("druid.custom.rich_text.module.rt")
+local rich_text = require("druid.extended.rich_text.module.rt")
 
 ---@class druid.rich_text.settings
 ---@field parent node

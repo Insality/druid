@@ -2,7 +2,6 @@
 -- Author: Britzl
 -- Modified by: Insality
 
---local color = require("druid.custom.rich_text.module.rt_color")
 local color = require("druid.color")
 
 local M = {}
