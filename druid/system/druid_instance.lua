@@ -701,13 +701,24 @@ function M:new_hotkey(keys_array, callback, callback_argument)
 end
 
 
-local rich_text = require("druid.extended.rich_text.rich_text")
+local rich_text = require("druid.custom.rich_text.rich_text")
 ---Create RichText component.
 ---@param text_node string|node The text node to make Rich Text
 ---@param value string|nil The initial text value. Default will be gui.get_text(text_node)
 ---@return druid.rich_text rich_text The new rich text component
 function M:new_rich_text(text_node, value)
 	return self:new(rich_text, text_node, value)
+end
+
+
+local rich_input = require("druid.custom.rich_input.rich_input")
+---Create RichInput component.
+---As a template please check rich_input.gui layout.
+---@param template string The template string name
+---@param nodes table|nil Nodes table from gui.clone_tree
+---@return druid.rich_input rich_input The new rich input component
+function M:new_rich_input(template, nodes)
+	return self:new(rich_input, template, nodes)
 end
 
 
