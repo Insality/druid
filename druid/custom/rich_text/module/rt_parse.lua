@@ -2,7 +2,7 @@
 -- Author: Britzl
 -- Modified by: Insality
 
-local tags = require("druid.extended.rich_text.module.rt_tags")
+local tags = require("druid.custom.rich_text.module.rt_tags")
 local utf8_lua = require("druid.system.utf8")
 local utf8 = utf8 or utf8_lua
 
