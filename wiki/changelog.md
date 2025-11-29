@@ -723,10 +723,6 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [#326] Fix for Editor Scripts corrupt file issue
 
 ### Druid 1.2.0
-- [Image] Add image component
-	- Create with `druid:new_image(node_or_node_id)`
-	- Currently used to load image from resource path, absolute path or URL
-	- Can be fit inside (keeping aspect ratio) stretched to the node area, depends on the GUI adjust mode
 - [Blocker] Fix for internal `is_enabled` state
 - [Button] Expose all click functions for the button
 - [Scroll] Add `scroll_to_make_node_visible` function
@@ -743,9 +739,15 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [Rich Text] Add `set_width` and `set_height` functions
 - [GO Widgets] Now passes events and functions from the widget to the GO context
 - [Layout] Add `set_position_function` function, similar to the Grid component
+- [#329](https://github.com/Insality/druid/issues/329) Allow numeric characters in RichText tags
+
+#### Druid Widget Store
+- [Image] Add image component
+	- Create with `druid:new_image(node_or_node_id)`
+	- Currently used to load image from resource path, absolute path or URL
+	- Can be fit inside (keeping aspect ratio) stretched to the node area, depends on the GUI adjust mode
 - [Properties Panel] Update with deep navigation support
 	- Add "Scenes" to manage a list of properties with back button support
 	- Add "Pages" to manage a a big lists of properties with paginations support
 	- Add `properties_panel:render_lua_table` to easily render your lua tables with a various types support (any simple types and vector, functions, events etc)
 	- Add "Refresh" button, which active a 1-sec refresh for current page
-- [#329](https://github.com/Insality/druid/issues/329) Allow numeric characters in RichText tags
