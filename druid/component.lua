@@ -173,7 +173,7 @@ end
 ---Get component name
 ---@return string name The component name + uid
 function M:get_name()
-	return self._component.name .. M.create_uid()
+	return self._component.name .. self._component._uid
 end
 
 
