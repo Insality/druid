@@ -1,3 +1,5 @@
+local logger = require("druid.system.druid_logger")
+
 ---@alias color vector4|vector3|string
 
 ---Color palette and utility functions for working with colors.
@@ -31,6 +33,8 @@ function M.get_color(color_id)
 			return M.hex2vector4(color_id)
 		end
 	end
+
+	logger.warn("Color not found in palette: " .. color_id)
 
 	return COLOR_WHITE
 end
