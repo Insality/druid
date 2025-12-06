@@ -27,8 +27,12 @@ function M:init(template, nodes)
 	gui.set_enabled(self.prefab, false)
 
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
+	self.scroll.on_scroll:subscribe(self.on_scroll)
 	self.grid = self.druid:new_grid("scroll_content", self.prefab, 1)
 	self.scroll:bind_grid(self.grid)
+
+	self.slider = self.druid:new_slider("scroll_bar_pin", vmath.vector3(0, -803.0, 0), self.on_slider_change)
+	self.slider:set_input_node("scroll_bar_view")
 
 	self.root:add_container("scroll_view", nil, function(_, size)
 		self.scroll:set_view_size(size)
@@ -181,6 +185,18 @@ function M:select_example_by_name_id(name_id)
 	end
 
 	return false
+end
+
+
+---@param value number in range [0..1]
+function M:on_slider_change(value)
+	self.scroll:scroll_to_percent(vmath.vector3(0, 1 - value, 0), true)
+end
+
+
+function M:on_scroll()
+	local scroll_percent = self.scroll:get_percent()
+	self.slider:set(1 - scroll_percent.y, true)
 end
 
 

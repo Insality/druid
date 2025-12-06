@@ -205,6 +205,18 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_BOX
+  id: "examples_list_view/scroll_bar_view"
+  parent: "examples_list_view/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "examples_list_view/scroll_bar_pin"
+  parent: "examples_list_view/scroll_bar_view"
+  template_node_child: true
+}
+nodes {
   position {
     x: 960.0
   }

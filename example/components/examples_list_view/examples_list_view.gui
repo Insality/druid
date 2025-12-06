@@ -136,6 +136,49 @@ nodes {
   parent: "examples_list_view_item/root"
   template_node_child: true
 }
+nodes {
+  position {
+    x: 400.0
+  }
+  size {
+    x: 16.0
+    y: 850.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  id: "scroll_bar_view"
+  pivot: PIVOT_NE
+  parent: "scroll_view"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 16.0
+    y: 48.0
+  }
+  color {
+    x: 0.275
+    y: 0.292
+    z: 0.324
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_16"
+  id: "scroll_bar_pin"
+  pivot: PIVOT_NE
+  parent: "scroll_bar_view"
+  inherit_alpha: true
+  slice9 {
+    x: 8.0
+    y: 8.0
+    z: 8.0
+    w: 8.0
+  }
+}
 layers {
   name: "druid"
 }
