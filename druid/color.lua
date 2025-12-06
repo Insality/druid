@@ -34,7 +34,7 @@ function M.get_color(color_id)
 		end
 	end
 
-	logger.warn("Color not found in palette: " .. color_id)
+	logger.warn("Color not found in palette", color_id)
 
 	return COLOR_WHITE
 end
