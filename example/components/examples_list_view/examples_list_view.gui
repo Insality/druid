@@ -157,9 +157,13 @@ nodes {
   size_mode: SIZE_MODE_AUTO
 }
 nodes {
+  position {
+    x: -8.0
+    y: -48.0
+  }
   size {
     x: 16.0
-    y: 48.0
+    y: 96.0
   }
   color {
     x: 0.275
@@ -169,7 +173,6 @@ nodes {
   type: TYPE_BOX
   texture: "druid_example/ui_circle_16"
   id: "scroll_bar_pin"
-  pivot: PIVOT_NE
   parent: "scroll_bar_view"
   inherit_alpha: true
   slice9 {
