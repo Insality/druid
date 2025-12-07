@@ -17,7 +17,7 @@ local COLOR_Z = hash("color.z")
 ---Get color by ID from palette, hex string, or return vector as-is.
 ---If color_id is not found in palette and not a hex string, returns white.
 ---@param color_id string|vector4|vector3 Color id from palette, hex color string, or vector
----@return vector4|vector3
+---@return vector4
 function M.get_color(color_id)
 	if type(color_id) ~= "string" then
 		return color_id
