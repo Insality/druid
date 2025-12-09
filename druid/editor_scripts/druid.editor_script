@@ -20,14 +20,32 @@ function M.get_prefs_schema()
 			default = DEFAULT_GUI_SCRIPT_TEMPLATE_PATH,
 			scope = editor.prefs.SCOPE.PROJECT
 		}),
+		["druid.command_assign_layers_enabled"] = editor.prefs.schema.boolean({
+			default = true,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
+		["druid.command_create_widget_enabled"] = editor.prefs.schema.boolean({
+			default = true,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
+		["druid.command_create_gui_script_enabled"] = editor.prefs.schema.boolean({
+			default = true,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
+		["druid.command_create_collection_enabled"] = editor.prefs.schema.boolean({
+			default = true,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
 	}
 end
 
 
 ---Define the editor commands
 function M.get_commands()
-	return {
-		{
+	local commands = {}
+
+	if editor.prefs.get("druid.command_assign_layers_enabled") then
+		table.insert(commands, {
 			label = "[Druid] Assign Layers",
 			locations = { "Edit" },
 			query = { selection = {type = "resource", cardinality = "one"} },
@@ -38,11 +56,13 @@ function M.get_commands()
 			run = function(opts)
 				return assign_layers.assign_layers(opts.selection)
 			end
-		},
+		})
+	end
 
-		{
+	if editor.prefs.get("druid.command_create_widget_enabled") then
+		table.insert(commands, {
 			label = "[Druid] Create Druid Widget",
-			locations = { "Edit", "Assets" },
+			locations = { "Assets" },
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
 				local path = editor.get(opts.selection, "path")
@@ -51,11 +71,13 @@ function M.get_commands()
 			run = function(opts)
 				return create_druid_widget.create_druid_widget(opts.selection)
 			end
-		},
+		})
+	end
 
-		{
+	if editor.prefs.get("druid.command_create_gui_script_enabled") then
+		table.insert(commands, {
 			label = "[Druid] Create Druid GUI Script",
-			locations = { "Edit", "Assets" },
+			locations = { "Assets" },
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
 				local path = editor.get(opts.selection, "path")
@@ -64,11 +86,13 @@ function M.get_commands()
 			run = function(opts)
 				return create_druid_gui_script.create_druid_gui_script(opts.selection)
 			end
-		},
+		})
+	end
 
-		{
+	if editor.prefs.get("druid.command_create_collection_enabled") then
+		table.insert(commands, {
 			label = "[Druid] Create Druid Collection",
-			locations = { "Edit", "Assets" },
+			locations = { "Assets" },
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
 				local path = editor.get(opts.selection, "path")
@@ -77,16 +101,18 @@ function M.get_commands()
 			run = function(opts)
 				return create_druid_collection.create_druid_collection(opts.selection)
 			end
-		},
+		})
+	end
 
-		{
-			label = "[Druid] Settings",
-			locations = { "Edit" },
-			run = function()
-				return druid_settings.open_settings()
-			end
-		}
-	}
+	table.insert(commands, {
+		label = "[Druid] Settings",
+		locations = { "Edit" },
+		run = function()
+			return druid_settings.open_settings()
+		end
+	})
+
+	return commands
 end
 
 
