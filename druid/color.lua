@@ -4,7 +4,7 @@ local logger = require("druid.system.druid_logger")
 
 ---Color palette and utility functions for working with colors.
 ---Supports palette management, hex conversion, RGB/HSB conversion, and color interpolation.
----@class druid.palette
+---@class druid.color
 local M = {}
 
 local PALETTE_DATA = {}
@@ -83,12 +83,24 @@ function M.lerp(t, color1, color2)
 	local h1, s1, v1 = M.rgb2hsb(color1.x, color1.y, color1.z)
 	local h2, s2, v2 = M.rgb2hsb(color2.x, color2.y, color2.z)
 
-	local h = h1 + (h2 - h1) * t
+	local dh = h2 - h1
+	if math.abs(dh) > 0.5 then
+		if dh > 0 then
+			dh = dh - 1
+		else
+			dh = dh + 1
+		end
+	end
+	local h = (h1 + dh * t) % 1
 	local s = s1 + (s2 - s1) * t
 	local v = v1 + (v2 - v1) * t
 
-	local r, g, b, a = M.hsb2rgb(h, s, v)
-	a = a or 1
+	local a1 = color1.w or 1
+	local a2 = color2.w or 1
+	local a = a1 + (a2 - a1) * t
+
+	local r, g, b = M.hsb2rgb(h, s, v)
+
 	return vmath.vector4(r, g, b, a)
 end
 
@@ -182,7 +194,7 @@ end
 ---@param red number
 ---@param green number
 ---@param blue number
----@return string
+---@return string hex_string Example: "FF0000", without "#" prefix
 function M.rgb2hex(red, green, blue)
 	local r = string.format("%x", math.floor(red * 255))
 	local g = string.format("%x", math.floor(green * 255))
