@@ -726,7 +726,7 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [Blocker] Fix for internal `is_enabled` state
 - [Button] Expose all click functions for the button
 - [Scroll] Add `scroll_to_make_node_visible` function
-- [Palette] Add Druid Color module
+- [Color] Add Druid Color module
 	- Use `local color = require("druid.color")` to access the module
 	- Manage color palettes
 	- Color conversions
@@ -740,8 +740,16 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [GO Widgets] Now passes events and functions from the widget to the GO context
 - [Layout] Add `set_position_function` function, similar to the Grid component
 - [#329](https://github.com/Insality/druid/issues/329) Allow numeric characters in RichText tags
+- [#333](https://github.com/Insality/druid/issues/333) Add settings to enable/disable editor scripts for the Druid
 
 #### Druid Widget Store
+All widgets moved from the Druid library to the Druid Asset Store extension
+
+##### Migration
+In case you using the `properties_panel`, `fps_panel`, `memory_panel`, `mini_graph` widgets, you need to migrate to the Druid Asset Store extension.
+
+TO do that you should open Asset Store extension and install them, After that you need to update GUI paths and require paths from `druid.widget.*` to `widget.*`
+
 - [Image] Add image component
 	- Create with `druid:new_image(node_or_node_id)`
 	- Currently used to load image from resource path, absolute path or URL
