@@ -1,0 +1,78 @@
+name: publish_pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: "25"
+
+      - name: install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zip
+
+      - name: build html5
+        run: |
+          deployer_url="https://raw.githubusercontent.com/Insality/defold-deployer/4/deployer.sh"
+          curl -s "${deployer_url}" | bash -s hbr
+
+      - name: find build artifacts
+        id: artifacts
+        run: |
+          HTML_DIR=$(find dist/bundle -type d -name "*_html" 2>/dev/null | head -1)
+          HTML_ZIP=$(find dist/bundle -type f -name "*_html.zip" 2>/dev/null | head -1)
+          if [ -z "$HTML_DIR" ] || [ ! -d "$HTML_DIR" ]; then
+            echo "HTML build directory not found"
+            exit 1
+          fi
+          echo "dir=${HTML_DIR}" >> $GITHUB_OUTPUT
+          echo "zip=${HTML_ZIP}" >> $GITHUB_OUTPUT
+
+      - name: upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ steps.artifacts.outputs.dir }}
+
+      - name: upload html zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-build
+          path: ${{ steps.artifacts.outputs.zip }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: configure pages
+        uses: actions/configure-pages@v4
+
+      - name: deploy to pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: summary
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          echo "Published at: https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO_NAME}/"
