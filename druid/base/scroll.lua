@@ -205,6 +205,9 @@ function M:scroll_to(point, is_instant)
 end
 
 
+---Scroll to the node, if node is not visible in scroll view
+---@param node node The node to make visible
+---@param is_instant boolean|nil Instant scroll flag
 function M:scroll_to_make_node_visible(node, is_instant)
 	-- Can be any node not only directly at scroll content
 	local screen_position = gui.get_screen_position(node)
