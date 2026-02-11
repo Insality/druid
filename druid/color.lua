@@ -20,6 +20,7 @@ local COLOR_Z = hash("color.z")
 ---@return vector4
 function M.get_color(color_id)
 	if type(color_id) ~= "string" then
+		---@cast color_id vector4
 		return color_id
 	end
 

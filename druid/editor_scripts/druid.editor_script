@@ -40,11 +40,22 @@ function M.get_prefs_schema()
 end
 
 
+---Temporarily solution, in some cases the get_commands throws before the prefs are loaded
+---@param key string The preference key
+---@return boolean Whether the preference is enabled
+local function pref_enabled(key)
+	local ok, value = pcall(function()
+		return editor.prefs.get(key)
+	end)
+	return not ok or value ~= false
+end
+
+
 ---Define the editor commands
 function M.get_commands()
 	local commands = {}
 
-	if editor.prefs.get("druid.command_assign_layers_enabled") then
+	if pref_enabled("druid.command_assign_layers_enabled") then
 		table.insert(commands, {
 			label = "[Druid] Assign Layers",
 			locations = { "Edit" },
@@ -59,7 +70,7 @@ function M.get_commands()
 		})
 	end
 
-	if editor.prefs.get("druid.command_create_widget_enabled") then
+	if pref_enabled("druid.command_create_widget_enabled") then
 		table.insert(commands, {
 			label = "[Druid] Create Druid Widget",
 			locations = { "Assets" },
@@ -74,7 +85,7 @@ function M.get_commands()
 		})
 	end
 
-	if editor.prefs.get("druid.command_create_gui_script_enabled") then
+	if pref_enabled("druid.command_create_gui_script_enabled") then
 		table.insert(commands, {
 			label = "[Druid] Create Druid GUI Script",
 			locations = { "Assets" },
@@ -89,7 +100,7 @@ function M.get_commands()
 		})
 	end
 
-	if editor.prefs.get("druid.command_create_collection_enabled") then
+	if pref_enabled("druid.command_create_collection_enabled") then
 		table.insert(commands, {
 			label = "[Druid] Create Druid Collection",
 			locations = { "Assets" },

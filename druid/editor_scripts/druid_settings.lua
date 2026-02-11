@@ -1,3 +1,6 @@
+---For grid_row temporarily disable
+---@diagnostic disable: undefined-field
+
 local editor_scripts_internal = require("druid.editor_scripts.editor_scripts_internal")
 
 local M = {}
