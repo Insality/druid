@@ -22,6 +22,7 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	if not self.druid then return end
 	self.druid:on_message(message_id, message, sender)
 end
 
