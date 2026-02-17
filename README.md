@@ -39,13 +39,13 @@ Open your `game.project` file and add the following lines to the dependencies fi
 **[Defold Event](https://github.com/Insality/defold-event)**
 
 ```
-https://github.com/Insality/defold-event/archive/refs/tags/12.zip
+https://github.com/Insality/defold-event/archive/refs/tags/14.zip
 ```
 
 **[Druid](https://github.com/Insality/druid/)**
 
 ```
-https://github.com/Insality/druid/archive/refs/tags/1.1.6.zip
+https://github.com/Insality/druid/archive/refs/tags/1.1.7.zip
 ```
 
 After that, select `Project ▸ Fetch Libraries` to update [library dependencies]((https://defold.com/manuals/libraries/#setting-up-library-dependencies)). This happens automatically whenever you open a project so you will only need to do this if the dependencies change without re-opening the project.
