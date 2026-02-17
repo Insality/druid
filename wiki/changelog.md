@@ -721,3 +721,6 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 #### Druid 1.1.6
 - [#326] Fix for Editor Scripts corrupt file issue
+
+#### Druid 1.1.7
+- Add image_refresh to the Druid atlas for compatibility with the Asset Store Widgets
