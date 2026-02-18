@@ -328,6 +328,7 @@ function M:select()
 	if not self.is_selected then
 		self:set_input_priority(const.PRIORITY_INPUT_MAX, true)
 		self.button:set_input_priority(const.PRIORITY_INPUT_MAX, true)
+		self.button.hover:set_enabled(false)
 		self.previous_value = self.value
 		self.is_selected = true
 
@@ -353,6 +354,7 @@ function M:unselect()
 	if self.is_selected then
 		self:reset_input_priority()
 		self.button:reset_input_priority()
+		self.button.hover:set_enabled(true)
 		self.is_selected = false
 
 		gui.hide_keyboard()
