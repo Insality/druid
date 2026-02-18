@@ -19,13 +19,13 @@ publisher = Insality
 developer = Maksim Tuprikov
 custom_resources = /example/locales
 dependencies#0 = https://github.com/britzl/deftest/archive/refs/tags/2.8.0.zip
-dependencies#1 = https://github.com/Insality/defold-saver/archive/refs/tags/5.zip
+dependencies#1 = https://github.com/Insality/defold-saver/archive/refs/tags/6.zip
 dependencies#2 = https://github.com/Insality/defold-tweener/archive/refs/tags/6.zip
-dependencies#3 = https://github.com/Insality/panthera/archive/refs/tags/runtime.5.zip
+dependencies#3 = https://github.com/Insality/panthera/archive/refs/tags/runtime.6.zip
 dependencies#4 = https://github.com/Insality/defold-lang/archive/refs/tags/4.zip
-dependencies#5 = https://github.com/Insality/defold-event/archive/refs/tags/13.zip
-dependencies#6 = https://github.com/subsoap/defos/archive/refs/tags/v2.8.0.zip
-dependencies#7 = https://github.com/Insality/asset-store/archive/refs/tags/1.zip
+dependencies#5 = https://github.com/Insality/defold-event/archive/refs/tags/14.zip
+dependencies#6 = https://github.com/subsoap/defos/archive/refs/tags/v2.8.6.zip
+dependencies#7 = https://github.com/Insality/asset-store/archive/refs/tags/2.zip
 
 [library]
 include_dirs = druid
