@@ -144,7 +144,7 @@ end
 ---@param action action The action
 ---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
-	if not (action_id == nil or M.ALLOWED_ACTIONS[action_id]) then
+	if action_id and not M.ALLOWED_ACTIONS[action_id] then
 		return false
 	end
 
