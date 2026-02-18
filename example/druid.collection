@@ -12,3 +12,13 @@ embedded_instances {
   "}\n"
   ""
 }
+embedded_instances {
+  id: "sound"
+  data: "embedded_components {\n"
+  "  id: \"click\"\n"
+  "  type: \"sound\"\n"
+  "  data: \"sound: \\\"/example/assets/sounds/button_click.ogg\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}

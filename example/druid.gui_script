@@ -61,6 +61,9 @@ local function setup_druid(self)
 		{ id = "zh", path = "/example/locales/zh.json" },
 	}, "en")
 	druid.set_text_function(lang.txp)
+	druid.set_sound_function(function(sound_id)
+		sound.play("/sound#" .. sound_id)
+	end)
 
 	window.set_listener(function(_, event)
 		druid.on_window_callback(event)
