@@ -731,12 +731,6 @@ He-he-hello! It's a new Druid update!
 
 
 **Changelog 1.2.0**
-- [Blocker] Fix for internal `is_enabled` state
-	- Before, if blocker node was disabled at init step and when node was enabled later, blocker node keeps internal `is_enabled` state as false and had to be changed with `blocker:set_enabled(true)` to make it work. Now it's fixed and blocker will work as expected.
-- [Button] Expose all click functions for the button
-	- Now you can call the `button:button_click()`, `button:button_double_click()`, `button:button_long_click()` etc.
-- [Scroll] Add `scroll_to_make_node_visible` function
-	- This makes a scroll to the element, so it will be visible in the scroll view. If element is already visible, nothing will happen.
 - [Color] 🎨 Add Druid Color module
 	- Use `local color = require("druid.color")` to access the module
 	- Use `color.get_color(color_id)` to get color by ID from palette, hex string, or return vector as-is.
@@ -745,25 +739,32 @@ He-he-hello! It's a new Druid update!
 	- Use `color.add_palette(palette_data)` to add colors to the palette. Colors can be hex strings or vector4 values.
 	- And various conversions between colors functions.
 	- Palette can be loaded at init step from the JSON file by path `druid.palette_path` in your `game.project` file.
+- [Layout] Add `set_position_function` function, similar to the Grid component
+- [Scroll] Add `scroll_to_make_node_visible` function
+	- This makes a scroll to the element, so it will be visible in the scroll view. If element is already visible, nothing will happen.
+- [Blocker] Fix for internal `is_enabled` state
+	- Before, if blocker node was disabled at init step and when node was enabled later, blocker node keeps internal `is_enabled` state as false and had to be changed with `blocker:set_enabled(true)` to make it work. Now it's fixed and blocker will work as expected.
+- [Button] Expose all click functions for the button
+	- Now you can call the `button:button_click()`, `button:button_double_click()`, `button:button_long_click()` etc.
 - [Container] Fix for container stretch mode
 	- `stretch` and `fit` was not init correctly in the `init` function arguments
 - [Rich Text] Using color names from the palette
 - [Rich Text] Add `rich_text:set_split_to_characters(true)` to split each letter node separately
 	- With this option, each letter will be a separate node, which can be useful for some animations or other effects.
 - [Rich Text] Add `set_width` and `set_height` functions
-- [Layout] Add `set_position_function` function, similar to the Grid component
+- [System] Migrated to `gui.cancel_animations` instead of `gui.cancel_animation`
 - [GO Widgets] Now passes events in addition to functions from the widget to the GO context
 - [#316](https://github.com/Insality/druid/issues/316) Button `on_hold_callback` now can be used without `on_long_click` callback
 	- Before, hold callback was required to be used with `on_long_click` callback. Now it's not required and can be used alone.
 	- If hold_callback exists, user can press and hold the button to trigger the hold callback.
 	- The button usual callback will be not triggered in this case.
 	- If both `on_long_click` and `on_hold_callback` callbacks exists, user can press and hold the button to trigger the hold callback until the long click callback is triggered (time is adjusted by `AUTOHOLD_TRIGGER` style parameter).
+- [#286](https://github.com/Insality/druid/issues/286) Fix style button `on_disabled` call in HTML5 button mode
 - [#297](https://github.com/Insality/druid/issues/297) Rich input hover animation fix for `rich_input:select()`
 - [#320](https://github.com/Insality/druid/issues/320) Add inherit alpha for rich text images to true by default
 - [#329](https://github.com/Insality/druid/issues/329) Allow numeric characters in RichText tags
 - [#333](https://github.com/Insality/druid/issues/333) Add settings to enable/disable Editor Scripts for the Druid
 - [#335](https://github.com/Insality/druid/issues/335) Add slider default steps into slider's style
-- [System] Migrated to `gui.cancel_animations` instead of `gui.cancel_animation`
 
 #### Druid Widget Store
 All Druid Widgets moved from the Druid library to the Druid [Asset Store](https://github.com/Insality/asset-store) extension.
