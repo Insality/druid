@@ -753,8 +753,10 @@ He-he-hello! It's a new Druid update!
 - [Rich Text] Add `set_width` and `set_height` functions
 - [Layout] Add `set_position_function` function, similar to the Grid component
 - [GO Widgets] Now passes events in addition to functions from the widget to the GO context
+- [#320](https://github.com/Insality/druid/issues/320) Add inherit alpha for rich text images to true by default
 - [#329](https://github.com/Insality/druid/issues/329) Allow numeric characters in RichText tags
 - [#333](https://github.com/Insality/druid/issues/333) Add settings to enable/disable Editor Scripts for the Druid
+- [#335](https://github.com/Insality/druid/issues/335) Add slider default steps into slider's style
 - [System] Migrated to `gui.cancel_animations` instead of `gui.cancel_animation`
 
 #### Druid Widget Store

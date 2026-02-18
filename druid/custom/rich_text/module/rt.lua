@@ -421,6 +421,7 @@ function M._update_nodes(lines, settings)
 				gui.set_texture(node, word.image.texture)
 				gui.play_flipbook(node, hash(word.image.anim))
 				gui.set_color(node, word.color or COLOR_WHITE)
+				gui.set_inherit_alpha(node, true)
 			else
 				node = word.node or gui.clone(settings.text_prefab)
 				gui.set_outline(node, word.outline)
