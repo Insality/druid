@@ -57,7 +57,7 @@ return {
   -- Overrules `include`.
   exclude = {
     "^test%/.+$",
-	"^druid/system/utf8.lua$",
+	"^druid/system/utf8$",
   },
 
   --- Table mapping names of modules to be included to their filenames.
