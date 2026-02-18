@@ -202,10 +202,10 @@ function M:on_input(action_id, action)
 		return self:_on_button_release() and is_consume
 	end
 
-	if self.can_action and not self.on_long_click:is_empty() then
+	if self.can_action and (not self.on_long_click:is_empty() or not self.on_hold_callback:is_empty()) then
 		local press_time = socket.gettime() - self.last_pressed_time
 
-		if self.style.AUTOHOLD_TRIGGER <= press_time then
+		if not self.on_long_click:is_empty() and self.style.AUTOHOLD_TRIGGER <= press_time then
 			self:_on_button_release()
 			return is_consume
 		end
@@ -404,13 +404,16 @@ function M:_on_button_release()
 			self.can_action = false
 
 			local time = socket.gettime()
-			local is_long_click = (time - self.last_pressed_time) >= self.style.LONGTAP_TIME
-			is_long_click = is_long_click and not self.on_long_click:is_empty()
+			local press_time = time - self.last_pressed_time
+			local is_long_click = press_time >= self.style.LONGTAP_TIME and not self.on_long_click:is_empty()
+			local is_hold_only = press_time >= self.style.LONGTAP_TIME and self.on_long_click:is_empty() and not self.on_hold_callback:is_empty()
 
 			local is_double_click = (time - self.last_released_time) < self.style.DOUBLETAP_TIME
 			is_double_click = is_double_click and not self.on_double_click:is_empty()
 
-			if is_long_click then
+			if is_hold_only then
+				return true
+			elseif is_long_click then
 				local is_hold_complete = (time - self.last_pressed_time) >= self.style.AUTOHOLD_TRIGGER
 				if is_hold_complete then
 					self:button_long_click()

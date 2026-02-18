@@ -753,6 +753,11 @@ He-he-hello! It's a new Druid update!
 - [Rich Text] Add `set_width` and `set_height` functions
 - [Layout] Add `set_position_function` function, similar to the Grid component
 - [GO Widgets] Now passes events in addition to functions from the widget to the GO context
+- [#316](https://github.com/Insality/druid/issues/316) Button `on_hold_callback` now can be used without `on_long_click` callback
+	- Before, hold callback was required to be used with `on_long_click` callback. Now it's not required and can be used alone.
+	- If hold_callback exists, user can press and hold the button to trigger the hold callback.
+	- The button usual callback will be not triggered in this case.
+	- If both `on_long_click` and `on_hold_callback` callbacks exists, user can press and hold the button to trigger the hold callback until the long click callback is triggered (time is adjusted by `AUTOHOLD_TRIGGER` style parameter).
 - [#320](https://github.com/Insality/druid/issues/320) Add inherit alpha for rich text images to true by default
 - [#329](https://github.com/Insality/druid/issues/329) Allow numeric characters in RichText tags
 - [#333](https://github.com/Insality/druid/issues/333) Add settings to enable/disable Editor Scripts for the Druid
