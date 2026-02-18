@@ -342,6 +342,7 @@ function M:button_click()
 		self._is_html5_listener_set = false
 		html5.set_interaction_listener(nil)
 	end
+	self.can_action = false
 	self.click_in_row = 1
 	self.on_click:trigger(self:get_context(), self.params, self)
 	self.style.on_click(self, self.anim_node)
@@ -392,7 +393,9 @@ function M:_on_button_release()
 	end
 
 	if self.disabled then
-		self.style.on_click_disabled(self, self.anim_node)
+		if self.can_action then
+			self.style.on_click_disabled(self, self.anim_node)
+		end
 		return true
 	elseif not check_function_result then
 		if self._failure_callback then
