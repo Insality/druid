@@ -726,39 +726,55 @@ Please support me if you like this project! It will help me keep engaged to upda
 - Add image_refresh to the Druid atlas for compatibility with the Asset Store Widgets
 
 ### Druid 1.2.0
+
+He-he-hello! It's a new Druid update!
+
+
+**Changelog 1.2.0**
 - [Blocker] Fix for internal `is_enabled` state
+	- Before, if blocker node was disabled at init step and when node was enabled later, blocker node keeps internal `is_enabled` state as false and had to be changed with `blocker:set_enabled(true)` to make it work. Now it's fixed and blocker will work as expected.
 - [Button] Expose all click functions for the button
+	- Now you can call the `button:button_click()`, `button:button_double_click()`, `button:button_long_click()` etc.
 - [Scroll] Add `scroll_to_make_node_visible` function
-- [Color] Add Druid Color module
+	- This makes a scroll to the element, so it will be visible in the scroll view. If element is already visible, nothing will happen.
+- [Color] 🎨 Add Druid Color module
 	- Use `local color = require("druid.color")` to access the module
-	- Manage color palettes
-	- Color conversions
-	- Convenient usage
+	- Use `color.get_color(color_id)` to get color by ID from palette, hex string, or return vector as-is.
+	- Use `color.set_color(gui_node, color_id)` to set color to the GUI node directly.
+	- Use `color.lerp(t, color1, color2)` to interpolate between two colors using HSB space (better visual results than RGB).
+	- Use `color.add_palette(palette_data)` to add colors to the palette. Colors can be hex strings or vector4 values.
+	- And various conversions between colors functions.
+	- Palette can be loaded at init step from the JSON file by path `druid.palette_path` in your `game.project` file.
 - [Container] Fix for container stretch mode
 	- `stretch` and `fit` was not init correctly in the `init` function arguments
 - [Rich Text] Using color names from the palette
 - [Rich Text] Add `rich_text:set_split_to_characters(true)` to split each letter node separately
-	- Weird implementation, but nice to have
+	- With this option, each letter will be a separate node, which can be useful for some animations or other effects.
 - [Rich Text] Add `set_width` and `set_height` functions
-- [GO Widgets] Now passes events and functions from the widget to the GO context
 - [Layout] Add `set_position_function` function, similar to the Grid component
+- [GO Widgets] Now passes events in addition to functions from the widget to the GO context
 - [#329](https://github.com/Insality/druid/issues/329) Allow numeric characters in RichText tags
-- [#333](https://github.com/Insality/druid/issues/333) Add settings to enable/disable editor scripts for the Druid
+- [#333](https://github.com/Insality/druid/issues/333) Add settings to enable/disable Editor Scripts for the Druid
+- [System] Migrated to `gui.cancel_animations` instead of `gui.cancel_animation`
 
 #### Druid Widget Store
-All widgets moved from the Druid library to the Druid Asset Store extension
+All Druid Widgets moved from the Druid library to the Druid [Asset Store](https://github.com/Insality/asset-store) extension.
+Also several more widgets was added to the Asset Store extension. Check it out!
 
 ##### Migration
 In case you using the `properties_panel`, `fps_panel`, `memory_panel`, `mini_graph` widgets, you need to migrate to the Druid Asset Store extension.
 
 TO do that you should open Asset Store extension and install them, After that you need to update GUI paths and require paths from `druid.widget.*` to `widget.*`
 
-- [Image] Add image component
-	- Create with `druid:new_image(node_or_node_id)`
-	- Currently used to load image from resource path, absolute path or URL
-	- Can be fit inside (keeping aspect ratio) stretched to the node area, depends on the GUI adjust mode
-- [Properties Panel] Update with deep navigation support
-	- Add "Scenes" to manage a list of properties with back button support
-	- Add "Pages" to manage a a big lists of properties with paginations support
-	- Add `properties_panel:render_lua_table` to easily render your lua tables with a various types support (any simple types and vector, functions, events etc)
-	- Add "Refresh" button, which active a 1-sec refresh for current page
+A big thanks to the my Github supporters:
+- [Defold Foundation](https://defold.com)
+- [Pawel](https://forum.defold.com/u/pawel)
+- [Ekharkunov](https://forum.defold.com/u/ekharkunov)
+
+And all my other supporters! Very appreciated!
+
+❤️ Support ❤️
+
+Please support me if you like this project! It will help me keep engaged to update **Druid** and make it even better!
+
+[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)

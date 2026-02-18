@@ -29,6 +29,7 @@ dependencies#7 = https://github.com/Insality/asset-store/archive/refs/tags/1.zip
 
 [library]
 include_dirs = druid
+defold_min_version = 1.11.2
 
 [input]
 gamepads = /builtins/input/default.gamepadsc
@@ -59,7 +60,7 @@ cssfile = /builtins/manifests/web/dark_theme.css
 show_console_banner = 0
 
 [native_extension]
-app_manifest =
+app_manifest = 
 
 [graphics]
 texture_profiles = /builtins/graphics/default.texture_profiles
