@@ -93,6 +93,11 @@ M["progress"] = {
 }
 
 
+M["slider"] = {
+	DEFAULT_STEPS = {}, -- e.g. {0, 0.25, 0.5, 0.75, 1} for notched slider; empty = continuous
+}
+
+
 M["swipe"] = {
 	SWIPE_THRESHOLD = 50,
 	SWIPE_TIME = 0.4,
