@@ -752,6 +752,7 @@ He-he-hello! It's a new Druid update!
 - [Rich Text] Add `rich_text:set_split_to_characters(true)` to split each letter node separately
 	- With this option, each letter will be a separate node, which can be useful for some animations or other effects.
 - [Rich Text] Add `set_width` and `set_height` functions
+- [Rich Text] Add `rich_text:set_pivot` function to adjust the alignment of the text inside the text area.
 - [System] Migrated to `gui.cancel_animations` instead of `gui.cancel_animation`
 - [GO Widgets] Now passes events in addition to functions from the widget to the GO context
 - [#286](https://github.com/Insality/druid/issues/286) Fix style button `on_disabled` call in HTML5 button mode

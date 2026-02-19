@@ -1,3 +1,4 @@
+local helper = require("druid.helper")
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
 
@@ -73,6 +74,7 @@ local rich_text = require("druid.custom.rich_text.module.rt")
 ---@field private _last_value string The last value of the rich text
 ---@field private _settings table The settings of the rich text
 ---@field private _split_to_characters boolean The split to characters flag
+---@field private _anchor vector3|nil Anchor position when pivot is set (keeps content in place on resize)
 local M = component.create("rich_text")
 
 
@@ -151,6 +153,16 @@ function M:set_text(text)
 	self:clear()
 	self._last_value = text
 
+	if self._anchor then
+		local size = gui.get_size(self.root)
+		local pivot_offset = helper.get_pivot_offset(gui.get_pivot(self.root))
+		gui.set_position(self.root, vmath.vector3(
+			self._anchor.x + size.x * pivot_offset.x,
+			self._anchor.y + size.y * pivot_offset.y,
+			self._anchor.z
+		))
+	end
+
 	self._settings.adjust_scale = 1
 	local root_size = gui.get_size(self.root)
 	self._settings.width = root_size.x
@@ -171,6 +183,30 @@ end
 ---@return string text The current text of the rich text
 function M:get_text()
 	return self._last_value
+end
+
+
+---Set pivot and keep the content in place (anchor). After this, resizing the root will keep the anchor fixed.
+---@param pivot number GUI pivot constant
+---@return druid.rich_text self
+function M:set_pivot(pivot)
+	local pos = gui.get_position(self.root)
+	local size = gui.get_size(self.root)
+	local pivot_offset = helper.get_pivot_offset(gui.get_pivot(self.root))
+	self._anchor = vmath.vector3(
+		pos.x - size.x * pivot_offset.x,
+		pos.y - size.y * pivot_offset.y,
+		pos.z
+	)
+	gui.set_pivot(self.root, pivot)
+	pivot_offset = helper.get_pivot_offset(pivot)
+	gui.set_position(self.root, vmath.vector3(
+		self._anchor.x + size.x * pivot_offset.x,
+		self._anchor.y + size.y * pivot_offset.y,
+		pos.z
+	))
+	self:set_text(self._last_value)
+	return self
 end
 
 

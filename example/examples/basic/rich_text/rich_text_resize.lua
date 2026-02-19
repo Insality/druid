@@ -1,8 +1,5 @@
-local helper = require("druid.helper")
-
 ---@class examples.rich_text_resize: druid.widget
 ---@field rich_text druid.rich_text
----@field position vector3
 local M = {}
 
 local WIDTH_MIN = 80
@@ -22,31 +19,6 @@ function M:init()
 
 	self.node_text_area_debug = self:get_node("text_area_debug")
 	gui.set_size(self.node_text_area_debug, vmath.vector3(gui.get_size(self.rich_text.root)))
-
-	local pos = gui.get_position(self.rich_text.root)
-	local size_x = gui.get(self.rich_text.root, "size.x")
-	local size_y = gui.get(self.rich_text.root, "size.y")
-	local parent_pivot = gui.get_pivot(self.rich_text.root)
-	local pivot_offset = helper.get_pivot_offset(parent_pivot)
-	self.position = vmath.vector3(
-		pos.x - size_x * pivot_offset.x,
-		pos.y - size_y * pivot_offset.y,
-		pos.z
-	)
-end
-
-
-function M:set_pivot(pivot)
-	gui.set_pivot(self.rich_text.root, pivot)
-	local size_x = gui.get(self.rich_text.root, "size.x")
-	local size_y = gui.get(self.rich_text.root, "size.y")
-	local pivot_offset = helper.get_pivot_offset(pivot)
-	gui.set_position(self.rich_text.root, vmath.vector3(
-		self.position.x + size_x * pivot_offset.x,
-		self.position.y + size_y * pivot_offset.y,
-		self.position.z
-	))
-	self.rich_text:set_text(self.rich_text:get_text())
 end
 
 
@@ -89,7 +61,7 @@ function M:properties_control(properties_panel)
 		if pivot_index > #pivot_list then
 			pivot_index = 1
 		end
-		self:set_pivot(pivot_list[pivot_index])
+		self.rich_text:set_pivot(pivot_list[pivot_index])
 	end)
 end
 
