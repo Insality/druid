@@ -754,10 +754,13 @@ He-he-hello! It's a new Druid update!
 - [Rich Text] Add `set_width` and `set_height` functions
 - [Rich Text] Add `rich_text:set_pivot` function to adjust the alignment of the text inside the text area.
 - [System] Migrated to `gui.cancel_animations` instead of `gui.cancel_animation`
+- [Examples] Add more Rich Text examples
 - [GO Widgets] Now passes events in addition to functions from the widget to the GO context
 - [#286](https://github.com/Insality/druid/issues/286) Fix style button `on_disabled` call in HTML5 button mode
 - [#289](https://github.com/Insality/druid/issues/289) Multiple Input field management + fixes on web input.
 	- Fix for Button `on_click_outside` event. It should be triggered now always on user click. Before it not always triggered, if input was consumed by some other component.
+- [#291](https://github.com/Insality/druid/issues/291) Add `on_init` for button and input style callback
+	- Using this style callback, you can add additional fields which can be used in other style callbacks for more flexibility.
 - [#297](https://github.com/Insality/druid/issues/297) Rich input hover animation fix for `rich_input:select()`
 - [#316](https://github.com/Insality/druid/issues/316) Button `on_hold_callback` now can be used without `on_long_click` callback
 	- Before, hold callback was required to be used with `on_long_click` callback. Now it's not required and can be used alone.

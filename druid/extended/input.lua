@@ -9,6 +9,7 @@ local utf8 = utf8 or utf8_lua
 ---@field MASK_DEFAULT_CHAR string Default character mask for password input
 ---@field IS_LONGTAP_ERASE boolean Is long tap will erase current input data
 ---@field IS_UNSELECT_ON_RESELECT boolean If true, call unselect on select selected input
+---@field on_init fun(self: druid.input)|nil Callback when input is initialized, use to set custom properties on self
 ---@field on_select fun(self: druid.input, button_node: node) Callback on input field selecting
 ---@field on_unselect fun(self: druid.input, button_node: node) Callback on input field unselecting
 ---@field on_input_wrong fun(self: druid.input, button_node: node) Callback on wrong user input
@@ -133,10 +134,13 @@ function M:on_style_change(style)
 		MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*",
 		IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false,
 
+		on_init = style.on_init or function() end,
 		on_select = style.on_select or function(_, button_node) end,
 		on_unselect = style.on_unselect or function(_, button_node) end,
 		on_input_wrong = style.on_input_wrong or function(_, button_node) end,
 	}
+
+	self.style.on_init(self)
 end
 
 

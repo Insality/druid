@@ -16,6 +16,8 @@ M["button"] = {
 	AUTOHOLD_TRIGGER = 0.8,
 	DOUBLETAP_TIME = 0.4,
 
+	on_init = function(self) end,
+
 	on_hover = function(self, node, state)
 		local scale_to = self.start_scale + M.button.HOVER_SCALE
 
@@ -51,7 +53,7 @@ M["button"] = {
 	end,
 
 	on_set_enabled = function(self, node, state)
-	end
+	end,
 }
 
 M["hover"] = {
@@ -65,7 +67,7 @@ M["drag"] = {
 }
 
 
-M["static_grid"] = {
+M["grid"] = {
 	IS_DYNAMIC_NODE_POSES = false, -- Always align by content size with node anchor
 	IS_ALIGN_LAST_ROW = true, -- Align the last row of grid
 }
@@ -110,6 +112,8 @@ M["input"] = {
 	BUTTON_SELECT_INCREASE = 1.08,
 	MASK_DEFAULT_CHAR = "*",
 	IS_UNSELECT_ON_RESELECT = false,
+
+	on_init = function(self) end,
 
 	on_select = function(self, button_node)
 		local target_scale = self.button.start_scale

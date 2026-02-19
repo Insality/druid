@@ -9,6 +9,7 @@ local component = require("druid.component")
 ---@field LONGTAP_TIME number|nil Minimum time to trigger on_hold_callback. Default: 0.4
 ---@field AUTOHOLD_TRIGGER number|nil Maximum hold time to trigger button release while holding. Default: 0.8
 ---@field DOUBLETAP_TIME number|nil Time between double taps. Default: 0.4
+---@field on_init fun(self)|nil
 ---@field on_click fun(self, node)|nil
 ---@field on_click_disabled fun(self, node)|nil
 ---@field on_hover fun(self, node, hover_state)|nil
@@ -100,12 +101,15 @@ function M:on_style_change(style)
 		AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8,
 		DOUBLETAP_TIME = style.DOUBLETAP_TIME or 0.4,
 
+		on_init = style.on_init or function() end,
 		on_click = style.on_click or function(_, node) end,
 		on_click_disabled = style.on_click_disabled or function(_, node) end,
 		on_mouse_hover = style.on_mouse_hover or function(_, node, state) end,
 		on_hover = style.on_hover or function(_, node, state) end,
 		on_set_enabled = style.on_set_enabled or function(_, node, state) end,
 	}
+
+	self.style.on_init(self)
 end
 
 
