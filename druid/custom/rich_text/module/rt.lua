@@ -147,8 +147,11 @@ local function measure_node(word, settings, previous_word)
 		word.node = node
 	end
 
-	local metrics = word.image and get_image_metrics(word, settings) or get_text_metrics(word, previous_word, settings)
-	return metrics
+	if word.image then
+		return get_image_metrics(word, settings)
+	else
+		return get_text_metrics(word, previous_word, settings)
+	end
 end
 
 
@@ -209,24 +212,47 @@ end
 ---@param settings druid.rich_text.settings
 function M._fill_properties(word, metrics, settings)
 	word.metrics = metrics
-	word.position = vmath.vector3(0)
+
+	word.position = word.position or vmath.vector3(0)
+	word.position.x = 0
+	word.position.y = 0
+	word.position.z = 0
 
 	if word.image then
-		-- Image properties
-		word.scale = vmath.vector3(word.relative_scale * settings.adjust_scale)
 		word.pivot = gui.PIVOT_CENTER
 		word.size = metrics.node_size
-		word.offset = vmath.vector3(0, 0, 0)
 		if word.image.width then
 			word.size.y = word.image.height or (word.size.y * word.image.width / word.size.x)
 			word.size.x = word.image.width
 		end
+		local image_scale = word.relative_scale * settings.adjust_scale
+		word.scale = word.scale or vmath.vector3(image_scale)
+		word.scale.x = image_scale
+		word.scale.y = image_scale
+		word.scale.z = image_scale
+
+		word.offset = word.offset or vmath.vector3(0)
+		word.offset.x = 0
+		word.offset.y = 0
+		word.offset.z = 0
 	else
-		-- Text properties
-		word.scale = settings.scale * word.relative_scale * settings.adjust_scale
-		word.pivot = gui.PIVOT_SW -- With this pivot adjustments works more correctly than with other pivots
-		word.size = vmath.vector3(metrics.width, metrics.height, 0)
-		word.offset = vmath.vector3(metrics.offset_x, metrics.offset_y, 0)
+		word.pivot = gui.PIVOT_SW
+		local text_scale = word.relative_scale * settings.adjust_scale
+
+		word.scale = word.scale or vmath.vector3(settings.scale * text_scale)
+		word.scale.x = settings.scale.x * text_scale
+		word.scale.y = settings.scale.y * text_scale
+		word.scale.z = settings.scale.z * text_scale
+
+		word.size = word.size or vmath.vector3(metrics.width, metrics.height, 0)
+		word.size.x = metrics.width
+		word.size.y = metrics.height
+		word.size.z = 0
+
+		word.offset = word.offset or vmath.vector3(metrics.offset_x, metrics.offset_y, 0)
+		word.offset.x = metrics.offset_x
+		word.offset.y = metrics.offset_y
+		word.offset.z = 0
 	end
 end
 

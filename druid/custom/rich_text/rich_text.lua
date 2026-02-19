@@ -2,6 +2,8 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 local rich_text = require("druid.custom.rich_text.module.rt")
 
+local VECTOR3_ONE = vmath.vector3(1)
+
 ---@class druid.rich_text.settings
 ---@field parent node
 ---@field size number
@@ -275,7 +277,7 @@ function M:_create_settings()
 	root_size.x = root_size.x * scale.x
 	root_size.y = root_size.y * scale.y
 	gui.set_size(self.root, root_size)
-	gui.set_scale(self.root, vmath.vector3(1))
+	gui.set_scale(self.root, VECTOR3_ONE)
 
 	return {
 		-- General settings
