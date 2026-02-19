@@ -21,7 +21,7 @@ Create hotkey component with druid: `hotkey = druid:new_hotkey(keys, callback, c
 - [add_hotkey](#add_hotkey)
 - [is_processing](#is_processing)
 - [set_repeat](#set_repeat)
-
+- [bind_node](#bind_node)
 ## Fields
 
 - [on_hotkey_pressed](#on_hotkey_pressed)
@@ -82,6 +82,21 @@ If true, the callback will be triggered on action.repeated
 
 - **Parameters:**
 	- `is_enabled_repeated` *(boolean)*: The flag value
+
+- **Returns:**
+	- `self` *(druid.hotkey)*: Current instance
+
+### bind_node
+
+---
+```lua
+hotkey:bind_node([node])
+```
+
+If node is provided, the hotkey can be disabled, if the node is disabled
+
+- **Parameters:**
+	- `[node]` *(node|nil)*: The node to bind the hotkey to. Nil to unbind the node
 
 - **Returns:**
 	- `self` *(druid.hotkey)*: Current instance

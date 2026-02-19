@@ -29,6 +29,7 @@ In this example you can inspect a variety of **Druid** components and see how th
 - [Quick API Reference](api/quick_api_reference.md)
 - [List of Components](#druid-components)
 - [Contributors](#contributors)
+
 ## Setup
 
 ### [Dependency](https://defold.com/manuals/libraries/#setting-up-library-dependencies)
@@ -45,7 +46,7 @@ https://github.com/Insality/defold-event/archive/refs/tags/14.zip
 **[Druid](https://github.com/Insality/druid/)**
 
 ```
-https://github.com/Insality/druid/archive/refs/tags/1.1.7.zip
+https://github.com/Insality/druid/archive/refs/tags/1.2.0.zip
 ```
 
 After that, select `Project ▸ Fetch Libraries` to update [library dependencies]((https://defold.com/manuals/libraries/#setting-up-library-dependencies)). This happens automatically whenever you open a project so you will only need to do this if the dependencies change without re-opening the project.
@@ -57,9 +58,9 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 > **Note:** The library size is calculated based on the build report per platform. Full size contains all components, they can be stripped out in the build process if you don't need them.
 
-| Platform         | Full Size  |
-| ---------------- | ------------- |
-| HTML5            | **84.52 KB**  |
+| Platform         | Full Size      |
+| ---------------- | -------------- |
+| HTML5            | **84.52 KB**   |
 | Desktop / Mobile | **141.03 KB**  |
 
 
@@ -72,13 +73,18 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 ### Basic usage
 
-The basic template for `gui_script` is:
+Use this as a starting point for your `gui_script` file:
 
 ```lua
 local druid = require("druid.druid")
 
 function init(self)
     self.druid = druid.new(self)
+
+    -- Create your components here
+    self.button = self.druid:new_button("button_node_id", function(self)
+        print("Button clicked!")
+    end)
 end
 
 function final(self)

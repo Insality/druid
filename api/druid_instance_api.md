@@ -7,7 +7,6 @@ The Druid Factory used to create components
 ## Functions
 
 - [create_druid_instance](#create_druid_instance)
-
 - [new](#new)
 - [final](#final)
 - [remove](#remove)
@@ -40,7 +39,6 @@ The Druid Factory used to create components
 - [new_rich_input](#new_rich_input)
 
 
-
 ### create_druid_instance
 
 ---
@@ -48,7 +46,7 @@ The Druid Factory used to create components
 instance.create_druid_instance(context, [style])
 ```
 
-Druid class constructor which used to create a Druid's components
+Druid class constructor which used to create Druid components
 
 - **Parameters:**
 	- `context` *(table)*: Druid context. Usually it is self of gui script
@@ -161,7 +159,7 @@ instance:set_whitelist(whitelist_components)
 
 Set whitelist components for input processing.
 If whitelist is not empty and component not contains in this list,
-component will be not processed on input step
+component will be not processed on the input step
 
 - **Parameters:**
 	- `whitelist_components` *(table|druid.component[])*: The array of component to whitelist
@@ -177,8 +175,8 @@ instance:set_blacklist(blacklist_components)
 ```
 
 Set blacklist components for input processing.
-If blacklist is not empty and component contains in this list,
-component will be not processed on input step DruidInstance
+If blacklist is not empty and component is contained in this list,
+component will be not processed on the input step DruidInstance
 
 - **Parameters:**
 	- `blacklist_components` *(table|druid.component[])*: The array of component to blacklist
@@ -299,7 +297,7 @@ Create Grid component
 - **Parameters:**
 	- `parent_node` *(string|node)*: The node_id or gui.get_node(node_id). Parent of all Grid items.
 	- `item` *(string|node)*: Item prefab. Required to get grid's item size. Can be adjusted separately.
-	- `[in_row]` *(number|nil)*: How many nodes in row can be placed
+	- `[in_row]` *(number|nil)*: How many nodes can be placed in a row
 
 - **Returns:**
 	- `grid` *(druid.grid)*: The new grid component
@@ -314,8 +312,8 @@ instance:new_scroll(view_node, content_node)
 Create Scroll component
 
 - **Parameters:**
-	- `view_node` *(string|node)*: The node_id or gui.get_node(node_id). Will used as user input node.
-	- `content_node` *(string|node)*: The node_id or gui.get_node(node_id). Will used as scrollable node inside view_node.
+	- `view_node` *(string|node)*: The node_id or gui.get_node(node_id). Will be used as user input node.
+	- `content_node` *(string|node)*: The node_id or gui.get_node(node_id). Will be used as scrollable node inside view_node.
 
 - **Returns:**
 	- `scroll` *(druid.scroll)*: The new scroll component
@@ -330,7 +328,7 @@ instance:new_drag(node, [on_drag_callback])
 Create Drag component
 
 - **Parameters:**
-	- `node` *(string|node)*: The node_id or gui.get_node(node_id). Will used as user input node.
+	- `node` *(string|node)*: The node_id or gui.get_node(node_id). Will be used as user input node.
 	- `[on_drag_callback]` *(function|nil)*: Callback for on_drag_event(self, dx, dy)
 
 - **Returns:**
@@ -346,7 +344,7 @@ instance:new_swipe(node, [on_swipe_callback])
 Create Swipe component
 
 - **Parameters:**
-	- `node` *(string|node)*: The node_id or gui.get_node(node_id). Will used as user input node.
+	- `node` *(string|node)*: The node_id or gui.get_node(node_id). Will be used as user input node.
 	- `[on_swipe_callback]` *(function|nil)*: Swipe callback for on_swipe_end event
 
 - **Returns:**
@@ -362,7 +360,7 @@ instance:new_lang_text(node, [locale_id], [adjust_type])
 Create LangText component
 
 - **Parameters:**
-	- `node` *(string|node)*: The_node id or gui.get_node(node_id)
+	- `node` *(string|node)*: The node_id or gui.get_node(node_id)
 	- `[locale_id]` *(string|nil)*: Default locale id or text from node as default
 	- `[adjust_type]` *(string|nil)*: Adjust type for text node. Default: "downscale"
 
@@ -379,7 +377,7 @@ instance:new_slider(pin_node, end_pos, [callback])
 Create Slider component
 
 - **Parameters:**
-	- `pin_node` *(string|node)*: The_node id or gui.get_node(node_id).
+	- `pin_node` *(string|node)*: The node_id or gui.get_node(node_id).
 	- `end_pos` *(vector3)*: The end position of slider
 	- `[callback]` *(function|nil)*: On slider change callback
 
@@ -396,8 +394,8 @@ instance:new_input(click_node, text_node, [keyboard_type])
 Create Input component
 
 - **Parameters:**
-	- `click_node` *(string|node)*: Button node to enabled input component
-	- `text_node` *(string|druid.text|node)*: Text node what will be changed on user input
+	- `click_node` *(string|node)*: Button node to enable input component
+	- `text_node` *(string|druid.text|node)*: Text node that will be changed on user input
 	- `[keyboard_type]` *(number|nil)*: Gui keyboard type for input field
 
 - **Returns:**
@@ -465,7 +463,7 @@ instance:new_layout(node, [mode])
 Create Layout component
 
 - **Parameters:**
-	- `node` *(string|node)*: The_node id or gui.get_node(node_id).
+	- `node` *(string|node)*: The node_id or gui.get_node(node_id).
 	- `[mode]` *(string|nil)*: vertical|horizontal|horizontal_wrap. Default: horizontal
 
 - **Returns:**
@@ -479,10 +477,17 @@ instance:new_container(node, [mode], [callback])
 ```
 
 Create Container component
+```lua
+mode:
+    | "stretch"
+    | "fit"
+    | "stretch_x"
+    | "stretch_y"
+```
 
 - **Parameters:**
-	- `node` *(string|node)*: The_node id or gui.get_node(node_id).
-	- `[mode]` *(string|nil)*: Layout mode
+	- `node` *(string|node)*: The node_id or gui.get_node(node_id).
+	- `[mode]` *("fit"|"stretch"|"stretch_x"|"stretch_y"|nil)*: Layout mode. Default Fit or Stretch depends from node adjust mode from GUI scene
 	- `[callback]` *(fun(self: druid.container, size: vector3)|nil)*: Callback on size changed
 
 - **Returns:**

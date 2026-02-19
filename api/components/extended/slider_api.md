@@ -22,7 +22,6 @@ Create slider component with druid: `slider = druid:new_slider(node_name, end_po
 - [set_input_node](#set_input_node)
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
-
 ## Fields
 
 - [node](#node)

@@ -725,29 +725,41 @@ Please support me if you like this project! It will help me keep engaged to upda
 #### Druid 1.1.7
 - Add image_refresh to the Druid atlas for compatibility with the Asset Store Widgets
 
+
 ### Druid 1.2.0
 
-He-he-hello! It's a new Druid update!
+He-he-hello! It's a new Druid update! Not so many big changes this time, but a lot of small improvements and fixes!
 
+The [Asset Store](https://github.com/Insality/asset-store) extension is now available and contains a Druid Widget Store! There is a place where we can all share our widgets and easily install them in your projects. It's not a dependency and these widgets will be downloaded as files, so you can easily edit and adjust them for your needs. It also reduces the risk of breaking something while updating the Druid library, since these files become a part of your project.
+
+This new Druid Widget Store contains several widgets, like the previously included widgets (`properties_panel`, `fps_panel`, `memory_panel`, `mini_graph`). Also it contains some new widgets, like `on_screen_joystick`, `external_image`, `tiling_node` and others.
+
+The **Druid Color** module is now available! It's a module which contains various color functions and utilities, plus palette management. If you wish you can use it to convert hex colors easily and also use a nice color lerp function.
+
+I also finally had time to go through Druid's issues to make some fixes and improvements.
+
+Thanks for the attention and your support!
 
 **Changelog 1.2.0**
+- [Widgets] Removed all included widgets from the Druid library. Now you need to install them from the Druid Asset Store extension.
+	- Read the migration section below to learn how to migrate to the new widgets.
 - [Color] 🎨 Add Druid Color module
 	- Use `local color = require("druid.color")` to access the module
 	- Use `color.get_color(color_id)` to get color by ID from palette, hex string, or return vector as-is.
-	- Use `color.set_color(gui_node, color_id)` to set color to the GUI node directly.
+	- Use `color.set_color(gui_node, color_id)` to set color to the GUI node directly, not touching the alpha channel.
 	- Use `color.lerp(t, color1, color2)` to interpolate between two colors using HSB space (better visual results than RGB).
 	- Use `color.add_palette(palette_data)` to add colors to the palette. Colors can be hex strings or vector4 values.
-	- And various conversions between colors functions.
+	- And various conversion functions between colors.
 	- Palette can be loaded at init step from the JSON file by path `druid.palette_path` in your `game.project` file.
-- [Layout] Add `set_position_function` function, similar to the Grid component
-- [Scroll] Add `scroll_to_make_node_visible` function
-	- This makes a scroll to the element, so it will be visible in the scroll view. If element is already visible, nothing will happen.
+- [Layout] Add `layout:set_position_function` function, similar to the Grid component
+- [Scroll] Add `scroll:scroll_to_make_node_visible` function
+	- This scrolls to the element so it will be visible in the scroll view. If the element is already visible, nothing will happen.
 - [Blocker] Fix for internal `is_enabled` state
-	- Before, if blocker node was disabled at init step and when node was enabled later, blocker node keeps internal `is_enabled` state as false and had to be changed with `blocker:set_enabled(true)` to make it work. Now it's fixed and blocker will work as expected.
+	- Before, if the blocker node was disabled at init step and then enabled later, it kept the internal `is_enabled` state as false and had to be fixed by calling `blocker:set_enabled(true)` to make it work. Now it's fixed and the blocker will work as expected.
 - [Button] Expose all click functions for the button
 	- Now you can call the `button:button_click()`, `button:button_double_click()`, `button:button_long_click()` etc.
 - [Container] Fix for container stretch mode
-	- `stretch` and `fit` was not init correctly in the `init` function arguments
+	- `stretch` and `fit` were not initialized correctly in the `init` function arguments
 - [Rich Text] Using color names from the palette
 - [Rich Text] Add `rich_text:set_split_to_characters(true)` to split each letter node separately
 	- With this option, each letter will be a separate node, which can be useful for some animations or other effects.
@@ -757,36 +769,36 @@ He-he-hello! It's a new Druid update!
 - [Examples] Add more Rich Text examples
 - [GO Widgets] Now passes events in addition to functions from the widget to the GO context
 - [#286](https://github.com/Insality/druid/issues/286) Fix style button `on_disabled` call in HTML5 button mode
-- [#289](https://github.com/Insality/druid/issues/289) Multiple Input field management + fixes on web input.
-	- Fix for Button `on_click_outside` event. It should be triggered now always on user click. Before it not always triggered, if input was consumed by some other component.
+- [#289](https://github.com/Insality/druid/issues/289) Multiple Input field management + fixes on web input component.
+	- Fix for Button `on_click_outside` event. It should now always be triggered on user click. Before, it did not always trigger when input was consumed by some other component.
 - [#291](https://github.com/Insality/druid/issues/291) Add `on_init` for button and input style callback
 	- Using this style callback, you can add additional fields which can be used in other style callbacks for more flexibility.
-- [#297](https://github.com/Insality/druid/issues/297) Rich input hover animation fix for `rich_input:select()`
-- [#316](https://github.com/Insality/druid/issues/316) Button `on_hold_callback` now can be used without `on_long_click` callback
-	- Before, hold callback was required to be used with `on_long_click` callback. Now it's not required and can be used alone.
-	- If hold_callback exists, user can press and hold the button to trigger the hold callback.
-	- The button usual callback will be not triggered in this case.
-	- If both `on_long_click` and `on_hold_callback` callbacks exists, user can press and hold the button to trigger the hold callback until the long click callback is triggered (time is adjusted by `AUTOHOLD_TRIGGER` style parameter).
-- [#320](https://github.com/Insality/druid/issues/320) Add inherit alpha for rich text images to true by default
+- [#297](https://github.com/Insality/druid/issues/297) Rich input hover animation fix for `rich_input:select()` function.
+- [#316](https://github.com/Insality/druid/issues/316) Button `on_hold_callback` can now be used without `on_long_click` callback
+	- Before, the hold callback was required to be used with `on_long_click` callback. Now it's not required and can be used alone.
+	- If hold_callback exists, the user can press and hold the button to trigger the hold callback.
+	- The button's usual callback will not be triggered in this case.
+	- If both `on_long_click` and `on_hold_callback` callbacks exist, the user can press and hold the button to trigger the hold callback until the long click callback is triggered (time is adjusted by `AUTOHOLD_TRIGGER` style parameter).
+- [#320](https://github.com/Insality/druid/issues/320) Set inherit alpha for rich text images to true by default
 - [#329](https://github.com/Insality/druid/issues/329) Allow numeric characters in RichText tags
 - [#333](https://github.com/Insality/druid/issues/333) Add settings to enable/disable Editor Scripts for the Druid
 - [#335](https://github.com/Insality/druid/issues/335) Add slider default steps into slider's style
 
 #### Druid Widget Store
-All Druid Widgets moved from the Druid library to the Druid [Asset Store](https://github.com/Insality/asset-store) extension.
-Also several more widgets was added to the Asset Store extension. Check it out!
+All Druid widgets were moved from the Druid library to the Druid [Asset Store](https://github.com/Insality/asset-store) extension.
+Several more widgets were also added to the Asset Store extension. Check it out!
 
 ##### Migration
-In case you using the `properties_panel`, `fps_panel`, `memory_panel`, `mini_graph` widgets, you need to migrate to the Druid Asset Store extension.
+If you are using the `properties_panel`, `fps_panel`, `memory_panel`, `mini_graph` widgets, you need to migrate to the Druid Asset Store extension.
 
-TO do that you should open Asset Store extension and install them, After that you need to update GUI paths and require paths from `druid.widget.*` to `widget.*`
+To do that you should open the Asset Store extension and install them. After that you need to update GUI paths and require paths from `druid.widget.*` to `widget.*`
 
-A big thanks to the my Github supporters:
+A big thanks to my Github supporters:
 - [Defold Foundation](https://defold.com)
 - [Pawel](https://forum.defold.com/u/pawel)
 - [Ekharkunov](https://forum.defold.com/u/ekharkunov)
 
-And all my other supporters! Very appreciated!
+And all my other supporters! Much appreciated!
 
 ❤️ Support ❤️
 

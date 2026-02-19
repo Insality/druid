@@ -24,6 +24,7 @@ Create scroll component with druid: `druid:new_scroll(view_node, content_node)`
 
 - [init](#init)
 - [scroll_to](#scroll_to)
+- [scroll_to_make_node_visible](#scroll_to_make_node_visible)
 - [scroll_to_index](#scroll_to_index)
 - [scroll_to_percent](#scroll_to_percent)
 - [get_percent](#get_percent)
@@ -39,8 +40,8 @@ Create scroll component with druid: `druid:new_scroll(view_node, content_node)`
 - [set_vertical_scroll](#set_vertical_scroll)
 - [is_node_in_view](#is_node_in_view)
 - [bind_grid](#bind_grid)
+- [bind_layout](#bind_layout)
 - [set_click_zone](#set_click_zone)
-
 ## Fields
 
 - [node](#node)
@@ -92,6 +93,19 @@ Start scroll to target point.
 
 - **Parameters:**
 	- `point` *(vector3)*: Target point
+	- `[is_instant]` *(boolean|nil)*: Instant scroll flag
+
+### scroll_to_make_node_visible
+
+---
+```lua
+scroll:scroll_to_make_node_visible(node, [is_instant])
+```
+
+Scroll to the node, if node is not visible in scroll view
+
+- **Parameters:**
+	- `node` *(node)*: The node to make visible
 	- `[is_instant]` *(boolean|nil)*: Instant scroll flag
 
 ### scroll_to_index
@@ -308,6 +322,22 @@ Bind the grid component (Static or Dynamic) to recalculate
 
 - **Parameters:**
 	- `[grid]` *(druid.grid|nil)*: Druid grid component
+
+- **Returns:**
+	- `self` *(druid.scroll)*: Current scroll instance
+
+### bind_layout
+
+---
+```lua
+scroll:bind_layout([layout])
+```
+
+Bind the layout component to recalculate
+ scroll size on layout changes
+
+- **Parameters:**
+	- `[layout]` *(druid.layout|nil)*: Druid layout component
 
 - **Returns:**
 	- `self` *(druid.scroll)*: Current scroll instance

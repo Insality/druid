@@ -38,7 +38,6 @@ Create text node with druid: `text = druid:new_text(node_name, [initial_value], 
 - [set_text_adjust](#set_text_adjust)
 - [set_minimal_scale](#set_minimal_scale)
 - [get_text_adjust](#get_text_adjust)
-
 ## Fields
 
 - [node](#node)
@@ -225,7 +224,7 @@ text:set_pivot(pivot)
 Set text pivot. Text will re-anchor inside text area
 
 - **Parameters:**
-	- `pivot` *(userdata)*: The gui.PIVOT_* constant
+	- `pivot` *(number)*: The gui.PIVOT_* constant
 
 - **Returns:**
 	- `self` *(druid.text)*: Current text instance
@@ -315,7 +314,7 @@ Return current text adjust type
 - **style** (_druid.text.style_): The style of the text
 
 <a name="start_pivot"></a>
-- **start_pivot** (_userdata_): The start pivot of the text
+- **start_pivot** (_number_): The start pivot of the text
 
 <a name="start_scale"></a>
 - **start_scale** (_vector3_): The start scale of the text

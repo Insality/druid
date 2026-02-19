@@ -18,7 +18,8 @@ Create a new Druid instance and adjust the Druid settings here.
 - [get_widget](#get_widget)
 - [register_druid_as_widget](#register_druid_as_widget)
 - [unregister_druid_as_widget](#unregister_druid_as_widget)
-
+- [set_logger](#set_logger)
+- [get_logger](#get_logger)
 
 
 ### new
@@ -126,20 +127,21 @@ It will notify all Druid instances to update the lang text components.
 
 ---
 ```lua
-druid.get_widget(widget_class, gui_url)
+druid.get_widget(widget_class, gui_url, [params])
 ```
 
-Create a widget from the binded Druid GUI instance.
+Create a widget from the bound Druid GUI instance.
 The widget will be created and all widget functions can be called from Game Object contexts.
-This allow use only `druid_widget.gui_script` for GUI files and call this widget functions from Game Object script file.
-Widget class here is a your lua file for the GUI scene (a widgets in Druid)
+This allows using only `druid_widget.gui_script` for GUI files and call this widget functions from Game Object script file.
+Widget class here is your lua file for the GUI scene (widgets in Druid)
 
 - **Parameters:**
 	- `widget_class` *(<T:druid.widget>)*: The class of the widget to return
-	- `gui_url` *(url)*: GUI url
+	- `gui_url` *(string|url)*: GUI url or string of component name near current script
+	- `[params]` *(any)*: Additional parameters to pass to the widget's init function
 
 - **Returns:**
-	- `widget` *(<T:druid.widget>?)*: The new created widget,
+	- `widget` *(<T:druid.widget>)*: The new created widget,
 
 - **Example Usage:**
 
@@ -169,4 +171,28 @@ druid.unregister_druid_as_widget()
 ```
 
 Should be called on final, where druid instance is destroyed.
+
+### set_logger
+
+---
+```lua
+druid.set_logger([logger_instance])
+```
+
+- **Parameters:**
+	- `[logger_instance]` *(table|druid.logger|nil)*:
+
+### get_logger
+
+---
+```lua
+druid.get_logger([name], [level])
+```
+
+- **Parameters:**
+	- `[name]` *(string?)*:
+	- `[level]` *(string|nil)*:
+
+- **Returns:**
+	- `` *(druid.logger)*:
 

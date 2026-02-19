@@ -339,18 +339,21 @@ function M:_is_input_match(action_id)
 end
 
 
+---Call button style on_hover callback
 ---@param hover_state boolean True if the hover state is active
 function M:button_hover(hover_state)
 	self.style.on_hover(self, self.anim_node, hover_state)
 end
 
 
+---Call button style on_hover callback
 ---@param hover_state boolean True if the hover state is active
 function M:button_mouse_hover(hover_state)
 	self.style.on_mouse_hover(self, self.anim_node, hover_state)
 end
 
 
+---Call button click callback
 function M:button_click()
 	if self._is_html5_mode then
 		self._is_html5_listener_set = false
@@ -363,6 +366,7 @@ function M:button_click()
 end
 
 
+---Call button repeated click callback
 function M:button_repeated_click()
 	if not self.is_repeated_started then
 		self.click_in_row = 0
@@ -375,6 +379,7 @@ function M:button_repeated_click()
 end
 
 
+---Call button long click callback
 function M:button_long_click()
 	self.click_in_row = 1
 	local time = socket.gettime() - self.last_pressed_time
@@ -383,6 +388,7 @@ function M:button_long_click()
 end
 
 
+---Call button double click callback
 function M:button_double_click()
 	self.click_in_row = self.click_in_row + 1
 	self.on_double_click:trigger(self:get_context(), self.params, self, self.click_in_row)
@@ -390,6 +396,7 @@ function M:button_double_click()
 end
 
 
+---Call button hold callback
 ---@param press_time number Amount of time the button was held
 function M:button_hold(press_time)
 	self.on_hold_callback:trigger(self:get_context(), self.params, self, press_time)

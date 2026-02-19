@@ -39,7 +39,6 @@ Create container component with druid: `container = druid:new_container(node, mo
 - [fit_into_node](#fit_into_node)
 - [set_min_size](#set_min_size)
 - [set_max_size](#set_max_size)
-
 ## Fields
 
 - [node](#node)
@@ -203,9 +202,17 @@ Set current size for layout node to fit inside it
 container:add_container(node_or_container, [mode], [on_resize_callback])
 ```
 
+```lua
+mode:
+    | "stretch"
+    | "fit"
+    | "stretch_x"
+    | "stretch_y"
+```
+
 - **Parameters:**
 	- `node_or_container` *(string|table|druid.container|node)*: The node or container to add
-	- `[mode]` *(string|nil)*: stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
+	- `[mode]` *("fit"|"stretch"|"stretch_x"|"stretch_y"|nil)*: stretch, fit, stretch_x, stretch_y. Default: Pick from node, "fit" or "stretch"
 	- `[on_resize_callback]` *(fun(self: userdata, size: vector3)|nil)*:
 
 - **Returns:**
@@ -322,6 +329,7 @@ Set the maximum size of the container
 - **Returns:**
 	- `self` *(druid.container)*: Current container instance
 
+
 ## Fields
 <a name="node"></a>
 - **node** (_node_): The gui node
@@ -351,7 +359,7 @@ Set the maximum size of the container
 - **center_offset** (_vector3_): The center offset
 
 <a name="mode"></a>
-- **mode** (_string_): The layout mode
+- **mode** (_"fit"|"stretch"|"stretch_x"|"stretch_y"_): The layout mode
 
 <a name="fit_size"></a>
 - **fit_size** (_vector3_): The fit size

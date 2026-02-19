@@ -60,6 +60,7 @@ local component = require("druid.component")
 ---@field private _grid_on_change event Grid items change event
 ---@field private _grid_on_change_callback function Grid change callback
 ---@field private _offset vector3 Content start offset
+---@field private _layout_on_change_callback function Layout change callback
 local M = component.create("scroll")
 
 
