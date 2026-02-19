@@ -221,10 +221,20 @@ end
 
 
 ---@private
-function M:on_input_interrupt()
+function M:on_input_interrupt(action_id, action)
 	self.can_action = false
 	self.hover:set_hover(false)
 	self.hover:set_mouse_hover(false)
+
+	local is_input_match = self:_is_input_match(action_id) and action.x -- only touch/mouse actions
+	local is_enabled = gui.is_enabled(self.node, true)
+	-- If pressed outside of button, trigger on_click_outside event
+	if is_input_match and is_enabled then
+		local is_pick = helper.pick_node(self.node, action.x, action.y, self.click_zone)
+		if not is_pick and action.released then
+			self.on_click_outside:trigger(self:get_context(), self.params, self)
+		end
+	end
 end
 
 

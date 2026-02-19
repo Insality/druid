@@ -104,6 +104,7 @@ function M:init(click_node, text_node, keyboard_type)
 	self.button = self.druid:new_button(click_node, self.select)
 	self.button.on_click_outside:subscribe(self.unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
+	self.button:set_style(nil)
 
 	if defos then
 		self.button.hover.style.ON_HOVER_CURSOR = defos.CURSOR_IBEAM
@@ -145,7 +146,9 @@ end
 ---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
 	if action_id and not M.ALLOWED_ACTIONS[action_id] then
-		return false
+		-- We want to block all key actions (key_w, key_s) etc while input is selected
+		local is_key_action = action.x == nil
+		return self.is_selected and is_key_action
 	end
 
 	if self.is_selected then

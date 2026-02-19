@@ -107,3 +107,6 @@ autosave_timer = 2
 [event]
 use_xpcall = 1
 
+[ios]
+bundle_identifier = com.insality.druid
+
