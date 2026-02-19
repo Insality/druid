@@ -112,6 +112,9 @@
 	"ui_example_rich_text_tags": "Теги расширенного текста",
 	"ui_example_rich_text_tags_description": "Здесь простой пример расширенного текста с тегами\n - <color=A1D7F5>цвет</color>\n - шрифт\n - размер\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "Расширенный текст с set_split_to_characters и анимацией по буквам",
+
 	"ui_example_basic_swipe": "Свайп",
 	"ui_example_basic_swipe_description": "Как добавить обратные вызовы на события свайпа.",
 

@@ -112,6 +112,9 @@
 	"ui_example_rich_text_tags": "Etiquetas de texto enriquecido",
 	"ui_example_rich_text_tags_description": "Aquí hay un ejemplo simple de texto enriquecido con etiquetas\n - <color=A1D7F5>color</color>\n - fuente\n - tamaño\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "Texto rico con set_split_to_characters y animación por letra",
+
 	"ui_example_basic_swipe": "Deslizar",
 	"ui_example_basic_swipe_description": "Cómo agregar callbacks en eventos de deslizar",
 

@@ -112,6 +112,9 @@
 	"ui_example_rich_text_tags": "Tags de Texto Rico",
 	"ui_example_rich_text_tags_description": "Aqui está um exemplo simples de texto rico com tags\n - <color=A1D7F5>cor</color>\n - fonte\n - tamanho\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "Texto rico com set_split_to_characters e animação por letra",
+
 	"ui_example_basic_swipe": "Deslizar",
 	"ui_example_basic_swipe_description": "Como adicionar callbacks em eventos de deslizar.",
 

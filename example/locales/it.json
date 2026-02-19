@@ -112,6 +112,9 @@
 	"ui_example_rich_text_tags": "Tag di testo ricco",
 	"ui_example_rich_text_tags_description": "Ecco un semplice esempio di testo ricco con tag\n - <color=A1D7F5>colore</color>\n - font\n - dimensione\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "Testo ricco con set_split_to_characters e animazione per lettera",
+
 	"ui_example_basic_swipe": "Scorrere",
 	"ui_example_basic_swipe_description": "Come aggiungere callback agli eventi di scorrimento",
 

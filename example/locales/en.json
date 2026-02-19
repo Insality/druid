@@ -129,6 +129,9 @@
 	"ui_example_rich_text_tags": "Rich Text Tags",
 	"ui_example_rich_text_tags_description": "Here is a example of rich text with tags\n - <color=A1D7F5>color</color>\n - font\n - size\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "Rich text with set_split_to_characters and per-letter animation",
+
 	"ui_example_basic_swipe": "Swipe",
 	"ui_example_basic_swipe_description": "How to add callbacks on swipe events",
 

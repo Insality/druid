@@ -112,6 +112,9 @@
 	"ui_example_rich_text_tags": "Étiquettes de texte riche",
 	"ui_example_rich_text_tags_description": "Voici un exemple simple de texte riche avec des étiquettes\n - <color=A1D7F5>couleur</color>\n - police\n - taille\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "Texte riche avec set_split_to_characters et animation par lettre",
+
 	"ui_example_basic_swipe": "Glissement",
 	"ui_example_basic_swipe_description": "Comment ajouter des rappels aux événements de glissement",
 

@@ -112,6 +112,9 @@
 	"ui_example_rich_text_tags": "富文本标签",
 	"ui_example_rich_text_tags_description": "这是一个带有标签的富文本简单示例\n - <color=A1D7F5>颜色</color>\n - 字体\n - 大小\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "使用 set_split_to_characters 及逐字动画",
+
 	"ui_example_basic_swipe": "滑动",
 	"ui_example_basic_swipe_description": "如何在滑动事件上添加回调。",
 

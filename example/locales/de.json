@@ -112,6 +112,9 @@
 	"ui_example_rich_text_tags": "Tags für reichen Text",
 	"ui_example_rich_text_tags_description": "Hier ist ein einfaches Beispiel für reichen Text mit Tags\n - <color=A1D7F5>Farbe</color>\n - Schriftart\n - Größe\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "Rich-Text mit set_split_to_characters und Buchstaben-Animation",
+
 	"ui_example_basic_swipe": "Wischen",
 	"ui_example_basic_swipe_description": "Wie man Rückrufe für Wischereignisse hinzufügt",
 
