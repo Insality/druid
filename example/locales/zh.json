@@ -115,6 +115,12 @@
 	"ui_example_rich_text_split_animated": "Rich Text Split",
 	"ui_example_rich_text_split_animated_description": "使用 set_split_to_characters 及逐字动画",
 
+	"ui_example_rich_text_resize": "Rich Text Resize",
+	"ui_example_rich_text_resize_description": "长富文本与宽度/高度滑块 (set_width / set_height)",
+
+	"ui_width": "宽度",
+	"ui_height": "高度",
+
 	"ui_example_basic_swipe": "滑动",
 	"ui_example_basic_swipe_description": "如何在滑动事件上添加回调。",
 

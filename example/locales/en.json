@@ -132,6 +132,12 @@
 	"ui_example_rich_text_split_animated": "Rich Text Split",
 	"ui_example_rich_text_split_animated_description": "Rich text with set_split_to_characters and per-letter animation",
 
+	"ui_example_rich_text_resize": "Rich Text Resize",
+	"ui_example_rich_text_resize_description": "Long rich text with width and height sliders (set_width / set_height)",
+
+	"ui_width": "Width",
+	"ui_height": "Height",
+
 	"ui_example_basic_swipe": "Swipe",
 	"ui_example_basic_swipe_description": "How to add callbacks on swipe events",
 

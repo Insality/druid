@@ -1822,6 +1822,31 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
+  id: "rich_text_resize"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/rich_text/rich_text_resize.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_text_resize/root"
+  parent: "rich_text_resize"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_resize/text"
+  parent: "rich_text_resize/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_text_resize/text_area_debug"
+  parent: "rich_text_resize/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
   id: "rich_text_tags_custom"
   parent: "basic"
   inherit_alpha: true

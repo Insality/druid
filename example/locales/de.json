@@ -115,6 +115,12 @@
 	"ui_example_rich_text_split_animated": "Rich Text Split",
 	"ui_example_rich_text_split_animated_description": "Rich-Text mit set_split_to_characters und Buchstaben-Animation",
 
+	"ui_example_rich_text_resize": "Rich Text Resize",
+	"ui_example_rich_text_resize_description": "Langer Rich-Text mit Schiebereglern für Breite und Höhe (set_width / set_height)",
+
+	"ui_width": "Breite",
+	"ui_height": "Höhe",
+
 	"ui_example_basic_swipe": "Wischen",
 	"ui_example_basic_swipe_description": "Wie man Rückrufe für Wischereignisse hinzufügt",
 

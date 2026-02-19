@@ -115,6 +115,12 @@
 	"ui_example_rich_text_split_animated": "Rich Text Split",
 	"ui_example_rich_text_split_animated_description": "Testo ricco con set_split_to_characters e animazione per lettera",
 
+	"ui_example_rich_text_resize": "Rich Text Resize",
+	"ui_example_rich_text_resize_description": "Testo ricco lungo con slider larghezza e altezza (set_width / set_height)",
+
+	"ui_width": "Larghezza",
+	"ui_height": "Altezza",
+
 	"ui_example_basic_swipe": "Scorrere",
 	"ui_example_basic_swipe_description": "Come aggiungere callback agli eventi di scorrimento",
 

@@ -115,6 +115,12 @@
 	"ui_example_rich_text_split_animated": "Rich Text Split",
 	"ui_example_rich_text_split_animated_description": "Texte riche avec set_split_to_characters et animation par lettre",
 
+	"ui_example_rich_text_resize": "Rich Text Resize",
+	"ui_example_rich_text_resize_description": "Long texte riche avec curseurs largeur et hauteur (set_width / set_height)",
+
+	"ui_width": "Largeur",
+	"ui_height": "Hauteur",
+
 	"ui_example_basic_swipe": "Glissement",
 	"ui_example_basic_swipe_description": "Comment ajouter des rappels aux événements de glissement",
 

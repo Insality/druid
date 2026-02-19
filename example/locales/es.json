@@ -115,6 +115,12 @@
 	"ui_example_rich_text_split_animated": "Rich Text Split",
 	"ui_example_rich_text_split_animated_description": "Texto rico con set_split_to_characters y animación por letra",
 
+	"ui_example_rich_text_resize": "Rich Text Resize",
+	"ui_example_rich_text_resize_description": "Texto rico largo con deslizadores de ancho y alto (set_width / set_height)",
+
+	"ui_width": "Ancho",
+	"ui_height": "Alto",
+
 	"ui_example_basic_swipe": "Deslizar",
 	"ui_example_basic_swipe_description": "Cómo agregar callbacks en eventos de deslizar",
 
