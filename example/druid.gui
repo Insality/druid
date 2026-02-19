@@ -2224,6 +2224,12 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_TEXT
+  id: "basic_blocker/text_hint"
+  parent: "basic_blocker/root"
+  template_node_child: true
+}
+nodes {
   type: TYPE_TEMPLATE
   id: "basic_back_handler"
   parent: "basic"
