@@ -151,6 +151,10 @@ function M:set_text(text)
 	self:clear()
 	self._last_value = text
 
+	self._settings.adjust_scale = 1
+	local root_size = gui.get_size(self.root)
+	self._settings.width = root_size.x
+	self._settings.height = root_size.y
 	self._settings.split_to_characters = self._split_to_characters
 
 	local words, settings, line_metrics = rich_text.create(text, self._settings, self.style)
@@ -266,6 +270,7 @@ end
 ---@param width number
 ---@return druid.rich_text self
 function M:set_width(width)
+	gui.set(self.root, "size.x", width)
 	self._settings.width = width
 	return self
 end
@@ -275,6 +280,7 @@ end
 ---@param height number
 ---@return druid.rich_text self
 function M:set_height(height)
+	gui.set(self.root, "size.y", height)
 	self._settings.height = height
 	return self
 end
