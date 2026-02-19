@@ -582,3 +582,22 @@ helper.sign(val)
 helper.step(current, target, step)
 helper.table_to_string(t)
 ```
+
+## [Druid Color](druid_color_api.md)
+
+Inspect [API Here](druid_color_api.md)
+
+```lua
+local color = require("druid.color")
+
+color.get_color(color_id)
+color.add_palette(palette_data)
+color.get_palette()
+color.set_color(gui_node, color)
+color.lerp(t, color1, color2)
+color.hex2rgb(hex)
+color.hex2vector4(hex, [alpha])
+color.rgb2hsb(r, g, b, [alpha])
+color.hsb2rgb(h, s, v, [alpha])
+color.rgb2hex(red, green, blue)
+```
