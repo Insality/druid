@@ -1,12 +1,9 @@
-local helper = require("druid.helper")
-
 ---@class examples.rich_text_tags: druid.widget
 ---@field rich_text_color druid.rich_text
 ---@field rich_text_font druid.rich_text
 ---@field rich_text_size druid.rich_text
 ---@field rich_text_breaks druid.rich_text
 ---@field rich_text_image druid.rich_text
----@field position table
 local M = {}
 
 
@@ -25,25 +22,6 @@ function M:init()
 
 	self.rich_text_image = self.druid:new_rich_text("rich_text_image") --[[@as druid.rich_text]]
 	self.rich_text_image:set_text("Hello, I'm<img=druid_example:icon_cross,32/>Rich Text <img=druid_logo:icon_druid,48/> <color=8ED59E><img=druid_logo:icon_druid,48/></color> <color=F49B9B><img=druid_logo:icon_druid,48/></color>")
-
-	self.position = {
-		[self.rich_text_color] = gui.get_position(self.rich_text_color.root),
-		[self.rich_text_font] = gui.get_position(self.rich_text_font.root),
-		[self.rich_text_size] = gui.get_position(self.rich_text_size.root),
-		[self.rich_text_breaks] = gui.get_position(self.rich_text_breaks.root),
-		[self.rich_text_image] = gui.get_position(self.rich_text_image.root),
-	}
-	-- Adjust positions with pivots
-	for rich_text, pos in pairs(self.position) do
-		local size_x = gui.get(rich_text.root, "size.x")
-		local size_y = gui.get(rich_text.root, "size.y")
-		local parent_pivot = gui.get_pivot(rich_text.root)
-		local pivot_offset = helper.get_pivot_offset(parent_pivot)
-		local offset_x = size_x * pivot_offset.x
-		local offset_y = size_y * pivot_offset.y
-		pos.x = pos.x - offset_x
-		pos.y = pos.y - offset_y
-	end
 end
 
 
@@ -55,18 +33,8 @@ function M:set_pivot(pivot)
 		self.rich_text_breaks,
 		self.rich_text_image,
 	}
-
 	for _, rich_text in ipairs(rich_texts) do
-		gui.set_pivot(rich_text.root, pivot)
-		local pos = self.position[rich_text]
-		local size_x = gui.get(rich_text.root, "size.x")
-		local size_y = gui.get(rich_text.root, "size.y")
-		local parent_pivot = gui.get_pivot(rich_text.root)
-		local pivot_offset = helper.get_pivot_offset(parent_pivot)
-		local offset_x = size_x * pivot_offset.x
-		local offset_y = size_y * pivot_offset.y
-		gui.set_position(rich_text.root, vmath.vector3(pos.x + offset_x, pos.y + offset_y, pos.z))
-		rich_text:set_text(rich_text:get_text())
+		rich_text:set_pivot(pivot)
 	end
 end
 

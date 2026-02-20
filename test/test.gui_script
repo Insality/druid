@@ -15,6 +15,7 @@ function init(self)
 	deftest.add(require("test.tests.test_rich_text"))
 	deftest.add(require("test.tests.test_scroll"))
 	deftest.add(require("test.tests.test_text"))
+	deftest.add(require("test.tests.test_color"))
 
 	local is_report = (sys.get_config_int("test.report", 0) == 1)
 	deftest.run({ coverage = { enabled = is_report } })

@@ -20,6 +20,7 @@ Create layout component with druid: `layout = druid:new_layout(node, layout_type
 - [init](#init)
 - [update](#update)
 - [get_entities](#get_entities)
+- [get_entities_count](#get_entities_count)
 - [set_node_index](#set_node_index)
 - [set_margin](#set_margin)
 - [set_padding](#set_padding)
@@ -36,7 +37,7 @@ Create layout component with druid: `layout = druid:new_layout(node, layout_type
 - [get_node_size](#get_node_size)
 - [calculate_rows_data](#calculate_rows_data)
 - [set_node_position](#set_node_position)
-
+- [set_position_function](#set_position_function)
 ## Fields
 
 - [node](#node)
@@ -89,6 +90,16 @@ layout:get_entities()
 - **Returns:**
 	- `entities` *(node[])*: The entities to manage the layout of
 
+### get_entities_count
+
+---
+```lua
+layout:get_entities_count()
+```
+
+- **Returns:**
+	- `count` *(number)*: The count of entities in layout
+
 ### set_node_index
 
 ---
@@ -127,10 +138,10 @@ layout:set_padding([padding_x], [padding_y], [padding_z], [padding_w])
 ```
 
 - **Parameters:**
-	- `[padding_x]` *(number|nil)*: The padding x
-	- `[padding_y]` *(number|nil)*: The padding y
-	- `[padding_z]` *(number|nil)*: The padding z
-	- `[padding_w]` *(number|nil)*: The padding w
+	- `[padding_x]` *(number|nil)*: From Left
+	- `[padding_y]` *(number|nil)*: From Top
+	- `[padding_z]` *(number|nil)*: From Right
+	- `[padding_w]` *(number|nil)*: From Bottom
 
 - **Returns:**
 	- `self` *(druid.layout)*: Current layout instance
@@ -247,8 +258,11 @@ layout:get_content_size()
 
 ---
 ```lua
-layout:refresh_layout()
+layout:refresh_layout([is_instant])
 ```
+
+- **Parameters:**
+	- `[is_instant]` *(boolean|nil)*: If true, node position update instantly, otherwise with set_position_function callback
 
 - **Returns:**
 	- `self` *(druid.layout)*: Current layout instance
@@ -293,16 +307,32 @@ Calculate rows data for layout. Contains total width, height and rows info (widt
 
 ---
 ```lua
-layout:set_node_position(node, x, y)
+layout:set_node_position(node, x, y, [is_instant])
 ```
 
 - **Parameters:**
 	- `node` *(node)*:
 	- `x` *(number)*:
 	- `y` *(number)*:
+	- `[is_instant]` *(any)*:
 
 - **Returns:**
 	- `` *(node)*:
+
+### set_position_function
+
+---
+```lua
+layout:set_position_function(callback)
+```
+
+Set custom position function for layout nodes. It will call on update poses on layout elements. Default: gui.set_position
+
+- **Parameters:**
+	- `callback` *(function)*:
+
+- **Returns:**
+	- `self` *(druid.layout)*: Current layout instance
 
 
 ## Fields

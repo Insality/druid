@@ -4,8 +4,8 @@ local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---@class druid.hover.style
----@field ON_HOVER_CURSOR string|nil Mouse hover style on node hover
----@field ON_MOUSE_HOVER_CURSOR string|nil Mouse hover style on node mouse hover
+---@field ON_HOVER_CURSOR string|number|nil Mouse hover style on node hover
+---@field ON_MOUSE_HOVER_CURSOR string|number|nil Mouse hover style on node mouse hover
 
 ---The component for handling hover events on a node
 ---@class druid.hover: druid.component

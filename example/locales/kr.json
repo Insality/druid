@@ -112,6 +112,15 @@
 	"ui_example_rich_text_tags": "리치 텍스트 태그",
 	"ui_example_rich_text_tags_description": "여기에는 태그가 있는 리치 텍스트의 간단한 예가 있습니다\n - <color=A1D7F5>색상</color>\n - 글꼴\n - 크기\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "set_split_to_characters와 글자별 애니메이션",
+
+	"ui_example_rich_text_resize": "Rich Text Resize",
+	"ui_example_rich_text_resize_description": "긴 리치 텍스트와 너비/높이 슬라이더 (set_width / set_height)",
+
+	"ui_width": "너비",
+	"ui_height": "높이",
+
 	"ui_example_basic_swipe": "스와이프",
 	"ui_example_basic_swipe_description": "스와이프 이벤트에 콜백을 추가하는 방법입니다.",
 

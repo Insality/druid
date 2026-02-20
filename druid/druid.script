@@ -30,7 +30,7 @@ local function get_atlas_path(self, request)
 		return nil
 	end
 
-	return go.get(request.sender, "textures", { key = request.texture_name })
+	return go.get(request.sender, "textures", { key = request.texture_name }) --[[@as string]]
 end
 
 

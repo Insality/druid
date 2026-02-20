@@ -18,7 +18,6 @@ Create timer component with druid: `timer = druid:new_timer(text_node, from_seco
 - [set_to](#set_to)
 - [set_state](#set_state)
 - [set_interval](#set_interval)
-
 ## Fields
 
 - [on_tick](#on_tick)

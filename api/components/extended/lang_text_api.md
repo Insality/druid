@@ -20,7 +20,6 @@ Create lang text component with druid: `text = druid:new_lang_text(node_name, lo
 - [set_text](#set_text)
 - [translate](#translate)
 - [format](#format)
-
 ## Fields
 
 - [text](#text)

@@ -41,7 +41,6 @@ You can use these functions in your projects as well.
 - [get_animation_data_from_node](#get_animation_data_from_node)
 
 
-
 ### centrate_text_with_icon
 
 ---
@@ -59,7 +58,7 @@ text_node will be first (at left side)
 	- `margin` *(number)*: Offset between nodes
 
 - **Returns:**
-	- `` *(unknown)*:
+	- `width` *(number)*: Total width of the centrated elements
 
 ### centrate_icon_with_text
 
@@ -78,7 +77,7 @@ icon_node will be first (at left side)
 	- `[margin]` *(number|nil)*: Offset between nodes
 
 - **Returns:**
-	- `` *(unknown)*:
+	- `width` *(number)*: Total width of the centrated elements
 
 ### centrate_nodes
 
@@ -96,7 +95,7 @@ The centrate will be around 0 x position.
 	- `...` *(...)*: vararg
 
 - **Returns:**
-	- `` *(unknown)*:
+	- `width` *(number)*: Total width of the centrated elements
 
 ### get_node
 
@@ -105,13 +104,15 @@ The centrate will be around 0 x position.
 helper.get_node(node_id, [template], [nodes])
 ```
 
+Get GUI node from string name, node itself, or template/nodes structure
+
 - **Parameters:**
-	- `node_id` *(string|node)*:
-	- `[template]` *(string|nil)*: Full Path to the template
-	- `[nodes]` *(table<hash, node>|nil)*: Nodes what created with gui.clone_tree
+	- `node_id` *(string|node)*: The node name or node itself
+	- `[template]` *(string|nil)*: Full path to the template
+	- `[nodes]` *(table<hash, node>|nil)*: Nodes created with gui.clone_tree
 
 - **Returns:**
-	- `` *(node)*:
+	- `The` *(node)*: requested node
 
 ### get_screen_aspect_koef
 
@@ -133,10 +134,10 @@ Get current screen stretch multiplier for each side
 helper.get_gui_scale()
 ```
 
-Get current GUI scale for each side
+Get current GUI scale
 
 - **Returns:**
-	- `scale_x` *(number)*:
+	- `scale` *(number)*:
 
 ### step
 
@@ -429,16 +430,19 @@ Check if device is mobile and can support multitouch
 
 ---
 ```lua
-helper.table_to_string(t)
+helper.table_to_string(t, [depth], [result])
 ```
 
-Simple table to one-line string converter
+Converts table to one-line string
 
 - **Parameters:**
 	- `t` *(table)*:
+	- `[depth]` *(number?)*:
+	- `[result]` *(string|nil)*: Internal parameter
 
 - **Returns:**
-	- `` *(string)*:
+	- `` *(string)*: String representation of table, Is max string length reached
+	- `result` *(boolean)*: String representation of table, Is max string length reached
 
 ### get_border
 
@@ -530,6 +534,9 @@ Get full position of node in the GUI tree
 ```lua
 helper.get_animation_data_from_node(node, atlas_path)
 ```
+
+Source: https://github.com/Dragosha/defold-sprite-repeat/blob/main/node_repeat/node_repeat.lua
+Thanks to Dragosha! ( ・ω・ ) <  Hey friend!
 
 - **Parameters:**
 	- `node` *(node)*:

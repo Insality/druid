@@ -16,6 +16,7 @@ The component for manage the nodes position in the grid with various options
 - [add](#add)
 - [set_items](#set_items)
 - [remove](#remove)
+- [get_items_count](#get_items_count)
 - [get_size](#get_size)
 - [get_size_for](#get_size_for)
 - [get_borders](#get_borders)
@@ -26,7 +27,6 @@ The component for manage the nodes position in the grid with various options
 - [set_in_row](#set_in_row)
 - [set_item_size](#set_item_size)
 - [sort_nodes](#sort_nodes)
-
 ## Fields
 
 - [on_add_item](#on_add_item)
@@ -196,6 +196,18 @@ Remove the item from the grid. Note that gui node will be not deleted
 
 - **Returns:**
 	- `node` *(node)*: The deleted gui node from grid
+
+### get_items_count
+
+---
+```lua
+grid:get_items_count()
+```
+
+Return items count in grid
+
+- **Returns:**
+	- `count` *(number)*: The items count in grid
 
 ### get_size
 

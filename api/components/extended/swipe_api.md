@@ -8,7 +8,6 @@ The component to manage swipe events over a node
 
 - [init](#init)
 - [set_click_zone](#set_click_zone)
-
 ## Fields
 
 - [node](#node)

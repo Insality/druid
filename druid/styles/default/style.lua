@@ -16,6 +16,8 @@ M["button"] = {
 	AUTOHOLD_TRIGGER = 0.8,
 	DOUBLETAP_TIME = 0.4,
 
+	on_init = function(self) end,
+
 	on_hover = function(self, node, state)
 		local scale_to = self.start_scale + M.button.HOVER_SCALE
 
@@ -51,7 +53,7 @@ M["button"] = {
 	end,
 
 	on_set_enabled = function(self, node, state)
-	end
+	end,
 }
 
 M["hover"] = {
@@ -65,7 +67,7 @@ M["drag"] = {
 }
 
 
-M["static_grid"] = {
+M["grid"] = {
 	IS_DYNAMIC_NODE_POSES = false, -- Always align by content size with node anchor
 	IS_ALIGN_LAST_ROW = true, -- Align the last row of grid
 }
@@ -73,7 +75,7 @@ M["static_grid"] = {
 
 M["scroll"] = {
 	ANIM_SPEED = 0.2, -- gui.animation speed to point
-	BACK_SPEED = 0.35, -- Lerp speed of return to soft position
+	BACK_SPEED = 0.1, -- Lerp speed of return to soft position
 	FRICT = 0.93, -- mult for free inert
 	FRICT_HOLD = 0.79, -- mult. for inert, while touching
 	INERT_THRESHOLD = 2.5, -- speed to stop inertion
@@ -93,6 +95,11 @@ M["progress"] = {
 }
 
 
+M["slider"] = {
+	DEFAULT_STEPS = {}, -- e.g. {0, 0.25, 0.5, 0.75, 1} for notched slider; empty = continuous
+}
+
+
 M["swipe"] = {
 	SWIPE_THRESHOLD = 50,
 	SWIPE_TIME = 0.4,
@@ -105,6 +112,8 @@ M["input"] = {
 	BUTTON_SELECT_INCREASE = 1.08,
 	MASK_DEFAULT_CHAR = "*",
 	IS_UNSELECT_ON_RESELECT = false,
+
+	on_init = function(self) end,
 
 	on_select = function(self, button_node)
 		local target_scale = self.button.start_scale
@@ -144,14 +153,6 @@ M["hotkey"] = {
 		"key_ralt",
 		"key_lsuper",
 		"key_rsuper"
-	}
-}
-
-
-M["rich_text"] = {
-	COLORS = {
-		white = "#FFFFFF",
-		black = "#000000"
 	}
 }
 

@@ -1,3 +1,4 @@
+---@diagnostic disable: invisible
 -- Hello, Defolder! Wish you a good day!
 
 local events = require("event.events")
@@ -50,6 +51,7 @@ local function sort_input_comparator(component_a, component_b)
 end
 
 
+---@param self druid.instance
 local function sort_input_stack(self)
 	local input_components = self.components_interest[const.ON_INPUT]
 	if not input_components then
@@ -93,31 +95,6 @@ local function register_interests(self, instance)
 		local interest = interest_list[i]
 		table.insert(self.components_interest[interest], instance)
 	end
-end
-
-
----Create the Druid component instance
----@param self druid.instance
----@param instance_class druid.component
----@return druid.component
-local function create(self, instance_class)
-	local instance = instance_class()
-	instance:setup_component(self, self:get_context(), self:get_style(), instance_class)
-	register_interests(self, instance)
-
-	return instance
-end
-
-
----@private
----@param self druid.instance
----@param widget_class druid.widget
----@return druid.widget
-local function create_widget(self, widget_class)
-	local instance = druid_component.create_widget(self, widget_class, self:get_context())
-	register_interests(self, instance)
-
-	return instance
 end
 
 
@@ -210,7 +187,9 @@ end
 ---@vararg any Additional arguments to pass to the component's init function
 ---@return T instance The new ready to use component
 function M:new(component, ...)
-	local instance = create(self, component)
+	local instance = component()
+	instance:setup_component(self, self:get_context(), self:get_style(), component)
+	register_interests(self, instance)
 
 	if instance.init then
 		instance:init(...)
@@ -321,7 +300,7 @@ function M:late_init()
 	end
 
 	if not self.input_inited and #self.components_interest[const.ON_INPUT] > 0 then
-		-- Input init on late init step, to be sure it goes after user go acquire input
+		-- Input init on late init step, to be sure it goes after user Game Objects acquire input
 		set_input_state(self, true)
 	end
 end
@@ -356,7 +335,7 @@ function M:on_input(action_id, action)
 
 	for i = #components, 1, -1 do
 		local component = components[i]
-		local input_enabled = component:get_input_enabled()
+		local input_enabled = component._meta.input_enabled
 
 		if input_enabled and self:_can_use_input_component(component) then
 			if not is_input_consumed then
@@ -492,13 +471,15 @@ end
 ---@vararg any Additional arguments to pass to the widget's init function
 ---@return T widget The new ready to use widget
 function M:new_widget(widget, template, nodes, ...)
-	local instance = create_widget(self, widget)
+	local instance = druid_component.create_widget(self, widget, self:get_context())
+	register_interests(self, instance)
 
 	instance.druid = instance:get_druid(template, nodes)
 
 	if instance.init then
 		instance:init(...)
 	end
+
 	if instance.on_late_init or (not self.input_inited and instance.on_input) then
 		schedule_late_init(self)
 	end
@@ -681,7 +662,7 @@ end
 local container = require("druid.extended.container")
 ---Create Container component
 ---@param node string|node The node_id or gui.get_node(node_id).
----@param mode string|nil Layout mode
+---@param mode druid.container.mode|nil Layout mode. Default Fit or Stretch depends from node adjust mode from GUI scene
 ---@param callback fun(self: druid.container, size: vector3)|nil Callback on size changed
 ---@return druid.container container The new container component
 function M:new_container(node, mode, callback)

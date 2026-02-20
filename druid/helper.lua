@@ -182,21 +182,13 @@ end
 ---@param v2 number|nil Max value If nil, value will be clamped to negative infinity
 ---@return number value Clamped value
 function M.clamp(value, v1, v2)
-	if v1 and v2 then
-		if v1 > v2 then
-			v1, v2 = v2, v1
-		end
+	v1 = v1 or -math.huge
+	v2 = v2 or math.huge
+	if v1 > v2 then
+		v1, v2 = v2, v1
 	end
 
-	if v1 and value < v1 then
-		return v1
-	end
-
-	if v2 and value > v2 then
-		return v2
-	end
-
-	return value
+	return math.max(v1, math.min(value, v2))
 end
 
 
@@ -374,7 +366,8 @@ end
 ---Check if device is desktop
 ---@return boolean
 function M.is_desktop()
-	return const.CURRENT_SYSTEM_NAME == const.OS.WINDOWS or const.CURRENT_SYSTEM_NAME == const.OS.MAC or const.CURRENT_SYSTEM_NAME == const.OS.LINUX
+	local name = const.CURRENT_SYSTEM_NAME
+	return name == const.OS.WINDOWS or name == const.OS.MAC or name == const.OS.LINUX
 end
 
 
@@ -411,24 +404,44 @@ function M.is_multitouch_supported()
 end
 
 
----Simple table to one-line string converter
+---Converts table to one-line string
 ---@param t table
----@return string
-function M.table_to_string(t)
-	if not t then
-		return ""
+---@param depth number?
+---@param result string|nil Internal parameter
+---@return string, boolean result String representation of table, Is max string length reached
+function M.table_to_string(t, depth, result)
+	if type(t) ~= "table" then
+		return tostring(t) or "", false
 	end
 
-	local result = "{"
+	depth = depth or 0
+	result = result or "{"
 
 	for key, value in pairs(t) do
 		if #result > 1 then
-			result = result .. ","
+			result = result .. ", "
 		end
-		result = result .. key .. ": " .. value
+
+		if type(value) == "table" then
+			if depth == 0 then
+				local table_len = 0
+				for _ in pairs(value) do
+					table_len = table_len + 1
+				end
+				result = result .. key .. ": {... #" .. table_len .. "}"
+			else
+				local convert_result, is_limit = M.table_to_string(value, depth - 1, "")
+				result = result .. key .. ": {" .. convert_result
+				if is_limit then
+					break
+				end
+			end
+		else
+			result = result .. key .. ": " .. tostring(value)
+		end
 	end
 
-	return result .. "}"
+	return result .. "}", false
 end
 
 

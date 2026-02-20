@@ -2,6 +2,7 @@ local event = require("event.event")
 local events = require("event.events")
 local settings = require("druid.system.settings")
 local druid_instance = require("druid.system.druid_instance")
+local logger = require("druid.system.druid_logger")
 
 local default_style = require("druid.styles.default.style")
 
@@ -114,6 +115,12 @@ local function wrap_widget(widget)
 		end
 	end
 
+	for key, value in pairs(widget) do
+		if event.is_event(value) then
+			wrapped_widget[key] = value
+		end
+	end
+
 	return wrapped_widget
 end
 
@@ -126,23 +133,26 @@ end
 ---		msg.url(nil, object_url, "gui_widget") -- other game object
 ---@generic T: druid.widget
 ---@param widget_class T The class of the widget to return
----@param gui_url url GUI url
----@return T? widget The new created widget,
-function M.get_widget(widget_class, gui_url)
+---@param gui_url url|string GUI url or string of component name near current script
+---@param params any|nil Additional parameters to pass to the widget's init function
+---@return T widget The new created widget,
+function M.get_widget(widget_class, gui_url, params)
+	if type(gui_url) == "string" then
+		gui_url = msg.url(nil, nil, gui_url)
+	end
+
 	gui_url = gui_url or msg.url()
 	local registered_druids = REGISTERED_GUI_WIDGETS[gui_url.socket]
-	if not registered_druids then
-		return nil
-	end
+	assert(registered_druids, "Druid widget not registered for this game object")
 
 	for index = 1, #registered_druids do
 		local druid = registered_druids[index]
 		if druid.fragment == gui_url.fragment and druid.path == gui_url.path then
-			return druid.new_widget:trigger(widget_class)
+			return druid.new_widget(widget_class, nil, nil, params)
 		end
 	end
 
-	return nil
+	error("Druid widget not found for this game object: " .. gui_url)
 end
 
 
@@ -156,8 +166,8 @@ function M.register_druid_as_widget(druid)
 	table.insert(REGISTERED_GUI_WIDGETS[gui_url.socket], {
 		path = gui_url.path,
 		fragment = gui_url.fragment,
-		new_widget = event.create(function(widget_class)
-			return wrap_widget(druid:new_widget(widget_class))
+		new_widget = event.create(function(widget_class, template, nodes, params)
+			return wrap_widget(druid:new_widget(widget_class, template, nodes, params))
 		end),
 	})
 end
@@ -181,6 +191,27 @@ function M.unregister_druid_as_widget()
 	if #REGISTERED_GUI_WIDGETS[socket] == 0 then
 		REGISTERED_GUI_WIDGETS[socket] = nil
 	end
+end
+
+
+---@param logger_instance druid.logger|table|nil
+function M.set_logger(logger_instance)
+	logger.set_logger(logger_instance)
+end
+
+
+---@param name string?
+---@param level string|nil
+---@return druid.logger
+function M.get_logger(name, level)
+	if not name then
+		local current_script_path = debug.getinfo(3).short_src
+		local basename = string.match(current_script_path, "([^/\\]+)$")
+		basename = string.match(basename, "(.*)%..*$")
+		name = basename
+	end
+
+	return setmetatable({ name = name, level = level }, { __index = logger })
 end
 
 

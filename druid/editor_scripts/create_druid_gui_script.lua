@@ -58,8 +58,6 @@ function M.create_druid_gui_script(selection)
 	editor.transact({
 		editor.tx.set(selection, "script", widget_resource_path)
 	})
-	editor.save()
-
 end
 
 

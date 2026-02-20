@@ -112,6 +112,15 @@
 	"ui_example_rich_text_tags": "リッチテキストタグ",
 	"ui_example_rich_text_tags_description": "ここにタグ付きリッチテキストの簡単な例があります\n - <color=A1D7F5>色</color>\n - フォント\n - サイズ\n - br\n - img",
 
+	"ui_example_rich_text_split_animated": "Rich Text Split",
+	"ui_example_rich_text_split_animated_description": "set_split_to_charactersと文字ごとのアニメーション",
+
+	"ui_example_rich_text_resize": "Rich Text Resize",
+	"ui_example_rich_text_resize_description": "長いリッチテキストと幅・高さスライダー (set_width / set_height)",
+
+	"ui_width": "幅",
+	"ui_height": "高さ",
+
 	"ui_example_basic_swipe": "スワイプ",
 	"ui_example_basic_swipe_description": "スワイプイベントにコールバックを追加する方法",
 

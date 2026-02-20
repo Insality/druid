@@ -25,7 +25,6 @@ Create progress bar component with druid: `progress = druid:new_progress(node_na
 - [set_steps](#set_steps)
 - [to](#to)
 - [set_max_size](#set_max_size)
-
 ## Fields
 
 - [node](#node)

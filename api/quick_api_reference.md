@@ -25,7 +25,7 @@
     19. [Text](#text)
     20. [Timer](#timer)
 4. [Helper](#helper)
-5. [Widgets](#widgets)
+5. [Druid Color](#druid-color)
 
 # API Reference
 
@@ -145,6 +145,13 @@ button:set_key_trigger(key)
 button:get_key_trigger()
 button:set_check_function([check_function], [failure_callback])
 button:set_web_user_interaction([is_web_mode])
+button:button_hover(hover_state)
+button:button_mouse_hover(hover_state)
+button:button_click()
+button:button_repeated_click()
+button:button_long_click()
+button:button_double_click()
+button:button_hold(press_time)
 
 button.on_click
 button.on_pressed
@@ -240,6 +247,7 @@ local grid = self.druid:new_grid(parent_node, item, [in_row])
 
 grid:add(item, [index], [shift_policy], [is_instant])
 grid:clear()
+grid:get_items_count()
 grid:get_all_pos()
 grid:get_borders()
 grid:get_index(pos)
@@ -273,6 +281,7 @@ Inspect [API Here](components/extended/hotkey_api.md)
 local hotkey = self.druid:new_hotkey(keys_array, [callback], [callback_argument])
 
 hotkey:add_hotkey(keys, [callback_argument])
+hotkey:bind_node([node])
 hotkey:is_processing()
 hotkey:on_focus_gained()
 hotkey:set_repeat(is_enabled_repeated)
@@ -357,17 +366,19 @@ layout:calculate_rows_data()
 layout:clear_layout()
 layout:get_content_size()
 layout:get_entities()
+layout:get_entities_count()
 layout:get_node_size(node)
 layout:get_size()
-layout:refresh_layout()
+layout:refresh_layout([is_instant])
 layout:remove(node_or_node_id)
 layout:set_dirty()
 layout:set_hug_content(is_hug_width, is_hug_height)
 layout:set_justify(is_justify)
 layout:set_margin([margin_x], [margin_y])
 layout:set_node_index([node], [index])
-layout:set_node_position(node, x, y)
+layout:set_node_position(node, x, y, [is_instant])
 layout:set_padding([padding_x], [padding_y], [padding_z], [padding_w])
+layout:set_position_function(callback)
 layout:set_type(type)
 layout:update()
 
@@ -420,7 +431,11 @@ rich_text:clear()
 rich_text:get_line_metric()
 rich_text:get_text()
 rich_text:get_words()
+rich_text:set_pivot(pivot)
 rich_text:set_text([text])
+rich_text:set_split_to_characters(value)
+rich_text:set_width(width)
+rich_text:set_height(height)
 rich_text:tagged(tag)
 ```
 
@@ -432,11 +447,13 @@ Inspect [API Here](components/base/scroll_api.md)
 local scroll = self.druid:new_scroll(view_node, content_node)
 
 scroll:bind_grid([grid])
+scroll:bind_layout([layout])
 scroll:get_percent()
 scroll:get_scroll_size()
 scroll:is_inert()
 scroll:is_node_in_view(node)
 scroll:scroll_to(point, [is_instant])
+scroll:scroll_to_make_node_visible(node, [is_instant])
 scroll:scroll_to_index(index, [skip_cb])
 scroll:scroll_to_percent(percent, [is_instant])
 scroll:set_click_zone(node)
@@ -464,6 +481,7 @@ local slider = self.druid:new_slider(pin_node, end_pos, [callback])
 
 slider:is_enabled()
 slider:set(value, [is_silent])
+slider:set_end_pos(end_pos)
 slider:set_enabled(is_enabled)
 slider:set_input_node([input_node])
 slider:set_steps(steps)
@@ -564,80 +582,24 @@ helper.remove_with_shift([array], [index], [shift_policy])
 helper.round(num, [num_decimal_places])
 helper.sign(val)
 helper.step(current, target, step)
-helper.table_to_string(t)
+helper.table_to_string(t, [depth])
 ```
 
-## [Widgets](widgets_api.md)
+## [Druid Color](druid_color_api.md)
 
-Inspect [API Here](widgets_api.md)
-
-### [FPS Panel](/api/components/widgets/fps_panel_api.md)
-
-Inspect [API Here](/api/components/widgets/fps_panel_api.md)
+Inspect [API Here](druid_color_api.md)
 
 ```lua
-local fps_panel = require("druid.widget.fps_panel.fps_panel")
+local color = require("druid.color")
 
-fps_panel:init()
-fps_panel:push_fps_value()
-```
-
-### [Memory Panel](/api/components/widgets/memory_panel_api.md)
-
-Inspect [API Here](/api/components/widgets/memory_panel_api.md)
-
-```lua
-local memory_panel = require("druid.widget.memory_panel.memory_panel")
-
-memory_panel:init()
-memory_panel:set_low_memory_limit([limit])
-memory_panel:push_next_value()
-memory_panel:update_text_memory()
-```
-
-### [Mini Graph](/api/components/widgets/mini_graph_api.md)
-
-Inspect [API Here](/api/components/widgets/mini_graph_api.md)
-
-```lua
-local mini_graph = require("druid.widget.mini_graph.mini_graph")
-
-mini_graph:clear()
-mini_graph:set_samples([samples])
-mini_graph:get_samples()
-mini_graph:set_line_value(index, value)
-mini_graph:get_line_value([index])
-mini_graph:push_line_value([value])
-mini_graph:set_max_value([max_value])
-mini_graph:set_line_height([index])
-mini_graph:get_lowest_value()
-mini_graph:get_highest_value()
-mini_graph:toggle_hide()
-```
-
-### [Properties Panel](/api/components/widgets/properties_panel_api.md)
-
-Inspect [API Here](/api/components/widgets/properties_panel_api.md)
-
-```lua
-local properties_panel = require("druid.widget.properties_panel.properties_panel")
-
-properties_panel:properties_constructors()
-properties_panel:init()
-properties_panel:clear_created_properties()
-properties_panel:clear()
-properties_panel:add_checkbox([on_create])
-properties_panel:add_slider([on_create])
-properties_panel:add_button([on_create])
-properties_panel:add_input([on_create])
-properties_panel:add_text([on_create])
-properties_panel:add_left_right_selector([on_create])
-properties_panel:add_vector3([on_create])
-properties_panel:add_inner_widget(widget_class, [template], [nodes], [on_create])
-properties_panel:add_widget(create_widget_callback)
-properties_panel:remove([widget])
-properties_panel:set_hidden([is_hidden])
-properties_panel:is_hidden()
-properties_panel:set_properties_per_page(properties_per_page)
-properties_panel:set_page([page])
+color.get_color(color_id)
+color.add_palette(palette_data)
+color.get_palette()
+color.set_color(gui_node, color)
+color.lerp(t, color1, color2)
+color.hex2rgb(hex)
+color.hex2vector4(hex, [alpha])
+color.rgb2hsb(r, g, b, [alpha])
+color.hsb2rgb(h, s, v, [alpha])
+color.rgb2hex(red, green, blue)
 ```

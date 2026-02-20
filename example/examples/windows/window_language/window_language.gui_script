@@ -1,24 +1,8 @@
-local lang = require("lang.lang")
 local druid = require("druid.druid")
 
 local window_language = require("example.examples.windows.window_language.window_language")
 
-
-local function debug_stub(self)
-	if msg.url().socket ~= hash("window_language") then
-		return
-	end
-
-	lang.init()
-	druid.set_text_function(lang.txp)
-end
-
-
 function init(self)
-	debug_stub(self)
-
-	-- Using component instead put all inside gui_script to
-	-- allow use it as example and as separate collection
 	self.druid = druid.new(self)
 	self.druid:new(window_language)
 end

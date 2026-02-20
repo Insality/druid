@@ -1,6 +1,7 @@
 local assign_layers = require("druid.editor_scripts.assign_layers")
 local create_druid_widget = require("druid.editor_scripts.create_druid_widget")
 local create_druid_gui_script = require("druid.editor_scripts.create_druid_gui_script")
+local create_druid_collection = require("druid.editor_scripts.create_druid_collection")
 local druid_settings = require("druid.editor_scripts.druid_settings")
 
 local M = {}
@@ -18,15 +19,44 @@ function M.get_prefs_schema()
 		["druid.gui_script_template_path"] = editor.prefs.schema.string({
 			default = DEFAULT_GUI_SCRIPT_TEMPLATE_PATH,
 			scope = editor.prefs.SCOPE.PROJECT
-		})
+		}),
+		["druid.command_assign_layers_enabled"] = editor.prefs.schema.boolean({
+			default = true,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
+		["druid.command_create_widget_enabled"] = editor.prefs.schema.boolean({
+			default = true,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
+		["druid.command_create_gui_script_enabled"] = editor.prefs.schema.boolean({
+			default = true,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
+		["druid.command_create_collection_enabled"] = editor.prefs.schema.boolean({
+			default = true,
+			scope = editor.prefs.SCOPE.PROJECT
+		}),
 	}
+end
+
+
+---Temporarily solution, in some cases the get_commands throws before the prefs are loaded
+---@param key string The preference key
+---@return boolean Whether the preference is enabled
+local function pref_enabled(key)
+	local ok, value = pcall(function()
+		return editor.prefs.get(key)
+	end)
+	return not ok or value ~= false
 end
 
 
 ---Define the editor commands
 function M.get_commands()
-	return {
-		{
+	local commands = {}
+
+	if pref_enabled("druid.command_assign_layers_enabled") then
+		table.insert(commands, {
 			label = "[Druid] Assign Layers",
 			locations = { "Edit" },
 			query = { selection = {type = "resource", cardinality = "one"} },
@@ -37,11 +67,13 @@ function M.get_commands()
 			run = function(opts)
 				return assign_layers.assign_layers(opts.selection)
 			end
-		},
+		})
+	end
 
-		{
+	if pref_enabled("druid.command_create_widget_enabled") then
+		table.insert(commands, {
 			label = "[Druid] Create Druid Widget",
-			locations = { "Edit", "Assets" },
+			locations = { "Assets" },
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
 				local path = editor.get(opts.selection, "path")
@@ -50,11 +82,13 @@ function M.get_commands()
 			run = function(opts)
 				return create_druid_widget.create_druid_widget(opts.selection)
 			end
-		},
+		})
+	end
 
-		{
+	if pref_enabled("druid.command_create_gui_script_enabled") then
+		table.insert(commands, {
 			label = "[Druid] Create Druid GUI Script",
-			locations = { "Edit", "Assets" },
+			locations = { "Assets" },
 			query = { selection = {type = "resource", cardinality = "one"} },
 			active = function(opts)
 				local path = editor.get(opts.selection, "path")
@@ -63,16 +97,33 @@ function M.get_commands()
 			run = function(opts)
 				return create_druid_gui_script.create_druid_gui_script(opts.selection)
 			end
-		},
+		})
+	end
 
-		{
-			label = "[Druid] Settings",
-			locations = { "Edit" },
-			run = function()
-				return druid_settings.open_settings()
+	if pref_enabled("druid.command_create_collection_enabled") then
+		table.insert(commands, {
+			label = "[Druid] Create Druid Collection",
+			locations = { "Assets" },
+			query = { selection = {type = "resource", cardinality = "one"} },
+			active = function(opts)
+				local path = editor.get(opts.selection, "path")
+				return path:match("%.gui$") ~= nil
+			end,
+			run = function(opts)
+				return create_druid_collection.create_druid_collection(opts.selection)
 			end
-		}
-	}
+		})
+	end
+
+	table.insert(commands, {
+		label = "[Druid] Settings",
+		locations = { "Edit" },
+		run = function()
+			return druid_settings.open_settings()
+		end
+	})
+
+	return commands
 end
 
 

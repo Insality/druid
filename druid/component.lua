@@ -20,20 +20,20 @@ local helper = require("druid.helper")
 ---@field _uid number
 
 ---@class druid.component
----@field druid druid.instance Druid instance to create inner components
----@field init fun(self:druid.component, ...)|nil Called when component is created
----@field update fun(self:druid.component, dt:number)|nil Called every frame
----@field on_remove fun(self:druid.component)|nil Called when component is removed
----@field on_input fun(self:druid.component, action_id:hash, action:table)|nil Called when input event is triggered
----@field on_input_interrupt fun(self:druid.component, action_id:hash, action:table)|nil Called when input event is consumed before
----@field on_message fun(self:druid.component, message_id:hash, message:table, sender:url)|nil Called when message is received
----@field on_late_init fun(self:druid.component)|nil Called before update once time after GUI init
----@field on_focus_lost fun(self:druid.component)|nil Called when app lost focus
----@field on_focus_gained fun(self:druid.component)|nil Called when app gained focus
----@field on_style_change fun(self:druid.component, style: table)|nil Called when style is changed
----@field on_layout_change fun(self:druid.component)|nil Called when GUI layout is changed
----@field on_window_resized fun(self:druid.component)|nil Called when window is resized
----@field on_language_change fun(self:druid.component)|nil Called when language is changed
+---@field protected druid druid.instance Druid instance to create inner components
+---@field protected init fun(self:druid.component, ...)|nil Called when component is created
+---@field protected update fun(self:druid.component, dt:number)|nil Called every frame
+---@field protected on_remove fun(self:druid.component)|nil Called when component is removed
+---@field protected on_input fun(self:druid.component, action_id:hash, action:table)|nil Called when input event is triggered
+---@field protected on_input_interrupt fun(self:druid.component, action_id:hash, action:table)|nil Called when input event is consumed before
+---@field protected on_message fun(self:druid.component, message_id:hash, message:table, sender:url)|nil Called when message is received
+---@field protected on_late_init fun(self:druid.component)|nil Called before update once time after GUI init
+---@field protected on_focus_lost fun(self:druid.component)|nil Called when app lost focus
+---@field protected on_focus_gained fun(self:druid.component)|nil Called when app gained focus
+---@field protected on_style_change fun(self:druid.component, style: table)|nil Called when style is changed
+---@field protected on_layout_change fun(self:druid.component)|nil Called when GUI layout is changed
+---@field protected on_window_resized fun(self:druid.component)|nil Called when window is resized
+---@field protected on_language_change fun(self:druid.component)|nil Called when language is changed
 ---@field private _component druid.component.component
 ---@field private _meta druid.component.meta
 local M = {}
@@ -133,6 +133,7 @@ end
 
 
 ---Return current component context
+---@protected
 ---@return any context Usually it's self of script but can be any other Druid component
 function M:get_context()
 	return self._meta.context
@@ -148,6 +149,7 @@ end
 
 
 ---Get Druid instance for inner component creation.
+---@protected
 ---@param template string|nil
 ---@param nodes table<hash, node>|node|string|nil The nodes table from gui.clone_tree or prefab node to use for clone or node id to clone
 ---@return druid.instance
@@ -171,11 +173,12 @@ end
 ---Get component name
 ---@return string name The component name + uid
 function M:get_name()
-	return self._component.name .. M.create_uid()
+	return self._component.name .. self._component._uid
 end
 
 
 ---Get parent component name
+---@protected
 ---@return string|nil parent_name The parent component name if exist or nil
 function M:get_parent_name()
 	local parent = self:get_parent_component()
@@ -228,6 +231,7 @@ end
 
 
 ---Get component UID, unique identifier created in component creation order.
+---@protected
 ---@return number uid The component uid
 function M:get_uid()
 	return self._component._uid
@@ -310,6 +314,7 @@ end
 
 
 ---Get current component nodes
+---@protected
 ---@return table<hash, node>|nil
 function M:get_nodes()
 	local nodes = self._meta.nodes
@@ -352,6 +357,7 @@ end
 
 
 ---Return all children components, recursive
+---@protected
 ---@return table Array of childrens if the Druid component instance
 function M:get_childrens()
 	local childrens = {}
@@ -404,7 +410,7 @@ local WIDGET_METATABLE = { __index = M }
 function M.create_widget(self, widget_class, context)
 	local instance = setmetatable({}, {
 		__index = setmetatable(widget_class, WIDGET_METATABLE)
-	})
+	}) --[[@as druid.widget]]
 
 	instance._component = {
 		_uid = M.create_uid(),
@@ -434,7 +440,6 @@ function M.create_widget(self, widget_class, context)
 		instance._meta.parent:__add_child(instance)
 	end
 
-	---@cast instance druid.widget
 	return instance
 end
 

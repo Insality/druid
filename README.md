@@ -29,23 +29,26 @@ In this example you can inspect a variety of **Druid** components and see how th
 - [Quick API Reference](api/quick_api_reference.md)
 - [List of Components](#druid-components)
 - [Contributors](#contributors)
+
 ## Setup
 
 ### [Dependency](https://defold.com/manuals/libraries/#setting-up-library-dependencies)
 
+> Can be installed from the [Asset Store](https://github.com/Insality/asset-store) extension to skip this step.
+
 Open your `game.project` file and add the following lines to the dependencies field under the project section:
 
-
-**[Druid](https://github.com/Insality/druid/)**
-
-```
-https://github.com/Insality/druid/archive/refs/tags/1.1.7.zip
-```
 
 **[Defold Event](https://github.com/Insality/defold-event)**
 
 ```
 https://github.com/Insality/defold-event/archive/refs/tags/14.zip
+```
+
+**[Druid](https://github.com/Insality/druid/)**
+
+```
+https://github.com/Insality/druid/archive/refs/tags/1.2.0.zip
 ```
 
 After that, select `Project ▸ Fetch Libraries` to update [library dependencies]((https://defold.com/manuals/libraries/#setting-up-library-dependencies)). This happens automatically whenever you open a project so you will only need to do this if the dependencies change without re-opening the project.
@@ -57,9 +60,9 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 > **Note:** The library size is calculated based on the build report per platform. Full size contains all components, they can be stripped out in the build process if you don't need them.
 
-| Platform         | Full Size  |
-| ---------------- | ------------- |
-| HTML5            | **84.52 KB**  |
+| Platform         | Full Size      |
+| ---------------- | -------------- |
+| HTML5            | **84.52 KB**   |
 | Desktop / Mobile | **141.03 KB**  |
 
 
@@ -72,13 +75,20 @@ Here is a list of [all releases](https://github.com/Insality/druid/releases).
 
 ### Basic usage
 
-The basic template for `gui_script` is:
+Use this as a starting point for your `gui_script` file:
 
 ```lua
 local druid = require("druid.druid")
 
 function init(self)
     self.druid = druid.new(self)
+
+    -- Create your components here
+    self.button = self.druid:new_button("button_node_id", function(self)
+        print("Button clicked!")
+    end)
+
+    self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
 end
 
 function final(self)
@@ -109,6 +119,7 @@ With next quick links:
 
 - [Druid Instance](api/druid_instance_api.md) - **Druid** instance returned from `druid.new(self)`
 - [Helper](api/druid_helper_api.md) - A lot of useful functions
+- [Druid Color](api/druid_color_api.md) - A color utility functions
 - [Widgets](wiki/widgets.md) - About widgets and how to use them
 
 
@@ -190,12 +201,13 @@ You can find the full **Druid** functions at [Quick API Reference](api/quick_api
 
 To better understand **Druid**, read the following documentation:
 
+- [Druid Workshop](https://youtu.be/qF19qpjZe9c) - A one hour video to undertand all the basics of **Druid**. Contains a lot of examples and explanations.
 - [How To GUI in Defold](https://forum.defold.com/t/how-to-gui-in-defold/73256)
 - [Widgets](wiki/widgets.md)
 - [Druid styles](wiki/styles.md)
 - [Advanced Setup](wiki/advanced-setup.md)
+- [Druid Settings](wiki/druid_settings.md)
 - [Optimize Druid Size](wiki/optimize_druid_size.md)
-- [Creating Custom Components](wiki/creating_custom_components.md)
 - [Changelog](wiki/changelog.md)
 
 
@@ -228,6 +240,10 @@ Read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
 
 ## ❤️ Support project ❤️
 
-Your donation helps me stay engaged in creating valuable projects for **Defold**. If you appreciate what I'm doing, please consider supporting me!
+Druid is developed and maintained by a single developer in his free time.
+
+If this library helps your project, consider supporting my work ❤️
+
+It really makes a difference.
 
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)

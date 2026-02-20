@@ -29,7 +29,6 @@ Create data list component with druid: `data_list = druid:new_data_list(scroll, 
 - [get_created_nodes](#get_created_nodes)
 - [get_created_components](#get_created_components)
 - [scroll_to_index](#scroll_to_index)
-
 ## Fields
 
 - [scroll](#scroll)

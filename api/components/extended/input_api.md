@@ -29,7 +29,6 @@ Create input component with druid: `input = druid:new_input(button_node_name, te
 - [reset_changes](#reset_changes)
 - [select_cursor](#select_cursor)
 - [move_selection](#move_selection)
-
 ## Fields
 
 - [on_input_select](#on_input_select)

@@ -17,3 +17,5 @@ manifest.private.der
 manifest.public.der
 /.editor_settings
 /.deployer_cache
+
+deployer_version_settings.ini

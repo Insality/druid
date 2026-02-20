@@ -87,5 +87,28 @@ nodes {
   outline_alpha: 0.0
   shadow_alpha: 0.0
 }
+nodes {
+  position {
+    y: -300.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+  }
+  size {
+    x: 1000.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "The Blocker components blocks all input in node area"
+  font: "text_bold"
+  id: "text_hint"
+  line_break: true
+  parent: "root"
+  inherit_alpha: true
+  alpha: 0.8
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

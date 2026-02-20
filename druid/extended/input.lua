@@ -9,6 +9,7 @@ local utf8 = utf8 or utf8_lua
 ---@field MASK_DEFAULT_CHAR string Default character mask for password input
 ---@field IS_LONGTAP_ERASE boolean Is long tap will erase current input data
 ---@field IS_UNSELECT_ON_RESELECT boolean If true, call unselect on select selected input
+---@field on_init fun(self: druid.input)|nil Callback when input is initialized, use to set custom properties on self
 ---@field on_select fun(self: druid.input, button_node: node) Callback on input field selecting
 ---@field on_unselect fun(self: druid.input, button_node: node) Callback on input field unselecting
 ---@field on_input_wrong fun(self: druid.input, button_node: node) Callback on wrong user input
@@ -104,6 +105,7 @@ function M:init(click_node, text_node, keyboard_type)
 	self.button = self.druid:new_button(click_node, self.select)
 	self.button.on_click_outside:subscribe(self.unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
+	self.button:set_style(nil)
 
 	if defos then
 		self.button.hover.style.ON_HOVER_CURSOR = defos.CURSOR_IBEAM
@@ -132,10 +134,13 @@ function M:on_style_change(style)
 		MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*",
 		IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false,
 
+		on_init = style.on_init or function() end,
 		on_select = style.on_select or function(_, button_node) end,
 		on_unselect = style.on_unselect or function(_, button_node) end,
 		on_input_wrong = style.on_input_wrong or function(_, button_node) end,
 	}
+
+	self.style.on_init(self)
 end
 
 
@@ -144,8 +149,10 @@ end
 ---@param action action The action
 ---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
-	if not (action_id == nil or M.ALLOWED_ACTIONS[action_id]) then
-		return false
+	if action_id and not M.ALLOWED_ACTIONS[action_id] then
+		-- We want to block all key actions (key_w, key_s) etc while input is selected
+		local is_key_action = action.x == nil
+		return self.is_selected and is_key_action
 	end
 
 	if self.is_selected then
@@ -328,6 +335,7 @@ function M:select()
 	if not self.is_selected then
 		self:set_input_priority(const.PRIORITY_INPUT_MAX, true)
 		self.button:set_input_priority(const.PRIORITY_INPUT_MAX, true)
+		self.button.hover:set_enabled(false)
 		self.previous_value = self.value
 		self.is_selected = true
 
@@ -353,6 +361,7 @@ function M:unselect()
 	if self.is_selected then
 		self:reset_input_priority()
 		self.button:reset_input_priority()
+		self.button.hover:set_enabled(true)
 		self.is_selected = false
 
 		gui.hide_keyboard()

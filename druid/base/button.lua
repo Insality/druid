@@ -9,6 +9,7 @@ local component = require("druid.component")
 ---@field LONGTAP_TIME number|nil Minimum time to trigger on_hold_callback. Default: 0.4
 ---@field AUTOHOLD_TRIGGER number|nil Maximum hold time to trigger button release while holding. Default: 0.8
 ---@field DOUBLETAP_TIME number|nil Time between double taps. Default: 0.4
+---@field on_init fun(self)|nil
 ---@field on_click fun(self, node)|nil
 ---@field on_click_disabled fun(self, node)|nil
 ---@field on_hover fun(self, node, hover_state)|nil
@@ -67,8 +68,8 @@ function M:init(node_or_node_id, callback, custom_args, anim_node)
 	self.start_scale = gui.get_scale(self.anim_node)
 	self.start_pos = gui.get_position(self.anim_node)
 	self.params = custom_args
-	self.hover = self.druid:new_hover(node_or_node_id, self._on_button_hover)
-	self.hover.on_mouse_hover:subscribe(self._on_button_mouse_hover)
+	self.hover = self.druid:new_hover(node_or_node_id, self.button_hover)
+	self.hover.on_mouse_hover:subscribe(self.button_mouse_hover)
 	self.click_zone = nil
 	self.is_repeated_started = false
 	self.last_pressed_time = 0
@@ -100,12 +101,15 @@ function M:on_style_change(style)
 		AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8,
 		DOUBLETAP_TIME = style.DOUBLETAP_TIME or 0.4,
 
+		on_init = style.on_init or function() end,
 		on_click = style.on_click or function(_, node) end,
 		on_click_disabled = style.on_click_disabled or function(_, node) end,
 		on_mouse_hover = style.on_mouse_hover or function(_, node, state) end,
 		on_hover = style.on_hover or function(_, node, state) end,
 		on_set_enabled = style.on_set_enabled or function(_, node, state) end,
 	}
+
+	self.style.on_init(self)
 end
 
 
@@ -184,7 +188,7 @@ function M:on_input(action_id, action)
 		if self._is_html5_mode then
 			self._is_html5_listener_set = true
 			html5.set_interaction_listener(function()
-				self:_on_button_click()
+				self:button_click()
 			end)
 		end
 		return is_consume
@@ -193,7 +197,7 @@ function M:on_input(action_id, action)
 	-- While hold button, repeat rate pick from input.repeat_interval
 	if action.repeated then
 		if not self.on_repeated_click:is_empty() and self.can_action then
-			self:_on_button_repeated_click()
+			self:button_repeated_click()
 			return is_consume
 		end
 	end
@@ -202,16 +206,16 @@ function M:on_input(action_id, action)
 		return self:_on_button_release() and is_consume
 	end
 
-	if self.can_action and not self.on_long_click:is_empty() then
+	if self.can_action and (not self.on_long_click:is_empty() or not self.on_hold_callback:is_empty()) then
 		local press_time = socket.gettime() - self.last_pressed_time
 
-		if self.style.AUTOHOLD_TRIGGER <= press_time then
+		if not self.on_long_click:is_empty() and self.style.AUTOHOLD_TRIGGER <= press_time then
 			self:_on_button_release()
 			return is_consume
 		end
 
 		if press_time >= self.style.LONGTAP_TIME then
-			self:_on_button_hold(press_time)
+			self:button_hold(press_time)
 			return is_consume
 		end
 	end
@@ -221,10 +225,20 @@ end
 
 
 ---@private
-function M:on_input_interrupt()
+function M:on_input_interrupt(action_id, action)
 	self.can_action = false
 	self.hover:set_hover(false)
 	self.hover:set_mouse_hover(false)
+
+	local is_input_match = self:_is_input_match(action_id) and action.x -- only touch/mouse actions
+	local is_enabled = gui.is_enabled(self.node, true)
+	-- If pressed outside of button, trigger on_click_outside event
+	if is_input_match and is_enabled then
+		local is_pick = helper.pick_node(self.node, action.x, action.y, self.click_zone)
+		if not is_pick and action.released then
+			self.on_click_outside:trigger(self:get_context(), self.params, self)
+		end
+	end
 end
 
 
@@ -325,30 +339,35 @@ function M:_is_input_match(action_id)
 end
 
 
+---Call button style on_hover callback
 ---@param hover_state boolean True if the hover state is active
-function M:_on_button_hover(hover_state)
+function M:button_hover(hover_state)
 	self.style.on_hover(self, self.anim_node, hover_state)
 end
 
 
+---Call button style on_hover callback
 ---@param hover_state boolean True if the hover state is active
-function M:_on_button_mouse_hover(hover_state)
+function M:button_mouse_hover(hover_state)
 	self.style.on_mouse_hover(self, self.anim_node, hover_state)
 end
 
 
-function M:_on_button_click()
+---Call button click callback
+function M:button_click()
 	if self._is_html5_mode then
 		self._is_html5_listener_set = false
 		html5.set_interaction_listener(nil)
 	end
+	self.can_action = false
 	self.click_in_row = 1
 	self.on_click:trigger(self:get_context(), self.params, self)
 	self.style.on_click(self, self.anim_node)
 end
 
 
-function M:_on_button_repeated_click()
+---Call button repeated click callback
+function M:button_repeated_click()
 	if not self.is_repeated_started then
 		self.click_in_row = 0
 		self.is_repeated_started = true
@@ -360,7 +379,8 @@ function M:_on_button_repeated_click()
 end
 
 
-function M:_on_button_long_click()
+---Call button long click callback
+function M:button_long_click()
 	self.click_in_row = 1
 	local time = socket.gettime() - self.last_pressed_time
 	self.on_long_click:trigger(self:get_context(), self.params, self, time)
@@ -368,15 +388,17 @@ function M:_on_button_long_click()
 end
 
 
-function M:_on_button_double_click()
+---Call button double click callback
+function M:button_double_click()
 	self.click_in_row = self.click_in_row + 1
 	self.on_double_click:trigger(self:get_context(), self.params, self, self.click_in_row)
 	self.style.on_click(self, self.anim_node)
 end
 
 
+---Call button hold callback
 ---@param press_time number Amount of time the button was held
-function M:_on_button_hold(press_time)
+function M:button_hold(press_time)
 	self.on_hold_callback:trigger(self:get_context(), self.params, self, press_time)
 end
 
@@ -392,7 +414,9 @@ function M:_on_button_release()
 	end
 
 	if self.disabled then
-		self.style.on_click_disabled(self, self.anim_node)
+		if self.can_action then
+			self.style.on_click_disabled(self, self.anim_node)
+		end
 		return true
 	elseif not check_function_result then
 		if self._failure_callback then
@@ -404,23 +428,26 @@ function M:_on_button_release()
 			self.can_action = false
 
 			local time = socket.gettime()
-			local is_long_click = (time - self.last_pressed_time) >= self.style.LONGTAP_TIME
-			is_long_click = is_long_click and not self.on_long_click:is_empty()
+			local press_time = time - self.last_pressed_time
+			local is_long_click = press_time >= self.style.LONGTAP_TIME and not self.on_long_click:is_empty()
+			local is_hold_only = press_time >= self.style.LONGTAP_TIME and self.on_long_click:is_empty() and not self.on_hold_callback:is_empty()
 
 			local is_double_click = (time - self.last_released_time) < self.style.DOUBLETAP_TIME
 			is_double_click = is_double_click and not self.on_double_click:is_empty()
 
-			if is_long_click then
+			if is_hold_only then
+				return true
+			elseif is_long_click then
 				local is_hold_complete = (time - self.last_pressed_time) >= self.style.AUTOHOLD_TRIGGER
 				if is_hold_complete then
-					self:_on_button_long_click()
+					self:button_long_click()
 				else
 					self.on_click_outside:trigger(self:get_context(), self.params, self)
 				end
 			elseif is_double_click then
-				self:_on_button_double_click()
+				self:button_double_click()
 			else
-				self:_on_button_click()
+				self:button_click()
 			end
 
 			self.last_released_time = time

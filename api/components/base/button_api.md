@@ -30,7 +30,13 @@ Where node_name is name of node from GUI scene. You can use `node_name` as input
 - [get_key_trigger](#get_key_trigger)
 - [set_check_function](#set_check_function)
 - [set_web_user_interaction](#set_web_user_interaction)
-
+- [button_hover](#button_hover)
+- [button_mouse_hover](#button_mouse_hover)
+- [button_click](#button_click)
+- [button_repeated_click](#button_repeated_click)
+- [button_long_click](#button_long_click)
+- [button_double_click](#button_double_click)
+- [button_hold](#button_hold)
 ## Fields
 
 - [on_click](#on_click)
@@ -194,6 +200,78 @@ If the game is not HTML, html mode will be not enabled
 
 - **Returns:**
 	- `self` *(druid.button)*: The current button instance
+
+### button_hover
+
+---
+```lua
+button:button_hover(hover_state)
+```
+
+Call button style on_hover callback
+
+- **Parameters:**
+	- `hover_state` *(boolean)*: True if the hover state is active
+
+### button_mouse_hover
+
+---
+```lua
+button:button_mouse_hover(hover_state)
+```
+
+Call button style on_hover callback
+
+- **Parameters:**
+	- `hover_state` *(boolean)*: True if the hover state is active
+
+### button_click
+
+---
+```lua
+button:button_click()
+```
+
+Call button click callback
+
+### button_repeated_click
+
+---
+```lua
+button:button_repeated_click()
+```
+
+Call button repeated click callback
+
+### button_long_click
+
+---
+```lua
+button:button_long_click()
+```
+
+Call button long click callback
+
+### button_double_click
+
+---
+```lua
+button:button_double_click()
+```
+
+Call button double click callback
+
+### button_hold
+
+---
+```lua
+button:button_hold(press_time)
+```
+
+Call button hold callback
+
+- **Parameters:**
+	- `press_time` *(number)*: Amount of time the button was held
 
 
 ## Fields

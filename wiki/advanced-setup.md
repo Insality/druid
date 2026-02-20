@@ -12,9 +12,12 @@ By default, **Druid** uses all key names from Defold's default `/builtins/input/
 - Key trigger: `Backspace` -> `key_backspace` (for BackHandler component, input component)
 - Key trigger: `Back` -> `key_back` (for BackHandler component, Android back button, input component)
 - Key trigger: `Enter` -> `key_enter` (for Input component, optional)
+- Key trigger: `Space` -> `key_space` (for Navigation Handler widget, optional)
 - Key trigger: `Esc` -> `key_esc` (for Input component, optional)
 - Key trigger: `Left` -> `key_left` (for Rich Input component, optional)
 - Key trigger: `Right` -> `key_right` (for Rich Input component, optional)
+- Key trigger: `Up` -> `key_up` (for Navigation Handler widget, optional)
+- Key trigger: `Down` -> `key_down` (for Navigation Handler widget, optional)
 - Key trigger: `Shift` -> `key_lshift` (for Rich Input component, optional)
 - Key trigger: `Ctrl` -> `key_lctrl` (for Rich Input component, optional)
 - Key trigger: `Super` -> `key_lsuper` (for Rich Input component, optional)
@@ -37,12 +40,15 @@ input_marked_text = marked_text
 input_key_esc = key_esc
 input_key_back = key_back
 input_key_enter = key_enter
+input_key_space = key_space
 input_key_backspace = key_backspace
 input_multitouch = touch_multi
 input_scroll_up = mouse_wheel_up
 input_scroll_down = mouse_wheel_down
 input_key_left = key_left
 input_key_right = key_right
+input_key_up = key_up
+input_key_down = key_down
 input_key_lshift = key_lshift
 input_key_lctrl = key_lctrl
 input_key_lsuper = key_lsuper

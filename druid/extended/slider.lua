@@ -25,7 +25,7 @@ local component = require("druid.component")
 ---@field private dist vector3 The distance between the start and end positions of the slider
 ---@field private is_drag boolean True if the slider is being dragged
 ---@field private value number The current value of the slider
----@field private steps number[] The steps of the slider
+---@field private steps number[]? The steps of the slider
 local M = component.create("slider", const.PRIORITY_INPUT_HIGH)
 
 
@@ -63,6 +63,15 @@ end
 function M:on_remove()
 	-- Return pin to start position
 	gui.set_position(self.node, self.start_pos)
+end
+
+
+---@private
+---@param style table
+function M:on_style_change(style)
+	if style.DEFAULT_STEPS and #style.DEFAULT_STEPS > 0 then
+		self.steps = style.DEFAULT_STEPS
+	end
 end
 
 
@@ -185,6 +194,17 @@ end
 ---@return druid.slider self Current slider instance
 function M:set_steps(steps)
 	self.steps = steps
+	return self
+end
+
+
+---Adjust the end position of the slider
+---@param end_pos vector3 The end position of the slider
+---@return druid.slider self Current slider instance
+function M:set_end_pos(end_pos)
+	self.end_pos = end_pos
+	self.dist = self.end_pos - self.start_pos
+	self:set(self.value)
 	return self
 end
 

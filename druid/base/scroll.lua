@@ -60,6 +60,7 @@ local component = require("druid.component")
 ---@field private _grid_on_change event Grid items change event
 ---@field private _grid_on_change_callback function Grid change callback
 ---@field private _offset vector3 Content start offset
+---@field private _layout_on_change_callback function Layout change callback
 local M = component.create("scroll")
 
 
@@ -202,6 +203,62 @@ function M:scroll_to(point, is_instant)
 	end
 
 	self.on_scroll_to:trigger(self:get_context(), target, is_instant)
+end
+
+
+---Scroll to the node, if node is not visible in scroll view
+---@param node node The node to make visible
+---@param is_instant boolean|nil Instant scroll flag
+function M:scroll_to_make_node_visible(node, is_instant)
+	-- Can be any node not only directly at scroll content
+	local screen_position = gui.get_screen_position(node)
+	local local_position = gui.screen_to_local(self.content_node, screen_position)
+
+	-- Get the node borders in content node space
+	local node_border = helper.get_border(node, local_position)
+
+	-- Calculate how much we need to scroll to make the node visible
+	local scroll_position = vmath.vector3(self.position)
+	local view_border = self.view_border
+
+	-- Convert content position to view position
+	local node_in_view_x = node_border.x + scroll_position.x
+	local node_in_view_y = node_border.y + scroll_position.y
+	local node_in_view_z = node_border.z + scroll_position.x
+	local node_in_view_w = node_border.w + scroll_position.y
+
+	local target_position = vmath.vector3(scroll_position)
+
+	-- Check if node is outside view horizontally
+	if self._is_horizontal_scroll then
+		-- If the node is too far to the right (left side not visible)
+		if node_in_view_x < view_border.x then
+			target_position.x = scroll_position.x + (view_border.x - node_in_view_x)
+		end
+		-- If the node is too far to the left (right side not visible)
+		if node_in_view_z > view_border.z then
+			target_position.x = scroll_position.x - (node_in_view_z - view_border.z)
+		end
+	end
+
+	-- Check if node is outside view vertically
+	if self._is_vertical_scroll then
+		-- If the node is too far up (bottom side not visible)
+		if node_in_view_w < view_border.w then
+			target_position.y = scroll_position.y + (view_border.w - node_in_view_w)
+		end
+		-- If the node is too far down (top side not visible)
+		if node_in_view_y > view_border.y then
+			target_position.y = scroll_position.y - (node_in_view_y - view_border.y)
+		end
+	end
+
+	-- If we need to scroll, do it
+	if target_position.x ~= scroll_position.x or target_position.y ~= scroll_position.y then
+		-- Convert to scroll_to expected format (content position, not scroll position)
+		local scroll_to_position = vmath.vector3(-target_position.x, -target_position.y, 0)
+		self:scroll_to(scroll_to_position, is_instant)
+	end
 end
 
 
@@ -525,27 +582,34 @@ function M:_check_soft_zone()
 	local target = self.target_position
 	local border = self.available_pos
 	local speed = self.style.BACK_SPEED
+	local is_changed = false
 
 	-- Right border (minimum x)
 	if target.x < border.x then
 		local step = math.max(math.abs(target.x - border.x) * speed, 1)
 		target.x = helper.step(target.x, border.x, step)
+		is_changed = true
 	end
 	-- Left border (maximum x)
 	if target.x > border.z then
 		local step = math.max(math.abs(target.x - border.z) * speed, 1)
 		target.x = helper.step(target.x, border.z, step)
+		is_changed = true
 	end
 	-- Top border (maximum y)
 	if target.y < border.y then
 		local step = math.max(math.abs(target.y - border.y) * speed, 1)
 		target.y = helper.step(target.y, border.y, step)
+		is_changed = true
 	end
 	-- Bot border (minimum y)
 	if target.y > border.w then
 		local step = math.max(math.abs(target.y - border.w) * speed, 1)
 		target.y = helper.step(target.y, border.w, step)
+		is_changed = true
 	end
+
+	return is_changed
 end
 
 
@@ -558,7 +622,7 @@ function M:_cancel_animate()
 		self.target_position = gui.get_position(self.content_node)
 		self.position.x = self.target_position.x
 		self.position.y = self.target_position.y
-		gui.cancel_animation(self.content_node, gui.PROP_POSITION)
+		gui.cancel_animations(self.content_node, gui.PROP_POSITION)
 		self.is_animate = false
 	end
 end
@@ -675,7 +739,11 @@ function M:_update_free_scroll(dt)
 	-- Inertion friction
 	self.inertion = self.inertion * self.style.FRICT
 
-	self:_check_soft_zone()
+	local is_changed = self:_check_soft_zone()
+	if is_changed then
+		self.inertion.x = 0
+		self.inertion.y = 0
+	end
 	if self.position.x ~= target.x or self.position.y ~= target.y then
 		self:_set_scroll_position(target.x, target.y)
 	end
