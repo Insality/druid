@@ -25,6 +25,7 @@
     19. [Text](#text)
     20. [Timer](#timer)
 4. [Helper](#helper)
+5. [Druid Color](#druid-color)
 
 # API Reference
 
@@ -580,7 +581,7 @@ helper.remove_with_shift([array], [index], [shift_policy])
 helper.round(num, [num_decimal_places])
 helper.sign(val)
 helper.step(current, target, step)
-helper.table_to_string(t)
+helper.table_to_string(t, [depth])
 ```
 
 ## [Druid Color](druid_color_api.md)

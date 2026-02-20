@@ -34,6 +34,8 @@ In this example you can inspect a variety of **Druid** components and see how th
 
 ### [Dependency](https://defold.com/manuals/libraries/#setting-up-library-dependencies)
 
+> Can be installed from the [Asset Store](https://github.com/Insality/asset-store) extension to skip this step.
+
 Open your `game.project` file and add the following lines to the dependencies field under the project section:
 
 
@@ -85,6 +87,8 @@ function init(self)
     self.button = self.druid:new_button("button_node_id", function(self)
         print("Button clicked!")
     end)
+
+    self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
 end
 
 function final(self)
@@ -115,6 +119,7 @@ With next quick links:
 
 - [Druid Instance](api/druid_instance_api.md) - **Druid** instance returned from `druid.new(self)`
 - [Helper](api/druid_helper_api.md) - A lot of useful functions
+- [Druid Color](api/druid_color_api.md) - A color utility functions
 - [Widgets](wiki/widgets.md) - About widgets and how to use them
 
 
@@ -196,13 +201,13 @@ You can find the full **Druid** functions at [Quick API Reference](api/quick_api
 
 To better understand **Druid**, read the following documentation:
 
+- [Druid Workshop](https://youtu.be/qF19qpjZe9c) - A one hour video to undertand all the basics of **Druid**. Contains a lot of examples and explanations.
 - [How To GUI in Defold](https://forum.defold.com/t/how-to-gui-in-defold/73256)
-- [Druid Workshop](https://youtu.be/qF19qpjZe9c)
 - [Widgets](wiki/widgets.md)
 - [Druid styles](wiki/styles.md)
 - [Advanced Setup](wiki/advanced-setup.md)
+- [Druid Settings](wiki/druid_settings.md)
 - [Optimize Druid Size](wiki/optimize_druid_size.md)
-- [Creating Custom Components](wiki/creating_custom_components.md)
 - [Changelog](wiki/changelog.md)
 
 

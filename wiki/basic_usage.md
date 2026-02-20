@@ -46,12 +46,13 @@ local druid = require("druid.druid")
 -- All component callbacks pass "self" as first argument
 -- This "self" is a context data passed in `druid.new(context)`
 local function on_button_callback(self)
+    -- You should call component's methods with `:` operator
     self.text:set_text("The button clicked!")
 end
 
 function init(self)
     self.druid = druid.new(self)
-    -- We can use the node_id instead of gui.get_node():
+    -- You can use the node_id instead of gui.get_node():
     self.button = self.druid:new_button("button_node_id", on_button_callback)
     self.text = self.druid:new_text("text_node_id", "Hello, Druid!")
 end
@@ -70,6 +71,34 @@ end
 
 function on_input(self, action_id, action)
     return self.druid:on_input(action_id, action)
+end
+```
+
+## Scroll with Grid Example
+
+```lua
+local druid = require("druid.druid")
+
+function init(self)
+    self.druid = druid.new(self)
+
+    -- The `scroll_node_id` node size means the scroll visible area and usually with stencil mode enabled.
+    -- The `content_node_id` node size should be bigger than the scroll_node_id node size and means the scrollable area. Should be a child of the `scroll_node_id` node.
+    self.scroll = self.druid:new_scroll("scroll_node_id", "content_node_id")
+
+    -- The `grid_parent_node_id` is a parent node for the grid items. Usually a content node of the scroll.
+    -- The `item_prefab_node_id` is a prefab node for the grid items. It's used to get the item size.
+    self.grid = self.druid:new_grid("content_node_id", "item_prefab_node_id", 1)
+
+    -- Bind the grid to the scroll. It will recalculate the scroll size on grid changes.
+    self.scroll:bind_grid(self.grid)
+
+    for index = 1, 10 do
+        local nodes = gui.clone_tree(gui.get_node("item_prefab_node_id"))
+        local root = nodes["/root"] -- The root node is the item node.
+        gui.set_enabled(root, true)
+        self.grid:add(root)
+    end
 end
 ```
 
@@ -185,10 +214,16 @@ end
 You can also use the root node ID or node directly, it will be cloned and used as a template:
 
 ```lua
+-- Pass the root node ID from this template to clone from
 self.my_widget = self.druid:new_widget(best_widget_in_the_world, "best_widget_in_the_world", "root")
--- or
+-- or pass the node to clone from
 self.my_widget = self.druid:new_widget(best_widget_in_the_world, "best_widget_in_the_world", self.prefab)
 ```
 
+### Widgets in Asset Store
 
+**Druid Widgets** can be installed from the [Asset Store](https://github.com/Insality/asset-store) extension. It's a collection of widgets that can be installed in your project.
 
+After the Asset Store in installed, press `Project ▸ [Asset Store] Assets` to open the Asset Store window.
+
+In this window you can inspect the available widgets and install them to your project. This widgets will be downloaded as files, so you can easily edit and adjust them for your needs.
