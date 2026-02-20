@@ -416,6 +416,18 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
+  id: "example_properties_panel/scroll_bar_view"
+  parent: "example_properties_panel/scroll_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "example_properties_panel/scroll_bar_pin"
+  parent: "example_properties_panel/scroll_bar_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
   id: "example_properties_panel/separator"
   parent: "example_properties_panel/root"
   template_node_child: true

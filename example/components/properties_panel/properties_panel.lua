@@ -31,6 +31,11 @@ function M:init(template, nodes)
 	self.scroll = self.druid:new_scroll("scroll_view", "scroll_content")
 	self.grid = self.druid:new_grid("scroll_content", "item_size", 1)
 	self.scroll:bind_grid(self.grid)
+	self.scroll.on_scroll:subscribe(self.on_scroll)
+	self.grid.on_change_items:subscribe(self.on_grid_change_items)
+
+	self.slider = self.druid:new_slider("scroll_bar_pin", vmath.vector3(-8, 48-290.0, 0), self.on_slider_change)
+	self.slider:set_input_node("scroll_bar_view")
 
 	self.property_checkbox_prefab = self:get_node("property_checkbox/root")
 	gui.set_enabled(self.property_checkbox_prefab, false)
@@ -118,5 +123,26 @@ function M:add_button(text_id, on_click_callback)
 	return instance
 end
 
+
+---@param value number in range [0..1]
+function M:on_slider_change(value)
+	self.scroll:scroll_to_percent(vmath.vector3(0, 1 - value, 0), true)
+end
+
+
+function M:on_scroll()
+	local scroll_percent = self.scroll:get_percent()
+	self.slider:set(1 - scroll_percent.y, true)
+end
+
+
+function M:on_grid_change_items()
+	local is_scroll_available = self.scroll.drag.can_y
+	gui.set_enabled(self.slider.node, is_scroll_available)
+	if is_scroll_available then
+		local scroll_percent = self.scroll:get_percent()
+		self.slider:set(1 - scroll_percent.y, true)
+	end
+end
 
 return M
