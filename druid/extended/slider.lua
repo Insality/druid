@@ -198,6 +198,17 @@ function M:set_steps(steps)
 end
 
 
+---Adjust the end position of the slider
+---@param end_pos vector3 The end position of the slider
+---@return druid.slider self Current slider instance
+function M:set_end_pos(end_pos)
+	self.end_pos = end_pos
+	self.dist = self.end_pos - self.start_pos
+	self:set(self.value)
+	return self
+end
+
+
 ---Set input zone for slider.
 ---User can touch any place of node, pin instantly will
 ---move at this position and node drag will start.

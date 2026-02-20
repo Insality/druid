@@ -481,6 +481,7 @@ local slider = self.druid:new_slider(pin_node, end_pos, [callback])
 
 slider:is_enabled()
 slider:set(value, [is_silent])
+slider:set_end_pos(end_pos)
 slider:set_enabled(is_enabled)
 slider:set_input_node([input_node])
 slider:set_steps(steps)

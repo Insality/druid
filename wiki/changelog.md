@@ -765,6 +765,7 @@ Thanks for the attention and your support!
 	- With this option, each letter will be a separate node, which can be useful for some animations or other effects.
 - [Rich Text] Add `set_width` and `set_height` functions
 - [Rich Text] Add `rich_text:set_pivot` function to adjust the alignment of the text inside the text area.
+- [Slider] Add `slider:set_end_pos` function to adjust the end position of the slider
 - [System] Migrated to `gui.cancel_animations` instead of `gui.cancel_animation`
 - [Examples] Add more Rich Text examples
 - [GO Widgets] Now passes events in addition to functions from the widget to the GO context

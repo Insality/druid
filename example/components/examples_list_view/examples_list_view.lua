@@ -31,12 +31,13 @@ function M:init(template, nodes)
 	self.grid = self.druid:new_grid("scroll_content", self.prefab, 1)
 	self.scroll:bind_grid(self.grid)
 
-	self.slider = self.druid:new_slider("scroll_bar_pin", vmath.vector3(-8, -802.0, 0), self.on_slider_change)
+	self.slider = self.druid:new_slider("scroll_bar_pin", vmath.vector3(-8, 48-850.0, 0), self.on_slider_change)
 	self.slider:set_input_node("scroll_bar_view")
 
 	self.root:add_container("scroll_view", nil, function(_, size)
 		self.scroll:set_view_size(size)
 		self.scroll:set_size(self.grid:get_size())
+		self.slider:set_end_pos(vmath.vector3(-8, 48-size.y, 0))
 	end)
 
 	self.selected_example = nil
