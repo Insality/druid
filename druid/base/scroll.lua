@@ -264,8 +264,9 @@ end
 
 ---Scroll to item in scroll by point index.
 ---@param index number Point index
----@param skip_cb boolean|nil If true, skip the point callback
-function M:scroll_to_index(index, skip_cb)
+---@param is_silent boolean|nil If true, skip the point callback
+---@param is_instant boolean|nil Instant scroll flag
+function M:scroll_to_index(index, is_silent, is_instant)
 	if not self.points then
 		return
 	end
@@ -275,12 +276,12 @@ function M:scroll_to_index(index, skip_cb)
 	if self.selected ~= index then
 		self.selected = index
 
-		if not skip_cb then
+		if not is_silent then
 			self.on_point_scroll:trigger(self:get_context(), index, self.points[index])
 		end
 	end
 
-	self:scroll_to(self.points[index])
+	self:scroll_to(self.points[index], is_instant)
 end
 
 
