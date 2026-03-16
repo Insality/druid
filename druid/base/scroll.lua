@@ -743,6 +743,7 @@ function M:_update_free_scroll(dt)
 	if is_changed then
 		self.inertion.x = 0
 		self.inertion.y = 0
+		self:_check_threshold()
 	end
 	if self.position.x ~= target.x or self.position.y ~= target.y then
 		self:_set_scroll_position(target.x, target.y)
