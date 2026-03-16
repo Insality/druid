@@ -11,6 +11,14 @@ function M.get_examples()
 			root = "basic_layout/root",
 			code_url = "example/examples/layout/basic/basic_layout.lua",
 			widget_class = require("example.examples.layout.basic.basic_layout"),
+		},
+		{
+			name_id = "ui_example_layout_scroll_bind_cards",
+			information_text_id = "ui_example_layout_scroll_bind_cards_description",
+			template = "scroll_bind_layout_cards",
+			root = "scroll_bind_layout_cards/root",
+			code_url = "example/examples/layout/cards/scroll_bind_layout_cards.lua",
+			widget_class = require("example.examples.layout.cards.scroll_bind_layout_cards"),
 		}
 	}
 end

@@ -1,0 +1,156 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
+}
+nodes {
+  size {
+    x: 300.0
+    y: 500.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  size {
+    x: 300.0
+    y: 500.0
+  }
+  color {
+    x: 0.6313726
+    y: 0.84313726
+    z: 0.9607843
+  }
+  type: TYPE_BOX
+  texture: "druid_example/ui_circle_32"
+  id: "panel"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    y: 200.0
+  }
+  size {
+    x: 240.0
+    y: 50.0
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_TEXT
+  text: "Level 1-1"
+  font: "text_bold"
+  id: "text_header"
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    y: 20.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
+  }
+  size {
+    x: 250.0
+    y: 260.0
+  }
+  color {
+    x: 0.31
+    y: 0.318
+    z: 0.322
+  }
+  type: TYPE_TEXT
+  text: "The level {x}, play and conquire!"
+  font: "text_bold"
+  id: "text_description"
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+  line_break: true
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    y: -180.0
+  }
+  type: TYPE_TEMPLATE
+  id: "button_text"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  size {
+    x: 200.0
+    y: 80.0
+  }
+  color {
+    x: 0.557
+    y: 0.835
+    z: 0.62
+  }
+  type: TYPE_BOX
+  id: "button_text/root"
+  parent: "button_text"
+  overridden_fields: 4
+  overridden_fields: 5
+  template_node_child: true
+}
+nodes {
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  size {
+    x: 200.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "Play"
+  id: "button_text/text"
+  parent: "button_text/root"
+  overridden_fields: 3
+  overridden_fields: 4
+  overridden_fields: 8
+  template_node_child: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
