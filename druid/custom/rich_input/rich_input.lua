@@ -73,6 +73,10 @@ local function on_select(self)
 
 	animate_cursor(self)
 	self.drag:set_enabled(true)
+
+	-- We want to catch events here first
+	self:set_input_priority(const.PRIORITY_INPUT_MAX, true)
+	self.input:set_input_priority(const.PRIORITY_INPUT_MAX - 1, true)
 end
 
 
@@ -83,6 +87,9 @@ local function on_unselect(self)
 	gui.set_enabled(self.placeholder.node, true and #self.input:get_text() == 0)
 
 	self.drag:set_enabled(false)
+
+	self:reset_input_priority()
+	self.input:reset_input_priority()
 end
 
 
