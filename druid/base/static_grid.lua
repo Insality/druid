@@ -94,18 +94,17 @@ end
 ---@param pos vector3 The node position in the grid
 ---@return number index The node index
 function M:get_index(pos)
-	-- Offset to left-top corner from node pivot
-	local node_offset_x = self.node_size.x * (-0.5 + self.node_pivot.x)
-	local node_offset_y = self.node_size.y * (0.5 - self.node_pivot.y)
+	local zero_offset = self:_get_zero_offset()
 
-	local col = (pos.x + node_offset_x) / self.node_size.x + 1
-	local row = -(pos.y + node_offset_y) / self.node_size.y
+	local local_y = pos.y - zero_offset.y
+	local row = helper.round(-local_y / self.node_size.y)
 
-	col = helper.round(col)
-	row = helper.round(row)
+	local zero_offset_x = self:_get_zero_offset_x(row)
+	local local_x = pos.x - zero_offset_x
+	local col = helper.round(local_x / self.node_size.x) + 1
 
 	local index = col + (row * self.in_row)
-	return math.ceil(index)
+	return index
 end
 
 
