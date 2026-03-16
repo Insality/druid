@@ -72,7 +72,6 @@ nodes {
 }
 nodes {
   position {
-    x: -550.0
     y: -250.0
   }
   size {
@@ -82,7 +81,6 @@ nodes {
   type: TYPE_BOX
   texture: "druid_example/empty"
   id: "layout"
-  pivot: PIVOT_W
   parent: "view"
   inherit_alpha: true
   slice9 {

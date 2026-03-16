@@ -72,7 +72,6 @@ nodes {
 }
 nodes {
   position {
-    x: -550.0
     y: -250.0
   }
   size {
@@ -82,15 +81,11 @@ nodes {
   type: TYPE_BOX
   texture: "druid_example/empty"
   id: "content"
-  pivot: PIVOT_W
   parent: "view"
   inherit_alpha: true
   visible: false
 }
 nodes {
-  position {
-    x: 550.0
-  }
   type: TYPE_TEMPLATE
   id: "scroll_bind_grid_card"
   parent: "content"

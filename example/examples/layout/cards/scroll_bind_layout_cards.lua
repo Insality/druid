@@ -26,7 +26,7 @@ function M:init()
 	self.scroll.on_scroll:subscribe(self.refresh_scroll)
 
 	self:init_elements(20)
-	self.scroll:scroll_to_index(1, false, true)
+	self.scroll:scroll_to_index(4, false, true)
 
 	self.output_log = nil
 end

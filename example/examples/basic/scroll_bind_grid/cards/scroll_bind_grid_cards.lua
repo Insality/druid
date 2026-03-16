@@ -53,7 +53,6 @@ function M:init_elements(count)
 	end
 
 	self:_refresh_grid()
-	self.level = 1
 end
 
 
@@ -85,6 +84,8 @@ function M:on_button_click(direction)
 end
 
 
+--- Refresh all elements relative to scroll position
+---@param position vector3
 function M:refresh_scroll(position)
 	local percent = self.scroll:get_percent()
 	local is_left_enabled = percent.x > 0.01
@@ -101,11 +102,10 @@ end
 function M:_refresh_grid()
 	-- Since grid size restric scroll to center of first and last elements,
 	-- we need to extend left and right area. For example we can do it in this way:
-	-- It's a amount of pixels, how much need to extend one side to align element
+	-- It's a amount of pixels, how much need to extend one side to align side elements
 	local extra_size = 250
 	self.scroll:set_size(
-		self.grid:get_size() + vmath.vector3(extra_size * 2, 0, 0),
-		self.grid:get_offset() - vmath.vector3(extra_size, 0, 0)
+		self.grid:get_size() + vmath.vector3(extra_size * 2, 0, 0)
 	)
 
 	-- Update points of interest
