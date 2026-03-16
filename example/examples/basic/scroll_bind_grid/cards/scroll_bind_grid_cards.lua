@@ -79,8 +79,9 @@ end
 
 
 function M:on_button_click(direction)
-	local current_index = self.grid:get_index(-self.scroll.position + vmath.vector3(0, -100, 0))
-	self.scroll:scroll_to_index(current_index + direction)
+	local current_index = self.grid:get_index(-self.scroll.position)
+	local target_index = current_index + direction
+	self.scroll:scroll_to_index(target_index)
 end
 
 
