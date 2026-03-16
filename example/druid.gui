@@ -2498,6 +2498,109 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_grid_cards"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/scroll_bind_grid/cards/scroll_bind_grid_cards.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/root"
+  parent: "scroll_bind_grid_cards"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/mask"
+  parent: "scroll_bind_grid_cards/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/view"
+  parent: "scroll_bind_grid_cards/mask"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/content"
+  parent: "scroll_bind_grid_cards/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_grid_cards/scroll_bind_grid_card"
+  parent: "scroll_bind_grid_cards/content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/scroll_bind_grid_card/root"
+  parent: "scroll_bind_grid_cards/scroll_bind_grid_card"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/scroll_bind_grid_card/panel"
+  parent: "scroll_bind_grid_cards/scroll_bind_grid_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_grid_cards/scroll_bind_grid_card/text_header"
+  parent: "scroll_bind_grid_cards/scroll_bind_grid_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_grid_cards/scroll_bind_grid_card/text_description"
+  parent: "scroll_bind_grid_cards/scroll_bind_grid_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_grid_cards/scroll_bind_grid_card/button_text"
+  parent: "scroll_bind_grid_cards/scroll_bind_grid_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/scroll_bind_grid_card/button_text/root"
+  parent: "scroll_bind_grid_cards/scroll_bind_grid_card/button_text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_grid_cards/scroll_bind_grid_card/button_text/text"
+  parent: "scroll_bind_grid_cards/scroll_bind_grid_card/button_text/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/button_left"
+  parent: "scroll_bind_grid_cards/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/icon_left"
+  parent: "scroll_bind_grid_cards/button_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/button_right"
+  parent: "scroll_bind_grid_cards/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_cards/icon_right"
+  parent: "scroll_bind_grid_cards/button_right"
+  template_node_child: true
+}
+nodes {
   size {
     x: 200.0
     y: 100.0
@@ -3817,6 +3920,109 @@ nodes {
   type: TYPE_BOX
   id: "basic_layout/prefab"
   parent: "basic_layout/layout"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_layout_cards"
+  parent: "layout"
+  inherit_alpha: true
+  template: "/example/examples/layout/cards/scroll_bind_layout_cards.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/root"
+  parent: "scroll_bind_layout_cards"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/mask"
+  parent: "scroll_bind_layout_cards/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/view"
+  parent: "scroll_bind_layout_cards/mask"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/layout"
+  parent: "scroll_bind_layout_cards/view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_layout_cards/scroll_bind_layout_card"
+  parent: "scroll_bind_layout_cards/layout"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/scroll_bind_layout_card/root"
+  parent: "scroll_bind_layout_cards/scroll_bind_layout_card"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/scroll_bind_layout_card/panel"
+  parent: "scroll_bind_layout_cards/scroll_bind_layout_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_layout_cards/scroll_bind_layout_card/text_header"
+  parent: "scroll_bind_layout_cards/scroll_bind_layout_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_layout_cards/scroll_bind_layout_card/text_description"
+  parent: "scroll_bind_layout_cards/scroll_bind_layout_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_layout_cards/scroll_bind_layout_card/button_text"
+  parent: "scroll_bind_layout_cards/scroll_bind_layout_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/scroll_bind_layout_card/button_text/root"
+  parent: "scroll_bind_layout_cards/scroll_bind_layout_card/button_text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_layout_cards/scroll_bind_layout_card/button_text/text"
+  parent: "scroll_bind_layout_cards/scroll_bind_layout_card/button_text/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/button_left"
+  parent: "scroll_bind_layout_cards/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/icon_left"
+  parent: "scroll_bind_layout_cards/button_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/button_right"
+  parent: "scroll_bind_layout_cards/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_layout_cards/icon_right"
+  parent: "scroll_bind_layout_cards/button_right"
   template_node_child: true
 }
 nodes {

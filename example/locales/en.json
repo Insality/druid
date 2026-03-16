@@ -114,6 +114,12 @@
 	"ui_example_basic_scroll_bind_grid_points": "Scroll Grid Points",
 	"ui_example_basic_scroll_bind_grid_points_description": "Scrolls with points of interest to snap to",
 
+	"ui_example_basic_scroll_bind_grid_cards": "Scroll Grid Cards",
+	"ui_example_basic_scroll_bind_grid_cards_description": "Mark elements to snap, and control over this elements with scroll or buttons",
+
+	"ui_example_layout_scroll_bind_cards": "Scroll Layout Cards",
+	"ui_example_layout_scroll_bind_cards_description": "Mark elements to snap, and control over this elements with scroll or buttons",
+
 	"ui_example_basic_input": "Input",
 	"ui_example_basic_input_description": "How to make most simple input in Druid",
 

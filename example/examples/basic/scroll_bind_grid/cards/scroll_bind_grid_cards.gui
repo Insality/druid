@@ -1,0 +1,214 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
+}
+nodes {
+  size {
+    x: 1000.0
+    y: 1000.0
+  }
+  type: TYPE_BOX
+  texture: "druid_example/empty"
+  id: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    y: 300.0
+  }
+  size {
+    x: 1100.0
+    y: 600.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid_example/empty"
+  id: "mask"
+  pivot: PIVOT_N
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+  clipping_mode: CLIPPING_MODE_STENCIL
+}
+nodes {
+  position {
+    y: -50.0
+  }
+  size {
+    x: 1100.0
+    y: 500.0
+  }
+  color {
+    x: 0.173
+    y: 0.184
+    z: 0.204
+  }
+  type: TYPE_BOX
+  texture: "druid_example/empty"
+  id: "view"
+  pivot: PIVOT_N
+  parent: "mask"
+  inherit_alpha: true
+  slice9 {
+    x: 16.0
+    y: 16.0
+    z: 16.0
+    w: 16.0
+  }
+}
+nodes {
+  position {
+    x: -550.0
+    y: -250.0
+  }
+  size {
+    x: 1100.0
+    y: 500.0
+  }
+  type: TYPE_BOX
+  texture: "druid_example/empty"
+  id: "content"
+  pivot: PIVOT_W
+  parent: "view"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    x: 550.0
+  }
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_grid_card"
+  parent: "content"
+  inherit_alpha: true
+  template: "/example/examples/basic/scroll_bind_grid/cards/scroll_bind_grid_card.gui"
+}
+nodes {
+  size {
+    x: 600.0
+    y: 500.0
+  }
+  type: TYPE_BOX
+  id: "scroll_bind_grid_card/root"
+  parent: "scroll_bind_grid_card"
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_card/panel"
+  parent: "scroll_bind_grid_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_grid_card/text_header"
+  parent: "scroll_bind_grid_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_grid_card/text_description"
+  parent: "scroll_bind_grid_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_bind_grid_card/button_text"
+  parent: "scroll_bind_grid_card/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_bind_grid_card/button_text/root"
+  parent: "scroll_bind_grid_card/button_text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_bind_grid_card/button_text/text"
+  parent: "scroll_bind_grid_card/button_text/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -350.0
+  }
+  size {
+    x: 200.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  id: "button_left"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  scale {
+    x: -2.0
+    y: 2.0
+  }
+  color {
+    x: 0.4627451
+    y: 0.4745098
+    z: 0.49019608
+  }
+  type: TYPE_BOX
+  texture: "druid_example/icon_arrow"
+  id: "icon_left"
+  parent: "button_left"
+  inherit_alpha: true
+  alpha: 0.7
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 350.0
+  }
+  size {
+    x: 200.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  id: "button_right"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  color {
+    x: 0.4627451
+    y: 0.4745098
+    z: 0.49019608
+  }
+  type: TYPE_BOX
+  texture: "druid_example/icon_arrow"
+  id: "icon_right"
+  parent: "button_right"
+  inherit_alpha: true
+  alpha: 0.7
+  size_mode: SIZE_MODE_AUTO
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

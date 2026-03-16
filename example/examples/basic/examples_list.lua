@@ -188,6 +188,14 @@ function M.get_examples()
 			widget_class = require("example.examples.basic.scroll_bind_grid.scroll_bind_grid_points"),
 		},
 		{
+			name_id = "ui_example_basic_scroll_bind_grid_cards",
+			information_text_id = "ui_example_basic_scroll_bind_grid_cards_description",
+			template = "scroll_bind_grid_cards",
+			root = "scroll_bind_grid_cards/root",
+			code_url = "example/examples/basic/scroll_bind_grid/cards/scroll_bind_grid_cards.lua",
+			widget_class = require("example.examples.basic.scroll_bind_grid.cards.scroll_bind_grid_cards"),
+		},
+		{
 			name_id = "ui_example_basic_input",
 			information_text_id = "ui_example_basic_input_description",
 			template = "basic_input",
