@@ -403,10 +403,6 @@ end
 function M:set_points(points)
 	self.points = points
 
-	table.sort(self.points, function(a, b)
-		return a.x > b.x or a.y < b.y
-	end)
-
 	self:_check_threshold()
 
 	return self
