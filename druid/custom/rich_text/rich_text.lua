@@ -86,15 +86,13 @@ function M:init(text_node, value)
 	self.root = self:get_node(text_node)
 	self.text_prefab = self.root
 
-	self._last_value = value or gui.get_text(self.text_prefab)
+	self._last_value = value or gui.get_text(self.text_prefab) or ""
 	self._settings = self:_create_settings()
 	self._split_to_characters = false
 
 	gui.set_text(self.root, "")
 
-	if value then
-		self:set_text(value)
-	end
+	self:set_text(self._last_value)
 end
 
 
@@ -102,10 +100,7 @@ end
 function M:on_layout_change()
 	gui.set_text(self.root, "")
 	self._settings = self:_create_settings()
-
-	if self._last_value then
-		self:set_text(self._last_value)
-	end
+	self:set_text(self._last_value)
 end
 
 
@@ -227,6 +222,8 @@ function M:clear()
 		self._words = nil
 	end
 	self._last_value = nil
+
+	return self
 end
 
 

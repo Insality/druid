@@ -117,16 +117,22 @@ end
 ---@return druid.rich_text.metrics
 local function get_image_metrics(word, settings)
 	local node = word.node
+	if word.image.width or word.image.height then
+		gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
+	else
+		gui.set_size_mode(node, gui.SIZE_MODE_AUTO)
+	end
 	gui.set_texture(node, word.image.texture)
-	gui.play_flipbook(node, word.image.anim)
+	gui.play_flipbook(node, hash(word.image.anim))
+
 	local node_size = gui.get_size(node)
 	local aspect = node_size.x / node_size.y
 	node_size.x = word.image.width or node_size.x
-	node_size.y = word.image.height or (node_size.x / aspect)
+	node_size.y = word.image.height or node_size.y
 
 	return {
-		width = node_size.x * word.relative_scale * settings.scale.x * settings.adjust_scale,
-		height = node_size.y * word.relative_scale * settings.scale.y * settings.adjust_scale,
+		width = node_size.x * word.relative_scale * settings.adjust_scale,
+		height = node_size.y * word.relative_scale * settings.adjust_scale,
 		node_size = node_size,
 	}
 end
@@ -140,7 +146,12 @@ local function measure_node(word, settings, previous_word)
 	do -- Clone node if required
 		local node
 		if word.image then
-			node = word.node or gui.new_box_node(vmath.vector3(0), vmath.vector3(word.image.width, word.image.height, 0))
+			local size = vmath.vector3(
+				word.image.width or 100,
+				word.image.height or 100,
+				0
+			)
+			node = word.node or gui.new_box_node(vmath.vector3(0), size)
 		else
 			node = word.node or gui.clone(settings.text_prefab)
 		end
