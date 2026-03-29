@@ -84,6 +84,11 @@ function M:update()
 end
 
 
+function M:on_layout_change()
+	self:refresh_layout(false)
+end
+
+
 ---@return node[] entities The entities to manage the layout of
 function M:get_entities()
 	return self.entities
