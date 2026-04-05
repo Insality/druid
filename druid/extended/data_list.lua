@@ -258,27 +258,44 @@ function M:_remove_at(index)
 end
 
 
+---Get the visible area bounds in content-local coordinates (top-left and bottom-right),
+---clamped to the grid coordinate range so get_index_xy produces valid results.
+---@return number left
+---@return number top
+---@return number right
+---@return number bottom
+---@private
+function M:_get_visible_bounds()
+	local scroll_pos = self.scroll.position
+	local view_border = self.scroll.view_border
+	local grid = self.grid
+	local grid_zero = grid._base_offset
+	local grid_max_x = grid_zero.x + (grid.in_row - 1) * grid.node_size.x
+
+	local left = math.max(-scroll_pos.x + view_border.x, grid_zero.x)
+	local top = math.min(-scroll_pos.y + view_border.y, grid_zero.y)
+	local right = math.min(-scroll_pos.x + view_border.z, grid_max_x)
+	local bottom = -scroll_pos.y + view_border.w
+
+	if #self._data <= grid.in_row then
+		bottom = top
+	end
+
+	return left, top, right, bottom
+end
+
+
 ---Refresh all elements in DataList
 ---@private
 function M:_refresh()
 	self.scroll:set_size(self.grid:get_size_for(#self._data))
 
-	local start_pos = -self.scroll.position --[[@as vector3]]
-	local start_index = self.grid:get_index(start_pos)
+	local left, top, right, bottom = self:_get_visible_bounds()
+
+	local start_index = self.grid:get_index_xy(left, top)
 	start_index = math.max(1, start_index)
 
-	local offset_x = self.scroll.view_size.x
-	local offset_y = self.scroll.view_size.y
-	local end_pos = vmath.vector3(start_pos.x + offset_x, start_pos.y - offset_y, 0)
-
-	local max_offset_x = (self.grid.in_row - 1) * self.grid.node_size.x
-	end_pos.x = math.min(end_pos.x, start_pos.x + max_offset_x)
-
-	if #self._data <= self.grid.in_row then
-		end_pos.y = start_pos.y
-	end
-
-	local end_index = self.grid:get_index(end_pos)
+	local end_index = self.grid:get_index_xy(right, bottom)
 	end_index = math.min(#self._data, end_index)
 
 	self.top_index = start_index
