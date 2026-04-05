@@ -815,3 +815,10 @@ Please support me if you like this project! It will help me keep engaged to upda
 - Fix case, when scroll stuck on the edge of the points of interest
 - Add Scroll Bind Grid example
 - Add Scroll Bind Layout example
+
+### Druid 1.2.2
+- [Rich Text] Fix centered alignment by excluding trailing space from line width calculation
+- [Rich Text] Fix render images size handling
+- [Data List] Fix for visible bounds calculation in matrix grid mode
+- [Scroll] Fix for `scroll_to_make_node_visible` for some cases
+- [Layout] Refresh layout component when window layout is changed
