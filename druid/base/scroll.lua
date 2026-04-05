@@ -214,6 +214,10 @@ function M:scroll_to_make_node_visible(node, is_instant)
 	local screen_position = gui.get_screen_position(node)
 	local local_position = gui.screen_to_local(self.content_node, screen_position)
 
+	local content_position = gui.get_position(self.content_node)
+	local_position.x = local_position.x - content_position.x
+	local_position.y = local_position.y - content_position.y
+
 	-- Get the node borders in content node space
 	local node_border = helper.get_border(node, local_position)
 
