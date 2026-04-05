@@ -44,9 +44,9 @@ function M:init(parent, element, in_row)
 	self.node_size = gui.get_size(self._prefab)
 	self.node_pivot = const.PIVOTS[gui.get_pivot(self._prefab)]
 
-	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
-	self._zero_offset = vmath.vector3(
-		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._grid_horizonal_offset,
+	self._row_center_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
+	self._base_offset = vmath.vector3(
+		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._row_center_offset,
 		self.node_size.y * self.node_pivot.y - self.node_size.y * self.pivot.y,
 		0)
 
@@ -80,31 +80,37 @@ function M:get_pos(index)
 	local row = math.ceil(index / self.in_row) - 1
 	local col = (index - row * self.in_row) - 1
 
-	local zero_offset_x = self:_get_zero_offset_x(row)
+	local zero_offset_x = self:_get_row_offset_x(row)
 
 	_temp_pos.x = col * self.node_size.x + zero_offset_x
-	_temp_pos.y = -row * self.node_size.y + self._zero_offset.y
+	_temp_pos.y = -row * self.node_size.y + self._base_offset.y
 	_temp_pos.z = 0
 
 	return _temp_pos
 end
 
 
----Return grid index by position
+---Return grid index by content-local x, y. Inverse of get_pos + _get_dynamic_offset.
+---@param x number
+---@param y number
+---@return number index The node index
+function M:get_index_xy(x, y)
+	local dynamic_offset_x, dynamic_offset_y = self:_get_dynamic_offset()
+	x = x - dynamic_offset_x
+	y = y - dynamic_offset_y
+
+	local row = helper.round((self._base_offset.y - y) / self.node_size.y)
+	local col = helper.round((x - self:_get_row_offset_x(row)) / self.node_size.x)
+
+	return (col + 1) + row * self.in_row
+end
+
+
+---Return grid index by position. Inverse of get_pos + _get_dynamic_offset.
 ---@param pos vector3 The node position in the grid
 ---@return number index The node index
 function M:get_index(pos)
-	local zero_offset = self:_get_zero_offset()
-
-	local local_y = pos.y - zero_offset.y
-	local row = helper.round(-local_y / self.node_size.y)
-
-	local zero_offset_x = self:_get_zero_offset_x(row)
-	local local_x = pos.x - zero_offset_x
-	local col = helper.round(local_x / self.node_size.x) + 1
-
-	local index = col + (row * self.in_row)
-	return index
+	return self:get_index_xy(pos.x, pos.y)
 end
 
 
@@ -163,9 +169,9 @@ function M:set_pivot(pivot)
 	gui.set_pivot(self.parent, pivot)
 
 	self.anchor = vmath.vector3(0.5 + self.pivot.x, 0.5 - self.pivot.y, 0)
-	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
-	self._zero_offset = vmath.vector3(
-		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._grid_horizonal_offset,
+	self._row_center_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
+	self._base_offset = vmath.vector3(
+		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._row_center_offset,
 		self.node_size.y * self.node_pivot.y - self.node_size.y * self.pivot.y,
 		0
 	)
@@ -192,7 +198,11 @@ function M:add(item, index, shift_policy, is_instant)
 	self:_update_indexes()
 	self:_update_borders()
 
-	gui.set_position(item, self:get_pos(index) + self:_get_zero_offset())
+	local pos = self:get_pos(index)
+	local dynamic_offset_x, dynamic_offset_y = self:_get_dynamic_offset()
+	pos.x = pos.x + dynamic_offset_x
+	pos.y = pos.y + dynamic_offset_y
+	gui.set_position(item, pos)
 
 	self:_update_pos(is_instant)
 
@@ -353,9 +363,9 @@ end
 ---@return druid.grid self Current grid instance
 function M:set_in_row(in_row)
 	self.in_row = in_row
-	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
-	self._zero_offset = vmath.vector3(
-		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._grid_horizonal_offset,
+	self._row_center_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
+	self._base_offset = vmath.vector3(
+		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._row_center_offset,
 		self.node_size.y * self.node_pivot.y - self.node_size.y * self.pivot.y,
 		0)
 
@@ -377,9 +387,9 @@ function M:set_item_size(width, height)
 	if height then
 		self.node_size.y = height
 	end
-	self._grid_horizonal_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
-	self._zero_offset = vmath.vector3(
-		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._grid_horizonal_offset,
+	self._row_center_offset = self.node_size.x * (self.in_row - 1) * self.anchor.x
+	self._base_offset = vmath.vector3(
+		self.node_size.x * self.node_pivot.x - self.node_size.x * self.pivot.x - self._row_center_offset,
 		self.node_size.y * self.node_pivot.y - self.node_size.y * self.pivot.y,
 		0)
 
@@ -448,12 +458,12 @@ end
 ---@param is_instant boolean|nil If true, node position update instantly, otherwise with set_position_function callback
 ---@private
 function M:_update_pos(is_instant)
-	local zero_offset = self:_get_zero_offset()
+	local dynamic_offset_x, dynamic_offset_y = self:_get_dynamic_offset()
 
 	for i, node in pairs(self.nodes) do
 		local pos = self:get_pos(i)
-		pos.x = pos.x + zero_offset.x
-		pos.y = pos.y + zero_offset.y
+		pos.x = pos.x + dynamic_offset_x
+		pos.y = pos.y + dynamic_offset_y
 
 		if is_instant then
 			gui.set_position(node, pos)
@@ -466,33 +476,33 @@ function M:_update_pos(is_instant)
 end
 
 
----Return elements offset for correct posing nodes. Correct posing at
----parent pivot node (0:0) with adjusting of node sizes and anchoring
----@return vector3 The offset vector
+---Return dynamic centering offset. Only non-zero when IS_DYNAMIC_NODE_POSES is enabled,
+---centers grid content according to pivot within its current borders.
+---@return number dynamic_offset_x
+---@return number dynamic_offset_y
 ---@private
-function M:_get_zero_offset()
+function M:_get_dynamic_offset()
 	if not self.style.IS_DYNAMIC_NODE_POSES then
-		return vmath.vector3(0)
+		return 0, 0
 	end
 
-	-- zero offset: center pos - border size * anchor
-	return vmath.vector3(
-		-((self.border.x + self.border.z)/2 + (self.border.z - self.border.x) * self.pivot.x),
-		-((self.border.y + self.border.w)/2 + (self.border.y - self.border.w) * self.pivot.y),
-		0
-	)
+	local border = self.border
+	local dynamic_offset_x = -((border.x + border.z) / 2 + (border.z - border.x) * self.pivot.x)
+	local dynamic_offset_y = -((border.y + border.w) / 2 + (border.y - border.w) * self.pivot.y)
+	return dynamic_offset_x, dynamic_offset_y
 end
 
 
----Return offset x for last row in grid. Used to align this row accorting to grid's anchor
+---Return x offset for a given row. For most rows returns _base_offset.x,
+---but when IS_ALIGN_LAST_ROW is enabled, the last row gets a different offset.
 ---@return number The offset x value
 ---@private
-function M:_get_zero_offset_x(row_index)
+function M:_get_row_offset_x(row_index)
 	if not self.style.IS_DYNAMIC_NODE_POSES or not self.style.IS_ALIGN_LAST_ROW then
-		return self._zero_offset.x
+		return self._base_offset.x
 	end
 
-	local offset_x = self._zero_offset.x
+	local offset_x = self._base_offset.x
 	local last_row = math.ceil(self.last_index / self.in_row) - 1
 
 	if last_row > 0 and last_row == row_index then
