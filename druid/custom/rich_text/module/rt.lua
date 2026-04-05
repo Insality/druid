@@ -420,6 +420,18 @@ function M._get_lines_metrics(lines, settings)
 			end
 		end
 
+		-- Exclude trailing space of last word from line width (parser adds "word " per token)
+		local last = line[#line]
+		if last and not last.image then
+			local trimmed = last.text:match("^(.-)%s+$")
+			if trimmed then
+				local font_resource = gui.get_font_resource(last.font)
+				local scale_x = last.relative_scale * settings.scale.x * settings.adjust_scale
+				local space_w = resource.get_text_metrics(font_resource, last.text).width - resource.get_text_metrics(font_resource, trimmed).width
+				width = width - space_w * scale_x
+			end
+		end
+
 		if line_index > 1 then
 			height = height * settings.text_leading
 		end
