@@ -18,8 +18,8 @@ Create slider component with druid: `slider = druid:new_slider(node_name, end_po
 
 - [init](#init)
 - [set](#set)
-- [set_end_pos](#set_end_pos)
 - [set_steps](#set_steps)
+- [set_end_pos](#set_end_pos)
 - [set_input_node](#set_input_node)
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
@@ -61,21 +61,6 @@ Set value for slider
 - **Returns:**
 	- `self` *(druid.slider)*: Current slider instance
 
-### set_end_pos
-
----
-```lua
-slider:set_end_pos(end_pos)
-```
-
-Adjust the end position of the slider. Should be on the same axis as the start position.
-
-- **Parameters:**
-	- `end_pos` *(vector3)*: The end position of the slider
-
-- **Returns:**
-	- `self` *(druid.slider)*: Current slider instance
-
 ### set_steps
 
 ---
@@ -88,6 +73,21 @@ apply closest step position
 
 - **Parameters:**
 	- `steps` *(number[])*: Array of steps
+
+- **Returns:**
+	- `self` *(druid.slider)*: Current slider instance
+
+### set_end_pos
+
+---
+```lua
+slider:set_end_pos(end_pos)
+```
+
+Adjust the end position of the slider
+
+- **Parameters:**
+	- `end_pos` *(vector3)*: The end position of the slider
 
 - **Returns:**
 	- `self` *(druid.slider)*: Current slider instance

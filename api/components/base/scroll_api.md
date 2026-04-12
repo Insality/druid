@@ -112,14 +112,15 @@ Scroll to the node, if node is not visible in scroll view
 
 ---
 ```lua
-scroll:scroll_to_index(index, [skip_cb])
+scroll:scroll_to_index(index, [is_silent], [is_instant])
 ```
 
 Scroll to item in scroll by point index.
 
 - **Parameters:**
 	- `index` *(number)*: Point index
-	- `[skip_cb]` *(boolean|nil)*: If true, skip the point callback
+	- `[is_silent]` *(boolean|nil)*: If true, skip the point callback
+	- `[is_instant]` *(boolean|nil)*: Instant scroll flag
 
 ### scroll_to_percent
 

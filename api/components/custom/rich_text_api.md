@@ -119,6 +119,9 @@ rich_text:clear()
 
 Clear all created words.
 
+- **Returns:**
+	- `` *(druid.rich_text)*:
+
 ### tagged
 
 ---
