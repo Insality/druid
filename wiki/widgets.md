@@ -246,21 +246,30 @@ You can create Druid widgets from a game object script. This allows you to use w
 For the GUI file you want to use as a widget, set its `gui_script` to `druid_widget.gui_script`.
 When you call `druid.get_widget(widget, gui_url)` in a game object script, Druid creates a widget proxy with bindings for all top-level widget functions.
 
+In some setups, you cannot create a widget immediately in `init(self)`, because the GUI component with `druid_widget.gui_script` may not be initialized yet.
+In this case, defer widget creation to a later step (for example, via `msg.post` and `on_message`):
+
 ```lua
 -- your_game_object.script
 local druid = require("druid.druid")
 local my_widget = require("widgets.my_widget.my_widget") -- Your widget module
 
 function init(self)
-    local gui_url = msg.url(nil, nil, "go_widget")
-    self.go_widget = druid.get_widget(my_widget, gui_url)
-    self.go_widget:play_animation()
-    self.go_widget:set_position(go.get_position())
-    self.go_widget.on_event:subscribe(self.on_event, self)
+    msg.post(".", "late_init")
 end
 
-function on_event()
+local function on_event(self)
     print("Widget event happened")
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("late_init") then
+        local gui_url = msg.url(nil, nil, "go_widget")
+        self.go_widget = druid.get_widget(my_widget, gui_url)
+        self.go_widget:play_animation()
+        self.go_widget:set_position(go.get_position())
+        self.go_widget.on_event:subscribe(on_event, self)
+    end
 end
 ```
 
@@ -271,16 +280,22 @@ This feature is called `GO Widgets`, and it is more advanced. Important notes:
 - Top-level events are also available from a GO script.
 - You cannot directly use `gui.*` functions on widget nodes from the GO script. Use widget API functions instead.
 
-You also able to pass a param to the widget from `druid.get_widget(widget, gui_url, [params])` call.
+You can also pass params to a widget via `druid.get_widget(widget, gui_url, [params])`.
 
 ```lua
 local my_widget = require("widgets.my_widget.my_widget")
 
 function init(self)
-    local gui_url = msg.url(nil, nil, "go_widget")
-    self.go_widget = druid.get_widget(my_widget, gui_url, {
-        show_badges = true
-    })
+    msg.post(".", "late_init")
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("late_init") then
+        local gui_url = msg.url(nil, nil, "go_widget")
+        self.go_widget = druid.get_widget(my_widget, gui_url, {
+            show_badges = true
+        })
+    end
 end
 ```
 
