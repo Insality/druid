@@ -1,27 +1,70 @@
 ---This is a template for a {COMPONENT_NAME} Druid widget.
----Instantiate this template with `druid.new_widget(widget_module, [template_id], [nodes])`.
----Read more about Druid Widgets here: ...
+---Instantiate this template with `druid:new_widget(widget_module, [template_id], [nodes], ...)`.
+---Read more about Druid Widgets here: https://github.com/Insality/druid/blob/master/wiki/widgets.md
+-- Once you are familiar with widgets, you can switch to the simpler template
+-- `/druid/templates/widget.lua.template` in Edit -> [Druid] Settings.
 
 ---@class widget.{COMPONENT_TYPE}: druid.widget
 local M = {}
 
 
-function M:init()
-	-- Now we have next functions to use here:
-	-- self:get_node([node_id]) -- Get node inside widget by id
-	-- self.druid to access Druid Instance API, like:
+-- Called on `druid:new_widget(...)` call. Additional arguments are passed from varags in `druid:new_widget()` call
+function M:init(...)
+	-- Use `self:get_node(node_id)` instead `gui.get_node(node_id)` to get widget's nodes
+	self.root = self:get_node("root")
+
+	-- Use `self.druid` to access Druid API, like
 	-- self.druid:new_button([node_id], [callback])
 	-- self.druid:new_text([node_id], [text])
-	-- And all functions from component.lua file
-
-	self.root = self:get_node("root")
-	self.button = self.druid:new_button("button", self.on_button, self)
+	self.button = self.druid:new_button("root", self.on_button, self)
 end
 
 
+-- You can add any functions to your widget
 function M:on_button()
-	print("Root node", self.root)
+	print("Clicked on root!")
 end
+
+-- All available lifecycle functions:
+
+-- Called before widget is removed by `druid:remove(widget)` or on `druid:final()`
+function M:on_remove() end
+
+
+-- Called every frame update
+function M:update(dt) end
+
+
+-- Called when input is dispatched to widget. Return true to consume input
+function M:on_input(action_id, action) return false end
+
+
+-- Called on script message
+function M:on_message(message_id, message, sender) end
+
+
+-- Called when language is changed
+function M:on_language_change() end
+
+
+-- Called when layout has changed
+function M:on_layout_change() end
+
+
+-- Called when window is resized
+function M:on_window_resized() end
+
+
+-- Called when input was already consumed by a higher-priority component
+function M:on_input_interrupt() end
+
+
+-- Called when widget lost focus
+function M:on_focus_lost() end
+
+
+-- Called when widget gained focus
+function M:on_focus_gained() end
 
 
 return M

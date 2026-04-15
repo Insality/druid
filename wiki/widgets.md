@@ -23,7 +23,7 @@ function M:init(template, nodes)
 end
 
 function M:on_click()
-	print("Current output string: " .. self.output_string)
+    print("Current output string: " .. self.output_string)
 end
 
 function M:set_output_string(output_string)
@@ -49,7 +49,7 @@ local M = {}
 
 function M:init()
     self.druid:new_button("button_node_name", self.on_click)
-	self.output_string = ""
+    self.output_string = ""
 end
 
 function M:on_click()
@@ -73,8 +73,8 @@ local my_widget = require("widgets.my_widget.my_widget")
 
 function init(self)
     self.druid = druid.new(self)
-	local template_id = "my_widget" -- If using a GUI template, set a template id, otherwise set nil
-	local nodes = nil -- If nodes are cloned with gui.clone_tree(), set a nodes table, otherwise set nil
+    local template_id = "my_widget" -- If using a GUI template, set a template id, otherwise set nil
+    local nodes = nil -- If nodes are cloned with gui.clone_tree(), set a nodes table, otherwise set nil
     self.my_widget = self.druid:new_widget(my_widget, template_id, nodes)
     self.my_widget:set_output_string("Hello world!")
 end
@@ -111,6 +111,61 @@ return M
 
 That's the basic creation process. Now we have a widget where we access the root node and use the "button_open" node as a button.
 
+Widget modules also support lifecycle callbacks:
+
+```lua
+-- Called before widget is removed by `druid:remove(widget)` call or on `druid:final()` call
+function M:on_remove() end
+
+-- Called every frame update
+function M:update(dt) end
+
+-- Called when input is dispatched to widget. Return true to consume input
+function M:on_input(action_id, action) return false end
+
+-- Called on script message
+function M:on_message(message_id, message, sender) end
+
+-- Called on `druid.on_language_change` call
+function M:on_language_change() end
+
+-- Called when layout has changed
+function M:on_layout_change() end
+
+-- Called when window is resized
+function M:on_window_resized() end
+
+-- Called when input was already consumed by a higher-priority component
+function M:on_input_interrupt() end
+
+-- Called when widget lost focus
+function M:on_focus_lost() end
+
+-- Called when widget gained focus
+function M:on_focus_gained() end
+```
+
+You can define only callbacks you need. Druid will call them automatically when corresponding events happen.
+
+Additional `druid:new_widget(widget, template, nodes, ...)` arguments are forwarded to `M:init(...)`:
+
+```lua
+local M = {}
+
+function M:init(user_id, options)
+    self.user_id = user_id
+    self.options = options
+end
+
+return M
+```
+
+```lua
+self.profile_widget = self.druid:new_widget(profile_widget, "profile_widget", nil, "42", {
+    show_badges = true
+})
+```
+
 Now, let's create a widget inside your game scene.
 
 Place a widget (GUI template) on your main scene. Then import Druid and create a new widget instance using this GUI template placed on the scene:
@@ -126,7 +181,7 @@ function init(self)
     -- In case we want to clone it and use several times we can pass the nodes table
     local array_of_widgets = {}
     for index = 1, 10 do
-        -- For widgets now we can use a root node inside my_widget directly instead of manually cloning the nodes
+        -- Instead of manual gui.clone_tree() call, we can pass a node_id to clone from as the third argument
         local widget = self.druid:new_widget(my_widget, "my_widget", "root")
         table.insert(array_of_widgets, widget)
     end
@@ -146,6 +201,7 @@ local M = {}
 
 function M:init()
     self.on_close = event.create()
+    -- Since we have no template prefix to add in paths, it will pick nodes from the parent instance directly
     self.druid:new_hotkey("key_backspace", self.on_close)
 end
 
@@ -158,15 +214,16 @@ local druid = require("druid.druid")
 local my_widget = require("widgets.my_widget.my_widget")
 
 local function on_close()
-	print("Widget closed")
+    print("Widget closed")
 end
 
 function init(self)
     self.druid = druid.new(self)
     self.my_widget = self.druid:new_widget(my_widget)
-	self.my_widget.on_close:subscribe(on_close, self)
+    self.my_widget.on_close:subscribe(on_close, self)
 end
 ```
+
 
 ## Create Druid Widget Editor Script
 
@@ -176,8 +233,62 @@ This script will create a new widget lua file with the same name and basic templ
 
 The Druid provides two templates:
 
-- `/druid/templates/widget.lua.template` - Basic template for the widget.
+- `/druid/templates/widget.lua.template` - Minimal template for the widget.
 - `/druid/templates/widget_full.lua.template` - Full template for the widget.
 
 You can change the path to the template in the `[Druid] Settings` option in the `Edit` menu.
 
+
+## Creating GO widgets without *.gui_script
+
+You can create Druid widgets from a game object script. This allows you to use widgets without creating dedicated `gui_script` files for each one.
+
+For the GUI file you want to use as a widget, set its `gui_script` to `druid_widget.gui_script`.
+When you call `druid.get_widget(widget, gui_url)` in a game object script, Druid creates a widget proxy with bindings for all top-level widget functions.
+
+```lua
+-- your_game_object.script
+local druid = require("druid.druid")
+local my_widget = require("widgets.my_widget.my_widget") -- Your widget module
+
+function init(self)
+    local gui_url = msg.url(nil, nil, "go_widget")
+    self.go_widget = druid.get_widget(my_widget, gui_url)
+    self.go_widget:play_animation()
+    self.go_widget:set_position(go.get_position())
+    self.go_widget.on_event:subscribe(self.on_event, self)
+end
+
+function on_event()
+    print("Widget event happened")
+end
+```
+
+This feature is called `GO Widgets`, and it is more advanced. Important notes:
+
+- All top-level functions are wrapped with `event`, so they can be called from a GO script.
+- Nested widget functions are not exposed.
+- Top-level events are also available from a GO script.
+- You cannot directly use `gui.*` functions on widget nodes from the GO script. Use widget API functions instead.
+
+You also able to pass a param to the widget from `druid.get_widget(widget, gui_url, [params])` call.
+
+```lua
+local my_widget = require("widgets.my_widget.my_widget")
+
+function init(self)
+    local gui_url = msg.url(nil, nil, "go_widget")
+    self.go_widget = druid.get_widget(my_widget, gui_url, {
+        show_badges = true
+    })
+end
+```
+
+```lua
+-- my_widget.lua
+local M = {}
+
+function M:init(params)
+    self.show_badges = params.show_badges
+end
+```

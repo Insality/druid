@@ -222,6 +222,7 @@ If you have any issues, questions or suggestions please [create an issue](https:
 
 
 ## History
+
 For a complete history of the development of **Druid**, please check the [changelog](wiki/changelog.md).
 
 
