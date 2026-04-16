@@ -144,6 +144,10 @@ end
 ---@param action table The action table
 ---@return boolean is_consumed True if the input was consumed
 function M:on_input(action_id, action)
+	if self.disabled then 
+		return
+	end
+	
 	if not self:_is_input_match(action_id) then
 		return false
 	end
