@@ -244,7 +244,7 @@ return function()
 			assert(progress:get() == 0.5)
 
 			-- Test that progress setter works
-			progress:set_to(0.75)
+			progress:set_value(0.75)
 			assert(progress:get() == 0.75)
 
 			-- Clean up component

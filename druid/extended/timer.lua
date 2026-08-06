@@ -37,7 +37,7 @@ function M:init(node, seconds_from, seconds_to, callback)
 
 	if seconds_from then
 		seconds_from = math.max(seconds_from, 0)
-		self:set_to(seconds_from)
+		self:set_value(seconds_from)
 		self:set_interval(seconds_from, seconds_to)
 
 		if seconds_to - seconds_from == 0 then
@@ -62,7 +62,7 @@ function M:update(dt)
 	if self.temp > dist then
 		self.temp = self.temp - dist
 		self.value = helper.step(self.value, self.target, 1)
-		self:set_to(self.value)
+		self:set_value(self.value)
 
 		self.on_tick:trigger(self:get_context(), self.value)
 
@@ -76,18 +76,27 @@ end
 
 ---@private
 function M:on_layout_change()
-	self:set_to(self.last_value)
+	self:set_value(self.last_value)
 end
 
 
 ---Set the timer to a specific value
 ---@param set_to number Value in seconds
 ---@return druid.timer self Current timer instance
-function M:set_to(set_to)
+function M:set_value(set_to)
 	self.last_value = set_to
 	gui.set_text(self.node, self:_second_string_min(set_to))
 
 	return self
+end
+
+
+---Set the timer to a specific value
+---@deprecated Use set_value instead
+---@param set_to number Value in seconds
+---@return druid.timer self Current timer instance
+function M:set_to(set_to)
+	return self:set_value(set_to)
 end
 
 
@@ -112,7 +121,7 @@ function M:set_interval(from, to)
 	self.temp = 0
 	self.target = to
 	self:set_state(true)
-	self:set_to(from)
+	self:set_value(from)
 
 	return self
 end
