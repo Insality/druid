@@ -52,8 +52,8 @@ end
 ---@return druid.lang_text self Current instance
 function M:set_to(text)
 	self.last_locale = nil
+	-- on_change is triggered via the text.on_set_text subscription made in init
 	self.text:set_text(text)
-	self.on_change:trigger()
 
 	return self
 end
