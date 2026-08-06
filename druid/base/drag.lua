@@ -61,6 +61,11 @@ function M:init(node_or_node_id, on_drag_callback)
 	self._scene_scale = helper.get_scene_scale(self.node)
 
 	self.click_zone = nil
+	self._allowed_drag_actions = {
+		[const.ACTION_TOUCH] = true,
+		[const.ACTION_MULTITOUCH] = true,
+	}
+
 	self.on_touch_start = event.create()
 	self.on_touch_end = event.create()
 	self.on_drag_start = event.create()
@@ -128,11 +133,16 @@ end
 ---@param action table Action from on_input
 ---@return boolean is_consumed True if the input was consumed
 function M:on_input(action_id, action)
-	if action_id ~= const.ACTION_TOUCH and action_id ~= const.ACTION_MULTITOUCH then
+	if not self._allowed_drag_actions[action_id] then
 		return false
 	end
 
 	if not self._is_enabled or not gui.is_enabled(self.node, true) then
+		return false
+	end
+
+	-- Drag requires the pointer position, key actions can't be used to drag
+	if not action.x or not action.y then
 		return false
 	end
 
@@ -231,6 +241,29 @@ function M:is_enabled()
 end
 
 
+---Add an additional input action that can start a drag.
+---By default only touch and multitouch actions are allowed.
+---Useful to drag with the middle or right mouse button on desktop.
+---The action should provide the pointer position, key actions are ignored.
+---@param action_id hash The action id to allow for dragging
+---@return druid.drag self Current instance
+function M:add_drag_action(action_id)
+	self._allowed_drag_actions[action_id] = true
+
+	return self
+end
+
+
+---Remove an additional input action from the allowed drag actions
+---@param action_id hash The action id to disallow for dragging
+---@return druid.drag self Current instance
+function M:remove_drag_action(action_id)
+	self._allowed_drag_actions[action_id] = nil
+
+	return self
+end
+
+
 function M:_start_touch(touch)
 	self.is_touch = true
 	self.is_drag = false
@@ -297,10 +330,18 @@ end
 ---@param touch_id number Touch id
 ---@return table|nil touch Touch action
 function M:_find_touch(action_id, action, touch_id)
-	local act = helper.is_mobile() and const.ACTION_MULTITOUCH or const.ACTION_TOUCH
-
-	if action_id ~= act then
+	if not self._allowed_drag_actions[action_id] then
 		return
+	end
+
+	-- On mobile both touch and touch_multi are fired for the same finger,
+	-- process only one of them to not apply the drag delta twice
+	local is_default_action = action_id == const.ACTION_TOUCH or action_id == const.ACTION_MULTITOUCH
+	if is_default_action then
+		local act = helper.is_mobile() and const.ACTION_MULTITOUCH or const.ACTION_TOUCH
+		if action_id ~= act then
+			return
+		end
 	end
 
 	if action.touch then
