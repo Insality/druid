@@ -733,22 +733,37 @@ function M:_update_free_scroll(dt)
 	end
 
 	local target = self.target_position
+	local inertion = self.inertion
+	local border = self.available_pos
+	local has_inertion = inertion.x ~= 0 or inertion.y ~= 0
+	local is_outside_soft_zone = target.x < border.x or target.x > border.z
+		or target.y < border.y or target.y > border.w
 
-	if self._is_inert and (self.inertion.x ~= 0 or self.inertion.y ~= 0) then
+	-- Settled scroll: skip friction, soft-zone, and position work
+	if not has_inertion
+		and self.position.x == target.x
+		and self.position.y == target.y
+		and not is_outside_soft_zone then
+		return
+	end
+
+	if self._is_inert and has_inertion then
 		-- Inertion apply
-		target.x = self.position.x + self.inertion.x * self.style.INERT_SPEED * dt
-		target.y = self.position.y + self.inertion.y * self.style.INERT_SPEED * dt
+		target.x = self.position.x + inertion.x * self.style.INERT_SPEED * dt
+		target.y = self.position.y + inertion.y * self.style.INERT_SPEED * dt
 
 		self:_check_threshold()
 	end
 
-	-- Inertion friction
-	self.inertion = self.inertion * self.style.FRICT
+	-- Inertion friction (mutate in place to avoid per-frame vector alloc)
+	local frict = self.style.FRICT
+	inertion.x = inertion.x * frict
+	inertion.y = inertion.y * frict
 
 	local is_changed = self:_check_soft_zone()
 	if is_changed then
-		self.inertion.x = 0
-		self.inertion.y = 0
+		inertion.x = 0
+		inertion.y = 0
 		self:_check_threshold()
 	end
 	if self.position.x ~= target.x or self.position.y ~= target.y then
