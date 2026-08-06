@@ -432,15 +432,17 @@ end
 ---If whitelist is not empty and component not contains in this list,
 ---component will be not processed on the input step.
 ---The list is captured on call, so mutating the passed array later has no effect
----@param whitelist_components table|druid.component[] The array of component to whitelist
+---@param whitelist_components table|druid.component[]|nil The array of component to whitelist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
 	if whitelist_components and whitelist_components._component then
 		whitelist_components = { whitelist_components }
 	end
 
-	for i = 1, #whitelist_components do
-		helper.add_array(whitelist_components, whitelist_components[i]:get_childrens())
+	if whitelist_components then
+		for i = 1, #whitelist_components do
+			helper.add_array(whitelist_components, whitelist_components[i]:get_childrens())
+		end
 	end
 
 	self._input_whitelist = whitelist_components
@@ -454,15 +456,17 @@ end
 ---If blacklist is not empty and component is contained in this list,
 ---component will be not processed on the input step DruidInstance.
 ---The list is captured on call, so mutating the passed array later has no effect
----@param blacklist_components table|druid.component[] The array of component to blacklist
+---@param blacklist_components table|druid.component[]|nil The array of component to blacklist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
 	if blacklist_components and blacklist_components._component then
 		blacklist_components = { blacklist_components }
 	end
 
-	for i = 1, #blacklist_components do
-		helper.add_array(blacklist_components, blacklist_components[i]:get_childrens())
+	if blacklist_components then
+		for i = 1, #blacklist_components do
+			helper.add_array(blacklist_components, blacklist_components[i]:get_childrens())
+		end
 	end
 
 	self._input_blacklist = blacklist_components
