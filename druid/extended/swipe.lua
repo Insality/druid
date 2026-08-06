@@ -33,6 +33,7 @@ function M:init(node_or_node_id, on_swipe_callback)
 
 	self.click_zone = nil
 	self.on_swipe = event.create(on_swipe_callback)
+	self._is_enabled = true
 end
 
 
@@ -67,7 +68,7 @@ function M:on_input(action_id, action)
 		return false
 	end
 
-	if not gui.is_enabled(self.node, true) then
+	if not self._is_enabled or not gui.is_enabled(self.node, true) then
 		return false
 	end
 
@@ -108,6 +109,25 @@ function M:set_click_zone(zone)
 	end
 
 	self.click_zone = self:get_node(zone)
+end
+
+
+---Set swipe enabled state
+---@param is_enabled boolean
+---@return druid.swipe self
+function M:set_enabled(is_enabled)
+	self._is_enabled = is_enabled
+	if not is_enabled then
+		self:_reset_swipe()
+	end
+	return self
+end
+
+
+---Return current swipe enabled state
+---@return boolean
+function M:is_enabled()
+	return self._is_enabled
 end
 
 
