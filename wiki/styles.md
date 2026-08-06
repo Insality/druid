@@ -68,9 +68,9 @@ end
 
 ## Create your own styles
 
-The most components have their styles. You can explore it on [Druid API](https://insality.github.io/druid/) in table style section ([button example](https://insality.github.io/druid/modules/Button.html#style)). Or you can see, what fields component uses in code in function `on_style_change`
+Most components have styles. See style fields in each component’s `@class druid.*.style` annotations, the [Quick API Reference](../api/quick_api_reference.md), or [button API](../api/components/base/button_api.md). You can also inspect what fields a component uses in its `on_style_change` function.
 
-To create you style, create lua module, what return <_component_name_, _component_style_> table
+To create your style, create a lua module that returns a `<component_name, component_style>` table.
 
 Example: [default druid style](https://github.com/Insality/druid/blob/master/druid/styles/default/style.lua)
 

@@ -51,7 +51,7 @@ function M:init(node, key, init_value)
 
 	self.on_change = event.create()
 
-	self:set_to(self.last_value)
+	self:set_value(self.last_value)
 end
 
 
@@ -67,7 +67,7 @@ end
 
 ---@private
 function M:on_layout_change()
-	self:set_to(self.last_value)
+	self:set_value(self.last_value)
 end
 
 
@@ -83,7 +83,7 @@ function M:update(dt)
 		local prev_value = self.last_value
 		local step = math.abs(self.last_value - self.target) * (self.style.SPEED * dt)
 		step = math.max(step, self.style.MIN_DELTA)
-		self:set_to(helper.step(self.last_value, self.target, step))
+		self:set_value(helper.step(self.last_value, self.target, step))
 
 		if self.last_value == self.target then
 			self:_check_steps(prev_value, self.target, self.target)
@@ -119,7 +119,7 @@ end
 ---Instant fill progress bar to value
 ---@param to number Progress bar value, from 0 to 1
 ---@return druid.progress self Current progress instance
-function M:set_to(to)
+function M:set_value(to)
 	to = helper.clamp(to, 0, 1)
 	self:_set_bar_to(to)
 
@@ -127,9 +127,25 @@ function M:set_to(to)
 end
 
 
+---Instant fill progress bar to value
+---@deprecated Use set_value instead
+---@param to number Progress bar value, from 0 to 1
+---@return druid.progress self Current progress instance
+function M:set_to(to)
+	return self:set_value(to)
+end
+
+
 ---Return the current value of the progress bar
 ---@return number value The current value of the progress bar
 function M:get()
+	return self.last_value
+end
+
+
+---Return the current value of the progress bar
+---@return number value The current value of the progress bar
+function M:get_value()
 	return self.last_value
 end
 
@@ -172,7 +188,7 @@ end
 ---@return druid.progress self Current progress instance
 function M:set_max_size(max_size)
 	self.max_size[self.key] = max_size[self.key]
-	self:set_to(self.last_value)
+	self:set_value(self.last_value)
 
 	return self
 end

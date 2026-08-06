@@ -148,16 +148,15 @@ end
 
 
 ---Set text to text field
----@deprecated
----@param set_to string Text for node
+---@param new_text string Text for node
 ---@return druid.text self Current text instance
-function M:set_to(set_to)
-	set_to = tostring(set_to or "")
+function M:set_text(new_text)
+	new_text = tostring(new_text or "")
 
-	self.last_value = set_to
-	gui.set_text(self.node, set_to)
+	self.last_value = new_text
+	gui.set_text(self.node, new_text)
 
-	self.on_set_text:trigger(self:get_context(), set_to)
+	self.on_set_text:trigger(self:get_context(), new_text)
 
 	self:_update_adjust()
 
@@ -165,9 +164,12 @@ function M:set_to(set_to)
 end
 
 
-function M:set_text(new_text)
----@diagnostic disable-next-line: deprecated
-	return self:set_to(new_text)
+---Set text to text field
+---@deprecated Use set_text instead
+---@param set_to string Text for node
+---@return druid.text self Current text instance
+function M:set_to(set_to)
+	return self:set_text(set_to)
 end
 
 

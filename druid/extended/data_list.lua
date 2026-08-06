@@ -9,7 +9,7 @@ local event = require("event.event")
 ---Create data list component with druid: `data_list = druid:new_data_list(scroll, grid, create_function)`
 ---
 ---### Notes
----- Data List uses a scroll component for scrolling and a grid component for layout
+---- Data List uses a scroll component for scrolling and a Static Grid component for layout
 ---- Data List only renders visible elements for better performance
 ---- Data List supports caching of elements for better performance
 ---- Data List supports adding, removing and updating elements
@@ -17,7 +17,7 @@ local event = require("event.event")
 ---- Data List supports custom element creation and cleanup
 ---@class druid.data_list: druid.component
 ---@field scroll druid.scroll The scroll instance for Data List component
----@field grid druid.grid The StaticGrid or DynamicGrid instance for Data List component
+---@field grid druid.grid The Static Grid instance for Data List component
 ---@field on_scroll_progress_change event fun(self: druid.data_list, progress: number) The event triggered when the scroll progress changes
 ---@field on_element_add event fun(self: druid.data_list, index: number, node: node, instance: druid.component, data: table) The event triggered when a new element is added
 ---@field on_element_remove event fun(self: druid.data_list, index: number, node: node, instance: druid.component, data: table) The event triggered when an element is removed
@@ -29,6 +29,7 @@ local event = require("event.event")
 ---@field private _cache table The cache table
 ---@field private _data table The data table
 ---@field private _data_visual table The data visual table
+---@field private _data_count number Last known data length used to gate scroll size updates
 local M = component.create("data_list")
 
 
@@ -53,8 +54,9 @@ function M:init(scroll, grid, create_function)
 	self._cache = {}
 	self._data = {}
 	self._data_visual = {}
+	self._data_count = 0
 
-	self.scroll.on_scroll:subscribe(self._refresh, self)
+	self.scroll.on_scroll:subscribe(self._on_scroll, self)
 
 	self.on_scroll_progress_change = event.create()
 	self.on_element_add = event.create()
@@ -65,7 +67,7 @@ end
 ---@private
 function M:on_remove()
 	self:clear()
-	self.scroll.on_scroll:unsubscribe(self._refresh, self)
+	self.scroll.on_scroll:unsubscribe(self._on_scroll, self)
 end
 
 
@@ -83,7 +85,7 @@ end
 ---@return druid.data_list self Current DataList instance
 function M:set_data(data)
 	self._data = data or {}
-	self:_refresh()
+	self:_refresh(true)
 
 	return self
 end
@@ -106,7 +108,7 @@ function M:add(data, index, shift_policy)
 	shift_policy = shift_policy or const.SHIFT.RIGHT
 
 	helper.insert_with_shift(self._data, data, index, shift_policy)
-	self:_refresh()
+	self:_refresh(true)
 
 	return self
 end
@@ -118,7 +120,7 @@ end
 ---@return druid.data_list self Current DataList instance
 function M:remove(index, shift_policy)
 	helper.remove_with_shift(self._data, index, shift_policy)
-	self:_refresh()
+	self:_refresh(true)
 
 	return self
 end
@@ -132,7 +134,7 @@ function M:remove_by_data(data, shift_policy)
 	local index = helper.contains(self._data, data)
 	if index then
 		helper.remove_with_shift(self._data, index, shift_policy)
-		self:_refresh()
+		self:_refresh(true)
 	end
 
 	return self
@@ -143,7 +145,7 @@ end
 ---@return druid.data_list self Current DataList instance
 function M:clear()
 	self._data = {}
-	self:_refresh()
+	self:_refresh(true)
 
 	return self
 end
@@ -285,10 +287,29 @@ function M:_get_visible_bounds()
 end
 
 
----Refresh all elements in DataList
+---Scroll position changed: refresh only visible range (no scroll size rebuild)
 ---@private
-function M:_refresh()
-	self.scroll:set_size(self.grid:get_size_for(#self._data))
+function M:_on_scroll()
+	self:_refresh(false)
+
+	local progress = self.scroll:get_percent()
+	local scroll_progress = self.scroll.drag.can_y and progress.y or progress.x
+	if scroll_progress ~= self.scroll_progress then
+		self.scroll_progress = scroll_progress
+		self.on_scroll_progress_change:trigger(self:get_context(), scroll_progress)
+	end
+end
+
+
+---Refresh all elements in DataList
+---@param update_scroll_size boolean|nil If true, rebuild scroll content size from data length
+---@private
+function M:_refresh(update_scroll_size)
+	local data_count = #self._data
+	if update_scroll_size or data_count ~= self._data_count then
+		self._data_count = data_count
+		self.scroll:set_size(self.grid:get_size_for(data_count))
+	end
 
 	local left, top, right, bottom = self:_get_visible_bounds()
 
@@ -296,20 +317,43 @@ function M:_refresh()
 	start_index = math.max(1, start_index)
 
 	local end_index = self.grid:get_index_xy(right, bottom)
-	end_index = math.min(#self._data, end_index)
+	end_index = math.min(data_count, end_index)
+
+	local range_unchanged = start_index == self.top_index and end_index == self.last_index
+	if range_unchanged then
+		local data_matches = true
+		for index = start_index, end_index do
+			local visual = self._data_visual[index]
+			local data = self._data[index]
+			if data then
+				if not visual or visual.data ~= data then
+					data_matches = false
+					break
+				end
+			elseif visual then
+				data_matches = false
+				break
+			end
+		end
+		if data_matches then
+			return
+		end
+	end
 
 	self.top_index = start_index
 	self.last_index = end_index
 
-	-- Clear from non range elements
+	-- Clear from non range elements and from elements with outdated data
+	-- (collect first, mutating while iterating pairs is unsafe)
+	local to_remove = {}
 	for index, data in pairs(self._data_visual) do
-		if index < start_index or index > end_index then
-			self:_remove_at(index)
-		elseif self._data[index] ~= data.data then
-			-- TODO We want to find currently created data instances and move them to new positions
-			-- Now it will re-create them
-			self:_remove_at(index)
+		if index < start_index or index > end_index or self._data[index] ~= data.data then
+			to_remove[#to_remove + 1] = index
 		end
+	end
+
+	for i = 1, #to_remove do
+		self:_remove_at(to_remove[i])
 	end
 
 	-- Add new elements

@@ -12,7 +12,7 @@ end
 
 function M:set_value(value)
 	gui.set_text(self.text_value, math.ceil(value * 100) .. "%")
-	self.progress:set_to(value)
+	self.progress:set_value(value)
 end
 
 

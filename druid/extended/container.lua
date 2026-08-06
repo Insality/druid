@@ -116,7 +116,7 @@ end
 
 ---@private
 function M:on_late_init()
-	if not gui.get_parent(self.node) then
+	if not self.fit_size and not gui.get_parent(self.node) then
 		-- TODO: Scale issue here, in fit into window!
 		self:fit_into_window()
 	end

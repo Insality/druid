@@ -50,20 +50,21 @@ end
 ---Setup raw text to lang_text component. This will clear any locale settings.
 ---@param text string Text for text node
 ---@return druid.lang_text self Current instance
-function M:set_to(text)
+function M:set_text(text)
 	self.last_locale = nil
+	-- on_change is triggered via the text.on_set_text subscription made in init
 	self.text:set_text(text)
-	self.on_change:trigger()
 
 	return self
 end
 
 
 ---Setup raw text to lang_text component. This will clear any locale settings.
+---@deprecated Use set_text instead
 ---@param text string Text for text node
 ---@return druid.lang_text self Current instance
-function M:set_text(text)
-	return self:set_to(text)
+function M:set_to(text)
+	return self:set_text(text)
 end
 
 

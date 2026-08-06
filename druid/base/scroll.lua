@@ -84,10 +84,6 @@ function M:init(view_node, content_node)
 	self.drag.on_touch_start:subscribe(self._on_touch_start)
 	self.drag.on_touch_end:subscribe(self._on_touch_end)
 
-	self.hover = self.druid:new_hover(view_node)
-	self.hover.on_mouse_hover:subscribe(self._on_mouse_hover)
-	self._is_mouse_hover = false
-
 	self.on_scroll = event.create()
 	self.on_scroll_to = event.create()
 	self.on_point_scroll = event.create()
@@ -318,6 +314,11 @@ end
 function M:get_percent()
 	local x_perc = 1 - self:_inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
 	local y_perc = self:_inverse_lerp(self.available_pos.w, self.available_pos.y, self.position.y)
+
+	-- If there is no available scroll space, the scroll is always at the start
+	if self.available_pos.x == self.available_pos.z then
+		x_perc = 0
+	end
 
 	return vmath.vector3(x_perc, y_perc, 0)
 end
@@ -728,22 +729,37 @@ function M:_update_free_scroll(dt)
 	end
 
 	local target = self.target_position
+	local inertion = self.inertion
+	local border = self.available_pos
+	local has_inertion = inertion.x ~= 0 or inertion.y ~= 0
+	local is_outside_soft_zone = target.x < border.x or target.x > border.z
+		or target.y < border.y or target.y > border.w
 
-	if self._is_inert and (self.inertion.x ~= 0 or self.inertion.y ~= 0) then
+	-- Settled scroll: skip friction, soft-zone, and position work
+	if not has_inertion
+		and self.position.x == target.x
+		and self.position.y == target.y
+		and not is_outside_soft_zone then
+		return
+	end
+
+	if self._is_inert and has_inertion then
 		-- Inertion apply
-		target.x = self.position.x + self.inertion.x * self.style.INERT_SPEED * dt
-		target.y = self.position.y + self.inertion.y * self.style.INERT_SPEED * dt
+		target.x = self.position.x + inertion.x * self.style.INERT_SPEED * dt
+		target.y = self.position.y + inertion.y * self.style.INERT_SPEED * dt
 
 		self:_check_threshold()
 	end
 
-	-- Inertion friction
-	self.inertion = self.inertion * self.style.FRICT
+	-- Inertion friction (mutate in place to avoid per-frame vector alloc)
+	local frict = self.style.FRICT
+	inertion.x = inertion.x * frict
+	inertion.y = inertion.y * frict
 
 	local is_changed = self:_check_soft_zone()
 	if is_changed then
-		self.inertion.x = 0
-		self.inertion.y = 0
+		inertion.x = 0
+		inertion.y = 0
 		self:_check_threshold()
 	end
 	if self.position.x ~= target.x or self.position.y ~= target.y then
@@ -793,23 +809,23 @@ function M:_update_size()
 	-- Extra content size calculation
 	-- We add extra size only if scroll is available
 	-- Even the content zone size less than view zone size
-	local content_border_extra = helper.get_border(self.content_node)
+	-- Reuse content_border (same node) and stretch in place
 	local stretch_size = self.style.EXTRA_STRETCH_SIZE
 
 	local sign_x = content_size.x > self.view_size.x and 1 or -1
-	content_border_extra.x = content_border_extra.x - stretch_size * sign_x
-	content_border_extra.z = content_border_extra.z + stretch_size * sign_x
+	content_border.x = content_border.x - stretch_size * sign_x
+	content_border.z = content_border.z + stretch_size * sign_x
 
 	local sign_y = content_size.y > self.view_size.y and 1 or -1
-	content_border_extra.y = content_border_extra.y + stretch_size * sign_y
-	content_border_extra.w = content_border_extra.w - stretch_size * sign_y
+	content_border.y = content_border.y + stretch_size * sign_y
+	content_border.w = content_border.w - stretch_size * sign_y
 
 	if not self.style.SMALL_CONTENT_SCROLL then
 		self.drag.can_x = content_size.x > self.view_size.x and self._is_horizontal_scroll
 		self.drag.can_y = content_size.y > self.view_size.y and self._is_vertical_scroll
 	end
 
-	self.available_pos_extra = self:_get_border_vector(self.view_border - content_border_extra, self._offset)
+	self.available_pos_extra = self:_get_border_vector(self.view_border - content_border, self._offset)
 	self.available_size_extra = self:_get_size_vector(self.available_pos_extra)
 
 	self:_set_scroll_position(self.position.x, self.position.y)
@@ -821,11 +837,25 @@ end
 
 
 function M:_process_scroll_wheel(action_id, action)
-	if not self._is_mouse_hover or self.style.WHEEL_SCROLL_SPEED == 0 then
+	if self.style.WHEEL_SCROLL_SPEED == 0 then
 		return false
 	end
 
 	if action_id ~= const.ACTION_SCROLL_UP and action_id ~= const.ACTION_SCROLL_DOWN then
+		return false
+	end
+
+	if not gui.is_enabled(self.view_node, true) then
+		return false
+	end
+
+	-- Pick only on wheel events instead of continuous hover tracking
+	if not helper.pick_node(self.view_node, action.x, action.y, self.drag.click_zone) then
+		return false
+	end
+
+	-- Nothing to scroll, do not consume the event so it can reach other scrolls below
+	if not self.drag.can_x and not self.drag.can_y then
 		return false
 	end
 
@@ -857,12 +887,11 @@ function M:_process_scroll_wheel(action_id, action)
 end
 
 
-function M:_on_mouse_hover(state)
-	self._is_mouse_hover = state
-end
-
-
 function M:_inverse_lerp(min, max, current)
+	if max == min then
+		return 0
+	end
+
 	return helper.clamp((current - min) / (max - min), 0, 1)
 end
 
