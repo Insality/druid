@@ -798,23 +798,23 @@ function M:_update_size()
 	-- Extra content size calculation
 	-- We add extra size only if scroll is available
 	-- Even the content zone size less than view zone size
-	local content_border_extra = helper.get_border(self.content_node)
+	-- Reuse content_border (same node) and stretch in place
 	local stretch_size = self.style.EXTRA_STRETCH_SIZE
 
 	local sign_x = content_size.x > self.view_size.x and 1 or -1
-	content_border_extra.x = content_border_extra.x - stretch_size * sign_x
-	content_border_extra.z = content_border_extra.z + stretch_size * sign_x
+	content_border.x = content_border.x - stretch_size * sign_x
+	content_border.z = content_border.z + stretch_size * sign_x
 
 	local sign_y = content_size.y > self.view_size.y and 1 or -1
-	content_border_extra.y = content_border_extra.y + stretch_size * sign_y
-	content_border_extra.w = content_border_extra.w - stretch_size * sign_y
+	content_border.y = content_border.y + stretch_size * sign_y
+	content_border.w = content_border.w - stretch_size * sign_y
 
 	if not self.style.SMALL_CONTENT_SCROLL then
 		self.drag.can_x = content_size.x > self.view_size.x and self._is_horizontal_scroll
 		self.drag.can_y = content_size.y > self.view_size.y and self._is_vertical_scroll
 	end
 
-	self.available_pos_extra = self:_get_border_vector(self.view_border - content_border_extra, self._offset)
+	self.available_pos_extra = self:_get_border_vector(self.view_border - content_border, self._offset)
 	self.available_size_extra = self:_get_size_vector(self.available_pos_extra)
 
 	self:_set_scroll_position(self.position.x, self.position.y)
