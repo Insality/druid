@@ -319,6 +319,11 @@ function M:get_percent()
 	local x_perc = 1 - self:_inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
 	local y_perc = self:_inverse_lerp(self.available_pos.w, self.available_pos.y, self.position.y)
 
+	-- If there is no available scroll space, the scroll is always at the start
+	if self.available_pos.x == self.available_pos.z then
+		x_perc = 0
+	end
+
 	return vmath.vector3(x_perc, y_perc, 0)
 end
 
@@ -863,6 +868,10 @@ end
 
 
 function M:_inverse_lerp(min, max, current)
+	if max == min then
+		return 0
+	end
+
 	return helper.clamp((current - min) / (max - min), 0, 1)
 end
 
