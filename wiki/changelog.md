@@ -840,6 +840,7 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [Scroll] Idle early-out and in-place inertion friction (no per-frame vector allocation when settled)
 - [Scroll] Wheel scrolling picks the view node on wheel events instead of continuous Hover tracking
 - [Scroll] **Breaking**: the internal `scroll.hover` component is removed, wheel scrolling no longer needs it
+- [Scroll] Wheel events are no longer consumed when the scroll can not scroll in any axis
 - [DataList] Gate refresh on visible-range / data-size changes; document cache mode as preferred for large lists
 - [DataList] `on_scroll_progress_change` is now actually triggered on scroll
 - [Drag] Create Hover lazily only when drag cursors are enabled (defos)

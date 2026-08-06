@@ -854,6 +854,11 @@ function M:_process_scroll_wheel(action_id, action)
 		return false
 	end
 
+	-- Nothing to scroll, do not consume the event so it can reach other scrolls below
+	if not self.drag.can_x and not self.drag.can_y then
+		return false
+	end
+
 	local koef = (action_id == const.ACTION_SCROLL_UP) and 1 or -1
 	if self.style.WHEEL_SCROLL_INVERTED then
 		koef = -koef
