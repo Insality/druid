@@ -109,8 +109,9 @@ function M:on_input(action_id, action)
 		if action.pressed and gui.screen_to_local then
 			self._scene_scale = helper.get_scene_scale(self.node)
 			self.pos = gui.screen_to_local(self.node, vmath.vector3(action.screen_x, action.screen_y, 0))
-			self.pos.x = helper.clamp(self.pos.x / self._scene_scale.x, self.start_pos.x, self.end_pos.x)
-			self.pos.y = helper.clamp(self.pos.y / self._scene_scale.y, self.start_pos.y, self.end_pos.y)
+			-- gui.screen_to_local already accounts for the scene scale, no need to divide it again
+			self.pos.x = helper.clamp(self.pos.x, self.start_pos.x, self.end_pos.x)
+			self.pos.y = helper.clamp(self.pos.y, self.start_pos.y, self.end_pos.y)
 
 			gui.set_position(self.node, self.pos)
 			self.is_drag = true
