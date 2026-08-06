@@ -19,6 +19,8 @@ local druid_component = require("druid.component")
 ---@field package _is_late_remove_enabled boolean Used to check if components should be removed on late update
 ---@field package _input_blacklist druid.component[]|nil Components that should not receive input
 ---@field package _input_whitelist druid.component[]|nil Components that should receive input
+---@field package _input_blacklist_set table<druid.component, boolean>|nil O(1) lookup for blacklist
+---@field package _input_whitelist_set table<druid.component, boolean>|nil O(1) lookup for whitelist
 local M = {}
 
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
@@ -129,15 +131,30 @@ function M:_can_use_input_component(component)
 	local can_by_whitelist = true
 	local can_by_blacklist = true
 
-	if self._input_whitelist and #self._input_whitelist > 0 then
-		can_by_whitelist = not not helper.contains(self._input_whitelist, component)
+	if self._input_whitelist_set then
+		can_by_whitelist = self._input_whitelist_set[component] == true
 	end
 
-	if self._input_blacklist and #self._input_blacklist > 0 then
-		can_by_blacklist = not helper.contains(self._input_blacklist, component)
+	if self._input_blacklist_set then
+		can_by_blacklist = self._input_blacklist_set[component] ~= true
 	end
 
 	return can_by_blacklist and can_by_whitelist
+end
+
+
+---@param list druid.component[]|nil
+---@return table<druid.component, boolean>|nil
+local function build_component_set(list)
+	if not list or #list == 0 then
+		return nil
+	end
+
+	local set = {}
+	for i = 1, #list do
+		set[list[i]] = true
+	end
+	return set
 end
 
 
@@ -167,6 +184,8 @@ function M.create_druid_instance(context, style)
 
 	self._input_blacklist = nil
 	self._input_whitelist = nil
+	self._input_blacklist_set = nil
+	self._input_whitelist_set = nil
 
 	self.components_all = {}
 	self.components_interest = {}
@@ -411,7 +430,8 @@ end
 
 ---Set whitelist components for input processing.
 ---If whitelist is not empty and component not contains in this list,
----component will be not processed on the input step
+---component will be not processed on the input step.
+---The list is captured on call, so mutating the passed array later has no effect
 ---@param whitelist_components table|druid.component[] The array of component to whitelist
 ---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
@@ -424,6 +444,7 @@ function M:set_whitelist(whitelist_components)
 	end
 
 	self._input_whitelist = whitelist_components
+	self._input_whitelist_set = build_component_set(whitelist_components)
 
 	return self
 end
@@ -431,7 +452,8 @@ end
 
 ---Set blacklist components for input processing.
 ---If blacklist is not empty and component is contained in this list,
----component will be not processed on the input step DruidInstance
+---component will be not processed on the input step DruidInstance.
+---The list is captured on call, so mutating the passed array later has no effect
 ---@param blacklist_components table|druid.component[] The array of component to blacklist
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
@@ -444,6 +466,7 @@ function M:set_blacklist(blacklist_components)
 	end
 
 	self._input_blacklist = blacklist_components
+	self._input_blacklist_set = build_component_set(blacklist_components)
 
 	return self
 end
