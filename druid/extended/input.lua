@@ -389,6 +389,14 @@ function M:unselect()
 end
 
 
+---Return the text currently displayed on the text node.
+---Can differ from `get_text` if the text adjust mode trims the value.
+---@return string text The visible input field text
+function M:get_text_visual()
+	return gui.get_text(self.text.node)
+end
+
+
 ---Return current input field text
 ---@return string text The current input field text
 function M:get_text()
