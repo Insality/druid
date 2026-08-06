@@ -8,9 +8,9 @@ Druid component to manage a list of data with a scrollable view, used to manage 
 Create data list component with druid: `data_list = druid:new_data_list(scroll, grid, create_function)`
 
 ### Notes
-- Data List uses a scroll component for scrolling and a grid component for layout
+- Data List uses a scroll component for scrolling and a Static Grid component for layout
 - Data List only renders visible elements for better performance
-- Data List supports caching of elements for better performance
+- Prefer `set_use_cache(true)` for large lists: reuse nodes via `on_element_add` / `on_element_remove` instead of create/delete
 - Data List supports adding, removing and updating elements
 - Data List supports scrolling to specific elements
 - Data List supports custom element creation and cleanup
@@ -216,7 +216,7 @@ Instant scroll to element with passed index
 - **scroll** (_druid.scroll_): The scroll instance for Data List component
 
 <a name="grid"></a>
-- **grid** (_druid.grid_): The StaticGrid or DynamicGrid instance for Data List component
+- **grid** (_druid.grid_): The Static Grid instance for Data List component
 
 <a name="on_scroll_progress_change"></a>
 - **on_scroll_progress_change** (_event_): fun(self: druid.data_list, progress: number) The event triggered when the scroll progress changes

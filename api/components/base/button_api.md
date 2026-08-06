@@ -14,7 +14,7 @@ Where node_name is name of node from GUI scene. You can use `node_name` as input
 -   - **params** - Additional params, specified on button creating
 -   - **button_instance** - button itself
 - You can set _params_ on button callback on button creating: `druid:new_button("node_name", callback, params)`.
-- Button have several events like on_click, on_repeated_click, on_long_click, on_hold_click, on_double_click
+- Button have several events like on_click, on_repeated_click, on_long_click, on_hold_callback, on_double_click
 - Click event will not trigger if between pressed and released state cursor was outside of node zone
 - Button can have key trigger to use them by key: `button:set_key_trigger`
 -
@@ -77,7 +77,7 @@ The constructor for the button component
 
 - **Parameters:**
 	- `node_or_node_id` *(string|node)*: Node name or GUI Node itself
-	- `[callback]` *(fun()|nil)*: Callback on button click
+	- `[callback]` *(fun(self, custom_args, button_instance)|nil)*: Callback on button click
 	- `[custom_args]` *(any)*: Custom args for any Button event, will be passed to callbacks
 	- `[anim_node]` *(string|node|nil)*: Node to animate instead of trigger node, useful for animating small icons on big panels
 
