@@ -32,6 +32,7 @@ local component = require("druid.component")
 ---@field private _is_enabled boolean True if Drag component is enabled
 ---@field private _x_koef number The x koef
 ---@field private _y_koef number The y koef
+---@field hover druid.hover|nil Hover component used only when drag cursors are enabled
 local M = component.create("drag", const.PRIORITY_INPUT_HIGH)
 
 
@@ -41,7 +42,8 @@ local M = component.create("drag", const.PRIORITY_INPUT_HIGH)
 function M:init(node_or_node_id, on_drag_callback)
 	self.druid = self:get_druid()
 	self.node = self:get_node(node_or_node_id)
-	self.hover = self.druid:new_hover(self.node)
+	-- Hover is created lazily only when drag cursors are enabled (defos)
+	self.hover = nil
 
 	self.dx = 0
 	self.dy = 0
@@ -87,15 +89,23 @@ function M:on_style_change(style)
 end
 
 
----Set Drag component enabled state.
----@param is_enabled boolean True if Drag component is enabled
+---Enable or disable drag cursor styles (requires defos). Hover is created only when enabled.
+---@param is_enabled boolean True if Drag cursors are enabled
 function M:set_drag_cursors(is_enabled)
 	if defos and is_enabled then
+		if not self.hover then
+			self.hover = self.druid:new_hover(self.node)
+			if self.click_zone then
+				self.hover:set_click_zone(self.click_zone)
+			end
+		end
+		self.hover:set_enabled(true)
 		self.hover.style.ON_HOVER_CURSOR = defos.CURSOR_CROSSHAIR
 		self.hover.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_HAND
-	else
+	elseif self.hover then
 		self.hover.style.ON_HOVER_CURSOR = nil
 		self.hover.style.ON_MOUSE_HOVER_CURSOR = nil
+		self.hover:set_enabled(false)
 	end
 end
 
@@ -219,6 +229,9 @@ end
 ---@return druid.drag self Current instance
 function M:set_click_zone(node)
 	self.click_zone = node and self:get_node(node) or nil
+	if self.hover then
+		self.hover:set_click_zone(self.click_zone)
+	end
 
 	return self
 end
