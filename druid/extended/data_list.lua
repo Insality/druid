@@ -291,6 +291,13 @@ end
 ---@private
 function M:_on_scroll()
 	self:_refresh(false)
+
+	local progress = self.scroll:get_percent()
+	local scroll_progress = self.scroll.drag.can_y and progress.y or progress.x
+	if scroll_progress ~= self.scroll_progress then
+		self.scroll_progress = scroll_progress
+		self.on_scroll_progress_change:trigger(self:get_context(), scroll_progress)
+	end
 end
 
 
