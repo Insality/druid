@@ -45,6 +45,7 @@ M.ALLOWED_ACTIONS = {
 	[const.ACTION_BACKSPACE] = true,
 	[const.ACTION_ENTER] = true,
 	[const.ACTION_ESC] = true,
+	[const.ACTION_BACK] = true,
 }
 
 ---Mask text by replacing every character with a mask character
@@ -149,6 +150,18 @@ end
 ---@param action action The action
 ---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
+	local is_modificator_action =
+		action_id == const.ACTION_LSHIFT or
+		action_id == const.ACTION_LCTRL or
+		action_id == const.ACTION_LALT or
+		action_id == const.ACTION_LCMD
+
+	local is_focus_switch_action = action_id == const.ACTION_TAB
+
+	if is_modificator_action or is_focus_switch_action then
+		return false
+	end
+
 	if action_id and not M.ALLOWED_ACTIONS[action_id] then
 		-- We want to block all key actions (key_w, key_s) etc while input is selected
 		local is_key_action = action.x == nil
@@ -164,6 +177,10 @@ function M:on_input(action_id, action)
 			-- ignore return key
 			if action.text == "\n" or action.text == "\r" then
 				return true
+			end
+
+			if action.text == "\t" then
+				return false
 			end
 
 			local hex = string.gsub(action.text, "(.)", function(c)
