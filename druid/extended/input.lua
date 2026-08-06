@@ -29,10 +29,10 @@ local utf8 = utf8 or utf8_lua
 ---@class druid.input: druid.component
 ---@field on_input_select event fun(self: druid.input, input: druid.input) The event triggered when the input field is selected
 ---@field on_input_unselect event fun(self: druid.input, text: string, input: druid.input) The event triggered when the input field is unselected
----@field on_input_text event fun(self: druid.input) The event triggered when the input field is changed
----@field on_input_empty event fun(self: druid.input) The event triggered when the input field is empty
----@field on_input_full event fun(self: druid.input) The event triggered when the input field is full
----@field on_input_wrong event fun(self: druid.input) The event triggered when the input field is wrong
+---@field on_input_text event fun(self: druid.input, text: string) The event triggered when the input field text changes
+---@field on_input_empty event fun(self: druid.input, text: string) The event triggered when the input field becomes empty
+---@field on_input_full event fun(self: druid.input, text: string) The event triggered when the input field reaches max length
+---@field on_input_wrong event fun(self: druid.input, character: string) The event triggered when a not allowed character is typed
 ---@field on_select_cursor_change event fun(self: druid.input, cursor_index: number, start_index: number, end_index: number) The event triggered when the cursor index is changed
 ---@field style druid.input.style The style of the input component
 local M = component.create("input")
