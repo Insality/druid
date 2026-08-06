@@ -84,10 +84,6 @@ function M:init(view_node, content_node)
 	self.drag.on_touch_start:subscribe(self._on_touch_start)
 	self.drag.on_touch_end:subscribe(self._on_touch_end)
 
-	self.hover = self.druid:new_hover(view_node)
-	self.hover.on_mouse_hover:subscribe(self._on_mouse_hover)
-	self._is_mouse_hover = false
-
 	self.on_scroll = event.create()
 	self.on_scroll_to = event.create()
 	self.on_point_scroll = event.create()
@@ -841,11 +837,20 @@ end
 
 
 function M:_process_scroll_wheel(action_id, action)
-	if not self._is_mouse_hover or self.style.WHEEL_SCROLL_SPEED == 0 then
+	if self.style.WHEEL_SCROLL_SPEED == 0 then
 		return false
 	end
 
 	if action_id ~= const.ACTION_SCROLL_UP and action_id ~= const.ACTION_SCROLL_DOWN then
+		return false
+	end
+
+	if not gui.is_enabled(self.view_node, true) then
+		return false
+	end
+
+	-- Pick only on wheel events instead of continuous hover tracking
+	if not helper.pick_node(self.view_node, action.x, action.y, self.drag.click_zone) then
 		return false
 	end
 
@@ -874,11 +879,6 @@ function M:_process_scroll_wheel(action_id, action)
 	end
 
 	return true
-end
-
-
-function M:_on_mouse_hover(state)
-	self._is_mouse_hover = state
 end
 
 
