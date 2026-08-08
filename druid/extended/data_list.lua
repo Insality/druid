@@ -287,17 +287,23 @@ function M:_get_visible_bounds()
 end
 
 
----Scroll position changed: refresh only visible range (no scroll size rebuild)
+---Sync scroll_progress from the current scroll percent and fire the event if changed
 ---@private
-function M:_on_scroll()
-	self:_refresh(false)
-
+function M:_update_scroll_progress()
 	local progress = self.scroll:get_percent()
 	local scroll_progress = self.scroll.drag.can_y and progress.y or progress.x
 	if scroll_progress ~= self.scroll_progress then
 		self.scroll_progress = scroll_progress
 		self.on_scroll_progress_change:trigger(self:get_context(), scroll_progress)
 	end
+end
+
+
+---Scroll position changed: refresh only visible range (no scroll size rebuild)
+---@private
+function M:_on_scroll()
+	self:_refresh(false)
+	self:_update_scroll_progress()
 end
 
 
@@ -309,6 +315,8 @@ function M:_refresh(update_scroll_size)
 	if update_scroll_size or data_count ~= self._data_count then
 		self._data_count = data_count
 		self.scroll:set_size(self.grid:get_size_for(data_count))
+		-- set_size can change percent without an on_scroll event
+		self:_update_scroll_progress()
 	end
 
 	local left, top, right, bottom = self:_get_visible_bounds()

@@ -842,7 +842,7 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [Scroll] **Breaking**: the internal `scroll.hover` component is removed, wheel scrolling no longer needs it
 - [Scroll] Wheel events are no longer consumed when the scroll can not scroll in any axis
 - [DataList] Gate refresh on visible-range / data-size changes; document cache mode as preferred for large lists
-- [DataList] `on_scroll_progress_change` is now actually triggered on scroll
+- [DataList] `on_scroll_progress_change` is now actually triggered on scroll and after data size rebuilds
 - [Drag] Create Hover lazily only when drag cursors are enabled (defos)
 - [Hover] Skip pick_node when no listeners and no cursor styles are configured
 - [System] O(1) whitelist/blacklist input membership via hash sets
