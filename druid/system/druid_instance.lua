@@ -145,16 +145,16 @@ end
 
 ---@param list druid.component[]|nil
 ---@return table<druid.component, boolean>|nil
-local function build_component_set(list)
+local function array_to_map(list)
 	if not list or #list == 0 then
 		return nil
 	end
 
-	local set = {}
+	local map = {}
 	for i = 1, #list do
-		set[list[i]] = true
+		map[list[i]] = true
 	end
-	return set
+	return map
 end
 
 
@@ -439,18 +439,17 @@ function M:set_whitelist(whitelist_components)
 		whitelist_components = { whitelist_components }
 	end
 
-	-- Work on a copy, expanding children in place would mutate the caller array
 	local components = nil
 	if whitelist_components then
 		components = {}
 		helper.add_array(components, whitelist_components)
-		for i = 1, #components do
-			helper.add_array(components, components[i]:get_childrens())
+		for i = 1, #whitelist_components do
+			helper.add_array(components, whitelist_components[i]:get_childrens())
 		end
 	end
 
 	self._input_whitelist = components
-	self._input_whitelist_set = build_component_set(components)
+	self._input_whitelist_set = array_to_map(components)
 
 	return self
 end
@@ -467,18 +466,17 @@ function M:set_blacklist(blacklist_components)
 		blacklist_components = { blacklist_components }
 	end
 
-	-- Work on a copy, expanding children in place would mutate the caller array
 	local components = nil
 	if blacklist_components then
 		components = {}
 		helper.add_array(components, blacklist_components)
-		for i = 1, #components do
-			helper.add_array(components, components[i]:get_childrens())
+		for i = 1, #blacklist_components do
+			helper.add_array(components, blacklist_components[i]:get_childrens())
 		end
 	end
 
 	self._input_blacklist = components
-	self._input_blacklist_set = build_component_set(components)
+	self._input_blacklist_set = array_to_map(components)
 
 	return self
 end
