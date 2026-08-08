@@ -142,12 +142,16 @@ return function()
 				last_progress = progress
 			end)
 
-			-- Move the content to the middle of the available range
-			scroll.position.y = (scroll.available_pos.y + scroll.available_pos.w) / 2
+			local progress_before = data_list.scroll_progress
+
+			-- The available range is symmetric around zero and the content starts in
+			-- the middle of it, so move to the end of the range to get a real change
+			scroll.position.y = scroll.available_pos.y
 			scroll.on_scroll:trigger(context, scroll.position)
 
 			assert(calls == 1)
-			assert(last_progress > 0 and last_progress < 1)
+			assert(last_progress ~= progress_before)
+			assert(data_list.scroll_progress == last_progress)
 
 			-- The same position must not fire the event again
 			scroll.on_scroll:trigger(context, scroll.position)
