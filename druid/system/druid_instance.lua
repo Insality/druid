@@ -3,7 +3,6 @@
 
 local events = require("event.events")
 local const = require("druid.const")
-local helper = require("druid.helper")
 local settings = require("druid.system.settings")
 local druid_component = require("druid.component")
 
@@ -126,33 +125,15 @@ end
 ---@param component druid.component The component to check
 ---@return boolean is_can_use True if component can be processed on input step
 function M:_can_use_input_component(component)
-	local can_by_whitelist = true
-	local can_by_blacklist = true
-
-	if self._input_whitelist then
-		can_by_whitelist = self._input_whitelist[component] == true
+	if self._input_whitelist and self._input_whitelist[component] ~= true then
+		return false
 	end
 
-	if self._input_blacklist then
-		can_by_blacklist = self._input_blacklist[component] ~= true
+	if self._input_blacklist and self._input_blacklist[component] == true then
+		return false
 	end
 
-	return can_by_blacklist and can_by_whitelist
-end
-
-
----@param list druid.component[]|nil
----@return table<druid.component, boolean>|nil
-local function array_to_map(list)
-	if not list or #list == 0 then
-		return nil
-	end
-
-	local map = {}
-	for i = 1, #list do
-		map[list[i]] = true
-	end
-	return map
+	return true
 end
 
 
@@ -427,7 +408,7 @@ end
 ---Set whitelist components for input processing.
 ---If whitelist is not empty and component not contains in this list,
 ---component will be not processed on the input step.
----The passed array is copied, it is not modified and later changes to it have no effect
+---The passed array is not modified; children are included recursively.
 ---@param whitelist_components table|druid.component[]|nil The array of component to whitelist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
@@ -435,16 +416,19 @@ function M:set_whitelist(whitelist_components)
 		whitelist_components = { whitelist_components }
 	end
 
-	local components = nil
-	if whitelist_components then
-		components = {}
-		helper.add_array(components, whitelist_components)
+	local map = nil
+	if whitelist_components and #whitelist_components > 0 then
+		map = {}
 		for i = 1, #whitelist_components do
-			helper.add_array(components, whitelist_components[i]:get_childrens())
+			map[whitelist_components[i]] = true
+			local children = whitelist_components[i]:get_childrens()
+			for j = 1, #children do
+				map[children[j]] = true
+			end
 		end
 	end
 
-	self._input_whitelist = array_to_map(components)
+	self._input_whitelist = map
 
 	return self
 end
@@ -453,7 +437,7 @@ end
 ---Set blacklist components for input processing.
 ---If blacklist is not empty and component is contained in this list,
 ---component will be not processed on the input step DruidInstance.
----The passed array is copied, it is not modified and later changes to it have no effect
+---The passed array is not modified; children are included recursively.
 ---@param blacklist_components table|druid.component[]|nil The array of component to blacklist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
@@ -461,16 +445,19 @@ function M:set_blacklist(blacklist_components)
 		blacklist_components = { blacklist_components }
 	end
 
-	local components = nil
-	if blacklist_components then
-		components = {}
-		helper.add_array(components, blacklist_components)
+	local map = nil
+	if blacklist_components and #blacklist_components > 0 then
+		map = {}
 		for i = 1, #blacklist_components do
-			helper.add_array(components, blacklist_components[i]:get_childrens())
+			map[blacklist_components[i]] = true
+			local children = blacklist_components[i]:get_childrens()
+			for j = 1, #children do
+				map[children[j]] = true
+			end
 		end
 	end
 
-	self._input_blacklist = array_to_map(components)
+	self._input_blacklist = map
 
 	return self
 end
