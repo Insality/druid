@@ -228,5 +228,43 @@ return function()
             -- Verify the lock state
             assert(scroll:set_vertical_scroll(false).drag.can_y == false)
         end)
+
+        it("Should consume wheel event when scroll can scroll", function()
+            create_scroll_instance()
+
+            local is_consumed = druid:on_input(hash("mouse_wheel_up"), { x = 0, y = 0 })
+            assert(is_consumed == true)
+        end)
+
+        it("Should ignore wheel event outside of the view node", function()
+            local scroll = create_scroll_instance()
+            local target_y = scroll.target_position.y
+
+            local is_consumed = druid:on_input(hash("mouse_wheel_up"), { x = 500, y = 500 })
+            assert(is_consumed == false)
+            assert(scroll.target_position.y == target_y)
+        end)
+
+        it("Should not consume wheel event when content fits the view", function()
+            local view_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 100, 0))
+            local content_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(50, 50, 0))
+            gui.set_parent(content_node, view_node)
+
+            local scroll = druid:new_scroll(view_node, content_node)
+            scroll.style.WHEEL_SCROLL_SPEED = 20
+
+            assert(scroll.drag.can_x == false)
+            assert(scroll.drag.can_y == false)
+
+            local is_consumed = druid:on_input(hash("mouse_wheel_up"), { x = 0, y = 0 })
+            assert(is_consumed == false)
+        end)
+
+        it("Should ignore wheel action without pointer position", function()
+            create_scroll_instance()
+
+            local is_consumed = druid:on_input(mock_input.key_pressed("mouse_wheel_up"))
+            assert(is_consumed == false)
+        end)
     end)
 end

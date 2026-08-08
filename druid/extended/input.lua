@@ -48,6 +48,15 @@ M.ALLOWED_ACTIONS = {
 	[const.ACTION_BACK] = true,
 }
 
+-- Modifiers must not be swallowed while the input is selected,
+-- otherwise app hotkeys that use them never receive the key events.
+local MODIFICATOR_ACTIONS = {
+	[const.ACTION_LSHIFT] = true,
+	[const.ACTION_LCTRL] = true,
+	[const.ACTION_LALT] = true,
+	[const.ACTION_LCMD] = true,
+}
+
 ---Mask text by replacing every character with a mask character
 ---@param text string
 ---@param mask string
@@ -150,15 +159,7 @@ end
 ---@param action action The action
 ---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
-	local is_modificator_action =
-		action_id == const.ACTION_LSHIFT or
-		action_id == const.ACTION_LCTRL or
-		action_id == const.ACTION_LALT or
-		action_id == const.ACTION_LCMD
-
-	local is_focus_switch_action = action_id == const.ACTION_TAB
-
-	if is_modificator_action or is_focus_switch_action then
+	if MODIFICATOR_ACTIONS[action_id] or action_id == const.ACTION_TAB then
 		return false
 	end
 

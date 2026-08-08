@@ -7,7 +7,7 @@ local component = require("druid.component")
 ---@field IS_DYNAMIC_NODE_POSES boolean|nil If true, always center grid content as grid pivot sets. Default: false
 ---@field IS_ALIGN_LAST_ROW boolean|nil If true, always align last row of the grid as grid pivot sets. Default: false
 
----The component for manage the nodes position in the grid with various options.
+---The component to manage the nodes position in the grid with various options.
 ---Created via `druid:new_grid()` (Static Grid). Prefer Layout for variable-size arrangements.
 ---@class druid.grid: druid.component
 ---@field on_add_item event fun(self: druid.grid, item: node, index: number) Trigger on add item event

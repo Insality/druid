@@ -849,6 +849,12 @@ function M:_process_scroll_wheel(action_id, action)
 		return false
 	end
 
+	-- Wheel actions should carry the current pointer position; without it we
+	-- cannot decide if the cursor is over this scroll (do not guess / consume)
+	if not action.x or not action.y then
+		return false
+	end
+
 	-- Pick only on wheel events instead of continuous hover tracking
 	if not helper.pick_node(self.view_node, action.x, action.y, self.drag.click_zone) then
 		return false

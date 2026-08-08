@@ -126,5 +126,36 @@ return function()
 			assert(data_list:get_data()[1].id == 1)
 			assert(data_list:get_data()[2].id == 3)
 		end)
+
+		it("Should trigger on_scroll_progress_change only when progress changes", function()
+			local data_list, _, scroll = create_data_list()
+			local data = {}
+			for i = 1, 30 do
+				data[i] = { id = i }
+			end
+			data_list:set_data(data)
+
+			local calls = 0
+			local last_progress = nil
+			data_list.on_scroll_progress_change:subscribe(function(_, progress)
+				calls = calls + 1
+				last_progress = progress
+			end)
+
+			local progress_before = data_list.scroll_progress
+
+			-- The available range is symmetric around zero and the content starts in
+			-- the middle of it, so move to the end of the range to get a real change
+			scroll.position.y = scroll.available_pos.y
+			scroll.on_scroll:trigger(context, scroll.position)
+
+			assert(calls == 1)
+			assert(last_progress ~= progress_before)
+			assert(data_list.scroll_progress == last_progress)
+
+			-- The same position must not fire the event again
+			scroll.on_scroll:trigger(context, scroll.position)
+			assert(calls == 1)
+		end)
 	end)
 end

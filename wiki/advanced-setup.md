@@ -18,9 +18,11 @@ By default, **Druid** uses all key names from Defold's default `/builtins/input/
 - Key trigger: `Right` -> `key_right` (for Rich Input component, optional)
 - Key trigger: `Up` -> `key_up` (for Navigation Handler widget, optional)
 - Key trigger: `Down` -> `key_down` (for Navigation Handler widget, optional)
-- Key trigger: `Shift` -> `key_lshift` (for Rich Input component, optional)
-- Key trigger: `Ctrl` -> `key_lctrl` (for Rich Input component, optional)
-- Key trigger: `Super` -> `key_lsuper` (for Rich Input component, optional)
+- Key trigger: `Shift` -> `key_lshift` (for Rich Input / Input / Hotkey, optional)
+- Key trigger: `Ctrl` -> `key_lctrl` (for Rich Input / Input / Hotkey, optional)
+- Key trigger: `Alt` -> `key_lalt` (for Input / Hotkey, optional)
+- Key trigger: `Super` -> `key_lsuper` (for Rich Input / Input / Hotkey, optional)
+- Key trigger: `Tab` -> `key_tab` (for Input focus switching, optional)
 - Touch triggers: `Touch multi` -> `touch_multi` (for Scroll component)
 
 ![](../media/input_binding_2.png)
@@ -51,7 +53,9 @@ input_key_up = key_up
 input_key_down = key_down
 input_key_lshift = key_lshift
 input_key_lctrl = key_lctrl
+input_key_lalt = key_lalt
 input_key_lsuper = key_lsuper
+input_key_tab = key_tab
 ```
 
 
