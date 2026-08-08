@@ -841,10 +841,15 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [Scroll] Wheel scrolling picks the view node on wheel events instead of continuous Hover tracking
 - [Scroll] **Breaking**: the internal `scroll.hover` component is removed, wheel scrolling no longer needs it
 - [Scroll] Wheel events are no longer consumed when the scroll can not scroll in any axis
+- [Scroll] Fix division by zero in `_inverse_lerp` / `get_percent` when there is no scroll space
 - [DataList] Gate refresh on visible-range / data-size changes; document cache mode as preferred for large lists
 - [DataList] `on_scroll_progress_change` is now actually triggered on scroll and after data size rebuilds
 - [Drag] Create Hover lazily only when drag cursors are enabled (defos)
+- [Drag] Add `add_drag_action` / `remove_drag_action` for custom drag input actions (e.g. middle mouse)
 - [Hover] Skip pick_node when no listeners and no cursor styles are configured
+- [Input] Do not consume modifier and Tab keys while selected; add `get_text_visual()`
+- [Slider] / [RichInput] Fix scene scale applied twice for `gui.screen_to_local` results
+- [Container] Do not override a manual `fit_into_size` on late init
 - [System] O(1) whitelist/blacklist input membership via hash sets
 - [System] `set_whitelist` / `set_blacklist` accept `nil` to clear the list instead of erroring
 - [System] `set_whitelist` / `set_blacklist` no longer modify the array passed to them
