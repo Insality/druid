@@ -847,6 +847,7 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [Hover] Skip pick_node when no listeners and no cursor styles are configured
 - [System] O(1) whitelist/blacklist input membership via hash sets
 - [System] `set_whitelist` / `set_blacklist` accept `nil` to clear the list instead of erroring
+- [System] `set_whitelist` / `set_blacklist` no longer modify the array passed to them
 - [API] Prefer `set_value` / `set_text`; deprecate `set_to` on progress, timer, lang_text and text (aliases kept)
 - [Swipe] Add `set_enabled` / `is_enabled`
 - [Tests] Add data_list, hotkey, slider tests; rewrite and register static_grid tests

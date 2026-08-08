@@ -431,7 +431,7 @@ end
 ---Set whitelist components for input processing.
 ---If whitelist is not empty and component not contains in this list,
 ---component will be not processed on the input step.
----The list is captured on call, so mutating the passed array later has no effect
+---The passed array is copied, it is not modified and later changes to it have no effect
 ---@param whitelist_components table|druid.component[]|nil The array of component to whitelist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
@@ -439,14 +439,18 @@ function M:set_whitelist(whitelist_components)
 		whitelist_components = { whitelist_components }
 	end
 
+	-- Work on a copy, expanding children in place would mutate the caller array
+	local components = nil
 	if whitelist_components then
-		for i = 1, #whitelist_components do
-			helper.add_array(whitelist_components, whitelist_components[i]:get_childrens())
+		components = {}
+		helper.add_array(components, whitelist_components)
+		for i = 1, #components do
+			helper.add_array(components, components[i]:get_childrens())
 		end
 	end
 
-	self._input_whitelist = whitelist_components
-	self._input_whitelist_set = build_component_set(whitelist_components)
+	self._input_whitelist = components
+	self._input_whitelist_set = build_component_set(components)
 
 	return self
 end
@@ -455,7 +459,7 @@ end
 ---Set blacklist components for input processing.
 ---If blacklist is not empty and component is contained in this list,
 ---component will be not processed on the input step DruidInstance.
----The list is captured on call, so mutating the passed array later has no effect
+---The passed array is copied, it is not modified and later changes to it have no effect
 ---@param blacklist_components table|druid.component[]|nil The array of component to blacklist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
@@ -463,14 +467,18 @@ function M:set_blacklist(blacklist_components)
 		blacklist_components = { blacklist_components }
 	end
 
+	-- Work on a copy, expanding children in place would mutate the caller array
+	local components = nil
 	if blacklist_components then
-		for i = 1, #blacklist_components do
-			helper.add_array(blacklist_components, blacklist_components[i]:get_childrens())
+		components = {}
+		helper.add_array(components, blacklist_components)
+		for i = 1, #components do
+			helper.add_array(components, components[i]:get_childrens())
 		end
 	end
 
-	self._input_blacklist = blacklist_components
-	self._input_blacklist_set = build_component_set(blacklist_components)
+	self._input_blacklist = components
+	self._input_blacklist_set = build_component_set(components)
 
 	return self
 end
