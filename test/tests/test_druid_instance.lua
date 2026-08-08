@@ -326,5 +326,53 @@ return function()
 			druid_instance:remove(container)
 			gui.delete_node(parent_node)
 		end)
+
+		it("Should clear input whitelist and blacklist with nil", function()
+			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
+			local clicks = 0
+			local button = druid_instance:new_button(button_node, function() clicks = clicks + 1 end)
+
+			-- Placed away from the first button, so they never pick the same click
+			local other_node = gui.new_box_node(vmath.vector3(250, 25, 0), vmath.vector3(100, 50, 0))
+			local other = druid_instance:new_button(other_node, function() end)
+
+			-- Whitelist the other button, so our button is filtered out
+			druid_instance:set_whitelist({ other })
+			druid_instance:on_input(mock_input.click_pressed(50, 25))
+			druid_instance:on_input(mock_input.click_released(50, 25))
+			assert(clicks == 0)
+
+			-- Clearing must not error and must restore the unfiltered routing
+			druid_instance:set_whitelist(nil)
+			druid_instance:set_blacklist({ button })
+			druid_instance:set_blacklist(nil)
+
+			druid_instance:on_input(mock_input.click_pressed(50, 25))
+			druid_instance:on_input(mock_input.click_released(50, 25))
+			assert(clicks == 1)
+
+			druid_instance:remove(button)
+			druid_instance:remove(other)
+			gui.delete_node(button_node)
+			gui.delete_node(other_node)
+		end)
+
+		it("Should not modify the array passed to set_whitelist", function()
+			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
+			local button = druid_instance:new_button(button_node, function() end)
+
+			-- Button owns a hover child, it must not leak into the caller array
+			local list = { button }
+			druid_instance:set_whitelist(list)
+			assert(#list == 1)
+
+			druid_instance:set_blacklist(list)
+			assert(#list == 1)
+
+			druid_instance:set_whitelist(nil)
+			druid_instance:set_blacklist(nil)
+			druid_instance:remove(button)
+			gui.delete_node(button_node)
+		end)
 	end)
 end
