@@ -374,5 +374,32 @@ return function()
 			druid_instance:remove(button)
 			gui.delete_node(button_node)
 		end)
+
+		it("Should include children in whitelist and blacklist", function()
+			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
+			local text_node = gui.new_text_node(vmath.vector3(50, 25, 0), "Text")
+			gui.set_font(text_node, "druid_text_bold")
+
+			-- Input owns a button child that handles the click to select
+			local input = druid_instance:new_input(button_node, text_node)
+
+			druid_instance:set_whitelist({ input })
+			druid_instance:on_input(mock_input.click_pressed(50, 25))
+			druid_instance:on_input(mock_input.click_released(50, 25))
+			assert(input.is_selected == true)
+
+			druid_instance:set_whitelist(nil)
+			input:unselect()
+
+			druid_instance:set_blacklist({ input })
+			druid_instance:on_input(mock_input.click_pressed(50, 25))
+			druid_instance:on_input(mock_input.click_released(50, 25))
+			assert(input.is_selected == false)
+
+			druid_instance:set_blacklist(nil)
+			druid_instance:remove(input)
+			gui.delete_node(button_node)
+			gui.delete_node(text_node)
+		end)
 	end)
 end

@@ -17,10 +17,8 @@ local druid_component = require("druid.component")
 ---@field package _late_init_timer_id number Timer id for late init
 ---@field package _late_remove druid.component[] Components to be removed on late update
 ---@field package _is_late_remove_enabled boolean Used to check if components should be removed on late update
----@field package _input_blacklist druid.component[]|nil Components that should not receive input
----@field package _input_whitelist druid.component[]|nil Components that should receive input
----@field package _input_blacklist_set table<druid.component, boolean>|nil O(1) lookup for blacklist
----@field package _input_whitelist_set table<druid.component, boolean>|nil O(1) lookup for whitelist
+---@field package _input_blacklist table<druid.component, boolean>|nil Components that should not receive input
+---@field package _input_whitelist table<druid.component, boolean>|nil Components that should receive input
 local M = {}
 
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
@@ -131,12 +129,12 @@ function M:_can_use_input_component(component)
 	local can_by_whitelist = true
 	local can_by_blacklist = true
 
-	if self._input_whitelist_set then
-		can_by_whitelist = self._input_whitelist_set[component] == true
+	if self._input_whitelist then
+		can_by_whitelist = self._input_whitelist[component] == true
 	end
 
-	if self._input_blacklist_set then
-		can_by_blacklist = self._input_blacklist_set[component] ~= true
+	if self._input_blacklist then
+		can_by_blacklist = self._input_blacklist[component] ~= true
 	end
 
 	return can_by_blacklist and can_by_whitelist
@@ -184,8 +182,6 @@ function M.create_druid_instance(context, style)
 
 	self._input_blacklist = nil
 	self._input_whitelist = nil
-	self._input_blacklist_set = nil
-	self._input_whitelist_set = nil
 
 	self.components_all = {}
 	self.components_interest = {}
@@ -448,8 +444,7 @@ function M:set_whitelist(whitelist_components)
 		end
 	end
 
-	self._input_whitelist = components
-	self._input_whitelist_set = array_to_map(components)
+	self._input_whitelist = array_to_map(components)
 
 	return self
 end
@@ -475,8 +470,7 @@ function M:set_blacklist(blacklist_components)
 		end
 	end
 
-	self._input_blacklist = components
-	self._input_blacklist_set = array_to_map(components)
+	self._input_blacklist = array_to_map(components)
 
 	return self
 end
