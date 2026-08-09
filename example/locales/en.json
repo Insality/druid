@@ -24,6 +24,10 @@
 	"ui_adjust_next": "Next Adjust",
 	"ui_enabled": "Enabled",
 	"ui_item_size": "Item Size",
+	"ui_inner_scrollable": "Inner Scrollable",
+	"ui_whitelist_a": "Whitelist A",
+	"ui_blacklist_a": "Blacklist A",
+	"ui_clear_filters": "Clear Filters",
 
 	"ui_examples_basic": "Basic",
 	"ui_examples_data_list": "Data List",
@@ -87,6 +91,8 @@
 
 	"ui_example_basic_scroll": "Scroll",
 	"ui_example_basic_scroll_description": "How to make a simple scroll",
+	"ui_example_basic_scroll_nested": "Scroll Nested",
+	"ui_example_basic_scroll_nested_description": "Nested scrolls: wheel picks the view under the cursor and passes through when inner content fits",
 	"ui_elastic_scroll": "Elastic Scroll",
 	"ui_slider_friction": "Scroll Friction",
 	"ui_slider_speed": "Scroll Speed",
@@ -121,7 +127,9 @@
 	"ui_example_layout_scroll_bind_cards_description": "Mark elements to snap, and control over this elements with scroll or buttons",
 
 	"ui_example_basic_input": "Input",
-	"ui_example_basic_input_description": "How to make most simple input in Druid",
+	"ui_example_basic_input_description": "Text input with get_text_visual and Tab hotkey while selected",
+	"ui_example_whitelist_blacklist": "Whitelist & Blacklist",
+	"ui_example_whitelist_blacklist_description": "Whitelist and blacklist components for input processing, including children",
 
 	"ui_example_input_password": "Input Password",
 	"ui_example_input_password_description": "How the password input works",
@@ -145,7 +153,7 @@
 	"ui_height": "Height",
 
 	"ui_example_basic_swipe": "Swipe",
-	"ui_example_basic_swipe_description": "How to add callbacks on swipe events",
+	"ui_example_basic_swipe_description": "Swipe callbacks with set_enabled to turn gestures on and off",
 
 	"ui_example_checkbox": "Checkbox",
 	"ui_example_checkbox_description": "How to make a checkbox using Druid Button",

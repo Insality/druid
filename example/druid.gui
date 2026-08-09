@@ -1433,6 +1433,91 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
+  id: "scroll_nested"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/scroll_nested/scroll_nested.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/root"
+  parent: "scroll_nested"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/outer_view"
+  parent: "scroll_nested/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/outer_content"
+  parent: "scroll_nested/outer_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/outer_hint"
+  parent: "scroll_nested/outer_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/inner_view"
+  parent: "scroll_nested/outer_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/inner_content"
+  parent: "scroll_nested/inner_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_hint"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_line_a"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_line_b"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_line_c"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_line_d"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/outer_bottom"
+  parent: "scroll_nested/outer_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/outer_bottom_2"
+  parent: "scroll_nested/outer_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
   id: "scroll_slider"
   parent: "basic"
   inherit_alpha: true
@@ -3758,6 +3843,121 @@ nodes {
   type: TYPE_BOX
   id: "on_screen_control/on_screen_input/button_action/icon"
   parent: "on_screen_control/on_screen_input/button_action/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist"
+  parent: "gamepad"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/whitelist_blacklist/whitelist_blacklist.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/root"
+  parent: "whitelist_blacklist"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/button_a"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/button_a/root"
+  parent: "whitelist_blacklist/button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/button_a/text"
+  parent: "whitelist_blacklist/button_a/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/button_b"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/button_b/root"
+  parent: "whitelist_blacklist/button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/button_b/text"
+  parent: "whitelist_blacklist/button_b/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/btn_whitelist"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/btn_whitelist/root"
+  parent: "whitelist_blacklist/btn_whitelist"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/btn_whitelist/text"
+  parent: "whitelist_blacklist/btn_whitelist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/btn_blacklist"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/btn_blacklist/root"
+  parent: "whitelist_blacklist/btn_blacklist"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/btn_blacklist/text"
+  parent: "whitelist_blacklist/btn_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/btn_clear"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/btn_clear/root"
+  parent: "whitelist_blacklist/btn_clear"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/btn_clear/text"
+  parent: "whitelist_blacklist/btn_clear/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/hint"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/status"
+  parent: "whitelist_blacklist/root"
   template_node_child: true
 }
 nodes {

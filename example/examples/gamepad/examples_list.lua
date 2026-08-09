@@ -19,7 +19,15 @@ function M.get_examples()
 			root = "on_screen_control/root",
 			code_url = "example/examples/gamepad/on_screen_control/on_screen_control.lua",
 			widget_class = require("example.examples.gamepad.on_screen_control.on_screen_control"),
-		}
+		},
+		{
+			name_id = "ui_example_whitelist_blacklist",
+			information_text_id = "ui_example_whitelist_blacklist_description",
+			template = "whitelist_blacklist",
+			root = "whitelist_blacklist/root",
+			code_url = "example/examples/gamepad/whitelist_blacklist/whitelist_blacklist.lua",
+			widget_class = require("example.examples.gamepad.whitelist_blacklist.whitelist_blacklist"),
+		},
 	}
 end
 

@@ -148,6 +148,14 @@ function M.get_examples()
 			widget_class = require("example.examples.basic.scroll.scroll"),
 		},
 		{
+			name_id = "ui_example_basic_scroll_nested",
+			information_text_id = "ui_example_basic_scroll_nested_description",
+			template = "scroll_nested",
+			root = "scroll_nested/root",
+			code_url = "example/examples/basic/scroll_nested/scroll_nested.lua",
+			widget_class = require("example.examples.basic.scroll_nested.scroll_nested"),
+		},
+		{
 			name_id = "ui_example_basic_scroll_slider",
 			information_text_id = "ui_example_basic_scroll_slider_description",
 			template = "scroll_slider",

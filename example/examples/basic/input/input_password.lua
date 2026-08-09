@@ -18,7 +18,8 @@ end
 ---@param output_log output_list
 function M:on_example_created(output_log)
 	self.input.on_input_unselect:subscribe(function(_, text)
-		output_log:add_log_text("Input: " .. text)
+		output_log:add_log_text("Text: " .. text)
+		output_log:add_log_text("Visual: " .. self.input:get_text_visual())
 	end)
 end
 
