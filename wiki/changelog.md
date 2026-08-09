@@ -853,6 +853,10 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [System] O(1) whitelist/blacklist input membership via hash sets
 - [System] `set_whitelist` / `set_blacklist` accept `nil` to clear the list instead of erroring
 - [System] `set_whitelist` / `set_blacklist` no longer modify the array passed to them
+- [System] `set_whitelist` / `set_blacklist` are scoped to the caller now
+	- Called on the `druid` instance from the gui script it affects all components, as before
+	- Called on the `self.druid` inside a component it affects this component subtree only, so neighbor widgets are not affected and can keep their own filters
+	- Nested filters are applied on top of each other, the filter owner is not affected by its own filter
 - [API] Prefer `set_value` / `set_text`; deprecate `set_to` on progress, timer, lang_text and text (aliases kept)
 - [Swipe] Add `set_enabled` / `is_enabled`
 - [Tests] Add data_list, hotkey, slider tests; rewrite and register static_grid tests

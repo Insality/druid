@@ -14,7 +14,7 @@ function M:init()
 		print("Button B")
 	end)
 
-	-- Keep filter controls in the whitelist so the mode can always be changed
+	-- The filters are set from `self.druid`, so they affect this widget subtree only
 	self.btn_whitelist = self.druid:new_button("btn_whitelist/root", self.on_whitelist_a)
 	self.btn_blacklist = self.druid:new_button("btn_blacklist/root", self.on_blacklist_a)
 	self.btn_clear = self.druid:new_button("btn_clear/root", self.on_clear_filter)
@@ -23,7 +23,7 @@ end
 
 function M:on_whitelist_a()
 	self.druid:set_blacklist(nil)
-	-- Include filter buttons, otherwise whitelist would lock the UI
+	-- Include filter buttons, otherwise the widget would lock itself
 	self.druid:set_whitelist({
 		self.button_a,
 		self.btn_whitelist,
@@ -65,13 +65,6 @@ function M:on_example_created(output_log)
 	self.btn_clear.on_click:subscribe(function()
 		output_log:add_log_text("Filter Cleared")
 	end)
-end
-
-
-function M:on_remove()
-	-- Example shares the app druid instance — clear filters on leave
-	self.druid:set_whitelist(nil)
-	self.druid:set_blacklist(nil)
 end
 
 

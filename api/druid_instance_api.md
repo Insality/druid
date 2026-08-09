@@ -162,6 +162,9 @@ If whitelist is not empty and component not contains in this list,
 component will be not processed on the input step.
 The passed array is not modified; children are included recursively.
 
+The filter is scoped to the caller: on the `druid` instance it affects all components,
+on the `self.druid` inside a component it affects this component subtree only.
+
 - **Parameters:**
 	- `[whitelist_components]` *(table|druid.component[]|nil)*: The array of component to whitelist, nil to clear it
 
@@ -179,6 +182,9 @@ Set blacklist components for input processing.
 If blacklist is not empty and component is contained in this list,
 component will be not processed on the input step DruidInstance.
 The passed array is not modified; children are included recursively.
+
+The filter is scoped to the caller: on the `druid` instance it affects all components,
+on the `self.druid` inside a component it affects this component subtree only.
 
 - **Parameters:**
 	- `[blacklist_components]` *(table|druid.component[]|nil)*: The array of component to blacklist, nil to clear it
