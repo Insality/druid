@@ -2,6 +2,7 @@ local deftest = require("deftest.deftest")
 
 function init(self)
 	deftest.add(require("test.tests.test_druid_instance"))
+	deftest.add(require("test.tests.test_input_filter"))
 	deftest.add(require("test.tests.test_back_handler"))
 	deftest.add(require("test.tests.test_blocker"))
 	deftest.add(require("test.tests.test_button"))
