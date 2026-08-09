@@ -225,7 +225,7 @@ function M:_set_cursor(priority, cursor)
 end
 
 
----@local
+---@private
 function M._apply_cursor_stack()
 	if not defos then
 		return

@@ -154,15 +154,16 @@ Called when the window event occurs
 
 ---
 ```lua
-instance:set_whitelist(whitelist_components)
+instance:set_whitelist([whitelist_components])
 ```
 
 Set whitelist components for input processing.
 If whitelist is not empty and component not contains in this list,
-component will be not processed on the input step
+component will be not processed on the input step.
+The passed array is not modified; children are included recursively.
 
 - **Parameters:**
-	- `whitelist_components` *(table|druid.component[])*: The array of component to whitelist
+	- `[whitelist_components]` *(table|druid.component[]|nil)*: The array of component to whitelist, nil to clear it
 
 - **Returns:**
 	- `self` *(druid.instance)*: The Druid instance
@@ -171,15 +172,16 @@ component will be not processed on the input step
 
 ---
 ```lua
-instance:set_blacklist(blacklist_components)
+instance:set_blacklist([blacklist_components])
 ```
 
 Set blacklist components for input processing.
 If blacklist is not empty and component is contained in this list,
-component will be not processed on the input step DruidInstance
+component will be not processed on the input step DruidInstance.
+The passed array is not modified; children are included recursively.
 
 - **Parameters:**
-	- `blacklist_components` *(table|druid.component[])*: The array of component to blacklist
+	- `[blacklist_components]` *(table|druid.component[]|nil)*: The array of component to blacklist, nil to clear it
 
 - **Returns:**
 	- `self` *(druid.instance)*: The Druid instance

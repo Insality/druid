@@ -2,7 +2,8 @@
 
 > at /druid/base/static_grid.lua
 
-The component for manage the nodes position in the grid with various options
+The component to manage the nodes position in the grid with various options.
+Created via `druid:new_grid()` (Static Grid). Prefer Layout for variable-size arrangements.
 
 ## Functions
 
@@ -28,6 +29,7 @@ The component for manage the nodes position in the grid with various options
 - [set_in_row](#set_in_row)
 - [set_item_size](#set_item_size)
 - [sort_nodes](#sort_nodes)
+
 ## Fields
 
 - [on_add_item](#on_add_item)
@@ -101,7 +103,7 @@ Return grid index by content-local x, y. Inverse of get_pos + _get_dynamic_offse
 grid:get_index(pos)
 ```
 
-Return grid index by position
+Return grid index by position. Inverse of get_pos + _get_dynamic_offset.
 
 - **Parameters:**
 	- `pos` *(vector3)*: The node position in the grid

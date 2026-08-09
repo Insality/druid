@@ -230,6 +230,8 @@ drag:on_window_resized()
 drag:set_click_zone([node])
 drag:set_drag_cursors(is_enabled)
 drag:set_enabled(is_enabled)
+drag:add_drag_action(action_id)
+drag:remove_drag_action(action_id)
 
 drag.on_touch_start
 drag.on_touch_end
@@ -317,6 +319,7 @@ Inspect [API Here](components/extended/input_api.md)
 local input = self.druid:new_input(click_node, text_node, [keyboard_type])
 
 input:get_text()
+input:get_text_visual()
 input:get_text_selected()
 input:get_text_selected_replaced(text)
 input:move_selection(delta, is_add_to_selection, is_move_to_end)
@@ -348,7 +351,6 @@ local lang_text = self.druid:new_lang_text(node, [locale_id], [adjust_type])
 lang_text:format([a], [b], [c], [d], [e], [f], [g])
 lang_text:on_language_change()
 lang_text:set_text(text)
-lang_text:set_to(text)
 lang_text:translate(locale_id, [a], [b], [c], [d], [e], [f], [g])
 
 lang_text.on_change
@@ -395,9 +397,10 @@ local progress = self.druid:new_progress(node, key, [init_value])
 progress:empty()
 progress:fill()
 progress:get()
+progress:get_value()
 progress:set_max_size(max_size)
 progress:set_steps(steps, callback)
-progress:set_to(to)
+progress:set_value(to)
 progress:to(to, [callback])
 progress:update([dt])
 
@@ -497,6 +500,8 @@ Inspect [API Here](components/extended/swipe_api.md)
 local swipe = self.druid:new_swipe(node, [on_swipe_callback])
 
 swipe:set_click_zone([zone])
+swipe:set_enabled(is_enabled)
+swipe:is_enabled()
 
 swipe.on_swipe
 ```
@@ -521,7 +526,6 @@ text:set_scale(scale)
 text:set_size(size)
 text:set_text([new_text])
 text:set_text_adjust([adjust_type], [minimal_scale])
-text:set_to(set_to)
 
 text.on_set_text
 text.on_update_text_scale
@@ -537,7 +541,7 @@ local timer = self.druid:new_timer(node, [seconds_from], [seconds_to], [callback
 
 timer:set_interval(from, to)
 timer:set_state([is_on])
-timer:set_to(set_to)
+timer:set_value(set_to)
 timer:update([dt])
 
 timer.on_tick

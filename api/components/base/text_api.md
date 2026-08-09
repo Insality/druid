@@ -38,6 +38,7 @@ Create text node with druid: `text = druid:new_text(node_name, [initial_value], 
 - [set_text_adjust](#set_text_adjust)
 - [set_minimal_scale](#set_minimal_scale)
 - [get_text_adjust](#get_text_adjust)
+
 ## Fields
 
 - [node](#node)

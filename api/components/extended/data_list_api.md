@@ -10,7 +10,7 @@ Create data list component with druid: `data_list = druid:new_data_list(scroll, 
 ### Notes
 - Data List uses a scroll component for scrolling and a Static Grid component for layout
 - Data List only renders visible elements for better performance
-- Prefer `set_use_cache(true)` for large lists: reuse nodes via `on_element_add` / `on_element_remove` instead of create/delete
+- Data List supports caching of elements for better performance
 - Data List supports adding, removing and updating elements
 - Data List supports scrolling to specific elements
 - Data List supports custom element creation and cleanup

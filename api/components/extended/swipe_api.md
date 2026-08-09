@@ -8,6 +8,8 @@ The component to manage swipe events over a node
 
 - [init](#init)
 - [set_click_zone](#set_click_zone)
+- [set_enabled](#set_enabled)
+- [is_enabled](#is_enabled)
 ## Fields
 
 - [node](#node)
@@ -39,6 +41,33 @@ Set the click zone for the swipe, useful for restricting events outside stencil 
 
 - **Parameters:**
 	- `[zone]` *(string|node|nil)*: Gui node
+
+### set_enabled
+
+---
+```lua
+swipe:set_enabled(is_enabled)
+```
+
+Set swipe enabled state
+
+- **Parameters:**
+	- `is_enabled` *(boolean)*:
+
+- **Returns:**
+	- `self` *(druid.swipe)*:
+
+### is_enabled
+
+---
+```lua
+swipe:is_enabled()
+```
+
+Return current swipe enabled state
+
+- **Returns:**
+	- `` *(boolean)*:
 
 
 ## Fields
