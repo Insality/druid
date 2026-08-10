@@ -1,172 +1,252 @@
 {
-	"ui_examples": "예시",
+	"ui_examples": "예제",
 	"ui_properties_panel": "속성",
 	"ui_output": "출력",
 	"ui_view_code": "코드 보기",
 	"ui_profiler": "프로파일러",
 	"ui_profiler_memory": "메모리",
 	"ui_profiler_fps": "FPS",
-	"ui_profiler_components": "구성 요소",
+	"ui_profiler_components": "컴포넌트",
 	"ui_profiler_events": "이벤트",
 	"ui_confirm": "확인",
 	"ui_cancel": "취소",
 	"ui_value": "값",
 	"ui_scroll": "스크롤",
 	"ui_clipping": "클리핑",
-	"ui_no_properties": "이 예제에 대한 속성이 없습니다.",
+	"ui_no_properties": "이 예제에는 속성이 없습니다",
 	"ui_padding": "패딩",
 	"ui_margin_x": "여백 X",
 	"ui_margin_y": "여백 Y",
 	"ui_justify": "정렬",
 	"ui_pivot_next": "다음 피벗",
-	"ui_type_next": "다음 유형",
-	"ui_adjust_next": "다음 조정",
+	"ui_type_next": "다음 타입",
+	"ui_adjust_next": "다음 Adjust",
 	"ui_enabled": "활성화",
+	"ui_item_size": "아이템 크기",
+	"ui_inner_scrollable": "내부 스크롤",
+	"ui_whitelist_a": "Whitelist A",
+	"ui_blacklist_a": "Blacklist A",
+	"ui_clear_filters": "필터 초기화",
 
 	"ui_examples_basic": "기본",
-	"ui_examples_data_list": "데이터 목록",
+	"ui_examples_data_list": "Data List",
 	"ui_examples_gamepad": "게임패드",
 	"ui_examples_window": "윈도우",
-	"ui_examples_panthera": "팬테라",
+	"ui_examples_panthera": "Panthera",
 
 	"ui_example_intro": "소개",
-	"ui_example_intro_description": "여기에는 선택한 예제에 대한 간략한 설명이 표시됩니다.",
+	"ui_example_intro_description": "왼쪽에서 예제를 고르세요. 여기에 무엇을 해볼지 적혀 있고, 속성 패널로 바로 바꾸며 출력에서 이벤트를 봅니다.",
 
 	"ui_example_basic_button": "버튼",
-	"ui_example_basic_button_description": "Druid의 기본 버튼 예시",
+	"ui_example_basic_button_description": "버튼을 누르고 출력에서 이벤트를 확인하세요. 활성화를 끄면 입력이 막힙니다.",
 
 	"ui_example_basic_button_double_click": "더블 클릭",
-	"ui_example_basic_button_double_click_description": "버튼에 더블 클릭 기능을 추가하는 방법입니다.",
+	"ui_example_basic_button_double_click_description": "빠르게 두 번 누르면 on_click과 on_double_click이 모두 발생합니다. 순서는 출력에서 확인하세요.",
 
-	"ui_example_basic_button_hold": "버튼 누르기",
-	"ui_example_basic_button_hold_description": "버튼에 대해 누르기 및 트리거 기능을 만드는 방법입니다.",
+	"ui_example_basic_button_hold": "버튼 길게 누르기",
+	"ui_example_basic_button_hold_description": "2초간 누르세요. on_hold_callback이 게이지를 채우고 마지막에 on_long_click이 발생합니다.",
 
 	"ui_example_basic_text": "텍스트",
-	"ui_example_basic_text_description": "텍스트가 다양한 속성으로 어떻게 조정되는지 확인하십시오.",
+	"ui_example_basic_text_description": "텍스트 영역의 모서리를 끌고 Adjust와 Pivot을 바꿔 텍스트가 어떻게 들어가는지 보세요.",
 
-	"ui_example_basic_multiline_text": "다중 행 텍스트",
-	"ui_example_basic_multiline_text_description": "다중 행 텍스트가 다양한 속성으로 어떻게 조정되는지 확인하십시오.",
+	"ui_example_basic_multiline_text": "여러 줄 텍스트",
+	"ui_example_basic_multiline_text_description": "줄바꿈이 있는 같은 예제. 영역을 줄이면 어디서 줄이 넘어가고 어떻게 축소되는지 보입니다.",
 
 	"ui_example_basic_hover": "호버",
-	"ui_example_basic_hover_description": "호버에는 두 개의 호버 이벤트가 있습니다. 하나는 마우스용이고, 다른 하나는 터치용입니다. 마우스 이벤트에는 mouse_callback을 사용하십시오.",
+	"ui_example_basic_hover_description": "왼쪽 노드는 터치에, 오른쪽 노드는 마우스에 반응합니다. 마우스는 mouse_callback을 씁니다.",
 
 	"ui_example_basic_drag": "드래그",
-	"ui_example_basic_drag_description": "간단한 드래그 노드를 만드는 방법입니다.",
+	"ui_example_basic_drag_description": "노드를 끌어보세요. 놓으면 on_drag_end의 애니메이션으로 처음 위치로 돌아갑니다.",
 
 	"ui_example_basic_drag_to_node": "노드로 드래그",
-	"ui_example_basic_drag_to_node_description": "노드를 다른 노드로 드래그하고 콜백을 받는 방법입니다.",
+	"ui_example_basic_drag_to_node_description": "노드를 영역 위로 끌면 영역이 밝아지고, 그 안에서 놓으면 카운터가 올라갑니다.",
 
 	"ui_example_basic_slider": "슬라이더",
-	"ui_example_basic_slider_description": "간단한 슬라이더를 만드는 방법입니다.",
+	"ui_example_basic_slider_description": "핀을 끌거나 바를 클릭하세요. set_input_node로 위젯 전체가 반응합니다.",
 
-	"ui_example_basic_slider_vertical": "수직 슬라이더",
-	"ui_example_basic_slider_vertical_description": "간단한 수직 슬라이더를 만드는 방법입니다.",
+	"ui_example_basic_slider_vertical": "세로 슬라이더",
+	"ui_example_basic_slider_vertical_description": "같은 슬라이더이며, 방향은 생성 시 전달한 끝 위치 벡터로 정해집니다.",
 
 	"ui_example_basic_slider_stepped": "단계 슬라이더",
-	"ui_example_basic_slider_stepped_description": "슬라이더는 \"단계\" 속성을 가질 수 있어 단계를 만들 수 있습니다.",
+	"ui_example_basic_slider_stepped_description": "set_steps를 쓰면 핀이 11개 고정 값 중 가장 가까운 값에 붙습니다.",
 
-	"ui_example_basic_progress_bar": "진행 바",
-	"ui_example_basic_progress_bar_description": "간단한 진행 바를 만드는 방법입니다.",
+	"ui_example_basic_progress_bar": "프로그레스 바",
+	"ui_example_basic_progress_bar_description": "오른쪽 슬라이더로 값을 바꾸세요. 바는 노드 크기로 채워집니다.",
 
-	"ui_example_basic_progress_bar_slice9": "진행 바 Slice9",
-	"ui_example_basic_progress_bar_slice9_description": "진행 컴포넌트는 시작할 때 스케일 가능하도록 slice9 속성을 처리할 수 있습니다.",
+	"ui_example_basic_progress_bar_slice9": "프로그레스 바 Slice9",
+	"ui_example_basic_progress_bar_slice9_description": "slice9를 쓴 같은 바입니다. 값이 작아도 둥근 모서리가 유지됩니다.",
+
+	"ui_example_basic_blocker": "블로커",
+	"ui_example_basic_blocker_description": "패널 전체를 누를 수 있지만 블로커 영역은 입력을 막습니다. 두 곳을 눌러 출력을 비교하세요.",
+
+	"ui_example_basic_back_handler": "백 핸들러",
+	"ui_example_basic_back_handler_description": "Backspace나 안드로이드 뒤로 가기를 누르면 핸들러가 콜백을 호출합니다.",
 
 	"ui_example_basic_timer": "타이머",
-	"ui_example_basic_timer_description": "타이머 구성 요소는 콜백이 있는 초 타이머를 표시하는 데 사용됩니다.",
+	"ui_example_basic_timer_description": "0까지 센 뒤 on_timer_end가 더 긴 간격으로 다시 시작합니다.",
 
 	"ui_example_basic_hotkey": "단축키",
-	"ui_example_basic_hotkey_description": "콜백에 대한 단축키를 만드는 방법입니다.",
+	"ui_example_basic_hotkey_description": "Shift + X를 누르세요. 보조 키도 조합의 일부라 없으면 발동하지 않습니다.",
 
 	"ui_example_basic_scroll": "스크롤",
-	"ui_example_basic_scroll_description": "간단한 스크롤을 만드는 방법입니다.",
-	"ui_elastic_scroll": "탄력 스크롤",
+	"ui_example_basic_scroll_description": "콘텐츠를 끌거나 휠을 쓰세요. 마찰, 관성, 늘어남은 오른쪽에서 조절합니다.",
+	"ui_example_basic_scroll_nested": "중첩 스크롤",
+	"ui_example_basic_scroll_nested_description": "휠은 커서 아래 뷰를 고릅니다. 내부 스크롤을 끄면 내용이 다 들어가고 휠은 바깥으로 넘어갑니다.",
+	"ui_elastic_scroll": "탄성 스크롤",
+	"ui_slider_friction": "스크롤 마찰",
+	"ui_slider_speed": "스크롤 속도",
+	"ui_slider_wheel_speed": "휠 속도",
+	"ui_wheel_by_inertion": "휠 관성 사용",
 
-	"ui_example_basic_scroll_slider": "슬라이더와 함께 스크롤",
-	"ui_example_basic_scroll_slider_description": "스크롤에 슬라이더 컨트롤을 추가하고 사용하는 방법입니다.",
+	"ui_example_basic_scroll_slider": "슬라이더가 있는 스크롤",
+	"ui_example_basic_scroll_slider_description": "스크롤과 슬라이더가 양방향으로 연결됩니다. 아무거나 끌거나 항목을 클릭하세요.",
 
 	"ui_example_basic_grid": "정적 그리드",
-	"ui_example_basic_grid_description": "그리드에 노드를 배치하는 방법입니다.",
-	"ui_grid_in_row": "행 내 요소",
+	"ui_example_basic_grid_description": "요소를 넣고 빼며 한 줄의 개수를 바꿔 그리드가 어떻게 배치하는지 보세요.",
+	"ui_grid_in_row": "한 줄의 요소 수",
 	"ui_add_element": "요소 추가",
 	"ui_remove_element": "요소 제거",
-	"ui_clear_elements": "요소 지우기",
+	"ui_clear_elements": "요소 비우기",
+	"ui_dynamic_pos": "동적 위치",
+	"ui_align_last_row": "마지막 줄 정렬",
 
-	"ui_example_basic_scroll_bind_grid": "스크롤 바인드 그리드",
-	"ui_example_basic_scroll_bind_grid_description": "스크롤은 그리드 및 사전 정의된 크기와 잘 작동합니다. 이것은 스크롤 바인드 그리드의 예입니다.",
+	"ui_example_basic_scroll_bind_grid": "스크롤 + 그리드",
+	"ui_example_basic_scroll_bind_grid_description": "연결된 그리드가 스크롤 크기를 갱신합니다. 요소를 추가하며 콘텐츠 크기를 보세요.",
 
-	"ui_example_basic_scroll_bind_grid_horizontal": "수평 스크롤 바인드 그리드",
-	"ui_example_basic_scroll_bind_grid_horizontal_description": "스크롤은 그리드 및 사전 정의된 크기와 잘 작동합니다. 이것은 수평 스크롤 바인드 그리드의 예입니다.",
+	"ui_example_basic_scroll_bind_grid_horizontal": "가로 스크롤 + 그리드",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "같은 연결이지만 그리드가 한 줄이라 스크롤이 가로가 됩니다.",
+
+	"ui_example_basic_scroll_bind_grid_points": "포인트 스크롤",
+	"ui_example_basic_scroll_bind_grid_points_description": "포인트는 그리드에서 가져옵니다. 손을 떼면 가장 가까운 항목에 붙습니다.",
+
+	"ui_example_basic_scroll_bind_grid_cards": "카드 스크롤",
+	"ui_example_basic_scroll_bind_grid_cards_description": "카드는 포인트에 붙고 중앙과의 거리에 따라 크기가 변합니다. 스크롤이나 화살표로 넘기세요.",
+
+	"ui_example_layout_scroll_bind_cards": "레이아웃 카드 스크롤",
+	"ui_example_layout_scroll_bind_cards_description": "너비가 제각각인 카드를 레이아웃에 배치. 스크롤은 레이아웃에 연결되어 카드마다 붙습니다.",
 
 	"ui_example_basic_input": "입력",
-	"ui_example_basic_input_description": "Druid에서 가장 간단한 입력을 만드는 방법입니다.",
+	"ui_example_basic_input_description": "클릭해 입력하고 Enter로 적용합니다. 텍스트가 잘리므로 출력에서 text와 visual을 비교하세요.",
+	"ui_example_whitelist_blacklist": "Whitelist와 Blacklist",
+	"ui_example_whitelist_blacklist_description": "화이트리스트와 블랙리스트로 자식까지 포함해 입력을 받을 컴포넌트를 제한합니다.",
+	"ui_example_scoped_filters": "중첩 입력 필터",
+	"ui_example_scoped_filters_description": "두 단계 필터: 예제가 두 패널을, 각 패널이 자신을 필터링하며 두 필터가 함께 적용됩니다.",
 
 	"ui_example_input_password": "비밀번호 입력",
-	"ui_example_input_password_description": "비밀번호 입력이 어떻게 작동하는지입니다.",
+	"ui_example_input_password_description": "비밀번호 칸은 화면에 점으로 보이지만 get_text는 실제 값을 그대로 돌려줍니다.",
 
-	"ui_example_basic_rich_input": "리치 입력",
-	"ui_example_basic_rich_input_description": "Druid에서 리치 입력을 만드는 방법입니다.",
+	"ui_example_basic_rich_input": "Rich Input",
+	"ui_example_basic_rich_input_description": "플레이스홀더와 커서가 있는 입력. 칸을 클릭해 입력하면 커서가 글자를 따라갑니다.",
 
-	"ui_example_basic_rich_text": "리치 텍스트",
-	"ui_example_basic_rich_text_description": "Druid에서 리치 텍스트를 만드는 방법입니다.",
+	"ui_example_basic_rich_text": "Rich Text",
+	"ui_example_basic_rich_text_description": "태그가 있는 한 문자열이 여러 노드가 되어, 한 텍스트에 색과 폰트를 섞을 수 있습니다.",
 
-	"ui_example_rich_text_tags": "리치 텍스트 태그",
-	"ui_example_rich_text_tags_description": "여기에는 태그가 있는 리치 텍스트의 간단한 예가 있습니다\n - <color=A1D7F5>색상</color>\n - 글꼴\n - 크기\n - br\n - img",
+	"ui_example_rich_text_tags": "Rich Text 태그",
+	"ui_example_rich_text_tags_description": "기본 제공 태그 예시:\n - <color=A1D7F5>color</color>\n - font\n - size\n - br\n - img",
 
-	"ui_example_rich_text_split_animated": "Rich Text Split",
-	"ui_example_rich_text_split_animated_description": "set_split_to_characters와 글자별 애니메이션",
+	"ui_example_rich_text_split_animated": "Rich Text 글자 분리",
+	"ui_example_rich_text_split_animated_description": "set_split_to_characters가 글자마다 노드를 만들어 한 글자씩 애니메이션합니다.",
 
-	"ui_example_rich_text_resize": "Rich Text Resize",
-	"ui_example_rich_text_resize_description": "긴 리치 텍스트와 너비/높이 슬라이더 (set_width / set_height)",
+	"ui_example_rich_text_resize": "Rich Text 크기",
+	"ui_example_rich_text_resize_description": "너비와 높이 슬라이더를 움직이면 텍스트가 다시 줄바꿈되고 영역에 맞게 줄어듭니다.",
 
 	"ui_width": "너비",
 	"ui_height": "높이",
 
 	"ui_example_basic_swipe": "스와이프",
-	"ui_example_basic_swipe_description": "스와이프 이벤트에 콜백을 추가하는 방법입니다.",
+	"ui_example_basic_swipe_description": "영역을 쓸어보세요. 힌트가 그 방향으로 이동합니다. 활성화를 끄면 제스처가 멈춥니다.",
 
-	"ui_example_data_list_basic": "기본 데이터 목록",
-	"ui_example_data_list_basic_description": "간단한 데이터 목록을 만드는 방법입니다.",
+	"ui_example_checkbox": "체크박스",
+	"ui_example_checkbox_description": "Druid 버튼으로 만든 체크박스. 클릭하면 아이콘이 바뀌고 선택 효과가 재생됩니다.",
 
-	"ui_example_data_list_horizontal_basic": "수평 기본 데이터 목록",
-	"ui_example_data_list_horizontal_basic_description": "간단한 수평 데이터 목록을 만드는 방법입니다.",
+	"ui_example_checkbox_group": "체크박스 그룹",
+	"ui_example_checkbox_group_description": "독립적인 체크박스 세 개. 바뀔 때마다 그룹이 모든 상태를 기록합니다.",
 
-	"ui_example_data_list_add_remove_clear": "데이터 목록 추가, 제거, 지우기",
-	"ui_example_data_list_add_remove_clear_description": "데이터 목록에서 추가, 제거 및 지우기 기능이 어떻게 작동하는지입니다.",
+	"ui_example_radio_group": "라디오 그룹",
+	"ui_example_radio_group_description": "같은 체크박스지만 하나만 켜집니다. 하나를 누르면 나머지가 꺼집니다.",
 
-	"ui_example_data_list_cache_with_component": "캐시된 데이터 목록 버전",
-	"ui_example_data_list_cache_with_component_description": "캐시된 버전은 추가/제거 콜백에 대해 더 많은 설정이 필요하지만 메모리 효율이 더 좋습니다.",
+	"ui_example_data_list_basic": "Data List 기본",
+	"ui_example_data_list_basic_description": "1000개 항목이지만 노드는 보이는 것만 존재합니다. 스크롤하며 인덱스를 확인하세요.",
+
+	"ui_example_data_list_horizontal_basic": "Data List 가로",
+	"ui_example_data_list_horizontal_basic_description": "가로 리스트에도 같은 가상화가 적용됩니다. 그리드는 한 줄뿐입니다.",
+
+	"ui_example_data_list_matrix_basic": "Data List 매트릭스",
+	"ui_example_data_list_matrix_basic_description": "한 줄에 4개인 그리드 위의 Data List. 보이는 줄에만 노드가 만들어집니다.",
+
+	"ui_example_data_list_add_remove_clear": "Data List 추가·제거·비우기",
+	"ui_example_data_list_add_remove_clear_description": "버튼으로 항목을 추가, 제거, 비웁니다. 항목을 클릭하면 인덱스로 제거됩니다.",
+
+	"ui_example_data_list_cache_with_component": "Data List 캐시 버전",
+	"ui_example_data_list_cache_with_component_description": "set_use_cache로 컴포넌트를 재사용하고, 데이터는 on_element_add와 on_element_remove에서 채웁니다.",
 
 	"ui_language": "언어",
-	"ui_example_window_language": "창 언어",
-	"ui_example_window_language_description": "언어 선택이 있는 창의 간단한 예입니다.",
+	"ui_example_window_language": "언어 윈도우",
+	"ui_example_window_language_description": "언어를 바꾸면 이 예제를 포함한 모든 lang_text가 즉시 다시 번역됩니다.",
 
 	"ui_confirmation": "확인",
-	"ui_example_window_confirmation": "창 확인",
-	"ui_confirmation_description": "100만 달러 자동차 구매를 확인하시겠습니까?",
+	"ui_example_window_confirmation": "확인 윈도우",
+	"ui_confirmation_description": "백만 달러짜리 자동차를 구매하시겠습니까?",
 
 	"ui_information": "정보",
-	"ui_example_window_information": "정보 창",
+	"ui_example_window_information": "정보 윈도우",
 	"ui_example_window_information_text": "당신은 최고 중의 최고입니다!",
-	"ui_example_window_information_description": "정보 메시지를 포함한 창의 간단한 예입니다.",
+	"ui_example_window_information_description": "버튼 하나짜리 윈도우 위젯이며 열고 닫는 애니메이션은 Panthera로 만들었습니다.",
+
+	"ui_example_widget_hover_hint": "호버 힌트",
+	"ui_example_widget_hover_hint_description": "상자에 커서를 올리고 잠시 기다리면 지정한 방향에 텍스트 크기에 맞춘 힌트가 나옵니다.",
+
+	"ui_example_widget_property_button": "Property Button",
+	"ui_example_widget_property_button_description": "오른쪽 속성 패널이 사용하는 버튼 행입니다.",
+
+	"ui_example_widget_property_slider": "Property Slider",
+	"ui_example_widget_property_slider_description": "오른쪽 속성 패널이 사용하는 슬라이더 행입니다.",
+
+	"ui_example_widget_property_checkbox": "Property Checkbox",
+	"ui_example_widget_property_checkbox_description": "오른쪽 속성 패널이 사용하는 체크박스 행입니다.",
+
+	"ui_example_widget_memory_panel": "메모리 패널",
+	"ui_example_widget_memory_panel_description": "메모리 사용량을 측정해 미니 그래프로 그리는 위젯입니다.",
+
+	"ui_example_widget_fps_panel": "FPS 패널",
+	"ui_example_widget_fps_panel_description": "FPS를 추적해 최근 몇 초를 미니 그래프로 그리는 위젯입니다.",
+
+	"ui_example_widget_mini_graph": "미니 그래프",
+	"ui_example_widget_mini_graph_description": "샘플 개수를 정하는 막대 그래프로, FPS와 메모리 패널이 사용합니다.",
+
+	"ui_example_widget_properties_panel": "속성 패널",
+	"ui_example_widget_properties_panel_description": "패널 자체입니다. 버튼, 슬라이더, 체크박스, 입력을 추가해 예제를 제어합니다.",
+
+	"ui_example_widget_property_input": "Property Input",
+	"ui_example_widget_property_input_description": "오른쪽 속성 패널이 사용하는 입력 행입니다.",
 
 	"ui_example_gamepad_tester": "게임패드 테스터",
-	"ui_example_gamepad_tester_description": "여기에서 게임패드를 테스트하여 버튼과 축을 바인딩합니다.",
+	"ui_example_gamepad_tester_description": "게임패드를 연결하면 버튼이 켜지고 스틱이 움직이며 트리거가 바를 채웁니다.",
 
-	"ui_example_on_screen_control": "화면 위의 제어",
-	"ui_example_on_screen_control_description": "화면 위의 제어에 대한 간단한 예입니다. 여기의 on_screen_input은 Druid 구성 요소로서 콜백이 있는 간단한 조이스틱입니다.",
+	"ui_example_widget_tiling_node": "Tiling Node",
+	"ui_example_widget_tiling_node_description": "노드 크기가 바뀌거나 애니메이션되는 동안에도 텍스처 타일링을 유지합니다.",
 
-	"ui_example_layout_basic": "레이아웃",
-	"ui_example_layout_basic_description": "이 레이아웃은 Figma와 같도록 조정할 수 있습니다.",
+	"ui_example_on_screen_control": "화면 조작",
+	"ui_example_on_screen_control_description": "스틱을 끌어 캐릭터를 움직이고 버튼으로 점프하세요. 멀티터치도 지원합니다.",
 
-	"ui_example_panthera_basic_animation": "팬테라 기본 애니메이션",
-	"ui_example_panthera_basic_animation_description": "여기에는 팬테라 기본 애니메이션의 간단한 예가 있습니다.",
+	"ui_example_layout_basic": "Layout",
+	"ui_example_layout_basic_description": "패딩, 여백, justify, 피벗, 레이아웃 타입을 바꿔 요소 배치를 확인하세요.",
 
-	"ui_example_panthera_animation_blend": "팬테라 애니메이션 혼합",
-	"ui_example_panthera_animation_blend_description": "여기에는 팬테라 애니메이션 혼합의 간단한 예가 있습니다.",
-	"ui_example_panthera_animation_blend_hint": "이 영역 위에 마우스를 올려 놓으세요.",
+	"ui_example_panthera_basic_animation": "Panthera 기본 애니메이션",
+	"ui_example_panthera_basic_animation_description": "GUI 노드 위의 Panthera 애니메이션을 런타임에서 만들어 반복 재생합니다.",
 
-	"ui_animation_vertical": "수직",
-	"ui_animation_horizontal": "수평",
+	"ui_example_panthera_animation_blend": "Panthera 애니메이션 블렌드",
+	"ui_example_panthera_animation_blend_description": "애니메이션 시간을 직접 지정해 커서 위치로 키를 섞습니다.",
+	"ui_example_panthera_animation_blend_hint": "이 영역 위에 마우스를 올리세요",
+
+	"ui_example_container_anchors": "Container: 앵커",
+	"ui_example_container_anchors_description": "부모의 모서리를 끌면 각 자식이 자신의 앵커와 상대 위치를 유지합니다.",
+
+	"ui_example_container_resize": "Container: 크기 조절",
+	"ui_example_container_resize_description": "모서리를 끌면 옆 패널이 X나 Y로 늘어나고 콘텐츠도 부모를 따라 커집니다.",
+
+	"ui_animation_vertical": "세로",
+	"ui_animation_horizontal": "가로",
 
 	"ui_language_en": "English",
 	"ui_language_ru": "Русский",
@@ -177,15 +257,5 @@
 	"ui_language_pt": "Português",
 	"ui_language_it": "Italiano",
 	"ui_language_kr": "한국어",
-	"ui_language_zh": "中文",
-	"ui_inner_scrollable": "Inner Scrollable",
-	"ui_whitelist_a": "Whitelist A",
-	"ui_blacklist_a": "Blacklist A",
-	"ui_clear_filters": "Clear Filters",
-	"ui_example_basic_scroll_nested": "Scroll Nested",
-	"ui_example_basic_scroll_nested_description": "Nested scrolls: wheel picks the view under the cursor and passes through when inner content fits",
-	"ui_example_whitelist_blacklist": "Whitelist & Blacklist",
-	"ui_example_whitelist_blacklist_description": "Whitelist and blacklist components for input processing, including children",
-	"ui_example_scoped_filters": "Scoped Input Filters",
-	"ui_example_scoped_filters_description": "Two filter levels at once: the example filters both panels, each panel filters itself, and the filters stack"
+	"ui_language_zh": "中文"
 }

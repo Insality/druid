@@ -2,7 +2,7 @@
 	"ui_examples": "Примеры",
 	"ui_properties_panel": "Свойства",
 	"ui_output": "Вывод",
-	"ui_view_code": "Просмотр кода",
+	"ui_view_code": "Открыть код",
 	"ui_profiler": "Профайлер",
 	"ui_profiler_memory": "Память",
 	"ui_profiler_fps": "FPS",
@@ -11,162 +11,242 @@
 	"ui_confirm": "Подтвердить",
 	"ui_cancel": "Отмена",
 	"ui_value": "Значение",
-	"ui_scroll": "Прокрутка",
+	"ui_scroll": "Скролл",
 	"ui_clipping": "Обрезка",
-	"ui_no_properties": "Нет свойств для этого примера",
-	"ui_padding": "Отступ",
-	"ui_margin_x": "Отступ по X",
-	"ui_margin_y": "Отступ по Y",
-	"ui_justify": "Выровнять",
-	"ui_pivot_next": "След. якорь",
-	"ui_type_next": "След. тип",
-	"ui_adjust_next": "След. тип сжатия",
+	"ui_no_properties": "У этого примера нет свойств",
+	"ui_padding": "Отступы",
+	"ui_margin_x": "Интервал X",
+	"ui_margin_y": "Интервал Y",
+	"ui_justify": "Выравнивание",
+	"ui_pivot_next": "Следующий Pivot",
+	"ui_type_next": "Следующий тип",
+	"ui_adjust_next": "Следующий Adjust",
 	"ui_enabled": "Включено",
+	"ui_item_size": "Размер элемента",
+	"ui_inner_scrollable": "Внутренний скролл",
+	"ui_whitelist_a": "Whitelist A",
+	"ui_blacklist_a": "Blacklist A",
+	"ui_clear_filters": "Сбросить фильтры",
 
-	"ui_examples_basic": "Основные",
-	"ui_examples_data_list": "Список данных",
+	"ui_examples_basic": "Основное",
+	"ui_examples_data_list": "Data List",
 	"ui_examples_gamepad": "Геймпад",
 	"ui_examples_window": "Окна",
-	"ui_examples_panthera": "Пантера",
+	"ui_examples_panthera": "Panthera",
 
 	"ui_example_intro": "Введение",
-	"ui_example_intro_description": "Здесь будет краткое описание выбранного примера.",
+	"ui_example_intro_description": "Выберите пример слева. Здесь описано, что попробовать, панель свойств меняет его на лету, а Вывод показывает события.",
 
 	"ui_example_basic_button": "Кнопка",
-	"ui_example_basic_button_description": "Пример базовой кнопки Druid",
+	"ui_example_basic_button_description": "Нажмите кнопку и посмотрите событие в Выводе. Снимите галочку Включено, чтобы заблокировать ввод.",
 
-	"ui_example_basic_button_double_click": "Двойной щелчок",
-	"ui_example_basic_button_double_click_description": "Как добавить функциональность двойного щелчка к кнопке.",
+	"ui_example_basic_button_double_click": "Двойное нажатие",
+	"ui_example_basic_button_double_click_description": "Нажмите дважды подряд: сработают и on_click, и on_double_click. Их порядок виден в Выводе.",
 
 	"ui_example_basic_button_hold": "Удержание кнопки",
-	"ui_example_basic_button_hold_description": "Как сделать функционал удержания и триггера для кнопки.",
+	"ui_example_basic_button_hold_description": "Держите кнопку 2 секунды. on_hold_callback заполняет полосу, on_long_click срабатывает в конце.",
 
 	"ui_example_basic_text": "Текст",
-	"ui_example_basic_text_description": "Проверьте, как текст настраивается с различными свойствами.",
+	"ui_example_basic_text_description": "Тяните углы области текста, переключайте Adjust и Pivot: смотрите, как текст вписывается в блок.",
 
 	"ui_example_basic_multiline_text": "Многострочный текст",
-	"ui_example_basic_multiline_text_description": "Проверьте, как многострочный текст настраивается с различными свойствами.",
+	"ui_example_basic_multiline_text_description": "То же самое, но с переносами. Уменьшите область и посмотрите, где текст переносится и как уменьшается.",
 
 	"ui_example_basic_hover": "Наведение",
-	"ui_example_basic_hover_description": "Наведение имеет два события. Одно для мыши и одно для касания. Используйте mouse_callback для событий мыши.",
+	"ui_example_basic_hover_description": "Левый узел реагирует на касание, правый — на мышь. Для мыши используйте mouse_callback.",
 
 	"ui_example_basic_drag": "Перетаскивание",
-	"ui_example_basic_drag_description": "Как создать простой узел перетаскивания.",
+	"ui_example_basic_drag_description": "Потяните узел. После отпускания он вернётся на старт по анимации из on_drag_end.",
 
-	"ui_example_basic_drag_to_node": "Перетаскивание к узлу",
-	"ui_example_basic_drag_to_node_description": "Как перетащить узел к другому узлу и получить обратные вызовы.",
+	"ui_example_basic_drag_to_node": "Перетаскивание в зону",
+	"ui_example_basic_drag_to_node_description": "Тяните узел на зону: она подсвечивается при наведении, а счётчик растёт при отпускании внутри.",
 
 	"ui_example_basic_slider": "Слайдер",
-	"ui_example_basic_slider_description": "Как сделать простой слайдер.",
+	"ui_example_basic_slider_description": "Тяните пин или кликните по полосе: set_input_node делает активным весь виджет.",
 
 	"ui_example_basic_slider_vertical": "Вертикальный слайдер",
-	"ui_example_basic_slider_vertical_description": "Как сделать простой вертикальный слайдер.",
+	"ui_example_basic_slider_vertical_description": "Тот же слайдер, направление задаётся вектором конечной позиции при создании.",
 
-	"ui_example_basic_slider_stepped": "Слайдер с шагами",
-	"ui_example_basic_slider_stepped_description": "Слайдеры могут иметь свойство «шаги», чтобы сделать их пошаговыми.",
+	"ui_example_basic_slider_stepped": "Слайдер со ступенями",
+	"ui_example_basic_slider_stepped_description": "Слайдер с set_steps: пин прилипает к ближайшему из 11 фиксированных значений.",
 
-	"ui_example_basic_progress_bar": "Полоса прогресса",
-	"ui_example_basic_progress_bar_description": "Как сделать простую полосу прогресса.",
+	"ui_example_basic_progress_bar": "Прогресс бар",
+	"ui_example_basic_progress_bar_description": "Меняйте значение слайдером справа, полоса заполняется за счёт размера узла.",
 
-	"ui_example_basic_progress_bar_slice9": "Полоса прогресса Slice9",
-	"ui_example_basic_progress_bar_slice9_description": "Компонент прогресса может обрабатывать свойство slice9, чтобы сделать его масштабируемым с самого начала.",
+	"ui_example_basic_progress_bar_slice9": "Прогресс бар Slice9",
+	"ui_example_basic_progress_bar_slice9_description": "Та же полоса со slice9: скруглённые края сохраняются даже при малых значениях.",
+
+	"ui_example_basic_blocker": "Блокер",
+	"ui_example_basic_blocker_description": "Кликается вся панель, но зона блокера съедает ввод. Нажмите в обе области и сравните Вывод.",
+
+	"ui_example_basic_back_handler": "Back Handler",
+	"ui_example_basic_back_handler_description": "Нажмите Backspace или кнопку «назад» на Android: обработчик вызовет колбэк, текст отреагирует.",
 
 	"ui_example_basic_timer": "Таймер",
-	"ui_example_basic_timer_description": "Компонент Таймера используется для отображения секундомера с обратным вызовом.",
+	"ui_example_basic_timer_description": "Таймер идёт до нуля, затем on_timer_end перезапускает его с большим интервалом.",
 
 	"ui_example_basic_hotkey": "Горячая клавиша",
-	"ui_example_basic_hotkey_description": "Как создать горячую клавишу для обратного вызова.",
+	"ui_example_basic_hotkey_description": "Нажмите Shift + X. Модификатор — часть комбинации, без него хоткей не сработает.",
 
-	"ui_example_basic_scroll": "Прокрутка",
-	"ui_example_basic_scroll_description": "Как сделать простую прокрутку.",
-	"ui_elastic_scroll": "Эластичная прокрутка",
+	"ui_example_basic_scroll": "Скролл",
+	"ui_example_basic_scroll_description": "Тяните контент или крутите колесо. Трение, инерцию и растяжение настройте справа.",
+	"ui_example_basic_scroll_nested": "Вложенный скролл",
+	"ui_example_basic_scroll_nested_description": "Колесо выбирает скролл под курсором. Выключите внутренний скролл: контент влезает и колесо уходит внешнему.",
+	"ui_elastic_scroll": "Упругий скролл",
+	"ui_slider_friction": "Трение скролла",
+	"ui_slider_speed": "Скорость скролла",
+	"ui_slider_wheel_speed": "Скорость колеса",
+	"ui_wheel_by_inertion": "Колесо по инерции",
 
-	"ui_example_basic_scroll_slider": "Прокрутка со слайдером",
-	"ui_example_basic_scroll_slider_description": "Как добавить элемент управления слайдером к прокрутке и использовать их.",
+	"ui_example_basic_scroll_slider": "Скролл со слайдером",
+	"ui_example_basic_scroll_slider_description": "Скролл и слайдер связаны в обе стороны. Тяните любой из них или кликните по элементу.",
 
-	"ui_example_basic_grid": "Статическая сетка",
-	"ui_example_basic_grid_description": "Как разместить узлы в сетке.",
-	"ui_grid_in_row": "Элементы в строке",
+	"ui_example_basic_grid": "Статичная сетка",
+	"ui_example_basic_grid_description": "Добавляйте и удаляйте элементы, меняйте количество в ряду и смотрите, как сетка их расставляет.",
+	"ui_grid_in_row": "Элементов в ряду",
 	"ui_add_element": "Добавить элемент",
 	"ui_remove_element": "Удалить элемент",
 	"ui_clear_elements": "Очистить элементы",
+	"ui_dynamic_pos": "Динамическая позиция",
+	"ui_align_last_row": "Выровнять последний ряд",
 
-	"ui_example_basic_scroll_bind_grid": "Прокрутка с привязанной сеткой",
-	"ui_example_basic_scroll_bind_grid_description": "Прокрутка хорошо работает с сетками и заранее заданными размерами, это пример привязанной прокрутки с сеткой.",
+	"ui_example_basic_scroll_bind_grid": "Скролл с сеткой",
+	"ui_example_basic_scroll_bind_grid_description": "Привязанная сетка обновляет размер скролла. Добавьте элементы и следите за размером контента.",
 
-	"ui_example_basic_scroll_bind_grid_horizontal": "Горизонтальная привязанная прокрутка",
-	"ui_example_basic_scroll_bind_grid_horizontal_description": "Прокрутка хорошо работает с сетками и заранее заданными размерами, это пример горизонтальной привязанной прокрутки с сеткой.",
+	"ui_example_basic_scroll_bind_grid_horizontal": "Горизонтальный скролл с сеткой",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "Та же привязка, но сетка в один ряд, поэтому скролл становится горизонтальным.",
 
-	"ui_example_basic_input": "Ввод",
-	"ui_example_basic_input_description": "Как сделать самый простой ввод в Druid.",
+	"ui_example_basic_scroll_bind_grid_points": "Скролл по точкам",
+	"ui_example_basic_scroll_bind_grid_points_description": "Точки интереса взяты из сетки: после отпускания скролл прилипает к ближайшему элементу.",
+
+	"ui_example_basic_scroll_bind_grid_cards": "Скролл с карточками",
+	"ui_example_basic_scroll_bind_grid_cards_description": "Карточки липнут к точкам и масштабируются по расстоянию до центра. Листайте скроллом или стрелками.",
+
+	"ui_example_layout_scroll_bind_cards": "Layout с карточками",
+	"ui_example_layout_scroll_bind_cards_description": "Карточки разной ширины в layout. Скролл привязан к layout и всё равно липнет к каждой карточке.",
+
+	"ui_example_basic_input": "Ввод текста",
+	"ui_example_basic_input_description": "Кликните и печатайте, Enter — применить. Текст обрезается: сравните text и visual в Выводе.",
+	"ui_example_whitelist_blacklist": "Whitelist и Blacklist",
+	"ui_example_whitelist_blacklist_description": "Whitelist и blacklist ограничивают, какие компоненты получают ввод, включая дочерние.",
+	"ui_example_scoped_filters": "Вложенные фильтры ввода",
+	"ui_example_scoped_filters_description": "Два уровня фильтров сразу: пример фильтрует обе панели, каждая панель — себя, фильтры складываются.",
 
 	"ui_example_input_password": "Ввод пароля",
-	"ui_example_input_password_description": "Как работает ввод пароля.",
+	"ui_example_input_password_description": "Поле пароля показывает точки на экране, а get_text по-прежнему отдаёт настоящее значение.",
 
-	"ui_example_basic_rich_input": "Расширенный ввод",
-	"ui_example_basic_rich_input_description": "Как сделать расширенный ввод в Druid.",
+	"ui_example_basic_rich_input": "Rich Input",
+	"ui_example_basic_rich_input_description": "Поле с плейсхолдером и курсором. Кликните и печатайте — курсор следует за текстом.",
 
-	"ui_example_basic_rich_text": "Расширенный текст",
-	"ui_example_basic_rich_text_description": "Как создать расширенный текст в Druid.",
+	"ui_example_basic_rich_text": "Rich Text",
+	"ui_example_basic_rich_text_description": "Из одной строки с тегами получается несколько узлов: цвета и шрифты смешиваются в одном тексте.",
 
-	"ui_example_rich_text_tags": "Теги расширенного текста",
-	"ui_example_rich_text_tags_description": "Здесь простой пример расширенного текста с тегами\n - <color=A1D7F5>цвет</color>\n - шрифт\n - размер\n - br\n - img",
+	"ui_example_rich_text_tags": "Теги Rich Text",
+	"ui_example_rich_text_tags_description": "Встроенные теги в деле:\n - <color=A1D7F5>color</color>\n - font\n - size\n - br\n - img",
 
-	"ui_example_rich_text_split_animated": "Rich Text Split",
-	"ui_example_rich_text_split_animated_description": "Расширенный текст с set_split_to_characters и анимацией по буквам",
+	"ui_example_rich_text_split_animated": "Rich Text по буквам",
+	"ui_example_rich_text_split_animated_description": "set_split_to_characters создаёт узел на каждую букву, поэтому каждая анимируется отдельно.",
 
-	"ui_example_rich_text_resize": "Rich Text Resize",
-	"ui_example_rich_text_resize_description": "Длинный расширенный текст и слайдеры ширины и высоты (set_width / set_height)",
+	"ui_example_rich_text_resize": "Размер Rich Text",
+	"ui_example_rich_text_resize_description": "Двигайте слайдеры ширины и высоты: текст переносится и уменьшается, чтобы влезть в область.",
 
 	"ui_width": "Ширина",
 	"ui_height": "Высота",
 
 	"ui_example_basic_swipe": "Свайп",
-	"ui_example_basic_swipe_description": "Как добавить обратные вызовы на события свайпа.",
+	"ui_example_basic_swipe_description": "Свайпните по области: подсказка уедет в сторону свайпа. Снимите Включено, чтобы отключить жесты.",
 
-	"ui_example_data_list_basic": "Основной список данных",
-	"ui_example_data_list_basic_description": "Как сделать простой список данных.",
+	"ui_example_checkbox": "Чекбокс",
+	"ui_example_checkbox_description": "Чекбокс из кнопки Druid: клик переключает иконку и проигрывает эффект выбора.",
 
-	"ui_example_data_list_horizontal_basic": "Горизонтальный основной список данных",
-	"ui_example_data_list_horizontal_basic_description": "Как сделать простой горизонтальный список данных.",
+	"ui_example_checkbox_group": "Группа чекбоксов",
+	"ui_example_checkbox_group_description": "Три независимых чекбокса, группа выводит все состояния при каждом изменении.",
 
-	"ui_example_data_list_add_remove_clear": "Добавление, удаление и очистка в списке данных",
-	"ui_example_data_list_add_remove_clear_description": "Как работают функции добавления, удаления и очистки в списке данных.",
+	"ui_example_radio_group": "Радио группа",
+	"ui_example_radio_group_description": "Те же чекбоксы, но включённым остаётся только один: клик сбрасывает остальные.",
 
-	"ui_example_data_list_cache_with_component": "Кэшированная версия списка данных",
-	"ui_example_data_list_cache_with_component_description": "Кэшированная версия требует большего количества настроек для обратных вызовов добавления/удаления, но более эффективна с точки зрения памяти.",
+	"ui_example_data_list_basic": "Data List",
+	"ui_example_data_list_basic_description": "1000 элементов, но узлы есть только у видимых. Следите за индексами при прокрутке.",
+
+	"ui_example_data_list_horizontal_basic": "Горизонтальный Data List",
+	"ui_example_data_list_horizontal_basic_description": "Та же виртуализация для горизонтального списка: в сетке всего один ряд.",
+
+	"ui_example_data_list_matrix_basic": "Data List матрицей",
+	"ui_example_data_list_matrix_basic_description": "Data List поверх сетки по 4 в ряду: узлы создаются только для видимых рядов.",
+
+	"ui_example_data_list_add_remove_clear": "Data List: добавить, удалить, очистить",
+	"ui_example_data_list_add_remove_clear_description": "Добавляйте, удаляйте и очищайте элементы кнопками. Клик по элементу удаляет его по индексу.",
+
+	"ui_example_data_list_cache_with_component": "Data List с кэшем",
+	"ui_example_data_list_cache_with_component_description": "С set_use_cache компоненты переиспользуются: данные заполняют on_element_add и on_element_remove.",
 
 	"ui_language": "Язык",
 	"ui_example_window_language": "Окно выбора языка",
-	"ui_example_window_language_description": "Здесь простой пример окна с выбором языка.",
+	"ui_example_window_language_description": "Смените язык: все lang_text переводятся сразу, включая сам пример.",
 
 	"ui_confirmation": "Подтверждение",
 	"ui_example_window_confirmation": "Окно подтверждения",
-	"ui_confirmation_description": "Подтвердить покупку автомобиля за миллион долларов?",
+	"ui_confirmation_description": "Подтвердите покупку машины за миллион долларов?",
 
 	"ui_information": "Информация",
 	"ui_example_window_information": "Окно информации",
 	"ui_example_window_information_text": "Ты лучший из лучших!",
-	"ui_example_window_information_description": "Здесь простой пример окна с информационным сообщением.",
+	"ui_example_window_information_description": "Виджет окна с одной кнопкой и анимацией открытия и закрытия на Panthera.",
+
+	"ui_example_widget_hover_hint": "Подсказка при наведении",
+	"ui_example_widget_hover_hint_description": "Наведите на квадрат и подождите: подсказка появится с нужной стороны и подстроится под текст.",
+
+	"ui_example_widget_property_button": "Property Button",
+	"ui_example_widget_property_button_description": "Строка с кнопкой, которую использует панель свойств справа.",
+
+	"ui_example_widget_property_slider": "Property Slider",
+	"ui_example_widget_property_slider_description": "Строка со слайдером, которую использует панель свойств справа.",
+
+	"ui_example_widget_property_checkbox": "Property Checkbox",
+	"ui_example_widget_property_checkbox_description": "Строка с чекбоксом, которую использует панель свойств справа.",
+
+	"ui_example_widget_memory_panel": "Панель памяти",
+	"ui_example_widget_memory_panel_description": "Виджет замеряет расход памяти и рисует его мини графиком.",
+
+	"ui_example_widget_fps_panel": "Панель FPS",
+	"ui_example_widget_fps_panel_description": "Виджет следит за FPS и рисует последние секунды мини графиком.",
+
+	"ui_example_widget_mini_graph": "Мини график",
+	"ui_example_widget_mini_graph_description": "Столбчатый график с заданным числом отсчётов, его используют панели FPS и памяти.",
+
+	"ui_example_widget_properties_panel": "Панель свойств",
+	"ui_example_widget_properties_panel_description": "Сама панель: добавляйте кнопки, слайдеры, чекбоксы и поля для управления примером.",
+
+	"ui_example_widget_property_input": "Property Input",
+	"ui_example_widget_property_input_description": "Строка с полем ввода, которую использует панель свойств справа.",
 
 	"ui_example_gamepad_tester": "Тестер геймпада",
-	"ui_example_gamepad_tester_description": "Проверьте здесь свой геймпад, чтобы настроить кнопки и оси.",
+	"ui_example_gamepad_tester_description": "Подключите геймпад: кнопки подсвечиваются, стики двигаются, триггеры заполняют полосы.",
 
-	"ui_example_on_screen_control": "Наэкранное управление",
-	"ui_example_on_screen_control_description": "Здесь простой пример наэкранного управления. Наэкранный ввод здесь — это простой джойстик с обратным вызовом в качестве компонента Druid.",
+	"ui_example_widget_tiling_node": "Tiling Node",
+	"ui_example_widget_tiling_node_description": "Tiling node сохраняет тайлинг текстуры при изменении размера и анимации узла.",
 
-	"ui_example_layout_basic": "Макет",
-	"ui_example_layout_basic_description": "Этот макет может быть настроен так, как в Figma.",
+	"ui_example_on_screen_control": "Экранное управление",
+	"ui_example_on_screen_control_description": "Тяните стик, чтобы двигать персонажа, и жмите кнопку для прыжка. Мультитач поддерживается.",
+
+	"ui_example_layout_basic": "Layout",
+	"ui_example_layout_basic_description": "Меняйте отступы, интервалы, выравнивание, pivot и тип layout: смотрите, как встают элементы.",
 
 	"ui_example_panthera_basic_animation": "Базовая анимация Panthera",
-	"ui_example_panthera_basic_animation_description": "Здесь простой пример базовой анимации Panthera.",
+	"ui_example_panthera_basic_animation_description": "Анимация Panthera поверх GUI узлов, созданная из рантайма и проигранная в цикле.",
 
 	"ui_example_panthera_animation_blend": "Смешивание анимаций Panthera",
-	"ui_example_panthera_animation_blend_description": "Здесь простой пример смешивания анимаций Panthera.",
-	"ui_example_panthera_animation_blend_hint": "Наведите мышь на эту область.",
+	"ui_example_panthera_animation_blend_description": "Время анимации задаётся вручную: позиция курсора смешивает ключи анимации.",
+	"ui_example_panthera_animation_blend_hint": "Наведите мышь на эту область",
 
-	"ui_animation_vertical": "Вертикальная",
-	"ui_animation_horizontal": "Горизонтальная",
+	"ui_example_container_anchors": "Container: якоря",
+	"ui_example_container_anchors_description": "Тяните углы родителя: каждый потомок держит свой якорь и относительную позицию.",
+
+	"ui_example_container_resize": "Container: размер",
+	"ui_example_container_resize_description": "Тяните углы: боковые панели тянутся по X или Y, а контент меняет размер вместе с родителем.",
+
+	"ui_animation_vertical": "Вертикально",
+	"ui_animation_horizontal": "Горизонтально",
 
 	"ui_language_en": "English",
 	"ui_language_ru": "Русский",
@@ -177,15 +257,5 @@
 	"ui_language_pt": "Português",
 	"ui_language_it": "Italiano",
 	"ui_language_kr": "한국어",
-	"ui_language_zh": "中文",
-	"ui_inner_scrollable": "Inner Scrollable",
-	"ui_whitelist_a": "Whitelist A",
-	"ui_blacklist_a": "Blacklist A",
-	"ui_clear_filters": "Clear Filters",
-	"ui_example_basic_scroll_nested": "Scroll Nested",
-	"ui_example_basic_scroll_nested_description": "Nested scrolls: wheel picks the view under the cursor and passes through when inner content fits",
-	"ui_example_whitelist_blacklist": "Whitelist & Blacklist",
-	"ui_example_whitelist_blacklist_description": "Whitelist and blacklist components for input processing, including children",
-	"ui_example_scoped_filters": "Scoped Input Filters",
-	"ui_example_scoped_filters_description": "Two filter levels at once: the example filters both panels, each panel filters itself, and the filters stack"
+	"ui_language_zh": "中文"
 }

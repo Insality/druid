@@ -3,167 +3,247 @@
 	"ui_properties_panel": "属性",
 	"ui_output": "输出",
 	"ui_view_code": "查看代码",
-	"ui_profiler": "分析器",
+	"ui_profiler": "性能分析",
 	"ui_profiler_memory": "内存",
 	"ui_profiler_fps": "FPS",
 	"ui_profiler_components": "组件",
 	"ui_profiler_events": "事件",
 	"ui_confirm": "确认",
 	"ui_cancel": "取消",
-	"ui_value": "值",
+	"ui_value": "数值",
 	"ui_scroll": "滚动",
 	"ui_clipping": "裁剪",
-	"ui_no_properties": "此示例没有属性",
-	"ui_padding": "填充",
-	"ui_margin_x": "边距 X",
-	"ui_margin_y": "边距 Y",
-	"ui_justify": "对齐",
-	"ui_pivot_next": "下一个支点",
+	"ui_no_properties": "该示例没有可调属性",
+	"ui_padding": "内边距",
+	"ui_margin_x": "间距 X",
+	"ui_margin_y": "间距 Y",
+	"ui_justify": "两端对齐",
+	"ui_pivot_next": "下一个轴心",
 	"ui_type_next": "下一个类型",
-	"ui_adjust_next": "下一个调整",
+	"ui_adjust_next": "下一个 Adjust",
 	"ui_enabled": "启用",
+	"ui_item_size": "元素尺寸",
+	"ui_inner_scrollable": "内部滚动",
+	"ui_whitelist_a": "Whitelist A",
+	"ui_blacklist_a": "Blacklist A",
+	"ui_clear_filters": "清除过滤",
 
 	"ui_examples_basic": "基础",
-	"ui_examples_data_list": "数据列表",
-	"ui_examples_gamepad": "游戏手柄",
+	"ui_examples_data_list": "Data List",
+	"ui_examples_gamepad": "手柄",
 	"ui_examples_window": "窗口",
-	"ui_examples_panthera": "美洲豹",
+	"ui_examples_panthera": "Panthera",
 
 	"ui_example_intro": "介绍",
-	"ui_example_intro_description": "这里将有所选示例的简要说明。",
+	"ui_example_intro_description": "在左侧选择示例。这里说明可以尝试什么，属性面板可实时调整，输出面板显示事件。",
 
 	"ui_example_basic_button": "按钮",
-	"ui_example_basic_button_description": "Druid 的基本按钮示例",
+	"ui_example_basic_button_description": "点击按钮并在输出中查看事件。取消勾选启用即可屏蔽输入。",
 
-	"ui_example_basic_button_double_click": "双击",
-	"ui_example_basic_button_double_click_description": "如何向按钮添加双击功能。",
+	"ui_example_basic_button_double_click": "双击按钮",
+	"ui_example_basic_button_double_click_description": "快速点两下：on_click 与 on_double_click 都会触发，顺序可在输出中查看。",
 
 	"ui_example_basic_button_hold": "长按按钮",
-	"ui_example_basic_button_hold_description": "如何为按钮创建长按和触发功能。",
+	"ui_example_basic_button_hold_description": "按住 2 秒。on_hold_callback 推进填充动画，结束时触发 on_long_click。",
 
 	"ui_example_basic_text": "文本",
-	"ui_example_basic_text_description": "检查文本如何通过不同的属性进行调整。",
+	"ui_example_basic_text_description": "拖动文本区域的角，切换 Adjust 和 Pivot，观察文本如何适配方框。",
 
 	"ui_example_basic_multiline_text": "多行文本",
-	"ui_example_basic_multiline_text_description": "检查多行文本如何通过不同的属性进行调整。",
+	"ui_example_basic_multiline_text_description": "同样的例子但带换行。缩小区域可以看到换行位置和缩放效果。",
 
 	"ui_example_basic_hover": "悬停",
-	"ui_example_basic_hover_description": "悬停有两个悬停事件。一个用于鼠标，一个用于触摸。请使用 mouse_callback 处理鼠标事件。",
+	"ui_example_basic_hover_description": "左侧节点响应触摸悬停，右侧响应鼠标悬停。鼠标事件请用 mouse_callback。",
 
-	"ui_example_basic_drag": "拖动",
-	"ui_example_basic_drag_description": "如何创建简单的拖动节点。",
+	"ui_example_basic_drag": "拖拽",
+	"ui_example_basic_drag_description": "拖动节点，松手后会按 on_drag_end 的动画回到起始位置。",
 
-	"ui_example_basic_drag_to_node": "拖动到节点",
-	"ui_example_basic_drag_to_node_description": "如何将节点拖动到另一个节点并获取回调。",
+	"ui_example_basic_drag_to_node": "拖拽到节点",
+	"ui_example_basic_drag_to_node_description": "把节点拖到区域上：经过时区域高亮，在区域内松手计数器会增加。",
 
 	"ui_example_basic_slider": "滑块",
-	"ui_example_basic_slider_description": "如何创建简单的滑块。",
+	"ui_example_basic_slider_description": "拖动滑块或点击滑条：set_input_node 让整个控件都能响应输入。",
 
 	"ui_example_basic_slider_vertical": "垂直滑块",
-	"ui_example_basic_slider_vertical_description": "如何创建简单的垂直滑块。",
+	"ui_example_basic_slider_vertical_description": "同样的滑块，方向由创建时传入的终点向量决定。",
 
-	"ui_example_basic_slider_stepped": "分步滑块",
-	"ui_example_basic_slider_stepped_description": "滑块可以有一个 \"步骤\" 属性，使其分步。",
+	"ui_example_basic_slider_stepped": "分段滑块",
+	"ui_example_basic_slider_stepped_description": "使用 set_steps 后，滑块会吸附到 11 个固定值中最近的一个。",
 
 	"ui_example_basic_progress_bar": "进度条",
-	"ui_example_basic_progress_bar_description": "如何创建简单的进度条。",
+	"ui_example_basic_progress_bar_description": "用右侧滑块改变数值，进度条通过节点尺寸来填充。",
 
 	"ui_example_basic_progress_bar_slice9": "进度条 Slice9",
-	"ui_example_basic_progress_bar_slice9_description": "进度组件可以处理 slice9 属性，使其从一开始就可缩放。",
+	"ui_example_basic_progress_bar_slice9_description": "同样的进度条使用 slice9，数值很小时圆角依然保持完好。",
+
+	"ui_example_basic_blocker": "输入拦截",
+	"ui_example_basic_blocker_description": "整块面板都可点击，但 blocker 区域会吞掉输入。点击两处并比较输出。",
+
+	"ui_example_basic_back_handler": "返回处理",
+	"ui_example_basic_back_handler_description": "按退格键或安卓返回键：处理器会调用回调，文字随之响应。",
 
 	"ui_example_basic_timer": "计时器",
-	"ui_example_basic_timer_description": "计时器组件用于显示带有回调的秒表。",
+	"ui_example_basic_timer_description": "计时到零后，on_timer_end 会用更长的间隔重新开始。",
 
 	"ui_example_basic_hotkey": "快捷键",
-	"ui_example_basic_hotkey_description": "如何为回调创建快捷键。",
+	"ui_example_basic_hotkey_description": "按 Shift + X。修饰键也是组合的一部分，缺少它就不会触发。",
 
 	"ui_example_basic_scroll": "滚动",
-	"ui_example_basic_scroll_description": "如何创建简单的滚动。",
+	"ui_example_basic_scroll_description": "拖动内容或使用滚轮。摩擦力、惯性和回弹拉伸可在右侧调整。",
+	"ui_example_basic_scroll_nested": "嵌套滚动",
+	"ui_example_basic_scroll_nested_description": "滚轮作用于光标下的视图。关闭内部滚动后内容能放下，滚轮会交给外层滚动。",
 	"ui_elastic_scroll": "弹性滚动",
+	"ui_slider_friction": "滚动摩擦",
+	"ui_slider_speed": "滚动速度",
+	"ui_slider_wheel_speed": "滚轮速度",
+	"ui_wheel_by_inertion": "滚轮带惯性",
 
 	"ui_example_basic_scroll_slider": "带滑块的滚动",
-	"ui_example_basic_scroll_slider_description": "如何将滑块控件添加到滚动中并使用它们。",
+	"ui_example_basic_scroll_slider_description": "滚动与滑块双向绑定。拖动其中任意一个，或点击条目滚动到它。",
 
 	"ui_example_basic_grid": "静态网格",
-	"ui_example_basic_grid_description": "如何将节点放置在网格中。",
-	"ui_grid_in_row": "行中的元素",
+	"ui_example_basic_grid_description": "增删元素、修改每行数量，观察网格如何重新排布节点。",
+	"ui_grid_in_row": "每行元素数",
 	"ui_add_element": "添加元素",
 	"ui_remove_element": "移除元素",
-	"ui_clear_elements": "清除元素",
+	"ui_clear_elements": "清空元素",
+	"ui_dynamic_pos": "动态位置",
+	"ui_align_last_row": "对齐最后一行",
 
 	"ui_example_basic_scroll_bind_grid": "滚动绑定网格",
-	"ui_example_basic_scroll_bind_grid_description": "滚动与网格和预定义大小搭配使用良好，这是滚动绑定网格的示例。",
+	"ui_example_basic_scroll_bind_grid_description": "绑定的网格会更新滚动尺寸。添加元素并观察下方的内容尺寸变化。",
 
-	"ui_example_basic_scroll_bind_grid_horizontal": "水平滚动绑定网格",
-	"ui_example_basic_scroll_bind_grid_horizontal_description": "滚动与网格和预定义大小搭配使用良好，这是水平滚动绑定网格的示例。",
+	"ui_example_basic_scroll_bind_grid_horizontal": "横向滚动绑定网格",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "同样的绑定，但网格只有一行，所以滚动变成横向。",
 
-	"ui_example_basic_input": "输入",
-	"ui_example_basic_input_description": "如何在 Druid 中创建最简单的输入。",
+	"ui_example_basic_scroll_bind_grid_points": "吸附点滚动",
+	"ui_example_basic_scroll_bind_grid_points_description": "吸附点取自网格：松手后滚动会吸附到最近的元素。",
+
+	"ui_example_basic_scroll_bind_grid_cards": "卡片滚动",
+	"ui_example_basic_scroll_bind_grid_cards_description": "卡片吸附到点位，并按到中心的距离缩放。用滚动或箭头切换。",
+
+	"ui_example_layout_scroll_bind_cards": "布局卡片滚动",
+	"ui_example_layout_scroll_bind_cards_description": "宽度随机的卡片放在 layout 中。滚动绑定到 layout，依然会吸附到每张卡片。",
+
+	"ui_example_basic_input": "文本输入",
+	"ui_example_basic_input_description": "点击输入，回车确认。文本会被截断：在输出中对比 text 与 visual。",
+	"ui_example_whitelist_blacklist": "白名单与黑名单",
+	"ui_example_whitelist_blacklist_description": "白名单和黑名单限制哪些组件能接收输入，子组件同样受影响。",
+	"ui_example_scoped_filters": "嵌套输入过滤",
+	"ui_example_scoped_filters_description": "两级过滤同时生效：示例过滤两个面板，每个面板过滤自身，两者叠加。",
 
 	"ui_example_input_password": "密码输入",
-	"ui_example_input_password_description": "密码输入如何工作。",
+	"ui_example_input_password_description": "密码框在屏幕上显示为圆点，而 get_text 仍返回真实内容。",
 
-	"ui_example_basic_rich_input": "富输入",
-	"ui_example_basic_rich_input_description": "如何在 Druid 中创建富输入。",
+	"ui_example_basic_rich_input": "Rich Input",
+	"ui_example_basic_rich_input_description": "带占位符和光标的输入框。点击输入，光标会跟随文本移动。",
 
-	"ui_example_basic_rich_text": "富文本",
-	"ui_example_basic_rich_text_description": "如何在 Druid 中创建富文本。",
+	"ui_example_basic_rich_text": "Rich Text",
+	"ui_example_basic_rich_text_description": "一条带标签的字符串会生成多个节点，可在同一段文字中混用颜色和字体。",
 
-	"ui_example_rich_text_tags": "富文本标签",
-	"ui_example_rich_text_tags_description": "这是一个带有标签的富文本简单示例\n - <color=A1D7F5>颜色</color>\n - 字体\n - 大小\n - br\n - img",
+	"ui_example_rich_text_tags": "Rich Text 标签",
+	"ui_example_rich_text_tags_description": "内置标签演示：\n - <color=A1D7F5>color</color>\n - font\n - size\n - br\n - img",
 
-	"ui_example_rich_text_split_animated": "Rich Text Split",
-	"ui_example_rich_text_split_animated_description": "使用 set_split_to_characters 及逐字动画",
+	"ui_example_rich_text_split_animated": "Rich Text 逐字",
+	"ui_example_rich_text_split_animated_description": "set_split_to_characters 为每个字母生成节点，因此可以逐字做动画。",
 
-	"ui_example_rich_text_resize": "Rich Text Resize",
-	"ui_example_rich_text_resize_description": "长富文本与宽度/高度滑块 (set_width / set_height)",
+	"ui_example_rich_text_resize": "Rich Text 尺寸",
+	"ui_example_rich_text_resize_description": "拖动宽度和高度滑块：文本会重新换行并缩小以适应区域。",
 
 	"ui_width": "宽度",
 	"ui_height": "高度",
 
-	"ui_example_basic_swipe": "滑动",
-	"ui_example_basic_swipe_description": "如何在滑动事件上添加回调。",
+	"ui_example_basic_swipe": "滑动手势",
+	"ui_example_basic_swipe_description": "在区域上滑动，提示会朝滑动方向移动。取消启用即可关闭手势。",
 
-	"ui_example_data_list_basic": "基本数据列表",
-	"ui_example_data_list_basic_description": "如何创建简单的数据列表。",
+	"ui_example_checkbox": "复选框",
+	"ui_example_checkbox_description": "用 Druid 按钮做的复选框：点击切换图标并播放选中特效。",
 
-	"ui_example_data_list_horizontal_basic": "基本水平数据列表",
-	"ui_example_data_list_horizontal_basic_description": "如何创建简单的水平数据列表。",
+	"ui_example_checkbox_group": "复选框组",
+	"ui_example_checkbox_group_description": "三个互相独立的复选框，每次变化时组会输出全部状态。",
 
-	"ui_example_data_list_add_remove_clear": "数据列表添加、删除、清除",
-	"ui_example_data_list_add_remove_clear_description": "数据列表中的添加、删除和清除功能如何工作。",
+	"ui_example_radio_group": "单选组",
+	"ui_example_radio_group_description": "同样的复选框，但只有一个能保持选中：点击其一会重置其余。",
 
-	"ui_example_data_list_cache_with_component": "缓存版本数据列表",
-	"ui_example_data_list_cache_with_component_description": "缓存版本需要更多设置以添加/删除回调，但在内存上更高效。",
+	"ui_example_data_list_basic": "Data List 基础",
+	"ui_example_data_list_basic_description": "1000 条数据，但只有可见项存在节点。滚动时留意可见索引的变化。",
+
+	"ui_example_data_list_horizontal_basic": "横向 Data List",
+	"ui_example_data_list_horizontal_basic_description": "横向列表使用同样的虚拟化：网格只有一行。",
+
+	"ui_example_data_list_matrix_basic": "矩阵 Data List",
+	"ui_example_data_list_matrix_basic_description": "基于每行 4 个的网格：只为可见的行创建节点。",
+
+	"ui_example_data_list_add_remove_clear": "Data List 增删清空",
+	"ui_example_data_list_add_remove_clear_description": "用按钮添加、移除和清空条目。点击某个条目会按索引移除它。",
+
+	"ui_example_data_list_cache_with_component": "带缓存的 Data List",
+	"ui_example_data_list_cache_with_component_description": "开启 set_use_cache 后复用组件，数据在 on_element_add 与 on_element_remove 中填充。",
 
 	"ui_language": "语言",
-	"ui_example_window_language": "窗口语言",
-	"ui_example_window_language_description": "这里是一个带有语言选择的窗口简单示例。",
+	"ui_example_window_language": "语言窗口",
+	"ui_example_window_language_description": "切换语言：包括本示例在内，所有 lang_text 会立即重新翻译。",
 
 	"ui_confirmation": "确认",
-	"ui_example_window_confirmation": "窗口确认",
-	"ui_confirmation_description": "确认购买一百万美元的汽车吗？",
+	"ui_example_window_confirmation": "确认窗口",
+	"ui_confirmation_description": "确认购买这辆一百万美元的车吗？",
 
 	"ui_information": "信息",
-	"ui_example_window_information": "窗口信息",
-	"ui_example_window_information_text": "你是最好的中的最好！",
-	"ui_example_window_information_description": "这是一个带有信息消息的窗口简单示例。",
+	"ui_example_window_information": "信息窗口",
+	"ui_example_window_information_text": "你是最棒的！",
+	"ui_example_window_information_description": "只有一个按钮的窗口控件，开关动画由 Panthera 实现。",
 
-	"ui_example_gamepad_tester": "游戏手柄测试器",
-	"ui_example_gamepad_tester_description": "在这里测试你的游戏手柄以绑定按钮和轴。",
+	"ui_example_widget_hover_hint": "悬停提示",
+	"ui_example_widget_hover_hint_description": "把鼠标放到方块上稍等：提示会出现在指定一侧，并按文本自动调整大小。",
+
+	"ui_example_widget_property_button": "Property Button",
+	"ui_example_widget_property_button_description": "右侧属性面板使用的按钮行。",
+
+	"ui_example_widget_property_slider": "Property Slider",
+	"ui_example_widget_property_slider_description": "右侧属性面板使用的滑块行。",
+
+	"ui_example_widget_property_checkbox": "Property Checkbox",
+	"ui_example_widget_property_checkbox_description": "右侧属性面板使用的复选框行。",
+
+	"ui_example_widget_memory_panel": "内存面板",
+	"ui_example_widget_memory_panel_description": "该控件采样内存占用，并绘制成小图表。",
+
+	"ui_example_widget_fps_panel": "FPS 面板",
+	"ui_example_widget_fps_panel_description": "该控件跟踪 FPS，把最近几秒绘制成小图表。",
+
+	"ui_example_widget_mini_graph": "迷你图表",
+	"ui_example_widget_mini_graph_description": "可设定采样数量的柱状图，FPS 和内存面板都在用它。",
+
+	"ui_example_widget_properties_panel": "属性面板",
+	"ui_example_widget_properties_panel_description": "面板本身：添加按钮、滑块、复选框和输入框来控制示例。",
+
+	"ui_example_widget_property_input": "Property Input",
+	"ui_example_widget_property_input_description": "右侧属性面板使用的输入行。",
+
+	"ui_example_gamepad_tester": "手柄测试",
+	"ui_example_gamepad_tester_description": "连接手柄：按键会高亮，摇杆会移动，扳机会填充进度条。",
+
+	"ui_example_widget_tiling_node": "Tiling Node",
+	"ui_example_widget_tiling_node_description": "节点被缩放或做动画时，tiling node 仍保持贴图平铺。",
 
 	"ui_example_on_screen_control": "屏幕控制",
-	"ui_example_on_screen_control_description": "这里是一个简单的屏幕控制示例。这里的屏幕输入是一个简单的操纵杆，带有 Druid 组件的回调。",
+	"ui_example_on_screen_control_description": "拖动摇杆移动角色，点击按钮跳跃，同时支持多点触控。",
 
-	"ui_example_layout_basic": "布局",
-	"ui_example_layout_basic_description": "此布局可以调整为与 Figma 相同。",
+	"ui_example_layout_basic": "Layout",
+	"ui_example_layout_basic_description": "调整内边距、间距、justify、轴心和布局类型，观察元素如何排列。",
 
-	"ui_example_panthera_basic_animation": "美洲豹基本动画",
-	"ui_example_panthera_basic_animation_description": "这里是美洲豹基本动画的简单示例。",
+	"ui_example_panthera_basic_animation": "Panthera 基础动画",
+	"ui_example_panthera_basic_animation_description": "在 GUI 节点上运行的 Panthera 动画，运行时创建并循环播放。",
 
-	"ui_example_panthera_animation_blend": "美洲豹动画混合",
-	"ui_example_panthera_animation_blend_description": "这里是美洲豹动画混合的简单示例。",
-	"ui_example_panthera_animation_blend_hint": "将鼠标悬停在此区域。",
+	"ui_example_panthera_animation_blend": "Panthera 动画混合",
+	"ui_example_panthera_animation_blend_description": "手动设置动画时间：光标位置在动画关键帧之间做混合。",
+	"ui_example_panthera_animation_blend_hint": "把鼠标移到这个区域",
+
+	"ui_example_container_anchors": "Container：锚点",
+	"ui_example_container_anchors_description": "拖动父级的角：每个子节点都会保持自己的锚点和相对位置。",
+
+	"ui_example_container_resize": "Container：缩放",
+	"ui_example_container_resize_description": "拖动四角：侧边面板按 X 或 Y 拉伸，内容也随父级一起改变尺寸。",
 
 	"ui_animation_vertical": "垂直",
 	"ui_animation_horizontal": "水平",
@@ -177,15 +257,5 @@
 	"ui_language_pt": "Português",
 	"ui_language_it": "Italiano",
 	"ui_language_kr": "한국어",
-	"ui_language_zh": "中文",
-	"ui_inner_scrollable": "Inner Scrollable",
-	"ui_whitelist_a": "Whitelist A",
-	"ui_blacklist_a": "Blacklist A",
-	"ui_clear_filters": "Clear Filters",
-	"ui_example_basic_scroll_nested": "Scroll Nested",
-	"ui_example_basic_scroll_nested_description": "Nested scrolls: wheel picks the view under the cursor and passes through when inner content fits",
-	"ui_example_whitelist_blacklist": "Whitelist & Blacklist",
-	"ui_example_whitelist_blacklist_description": "Whitelist and blacklist components for input processing, including children",
-	"ui_example_scoped_filters": "Scoped Input Filters",
-	"ui_example_scoped_filters_description": "Two filter levels at once: the example filters both panels, each panel filters itself, and the filters stack"
+	"ui_language_zh": "中文"
 }
