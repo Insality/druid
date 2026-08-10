@@ -3961,6 +3961,199 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters"
+  parent: "gamepad"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/scoped_filters/scoped_filters.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/root"
+  parent: "scoped_filters"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/btn_lock_all"
+  parent: "scoped_filters/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/btn_lock_all/root"
+  parent: "scoped_filters/btn_lock_all"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/btn_lock_all/text"
+  parent: "scoped_filters/btn_lock_all/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_left"
+  parent: "scoped_filters/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_left/root"
+  parent: "scoped_filters/panel_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/title"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_left/button_a"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_left/button_a/root"
+  parent: "scoped_filters/panel_left/button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/button_a/text"
+  parent: "scoped_filters/panel_left/button_a/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_left/button_b"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_left/button_b/root"
+  parent: "scoped_filters/panel_left/button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/button_b/text"
+  parent: "scoped_filters/panel_left/button_b/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_left/btn_lock"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_left/btn_lock/root"
+  parent: "scoped_filters/panel_left/btn_lock"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/btn_lock/text"
+  parent: "scoped_filters/panel_left/btn_lock/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/status"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_right"
+  parent: "scoped_filters/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_right/root"
+  parent: "scoped_filters/panel_right"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/title"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_right/button_a"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_right/button_a/root"
+  parent: "scoped_filters/panel_right/button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/button_a/text"
+  parent: "scoped_filters/panel_right/button_a/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_right/button_b"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_right/button_b/root"
+  parent: "scoped_filters/panel_right/button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/button_b/text"
+  parent: "scoped_filters/panel_right/button_b/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_right/btn_lock"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_right/btn_lock/root"
+  parent: "scoped_filters/panel_right/btn_lock"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/btn_lock/text"
+  parent: "scoped_filters/panel_right/btn_lock/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/status"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/hint"
+  parent: "scoped_filters/root"
+  template_node_child: true
+}
+nodes {
   size {
     x: 200.0
     y: 100.0

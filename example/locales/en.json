@@ -130,6 +130,8 @@
 	"ui_example_basic_input_description": "Text input with get_text_visual and Tab hotkey while selected",
 	"ui_example_whitelist_blacklist": "Whitelist & Blacklist",
 	"ui_example_whitelist_blacklist_description": "Whitelist and blacklist components for input processing, including children",
+	"ui_example_scoped_filters": "Scoped Input Filters",
+	"ui_example_scoped_filters_description": "Two filter levels at once: the example filters both panels, each panel filters itself, and the filters stack",
 
 	"ui_example_input_password": "Input Password",
 	"ui_example_input_password_description": "How the password input works",

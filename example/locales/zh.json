@@ -185,5 +185,7 @@
 	"ui_example_basic_scroll_nested": "Scroll Nested",
 	"ui_example_basic_scroll_nested_description": "Nested scrolls: wheel picks the view under the cursor and passes through when inner content fits",
 	"ui_example_whitelist_blacklist": "Whitelist & Blacklist",
-	"ui_example_whitelist_blacklist_description": "Whitelist and blacklist components for input processing, including children"
+	"ui_example_whitelist_blacklist_description": "Whitelist and blacklist components for input processing, including children",
+	"ui_example_scoped_filters": "Scoped Input Filters",
+	"ui_example_scoped_filters_description": "Two filter levels at once: the example filters both panels, each panel filters itself, and the filters stack"
 }

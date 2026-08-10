@@ -28,6 +28,14 @@ function M.get_examples()
 			code_url = "example/examples/gamepad/whitelist_blacklist/whitelist_blacklist.lua",
 			widget_class = require("example.examples.gamepad.whitelist_blacklist.whitelist_blacklist"),
 		},
+		{
+			name_id = "ui_example_scoped_filters",
+			information_text_id = "ui_example_scoped_filters_description",
+			template = "scoped_filters",
+			root = "scoped_filters/root",
+			code_url = "example/examples/gamepad/scoped_filters/scoped_filters.lua",
+			widget_class = require("example.examples.gamepad.scoped_filters.scoped_filters"),
+		},
 	}
 end
 
