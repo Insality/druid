@@ -6,6 +6,7 @@ local event = require("event.event")
 ---@field grid druid.grid
 ---@field data_list druid.data_list
 ---@field on_item_click event
+---@field next_id number
 local M = {}
 
 
@@ -17,13 +18,22 @@ function M:init()
 	self.grid = self.druid:new_grid("content", self.prefab, 1)
 	self.data_list = self.druid:new_data_list(self.scroll, self.grid, self.create_item_callback) --[[@as druid.data_list]]
 
+	self.next_id = 1
 	local data = {}
-	for index = 1, 20 do
-		table.insert(data, {})
+	for _ = 1, 20 do
+		table.insert(data, { id = self:acquire_id() })
 	end
 	self.data_list:set_data(data)
 
 	self.on_item_click = event.create()
+end
+
+
+---@return number
+function M:acquire_id()
+	local id = self.next_id
+	self.next_id = self.next_id + 1
+	return id
 end
 
 
@@ -36,7 +46,7 @@ function M:create_item_callback(item_data, index)
 	local root = nodes[self:get_template() .. "/prefab"]
 	local text = nodes[self:get_template() .. "/text"]
 	gui.set_enabled(root, true)
-	gui.set_text(text, "Data Item " .. index)
+	gui.set_text(text, "Data Item " .. item_data.id)
 
 	local button = self.druid:new_button(root, self.on_button_click, index)
 	return root, button
@@ -49,7 +59,7 @@ end
 
 
 function M:add_item(index)
-	self.data_list:add({}, index)
+	self.data_list:add({ id = self:acquire_id() }, index)
 end
 
 
@@ -67,8 +77,10 @@ end
 ---@param output_list output_list
 function M:on_example_created(output_list)
 	self.on_item_click:subscribe(function(index)
+		local item_data = self.data_list:get_data()[index]
+		local id = item_data and item_data.id or index
 		self:remove_item(index)
-		output_list:add_log_text("Item removed: " .. index)
+		output_list:add_log_text("Item removed: " .. id)
 	end)
 end
 
