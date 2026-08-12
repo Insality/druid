@@ -81,11 +81,11 @@ end
 
 
 ---Set the timer to a specific value
----@param set_to number Value in seconds
+---@param value number Value in seconds
 ---@return druid.timer self Current timer instance
-function M:set_value(set_to)
-	self.last_value = set_to
-	gui.set_text(self.node, self:_second_string_min(set_to))
+function M:set_value(value)
+	self.last_value = value
+	gui.set_text(self.node, self:_second_string_min(value))
 
 	return self
 end

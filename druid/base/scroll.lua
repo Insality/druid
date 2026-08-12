@@ -312,13 +312,13 @@ end
 -- Values will be in [0..1] interval
 ---@return vector3 New vector with scroll progress values
 function M:get_percent()
-	local x_perc = 1 - self:_inverse_lerp(self.available_pos.x, self.available_pos.z, self.position.x)
-	local y_perc = self:_inverse_lerp(self.available_pos.w, self.available_pos.y, self.position.y)
+	local border = self.available_pos
 
-	-- If there is no available scroll space, the scroll is always at the start
-	if self.available_pos.x == self.available_pos.z then
-		x_perc = 0
-	end
+	-- With no available scroll space the scroll is always at the start. The y axis gets it
+	-- from _inverse_lerp, but the x one is inverted, so it needs an explicit zero here
+	local is_x_empty = border.x == border.z
+	local x_perc = is_x_empty and 0 or (1 - self:_inverse_lerp(border.x, border.z, self.position.x))
+	local y_perc = self:_inverse_lerp(border.w, border.y, self.position.y)
 
 	return vmath.vector3(x_perc, y_perc, 0)
 end

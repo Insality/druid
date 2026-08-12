@@ -26,7 +26,6 @@ Create text node with druid: `text = druid:new_text(node_name, [initial_value], 
 - [init](#init)
 - [get_text_size](#get_text_size)
 - [get_text_index_by_width](#get_text_index_by_width)
-- [set_to](#set_to)
 - [set_text](#set_text)
 - [get_text](#get_text)
 - [set_size](#set_size)
@@ -117,33 +116,20 @@ Get chars count by width
 - **Returns:**
 	- `index` *(number)*: The chars count
 
-### set_to
+### set_text
 
 ---
 ```lua
-text:set_to(set_to)
+text:set_text(new_text)
 ```
 
 Set text to text field
 
 - **Parameters:**
-	- `set_to` *(string)*: Text for node
+	- `new_text` *(string)*: Text for node
 
 - **Returns:**
 	- `self` *(druid.text)*: Current text instance
-
-### set_text
-
----
-```lua
-text:set_text([new_text])
-```
-
-- **Parameters:**
-	- `[new_text]` *(any)*:
-
-- **Returns:**
-	- `` *(druid.text)*:
 
 ### get_text
 

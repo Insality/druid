@@ -3896,56 +3896,56 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "whitelist_blacklist/btn_whitelist"
+  id: "whitelist_blacklist/button_whitelist"
   parent: "whitelist_blacklist/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "whitelist_blacklist/btn_whitelist/root"
-  parent: "whitelist_blacklist/btn_whitelist"
+  id: "whitelist_blacklist/button_whitelist/root"
+  parent: "whitelist_blacklist/button_whitelist"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "whitelist_blacklist/btn_whitelist/text"
-  parent: "whitelist_blacklist/btn_whitelist/root"
+  id: "whitelist_blacklist/button_whitelist/text"
+  parent: "whitelist_blacklist/button_whitelist/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "whitelist_blacklist/btn_blacklist"
+  id: "whitelist_blacklist/button_blacklist"
   parent: "whitelist_blacklist/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "whitelist_blacklist/btn_blacklist/root"
-  parent: "whitelist_blacklist/btn_blacklist"
+  id: "whitelist_blacklist/button_blacklist/root"
+  parent: "whitelist_blacklist/button_blacklist"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "whitelist_blacklist/btn_blacklist/text"
-  parent: "whitelist_blacklist/btn_blacklist/root"
+  id: "whitelist_blacklist/button_blacklist/text"
+  parent: "whitelist_blacklist/button_blacklist/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "whitelist_blacklist/btn_clear"
+  id: "whitelist_blacklist/button_clear"
   parent: "whitelist_blacklist/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "whitelist_blacklist/btn_clear/root"
-  parent: "whitelist_blacklist/btn_clear"
+  id: "whitelist_blacklist/button_clear/root"
+  parent: "whitelist_blacklist/button_clear"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "whitelist_blacklist/btn_clear/text"
-  parent: "whitelist_blacklist/btn_clear/root"
+  id: "whitelist_blacklist/button_clear/text"
+  parent: "whitelist_blacklist/button_clear/root"
   template_node_child: true
 }
 nodes {
@@ -3975,20 +3975,20 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "scoped_filters/btn_lock_all"
+  id: "scoped_filters/button_lock_all"
   parent: "scoped_filters/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "scoped_filters/btn_lock_all/root"
-  parent: "scoped_filters/btn_lock_all"
+  id: "scoped_filters/button_lock_all/root"
+  parent: "scoped_filters/button_lock_all"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "scoped_filters/btn_lock_all/text"
-  parent: "scoped_filters/btn_lock_all/root"
+  id: "scoped_filters/button_lock_all/text"
+  parent: "scoped_filters/button_lock_all/root"
   template_node_child: true
 }
 nodes {
@@ -4047,20 +4047,20 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "scoped_filters/panel_left/btn_lock"
+  id: "scoped_filters/panel_left/button_lock"
   parent: "scoped_filters/panel_left/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "scoped_filters/panel_left/btn_lock/root"
-  parent: "scoped_filters/panel_left/btn_lock"
+  id: "scoped_filters/panel_left/button_lock/root"
+  parent: "scoped_filters/panel_left/button_lock"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "scoped_filters/panel_left/btn_lock/text"
-  parent: "scoped_filters/panel_left/btn_lock/root"
+  id: "scoped_filters/panel_left/button_lock/text"
+  parent: "scoped_filters/panel_left/button_lock/root"
   template_node_child: true
 }
 nodes {
@@ -4125,20 +4125,20 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "scoped_filters/panel_right/btn_lock"
+  id: "scoped_filters/panel_right/button_lock"
   parent: "scoped_filters/panel_right/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "scoped_filters/panel_right/btn_lock/root"
-  parent: "scoped_filters/panel_right/btn_lock"
+  id: "scoped_filters/panel_right/button_lock/root"
+  parent: "scoped_filters/panel_right/button_lock"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "scoped_filters/panel_right/btn_lock/text"
-  parent: "scoped_filters/panel_right/btn_lock/root"
+  id: "scoped_filters/panel_right/button_lock/text"
+  parent: "scoped_filters/panel_right/button_lock/root"
   template_node_child: true
 }
 nodes {

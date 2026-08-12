@@ -541,7 +541,7 @@ local timer = self.druid:new_timer(node, [seconds_from], [seconds_to], [callback
 
 timer:set_interval(from, to)
 timer:set_state([is_on])
-timer:set_value(set_to)
+timer:set_value(value)
 timer:update([dt])
 
 timer.on_tick

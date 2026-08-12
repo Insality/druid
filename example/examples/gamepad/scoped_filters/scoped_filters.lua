@@ -8,13 +8,13 @@ local filter_panel = require("example.examples.gamepad.scoped_filters.filter_pan
 ---@class examples.scoped_filters: druid.widget
 ---@field panel_left examples.filter_panel
 ---@field panel_right examples.filter_panel
----@field btn_lock_all druid.button
+---@field button_lock_all druid.button
 local M = {}
 
 
 function M:init()
 	-- The lock button is in the whitelist as well, otherwise the example would lock itself
-	self.btn_lock_all = self.druid:new_button("btn_lock_all/root", self.toggle_lock_all)
+	self.button_lock_all = self.druid:new_button("button_lock_all/root", self.toggle_lock_all)
 	self.is_locked_all = false
 
 	self.panel_left = self.druid:new_widget(filter_panel, "panel_left"):set_title("Panel Left")
@@ -27,13 +27,13 @@ function M:toggle_lock_all()
 
 	if self.is_locked_all then
 		-- Set on the example `self.druid`, so it covers both panels, but nothing outside
-		self.druid:set_whitelist({ self.panel_left, self.btn_lock_all })
+		self.druid:set_whitelist({ self.panel_left, self.button_lock_all })
 	else
 		self.druid:set_whitelist(nil)
 	end
 
 	local text = self.is_locked_all and "Unlock the example" or "Lock to Left panel"
-	gui.set_text(self:get_node("btn_lock_all/text"), text)
+	gui.set_text(self:get_node("button_lock_all/text"), text)
 end
 
 
@@ -45,7 +45,7 @@ function M:on_example_created(output_log)
 	self.panel_right.on_button_click:subscribe(function(button_name)
 		output_log:add_log_text("Right: Button " .. button_name)
 	end)
-	self.btn_lock_all.on_click:subscribe(function()
+	self.button_lock_all.on_click:subscribe(function()
 		output_log:add_log_text(self.is_locked_all and "Example locked to Left" or "Example unlocked")
 	end)
 end

@@ -6,7 +6,7 @@ local event = require("event.event")
 ---@class examples.filter_panel: druid.widget
 ---@field button_a druid.button
 ---@field button_b druid.button
----@field btn_lock druid.button
+---@field button_lock druid.button
 ---@field on_button_click event fun(button_name: string)
 local M = {}
 
@@ -24,7 +24,7 @@ function M:init()
 	end)
 
 	-- The lock button is in the whitelist as well, otherwise the panel would lock itself
-	self.btn_lock = self.druid:new_button("btn_lock/root", self.toggle_lock)
+	self.button_lock = self.druid:new_button("button_lock/root", self.toggle_lock)
 
 	self.is_locked = false
 end
@@ -41,12 +41,12 @@ function M:toggle_lock()
 	self.is_locked = not self.is_locked
 
 	if self.is_locked then
-		self.druid:set_whitelist({ self.button_a, self.btn_lock })
+		self.druid:set_whitelist({ self.button_a, self.button_lock })
 	else
 		self.druid:set_whitelist(nil)
 	end
 
-	gui.set_text(self:get_node("btn_lock/text"), self.is_locked and "Unlock" or "Lock to A")
+	gui.set_text(self:get_node("button_lock/text"), self.is_locked and "Unlock" or "Lock to A")
 	gui.set_text(self.status, self.is_locked and "Filter: only A" or "Filter: none")
 end
 

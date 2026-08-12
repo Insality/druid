@@ -836,28 +836,54 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [Hover] Fix for cursor stack issue
 	- Now cursor stack is applied correctly when the hover component is removed
 
-### Druid 1.2.6
+### Druid 1.3.0
+
+This release is mostly about the input step: scroll and drag no longer keep a Hover component alive just to know where the cursor is, the Hover component itself skips the pick work when nobody listens, and the whitelist/blacklist input filters became scoped to the component that sets them, so widgets can filter their own subtree without fighting each other.
+
+There are a few breaking changes, all listed in the migration section below. Nothing changes for you if you only use the public component API and never touched `scroll.hover` or `drag.hover`.
+
+**Changelog 1.3.0**
 - [Scroll] Idle early-out and in-place inertion friction (no per-frame vector allocation when settled)
 - [Scroll] Wheel scrolling picks the view node on wheel events instead of continuous Hover tracking
 - [Scroll] **Breaking**: the internal `scroll.hover` component is removed, wheel scrolling no longer needs it
 - [Scroll] Wheel events are no longer consumed when the scroll can not scroll in any axis
+- [Scroll] Wheel events are ignored when the view node is disabled, or when the action has no pointer position
 - [Scroll] Fix division by zero in `_inverse_lerp` / `get_percent` when there is no scroll space
 - [DataList] Gate refresh on visible-range / data-size changes; document cache mode as preferred for large lists
 - [DataList] `on_scroll_progress_change` is now actually triggered on scroll and after data size rebuilds
 - [Drag] Create Hover lazily only when drag cursors are enabled (defos)
+- [Drag] **Breaking**: `drag.hover` is `nil` until `set_drag_cursors(true)` is called with defos available
 - [Drag] Add `add_drag_action` / `remove_drag_action` for custom drag input actions (e.g. middle mouse)
+- [Drag] Ignore actions without a pointer position, so key actions can not start a drag
 - [Hover] Skip pick_node when no listeners and no cursor styles are configured
 - [Input] Do not consume modifier and Tab keys while selected; add `get_text_visual()`
+- [Input] The `key_back` action now unselects the input instead of being swallowed
+- [LangText] `on_change` is no longer triggered twice on `set_text`
 - [Slider] / [RichInput] Fix scene scale applied twice for `gui.screen_to_local` results
 - [Container] Do not override a manual `fit_into_size` on late init
 - [System] O(1) whitelist/blacklist input membership via hash sets
 - [System] `set_whitelist` / `set_blacklist` accept `nil` to clear the list instead of erroring
 - [System] `set_whitelist` / `set_blacklist` no longer modify the array passed to them
-- [System] `set_whitelist` / `set_blacklist` are scoped to the caller now
+- [System] **Breaking**: `set_whitelist` / `set_blacklist` are scoped to the caller now
 	- Called on the `druid` instance from the gui script it affects all components, as before
 	- Called on the `self.druid` inside a component it affects this component subtree only, so neighbor widgets are not affected and can keep their own filters
 	- Nested filters are applied on top of each other, the filter owner is not affected by its own filter
 - [API] Prefer `set_value` / `set_text`; deprecate `set_to` on progress, timer, lang_text and text (aliases kept)
+- [Progress] Add `get_value()` as an alias for `get()`
 - [Swipe] Add `set_enabled` / `is_enabled`
-- [Tests] Add data_list, hotkey, slider tests; rewrite and register static_grid tests
+- [Tests] Add data_list, hotkey, slider and input filter tests; rewrite and register static_grid tests
 - [Docs] Fix CONTRIBUTING issue tracker URL, styles links, custom-component type names, README Event dependency pin
+
+**Migration 1.3.0**
+
+- `scroll.hover` is removed. If you used it to track the cursor over the scroll view, create your own Hover: `local hover = self.druid:new_hover(view_node)`.
+- `drag.hover` is now created lazily and is `nil` by default. Guard the access (`if drag.hover then`) or call `drag:set_drag_cursors(true)` first. Note that the Hover is only created when the `defos` extension is available.
+- `set_whitelist` / `set_blacklist` called on a component's `self.druid` used to set a **global** filter for the whole Druid instance. Now it only filters that component's subtree, and it does not filter the component that set it. If you relied on the old global behavior from inside a component, call it on the gui script instance instead:
+	```lua
+	-- Before: the filter was global even when set from a component
+	self.druid:set_whitelist({ button })
+
+	-- After: to keep the global behavior, set it on the gui script instance
+	druid_instance:set_whitelist({ button })
+	```
+- `progress:set_to`, `timer:set_to`, `lang_text:set_to` and `text:set_to` still work, but are deprecated in favor of `set_value` / `set_text`.

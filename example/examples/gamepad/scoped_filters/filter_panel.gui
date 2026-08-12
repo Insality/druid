@@ -99,22 +99,22 @@ nodes {
     y: 0.8
   }
   type: TYPE_TEMPLATE
-  id: "btn_lock"
+  id: "button_lock"
   parent: "root"
   inherit_alpha: true
   template: "/example/templates/button_text_blue.gui"
 }
 nodes {
   type: TYPE_BOX
-  id: "btn_lock/root"
-  parent: "btn_lock"
+  id: "button_lock/root"
+  parent: "button_lock"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
   text: "Lock to A"
-  id: "btn_lock/text"
-  parent: "btn_lock/root"
+  id: "button_lock/text"
+  parent: "button_lock/root"
   overridden_fields: 8
   template_node_child: true
 }

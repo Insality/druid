@@ -25,7 +25,7 @@ nodes {
     y: 0.8
   }
   type: TYPE_TEMPLATE
-  id: "btn_lock_all"
+  id: "button_lock_all"
   parent: "root"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
@@ -36,16 +36,16 @@ nodes {
     y: 90.0
   }
   type: TYPE_BOX
-  id: "btn_lock_all/root"
-  parent: "btn_lock_all"
+  id: "button_lock_all/root"
+  parent: "button_lock_all"
   overridden_fields: 4
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
   text: "Lock to Left panel"
-  id: "btn_lock_all/text"
-  parent: "btn_lock_all/root"
+  id: "button_lock_all/text"
+  parent: "button_lock_all/root"
   overridden_fields: 8
   template_node_child: true
 }
@@ -110,20 +110,20 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "panel_left/btn_lock"
+  id: "panel_left/button_lock"
   parent: "panel_left/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "panel_left/btn_lock/root"
-  parent: "panel_left/btn_lock"
+  id: "panel_left/button_lock/root"
+  parent: "panel_left/button_lock"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "panel_left/btn_lock/text"
-  parent: "panel_left/btn_lock/root"
+  id: "panel_left/button_lock/text"
+  parent: "panel_left/button_lock/root"
   template_node_child: true
 }
 nodes {
@@ -193,20 +193,20 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
-  id: "panel_right/btn_lock"
+  id: "panel_right/button_lock"
   parent: "panel_right/root"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
-  id: "panel_right/btn_lock/root"
-  parent: "panel_right/btn_lock"
+  id: "panel_right/button_lock/root"
+  parent: "panel_right/button_lock"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
-  id: "panel_right/btn_lock/text"
-  parent: "panel_right/btn_lock/root"
+  id: "panel_right/button_lock/text"
+  parent: "panel_right/button_lock/root"
   template_node_child: true
 }
 nodes {

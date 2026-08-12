@@ -21,7 +21,6 @@ Create progress bar component with druid: `progress = druid:new_progress(node_na
 - [fill](#fill)
 - [empty](#empty)
 - [set_value](#set_value)
-- [set_to](#set_to)
 - [get](#get)
 - [get_value](#get_value)
 - [set_steps](#set_steps)
@@ -101,23 +100,6 @@ progress:set_value(to)
 ```
 
 Instant fill progress bar to value
-
-- **Parameters:**
-	- `to` *(number)*: Progress bar value, from 0 to 1
-
-- **Returns:**
-	- `self` *(druid.progress)*: Current progress instance
-
-### set_to
-
----
-```lua
-progress:set_to(to)
-```
-
-Instant fill progress bar to value
-
-> Deprecated: Use `set_value` instead
 
 - **Parameters:**
 	- `to` *(number)*: Progress bar value, from 0 to 1

@@ -76,22 +76,22 @@ nodes {
     y: 0.75
   }
   type: TYPE_TEMPLATE
-  id: "btn_whitelist"
+  id: "button_whitelist"
   parent: "root"
   inherit_alpha: true
   template: "/example/templates/button_text_green.gui"
 }
 nodes {
   type: TYPE_BOX
-  id: "btn_whitelist/root"
-  parent: "btn_whitelist"
+  id: "button_whitelist/root"
+  parent: "button_whitelist"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
   text: "Whitelist A"
-  id: "btn_whitelist/text"
-  parent: "btn_whitelist/root"
+  id: "button_whitelist/text"
+  parent: "button_whitelist/root"
   overridden_fields: 8
   template_node_child: true
 }
@@ -104,22 +104,22 @@ nodes {
     y: 0.75
   }
   type: TYPE_TEMPLATE
-  id: "btn_blacklist"
+  id: "button_blacklist"
   parent: "root"
   inherit_alpha: true
   template: "/example/templates/button_text_blue.gui"
 }
 nodes {
   type: TYPE_BOX
-  id: "btn_blacklist/root"
-  parent: "btn_blacklist"
+  id: "button_blacklist/root"
+  parent: "button_blacklist"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
   text: "Blacklist A"
-  id: "btn_blacklist/text"
-  parent: "btn_blacklist/root"
+  id: "button_blacklist/text"
+  parent: "button_blacklist/root"
   overridden_fields: 8
   template_node_child: true
 }
@@ -133,22 +133,22 @@ nodes {
     y: 0.75
   }
   type: TYPE_TEMPLATE
-  id: "btn_clear"
+  id: "button_clear"
   parent: "root"
   inherit_alpha: true
   template: "/example/templates/button_text_blue.gui"
 }
 nodes {
   type: TYPE_BOX
-  id: "btn_clear/root"
-  parent: "btn_clear"
+  id: "button_clear/root"
+  parent: "button_clear"
   template_node_child: true
 }
 nodes {
   type: TYPE_TEXT
   text: "Clear Filter"
-  id: "btn_clear/text"
-  parent: "btn_clear/root"
+  id: "button_clear/text"
+  parent: "button_clear/root"
   overridden_fields: 8
   template_node_child: true
 }

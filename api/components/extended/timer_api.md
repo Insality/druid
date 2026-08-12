@@ -16,7 +16,6 @@ Create timer component with druid: `timer = druid:new_timer(text_node, from_seco
 
 - [init](#init)
 - [set_value](#set_value)
-- [set_to](#set_to)
 - [set_state](#set_state)
 - [set_interval](#set_interval)
 ## Fields
@@ -54,30 +53,13 @@ timer:init(node, [seconds_from], [seconds_to], [callback])
 
 ---
 ```lua
-timer:set_value(set_to)
+timer:set_value(value)
 ```
 
 Set the timer to a specific value
 
 - **Parameters:**
-	- `set_to` *(number)*: Value in seconds
-
-- **Returns:**
-	- `self` *(druid.timer)*: Current timer instance
-
-### set_to
-
----
-```lua
-timer:set_to(set_to)
-```
-
-Set the timer to a specific value
-
-> Deprecated: Use `set_value` instead
-
-- **Parameters:**
-	- `set_to` *(number)*: Value in seconds
+	- `value` *(number)*: Value in seconds
 
 - **Returns:**
 	- `self` *(druid.timer)*: Current timer instance

@@ -70,7 +70,7 @@ function M:properties_control(properties_panel)
 	end)
 
 	self.data_list.on_scroll_progress_change:subscribe(function(_, progress)
-		scroll_slider:set_value(1 - progress)
+		scroll_slider:set_value(1 - progress, true)
 	end)
 end
 
