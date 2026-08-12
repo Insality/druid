@@ -878,12 +878,12 @@ There are a few breaking changes, all listed in the migration section below. Not
 
 - `scroll.hover` is removed. If you used it to track the cursor over the scroll view, create your own Hover: `local hover = self.druid:new_hover(view_node)`.
 - `drag.hover` is now created lazily and is `nil` by default. Guard the access (`if drag.hover then`) or call `drag:set_drag_cursors(true)` first. Note that the Hover is only created when the `defos` extension is available.
-- `set_whitelist` / `set_blacklist` called on a component's `self.druid` used to set a **global** filter for the whole Druid instance. Now it only filters that component's subtree, and it does not filter the component that set it. If you relied on the old global behavior from inside a component, call it on the gui script instance instead:
-	```lua
-	-- Before: the filter was global even when set from a component
-	self.druid:set_whitelist({ button })
+- `set_whitelist` / `set_blacklist` used to set one **global** filter for the whole Druid instance, no matter where they were called from. Now the filter is scoped to the caller: the `self.druid` inside a component filters that component's subtree only, and never the component itself. Nothing changes if you call them on the instance you created with `druid.new(self)` in the gui script.
 
-	-- After: to keep the global behavior, set it on the gui script instance
-	druid_instance:set_whitelist({ button })
+	If you did rely on a component filtering the whole GUI, call it from the gui script instead, widgets usually have no access upwards anyway:
+
+	```lua
+	-- gui_script: `self.druid` is the instance, the filter covers every component
+	self.druid:set_whitelist({ self.window.button_accept })
 	```
 - `progress:set_to`, `timer:set_to`, `lang_text:set_to` and `text:set_to` still work, but are deprecated in favor of `set_value` / `set_text`.

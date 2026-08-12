@@ -63,7 +63,7 @@ For new features, major improvements, or complex fixes:
 2. Create a branch from `develop`
 3. Make your changes
 4. Prefer widgets (`druid:new_widget`) for reusable GUI pieces; use `component.create` for library-style components
-5. Keep EmmyLua annotations accurate (`---@class`, `---@param`, event field types)
+5. Keep Lua annotations accurate (`---@class`, `---@param`, event field types)
 6. Test your changes thoroughly (add unit tests when fixing bugs)
 7. Submit a pull request to the `develop` branch
 8. Include references to any related issues (e.g., "Fixes #123")
@@ -83,7 +83,7 @@ Clear, accurate documentation helps everyone, so documentation improvements are 
 
 ## API Docs From Annotations
 
-Markdown under `/api` is generated from EmmyLua annotations in the Lua sources.
+Markdown under `/api` is generated from Lua annotations in the Lua sources.
 
 There is currently **no in-repo docgen script**. When you change public APIs:
 
