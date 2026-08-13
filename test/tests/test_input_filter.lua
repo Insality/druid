@@ -129,6 +129,70 @@ return function()
 			gui.delete_node(text_node)
 		end)
 
+		it("Should include children created after set_whitelist", function()
+			local widget = create_test_widget()
+
+			-- Whitelist the widget itself: current and future children must pass
+			widget.druid:set_whitelist({ widget })
+			local late = widget.druid:new(probe_class)
+			send_input()
+
+			assert(widget.input_calls == 1)
+			assert(widget.probe_a.input_calls == 1)
+			assert(late.input_calls == 1)
+
+			druid_instance:remove(widget)
+		end)
+
+		it("Should include children created after the instance set_whitelist", function()
+			local widget = create_test_widget()
+
+			druid_instance:set_whitelist({ widget })
+			local late = widget.druid:new(probe_class)
+			send_input()
+
+			assert(widget.probe_a.input_calls == 1)
+			assert(late.input_calls == 1)
+
+			druid_instance:set_whitelist(nil)
+			druid_instance:remove(widget)
+		end)
+
+		it("Should include children created under a whitelisted child", function()
+			local child_class = {}
+			function child_class:init()
+				self.probe = self.druid:new(probe_class)
+			end
+
+			local parent_class = {}
+			function parent_class:init()
+				self.child = self.druid:new_widget(child_class)
+			end
+
+			local parent = druid_instance:new_widget(parent_class)
+			parent.druid:set_whitelist({ parent.child })
+
+			local late = parent.child.druid:new(probe_class)
+			send_input()
+			assert(parent.child.probe.input_calls == 1)
+			assert(late.input_calls == 1)
+
+			druid_instance:remove(parent)
+		end)
+
+		it("Should not include siblings created after set_whitelist of another child", function()
+			local widget = create_test_widget()
+
+			widget.druid:set_whitelist({ widget.probe_a })
+			local late = widget.druid:new(probe_class)
+			send_input()
+
+			assert(widget.probe_a.input_calls == 1)
+			assert(late.input_calls == 0)
+
+			druid_instance:remove(widget)
+		end)
+
 		it("Should apply the widget input filter to its subtree only", function()
 			local widget = create_test_widget()
 			local neighbor = create_test_widget()
@@ -271,10 +335,14 @@ return function()
 			local widget = create_test_widget()
 
 			widget.druid:set_blacklist({ widget })
+			local late = widget.druid:new(probe_class)
 			send_input()
 
 			assert(widget.probe_a.input_calls == 0)
 			assert(widget.probe_b.input_calls == 0)
+
+			-- The children created later are blocked as well
+			assert(late.input_calls == 0)
 
 			-- The owner itself is not affected by its own filter
 			assert(widget.input_calls == 1)

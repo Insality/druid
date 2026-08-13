@@ -6,10 +6,11 @@ local const = require("druid.const")
 local settings = require("druid.system.settings")
 local druid_component = require("druid.component")
 
----The input filter, applied to the Druid instance components or to the component subtree
+---The input filter, applied to the Druid instance components or to the component subtree.
+---Membership is the listed component plus any descendant, including ones created later.
 ---@class druid.instance.input_filter
----@field whitelist table<druid.component, boolean>|nil Components that should receive input
----@field blacklist table<druid.component, boolean>|nil Components that should not receive input
+---@field whitelist table<druid.component, boolean>|nil Components that should receive input (with descendants)
+---@field blacklist table<druid.component, boolean>|nil Components that should not receive input (with descendants)
 
 ---The Druid Factory used to create components
 ---@class druid.instance
@@ -125,7 +126,9 @@ local function check_sort_input_stack(self, components)
 end
 
 
----Check the component against the single input filter
+---Check the component against the single input filter.
+---A listed component matches itself and any of its descendants, so the membership is
+---the walk over the parents chain. Descendants created later are matched as well
 ---@param filter druid.instance.input_filter|nil The filter to check
 ---@param component druid.component The component to check
 ---@return boolean is_filtered True if the component is filtered out by this filter
@@ -134,15 +137,33 @@ local function is_filtered(filter, component)
 		return false
 	end
 
-	if filter.whitelist and filter.whitelist[component] ~= true then
-		return true
+	local whitelist = filter.whitelist
+	local blacklist = filter.blacklist
+	if not whitelist and not blacklist then
+		return false
 	end
 
-	if filter.blacklist and filter.blacklist[component] == true then
-		return true
+	-- Both lists are checked in the single walk. The blacklist wins, so it returns at once,
+	-- while the whitelist hit still has to look for the blacklist in the rest of the chain
+	local is_allowed = not whitelist
+	local current = component
+	while current do
+		if blacklist and blacklist[current] == true then
+			return true
+		end
+
+		if whitelist and whitelist[current] == true then
+			if not blacklist then
+				return false
+			end
+
+			is_allowed = true
+		end
+
+		current = current._meta.parent
 	end
 
-	return false
+	return not is_allowed
 end
 
 
@@ -436,7 +457,9 @@ function M:on_language_change()
 end
 
 
----Make a hash set from the components list to check the input filter membership
+---Make a hash set from the components list to check the input filter membership.
+---Children are not copied in: membership walks the parent chain at input time,
+---so components created later under a listed parent still match.
 ---@param components table|druid.component[]|nil The array of components, single component or nil
 ---@return table<druid.component, boolean>|nil map The components hash set or nil if the list is empty
 local function make_filter_map(components)
@@ -450,13 +473,7 @@ local function make_filter_map(components)
 
 	local map = {}
 	for index = 1, #components do
-		local component = components[index]
-		map[component] = true
-
-		local children = component:get_childrens()
-		for child_index = 1, #children do
-			map[children[child_index]] = true
-		end
+		map[components[index]] = true
 	end
 
 	return map
@@ -479,12 +496,13 @@ end
 
 
 ---Set whitelist components for input processing.
----If whitelist is not empty and component not contains in this list,
----component will be not processed on the input step.
----The passed array is not modified; children are included recursively.
+---If whitelist is not empty, only the listed components and their descendants
+---receive input. Descendants created later still match, no need to call this again.
 ---
 ---The filter is scoped to the caller: on the `druid` instance it affects all components,
 ---on the `self.druid` inside a component it affects this component subtree only.
+---The filter owner is not affected by its own filter, so a widget can restrict its children
+---and keep its own `on_input` working.
 ---@param whitelist_components table|druid.component[]|nil The array of component to whitelist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
@@ -496,12 +514,13 @@ end
 
 
 ---Set blacklist components for input processing.
----If blacklist is not empty and component is contained in this list,
----component will be not processed on the input step DruidInstance.
----The passed array is not modified; children are included recursively.
+---If blacklist is not empty, the listed components and their descendants
+---are skipped on the input step. Descendants created later still match.
 ---
 ---The filter is scoped to the caller: on the `druid` instance it affects all components,
 ---on the `self.druid` inside a component it affects this component subtree only.
+---The filter owner is not affected by its own filter: blacklist `{ self }` from the widget
+---blocks every child, to block the widget itself set the filter from the outside.
 ---@param blacklist_components table|druid.component[]|nil The array of component to blacklist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
