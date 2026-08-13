@@ -840,7 +840,7 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 This release is mostly about the input step: scroll and drag no longer keep a Hover component alive just to know where the cursor is, the Hover component itself skips the pick work when nobody listens, and the whitelist/blacklist input filters became scoped to the component that sets them, so widgets can filter their own subtree without fighting each other.
 
-There are a few breaking changes, all listed in the migration section below. Nothing changes for you if you only use the public component API and never touched `scroll.hover` or `drag.hover`.
+There are a few breaking changes, all listed in the migration section below. The usual public component API is unchanged except `set_whitelist` / `set_blacklist` (scope and membership), `drag.hover` and the removal of `scroll.hover`.
 
 **Changelog 1.3.0**
 - [Scroll] Idle early-out and in-place inertion friction (no per-frame vector allocation when settled)
@@ -851,23 +851,23 @@ There are a few breaking changes, all listed in the migration section below. Not
 - [Scroll] Fix division by zero in `_inverse_lerp` / `get_percent` when there is no scroll space
 - [DataList] Gate refresh on visible-range / data-size changes; document cache mode as preferred for large lists
 - [DataList] `on_scroll_progress_change` is now actually triggered on scroll and after data size rebuilds
-- [Drag] Create Hover lazily only when drag cursors are enabled (defos)
-- [Drag] **Breaking**: `drag.hover` is `nil` until `set_drag_cursors(true)` is called with defos available
+- [Drag] **Breaking**: Hover is created only when defos is available. Without defos `drag.hover` is `nil`, with defos cursors stay on by default and Hover exists right after create
 - [Drag] Add `add_drag_action` / `remove_drag_action` for custom drag input actions (e.g. middle mouse)
 - [Drag] Ignore actions without a pointer position, so key actions can not start a drag
 - [Hover] Skip pick_node when no listeners and no cursor styles are configured
 - [Input] Do not consume modifier and Tab keys while selected; add `get_text_visual()`
 - [Input] The `key_back` action now unselects the input instead of being swallowed
 - [LangText] `on_change` is no longer triggered twice on `set_text`
-- [Slider] / [RichInput] Fix scene scale applied twice for `gui.screen_to_local` results
+- [Slider] / [RichInput] Fix scene scale applied twice for `gui.screen_to_local` results (click position on a scaled GUI changes if you had compensated for the old bug)
 - [Container] Do not override a manual `fit_into_size` on late init
-- [System] O(1) whitelist/blacklist input membership via hash sets
+- [System] Whitelist/blacklist membership is resolved by the parent chain instead of a snapshot of children
 - [System] `set_whitelist` / `set_blacklist` accept `nil` to clear the list instead of erroring
 - [System] `set_whitelist` / `set_blacklist` no longer modify the array passed to them
 - [System] **Breaking**: `set_whitelist` / `set_blacklist` are scoped to the caller now
 	- Called on the `druid` instance from the gui script it affects all components, as before
 	- Called on the `self.druid` inside a component it affects this component subtree only, so neighbor widgets are not affected and can keep their own filters
 	- Nested filters are applied on top of each other, the filter owner is not affected by its own filter
+	- A listed component matches itself and every descendant, including ones created later. No need to call `set_whitelist` again after adding children
 - [API] Prefer `set_value` / `set_text`; deprecate `set_to` on progress, timer, lang_text and text (aliases kept)
 - [Progress] Add `get_value()` as an alias for `get()`
 - [Swipe] Add `set_enabled` / `is_enabled`
@@ -877,13 +877,43 @@ There are a few breaking changes, all listed in the migration section below. Not
 **Migration 1.3.0**
 
 - `scroll.hover` is removed. If you used it to track the cursor over the scroll view, create your own Hover: `local hover = self.druid:new_hover(view_node)`.
-- `drag.hover` is now created lazily and is `nil` by default. Guard the access (`if drag.hover then`) or call `drag:set_drag_cursors(true)` first. Note that the Hover is only created when the `defos` extension is available.
-- `set_whitelist` / `set_blacklist` used to set one **global** filter for the whole Druid instance, no matter where they were called from. Now the filter is scoped to the caller: the `self.druid` inside a component filters that component's subtree only, and never the component itself. Nothing changes if you call them on the instance you created with `druid.new(self)` in the gui script.
+- `drag.hover` is `nil` without defos. With defos, drag cursors stay on by default, so Hover exists after create. Guard the access (`if drag.hover then`) if the extension may be missing.
+- `set_whitelist` / `set_blacklist` used to set one **global** filter for the whole Druid instance, no matter where they were called from. Now the filter is scoped to the caller.
 
-	If you did rely on a component filtering the whole GUI, call it from the gui script instead, widgets usually have no access upwards anyway:
+	**Where you call it**
 
 	```lua
 	-- gui_script: `self.druid` is the instance, the filter covers every component
 	self.druid:set_whitelist({ self.window.button_accept })
+
+	-- inside a widget: `self.druid` is the component proxy, the filter covers this widget only
+	self.druid:set_whitelist({ self.button_ok })
 	```
+
+	If a widget used to filter the whole GUI, move that call to the gui script. Widgets usually have no access upwards anyway.
+
+	**Who matches**
+
+	A listed component matches itself and all descendants, including children created after the call. You do not snapshot the tree, and the filter owner is never affected by its own filter.
+
+	```lua
+	-- Allow this button and its children, block the rest of the widget children.
+	-- The widget on_input keeps working, it is the filter owner
+	self.druid:set_whitelist({ self.button_ok })
+
+	-- Allow every child, current and created later (DataList rows, popups)
+	self.druid:set_whitelist({ self })
+
+	-- Block every child, including ones created later
+	self.druid:set_blacklist({ self })
+
+	-- Block one child and its children
+	self.druid:set_blacklist({ self.button_cancel })
+	```
+
+	To keep a lock/unlock control while a whitelist is on, put that control in the whitelist too (see the scoped filters example). To block a widget together with its own `on_input`, set the filter from the outside: the gui script or the parent widget.
+
+	Only the owner subtree can be listed, anything else matches nothing.
+
+	Clear the filter before removing a component you listed: a whitelist whose components are gone blocks the whole scope, it does not fall back to "allow all".
 - `progress:set_to`, `timer:set_to`, `lang_text:set_to` and `text:set_to` still work, but are deprecated in favor of `set_value` / `set_text`.
