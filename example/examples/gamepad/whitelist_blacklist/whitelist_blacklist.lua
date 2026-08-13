@@ -27,7 +27,7 @@ end
 
 function M:on_whitelist_a()
 	self.druid:set_blacklist(nil)
-	-- Include filter buttons, otherwise the widget would lock itself
+	-- Include filter buttons, otherwise they cannot change the filter while it is on
 	self.druid:set_whitelist({
 		self.button_a,
 		self.button_whitelist,

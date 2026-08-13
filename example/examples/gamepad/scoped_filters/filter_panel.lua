@@ -23,7 +23,7 @@ function M:init()
 		self.on_button_click:trigger("B")
 	end)
 
-	-- The lock button is in the whitelist as well, otherwise the panel would lock itself
+	-- Keep the lock button in the whitelist, otherwise it cannot unlock the panel
 	self.button_lock = self.druid:new_button("button_lock/root", self.toggle_lock)
 
 	self.is_locked = false

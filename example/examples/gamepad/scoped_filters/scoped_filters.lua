@@ -13,7 +13,7 @@ local M = {}
 
 
 function M:init()
-	-- The lock button is in the whitelist as well, otherwise the example would lock itself
+	-- Keep the lock button in the whitelist, otherwise it cannot unlock the example
 	self.button_lock_all = self.druid:new_button("button_lock_all/root", self.toggle_lock_all)
 	self.is_locked_all = false
 
