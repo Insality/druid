@@ -61,7 +61,7 @@ The constructor for Drag component
 drag:set_drag_cursors(is_enabled)
 ```
 
-Enable or disable drag cursor styles (requires defos). Hover is created only when enabled.
+Enable or disable drag cursor styles. No-op without defos. Hover is created on first enable.
 
 - **Parameters:**
 	- `is_enabled` *(boolean)*: True if Drag cursors are enabled
@@ -204,7 +204,7 @@ Remove an additional input action from the allowed drag actions
 - **touch_start_pos** (_vector3_): The touch start position
 
 <a name="hover"></a>
-- **hover** (_druid.hover_): Hover component used only when drag cursors are enabled
+- **hover** (_druid.hover|nil_): Hover for drag cursors. `nil` without defos
 
 <a name="druid"></a>
 - **druid** (_druid.instance_): The Druid Factory used to create components
