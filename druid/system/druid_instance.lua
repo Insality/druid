@@ -288,6 +288,17 @@ function M:get_style()
 end
 
 
+---Set a style of Druid instance. Pass nil to reset to the default style.
+---The style is applied to the components created after this call, already created components keep their style.
+---@param style table|nil The Druid style table
+---@return druid.instance self The Druid instance itself for chaining
+function M:set_style(style)
+	self._style = style or settings.default_style
+
+	return self
+end
+
+
 ---Druid late update function called after initialization and before the regular update step.
 ---This function is used to check the GUI state and perform actions after all components and nodes have been created.
 ---An example use case is performing an auto stencil check in the GUI hierarchy for input components.
