@@ -836,6 +836,14 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [Hover] Fix for cursor stack issue
 	- Now cursor stack is applied correctly when the hover component is removed
 
+### Druid 1.2.6
+- [System] Add `druid.get_druid(gui_url)` to get the Druid instance bound with `druid.register_druid_as_widget()` from a game object script
+	- Returns the instance as is, without cross-context events wrapping, unlike `druid.get_widget()`
+	- Returns `nil` if there is no Druid instance registered for this url
+- [System] Add `druid_instance:set_style(style)` to set the style of the Druid instance
+	- The style is applied to the components created after this call, already created components keep their style
+	- Allows to set the style from a game object script: `druid.get_druid(url):set_style(my_style)`
+
 ### Druid 1.3.0
 
 This release is mostly about the input step: scroll and drag no longer keep a Hover component alive just to know where the cursor is, the Hover component itself skips the pick work when nobody listens, and the whitelist/blacklist input filters became scoped to the component that sets them, so widgets can filter their own subtree without fighting each other.

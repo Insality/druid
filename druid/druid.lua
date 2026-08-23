@@ -93,7 +93,7 @@ function M.on_language_change()
 end
 
 
----@type table<userdata, {path: string, fragment: string, new_widget: event}[]>
+---@type table<userdata, {path: string, fragment: string, new_widget: event, instance: druid.instance}[]>
 local REGISTERED_GUI_WIDGETS = {}
 
 ---Set a widget to the current game object. The game object can acquire the widget by calling `bindings.get_widget`
@@ -122,6 +122,35 @@ local function wrap_widget(widget)
 	end
 
 	return wrapped_widget
+end
+
+
+---Get the Druid instance bound to the GUI by `druid.register_druid_as_widget()`.
+---Unlike `druid.get_widget()`, the instance is returned as is, without cross-context events wrapping,
+---so from a game object script you should only use its plain functions, not the GUI related ones.
+---		local instance = druid.get_druid("gui_widget")
+---		instance:set_style(my_style) -- Should be set before creating widgets
+---@param gui_url url|string|nil GUI url or string of component name near current script
+---@return druid.instance|nil instance The registered Druid instance or nil if not registered
+function M.get_druid(gui_url)
+	if type(gui_url) == "string" then
+		gui_url = msg.url(nil, nil, gui_url)
+	end
+
+	gui_url = gui_url or msg.url()
+	local registered_druids = REGISTERED_GUI_WIDGETS[gui_url.socket]
+	if not registered_druids then
+		return nil
+	end
+
+	for index = 1, #registered_druids do
+		local druid = registered_druids[index]
+		if druid.fragment == gui_url.fragment and druid.path == gui_url.path then
+			return druid.instance
+		end
+	end
+
+	return nil
 end
 
 
@@ -166,6 +195,7 @@ function M.register_druid_as_widget(druid)
 	table.insert(REGISTERED_GUI_WIDGETS[gui_url.socket], {
 		path = gui_url.path,
 		fragment = gui_url.fragment,
+		instance = druid,
 		new_widget = event.create(function(widget_class, template, nodes, params)
 			return wrap_widget(druid:new_widget(widget_class, template, nodes, params))
 		end),
