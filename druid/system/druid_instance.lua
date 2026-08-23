@@ -215,6 +215,7 @@ function M:_can_use_input_component(component)
 end
 
 
+---@param self druid.instance The root Druid instance
 local function schedule_late_init(self)
 	if self._late_init_timer_id then
 		return
@@ -271,7 +272,7 @@ function M:new(component, ...)
 	end
 
 	if instance.on_late_init or (not self.input_inited and instance.on_input) then
-		schedule_late_init(self)
+		schedule_late_init(self._root)
 	end
 
 	return instance
@@ -612,7 +613,7 @@ function M:new_widget(widget, template, nodes, ...)
 	end
 
 	if instance.on_late_init or (not self.input_inited and instance.on_input) then
-		schedule_late_init(self)
+		schedule_late_init(self._root)
 	end
 
 	return instance
