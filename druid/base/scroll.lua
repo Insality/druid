@@ -152,7 +152,7 @@ function M:update(dt)
 	end
 
 	if self.drag.is_drag then
-		self:_update_hand_scroll(dt)
+		self:_update_hand_scroll()
 	else
 		self:_update_free_scroll(dt)
 	end
@@ -768,7 +768,7 @@ function M:_update_free_scroll(dt)
 end
 
 
-function M:_update_hand_scroll(dt)
+function M:_update_hand_scroll()
 	if self.is_animate then
 		self:_cancel_animate()
 	end

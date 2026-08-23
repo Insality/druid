@@ -363,7 +363,7 @@ function M:_update_text_area_size()
 		local is_fit = self:_is_fit_info_area(metrics)
 		local step = is_fit and self.style.ADJUST_SCALE_DELTA or -self.style.ADJUST_SCALE_DELTA
 
-		for i = 1, self.style.ADJUST_STEPS do
+		for _ = 1, self.style.ADJUST_STEPS do
 			-- Grow down to check if we fit
 			if step < 0 and is_fit then
 				break

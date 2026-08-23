@@ -291,7 +291,7 @@ function M:add_container(node_or_container, mode, on_resize_callback)
 	---@cast node node
 	node = self:get_node(node)
 
-	container = container or self.druid:new(M, node, mode)
+	container = container or self.druid:new(M, node, mode) --[[@as druid.container]]
 	container:set_parent_container(self)
 	if on_resize_callback then
 		container.on_size_changed:subscribe(on_resize_callback)

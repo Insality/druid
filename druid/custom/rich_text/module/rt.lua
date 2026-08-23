@@ -126,7 +126,6 @@ local function get_image_metrics(word, settings)
 	gui.play_flipbook(node, hash(word.image.anim))
 
 	local node_size = gui.get_size(node)
-	local aspect = node_size.x / node_size.y
 	node_size.x = word.image.width or node_size.x
 	node_size.y = word.image.height or node_size.y
 

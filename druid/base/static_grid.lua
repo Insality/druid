@@ -306,7 +306,7 @@ end
 ---@return vector3[] positions All grid node positions
 function M:get_all_pos()
 	local result = {}
-	for i, node in pairs(self.nodes) do
+	for _, node in pairs(self.nodes) do
 		table.insert(result, gui.get_position(node))
 	end
 

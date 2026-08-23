@@ -185,7 +185,7 @@ function M:on_input(action_id, action)
 	if touch.released and self.is_touch then
 		if action.touch then
 			-- Mobile
-			self:_on_touch_release(action_id, action, touch)
+			self:_on_touch_release(action, touch)
 		else
 			-- PC
 			self:_end_touch(touch)
@@ -376,10 +376,9 @@ end
 
 ---Process on touch release. We should to find, if any other
 ---touches exists to switch to another touch.
----@param action_id hash Action id from on_input
 ---@param action table Action from on_input
 ---@param touch table Touch action
-function M:_on_touch_release(action_id, action, touch)
+function M:_on_touch_release(action, touch)
 	if #action.touch >= 2 then
 		-- Find next unpressed touch
 		local next_touch
