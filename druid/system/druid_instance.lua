@@ -133,8 +133,10 @@ end
 ---the walk over the parents chain. Descendants created later are matched as well
 ---@param filter druid.instance.input_filter|nil The filter to check
 ---@param component druid.component The component to check
+---@param owner druid.component|nil The component the filter is set on, the walk stops on it.
+---Nil for the instance filter, it covers the whole components tree
 ---@return boolean is_filtered True if the component is filtered out by this filter
-local function is_filtered(filter, component)
+local function is_filtered(filter, component, owner)
 	if not filter then
 		return false
 	end
@@ -160,6 +162,11 @@ local function is_filtered(filter, component)
 			end
 
 			is_allowed = true
+		end
+
+		-- Only the owner subtree can be listed, so nothing above the owner is checked
+		if current == owner then
+			break
 		end
 
 		current = current._meta.parent
@@ -204,7 +211,7 @@ function M:_can_use_input_component(component)
 	-- The walk starts from the parent, so the filter owner is not affected by its own filter
 	local parent = component._meta.parent
 	while parent do
-		if is_filtered(parent._meta.input_filter, component) then
+		if is_filtered(parent._meta.input_filter, component, parent) then
 			return false
 		end
 
