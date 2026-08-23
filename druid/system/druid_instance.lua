@@ -23,6 +23,8 @@ local druid_component = require("druid.component")
 ---@field package _late_remove druid.component[] Components to be removed on late update
 ---@field package _is_late_remove_enabled boolean Used to check if components should be removed on late update
 ---@field package _input_filter druid.instance.input_filter|nil Input filter for all the instance components
+---@field package _root druid.instance The root Druid instance, the inner ones are the proxies over it
+---@field package _input_filters_count number Amount of the filter lists, set on the instance and on its components
 local M = {}
 
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
@@ -167,10 +169,33 @@ local function is_filtered(filter, component)
 end
 
 
+---Assign the filter list and keep the instance filters counter in sync.
+---The counter is the fast path check on the input step, see `_can_use_input_component`
+---@param root druid.instance The root Druid instance
+---@param filter druid.instance.input_filter The filter to change
+---@param key string The filter list key: "whitelist" or "blacklist"
+---@param map table<druid.component, boolean>|nil The new filter list or nil to clear it
+local function set_filter_list(root, filter, key, map)
+	local previous = filter[key]
+	if previous == nil and map ~= nil then
+		root._input_filters_count = root._input_filters_count + 1
+	elseif previous ~= nil and map == nil then
+		root._input_filters_count = root._input_filters_count - 1
+	end
+
+	filter[key] = map
+end
+
+
 ---Check the input filters for the component: the instance one and the ones from its parents
 ---@param component druid.component The component to check
 ---@return boolean is_can_use True if component can be processed on input step
 function M:_can_use_input_component(component)
+	-- Nothing is filtered at all in the most of the cases, so skip the parents walk
+	if self._input_filters_count == 0 then
+		return true
+	end
+
 	if is_filtered(self._input_filter, component) then
 		return false
 	end
@@ -209,12 +234,14 @@ end
 function M.create_druid_instance(context, style)
 	local self = setmetatable({}, DRUID_INSTANCE_METATABLE)
 
+	self._root = self
 	self._context = context
 	self._style = style or settings.default_style
 	self._is_late_remove_enabled = false
 	self._late_remove = {}
 
 	self._input_filter = nil
+	self._input_filters_count = 0
 
 	self.components_all = {}
 	self.components_interest = {}
@@ -302,6 +329,17 @@ function M:remove(component)
 			end
 			table.remove(all_components, i)
 			is_removed = true
+		end
+	end
+
+	if is_removed then
+		-- The component is gone, so its filters should not be counted anymore
+		local component_filter = component._meta.input_filter
+		if component_filter then
+			local root = self._root
+			set_filter_list(root, component_filter, "whitelist", nil)
+			set_filter_list(root, component_filter, "blacklist", nil)
+			component._meta.input_filter = nil
 		end
 	end
 
@@ -518,7 +556,7 @@ end
 ---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
 	local filter = get_input_filter(self)
-	filter.whitelist = make_filter_map(whitelist_components)
+	set_filter_list(self._root, filter, "whitelist", make_filter_map(whitelist_components))
 
 	return self
 end
@@ -536,7 +574,7 @@ end
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
 	local filter = get_input_filter(self)
-	filter.blacklist = make_filter_map(blacklist_components)
+	set_filter_list(self._root, filter, "blacklist", make_filter_map(blacklist_components))
 
 	return self
 end
