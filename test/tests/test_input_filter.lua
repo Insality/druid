@@ -129,10 +129,11 @@ return function()
 			gui.delete_node(text_node)
 		end)
 
-		it("Should include children created after set_whitelist", function()
+		it("Should pass the whole subtree when the filter owner is whitelisted", function()
 			local widget = create_test_widget()
 
-			-- Whitelist the widget itself: current and future children must pass
+			-- The owner counts as a member of its own subtree, so everything below it passes.
+			-- Such a whitelist is a no-op by design, the check guards the membership walk
 			widget.druid:set_whitelist({ widget })
 			local late = widget.druid:new(probe_class)
 			send_input()

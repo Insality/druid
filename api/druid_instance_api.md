@@ -185,8 +185,8 @@ are skipped on the input step. Descendants created later still match.
 
 The filter is scoped to the caller: on the `druid` instance it affects all components,
 on the `self.druid` inside a component it affects this component subtree only.
-The filter owner is not affected by its own filter: blacklist `{ self }` from the widget
-blocks every child, to block the widget itself set the filter from the outside.
+The filter owner is not affected by its own filter, to filter a widget itself
+set the filter from the outside: the gui script or the parent widget.
 
 - **Parameters:**
 	- `[blacklist_components]` *(table|druid.component[]|nil)*: The array of component to blacklist, nil to clear it

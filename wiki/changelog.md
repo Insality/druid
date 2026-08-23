@@ -914,17 +914,11 @@ The rest are fixes and small API additions. There are several breaking changes, 
 	-- The widget on_input keeps working, it is the filter owner
 	self.druid:set_whitelist({ self.button_ok })
 
-	-- Allow every child, current and created later (Data List rows, popups)
-	self.druid:set_whitelist({ self })
-
-	-- Block every child, including ones created later
-	self.druid:set_blacklist({ self })
-
-	-- Block one child and its children
+	-- Block one child and its children, current and created later
 	self.druid:set_blacklist({ self.button_cancel })
 	```
 
-	To keep a lock/unlock control while a whitelist is on, put that control in the whitelist too (see the Scoped Input Filters example). To block a widget together with its own `on_input`, set the filter from the outside: the gui script or the parent widget.
+	To keep a lock/unlock control while a whitelist is on, put that control in the whitelist too (see the Scoped Input Filters example).
 
 	Only the owner subtree can be listed, anything else matches nothing.
 

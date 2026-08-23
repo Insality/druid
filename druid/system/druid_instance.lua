@@ -489,6 +489,7 @@ end
 ---Make a hash set from the components list to check the input filter membership.
 ---Children are not copied in: membership walks the parent chain at input time,
 ---so components created later under a listed parent still match.
+---Keys are weak, so a listed component removed from the Druid instance is not kept alive.
 ---@param components table|druid.component[]|nil The array of components, single component or nil
 ---@return table<druid.component, boolean>|nil map The components hash set or nil if the list is empty
 local function make_filter_map(components)
@@ -552,8 +553,8 @@ end
 ---
 ---The filter is scoped to the caller: on the `druid` instance it affects all components,
 ---on the `self.druid` inside a component it affects this component subtree only.
----The filter owner is not affected by its own filter: blacklist `{ self }` from the widget
----blocks every child, to block the widget itself set the filter from the outside.
+---The filter owner is not affected by its own filter, to filter a widget itself
+---set the filter from the outside: the gui script or the parent widget.
 ---@param blacklist_components table|druid.component[]|nil The array of component to blacklist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
