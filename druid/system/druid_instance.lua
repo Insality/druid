@@ -24,7 +24,7 @@ local druid_component = require("druid.component")
 ---@field package _is_late_remove_enabled boolean Used to check if components should be removed on late update
 ---@field package _input_filter druid.instance.input_filter|nil Input filter for all the instance components
 ---@field package _root druid.instance The root Druid instance, the inner ones are the proxies over it
----@field package _input_filters_count number Amount of the filter lists, set on the instance and on its components
+---@field package _has_input_filters boolean True if any filter was set on the instance or on its components
 local M = {}
 
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
@@ -177,30 +177,12 @@ local function is_filtered(filter, component, owner)
 end
 
 
----Assign the filter list and keep the instance filters counter in sync.
----The counter is the fast path check on the input step, see `_can_use_input_component`
----@param root druid.instance The root Druid instance
----@param filter druid.instance.input_filter The filter to change
----@param key string The filter list key: "whitelist" or "blacklist"
----@param map table<druid.component, boolean>|nil The new filter list or nil to clear it
-local function set_filter_list(root, filter, key, map)
-	local previous = filter[key]
-	if previous == nil and map ~= nil then
-		root._input_filters_count = root._input_filters_count + 1
-	elseif previous ~= nil and map == nil then
-		root._input_filters_count = root._input_filters_count - 1
-	end
-
-	filter[key] = map
-end
-
-
 ---Check the input filters for the component: the instance one and the ones from its parents
 ---@param component druid.component The component to check
 ---@return boolean is_can_use True if component can be processed on input step
 function M:_can_use_input_component(component)
-	-- Nothing is filtered at all in the most of the cases, so skip the parents walk
-	if self._input_filters_count == 0 then
+	-- No filters were ever set in the most of the cases, so skip the parents walk
+	if not self._has_input_filters then
 		return true
 	end
 
@@ -250,7 +232,7 @@ function M.create_druid_instance(context, style)
 	self._late_remove = {}
 
 	self._input_filter = nil
-	self._input_filters_count = 0
+	self._has_input_filters = false
 
 	self.components_all = {}
 	self.components_interest = {}
@@ -338,17 +320,6 @@ function M:remove(component)
 			end
 			table.remove(all_components, i)
 			is_removed = true
-		end
-	end
-
-	if is_removed then
-		-- The component is gone, so its filters should not be counted anymore
-		local component_filter = component._meta.input_filter
-		if component_filter then
-			local root = self._root
-			set_filter_list(root, component_filter, "whitelist", nil)
-			set_filter_list(root, component_filter, "blacklist", nil)
-			component._meta.input_filter = nil
 		end
 	end
 
@@ -518,7 +489,6 @@ end
 ---Make a hash set from the components list to check the input filter membership.
 ---Children are not copied in: membership walks the parent chain at input time,
 ---so components created later under a listed parent still match.
----Keys are weak, so a listed component removed from the Druid instance is not kept alive.
 ---@param components table|druid.component[]|nil The array of components, single component or nil
 ---@return table<druid.component, boolean>|nil map The components hash set or nil if the list is empty
 local function make_filter_map(components)
@@ -539,10 +509,14 @@ local function make_filter_map(components)
 end
 
 
----Get the input filter to fill, it will be created if it's not exist yet
+---Get the input filter to fill, it will be created if it's not exist yet.
+---Both setters go through here, so this is the only place raising the fast path flag
 ---@param self druid.instance The Druid instance or the table from the `component:get_druid()`
 ---@return druid.instance.input_filter filter The instance filter or the component one
 local function get_input_filter(self)
+	-- The flag is never lowered: clearing a filter is rare and the walk costs almost nothing
+	self._root._has_input_filters = true
+
 	if getmetatable(self) == DRUID_INSTANCE_METATABLE then
 		self._input_filter = self._input_filter or {}
 		return self._input_filter
@@ -566,7 +540,7 @@ end
 ---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
 	local filter = get_input_filter(self)
-	set_filter_list(self._root, filter, "whitelist", make_filter_map(whitelist_components))
+	filter.whitelist = make_filter_map(whitelist_components)
 
 	return self
 end
@@ -584,7 +558,7 @@ end
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
 	local filter = get_input_filter(self)
-	set_filter_list(self._root, filter, "blacklist", make_filter_map(blacklist_components))
+	filter.blacklist = make_filter_map(blacklist_components)
 
 	return self
 end
