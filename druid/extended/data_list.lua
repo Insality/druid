@@ -318,6 +318,23 @@ function M:_on_scroll()
 end
 
 
+---Check that every element in the range is rendered from the current data
+---@param start_index number The first index of the visible range
+---@param end_index number The last index of the visible range
+---@return boolean is_in_sync True if the rendered elements already match the data
+---@private
+function M:_is_visual_in_sync(start_index, end_index)
+	for index = start_index, end_index do
+		local visual = self._data_visual[index]
+		if (visual and visual.data) ~= self._data[index] then
+			return false
+		end
+	end
+
+	return true
+end
+
+
 ---Refresh all elements in DataList
 ---@param update_scroll_size boolean|nil If true, rebuild scroll content size from data length
 ---@private
@@ -338,32 +355,17 @@ function M:_refresh(update_scroll_size)
 	local end_index = self.grid:get_index_xy(right, bottom)
 	end_index = math.min(data_count, end_index)
 
-	local range_unchanged = start_index == self.top_index and end_index == self.last_index
-	if range_unchanged then
-		local data_matches = true
-		for index = start_index, end_index do
-			local visual = self._data_visual[index]
-			local data = self._data[index]
-			if data then
-				if not visual or visual.data ~= data then
-					data_matches = false
-					break
-				end
-			elseif visual then
-				data_matches = false
-				break
-			end
-		end
-		if data_matches then
-			return
-		end
+	-- Nothing to do when the same range is already rendered from the same data
+	if start_index == self.top_index and end_index == self.last_index
+		and self:_is_visual_in_sync(start_index, end_index) then
+		return
 	end
 
 	self.top_index = start_index
 	self.last_index = end_index
 
-	-- Clear from non range elements and from elements with outdated data
-	-- (collect first, mutating while iterating pairs is unsafe)
+	-- Clear from non range elements and from elements with outdated data.
+	-- Collected first: _remove_at triggers user callbacks that may touch the list
 	local to_remove = {}
 	for index, data in pairs(self._data_visual) do
 		if index < start_index or index > end_index or self._data[index] ~= data.data then

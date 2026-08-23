@@ -62,13 +62,7 @@ local MODIFICATOR_ACTIONS = {
 ---@param mask string
 ---@return string Masked text
 local function mask_text(text, mask)
-	mask = mask or "*"
-	local masked_text = ""
-	for uchar in utf8.gmatch(text, ".") do
-		masked_text = masked_text .. mask
-	end
-
-	return masked_text
+	return string.rep(mask or "*", utf8.len(text))
 end
 
 
