@@ -30,6 +30,7 @@ local M = {}
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
 local INTERESTS_CACHE = {} -- Cache interests per component class in runtime
 local DRUID_INSTANCE_METATABLE = { __index = M }
+local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 local function set_input_state(self, is_input_inited)
 	if IS_NO_AUTO_INPUT or (self.input_inited == is_input_inited) then
@@ -517,6 +518,7 @@ end
 ---Make a hash set from the components list to check the input filter membership.
 ---Children are not copied in: membership walks the parent chain at input time,
 ---so components created later under a listed parent still match.
+---Keys are weak, so a listed component removed from the Druid instance is not kept alive.
 ---@param components table|druid.component[]|nil The array of components, single component or nil
 ---@return table<druid.component, boolean>|nil map The components hash set or nil if the list is empty
 local function make_filter_map(components)
@@ -528,7 +530,7 @@ local function make_filter_map(components)
 		return nil
 	end
 
-	local map = {}
+	local map = setmetatable({}, WEAK_KEYS_METATABLE)
 	for index = 1, #components do
 		map[components[index]] = true
 	end
