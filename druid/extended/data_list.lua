@@ -198,6 +198,17 @@ function M:scroll_to_index(index)
 end
 
 
+---Rebuild the scroll content size and refresh the visible elements.
+---The DataList refreshes itself on the data change, so this is only needed when
+---something outside of the data changed, like the grid item size at runtime
+---@return druid.data_list self Current DataList instance
+function M:refresh()
+	self:_refresh(true)
+
+	return self
+end
+
+
 ---Add element at passed index using cache or create new
 ---@param index number The index to add the element at
 ---@private

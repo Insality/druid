@@ -29,6 +29,7 @@ Create data list component with druid: `data_list = druid:new_data_list(scroll, 
 - [get_created_nodes](#get_created_nodes)
 - [get_created_components](#get_created_components)
 - [scroll_to_index](#scroll_to_index)
+- [refresh](#refresh)
 ## Fields
 
 - [scroll](#scroll)
@@ -209,6 +210,20 @@ Instant scroll to element with passed index
 
 - **Parameters:**
 	- `index` *(number)*: The index to scroll to
+
+### refresh
+
+---
+```lua
+data_list:refresh()
+```
+
+Rebuild the scroll content size and refresh the visible elements.
+The DataList refreshes itself on the data change, so this is only needed when
+something outside of the data changed, like the grid item size at runtime
+
+- **Returns:**
+	- `self` *(druid.data_list)*: Current DataList instance
 
 
 ## Fields
