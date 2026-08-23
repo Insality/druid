@@ -846,46 +846,51 @@ Please support me if you like this project! It will help me keep engaged to upda
 
 ### Druid 1.3.0
 
-This release is mostly about the input step: scroll and drag no longer keep a Hover component alive just to know where the cursor is, the Hover component itself skips the pick work when nobody listens, and the whitelist/blacklist input filters became scoped to the component that sets them, so widgets can filter their own subtree without fighting each other.
+Hello! This Druid update is all about the input step.
 
-There are a few breaking changes, all listed in the migration section below. The usual public component API is unchanged except `set_whitelist` / `set_blacklist` (scope and membership), `drag.hover` and the removal of `scroll.hover`.
+The main change here is the **input filters**. Before, `set_whitelist` and `set_blacklist` were one global list for the whole GUI, no matter where you called them from. Two widgets could not use them at the same time, the last call simply won. Now the filter belongs to whoever sets it: a widget filters its own children and does not touch its neighbours, while the gui script still filters everything, as before. A listed component now covers itself and all of its children, including the ones created later, so you don't have to re-apply the filter after adding elements.
+
+There are three new examples about it: **Whitelist & Blacklist**, **Scoped Input Filters** and **Scroll Nested**.
+
+The input step also became noticeably cheaper. Scroll and Drag no longer keep a Hover component alive just to know where the cursor is, Hover skips its work when nobody is subscribed to it, Scroll does nothing while it stands still, and Data List does not rebuild its elements when nothing has changed.
+
+The rest are fixes and small API additions. There are several breaking changes, all of them are described in the migration section below.
+
+**Note:** this release requires the **Defold Event** dependency of version **16**. Check the installation section in the [README](https://github.com/Insality/druid).
 
 **Changelog 1.3.0**
-- [Scroll] Idle early-out and in-place inertion friction (no per-frame vector allocation when settled)
-- [Scroll] Wheel scrolling picks the view node on wheel events instead of continuous Hover tracking
-- [Scroll] **Breaking**: the internal `scroll.hover` component is removed, wheel scrolling no longer needs it
-- [Scroll] Wheel events are no longer consumed when the scroll can not scroll in any axis
-- [Scroll] Wheel events are ignored when the view node is disabled, or when the action has no pointer position
-- [Scroll] Fix division by zero in `_inverse_lerp` / `get_percent` when there is no scroll space
-- [DataList] Gate refresh on visible-range / data-size changes; document cache mode as preferred for large lists
-- [DataList] `on_scroll_progress_change` is now actually triggered on scroll and after data size rebuilds
-- [Drag] **Breaking**: Hover is created only when defos is available. Without defos `drag.hover` is `nil`, with defos cursors stay on by default and Hover exists right after create
-- [Drag] Add `add_drag_action` / `remove_drag_action` for custom drag input actions (e.g. middle mouse)
-- [Drag] Ignore actions without a pointer position, so key actions can not start a drag
-- [Hover] Skip pick_node when no listeners and no cursor styles are configured
-- [Input] Do not consume modifier and Tab keys while selected; add `get_text_visual()`
-- [Input] The `key_back` action now unselects the input instead of being swallowed
-- [LangText] `on_change` is no longer triggered twice on `set_text`
-- [Slider] / [RichInput] Fix scene scale applied twice for `gui.screen_to_local` results (click position on a scaled GUI changes if you had compensated for the old bug)
-- [Container] Do not override a manual `fit_into_size` on late init
-- [System] Whitelist/blacklist membership is resolved by the parent chain instead of a snapshot of children
-- [System] `set_whitelist` / `set_blacklist` accept `nil` to clear the list instead of erroring
-- [System] `set_whitelist` / `set_blacklist` no longer modify the array passed to them
-- [System] **Breaking**: `set_whitelist` / `set_blacklist` are scoped to the caller now
-	- Called on the `druid` instance from the gui script it affects all components, as before
-	- Called on the `self.druid` inside a component it affects this component subtree only, so neighbor widgets are not affected and can keep their own filters
-	- Nested filters are applied on top of each other, the filter owner is not affected by its own filter
-	- A listed component matches itself and every descendant, including ones created later. No need to call `set_whitelist` again after adding children
-- [API] Prefer `set_value` / `set_text`; deprecate `set_to` on progress, timer, lang_text and text (aliases kept)
-- [Progress] Add `get_value()` as an alias for `get()`
-- [Swipe] Add `set_enabled` / `is_enabled`
-- [Tests] Add data_list, hotkey, slider and input filter tests; rewrite and register static_grid tests
-- [Docs] Fix CONTRIBUTING issue tracker URL, styles links, custom-component type names, README Event dependency pin
+- [Dependency] The required `defold-event` version is bumped to **16**
+- [System] **Breaking**: `set_whitelist` and `set_blacklist` are scoped to whoever calls them
+	- Called on the `druid` instance in the gui script, the filter covers all components, as before
+	- Called on the `self.druid` inside a widget, the filter covers this widget subtree only, so the neighbour widgets keep their own filters
+	- A listed component matches itself and all of its children, including the ones created later. No need to call `set_whitelist` again after adding elements
+	- Nested filters are applied on top of each other, and the filter owner is never affected by its own filter
+	- Check the migration section below, it contains the usage examples
+- [System] `set_whitelist` and `set_blacklist` accept `nil` to clear the filter, instead of throwing an error
+- [System] `set_whitelist` and `set_blacklist` no longer modify the array you pass to them
+- [Scroll] **Breaking**: the internal `scroll.hover` component is removed, the mouse wheel does not need it anymore
+- [Scroll] The mouse wheel is not consumed when the scroll can not scroll, so a nested scroll or the scroll below can handle it
+- [Scroll] The mouse wheel is ignored when the scroll view node is disabled
+- [Scroll] Fix division by zero in `scroll:get_percent()` when there is no space to scroll
+- [Drag] **Breaking**: `drag.hover` exists only when the `defos` extension is available, otherwise it is `nil`
+- [Drag] Add `drag:add_drag_action(action_id)` and `drag:remove_drag_action(action_id)` to drag with other inputs, like the middle mouse button
+- [Drag] Actions without a cursor position can not start a drag anymore, so a key trigger will not move your node
+- [Input] The modificator keys (shift, ctrl, alt, cmd) and `tab` are not consumed anymore while the input is selected, so your hotkeys keep working while the user types
+- [Input] The `key_back` action now unselects the input field instead of being swallowed
+- [Input] Add `input:get_text_visual()` to get the text as it is displayed on the node. It can differ from `get_text()` when the text adjust mode trims the value
+- [Data List] `on_scroll_progress_change` is now triggered on scroll, before it was not triggered at all
+- [Data List] Add `data_list:refresh()` to rebuild the list when something outside of the data has changed, like the grid item size
+- [Slider] / [Rich Input] Fix the click position on a scaled GUI, the scene scale was applied twice
+- [Lang Text] `on_change` is not triggered twice on `set_text` anymore
+- [Container] A manual `container:fit_into_size()` is not overridden on the late init step anymore
+- [Swipe] Add `swipe:set_enabled(state)` and `swipe:is_enabled()`
+- [Progress] Add `progress:get_value()` as an alias for `progress:get()`
+- [API] Prefer `set_value` and `set_text` over `set_to`. The `set_to` function is deprecated in Progress, Timer, Lang Text and Text components, the old calls still work
+- [Performance] The input step got noticeably cheaper: Scroll, Drag and Hover skip their work when nothing happens, Data List skips the rebuild when the visible range and the data are the same, and the input filters are skipped entirely when none of them are set
+- [Examples] Add **Whitelist & Blacklist**, **Scoped Input Filters** and **Scroll Nested** examples
 
 **Migration 1.3.0**
 
-- `scroll.hover` is removed. If you used it to track the cursor over the scroll view, create your own Hover: `local hover = self.druid:new_hover(view_node)`.
-- `drag.hover` is `nil` without defos. With defos, drag cursors stay on by default, so Hover exists after create. Guard the access (`if drag.hover then`) if the extension may be missing.
 - `set_whitelist` / `set_blacklist` used to set one **global** filter for the whole Druid instance, no matter where they were called from. Now the filter is scoped to the caller.
 
 	**Where you call it**
@@ -909,7 +914,7 @@ There are a few breaking changes, all listed in the migration section below. The
 	-- The widget on_input keeps working, it is the filter owner
 	self.druid:set_whitelist({ self.button_ok })
 
-	-- Allow every child, current and created later (DataList rows, popups)
+	-- Allow every child, current and created later (Data List rows, popups)
 	self.druid:set_whitelist({ self })
 
 	-- Block every child, including ones created later
@@ -919,9 +924,13 @@ There are a few breaking changes, all listed in the migration section below. The
 	self.druid:set_blacklist({ self.button_cancel })
 	```
 
-	To keep a lock/unlock control while a whitelist is on, put that control in the whitelist too (see the scoped filters example). To block a widget together with its own `on_input`, set the filter from the outside: the gui script or the parent widget.
+	To keep a lock/unlock control while a whitelist is on, put that control in the whitelist too (see the Scoped Input Filters example). To block a widget together with its own `on_input`, set the filter from the outside: the gui script or the parent widget.
 
 	Only the owner subtree can be listed, anything else matches nothing.
 
 	Clear the filter before removing a component you listed: a whitelist whose components are gone blocks the whole scope, it does not fall back to "allow all".
+- `scroll.hover` is removed. If you used it to track the cursor over the scroll view, create your own Hover: `local hover = self.druid:new_hover(view_node)`.
+- `drag.hover` is `nil` without the `defos` extension. With `defos` the drag cursors stay on by default, so the Hover exists right after create. Guard the access (`if drag.hover then`) if the extension may be missing.
+- The Input component does not consume the modificator keys and `tab` anymore while it is selected. If your app has hotkeys with these keys, they will now trigger while the user is typing in the input field. Disable them on the `on_input_select` event if that is not what you want.
+- The Slider and the Rich Input caret now use the correct click position on a scaled GUI. If you compensated for the old double scale on your side, remove that compensation.
 - `progress:set_to`, `timer:set_to`, `lang_text:set_to` and `text:set_to` still work, but are deprecated in favor of `set_value` / `set_text`.
