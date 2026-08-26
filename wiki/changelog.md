@@ -843,3 +843,8 @@ Please support me if you like this project! It will help me keep engaged to upda
 - [System] Add `druid_instance:set_style(style)` to set the style of the Druid instance
 	- The style is applied to the components created after this call, already created components keep their style
 	- Allows to set the style from a game object script: `druid.get_druid(url):set_style(my_style)`
+
+### Druid 1.2.7
+- [System] Add `template` argument to `druid.get_widget(widget_class, gui_url, [params], [template])`
+	- The template name is passed to the `new_widget` of the bound Druid instance, so widgets placed inside a GUI template can be created from a game object script
+	- The argument is optional, existing calls are not affected
