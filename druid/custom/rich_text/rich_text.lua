@@ -88,6 +88,11 @@ function M:init(text_node, value)
 	self.root = self:get_node(text_node)
 	self.text_prefab = self.root
 
+	local root_size = gui.get_size(self.root)
+	local scale = gui.get_scale(self.root)
+	self._default_size = root_size
+	self._default_scale = scale
+
 	self._last_value = value or gui.get_text(self.text_prefab) or ""
 	self.is_justify = false
 	self._settings = self:_create_settings()
@@ -271,11 +276,9 @@ function M:_create_settings()
 	local root_size = gui.get_size(self.root)
 	local scale = gui.get_scale(self.root)
 
-	self._default_size = root_size
-	self._default_scale = scale
-
 	root_size.x = root_size.x * scale.x
 	root_size.y = root_size.y * scale.y
+
 	gui.set_size(self.root, root_size)
 	gui.set_scale(self.root, VECTOR3_ONE)
 
