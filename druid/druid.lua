@@ -164,8 +164,9 @@ end
 ---@param widget_class T The class of the widget to return
 ---@param gui_url url|string GUI url or string of component name near current script
 ---@param params any|nil Additional parameters to pass to the widget's init function
+---@param template string|nil The GUI template name used by the widget nodes
 ---@return T widget The new created widget,
-function M.get_widget(widget_class, gui_url, params)
+function M.get_widget(widget_class, gui_url, params, template)
 	if type(gui_url) == "string" then
 		gui_url = msg.url(nil, nil, gui_url)
 	end
@@ -177,7 +178,7 @@ function M.get_widget(widget_class, gui_url, params)
 	for index = 1, #registered_druids do
 		local druid = registered_druids[index]
 		if druid.fragment == gui_url.fragment and druid.path == gui_url.path then
-			return druid.new_widget(widget_class, nil, nil, params)
+			return druid.new_widget(widget_class, template, nil, params)
 		end
 	end
 

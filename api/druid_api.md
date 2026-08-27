@@ -127,7 +127,7 @@ It will notify all Druid instances to update the lang text components.
 
 ---
 ```lua
-druid.get_widget(widget_class, gui_url, [params])
+druid.get_widget(widget_class, gui_url, [params], [template])
 ```
 
 Create a widget from the bound Druid GUI instance.
@@ -139,6 +139,7 @@ Widget class here is your lua file for the GUI scene (widgets in Druid)
 	- `widget_class` *(<T:druid.widget>)*: The class of the widget to return
 	- `gui_url` *(string|url)*: GUI url or string of component name near current script
 	- `[params]` *(any)*: Additional parameters to pass to the widget's init function
+	- `[template]` *(string)*: The GUI template name used by the widget nodes
 
 - **Returns:**
 	- `widget` *(<T:druid.widget>)*: The new created widget,

@@ -307,3 +307,16 @@ function M:init(params)
     self.show_badges = params.show_badges
 end
 ```
+
+If the widget nodes are placed inside a GUI template, pass the template name as the last argument:
+`druid.get_widget(widget, gui_url, [params], [template])`. It is used to resolve the widget nodes, the same way as
+in `druid:new_widget(widget_class, template, nodes, params)`.
+
+```lua
+function on_message(self, message_id, message, sender)
+    if message_id == hash("late_init") then
+        local gui_url = msg.url(nil, nil, "go_widget")
+        self.go_widget = druid.get_widget(my_widget, gui_url, nil, "my_widget_template")
+    end
+end
+```
