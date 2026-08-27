@@ -1,11 +1,10 @@
 # Creating Custom Components
 
-# Deprecated
-Custom compomnents from 1.1 release are deprecated. Now we have a new way to create custom components - widgets.
+> **Prefer widgets.** From Druid 1.1+, the recommended way to build reusable GUI pieces is [Widgets](widgets.md). Custom components still work for library-style components (`component.create`), but new editor tooling targets widgets.
 
-Custom components are will exists for more system things like basic components. You don't have to migrate to widgets.
+Custom components will continue to exist for system / basic-style components. You do not have to migrate existing ones.
 
-The editor script for creating custom components is removed. Now you can create widgets with the new editor script.
+The editor script for creating custom components was removed. Create widgets with the widget editor script instead.
 
 Read more about widgets in [widgets.md](widgets.md)
 
@@ -13,7 +12,7 @@ Read more about widgets in [widgets.md](widgets.md)
 
 Druid offers the flexibility to create custom components that contain your own logic, as well as other Druid basic components or custom components. While Druid provides a set of predefined components like buttons and scrolls, it goes beyond that and provides a way to handle all your GUI elements in a more abstract manner. Custom components are a powerful way to separate logic and create higher levels of abstraction in your code.
 
-Every component is a child of the Basic Druid component. You can call methods of basic components using `self:{method_name}`.
+Every component inherits from `druid.component`. You can call base component methods using `self:{method_name}`.
 
 ## Custom Components
 
@@ -24,7 +23,7 @@ A basic custom component template looks like this (you can copy it from `/druid/
 ```lua
 local component = require("druid.component")
 
----@class component_name: druid.base_component
+---@class component_name: druid.component
 local M = component.create("component_name")
 
 function M:init(template, nodes)
@@ -65,7 +64,7 @@ A full custom component template looks like this (you can copy it from `/druid/t
 ```lua
 local component =  require("druid.component")
 
----@class component_name: druid.base_component
+---@class component_name: druid.component
 local M = component.create("component_name")
 
 function M:init(template, nodes)

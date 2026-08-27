@@ -752,12 +752,6 @@ nodes {
   template_node_child: true
 }
 nodes {
-  type: TYPE_TEXT
-  id: "intro/text_support"
-  parent: "intro/root"
-  template_node_child: true
-}
-nodes {
   type: TYPE_BOX
   id: "intro/icon_heart1"
   parent: "intro/root"
@@ -1429,6 +1423,91 @@ nodes {
   type: TYPE_TEXT
   id: "basic_progress_bar/progress_value"
   parent: "basic_progress_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scroll_nested"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/scroll_nested/scroll_nested.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/root"
+  parent: "scroll_nested"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/outer_view"
+  parent: "scroll_nested/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/outer_content"
+  parent: "scroll_nested/outer_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/outer_hint"
+  parent: "scroll_nested/outer_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/inner_view"
+  parent: "scroll_nested/outer_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scroll_nested/inner_content"
+  parent: "scroll_nested/inner_view"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_hint"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_line_a"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_line_b"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_line_c"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/inner_line_d"
+  parent: "scroll_nested/inner_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/outer_bottom"
+  parent: "scroll_nested/outer_content"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scroll_nested/outer_bottom_2"
+  parent: "scroll_nested/outer_content"
   template_node_child: true
 }
 nodes {
@@ -3758,6 +3837,314 @@ nodes {
   type: TYPE_BOX
   id: "on_screen_control/on_screen_input/button_action/icon"
   parent: "on_screen_control/on_screen_input/button_action/button"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist"
+  parent: "gamepad"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/whitelist_blacklist/whitelist_blacklist.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/root"
+  parent: "whitelist_blacklist"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/button_a"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/button_a/root"
+  parent: "whitelist_blacklist/button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/button_a/text"
+  parent: "whitelist_blacklist/button_a/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/button_b"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/button_b/root"
+  parent: "whitelist_blacklist/button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/button_b/text"
+  parent: "whitelist_blacklist/button_b/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/button_whitelist"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/button_whitelist/root"
+  parent: "whitelist_blacklist/button_whitelist"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/button_whitelist/text"
+  parent: "whitelist_blacklist/button_whitelist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/button_blacklist"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/button_blacklist/root"
+  parent: "whitelist_blacklist/button_blacklist"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/button_blacklist/text"
+  parent: "whitelist_blacklist/button_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "whitelist_blacklist/button_clear"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "whitelist_blacklist/button_clear/root"
+  parent: "whitelist_blacklist/button_clear"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/button_clear/text"
+  parent: "whitelist_blacklist/button_clear/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/hint"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "whitelist_blacklist/status"
+  parent: "whitelist_blacklist/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters"
+  parent: "gamepad"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/scoped_filters/scoped_filters.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/root"
+  parent: "scoped_filters"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/button_lock_all"
+  parent: "scoped_filters/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/button_lock_all/root"
+  parent: "scoped_filters/button_lock_all"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/button_lock_all/text"
+  parent: "scoped_filters/button_lock_all/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_left"
+  parent: "scoped_filters/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_left/root"
+  parent: "scoped_filters/panel_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/title"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_left/button_a"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_left/button_a/root"
+  parent: "scoped_filters/panel_left/button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/button_a/text"
+  parent: "scoped_filters/panel_left/button_a/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_left/button_b"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_left/button_b/root"
+  parent: "scoped_filters/panel_left/button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/button_b/text"
+  parent: "scoped_filters/panel_left/button_b/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_left/button_lock"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_left/button_lock/root"
+  parent: "scoped_filters/panel_left/button_lock"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/button_lock/text"
+  parent: "scoped_filters/panel_left/button_lock/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_left/status"
+  parent: "scoped_filters/panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_right"
+  parent: "scoped_filters/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_right/root"
+  parent: "scoped_filters/panel_right"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/title"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_right/button_a"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_right/button_a/root"
+  parent: "scoped_filters/panel_right/button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/button_a/text"
+  parent: "scoped_filters/panel_right/button_a/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_right/button_b"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_right/button_b/root"
+  parent: "scoped_filters/panel_right/button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/button_b/text"
+  parent: "scoped_filters/panel_right/button_b/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "scoped_filters/panel_right/button_lock"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "scoped_filters/panel_right/button_lock/root"
+  parent: "scoped_filters/panel_right/button_lock"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/button_lock/text"
+  parent: "scoped_filters/panel_right/button_lock/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/panel_right/status"
+  parent: "scoped_filters/panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "scoped_filters/hint"
+  parent: "scoped_filters/root"
   template_node_child: true
 }
 nodes {

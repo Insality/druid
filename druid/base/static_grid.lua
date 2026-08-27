@@ -7,7 +7,8 @@ local component = require("druid.component")
 ---@field IS_DYNAMIC_NODE_POSES boolean|nil If true, always center grid content as grid pivot sets. Default: false
 ---@field IS_ALIGN_LAST_ROW boolean|nil If true, always align last row of the grid as grid pivot sets. Default: false
 
----The component for manage the nodes position in the grid with various options
+---The component to manage the nodes position in the grid with various options.
+---Created via `druid:new_grid()` (Static Grid). Prefer Layout for variable-size arrangements.
 ---@class druid.grid: druid.component
 ---@field on_add_item event fun(self: druid.grid, item: node, index: number) Trigger on add item event
 ---@field on_remove_item event fun(self: druid.grid, index: number) Trigger on remove item event
@@ -305,7 +306,7 @@ end
 ---@return vector3[] positions All grid node positions
 function M:get_all_pos()
 	local result = {}
-	for i, node in pairs(self.nodes) do
+	for _, node in pairs(self.nodes) do
 		table.insert(result, gui.get_position(node))
 	end
 

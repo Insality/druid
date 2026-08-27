@@ -18,7 +18,9 @@ M.ACTION_UP = hash(sys.get_config_string("druid.input_key_up", "key_up"))
 M.ACTION_DOWN = hash(sys.get_config_string("druid.input_key_down", "key_down"))
 M.ACTION_LSHIFT = hash(sys.get_config_string("druid.input_key_lshift", "key_lshift"))
 M.ACTION_LCTRL = hash(sys.get_config_string("druid.input_key_lctrl", "key_lctrl"))
+M.ACTION_LALT = hash(sys.get_config_string("druid.input_key_lalt", "key_lalt"))
 M.ACTION_LCMD = hash(sys.get_config_string("druid.input_key_lsuper", "key_lsuper"))
+M.ACTION_TAB = hash(sys.get_config_string("druid.input_key_tab", "key_tab"))
 
 M.ON_INPUT = "on_input"
 M.ON_UPDATE = "update"

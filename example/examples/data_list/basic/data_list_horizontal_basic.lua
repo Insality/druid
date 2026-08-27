@@ -47,6 +47,14 @@ function M:properties_control(properties_panel)
 	properties_panel:add_checkbox("ui_clipping", is_stencil, function(value)
 		gui.set_clipping_mode(view_node, value and gui.CLIPPING_MODE_STENCIL or gui.CLIPPING_MODE_NONE)
 	end)
+
+	local scroll_slider = properties_panel:add_slider("ui_scroll", 0, function(value)
+		self.scroll:scroll_to_percent(vmath.vector3(value, 0, 0), true)
+	end)
+
+	self.data_list.on_scroll_progress_change:subscribe(function(_, progress)
+		scroll_slider:set_value(progress, true)
+	end)
 end
 
 

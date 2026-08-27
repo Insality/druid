@@ -1,5 +1,5 @@
 {
-	"ui_examples": "例",
+	"ui_examples": "サンプル",
 	"ui_properties_panel": "プロパティ",
 	"ui_output": "出力",
 	"ui_view_code": "コードを見る",
@@ -13,157 +13,237 @@
 	"ui_value": "値",
 	"ui_scroll": "スクロール",
 	"ui_clipping": "クリッピング",
-	"ui_no_properties": "この例にプロパティはありません",
+	"ui_no_properties": "このサンプルにプロパティはありません",
 	"ui_padding": "パディング",
 	"ui_margin_x": "マージン X",
 	"ui_margin_y": "マージン Y",
-	"ui_justify": "両端揃え",
+	"ui_justify": "均等配置",
 	"ui_pivot_next": "次のピボット",
 	"ui_type_next": "次のタイプ",
-	"ui_adjust_next": "次の調整",
+	"ui_adjust_next": "次の Adjust",
 	"ui_enabled": "有効",
+	"ui_item_size": "アイテムサイズ",
+	"ui_inner_scrollable": "内側のスクロール",
+	"ui_whitelist_a": "Whitelist A",
+	"ui_blacklist_a": "Blacklist A",
+	"ui_clear_filters": "フィルタをクリア",
 
 	"ui_examples_basic": "基本",
-	"ui_examples_data_list": "データリスト",
+	"ui_examples_data_list": "Data List",
 	"ui_examples_gamepad": "ゲームパッド",
 	"ui_examples_window": "ウィンドウ",
-	"ui_examples_panthera": "パンテラ",
+	"ui_examples_panthera": "Panthera",
 
-	"ui_example_intro": "紹介",
-	"ui_example_intro_description": "ここには、選択された例の簡単な説明が表示されます。",
+	"ui_example_intro": "はじめに",
+	"ui_example_intro_description": "左からサンプルを選んでください。ここに試す内容が書かれ、プロパティで即座に変更でき、出力にイベントが表示されます。",
 
 	"ui_example_basic_button": "ボタン",
-	"ui_example_basic_button_description": "Druid の基本的なボタンの例",
+	"ui_example_basic_button_description": "ボタンを押して出力のイベントを確認。有効のチェックを外すと入力がブロックされます。",
 
 	"ui_example_basic_button_double_click": "ダブルクリック",
-	"ui_example_basic_button_double_click_description": "ボタンにダブルクリック機能を追加する方法。",
+	"ui_example_basic_button_double_click_description": "素早く2回押すと on_click と on_double_click の両方が発火します。順番は出力で確認できます。",
 
 	"ui_example_basic_button_hold": "長押し",
-	"ui_example_basic_button_hold_description": "ボタンの長押しとトリガー機能を作成する方法。",
+	"ui_example_basic_button_hold_description": "2秒間押し続けます。on_hold_callback がゲージを進め、最後に on_long_click が発火します。",
 
 	"ui_example_basic_text": "テキスト",
-	"ui_example_basic_text_description": "異なるプロパティでテキストがどのように調整されるかを確認します。",
+	"ui_example_basic_text_description": "テキスト領域の角をドラッグし、Adjust と Pivot を切り替えて収まり方を確認しましょう。",
 
 	"ui_example_basic_multiline_text": "複数行テキスト",
-	"ui_example_basic_multiline_text_description": "異なるプロパティで複数行のテキストがどのように調整されるかを確認します。",
+	"ui_example_basic_multiline_text_description": "改行ありの同じ例。領域を小さくすると、折り返し位置と縮小の様子が分かります。",
 
 	"ui_example_basic_hover": "ホバー",
-	"ui_example_basic_hover_description": "ホバーには2つのホバーイベントがあります。マウス用とタッチ用です。マウスイベントには mouse_callback を使用してください。",
+	"ui_example_basic_hover_description": "左のノードはタッチ、右のノードはマウスに反応します。マウスには mouse_callback を使います。",
 
 	"ui_example_basic_drag": "ドラッグ",
-	"ui_example_basic_drag_description": "簡単なドラッグノードを作成する方法",
+	"ui_example_basic_drag_description": "ノードをドラッグします。離すと on_drag_end のアニメーションで元の位置に戻ります。",
 
-	"ui_example_basic_drag_to_node": "ノードにドラッグ",
-	"ui_example_basic_drag_to_node_description": "ノードを別のノードにドラッグしてコールバックを取得する方法",
+	"ui_example_basic_drag_to_node": "ノードへドラッグ",
+	"ui_example_basic_drag_to_node_description": "ノードをゾーンへ運ぶと光り、中で離すとカウンターが増えます。",
 
 	"ui_example_basic_slider": "スライダー",
-	"ui_example_basic_slider_description": "簡単なスライダーを作成する方法",
+	"ui_example_basic_slider_description": "ピンをドラッグ、またはバーをクリック。set_input_node でウィジェット全体が反応します。",
 
-	"ui_example_basic_slider_vertical": "垂直スライダー",
-	"ui_example_basic_slider_vertical_description": "簡単な垂直スライダーを作成する方法",
+	"ui_example_basic_slider_vertical": "縦スライダー",
+	"ui_example_basic_slider_vertical_description": "同じスライダーで、方向は作成時に渡す終点ベクトルで決まります。",
 
 	"ui_example_basic_slider_stepped": "ステップ付きスライダー",
-	"ui_example_basic_slider_stepped_description": "スライダーには「ステップ」プロパティがあり、ステップ付きにすることができます。",
+	"ui_example_basic_slider_stepped_description": "set_steps を使うと、ピンは11個の固定値のうち最も近い値に吸着します。",
 
 	"ui_example_basic_progress_bar": "プログレスバー",
-	"ui_example_basic_progress_bar_description": "簡単なプログレスバーを作成する方法",
+	"ui_example_basic_progress_bar_description": "右のスライダーで値を変更します。バーはノードのサイズで満たされます。",
 
 	"ui_example_basic_progress_bar_slice9": "プログレスバー Slice9",
-	"ui_example_basic_progress_bar_slice9_description": "プログレスコンポーネントは、最初からスケーラブルにするために slice9 プロパティを処理できます。",
+	"ui_example_basic_progress_bar_slice9_description": "slice9 付きの同じバー。値が小さくても角の丸みが保たれます。",
+
+	"ui_example_basic_blocker": "ブロッカー",
+	"ui_example_basic_blocker_description": "パネル全体が押せますが、ブロッカー領域は入力を遮ります。両方を押して出力を比べましょう。",
+
+	"ui_example_basic_back_handler": "バックハンドラ",
+	"ui_example_basic_back_handler_description": "Backspace または Android の戻るボタンを押すと、ハンドラがコールバックを呼びます。",
 
 	"ui_example_basic_timer": "タイマー",
-	"ui_example_basic_timer_description": "タイマーコンポーネントは、コールバック付きの秒数のタイマーを表示するために使用されます。",
+	"ui_example_basic_timer_description": "ゼロまでカウントし、on_timer_end がより長い間隔で再スタートさせます。",
 
 	"ui_example_basic_hotkey": "ホットキー",
-	"ui_example_basic_hotkey_description": "コールバック用のホットキーを作成する方法",
+	"ui_example_basic_hotkey_description": "Shift + X を押します。修飾キーも組み合わせの一部なので、単独では発火しません。",
 
 	"ui_example_basic_scroll": "スクロール",
-	"ui_example_basic_scroll_description": "簡単なスクロールを作成する方法",
-	"ui_elastic_scroll": "エラスティックスクロール",
+	"ui_example_basic_scroll_description": "コンテンツをドラッグするかホイールで操作。摩擦、慣性、伸びは右側で調整します。",
+	"ui_example_basic_scroll_nested": "入れ子スクロール",
+	"ui_example_basic_scroll_nested_description": "ホイールはカーソル下のビューを選びます。内側のスクロールを切ると内容が収まり、外側へ渡されます。",
+	"ui_elastic_scroll": "弾性スクロール",
+	"ui_slider_friction": "スクロールの摩擦",
+	"ui_slider_speed": "スクロール速度",
+	"ui_slider_wheel_speed": "ホイール速度",
+	"ui_wheel_by_inertion": "ホイールを慣性で",
 
 	"ui_example_basic_scroll_slider": "スライダー付きスクロール",
-	"ui_example_basic_scroll_slider_description": "スクロールにスライダーコントロールを追加して使用する方法",
+	"ui_example_basic_scroll_slider_description": "スクロールとスライダーは双方向に連動します。どちらを動かしても、項目をクリックしてもOK。",
 
 	"ui_example_basic_grid": "静的グリッド",
-	"ui_example_basic_grid_description": "ノードをグリッドに配置する方法",
-	"ui_grid_in_row": "行の要素",
+	"ui_example_basic_grid_description": "要素を追加・削除し、1行の数を変えて、グリッドの並べ方を確認しましょう。",
+	"ui_grid_in_row": "1行の要素数",
 	"ui_add_element": "要素を追加",
 	"ui_remove_element": "要素を削除",
 	"ui_clear_elements": "要素をクリア",
+	"ui_dynamic_pos": "動的な位置",
+	"ui_align_last_row": "最終行を整列",
 
-	"ui_example_basic_scroll_bind_grid": "スクロールバインドグリッド",
-	"ui_example_basic_scroll_bind_grid_description": "スクロールはグリッドと事前定義されたサイズでうまく機能します。これはスクロールバインドグリッドの例です。",
+	"ui_example_basic_scroll_bind_grid": "スクロール + グリッド",
+	"ui_example_basic_scroll_bind_grid_description": "バインドしたグリッドがスクロールサイズを更新します。要素を足してコンテンツサイズを見ましょう。",
 
-	"ui_example_basic_scroll_bind_grid_horizontal": "水平スクロールバインドグリッド",
-	"ui_example_basic_scroll_bind_grid_horizontal_description": "スクロールはグリッドと事前定義されたサイズでうまく機能します。これは水平スクロールバインドグリッドの例です。",
+	"ui_example_basic_scroll_bind_grid_horizontal": "横スクロール + グリッド",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "同じバインドですが、グリッドが1行なのでスクロールは横方向になります。",
+
+	"ui_example_basic_scroll_bind_grid_points": "ポイント吸着スクロール",
+	"ui_example_basic_scroll_bind_grid_points_description": "ポイントはグリッドから取得。指を離すと最も近い要素に吸着します。",
+
+	"ui_example_basic_scroll_bind_grid_cards": "カードスクロール",
+	"ui_example_basic_scroll_bind_grid_cards_description": "カードはポイントに吸着し、中心からの距離で拡大縮小します。スクロールか矢印で切り替え。",
+
+	"ui_example_layout_scroll_bind_cards": "レイアウト + カード",
+	"ui_example_layout_scroll_bind_cards_description": "幅がばらばらのカードをレイアウトに配置。スクロールはレイアウトに連動し各カードへ吸着します。",
 
 	"ui_example_basic_input": "入力",
-	"ui_example_basic_input_description": "Druid で最も単純な入力を作成する方法",
+	"ui_example_basic_input_description": "クリックして入力し、Enter で確定。テキストは省略されるので出力で text と visual を比較。",
+	"ui_example_whitelist_blacklist": "Whitelist と Blacklist",
+	"ui_example_whitelist_blacklist_description": "ホワイトリストとブラックリストで、子も含めて入力を受け取るコンポーネントを制限します。",
+	"ui_example_scoped_filters": "入れ子の入力フィルタ",
+	"ui_example_scoped_filters_description": "2階層のフィルタ：サンプルが両パネルを、各パネルが自身をフィルタし、両者は重ねて適用されます。",
 
 	"ui_example_input_password": "パスワード入力",
-	"ui_example_input_password_description": "パスワード入力がどのように機能するか",
+	"ui_example_input_password_description": "パスワード欄は画面上では伏せ字ですが、get_text は実際の値を返します。",
 
-	"ui_example_basic_rich_input": "リッチ入力",
-	"ui_example_basic_rich_input_description": "Druid でリッチ入力を作成する方法",
+	"ui_example_basic_rich_input": "Rich Input",
+	"ui_example_basic_rich_input_description": "プレースホルダとカーソル付きの入力欄。クリックして入力するとカーソルが追従します。",
 
-	"ui_example_basic_rich_text": "リッチテキスト",
-	"ui_example_basic_rich_text_description": "Druid でリッチテキストを作成する方法",
+	"ui_example_basic_rich_text": "Rich Text",
+	"ui_example_basic_rich_text_description": "タグ付きの1つの文字列が複数ノードになり、色とフォントを1つのテキストに混在できます。",
 
-	"ui_example_rich_text_tags": "リッチテキストタグ",
-	"ui_example_rich_text_tags_description": "ここにタグ付きリッチテキストの簡単な例があります\n - <color=A1D7F5>色</color>\n - フォント\n - サイズ\n - br\n - img",
+	"ui_example_rich_text_tags": "Rich Text のタグ",
+	"ui_example_rich_text_tags_description": "組み込みタグの例:\n - <color=A1D7F5>color</color>\n - font\n - size\n - br\n - img",
 
-	"ui_example_rich_text_split_animated": "Rich Text Split",
-	"ui_example_rich_text_split_animated_description": "set_split_to_charactersと文字ごとのアニメーション",
+	"ui_example_rich_text_split_animated": "Rich Text 文字分割",
+	"ui_example_rich_text_split_animated_description": "set_split_to_characters で文字ごとにノードが作られ、1文字ずつアニメーションできます。",
 
-	"ui_example_rich_text_resize": "Rich Text Resize",
-	"ui_example_rich_text_resize_description": "長いリッチテキストと幅・高さスライダー (set_width / set_height)",
+	"ui_example_rich_text_resize": "Rich Text のサイズ",
+	"ui_example_rich_text_resize_description": "幅と高さのスライダーを動かすと、テキストが再折り返しされ領域に収まるよう縮小します。",
 
 	"ui_width": "幅",
 	"ui_height": "高さ",
 
 	"ui_example_basic_swipe": "スワイプ",
-	"ui_example_basic_swipe_description": "スワイプイベントにコールバックを追加する方法",
+	"ui_example_basic_swipe_description": "領域をスワイプするとヒントがその方向へ移動。有効を外すとジェスチャーが止まります。",
 
-	"ui_example_data_list_basic": "基本データリスト",
-	"ui_example_data_list_basic_description": "シンプルなデータリストを作成する方法",
+	"ui_example_checkbox": "チェックボックス",
+	"ui_example_checkbox_description": "Druid のボタンで作ったチェックボックス。クリックでアイコンが切り替わり演出が再生されます。",
 
-	"ui_example_data_list_horizontal_basic": "基本水平データリスト",
-	"ui_example_data_list_horizontal_basic_description": "シンプルな水平データリストを作成する方法",
+	"ui_example_checkbox_group": "チェックボックスグループ",
+	"ui_example_checkbox_group_description": "独立した3つのチェックボックス。変更のたびにグループが全状態をログに出します。",
 
-	"ui_example_data_list_add_remove_clear": "データリストの追加、削除、クリア",
-	"ui_example_data_list_add_remove_clear_description": "データリスト内の追加、削除、およびクリア機能がどのように機能するか",
+	"ui_example_radio_group": "ラジオグループ",
+	"ui_example_radio_group_description": "同じチェックボックスですが、オンになるのは1つだけ。クリックで他がリセットされます。",
 
-	"ui_example_data_list_cache_with_component": "キャッシュされたデータリスト",
-	"ui_example_data_list_cache_with_component_description": "キャッシュされたバージョンは、追加/削除のコールバックにより多くの設定が必要ですが、メモリ効率が向上します。",
+	"ui_example_data_list_basic": "Data List 基本",
+	"ui_example_data_list_basic_description": "1000件でもノードは見えている分だけ。スクロールしながらインデックスを見てみましょう。",
+
+	"ui_example_data_list_horizontal_basic": "Data List 横方向",
+	"ui_example_data_list_horizontal_basic_description": "横リストでも同じ仮想化。グリッドは1行だけです。",
+
+	"ui_example_data_list_matrix_basic": "Data List マトリクス",
+	"ui_example_data_list_matrix_basic_description": "1行4件のグリッド上の Data List。ノードは見えている行にだけ作られます。",
+
+	"ui_example_data_list_add_remove_clear": "Data List 追加・削除・クリア",
+	"ui_example_data_list_add_remove_clear_description": "ボタンで項目を追加、削除、クリア。項目をクリックするとインデックスで削除されます。",
+
+	"ui_example_data_list_cache_with_component": "Data List キャッシュ版",
+	"ui_example_data_list_cache_with_component_description": "set_use_cache でコンポーネントを再利用し、データは on_element_add と on_element_remove で設定します。",
 
 	"ui_language": "言語",
-	"ui_example_window_language": "ウィンドウ言語",
-	"ui_example_window_language_description": "言語選択のあるウィンドウの簡単な例です。",
+	"ui_example_window_language": "言語ウィンドウ",
+	"ui_example_window_language_description": "言語を切り替えると、このサンプルも含めすべての lang_text が即座に翻訳されます。",
 
 	"ui_confirmation": "確認",
-	"ui_example_window_confirmation": "ウィンドウ確認",
-	"ui_confirmation_description": "100万ドルの車を購入することを確認しますか？",
+	"ui_example_window_confirmation": "確認ウィンドウ",
+	"ui_confirmation_description": "100万ドルの車を購入しますか？",
 
 	"ui_information": "情報",
-	"ui_example_window_information": "ウィンドウ情報",
+	"ui_example_window_information": "情報ウィンドウ",
 	"ui_example_window_information_text": "あなたは最高の中の最高です！",
-	"ui_example_window_information_description": "情報メッセージを含むウィンドウの簡単な例です。",
+	"ui_example_window_information_description": "ボタン1つのウィンドウウィジェット。開閉は Panthera のアニメーションです。",
+
+	"ui_example_widget_hover_hint": "ホバーヒント",
+	"ui_example_widget_hover_hint_description": "四角にカーソルを乗せて少し待つと、指定した側にテキストに合わせたヒントが出ます。",
+
+	"ui_example_widget_property_button": "Property Button",
+	"ui_example_widget_property_button_description": "右のプロパティパネルで使われるボタン行です。",
+
+	"ui_example_widget_property_slider": "Property Slider",
+	"ui_example_widget_property_slider_description": "右のプロパティパネルで使われるスライダー行です。",
+
+	"ui_example_widget_property_checkbox": "Property Checkbox",
+	"ui_example_widget_property_checkbox_description": "右のプロパティパネルで使われるチェックボックス行です。",
+
+	"ui_example_widget_memory_panel": "メモリパネル",
+	"ui_example_widget_memory_panel_description": "メモリ使用量を計測し、ミニグラフとして描画するウィジェットです。",
+
+	"ui_example_widget_fps_panel": "FPS パネル",
+	"ui_example_widget_fps_panel_description": "FPS を追跡し、直近数秒をミニグラフとして描画するウィジェットです。",
+
+	"ui_example_widget_mini_graph": "ミニグラフ",
+	"ui_example_widget_mini_graph_description": "サンプル数を指定する棒グラフ。FPS パネルとメモリパネルで使われています。",
+
+	"ui_example_widget_properties_panel": "プロパティパネル",
+	"ui_example_widget_properties_panel_description": "パネル本体。ボタン、スライダー、チェックボックス、入力欄を追加してサンプルを操作します。",
+
+	"ui_example_widget_property_input": "Property Input",
+	"ui_example_widget_property_input_description": "右のプロパティパネルで使われる入力行です。",
 
 	"ui_example_gamepad_tester": "ゲームパッドテスター",
-	"ui_example_gamepad_tester_description": "ここでゲームパッドをテストして、ボタンと軸をバインドします",
+	"ui_example_gamepad_tester_description": "ゲームパッドを接続すると、ボタンが光り、スティックが動き、トリガーがバーを満たします。",
 
-	"ui_example_on_screen_control": "画面上のコントロール",
-	"ui_example_on_screen_control_description": "画面上のコントロールの簡単な例です。ここでの on_screen_input はコールバックを持つシンプルなジョイスティックです。Druid コンポーネントとして",
+	"ui_example_widget_tiling_node": "Tiling Node",
+	"ui_example_widget_tiling_node_description": "ノードのサイズ変更やアニメーション中もテクスチャのタイリングを保ちます。",
 
-	"ui_example_layout_basic": "レイアウト",
-	"ui_example_layout_basic_description": "このレイアウトは、Figma と同じになるように調整できます。",
+	"ui_example_on_screen_control": "画面上コントロール",
+	"ui_example_on_screen_control_description": "スティックをドラッグしてキャラを動かし、ボタンでジャンプ。マルチタッチにも対応します。",
 
-	"ui_example_panthera_basic_animation": "パンテラ基本アニメーション",
-	"ui_example_panthera_basic_animation_description": "ここにパンテラ基本アニメーションの簡単な例があります。",
+	"ui_example_layout_basic": "Layout",
+	"ui_example_layout_basic_description": "パディング、マージン、justify、ピボット、レイアウトタイプを変えて配置を確認しましょう。",
 
-	"ui_example_panthera_animation_blend": "パンテラアニメーションブレンド",
-	"ui_example_panthera_animation_blend_description": "ここにパンテラアニメーションブレンドの簡単な例があります。",
-	"ui_example_panthera_animation_blend_hint": "この領域にマウスをホバーします。",
+	"ui_example_panthera_basic_animation": "Panthera 基本アニメーション",
+	"ui_example_panthera_basic_animation_description": "GUI ノード上の Panthera アニメーションを実行時に生成し、ループ再生します。",
+
+	"ui_example_panthera_animation_blend": "Panthera アニメーションブレンド",
+	"ui_example_panthera_animation_blend_description": "アニメーション時間を手動で設定し、カーソル位置でキーをブレンドします。",
+	"ui_example_panthera_animation_blend_hint": "このエリアにマウスを乗せてください",
+
+	"ui_example_container_anchors": "Container: アンカー",
+	"ui_example_container_anchors_description": "親の角をドラッグすると、各子が自分のアンカーと相対位置を保ちます。",
+
+	"ui_example_container_resize": "Container: リサイズ",
+	"ui_example_container_resize_description": "角をドラッグすると、サイドパネルが X や Y に伸び、コンテンツも親に合わせて変化します。",
 
 	"ui_animation_vertical": "垂直",
 	"ui_animation_horizontal": "水平",

@@ -3,9 +3,14 @@
 
 local events = require("event.events")
 local const = require("druid.const")
-local helper = require("druid.helper")
 local settings = require("druid.system.settings")
 local druid_component = require("druid.component")
+
+---The input filter, applied to the Druid instance components or to the component subtree.
+---Membership is the listed component plus any descendant, including ones created later.
+---@class druid.instance.input_filter
+---@field whitelist table<druid.component, boolean>|nil Components that should receive input (with descendants)
+---@field blacklist table<druid.component, boolean>|nil Components that should not receive input (with descendants)
 
 ---The Druid Factory used to create components
 ---@class druid.instance
@@ -17,13 +22,15 @@ local druid_component = require("druid.component")
 ---@field package _late_init_timer_id number Timer id for late init
 ---@field package _late_remove druid.component[] Components to be removed on late update
 ---@field package _is_late_remove_enabled boolean Used to check if components should be removed on late update
----@field package _input_blacklist druid.component[]|nil Components that should not receive input
----@field package _input_whitelist druid.component[]|nil Components that should receive input
+---@field package _input_filter druid.instance.input_filter|nil Input filter for all the instance components
+---@field package _root druid.instance The root Druid instance, the inner ones are the proxies over it
+---@field package _has_input_filters boolean True if any filter was set on the instance or on its components
 local M = {}
 
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
 local INTERESTS_CACHE = {} -- Cache interests per component class in runtime
 local DRUID_INSTANCE_METATABLE = { __index = M }
+local WEAK_KEYS_METATABLE = { __mode = "k" }
 
 local function set_input_state(self, is_input_inited)
 	if IS_NO_AUTO_INPUT or (self.input_inited == is_input_inited) then
@@ -122,25 +129,83 @@ local function check_sort_input_stack(self, components)
 end
 
 
----Check whitelists and blacklists for input components
+---Check the component against the single input filter.
+---A listed component matches itself and any of its descendants, so the membership is
+---the walk over the parents chain. Descendants created later are matched as well
+---@param filter druid.instance.input_filter|nil The filter to check
 ---@param component druid.component The component to check
----@return boolean is_can_use True if component can be processed on input step
-function M:_can_use_input_component(component)
-	local can_by_whitelist = true
-	local can_by_blacklist = true
-
-	if self._input_whitelist and #self._input_whitelist > 0 then
-		can_by_whitelist = not not helper.contains(self._input_whitelist, component)
+---@param owner druid.component|nil The component the filter is set on, the walk stops on it.
+---Nil for the instance filter, it covers the whole components tree
+---@return boolean is_filtered True if the component is filtered out by this filter
+local function is_filtered(filter, component, owner)
+	if not filter then
+		return false
 	end
 
-	if self._input_blacklist and #self._input_blacklist > 0 then
-		can_by_blacklist = not helper.contains(self._input_blacklist, component)
+	local whitelist = filter.whitelist
+	local blacklist = filter.blacklist
+	if not whitelist and not blacklist then
+		return false
 	end
 
-	return can_by_blacklist and can_by_whitelist
+	-- Both lists are checked in the single walk. The blacklist wins, so it returns at once,
+	-- while the whitelist hit still has to look for the blacklist in the rest of the chain
+	local is_allowed = not whitelist
+	local current = component
+	while current do
+		if blacklist and blacklist[current] == true then
+			return true
+		end
+
+		if whitelist and whitelist[current] == true then
+			if not blacklist then
+				return false
+			end
+
+			is_allowed = true
+		end
+
+		-- Only the owner subtree can be listed, so nothing above the owner is checked
+		if current == owner then
+			break
+		end
+
+		current = current._meta.parent
+	end
+
+	return not is_allowed
 end
 
 
+---Check the input filters for the component: the instance one and the ones from its parents
+---@param component druid.component The component to check
+---@return boolean is_can_use True if component can be processed on input step
+function M:_can_use_input_component(component)
+	-- No filters were ever set in the most of the cases, so skip the parents walk
+	if not self._has_input_filters then
+		return true
+	end
+
+	if is_filtered(self._input_filter, component) then
+		return false
+	end
+
+	-- The filter, set from a component, is applied to its subtree, so check the parents.
+	-- The walk starts from the parent, so the filter owner is not affected by its own filter
+	local parent = component._meta.parent
+	while parent do
+		if is_filtered(parent._meta.input_filter, component, parent) then
+			return false
+		end
+
+		parent = parent._meta.parent
+	end
+
+	return true
+end
+
+
+---@param self druid.instance The root Druid instance
 local function schedule_late_init(self)
 	if self._late_init_timer_id then
 		return
@@ -160,13 +225,14 @@ end
 function M.create_druid_instance(context, style)
 	local self = setmetatable({}, DRUID_INSTANCE_METATABLE)
 
+	self._root = self
 	self._context = context
 	self._style = style or settings.default_style
 	self._is_late_remove_enabled = false
 	self._late_remove = {}
 
-	self._input_blacklist = nil
-	self._input_whitelist = nil
+	self._input_filter = nil
+	self._has_input_filters = false
 
 	self.components_all = {}
 	self.components_interest = {}
@@ -196,7 +262,7 @@ function M:new(component, ...)
 	end
 
 	if instance.on_late_init or (not self.input_inited and instance.on_input) then
-		schedule_late_init(self)
+		schedule_late_init(self._root)
 	end
 
 	return instance
@@ -420,41 +486,80 @@ function M:on_language_change()
 end
 
 
+---Make a hash set from the components list to check the input filter membership.
+---Children are not copied in: membership walks the parent chain at input time,
+---so components created later under a listed parent still match.
+---Keys are weak, so a listed component removed from the Druid instance is not kept alive.
+---@param components table|druid.component[]|nil The array of components, single component or nil
+---@return table<druid.component, boolean>|nil map The components hash set or nil if the list is empty
+local function make_filter_map(components)
+	if components and components._component then
+		components = { components }
+	end
+
+	if not components or #components == 0 then
+		return nil
+	end
+
+	local map = setmetatable({}, WEAK_KEYS_METATABLE)
+	for index = 1, #components do
+		map[components[index]] = true
+	end
+
+	return map
+end
+
+
+---Get the input filter to fill, it will be created if it's not exist yet.
+---Both setters go through here, so this is the only place raising the fast path flag
+---@param self druid.instance The Druid instance or the table from the `component:get_druid()`
+---@return druid.instance.input_filter filter The instance filter or the component one
+local function get_input_filter(self)
+	-- The flag is never lowered: clearing a filter is rare and the walk costs almost nothing
+	self._root._has_input_filters = true
+
+	if getmetatable(self) == DRUID_INSTANCE_METATABLE then
+		self._input_filter = self._input_filter or {}
+		return self._input_filter
+	end
+
+	local component_meta = self._context._meta
+	component_meta.input_filter = component_meta.input_filter or {}
+	return component_meta.input_filter
+end
+
+
 ---Set whitelist components for input processing.
----If whitelist is not empty and component not contains in this list,
----component will be not processed on the input step
----@param whitelist_components table|druid.component[] The array of component to whitelist
+---If whitelist is not empty, only the listed components and their descendants
+---receive input. Descendants created later still match, no need to call this again.
+---
+---The filter is scoped to the caller: on the `druid` instance it affects all components,
+---on the `self.druid` inside a component it affects this component subtree only.
+---The filter owner is not affected by its own filter, so a widget can restrict its children
+---and keep its own `on_input` working.
+---@param whitelist_components table|druid.component[]|nil The array of component to whitelist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_whitelist(whitelist_components)
-	if whitelist_components and whitelist_components._component then
-		whitelist_components = { whitelist_components }
-	end
-
-	for i = 1, #whitelist_components do
-		helper.add_array(whitelist_components, whitelist_components[i]:get_childrens())
-	end
-
-	self._input_whitelist = whitelist_components
+	local filter = get_input_filter(self)
+	filter.whitelist = make_filter_map(whitelist_components)
 
 	return self
 end
 
 
 ---Set blacklist components for input processing.
----If blacklist is not empty and component is contained in this list,
----component will be not processed on the input step DruidInstance
----@param blacklist_components table|druid.component[] The array of component to blacklist
+---If blacklist is not empty, the listed components and their descendants
+---are skipped on the input step. Descendants created later still match.
+---
+---The filter is scoped to the caller: on the `druid` instance it affects all components,
+---on the `self.druid` inside a component it affects this component subtree only.
+---The filter owner is not affected by its own filter, to filter a widget itself
+---set the filter from the outside: the gui script or the parent widget.
+---@param blacklist_components table|druid.component[]|nil The array of component to blacklist, nil to clear it
 ---@return druid.instance self The Druid instance
 function M:set_blacklist(blacklist_components)
-	if blacklist_components and blacklist_components._component then
-		blacklist_components = { blacklist_components }
-	end
-
-	for i = 1, #blacklist_components do
-		helper.add_array(blacklist_components, blacklist_components[i]:get_childrens())
-	end
-
-	self._input_blacklist = blacklist_components
+	local filter = get_input_filter(self)
+	filter.blacklist = make_filter_map(blacklist_components)
 
 	return self
 end
@@ -492,7 +597,7 @@ function M:new_widget(widget, template, nodes, ...)
 	end
 
 	if instance.on_late_init or (not self.input_inited and instance.on_input) then
-		schedule_late_init(self)
+		schedule_late_init(self._root)
 	end
 
 	return instance

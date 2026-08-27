@@ -11,6 +11,7 @@ local helper = require("druid.helper")
 ---@field children table
 ---@field parent druid.component|nil
 ---@field instance_class table
+---@field input_filter druid.instance.input_filter|nil Input filter for the component subtree, set by `druid:set_whitelist` / `druid:set_blacklist`
 
 ---@class druid.component.component
 ---@field name string

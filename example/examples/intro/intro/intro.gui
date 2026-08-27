@@ -65,7 +65,7 @@ nodes {
 }
 nodes {
   position {
-    y: 255.0
+    y: 240.0
   }
   scale {
     x: 2.0
@@ -91,7 +91,7 @@ nodes {
 nodes {
   position {
     x: -210.0
-    y: 191.0
+    y: 150.0
   }
   scale {
     x: 0.7
@@ -99,7 +99,7 @@ nodes {
   }
   size {
     x: 600.0
-    y: 400.0
+    y: 600.0
   }
   color {
     x: 0.525
@@ -107,11 +107,11 @@ nodes {
     z: 0.525
   }
   type: TYPE_TEXT
-  text: "Welcome to Druid Example Page\n"
+  text: "Pick an example on the left.\n"
   "\n"
-  "Navigate over examples on the left\n"
+  "Each example is a GUI file with .lua code nearby.\n"
   "\n"
-  "Check example info on the right"
+  "The right panel is a short note and a link to the code. Some examples may have tweak controls."
   font: "text_bold"
   id: "text_description"
   pivot: PIVOT_NW
@@ -123,39 +123,8 @@ nodes {
 }
 nodes {
   position {
-    x: -210.0
-    y: -189.0
-  }
-  scale {
-    x: 0.7
-    y: 0.7
-  }
-  size {
-    x: 600.0
-    y: 300.0
-  }
-  color {
-    x: 0.525
-    y: 0.525
-    z: 0.525
-  }
-  type: TYPE_TEXT
-  text: "Your donation helps me stay engaged in creating valuable projects for Defold.\n"
-  "\n"
-  "If you appreciate what I\'m doing, please consider supporting me!"
-  font: "text_bold"
-  id: "text_support"
-  pivot: PIVOT_W
-  line_break: true
-  parent: "root"
-  inherit_alpha: true
-  outline_alpha: 0.0
-  shadow_alpha: 0.0
-}
-nodes {
-  position {
-    x: -170.0
-    y: -364.0
+    x: -200.0
+    y: -350.0
   }
   type: TYPE_BOX
   texture: "druid_example/icon_heart"
@@ -167,7 +136,7 @@ nodes {
 }
 nodes {
   position {
-    y: -364.0
+    y: -350.0
   }
   type: TYPE_BOX
   texture: "druid_example/icon_heart"
@@ -179,8 +148,8 @@ nodes {
 }
 nodes {
   position {
-    x: 170.0
-    y: -364.0
+    x: 200.0
+    y: -350.0
   }
   type: TYPE_BOX
   texture: "druid_example/icon_heart"

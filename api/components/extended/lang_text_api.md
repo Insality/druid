@@ -16,10 +16,10 @@ Create lang text component with druid: `text = druid:new_lang_text(node_name, lo
 ## Functions
 
 - [init](#init)
-- [set_to](#set_to)
 - [set_text](#set_text)
 - [translate](#translate)
 - [format](#format)
+
 ## Fields
 
 - [text](#text)
@@ -43,21 +43,6 @@ lang_text:init(node, [locale_id], [adjust_type])
 
 - **Returns:**
 	- `` *(druid.lang_text)*:
-
-### set_to
-
----
-```lua
-lang_text:set_to(text)
-```
-
-Setup raw text to lang_text component. This will clear any locale settings.
-
-- **Parameters:**
-	- `text` *(string)*: Text for text node
-
-- **Returns:**
-	- `self` *(druid.lang_text)*: Current instance
 
 ### set_text
 

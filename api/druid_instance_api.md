@@ -154,15 +154,20 @@ Called when the window event occurs
 
 ---
 ```lua
-instance:set_whitelist(whitelist_components)
+instance:set_whitelist([whitelist_components])
 ```
 
 Set whitelist components for input processing.
-If whitelist is not empty and component not contains in this list,
-component will be not processed on the input step
+If whitelist is not empty, only the listed components and their descendants
+receive input. Descendants created later still match, no need to call this again.
+
+The filter is scoped to the caller: on the `druid` instance it affects all components,
+on the `self.druid` inside a component it affects this component subtree only.
+The filter owner is not affected by its own filter, so a widget can restrict its children
+and keep its own `on_input` working.
 
 - **Parameters:**
-	- `whitelist_components` *(table|druid.component[])*: The array of component to whitelist
+	- `[whitelist_components]` *(table|druid.component[]|nil)*: The array of component to whitelist, nil to clear it
 
 - **Returns:**
 	- `self` *(druid.instance)*: The Druid instance
@@ -171,15 +176,20 @@ component will be not processed on the input step
 
 ---
 ```lua
-instance:set_blacklist(blacklist_components)
+instance:set_blacklist([blacklist_components])
 ```
 
 Set blacklist components for input processing.
-If blacklist is not empty and component is contained in this list,
-component will be not processed on the input step DruidInstance
+If blacklist is not empty, the listed components and their descendants
+are skipped on the input step. Descendants created later still match.
+
+The filter is scoped to the caller: on the `druid` instance it affects all components,
+on the `self.druid` inside a component it affects this component subtree only.
+The filter owner is not affected by its own filter, to filter a widget itself
+set the filter from the outside: the gui script or the parent widget.
 
 - **Parameters:**
-	- `blacklist_components` *(table|druid.component[])*: The array of component to blacklist
+	- `[blacklist_components]` *(table|druid.component[]|nil)*: The array of component to blacklist, nil to clear it
 
 - **Returns:**
 	- `self` *(druid.instance)*: The Druid instance

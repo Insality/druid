@@ -9,12 +9,20 @@ local component = require("druid.component")
 ---@field LONGTAP_TIME number|nil Minimum time to trigger on_hold_callback. Default: 0.4
 ---@field AUTOHOLD_TRIGGER number|nil Maximum hold time to trigger button release while holding. Default: 0.8
 ---@field DOUBLETAP_TIME number|nil Time between double taps. Default: 0.4
----@field on_init fun(self)|nil
----@field on_click fun(self, node)|nil
----@field on_click_disabled fun(self, node)|nil
----@field on_hover fun(self, node, hover_state)|nil
----@field on_mouse_hover fun(self, node, hover_state)|nil
----@field on_set_enabled fun(self, node, enabled_state)|nil
+---@field HOVER_SCALE vector3|nil Scale added on touch hover (default style). Default: vmath.vector3(0.08, 0.08, 1)
+---@field HOVER_MOUSE_SCALE vector3|nil Scale added on mouse hover (default style). Default: vmath.vector3(0.04, 0.04, 1)
+---@field HOVER_TIME number|nil Hover scale animation time. Default: 0.05
+---@field SCALE_CHANGE vector3|nil Scale punch on click (default style). Default: vmath.vector3(0.12, 0.12, 1)
+---@field BTN_SOUND string|nil Sound id played on click. Default: "click"
+---@field BTN_SOUND_DISABLED string|nil Sound id played on disabled click. Default: "click"
+---@field DISABLED_COLOR vector4|nil Color applied when disabled via style. Default: vmath.vector4(0, 0, 0, 1)
+---@field ENABLED_COLOR vector4|nil Color applied when enabled via style. Default: vmath.vector4(1)
+---@field on_init fun(self: druid.button)|nil
+---@field on_click fun(self: druid.button, node: node)|nil
+---@field on_click_disabled fun(self: druid.button, node: node)|nil
+---@field on_hover fun(self: druid.button, node: node, hover_state: boolean)|nil
+---@field on_mouse_hover fun(self: druid.button, node: node, hover_state: boolean)|nil
+---@field on_set_enabled fun(self: druid.button, node: node, enabled_state: boolean)|nil
 
 ---Basic Druid input component. Handle input on node and provide different callbacks on touch events.
 ---
@@ -28,18 +36,18 @@ local component = require("druid.component")
 ----   - **params** - Additional params, specified on button creating
 ----   - **button_instance** - button itself
 ---- You can set _params_ on button callback on button creating: `druid:new_button("node_name", callback, params)`.
----- Button have several events like on_click, on_repeated_click, on_long_click, on_hold_click, on_double_click
+---- Button have several events like on_click, on_repeated_click, on_long_click, on_hold_callback, on_double_click
 ---- Click event will not trigger if between pressed and released state cursor was outside of node zone
 ---- Button can have key trigger to use them by key: `button:set_key_trigger`
 ----
 ---@class druid.button: druid.component
----@field on_click event fun(self, custom_args, button_instance)
----@field on_pressed event fun(self, custom_args, button_instance)
----@field on_repeated_click event fun(self, custom_args, button_instance, click_count) Repeated click callback, while holding the button
----@field on_long_click event fun(self, custom_args, button_instance, hold_time) Callback on long button tap
----@field on_double_click event fun(self, custom_args, button_instance, click_amount) Different callback, if tap button 2+ in row
----@field on_hold_callback event fun(self, custom_args, button_instance, press_time) Hold callback, before long_click trigger
----@field on_click_outside event fun(self, custom_args, button_instance)
+---@field on_click event fun(self: druid.button, custom_args: any, button_instance: druid.button)
+---@field on_pressed event fun(self: druid.button, custom_args: any, button_instance: druid.button)
+---@field on_repeated_click event fun(self: druid.button, custom_args: any, button_instance: druid.button, click_count: number) Repeated click callback, while holding the button
+---@field on_long_click event fun(self: druid.button, custom_args: any, button_instance: druid.button, hold_time: number) Callback on long button tap
+---@field on_double_click event fun(self: druid.button, custom_args: any, button_instance: druid.button, click_amount: number) Different callback, if tap button 2+ in row
+---@field on_hold_callback event fun(self: druid.button, custom_args: any, button_instance: druid.button, press_time: number) Hold callback, before long_click trigger
+---@field on_click_outside event fun(self: druid.button, custom_args: any, button_instance: druid.button)
 ---@field node node Clickable node
 ---@field node_id hash Node id
 ---@field anim_node node Animation node. In default case equals to clickable node
@@ -50,13 +58,13 @@ local component = require("druid.component")
 ---@field start_pos vector3 Start position of the button
 ---@field disabled boolean Is button disabled
 ---@field key_trigger hash Key trigger for this button
----@field style table Style for this button
+---@field style druid.button.style Style for this button
 local M = component.create("button")
 
 
 ---The constructor for the button component
 ---@param node_or_node_id node|string Node name or GUI Node itself
----@param callback fun()|nil Callback on button click
+---@param callback fun(self: any, custom_args: any, button_instance: druid.button)|nil Callback on button click
 ---@param custom_args any|nil Custom args for any Button event, will be passed to callbacks
 ---@param anim_node node|string|nil Node to animate instead of trigger node, useful for animating small icons on big panels
 function M:init(node_or_node_id, callback, custom_args, anim_node)

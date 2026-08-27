@@ -68,7 +68,7 @@ function M:on_input(action_id, action)
 		return false
 	end
 
-	-- Disable nil (it's mouse) hover or mobile platforms
+	-- Disable nil (it's mouse) hover on mobile platforms
 	if IS_MOBILE and not action_id then
 		return false
 	end
@@ -79,8 +79,24 @@ function M:on_input(action_id, action)
 		return false
 	end
 
+	-- Skip pick work when nothing listens for this hover mode.
+	-- The state is reset before leaving, otherwise it would stay stuck on true and
+	-- set_hover would silently skip the next hover for a listener subscribed later
+	local is_touch = action_id ~= nil
+	if is_touch then
+		if self.on_hover:is_empty() and not self.style.ON_HOVER_CURSOR then
+			self:set_hover(false)
+			return false
+		end
+	else
+		if self.on_mouse_hover:is_empty() and not self.style.ON_MOUSE_HOVER_CURSOR then
+			self:set_mouse_hover(false)
+			return false
+		end
+	end
+
 	local is_pick = helper.pick_node(self.node, action.x, action.y, self.click_zone)
-	local hover_function = action_id and self.set_hover or self.set_mouse_hover
+	local hover_function = is_touch and self.set_hover or self.set_mouse_hover
 
 	if not is_pick then
 		hover_function(self, false)
@@ -209,7 +225,7 @@ function M:_set_cursor(priority, cursor)
 end
 
 
----@local
+---@private
 function M._apply_cursor_stack()
 	if not defos then
 		return

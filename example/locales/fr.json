@@ -11,159 +11,239 @@
 	"ui_confirm": "Confirmer",
 	"ui_cancel": "Annuler",
 	"ui_value": "Valeur",
-	"ui_scroll": "Défilement",
+	"ui_scroll": "Scroll",
 	"ui_clipping": "Découpe",
 	"ui_no_properties": "Aucune propriété pour cet exemple",
-	"ui_padding": "Marge intérieure",
+	"ui_padding": "Padding",
 	"ui_margin_x": "Marge X",
 	"ui_margin_y": "Marge Y",
 	"ui_justify": "Justifier",
-	"ui_pivot_next": "Prochain pivot",
-	"ui_type_next": "Prochain type",
-	"ui_adjust_next": "Prochain ajustement",
+	"ui_pivot_next": "Pivot suivant",
+	"ui_type_next": "Type suivant",
+	"ui_adjust_next": "Adjust suivant",
 	"ui_enabled": "Activé",
+	"ui_item_size": "Taille de l'élément",
+	"ui_inner_scrollable": "Scroll interne",
+	"ui_whitelist_a": "Whitelist A",
+	"ui_blacklist_a": "Blacklist A",
+	"ui_clear_filters": "Effacer les filtres",
 
-	"ui_examples_basic": "De base",
-	"ui_examples_data_list": "Liste de données",
-	"ui_examples_gamepad": "Gamepad",
+	"ui_examples_basic": "Basique",
+	"ui_examples_data_list": "Data List",
+	"ui_examples_gamepad": "Manette",
 	"ui_examples_window": "Fenêtres",
 	"ui_examples_panthera": "Panthera",
 
 	"ui_example_intro": "Introduction",
-	"ui_example_intro_description": "Voici une brève description de l'exemple sélectionné.",
+	"ui_example_intro_description": "Choisis un exemple à gauche. Ce texte dit quoi essayer, les Propriétés le modifient en direct et la Sortie montre les événements.",
 
 	"ui_example_basic_button": "Bouton",
-	"ui_example_basic_button_description": "Exemple de bouton de base Druid",
+	"ui_example_basic_button_description": "Clique le bouton et regarde l'événement dans la Sortie. Décoche Activé pour bloquer l'entrée.",
 
 	"ui_example_basic_button_double_click": "Double clic",
-	"ui_example_basic_button_double_click_description": "Comment ajouter une fonctionnalité de double clic au bouton.",
+	"ui_example_basic_button_double_click_description": "Clique deux fois vite : on_click et on_double_click se déclenchent, l'ordre est dans la Sortie.",
 
-	"ui_example_basic_button_hold": "Maintenir",
-	"ui_example_basic_button_hold_description": "Comment créer une fonctionnalité de maintien et de déclenchement pour le bouton.",
+	"ui_example_basic_button_hold": "Maintien du bouton",
+	"ui_example_basic_button_hold_description": "Maintiens le bouton 2 secondes. on_hold_callback remplit la barre, on_long_click part à la fin.",
 
 	"ui_example_basic_text": "Texte",
-	"ui_example_basic_text_description": "Vérifiez comment le texte est ajusté avec différentes propriétés.",
+	"ui_example_basic_text_description": "Tire les coins de la zone, change Adjust et Pivot et regarde comment le texte s'y insère.",
 
 	"ui_example_basic_multiline_text": "Texte multiligne",
-	"ui_example_basic_multiline_text_description": "Vérifiez comment le texte multiligne est ajusté avec différentes propriétés.",
+	"ui_example_basic_multiline_text_description": "Pareil avec des retours à la ligne. Réduis la zone pour voir la coupure et la mise à l'échelle.",
 
 	"ui_example_basic_hover": "Survol",
-	"ui_example_basic_hover_description": "Le survol a deux événements de survol. Un pour la souris et un pour le toucher. Utilisez mouse_callback pour les événements de la souris.",
+	"ui_example_basic_hover_description": "Le nœud de gauche réagit au toucher, celui de droite à la souris. Utilise mouse_callback pour la souris.",
 
 	"ui_example_basic_drag": "Glisser",
-	"ui_example_basic_drag_description": "Comment créer un nœud de glissement simple",
+	"ui_example_basic_drag_description": "Fais glisser le nœud. Au relâchement il revient au départ via l'animation de on_drag_end.",
 
-	"ui_example_basic_drag_to_node": "Glisser vers le nœud",
-	"ui_example_basic_drag_to_node_description": "Comment glisser un nœud vers un autre nœud et obtenir des rappels",
+	"ui_example_basic_drag_to_node": "Glisser vers un nœud",
+	"ui_example_basic_drag_to_node_description": "Amène le nœud sur la zone : elle s'illumine au survol et le compteur monte si tu lâches dedans.",
 
-	"ui_example_basic_slider": "Curseur",
-	"ui_example_basic_slider_description": "Comment créer un curseur simple",
+	"ui_example_basic_slider": "Slider",
+	"ui_example_basic_slider_description": "Tire le pin ou clique sur la barre : set_input_node rend tout le widget interactif.",
 
-	"ui_example_basic_slider_vertical": "Curseur vertical",
-	"ui_example_basic_slider_vertical_description": "Comment créer un curseur vertical simple",
+	"ui_example_basic_slider_vertical": "Slider vertical",
+	"ui_example_basic_slider_vertical_description": "Le même slider, la direction vient du vecteur de position finale donné à la création.",
 
-	"ui_example_basic_slider_stepped": "Curseur à étapes",
-	"ui_example_basic_slider_stepped_description": "Les curseurs peuvent avoir une propriété \"étapes\" pour les rendre à étapes",
+	"ui_example_basic_slider_stepped": "Slider par paliers",
+	"ui_example_basic_slider_stepped_description": "Slider avec set_steps : le pin se cale sur la plus proche des 11 valeurs fixes.",
 
 	"ui_example_basic_progress_bar": "Barre de progression",
-	"ui_example_basic_progress_bar_description": "Comment créer une barre de progression simple",
+	"ui_example_basic_progress_bar_description": "Change la valeur avec le slider à droite, la barre se remplit par la taille du nœud.",
 
 	"ui_example_basic_progress_bar_slice9": "Barre de progression Slice9",
-	"ui_example_basic_progress_bar_slice9_description": "Le composant de progression peut gérer la propriété slice9 pour le rendre évolutif dès le début",
+	"ui_example_basic_progress_bar_slice9_description": "La même barre en slice9 : les bords arrondis restent nets même pour de petites valeurs.",
+
+	"ui_example_basic_blocker": "Blocker",
+	"ui_example_basic_blocker_description": "Tout le panneau est cliquable, mais la zone du blocker mange l'entrée. Compare dans la Sortie.",
+
+	"ui_example_basic_back_handler": "Back Handler",
+	"ui_example_basic_back_handler_description": "Appuie sur Retour arrière ou le bouton retour Android : le handler appelle le callback.",
 
 	"ui_example_basic_timer": "Minuteur",
-	"ui_example_basic_timer_description": "Le composant Minuteur est utilisé pour afficher un minuteur en secondes avec un rappel",
+	"ui_example_basic_timer_description": "Le minuteur descend à zéro, puis on_timer_end le relance avec un intervalle plus long.",
 
 	"ui_example_basic_hotkey": "Raccourci",
-	"ui_example_basic_hotkey_description": "Comment créer un raccourci pour un rappel",
+	"ui_example_basic_hotkey_description": "Appuie sur Shift + X. Le modificateur fait partie de la combinaison, sans lui rien ne part.",
 
-	"ui_example_basic_scroll": "Défilement",
-	"ui_example_basic_scroll_description": "Comment créer un défilement simple",
-	"ui_elastic_scroll": "Défilement élastique",
+	"ui_example_basic_scroll": "Scroll",
+	"ui_example_basic_scroll_description": "Fais glisser le contenu ou utilise la molette. Friction, inertie et élasticité se règlent à droite.",
+	"ui_example_basic_scroll_nested": "Scroll imbriqué",
+	"ui_example_basic_scroll_nested_description": "La molette choisit la vue sous le curseur. Sans scroll interne le contenu tient et la molette passe au parent.",
+	"ui_elastic_scroll": "Scroll élastique",
+	"ui_slider_friction": "Friction du scroll",
+	"ui_slider_speed": "Vitesse du scroll",
+	"ui_slider_wheel_speed": "Vitesse de la molette",
+	"ui_wheel_by_inertion": "Molette par inertie",
 
-	"ui_example_basic_scroll_slider": "Défilement avec curseur",
-	"ui_example_basic_scroll_slider_description": "Comment ajouter un contrôle de curseur au défilement et les utiliser",
+	"ui_example_basic_scroll_slider": "Scroll avec slider",
+	"ui_example_basic_scroll_slider_description": "Scroll et slider sont liés dans les deux sens. Tire l'un ou l'autre, ou clique un élément.",
 
 	"ui_example_basic_grid": "Grille statique",
-	"ui_example_basic_grid_description": "Comment placer des nœuds dans une grille",
-	"ui_grid_in_row": "Éléments dans la ligne",
+	"ui_example_basic_grid_description": "Ajoute et retire des éléments, change le nombre par ligne et regarde comment la grille les place.",
+	"ui_grid_in_row": "Éléments par ligne",
 	"ui_add_element": "Ajouter un élément",
-	"ui_remove_element": "Supprimer un élément",
-	"ui_clear_elements": "Effacer les éléments",
+	"ui_remove_element": "Retirer un élément",
+	"ui_clear_elements": "Vider les éléments",
+	"ui_dynamic_pos": "Position dynamique",
+	"ui_align_last_row": "Aligner la dernière ligne",
 
-	"ui_example_basic_scroll_bind_grid": "Défilement lié à la grille",
-	"ui_example_basic_scroll_bind_grid_description": "Le défilement fonctionne bien avec les grilles et les tailles prédéfinies, voici un exemple de défilement lié à une grille.",
+	"ui_example_basic_scroll_bind_grid": "Scroll avec grille",
+	"ui_example_basic_scroll_bind_grid_description": "La grille liée met à jour la taille du scroll. Ajoute des éléments et surveille la taille du contenu.",
 
-	"ui_example_basic_scroll_bind_grid_horizontal": "Défilement lié à la grille horizontale",
-	"ui_example_basic_scroll_bind_grid_horizontal_description": "Le défilement fonctionne bien avec les grilles et les tailles prédéfinies, voici un exemple de défilement lié à une grille horizontale.",
+	"ui_example_basic_scroll_bind_grid_horizontal": "Scroll grille horizontale",
+	"ui_example_basic_scroll_bind_grid_horizontal_description": "La même liaison, mais la grille tient sur une ligne, donc le scroll devient horizontal.",
 
-	"ui_example_basic_input": "Entrée",
-	"ui_example_basic_input_description": "Comment créer l'entrée la plus simple dans Druid",
+	"ui_example_basic_scroll_bind_grid_points": "Scroll par points",
+	"ui_example_basic_scroll_bind_grid_points_description": "Les points viennent de la grille : au relâchement le scroll se cale sur l'élément le plus proche.",
 
-	"ui_example_input_password": "Entrée de mot de passe",
-	"ui_example_input_password_description": "Comment fonctionne l'entrée de mot de passe",
+	"ui_example_basic_scroll_bind_grid_cards": "Scroll avec cartes",
+	"ui_example_basic_scroll_bind_grid_cards_description": "Les cartes se calent sur des points et changent d'échelle selon la distance au centre.",
 
-	"ui_example_basic_rich_input": "Entrée riche",
-	"ui_example_basic_rich_input_description": "Comment créer une entrée riche dans Druid",
+	"ui_example_layout_scroll_bind_cards": "Layout avec cartes",
+	"ui_example_layout_scroll_bind_cards_description": "Cartes de largeur aléatoire dans un layout. Le scroll est lié au layout et se cale sur chaque carte.",
 
-	"ui_example_basic_rich_text": "Texte riche",
-	"ui_example_basic_rich_text_description": "Comment créer un texte riche dans Druid",
+	"ui_example_basic_input": "Saisie",
+	"ui_example_basic_input_description": "Clique et tape, Entrée valide. Le texte est rogné : compare text et visual dans la Sortie.",
+	"ui_example_whitelist_blacklist": "Whitelist et Blacklist",
+	"ui_example_whitelist_blacklist_description": "Whitelist et blacklist limitent les composants qui reçoivent l'entrée, enfants compris.",
+	"ui_example_scoped_filters": "Filtres d'entrée imbriqués",
+	"ui_example_scoped_filters_description": "Deux niveaux de filtre : l'exemple filtre les deux panneaux, chaque panneau se filtre, et ils se cumulent.",
 
-	"ui_example_rich_text_tags": "Étiquettes de texte riche",
-	"ui_example_rich_text_tags_description": "Voici un exemple simple de texte riche avec des étiquettes\n - <color=A1D7F5>couleur</color>\n - police\n - taille\n - br\n - img",
+	"ui_example_input_password": "Saisie de mot de passe",
+	"ui_example_input_password_description": "Le champ affiche des points à l'écran, mais get_text renvoie toujours la vraie valeur.",
 
-	"ui_example_rich_text_split_animated": "Rich Text Split",
-	"ui_example_rich_text_split_animated_description": "Texte riche avec set_split_to_characters et animation par lettre",
+	"ui_example_basic_rich_input": "Rich Input",
+	"ui_example_basic_rich_input_description": "Saisie avec placeholder et curseur. Clique le champ et tape, le curseur suit le texte.",
 
-	"ui_example_rich_text_resize": "Rich Text Resize",
-	"ui_example_rich_text_resize_description": "Long texte riche avec curseurs largeur et hauteur (set_width / set_height)",
+	"ui_example_basic_rich_text": "Rich Text",
+	"ui_example_basic_rich_text_description": "Une chaîne balisée devient plusieurs nœuds : couleurs et polices se mélangent dans un texte.",
+
+	"ui_example_rich_text_tags": "Balises Rich Text",
+	"ui_example_rich_text_tags_description": "Les balises intégrées en action :\n - <color=A1D7F5>color</color>\n - font\n - size\n - br\n - img",
+
+	"ui_example_rich_text_split_animated": "Rich Text par lettres",
+	"ui_example_rich_text_split_animated_description": "set_split_to_characters crée un nœud par lettre, chacune est donc animée séparément.",
+
+	"ui_example_rich_text_resize": "Taille du Rich Text",
+	"ui_example_rich_text_resize_description": "Bouge les sliders de largeur et de hauteur : le texte se recoupe et se réduit pour tenir.",
 
 	"ui_width": "Largeur",
 	"ui_height": "Hauteur",
 
-	"ui_example_basic_swipe": "Glissement",
-	"ui_example_basic_swipe_description": "Comment ajouter des rappels aux événements de glissement",
+	"ui_example_basic_swipe": "Swipe",
+	"ui_example_basic_swipe_description": "Balaye la zone : l'indice part du côté du swipe. Décoche Activé pour couper les gestes.",
 
-	"ui_example_data_list_basic": "Liste de données de base",
-	"ui_example_data_list_basic_description": "Comment créer une liste de données simple",
+	"ui_example_checkbox": "Case à cocher",
+	"ui_example_checkbox_description": "Une case faite avec un bouton Druid : le clic bascule l'icône et joue l'effet de sélection.",
 
-	"ui_example_data_list_horizontal_basic": "Liste de données horizontale de base",
-	"ui_example_data_list_horizontal_basic_description": "Comment créer une liste de données horizontale simple",
+	"ui_example_checkbox_group": "Groupe de cases",
+	"ui_example_checkbox_group_description": "Trois cases indépendantes, le groupe journalise tous les états à chaque changement.",
 
-	"ui_example_data_list_add_remove_clear": "Liste de données ajouter, supprimer, effacer",
-	"ui_example_data_list_add_remove_clear_description": "Comment fonctionnent les fonctions ajouter, supprimer et effacer dans la liste de données",
+	"ui_example_radio_group": "Groupe radio",
+	"ui_example_radio_group_description": "Les mêmes cases, mais une seule reste active : un clic réinitialise les autres.",
 
-	"ui_example_data_list_cache_with_component": "Version mise en cache de la liste de données",
-	"ui_example_data_list_cache_with_component_description": "La version mise en cache nécessite plus de configuration pour les rappels d'ajout/suppression, mais est plus efficace en mémoire",
+	"ui_example_data_list_basic": "Data List basique",
+	"ui_example_data_list_basic_description": "1000 éléments, mais seuls les visibles existent en nœuds. Regarde les indices en scrollant.",
+
+	"ui_example_data_list_horizontal_basic": "Data List horizontale",
+	"ui_example_data_list_horizontal_basic_description": "La même virtualisation en horizontal : la grille n'a qu'une seule ligne.",
+
+	"ui_example_data_list_matrix_basic": "Data List en matrice",
+	"ui_example_data_list_matrix_basic_description": "Data List sur une grille de 4 par ligne : les nœuds ne sont créés que pour les lignes visibles.",
+
+	"ui_example_data_list_add_remove_clear": "Data List ajouter, retirer, vider",
+	"ui_example_data_list_add_remove_clear_description": "Ajoute, retire et vide les éléments avec les boutons. Un clic sur un élément le retire par index.",
+
+	"ui_example_data_list_cache_with_component": "Data List avec cache",
+	"ui_example_data_list_cache_with_component_description": "Avec set_use_cache les composants sont réutilisés : on_element_add et on_element_remove remplissent les données.",
 
 	"ui_language": "Langue",
 	"ui_example_window_language": "Fenêtre de langue",
-	"ui_example_window_language_description": "Voici un exemple simple d'une fenêtre avec sélection de langue.",
+	"ui_example_window_language_description": "Change la langue : tous les lang_text sont retraduits d'un coup, l'exemple compris.",
 
 	"ui_confirmation": "Confirmation",
 	"ui_example_window_confirmation": "Fenêtre de confirmation",
-	"ui_confirmation_description": "Confirmer l'achat de la voiture d'un million de dollars ?",
+	"ui_confirmation_description": "Confirmer l'achat de la voiture à un million de dollars ?",
 
 	"ui_information": "Information",
 	"ui_example_window_information": "Fenêtre d'information",
-	"ui_example_window_information_text": "Vous êtes le meilleur des meilleurs !",
-	"ui_example_window_information_description": "Voici un exemple simple d'une fenêtre avec un message d'information.",
+	"ui_example_window_information_text": "Tu es le meilleur des meilleurs !",
+	"ui_example_window_information_description": "Un widget de fenêtre avec un bouton et une animation Panthera d'ouverture et de fermeture.",
 
-	"ui_example_gamepad_tester": "Testeur de gamepad",
-	"ui_example_gamepad_tester_description": "Testez votre gamepad ici pour lier des boutons et des axes",
+	"ui_example_widget_hover_hint": "Info-bulle au survol",
+	"ui_example_widget_hover_hint_description": "Survole une boîte et attends : l'info-bulle apparaît du bon côté et s'adapte au texte.",
+
+	"ui_example_widget_property_button": "Property Button",
+	"ui_example_widget_property_button_description": "La ligne bouton utilisée par le panneau de propriétés à droite.",
+
+	"ui_example_widget_property_slider": "Property Slider",
+	"ui_example_widget_property_slider_description": "La ligne slider utilisée par le panneau de propriétés à droite.",
+
+	"ui_example_widget_property_checkbox": "Property Checkbox",
+	"ui_example_widget_property_checkbox_description": "La ligne case à cocher utilisée par le panneau de propriétés à droite.",
+
+	"ui_example_widget_memory_panel": "Panneau mémoire",
+	"ui_example_widget_memory_panel_description": "Le widget mesure la mémoire utilisée et la dessine en mini graphique.",
+
+	"ui_example_widget_fps_panel": "Panneau FPS",
+	"ui_example_widget_fps_panel_description": "Le widget suit les FPS et dessine les dernières secondes en mini graphique.",
+
+	"ui_example_widget_mini_graph": "Mini graphique",
+	"ui_example_widget_mini_graph_description": "Un graphique à barres avec un nombre fixe d'échantillons, utilisé par les panneaux FPS et mémoire.",
+
+	"ui_example_widget_properties_panel": "Panneau de propriétés",
+	"ui_example_widget_properties_panel_description": "Le panneau lui-même : ajoute boutons, sliders, cases et champs pour piloter un exemple.",
+
+	"ui_example_widget_property_input": "Property Input",
+	"ui_example_widget_property_input_description": "La ligne de saisie utilisée par le panneau de propriétés à droite.",
+
+	"ui_example_gamepad_tester": "Testeur de manette",
+	"ui_example_gamepad_tester_description": "Branche une manette : les boutons s'allument, les sticks bougent, les gâchettes remplissent les barres.",
+
+	"ui_example_widget_tiling_node": "Tiling Node",
+	"ui_example_widget_tiling_node_description": "Le tiling node garde la texture en mosaïque pendant que le nœud est redimensionné ou animé.",
 
 	"ui_example_on_screen_control": "Contrôle à l'écran",
-	"ui_example_on_screen_control_description": "Voici un exemple simple de contrôle à l'écran. L'entrée à l'écran ici est un joystick simple avec un rappel en tant que composant Druid",
+	"ui_example_on_screen_control_description": "Tire le stick pour déplacer le personnage et appuie sur le bouton pour sauter. Le multitouch marche.",
 
-	"ui_example_layout_basic": "Mise en page",
-	"ui_example_layout_basic_description": "Cette mise en page peut être ajustée pour correspondre à celle de Figma",
+	"ui_example_layout_basic": "Layout",
+	"ui_example_layout_basic_description": "Change padding, marges, justify, pivot et le type de layout pour voir le placement des éléments.",
 
-	"ui_example_panthera_basic_animation": "Animation de base de Panthera",
-	"ui_example_panthera_basic_animation_description": "Voici un exemple simple de l'animation de base de Panthera.",
+	"ui_example_panthera_basic_animation": "Animation Panthera de base",
+	"ui_example_panthera_basic_animation_description": "Une animation Panthera sur des nœuds GUI, créée à l'exécution et jouée en boucle.",
 
-	"ui_example_panthera_animation_blend": "Mélange d'animations de Panthera",
-	"ui_example_panthera_animation_blend_description": "Voici un exemple simple de mélange d'animations de Panthera.",
-	"ui_example_panthera_animation_blend_hint": "Survolez cette zone avec la souris",
+	"ui_example_panthera_animation_blend": "Mélange d'animations Panthera",
+	"ui_example_panthera_animation_blend_description": "Le temps d'animation est fixé à la main : la position du curseur mélange les clés.",
+	"ui_example_panthera_animation_blend_hint": "Passe la souris sur cette zone",
+
+	"ui_example_container_anchors": "Container : ancres",
+	"ui_example_container_anchors_description": "Tire les coins du parent : chaque enfant garde son ancre et sa position relative.",
+
+	"ui_example_container_resize": "Container : redimension",
+	"ui_example_container_resize_description": "Tire les coins : les panneaux latéraux s'étirent en X ou Y et le contenu suit le parent.",
 
 	"ui_animation_vertical": "Vertical",
 	"ui_animation_horizontal": "Horizontal",

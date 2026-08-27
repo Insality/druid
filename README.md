@@ -5,23 +5,61 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/insality/druid/ci-workflow.yml?branch=master&style=for-the-badge)](https://github.com/Insality/druid/actions)
 [![codecov](https://img.shields.io/codecov/c/github/Insality/druid?style=for-the-badge)](https://codecov.io/gh/Insality/druid)
 
-[![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
+Place nodes in the Defold GUI editor, then attach a button, scroll, data list or your own component.
 
-**Druid** - a powerful, flexible and easy to use **Defold** component UI framework. Contains a wide range of UI components that you can use to create a beautiful, responsive and customizable GUIs. Provides a powerful way to create, compose and manage your custom components and scenes.
+## Layout the window
 
-## Druid Example
+Build the window in the GUI scene, for example:
 
-Check the [**HTML5 version**](https://insality.github.io/druid/) of the **Druid** example app.
+```
+shop
+├── title          text
+├── close          button
+├── scroll         scroll view (stencil, this size is the window)
+│   └── content    scroll content (child, taller than the view)
+│       └── row    item prefab (cloned into the list)
+└── buy            button
+```
 
-In this example you can inspect a variety of **Druid** components and see how they work. Each example page provides a direct link to the corresponding example code, making it easier for you to understand how to use **Druid**.
+## Assign the ids to the components
+
+Inside `init` of this GUI gui_script file:
+
+```lua
+self.druid = druid.new(self)
+
+self.druid:new_text("title", "Shop")
+self.druid:new_button("close", self.on_close)
+self.druid:new_scroll("scroll", "content")
+self.druid:new_button("buy", self.on_buy)
+```
+
+## A reusable piece is a `.gui` plus a `.lua`
+
+Design layout `health_bar.gui` (`root`, `fill`, `label`).
+You write `health_bar.lua` next to it:
+
+```lua
+function M:init()
+	self.progress = self.druid:new_progress("fill", "x")
+	self.label = self.druid:new_text("label")
+end
+```
+
+Drop the template on a screen, then:
+
+```lua
+self.hp = self.druid:new_widget(health_bar, "health_bar")
+```
+
+[Live examples](https://insality.github.io/druid/)
 
 ## Features
 
-- **Components Rich** - Provides a extensive set of components, from basic buttons to infinity data lists and rich texts
-- **Customizable** - You can customize components appearance and behaviour with their API and styles
-- **Widgets** - Powerful way to create your own reusable components
-- **Input Handling** - Handles input in a stack-based manner and manage input priority
-- **Event Based** - Uses [Defold Event](https://github.com/Insality/defold-event) for components callbacks and communication between components
+- **Components** - Button, scroll, data list, input, and the rest. Logic over nodes you already placed
+- **Widgets** - A reusable piece is a `.gui` plus a `.lua`
+- **Input** - Stack-based, with priority. Last created is checked first
+- **Events** - Callbacks via [Defold Event](https://github.com/Insality/defold-event)
 
 ## Quick Links
 
@@ -42,13 +80,13 @@ Open your `game.project` file and add the following lines to the dependencies fi
 **[Defold Event](https://github.com/Insality/defold-event)**
 
 ```
-https://github.com/Insality/defold-event/archive/refs/tags/14.zip
+https://github.com/Insality/defold-event/archive/refs/tags/16.zip
 ```
 
 **[Druid](https://github.com/Insality/druid/)**
 
 ```
-https://github.com/Insality/druid/archive/refs/tags/1.2.7.zip
+https://github.com/Insality/druid/archive/refs/tags/1.3.0.zip
 ```
 
 After that, select `Project ▸ Fetch Libraries` to update [library dependencies]((https://defold.com/manuals/libraries/#setting-up-library-dependencies)). This happens automatically whenever you open a project so you will only need to do this if the dependencies change without re-opening the project.
@@ -136,7 +174,7 @@ Here is full **Druid** components list.
 | **[Scroll](/api/components/base/scroll_api.md)** | Logic over two GUI Nodes: input and content. Provides basic behaviour for scrollable content. | [Scroll Example](https://insality.github.io/druid/?example=ui_example_basic_scroll) | <img src="media/preview/scroll.gif" width="200" height="100"> |
 | **[Blocker](/api/components/base/blocker_api.md)** | Logic over GUI Node. Don't pass any user input below node area size. | [Blocker Example](https://insality.github.io/druid/?example=ui_example_basic_blocker) | <img src="media/preview/blocker.gif" width="200" height="100"> |
 | **[Back Handler](/api/components/base/back_handler_api.md)** | Call callback on user "Back" action. It's a Android back button or keyboard backspace key | [Back Handler Example](https://insality.github.io/druid/?example=ui_example_basic_back_handler) | <img src="media/preview/back_handler.gif" width="200" height="100"> |
-| **[Static Grid](/api/components/base/static_grid_api.md)** | Logic over GUI Node. Component to manage node positions with all equal node sizes. | [Static Gid Example](https://insality.github.io/druid/?example=ui_example_basic_grid) | <img src="media/preview/static_grid.gif" width="200" height="100"> |
+| **[Static Grid](/api/components/base/static_grid_api.md)** | Logic over GUI Node. Component to manage node positions with all equal node sizes. | [Static Grid Example](https://insality.github.io/druid/?example=ui_example_basic_grid) | <img src="media/preview/static_grid.gif" width="200" height="100"> |
 | **[Hover](/api/components/base/hover_api.md)** | Logic over GUI Node. Handle hover action over node. For both: mobile touch and mouse cursor. | [Hover Example](https://insality.github.io/druid/?example=ui_example_basic_hover) | <img src="media/preview/hover.gif" width="200" height="100"> |
 | **[Swipe](/api/components/extended/swipe_api.md)** | Logic over GUI Node. Handle swipe gestures over node. | [Swipe Example](https://insality.github.io/druid/?example=ui_example_basic_swipe) | <img src="media/preview/swipe.gif" width="200" height="100"> |
 | **[Drag](/api/components/base/drag_api.md)** | Logic over GUI Node. Handle drag input actions. Can be useful to make on screen controlls. | [Drag Example](https://insality.github.io/druid/?example=ui_example_basic_drag) | <img src="media/preview/drag.gif" width="200" height="100"> |

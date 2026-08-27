@@ -306,5 +306,40 @@ return function()
             druid:remove(rich_text)
             gui.delete_node(text_node)
         end)
+
+        it("Should justify words to the root width", function()
+            local text_node = gui.new_text_node(vmath.vector3(0, 0, 0), "")
+            gui.set_font(text_node, "druid_text_bold")
+            gui.set_size(text_node, vmath.vector3(400, 40, 0))
+            gui.set_line_break(text_node, true)
+
+            local rich_text = druid:new_rich_text(text_node)
+            assert(rich_text.is_justify == false)
+
+            rich_text:set_text("One Two Three")
+            local words = rich_text:get_words()
+            assert(#words >= 3)
+
+            local span_before = words[#words].position.x - words[1].position.x
+            local last_before = words[#words].position.x
+
+            rich_text:set_justify(true)
+            assert(rich_text.is_justify == true)
+
+            words = rich_text:get_words()
+            local span_after = words[#words].position.x - words[1].position.x
+            local last_after = words[#words].position.x
+
+            assert(span_after > span_before)
+            assert(last_after > last_before)
+
+            rich_text:set_justify(false)
+            assert(rich_text.is_justify == false)
+            words = rich_text:get_words()
+            assert(math.abs((words[#words].position.x - words[1].position.x) - span_before) < 0.01)
+
+            druid:remove(rich_text)
+            gui.delete_node(text_node)
+        end)
     end)
 end

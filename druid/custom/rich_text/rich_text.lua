@@ -25,6 +25,7 @@ local VECTOR3_ONE = vmath.vector3(1)
 ---@field font hash
 ---@field width number
 ---@field height number
+---@field is_justify boolean
 
 ---@class druid.rich_text.word
 ---@field node node
@@ -76,6 +77,7 @@ local VECTOR3_ONE = vmath.vector3(1)
 ---@field private _last_value string The last value of the rich text
 ---@field private _settings table The settings of the rich text
 ---@field private _split_to_characters boolean The split to characters flag
+---@field is_justify boolean True if words on a line should be spread to the root width
 ---@field private _anchor vector3|nil Anchor position when pivot is set (keeps content in place on resize)
 local M = component.create("rich_text")
 
@@ -86,7 +88,13 @@ function M:init(text_node, value)
 	self.root = self:get_node(text_node)
 	self.text_prefab = self.root
 
+	local root_size = gui.get_size(self.root)
+	local scale = gui.get_scale(self.root)
+	self._default_size = root_size
+	self._default_scale = scale
+
 	self._last_value = value or gui.get_text(self.text_prefab) or ""
+	self.is_justify = false
 	self._settings = self:_create_settings()
 	self._split_to_characters = false
 
@@ -268,11 +276,9 @@ function M:_create_settings()
 	local root_size = gui.get_size(self.root)
 	local scale = gui.get_scale(self.root)
 
-	self._default_size = root_size
-	self._default_scale = scale
-
 	root_size.x = root_size.x * scale.x
 	root_size.y = root_size.y * scale.y
+
 	gui.set_size(self.root, root_size)
 	gui.set_scale(self.root, VECTOR3_ONE)
 
@@ -294,10 +300,25 @@ function M:_create_settings()
 		text_leading = gui.get_leading(self.root),
 		is_multiline = gui.get_line_break(self.root),
 		split_to_characters = false,
+		is_justify = self.is_justify or false,
 
 		-- Image settings
 		image_pixel_grid_snap = false, -- disabled now
 	}
+end
+
+
+---Spread words on each line to the root width, same idea as layout:set_justify.
+---A line with one word is left as-is. Extra gap is inserted between words.
+---@param is_justify boolean
+---@return druid.rich_text self
+function M:set_justify(is_justify)
+	self.is_justify = is_justify
+	if self._settings then
+		self._settings.is_justify = is_justify
+	end
+	self:set_text(self._last_value)
+	return self
 end
 
 

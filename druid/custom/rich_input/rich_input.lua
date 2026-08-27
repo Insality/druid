@@ -106,9 +106,8 @@ local function get_index_by_touch(self, touch)
 	TEMP_VECTOR.y = touch.screen_y
 
 	-- Distance to the text node position
-	local scene_scale = helper.get_scene_scale(text_node)
+	-- gui.screen_to_local already accounts for the scene scale, no need to divide it again
 	local local_pos = gui.screen_to_local(text_node, TEMP_VECTOR)
-	local_pos.x = local_pos.x / scene_scale.x
 
 	-- Offset to the left side of the text node
 	local pivot_offset = helper.get_pivot_offset(gui.get_pivot(text_node))

@@ -55,10 +55,10 @@ end
 
 function M:on_input(action_id, action)
 	if action_id == hash("gamepad_ltrigger") then
-		self.trigger_l2:set_to(action.value)
+		self.trigger_l2:set_value(action.value)
 	end
 	if action_id == hash("gamepad_rtrigger") then
-		self.trigger_r2:set_to(action.value)
+		self.trigger_r2:set_value(action.value)
 	end
 
 	-- Left Stick

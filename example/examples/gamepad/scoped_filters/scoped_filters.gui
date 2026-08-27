@@ -1,0 +1,250 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
+}
+nodes {
+  size {
+    x: 1000.0
+    y: 1000.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    y: 300.0
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  type: TYPE_TEMPLATE
+  id: "button_lock_all"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  size {
+    x: 400.0
+    y: 90.0
+  }
+  type: TYPE_BOX
+  id: "button_lock_all/root"
+  parent: "button_lock_all"
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Lock to Left panel"
+  id: "button_lock_all/text"
+  parent: "button_lock_all/root"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -220.0
+    y: 20.0
+  }
+  type: TYPE_TEMPLATE
+  id: "panel_left"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/scoped_filters/filter_panel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_left/root"
+  parent: "panel_left"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_left/title"
+  parent: "panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "panel_left/button_a"
+  parent: "panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_left/button_a/root"
+  parent: "panel_left/button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_left/button_a/text"
+  parent: "panel_left/button_a/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "panel_left/button_b"
+  parent: "panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_left/button_b/root"
+  parent: "panel_left/button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_left/button_b/text"
+  parent: "panel_left/button_b/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "panel_left/button_lock"
+  parent: "panel_left/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_left/button_lock/root"
+  parent: "panel_left/button_lock"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_left/button_lock/text"
+  parent: "panel_left/button_lock/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_left/status"
+  parent: "panel_left/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 220.0
+    y: 20.0
+  }
+  type: TYPE_TEMPLATE
+  id: "panel_right"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/examples/gamepad/scoped_filters/filter_panel.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_right/root"
+  parent: "panel_right"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_right/title"
+  parent: "panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "panel_right/button_a"
+  parent: "panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_right/button_a/root"
+  parent: "panel_right/button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_right/button_a/text"
+  parent: "panel_right/button_a/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "panel_right/button_b"
+  parent: "panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_right/button_b/root"
+  parent: "panel_right/button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_right/button_b/text"
+  parent: "panel_right/button_b/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "panel_right/button_lock"
+  parent: "panel_right/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "panel_right/button_lock/root"
+  parent: "panel_right/button_lock"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_right/button_lock/text"
+  parent: "panel_right/button_lock/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "panel_right/status"
+  parent: "panel_right/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    y: -240.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
+  }
+  size {
+    x: 900.0
+    y: 200.0
+  }
+  color {
+    x: 0.722
+    y: 0.741
+    z: 0.761
+  }
+  type: TYPE_TEXT
+  text: "Two filter levels at once.\n"
+  "The top button filters the whole example: only the left panel stays alive.\n"
+  "Each panel filters itself: only Button A stays alive inside it.\n"
+  "The filters stack, and none of them leaks outside of its owner."
+  font: "text_bold"
+  id: "hint"
+  pivot: PIVOT_N
+  line_break: true
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

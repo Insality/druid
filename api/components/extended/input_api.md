@@ -23,12 +23,14 @@ Create input component with druid: `input = druid:new_input(button_node_name, te
 - [set_text](#set_text)
 - [select](#select)
 - [unselect](#unselect)
+- [get_text_visual](#get_text_visual)
 - [get_text](#get_text)
 - [set_max_length](#set_max_length)
 - [set_allowed_characters](#set_allowed_characters)
 - [reset_changes](#reset_changes)
 - [select_cursor](#select_cursor)
 - [move_selection](#move_selection)
+
 ## Fields
 
 - [on_input_select](#on_input_select)
@@ -127,6 +129,19 @@ input:unselect()
 ```
 
 Remove selection from input. It will hide the keyboard and trigger on_unselect events
+
+### get_text_visual
+
+---
+```lua
+input:get_text_visual()
+```
+
+Return the text currently displayed on the text node.
+Can differ from `get_text` if the text adjust mode trims the value.
+
+- **Returns:**
+	- `text` *(string)*: The visible input field text
 
 ### get_text
 
@@ -230,16 +245,16 @@ Change cursor position by delta
 - **on_input_unselect** (_event_): fun(self: druid.input, text: string, input: druid.input) The event triggered when the input field is unselected
 
 <a name="on_input_text"></a>
-- **on_input_text** (_event_): fun(self: druid.input) The event triggered when the input field is changed
+- **on_input_text** (_event_): fun(self: druid.input, text: string) The event triggered when the input field text changes
 
 <a name="on_input_empty"></a>
-- **on_input_empty** (_event_): fun(self: druid.input) The event triggered when the input field is empty
+- **on_input_empty** (_event_): fun(self: druid.input, text: string) The event triggered when the input field becomes empty
 
 <a name="on_input_full"></a>
-- **on_input_full** (_event_): fun(self: druid.input) The event triggered when the input field is full
+- **on_input_full** (_event_): fun(self: druid.input, text: string) The event triggered when the input field reaches max length
 
 <a name="on_input_wrong"></a>
-- **on_input_wrong** (_event_): fun(self: druid.input) The event triggered when the input field is wrong
+- **on_input_wrong** (_event_): fun(self: druid.input, character: string) The event triggered when a not allowed character is typed
 
 <a name="on_select_cursor_change"></a>
 - **on_select_cursor_change** (_event_): fun(self: druid.input, cursor_index: number, start_index: number, end_index: number) The event triggered when the cursor index is changed

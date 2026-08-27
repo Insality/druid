@@ -42,6 +42,7 @@ Create scroll component with druid: `druid:new_scroll(view_node, content_node)`
 - [bind_grid](#bind_grid)
 - [bind_layout](#bind_layout)
 - [set_click_zone](#set_click_zone)
+
 ## Fields
 
 - [node](#node)
@@ -62,7 +63,6 @@ Create scroll component with druid: `druid:new_scroll(view_node, content_node)`
 - [is_animate](#is_animate)
 - [style](#style)
 - [druid](#druid)
-- [hover](#hover)
 - [points](#points)
 - [available_pos_extra](#available_pos_extra)
 - [available_size_extra](#available_size_extra)
@@ -411,9 +411,6 @@ Strict drag scroll area. Useful for
 
 <a name="druid"></a>
 - **druid** (_druid.instance_): The Druid Factory used to create components
-
-<a name="hover"></a>
-- **hover** (_druid.hover_): The component for handling hover events on a node
 
 <a name="points"></a>
 - **points** (_table_)

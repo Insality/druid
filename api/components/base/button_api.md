@@ -14,7 +14,7 @@ Where node_name is name of node from GUI scene. You can use `node_name` as input
 -   - **params** - Additional params, specified on button creating
 -   - **button_instance** - button itself
 - You can set _params_ on button callback on button creating: `druid:new_button("node_name", callback, params)`.
-- Button have several events like on_click, on_repeated_click, on_long_click, on_hold_click, on_double_click
+- Button have several events like on_click, on_repeated_click, on_long_click, on_hold_callback, on_double_click
 - Click event will not trigger if between pressed and released state cursor was outside of node zone
 - Button can have key trigger to use them by key: `button:set_key_trigger`
 -
@@ -37,6 +37,7 @@ Where node_name is name of node from GUI scene. You can use `node_name` as input
 - [button_long_click](#button_long_click)
 - [button_double_click](#button_double_click)
 - [button_hold](#button_hold)
+
 ## Fields
 
 - [on_click](#on_click)
@@ -65,7 +66,6 @@ Where node_name is name of node from GUI scene. You can use `node_name` as input
 - [can_action](#can_action)
 
 
-
 ### init
 
 ---
@@ -77,7 +77,7 @@ The constructor for the button component
 
 - **Parameters:**
 	- `node_or_node_id` *(string|node)*: Node name or GUI Node itself
-	- `[callback]` *(fun()|nil)*: Callback on button click
+	- `[callback]` *(fun(self: any, custom_args: any, button_instance: druid.button)|nil)*: Callback on button click
 	- `[custom_args]` *(any)*: Custom args for any Button event, will be passed to callbacks
 	- `[anim_node]` *(string|node|nil)*: Node to animate instead of trigger node, useful for animating small icons on big panels
 
@@ -276,25 +276,25 @@ Call button hold callback
 
 ## Fields
 <a name="on_click"></a>
-- **on_click** (_event_): fun(self, custom_args, button_instance)
+- **on_click** (_event_): fun(self: druid.button, custom_args: any, button_instance: druid.button)
 
 <a name="on_pressed"></a>
-- **on_pressed** (_event_): fun(self, custom_args, button_instance)
+- **on_pressed** (_event_): fun(self: druid.button, custom_args: any, button_instance: druid.button)
 
 <a name="on_repeated_click"></a>
-- **on_repeated_click** (_event_): fun(self, custom_args, button_instance, click_count) Repeated click callback, while holding the button
+- **on_repeated_click** (_event_): fun(self: druid.button, custom_args: any, button_instance: druid.button, click_count: number) Repeated click callback, while holding the button
 
 <a name="on_long_click"></a>
-- **on_long_click** (_event_): fun(self, custom_args, button_instance, hold_time) Callback on long button tap
+- **on_long_click** (_event_): fun(self: druid.button, custom_args: any, button_instance: druid.button, hold_time: number) Callback on long button tap
 
 <a name="on_double_click"></a>
-- **on_double_click** (_event_): fun(self, custom_args, button_instance, click_amount) Different callback, if tap button 2+ in row
+- **on_double_click** (_event_): fun(self: druid.button, custom_args: any, button_instance: druid.button, click_amount: number) Different callback, if tap button 2+ in row
 
 <a name="on_hold_callback"></a>
-- **on_hold_callback** (_event_): fun(self, custom_args, button_instance, press_time) Hold callback, before long_click trigger
+- **on_hold_callback** (_event_): fun(self: druid.button, custom_args: any, button_instance: druid.button, press_time: number) Hold callback, before long_click trigger
 
 <a name="on_click_outside"></a>
-- **on_click_outside** (_event_): fun(self, custom_args, button_instance)
+- **on_click_outside** (_event_): fun(self: druid.button, custom_args: any, button_instance: druid.button)
 
 <a name="node"></a>
 - **node** (_node_): Clickable node
@@ -327,7 +327,7 @@ Call button hold callback
 - **key_trigger** (_hash_): Key trigger for this button
 
 <a name="style"></a>
-- **style** (_table_): Style for this button
+- **style** (_druid.button.style_): Style for this button
 
 <a name="druid"></a>
 - **druid** (_druid.instance_): The Druid Factory used to create components

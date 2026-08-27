@@ -56,6 +56,10 @@ function M:properties_control(properties_panel)
 		gui.PIVOT_N,
 		gui.PIVOT_NW,
 	}
+	properties_panel:add_checkbox("ui_justify", false, function(value)
+		self.rich_text:set_justify(value)
+	end)
+
 	properties_panel:add_button("ui_pivot_next", function()
 		pivot_index = pivot_index + 1
 		if pivot_index > #pivot_list then

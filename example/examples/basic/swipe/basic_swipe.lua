@@ -33,4 +33,13 @@ function M:on_example_created(output_log)
 end
 
 
+---@param properties_panel properties_panel
+function M:properties_control(properties_panel)
+	local checkbox = properties_panel:add_checkbox("ui_enabled", true, function(value)
+		self.swipe:set_enabled(value)
+	end)
+	checkbox:set_value(true)
+end
+
+
 return M

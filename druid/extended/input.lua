@@ -29,10 +29,10 @@ local utf8 = utf8 or utf8_lua
 ---@class druid.input: druid.component
 ---@field on_input_select event fun(self: druid.input, input: druid.input) The event triggered when the input field is selected
 ---@field on_input_unselect event fun(self: druid.input, text: string, input: druid.input) The event triggered when the input field is unselected
----@field on_input_text event fun(self: druid.input) The event triggered when the input field is changed
----@field on_input_empty event fun(self: druid.input) The event triggered when the input field is empty
----@field on_input_full event fun(self: druid.input) The event triggered when the input field is full
----@field on_input_wrong event fun(self: druid.input) The event triggered when the input field is wrong
+---@field on_input_text event fun(self: druid.input, text: string) The event triggered when the input field text changes
+---@field on_input_empty event fun(self: druid.input, text: string) The event triggered when the input field becomes empty
+---@field on_input_full event fun(self: druid.input, text: string) The event triggered when the input field reaches max length
+---@field on_input_wrong event fun(self: druid.input, character: string) The event triggered when a not allowed character is typed
 ---@field on_select_cursor_change event fun(self: druid.input, cursor_index: number, start_index: number, end_index: number) The event triggered when the cursor index is changed
 ---@field style druid.input.style The style of the input component
 local M = component.create("input")
@@ -45,6 +45,16 @@ M.ALLOWED_ACTIONS = {
 	[const.ACTION_BACKSPACE] = true,
 	[const.ACTION_ENTER] = true,
 	[const.ACTION_ESC] = true,
+	[const.ACTION_BACK] = true,
+}
+
+-- Modifiers must not be swallowed while the input is selected,
+-- otherwise app hotkeys that use them never receive the key events.
+local MODIFICATOR_ACTIONS = {
+	[const.ACTION_LSHIFT] = true,
+	[const.ACTION_LCTRL] = true,
+	[const.ACTION_LALT] = true,
+	[const.ACTION_LCMD] = true,
 }
 
 ---Mask text by replacing every character with a mask character
@@ -52,13 +62,7 @@ M.ALLOWED_ACTIONS = {
 ---@param mask string
 ---@return string Masked text
 local function mask_text(text, mask)
-	mask = mask or "*"
-	local masked_text = ""
-	for uchar in utf8.gmatch(text, ".") do
-		masked_text = masked_text .. mask
-	end
-
-	return masked_text
+	return string.rep(mask or "*", utf8.len(text))
 end
 
 
@@ -149,6 +153,10 @@ end
 ---@param action action The action
 ---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
+	if MODIFICATOR_ACTIONS[action_id] or action_id == const.ACTION_TAB then
+		return false
+	end
+
 	if action_id and not M.ALLOWED_ACTIONS[action_id] then
 		-- We want to block all key actions (key_w, key_s) etc while input is selected
 		local is_key_action = action.x == nil
@@ -164,6 +172,10 @@ function M:on_input(action_id, action)
 			-- ignore return key
 			if action.text == "\n" or action.text == "\r" then
 				return true
+			end
+
+			if action.text == "\t" then
+				return false
 			end
 
 			local hex = string.gsub(action.text, "(.)", function(c)
@@ -369,6 +381,14 @@ function M:unselect()
 
 		self.style.on_unselect(self, self.button.node)
 	end
+end
+
+
+---Return the text currently displayed on the text node.
+---Can differ from `get_text` if the text adjust mode trims the value.
+---@return string text The visible input field text
+function M:get_text_visual()
+	return gui.get_text(self.text.node)
 end
 
 

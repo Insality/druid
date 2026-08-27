@@ -1,0 +1,148 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+textures {
+  name: "druid_example"
+  texture: "/example/assets/druid_example.atlas"
+}
+nodes {
+  size {
+    x: 320.0
+    y: 460.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  position {
+    y: 180.0
+  }
+  scale {
+    x: 0.85
+    y: 0.85
+  }
+  size {
+    x: 320.0
+    y: 40.0
+  }
+  color {
+    x: 0.9
+    y: 0.9
+    z: 0.55
+  }
+  type: TYPE_TEXT
+  text: "Panel"
+  font: "text_bold"
+  id: "title"
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  position {
+    y: 90.0
+  }
+  type: TYPE_TEMPLATE
+  id: "button_a"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/templates/button_text_green.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_a/root"
+  parent: "button_a"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Button A"
+  id: "button_a/text"
+  parent: "button_a/root"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    y: -20.0
+  }
+  type: TYPE_TEMPLATE
+  id: "button_b"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/templates/button_text_blue.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_b/root"
+  parent: "button_b"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Button B"
+  id: "button_b/text"
+  parent: "button_b/root"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    y: -130.0
+  }
+  scale {
+    x: 0.8
+    y: 0.8
+  }
+  type: TYPE_TEMPLATE
+  id: "button_lock"
+  parent: "root"
+  inherit_alpha: true
+  template: "/example/templates/button_text_blue.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "button_lock/root"
+  parent: "button_lock"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Lock to A"
+  id: "button_lock/text"
+  parent: "button_lock/root"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    y: -200.0
+  }
+  scale {
+    x: 0.7
+    y: 0.7
+  }
+  size {
+    x: 400.0
+    y: 40.0
+  }
+  color {
+    x: 0.722
+    y: 0.741
+    z: 0.761
+  }
+  type: TYPE_TEXT
+  text: "Filter: none"
+  font: "text_bold"
+  id: "status"
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

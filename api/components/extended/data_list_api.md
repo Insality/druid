@@ -8,7 +8,7 @@ Druid component to manage a list of data with a scrollable view, used to manage 
 Create data list component with druid: `data_list = druid:new_data_list(scroll, grid, create_function)`
 
 ### Notes
-- Data List uses a scroll component for scrolling and a grid component for layout
+- Data List uses a scroll component for scrolling and a Static Grid component for layout
 - Data List only renders visible elements for better performance
 - Data List supports caching of elements for better performance
 - Data List supports adding, removing and updating elements
@@ -29,6 +29,7 @@ Create data list component with druid: `data_list = druid:new_data_list(scroll, 
 - [get_created_nodes](#get_created_nodes)
 - [get_created_components](#get_created_components)
 - [scroll_to_index](#scroll_to_index)
+- [refresh](#refresh)
 ## Fields
 
 - [scroll](#scroll)
@@ -210,13 +211,27 @@ Instant scroll to element with passed index
 - **Parameters:**
 	- `index` *(number)*: The index to scroll to
 
+### refresh
+
+---
+```lua
+data_list:refresh()
+```
+
+Rebuild the scroll content size and refresh the visible elements.
+The DataList refreshes itself on the data change, so this is only needed when
+something outside of the data changed, like the grid item size at runtime
+
+- **Returns:**
+	- `self` *(druid.data_list)*: Current DataList instance
+
 
 ## Fields
 <a name="scroll"></a>
 - **scroll** (_druid.scroll_): The scroll instance for Data List component
 
 <a name="grid"></a>
-- **grid** (_druid.grid_): The StaticGrid or DynamicGrid instance for Data List component
+- **grid** (_druid.grid_): The Static Grid instance for Data List component
 
 <a name="on_scroll_progress_change"></a>
 - **on_scroll_progress_change** (_event_): fun(self: druid.data_list, progress: number) The event triggered when the scroll progress changes

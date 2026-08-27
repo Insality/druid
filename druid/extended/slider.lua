@@ -107,10 +107,11 @@ function M:on_input(action_id, action)
 
 	if not self.is_drag and self._input_node and gui.pick_node(self._input_node, action.x, action.y) then
 		if action.pressed and gui.screen_to_local then
+			-- Refreshed for the drag delta below, screen_to_local does not need it
 			self._scene_scale = helper.get_scene_scale(self.node)
 			self.pos = gui.screen_to_local(self.node, vmath.vector3(action.screen_x, action.screen_y, 0))
-			self.pos.x = helper.clamp(self.pos.x / self._scene_scale.x, self.start_pos.x, self.end_pos.x)
-			self.pos.y = helper.clamp(self.pos.y / self._scene_scale.y, self.start_pos.y, self.end_pos.y)
+			self.pos.x = helper.clamp(self.pos.x, self.start_pos.x, self.end_pos.x)
+			self.pos.y = helper.clamp(self.pos.y, self.start_pos.y, self.end_pos.y)
 
 			gui.set_position(self.node, self.pos)
 			self.is_drag = true

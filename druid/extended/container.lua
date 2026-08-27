@@ -116,7 +116,7 @@ end
 
 ---@private
 function M:on_late_init()
-	if not gui.get_parent(self.node) then
+	if not self.fit_size and not gui.get_parent(self.node) then
 		-- TODO: Scale issue here, in fit into window!
 		self:fit_into_window()
 	end
@@ -291,7 +291,7 @@ function M:add_container(node_or_container, mode, on_resize_callback)
 	---@cast node node
 	node = self:get_node(node)
 
-	container = container or self.druid:new(M, node, mode)
+	container = container or self.druid:new(M, node, mode) --[[@as druid.container]]
 	container:set_parent_container(self)
 	if on_resize_callback then
 		container.on_size_changed:subscribe(on_resize_callback)

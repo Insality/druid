@@ -11,6 +11,8 @@ A component that allows you to subscribe to drag events over a node
 - [set_click_zone](#set_click_zone)
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
+- [add_drag_action](#add_drag_action)
+- [remove_drag_action](#remove_drag_action)
 
 ## Fields
 
@@ -34,8 +36,8 @@ A component that allows you to subscribe to drag events over a node
 - [screen_x](#screen_x)
 - [screen_y](#screen_y)
 - [touch_start_pos](#touch_start_pos)
-- [druid](#druid)
 - [hover](#hover)
+- [druid](#druid)
 
 
 
@@ -59,10 +61,10 @@ The constructor for Drag component
 drag:set_drag_cursors(is_enabled)
 ```
 
-Set Drag component enabled state.
+Enable or disable drag cursor styles. No-op without defos. Hover is created on first enable.
 
 - **Parameters:**
-	- `is_enabled` *(boolean)*: True if Drag component is enabled
+	- `is_enabled` *(boolean)*: True if Drag cursors are enabled
 
 ### set_click_zone
 
@@ -105,6 +107,39 @@ Check if Drag component is capture input
 
 - **Returns:**
 	- `is_enabled` *(boolean)*: True if Drag component is enabled
+
+### add_drag_action
+
+---
+```lua
+drag:add_drag_action(action_id)
+```
+
+Add an additional input action that can start a drag.
+By default only touch and multitouch actions are allowed.
+Useful to drag with the middle or right mouse button on desktop.
+The action should provide the pointer position, key actions are ignored.
+
+- **Parameters:**
+	- `action_id` *(hash)*: The action id to allow for dragging
+
+- **Returns:**
+	- `self` *(druid.drag)*: Current instance
+
+### remove_drag_action
+
+---
+```lua
+drag:remove_drag_action(action_id)
+```
+
+Remove an additional input action from the allowed drag actions
+
+- **Parameters:**
+	- `action_id` *(hash)*: The action id to disallow for dragging
+
+- **Returns:**
+	- `self` *(druid.drag)*: Current instance
 
 
 ## Fields
@@ -168,9 +203,9 @@ Check if Drag component is capture input
 <a name="touch_start_pos"></a>
 - **touch_start_pos** (_vector3_): The touch start position
 
+<a name="hover"></a>
+- **hover** (_druid.hover|nil_): Hover for drag cursors. `nil` without defos
+
 <a name="druid"></a>
 - **druid** (_druid.instance_): The Druid Factory used to create components
-
-<a name="hover"></a>
-- **hover** (_druid.hover_): The component for handling hover events on a node
 
