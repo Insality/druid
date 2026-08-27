@@ -752,12 +752,6 @@ nodes {
   template_node_child: true
 }
 nodes {
-  type: TYPE_TEXT
-  id: "intro/text_support"
-  parent: "intro/root"
-  template_node_child: true
-}
-nodes {
   type: TYPE_BOX
   id: "intro/icon_heart1"
   parent: "intro/root"
