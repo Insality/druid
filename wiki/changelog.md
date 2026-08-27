@@ -858,7 +858,7 @@ The main change here is the **input filters**. Before, `set_whitelist` and `set_
 
 There are three new examples about it: **Whitelist & Blacklist**, **Scoped Input Filters** and **Scroll Nested**.
 
-The input step also became noticeably cheaper. Scroll and Drag no longer keep a Hover component alive just to know where the cursor is, Hover skips its work when nobody is subscribed to it, Scroll does nothing while it stands still, and Data List does not rebuild its elements when nothing has changed.
+The input step also became noticeably cheaper. Scroll and Drag no longer keep a Hover component alive just to know where the cursor is, Hover skips its work when nobody is subscribed to it.
 
 The rest are fixes and small API additions. There are several breaking changes, all of them are described in the migration section below.
 
