@@ -884,7 +884,7 @@ The rest are fixes and small API additions. There are several breaking changes, 
 - [Input] The modificator keys (shift, ctrl, alt, cmd) and `tab` are not consumed anymore while the input is selected, so your hotkeys keep working while the user types
 - [Input] The `key_back` action now unselects the input field instead of being swallowed
 - [Input] Add `input:get_text_visual()` to get the text as it is displayed on the node. It can differ from `get_text()` when the text adjust mode trims the value
-- [Data List] `on_scroll_progress_change` is now triggered on scroll, before it was not triggered at all
+- [Data List] `on_scroll_progress_change` fix for correct values report
 - [Data List] Add `data_list:refresh()` to rebuild the list when something outside of the data has changed, like the grid item size
 - [Slider] / [Rich Input] Fix the click position on a scaled GUI, the scene scale was applied twice
 - [Lang Text] `on_change` is not triggered twice on `set_text` anymore
