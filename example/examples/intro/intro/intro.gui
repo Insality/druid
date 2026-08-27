@@ -123,8 +123,8 @@ nodes {
 }
 nodes {
   position {
-    x: -170.0
-    y: -364.0
+    x: -200.0
+    y: -350.0
   }
   type: TYPE_BOX
   texture: "druid_example/icon_heart"
@@ -136,7 +136,7 @@ nodes {
 }
 nodes {
   position {
-    y: -364.0
+    y: -350.0
   }
   type: TYPE_BOX
   texture: "druid_example/icon_heart"
@@ -148,8 +148,8 @@ nodes {
 }
 nodes {
   position {
-    x: 170.0
-    y: -364.0
+    x: 200.0
+    y: -350.0
   }
   type: TYPE_BOX
   texture: "druid_example/icon_heart"
