@@ -366,9 +366,16 @@ function M._position_lines(lines, settings)
 	for line_index = 1, #lines do
 		local line = lines[line_index]
 		local line_metrics = lines_metrics.lines[line_index]
-		local current_x = (parent_size.x - line_metrics.width) * (pivot.x + 0.5) - (parent_size.x * (pivot.x + 0.5))
+		local word_count = #line
+		local extra_gap = 0
+		local used_width = line_metrics.width
+		if settings.is_justify and word_count > 1 and line_metrics.width < settings.width then
+			extra_gap = (settings.width - line_metrics.width) / (word_count - 1)
+			used_width = settings.width
+		end
+		local current_x = (parent_size.x - used_width) * (pivot.x + 0.5) - (parent_size.x * (pivot.x + 0.5))
 		local max_height = 0
-		for word_index = 1, #line do
+		for word_index = 1, word_count do
 			local word = line[word_index]
 			local pivot_offset = helper.get_pivot_offset(word.pivot)
 			local word_width = word.metrics.width
@@ -379,6 +386,9 @@ function M._position_lines(lines, settings)
 			word.position.y = word.position.y - (word.metrics.height - line_metrics.height) * (pivot_offset.y - 0.5)
 
 			current_x = current_x + word_width
+			if extra_gap > 0 and word_index < word_count then
+				current_x = current_x + extra_gap
+			end
 
 			-- TODO: check if we need to calculate images
 			if not word.image then
