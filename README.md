@@ -9,9 +9,7 @@ Place nodes in the Defold GUI editor, then attach a button, scroll, data list or
 
 ## Layout the window
 
-Build the window in the GUI scene. Give every node an id. That id is the contract.
-
-<!-- screenshot: Defold GUI Outline with these ids visible -->
+Build the window in the GUI scene, for example:
 
 ```
 shop
@@ -23,7 +21,9 @@ shop
 └── buy            button
 ```
 
-## Point at those ids
+## Assign the ids to the components
+
+Inside `init` of this GUI gui_script file:
 
 ```lua
 self.druid = druid.new(self)
