@@ -57,7 +57,7 @@ local function update_text(self)
 	local pivot_text = gui.get_pivot(self.input.text.node)
 	local pivot_offset = helper.get_pivot_offset(pivot_text)
 
-	self.cursor_position.x = self.text_position.x - self.input.text_width * (0.5 + pivot_offset.x) + left_part_width
+	self.cursor_position.x = self.text_position.x - self.input.total_width * (0.5 + pivot_offset.x) + left_part_width
 
 	gui.set_position(self.cursor, self.cursor_position)
 	gui.set_scale(self.cursor, self.input.text.scale)
