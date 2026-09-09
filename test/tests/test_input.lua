@@ -375,5 +375,67 @@ return function()
 			gui.delete_node(button_node)
 			gui.delete_node(text_node)
 		end)
+
+		it("Should move cursor with the arrow keys", function()
+			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
+			local text_node = gui.new_text_node(vmath.vector3(50, 25, 0), "Hello World")
+			gui.set_font(text_node, "druid_text_bold")
+
+			local input = druid:new_input(button_node, text_node)
+
+			-- Select input
+			druid:on_input(mock_input.click_pressed(50, 25))
+			druid:on_input(mock_input.click_released(50, 25))
+			assert(input.cursor_index == 11)
+
+			assert(druid:on_input(mock_input.key_pressed("key_left")) == true)
+			assert(input.cursor_index == 10)
+
+			assert(druid:on_input(mock_input.key_pressed("key_left")) == true)
+			assert(input.cursor_index == 9)
+
+			assert(druid:on_input(mock_input.key_pressed("key_right")) == true)
+			assert(input.cursor_index == 10)
+			assert(input.start_index == 10)
+			assert(input.end_index == 10)
+
+			-- The modificator keys are never consumed by the input
+			input:select_cursor(11)
+			assert(druid:on_input(mock_input.key_pressed("key_lshift")) == false)
+
+			-- The shift extends the selection
+			druid:on_input(mock_input.key_pressed("key_left"))
+			assert(input.cursor_index == 10)
+			assert(input.start_index == 10)
+			assert(input.end_index == 11)
+			assert(input:get_text_selected() == "d")
+
+			druid:on_input(mock_input.key_pressed("key_left"))
+			assert(input:get_text_selected() == "ld")
+
+			druid:on_input(mock_input.key_released("key_lshift"))
+
+			-- Without the shift the arrow key resets the selection and keeps the cursor
+			druid:on_input(mock_input.key_pressed("key_right"))
+			assert(input.cursor_index == 9)
+			assert(input.start_index == 9)
+			assert(input.end_index == 9)
+
+			-- The ctrl moves the cursor to the text bounds
+			input:select_cursor(5)
+			assert(druid:on_input(mock_input.key_pressed("key_lctrl")) == false)
+
+			druid:on_input(mock_input.key_pressed("key_left"))
+			assert(input.cursor_index == 0)
+
+			druid:on_input(mock_input.key_pressed("key_right"))
+			assert(input.cursor_index == 11)
+
+			druid:on_input(mock_input.key_released("key_lctrl"))
+
+			druid:remove(input)
+			gui.delete_node(button_node)
+			gui.delete_node(text_node)
+		end)
 	end)
 end

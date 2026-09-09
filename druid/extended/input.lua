@@ -46,6 +46,8 @@ M.ALLOWED_ACTIONS = {
 	[const.ACTION_ENTER] = true,
 	[const.ACTION_ESC] = true,
 	[const.ACTION_BACK] = true,
+	[const.ACTION_LEFT] = true,
+	[const.ACTION_RIGHT] = true,
 }
 
 -- Modifiers must not be swallowed while the input is selected,
@@ -88,6 +90,8 @@ function M:init(click_node, text_node, keyboard_type)
 	end
 
 	self.is_selected = false
+	self.is_lshift = false
+	self.is_lctrl = false
 	self.value = self.text.last_value
 	self.previous_value = self.text.last_value
 	self.current_value = self.text.last_value
@@ -153,7 +157,27 @@ end
 ---@param action action The action
 ---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
-	if MODIFICATOR_ACTIONS[action_id] or action_id == const.ACTION_TAB then
+	if MODIFICATOR_ACTIONS[action_id] then
+		if action_id == const.ACTION_LSHIFT then
+			if action.pressed then
+				self.is_lshift = true
+			elseif action.released then
+				self.is_lshift = false
+			end
+		end
+
+		if action_id == const.ACTION_LCTRL or action_id == const.ACTION_LCMD then
+			if action.pressed then
+				self.is_lctrl = true
+			elseif action.released then
+				self.is_lctrl = false
+			end
+		end
+
+		return false
+	end
+
+	if action_id == const.ACTION_TAB then
 		return false
 	end
 
@@ -223,6 +247,16 @@ function M:on_input(action_id, action)
 				-- Calculate offsets from cursor pos to start index
 				cursor_shift_indexes = start_index - self.cursor_index
 			end
+		end
+
+		if action_id == const.ACTION_LEFT and (action.pressed or action.repeated) then
+			self:move_selection(-1, self.is_lshift, self.is_lctrl)
+			return true
+		end
+
+		if action_id == const.ACTION_RIGHT and (action.pressed or action.repeated) then
+			self:move_selection(1, self.is_lshift, self.is_lctrl)
+			return true
 		end
 
 		if action_id == const.ACTION_ENTER and action.released then
