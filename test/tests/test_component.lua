@@ -59,5 +59,31 @@ return function()
 
 			druid_instance:remove(parent)
 		end)
+
+		it("Should apply input priority to the subtree even if the value is the same", function()
+			local parent = druid_instance:new(parent_class)
+			local child = parent.child
+
+			parent:set_input_priority(const.PRIORITY_INPUT_HIGH)
+			assert(child:get_input_priority() == const.PRIORITY_INPUT_HIGH)
+
+			-- The child priority is changed on it's own
+			child:set_input_priority(const.PRIORITY_INPUT_MAX)
+
+			-- The parent is already on this value, but the subtree should be synced anyway
+			parent:set_input_priority(const.PRIORITY_INPUT_HIGH)
+			assert(child:get_input_priority() == const.PRIORITY_INPUT_HIGH)
+
+			-- The temporary raise keeps the default value
+			parent:set_input_priority(const.PRIORITY_INPUT_MAX, true)
+			assert(parent:get_input_priority() == const.PRIORITY_INPUT_MAX)
+
+			-- The same value without the temporary flag makes it the new default one
+			parent:set_input_priority(const.PRIORITY_INPUT_MAX)
+			parent:reset_input_priority()
+			assert(parent:get_input_priority() == const.PRIORITY_INPUT_MAX)
+
+			druid_instance:remove(parent)
+		end)
 	end)
 end

@@ -219,22 +219,12 @@ end
 function M:set_input_priority(value, is_temporary)
 	assert(value)
 
-	local component = self._component
+	apply_input_priority(self, value, is_temporary)
 
-	if component.input_priority == value then
-		return self
-	end
-
-	component.input_priority = value
-	component._is_input_priority_changed = true
-
-	if not is_temporary then
-		component.default_input_priority = value
-	end
-
+	-- The children list is already recursive, no need to go deeper from each child
 	local children = self:get_childrens()
 	for i = 1, #children do
-		children[i]:set_input_priority(value, is_temporary)
+		apply_input_priority(children[i], value, is_temporary)
 	end
 
 	return self
