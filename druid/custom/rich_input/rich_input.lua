@@ -136,7 +136,7 @@ local function on_touch_start_callback(self, touch)
 	self._last_touch_info.cursor_index = cursor_index
 	self._last_touch_info.time = socket.gettime()
 
-	if self.input.is_lshift then
+	if self.is_lshift then
 		local start_index = self.input.start_index
 		local end_index = self.input.end_index
 
