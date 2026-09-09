@@ -37,7 +37,7 @@ end
 ---@param self druid.rich_input
 local function update_text(self)
 	local full_text = self.input:get_text()
-	local visible_text = self.input.text:get_text()
+	local visible_text = self.input:get_text_visual()
 
 	local is_truncated = visible_text ~= full_text
 	local cursor_index = self.input.cursor_index
