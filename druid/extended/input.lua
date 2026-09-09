@@ -43,6 +43,7 @@ M.ALLOWED_ACTIONS = {
 	[const.ACTION_TEXT] = true,
 	[const.ACTION_MARKED_TEXT] = true,
 	[const.ACTION_BACKSPACE] = true,
+	[const.ACTION_DELETE] = true,
 	[const.ACTION_ENTER] = true,
 	[const.ACTION_ESC] = true,
 	[const.ACTION_BACK] = true,
@@ -242,6 +243,32 @@ function M:on_input(action_id, action)
 			else
 				local left_part = utf8.sub(self.value, 1, start_index)
 				local right_part = utf8.sub(self.value, end_index + 1, utf8.len(self.value))
+				input_text = left_part .. right_part
+
+				-- Calculate offsets from cursor pos to start index
+				cursor_shift_indexes = start_index - self.cursor_index
+			end
+		end
+
+		if action_id == const.ACTION_DELETE and (action.pressed or action.repeated) then
+			local len = utf8.len(self.value)
+			local start_index = self.start_index or len
+			local end_index = self.end_index or len
+
+			-- If start == end index, remove right of this selection letter, else delete all selection
+			if start_index == end_index then
+				-- Nothing to delete if the cursor is at the end of the text
+				if end_index < len then
+					local left_part = utf8.sub(self.value, 1, start_index)
+					local right_part = utf8.sub(self.value, end_index + 2, len)
+					input_text = left_part .. right_part
+
+					-- The cursor stays on the same place
+					cursor_shift_indexes = 0
+				end
+			else
+				local left_part = utf8.sub(self.value, 1, start_index)
+				local right_part = utf8.sub(self.value, end_index + 1, len)
 				input_text = left_part .. right_part
 
 				-- Calculate offsets from cursor pos to start index

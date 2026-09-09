@@ -437,5 +437,46 @@ return function()
 			gui.delete_node(button_node)
 			gui.delete_node(text_node)
 		end)
+
+		it("Should handle forward delete input", function()
+			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
+			local text_node = gui.new_text_node(vmath.vector3(50, 25, 0), "Hello")
+			gui.set_font(text_node, "druid_text_bold")
+
+			local input = druid:new_input(button_node, text_node)
+
+			-- Select input, the cursor is at the end of the text
+			druid:on_input(mock_input.click_pressed(50, 25))
+			druid:on_input(mock_input.click_released(50, 25))
+			assert(input.cursor_index == 5)
+
+			-- Nothing to delete at the end of the text
+			druid:on_input(mock_input.key_pressed("key_del"))
+			assert(input:get_text() == "Hello")
+			assert(input.cursor_index == 5)
+
+			-- Delete the letter right of the cursor, the cursor is not moved
+			input:select_cursor(2)
+			druid:on_input(mock_input.key_pressed("key_del"))
+			assert(input:get_text() == "Helo")
+			assert(input.cursor_index == 2)
+
+			druid:on_input(mock_input.key_pressed("key_del"))
+			assert(input:get_text() == "Heo")
+			assert(input.cursor_index == 2)
+
+			-- The selection is removed and the cursor goes to it's start
+			input:set_text("Hello World")
+			input:select_cursor(5, 0, 5)
+			druid:on_input(mock_input.key_pressed("key_del"))
+			assert(input:get_text() == " World")
+			assert(input.cursor_index == 0)
+			assert(input.start_index == 0)
+			assert(input.end_index == 0)
+
+			druid:remove(input)
+			gui.delete_node(button_node)
+			gui.delete_node(text_node)
+		end)
 	end)
 end

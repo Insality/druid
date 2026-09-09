@@ -10,6 +10,7 @@ By default, **Druid** uses all key names from Defold's default `/builtins/input/
 - Mouse trigger: `Wheel up` -> `mouse_wheel_up` (for Scroll component)
 - Mouse trigger: `Wheel down` -> `mouse_wheel_down` (for Scroll component)
 - Key trigger: `Backspace` -> `key_backspace` (for BackHandler component, input component)
+- Key trigger: `Del` -> `key_del` (for Input component, optional)
 - Key trigger: `Back` -> `key_back` (for BackHandler component, Android back button, input component)
 - Key trigger: `Enter` -> `key_enter` (for Input component, optional)
 - Key trigger: `Space` -> `key_space` (for Navigation Handler widget, optional)
@@ -44,6 +45,7 @@ input_key_back = key_back
 input_key_enter = key_enter
 input_key_space = key_space
 input_key_backspace = key_backspace
+input_key_delete = key_del
 input_multitouch = touch_multi
 input_scroll_up = mouse_wheel_up
 input_scroll_down = mouse_wheel_down
