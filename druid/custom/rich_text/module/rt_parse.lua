@@ -199,7 +199,7 @@ end
 ---@param text string The text to get the length of
 ---@return number The length of the text
 function M.length(text)
-	return utf8.len(text:gsub("<img.-/>", " "):gsub("<.->", ""))
+	return utf8.len((text:gsub("<img.-/>", " "):gsub("<.->", "")))
 end
 
 
