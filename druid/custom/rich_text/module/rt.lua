@@ -323,9 +323,13 @@ function M._split_on_lines(words, settings)
 
 		local word_metrics = measure_node(word, settings, prefix)
 
+		-- A nobr run moves to the next line only as a whole, from its first word
+		local previous_word = words[i - 1]
+		local is_nobr_start = word.nobr and not (previous_word and previous_word.nobr)
+
 		local next_words_width = word_metrics.width
 		-- Collect width of nobr words from current to next words with nobr
-		if word.nobr then
+		if is_nobr_start then
 			local run_tail, run_font = get_line_tail(prefix, word.font, word)
 			for index = i + 1, word_count do
 				local next_word = words[index]
@@ -338,8 +342,10 @@ function M._split_on_lines(words, settings)
 				run_tail, run_font = get_line_tail(run_tail, run_font, next_word)
 			end
 		end
-		local overflow = (current_line_width + next_words_width) > settings.width
-		local is_new_line = (overflow or word.br) and settings.is_multiline and not word.nobr
+		-- A word wider than the area stays on its line instead of leaving an empty one before it
+		local overflow = #current_line > 0 and (current_line_width + next_words_width) > settings.width
+		local can_break = not word.nobr or is_nobr_start
+		local is_new_line = (overflow or word.br) and settings.is_multiline and can_break
 
 		-- Trim first word of the line
 		if is_new_line or #current_line == 0 then
