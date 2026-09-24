@@ -21,9 +21,6 @@ local function parse_tag(tag, params, style)
 end
 
 
--- Settings table -> metatable to read it from words, one per settings table
-local WORD_METATABLES = setmetatable({}, { __mode = "k" })
-
 -- add a single word to the list of words
 local function add_word(text, settings, words)
 	-- handle HTML entities
@@ -32,12 +29,7 @@ local function add_word(text, settings, words)
 	end
 
 	-- Words read the tag settings through the metatable instead of copying them
-	local word_metatable = WORD_METATABLES[settings]
-	if not word_metatable then
-		word_metatable = { __index = settings }
-		WORD_METATABLES[settings] = word_metatable
-	end
-	local data = setmetatable({ text = text, source_text = text }, word_metatable)
+	local data = setmetatable({ text = text, source_text = text }, { __index = settings })
 
 	words[#words + 1] = data
 	return data
