@@ -19,6 +19,32 @@ local function ltrim(text)
 end
 
 
+-- Keep only the last glyph run with trailing spaces: the advance of the next word
+-- depends on the previous glyph only, and a longer text is just more to measure
+local function get_line_tail(tail, font, word)
+	if word.image then
+		return nil, nil
+	end
+	if word.text == "" then
+		return tail, font
+	end
+	if word.font ~= font then
+		tail = nil
+	end
+	local text = (tail or "") .. word.text
+	return text:match("%S+%s*$") or text, word.font
+end
+
+
+-- Line tail is a valid measure prefix only for a text word in the same font
+local function get_prefix(tail, font, word)
+	if word.image or word.font ~= font then
+		return nil
+	end
+	return tail
+end
+
+
 -- compare two words and check that they have the same size, color, font and tags
 local function compare_words(one, two)
 	if one == nil
@@ -72,10 +98,10 @@ end
 
 
 ---@param word druid.rich_text.word
----@param previous_word druid.rich_text.word|nil
+---@param prefix string|nil Text before the word on the same line
 ---@param settings druid.rich_text.settings
 ---@return druid.rich_text.metrics
-local function get_text_metrics(word, previous_word, settings)
+local function get_text_metrics(word, prefix, settings)
 	local text = word.text
 	local font_resource = gui.get_font_resource(word.font)
 
@@ -96,10 +122,7 @@ local function get_text_metrics(word, previous_word, settings)
 		-- A lone glyph's width includes distance-field padding on both sides.
 		-- Measure after text that already paid that padding, then pull the node
 		-- back so the padding overlaps the previous glyph instead of a word space.
-		local previous_text = "|"
-		if previous_word and not previous_word.image and previous_word.text and utf8.len(previous_word.text) > 0 then
-			previous_text = previous_word.text
-		end
+		local previous_text = (prefix and prefix ~= "") and prefix or "|"
 		local base_metrics = resource.get_text_metrics(font_resource, previous_text)
 		local union_metrics = resource.get_text_metrics(font_resource, previous_text .. text)
 		metrics.width = (union_metrics.width - base_metrics.width) * word_scale_x
@@ -140,9 +163,9 @@ end
 
 ---@param word druid.rich_text.word
 ---@param settings druid.rich_text.settings
----@param previous_word druid.rich_text.word|nil
+---@param prefix string|nil Text before the word on the same line
 ---@return druid.rich_text.metrics
-local function measure_node(word, settings, previous_word)
+local function measure_node(word, settings, prefix)
 	do -- Clone node if required
 		local node
 		if word.image then
@@ -161,7 +184,7 @@ local function measure_node(word, settings, previous_word)
 	if word.image then
 		return get_image_metrics(word, settings)
 	else
-		return get_text_metrics(word, previous_word, settings)
+		return get_text_metrics(word, prefix, settings)
 	end
 end
 
@@ -279,6 +302,11 @@ function M._split_on_lines(words, settings)
 	local current_line_width = 0
 	local current_line_height = 0
 
+	-- Text before the next word on the current line, see get_line_tail
+	local line_tail = nil
+	local line_font = nil
+	local last_text_word = nil
+
 	repeat
 		local word = words[i]
 		if word == nil then
@@ -288,63 +316,38 @@ function M._split_on_lines(words, settings)
 		-- Reset texts to start measure again
 		word.text = word.source_text
 
-		-- Skip empty words so a trimmed space or a pause tag does not break the advance
-		local previous_word = nil
-		for prev_index = #current_line, 1, -1 do
-			local prev = current_line[prev_index]
-			if prev.image then
-				break
-			end
-			if prev.text and utf8.len(prev.text) > 0 then
-				previous_word = prev
-				break
-			end
-		end
-		if settings.combine_words and not compare_words(previous_word, word) then
-			previous_word = nil
+		local prefix = get_prefix(line_tail, line_font, word)
+		if settings.combine_words and not compare_words(last_text_word, word) then
+			prefix = nil
 		end
 
-		local word_metrics = measure_node(word, settings)
+		local word_metrics = measure_node(word, settings, prefix)
 
 		local next_words_width = word_metrics.width
 		-- Collect width of nobr words from current to next words with nobr
 		if word.nobr then
+			local run_tail, run_font = get_line_tail(prefix, word.font, word)
 			for index = i + 1, word_count do
-				if words[index].nobr then
-					local next_word_measure = measure_node(words[index], settings, words[index-1])
-					next_words_width = next_words_width + next_word_measure.width
-				else
+				local next_word = words[index]
+				if not next_word.nobr then
 					break
 				end
+				next_word.text = next_word.source_text
+				local next_word_measure = measure_node(next_word, settings, get_prefix(run_tail, run_font, next_word))
+				next_words_width = next_words_width + next_word_measure.width
+				run_tail, run_font = get_line_tail(run_tail, run_font, next_word)
 			end
 		end
 		local overflow = (current_line_width + next_words_width) > settings.width
 		local is_new_line = (overflow or word.br) and settings.is_multiline and not word.nobr
 
-		-- Whole line so far, so a word space does not reset the padding
-		local prefix = nil
-		if not is_new_line then
-			local chunks = {}
-			for prev_index = 1, #current_line do
-				local prev = current_line[prev_index]
-				if prev.image then
-					chunks = {}
-				elseif prev.text and prev.text ~= "" then
-					chunks[#chunks + 1] = prev.text
-				end
-			end
-			if #chunks > 0 then
-				prefix = table.concat(chunks)
-			end
-		end
-		if prefix then
-			word_metrics = measure_node(word, settings, { text = prefix })
-		end
-
 		-- Trim first word of the line
-		if is_new_line or not previous_word then
-			word.text = ltrim(word.text)
-			word_metrics = measure_node(word, settings, nil)
+		if is_new_line or #current_line == 0 then
+			local trimmed = ltrim(word.text)
+			if is_new_line or trimmed ~= word.text then
+				word.text = trimmed
+				word_metrics = measure_node(word, settings, nil)
+			end
 		end
 		M._fill_properties(word, word_metrics, settings)
 
@@ -358,10 +361,17 @@ function M._split_on_lines(words, settings)
 			-- overflow, position the words that fit on the line
 			lines[#lines + 1] = current_line
 
-			word.text = ltrim(word.text)
 			current_line = { word }
 			current_line_height = word.metrics.height
 			current_line_width = word.metrics.width
+			line_tail, line_font, last_text_word = nil, nil, nil
+		end
+
+		line_tail, line_font = get_line_tail(line_tail, line_font, word)
+		if word.image then
+			last_text_word = nil
+		elseif word.text ~= "" then
+			last_text_word = word
 		end
 
 		i = i + 1
