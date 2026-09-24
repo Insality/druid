@@ -139,7 +139,11 @@ local function get_text_metrics(word, prefix, settings)
 		-- A lone glyph's width includes distance-field padding on both sides.
 		-- Measure after text that already paid that padding, then pull the node
 		-- back so the padding overlaps the previous glyph instead of a word space.
-		local previous_text = (prefix and prefix ~= "") and prefix or "|"
+		-- Spaces have no glyph to pay the padding, so keep "|" before them
+		local previous_text = prefix or ""
+		if not previous_text:find("%S") then
+			previous_text = "|" .. previous_text
+		end
 		local base_metrics = resource.get_text_metrics(font_resource, previous_text)
 		local union_metrics = resource.get_text_metrics(font_resource, previous_text .. text)
 		metrics.width = (union_metrics.width - base_metrics.width) * word_scale_x

@@ -44,6 +44,11 @@ local function split_line(line, settings, words)
 		add_word(ws_start .. ws_end, settings, words)
 	else
 		local wi = #words
+		-- Letters are nobr, a leading space glued to the first one would join it to the previous letters
+		if settings.split_to_characters and ws_start ~= "" then
+			add_word(ws_start, settings, words)
+			ws_start = ""
+		end
 		for word in trimmed_text:gmatch("%S+") do
 			if settings.split_to_characters then
 				local length = utf8.len(word)
