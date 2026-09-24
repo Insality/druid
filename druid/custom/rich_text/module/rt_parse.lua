@@ -46,7 +46,8 @@ local function split_line(line, settings, words)
 		local wi = #words
 		for word in trimmed_text:gmatch("%S+") do
 			if settings.split_to_characters then
-				for i = 1, #word do
+				local length = utf8.len(word)
+				for i = 1, length do
 					local symbol = utf8.sub(word, i, i)
 					local w = add_word(symbol, settings, words)
 					w.nobr = true

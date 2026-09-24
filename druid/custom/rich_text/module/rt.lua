@@ -90,19 +90,20 @@ local function get_text_metrics(word, previous_word, settings)
 		metrics.height = metrics.height * word_scale_y
 	else
 		metrics = resource.get_text_metrics(font_resource, text)
-		metrics.width = metrics.width * word_scale_x
+		local alone_width = metrics.width * word_scale_x
 		metrics.height = metrics.height * word_scale_y
 
-		if previous_word and not previous_word.image then
-			local previous_word_metrics = resource.get_text_metrics(font_resource, previous_word.text)
-			local union_metrics = resource.get_text_metrics(font_resource, previous_word.text .. text)
-
-			local without_previous_width = metrics.width
-			metrics.width = (union_metrics.width - previous_word_metrics.width) * word_scale_x
-			-- Since the several characters can be ajusted to fit the space between the previous word and this word
-			-- For example: chars: [.,?!]
-			metrics.offset_x = metrics.width - without_previous_width
+		-- A lone glyph's width includes distance-field padding on both sides.
+		-- Measure after text that already paid that padding, then pull the node
+		-- back so the padding overlaps the previous glyph instead of a word space.
+		local previous_text = "|"
+		if previous_word and not previous_word.image and previous_word.text and utf8.len(previous_word.text) > 0 then
+			previous_text = previous_word.text
 		end
+		local base_metrics = resource.get_text_metrics(font_resource, previous_text)
+		local union_metrics = resource.get_text_metrics(font_resource, previous_text .. text)
+		metrics.width = (union_metrics.width - base_metrics.width) * word_scale_x
+		metrics.offset_x = metrics.width - alone_width
 	end
 
 	metrics.offset_x = metrics.offset_x or 0
@@ -287,12 +288,20 @@ function M._split_on_lines(words, settings)
 		-- Reset texts to start measure again
 		word.text = word.source_text
 
-		-- get the previous word, so we can combine
-		local previous_word = current_line[#current_line]
-		if settings.combine_words then
-			if not compare_words(previous_word, word) then
-				previous_word = nil
+		-- Skip empty words so a trimmed space or a pause tag does not break the advance
+		local previous_word = nil
+		for prev_index = #current_line, 1, -1 do
+			local prev = current_line[prev_index]
+			if prev.image then
+				break
 			end
+			if prev.text and utf8.len(prev.text) > 0 then
+				previous_word = prev
+				break
+			end
+		end
+		if settings.combine_words and not compare_words(previous_word, word) then
+			previous_word = nil
 		end
 
 		local word_metrics = measure_node(word, settings)
@@ -312,9 +321,24 @@ function M._split_on_lines(words, settings)
 		local overflow = (current_line_width + next_words_width) > settings.width
 		local is_new_line = (overflow or word.br) and settings.is_multiline and not word.nobr
 
-		-- We recalculate metrics with previous_word if it follow for word on current line
-		if not is_new_line and previous_word then
-			word_metrics = measure_node(word, settings, previous_word)
+		-- Whole line so far, so a word space does not reset the padding
+		local prefix = nil
+		if not is_new_line then
+			local chunks = {}
+			for prev_index = 1, #current_line do
+				local prev = current_line[prev_index]
+				if prev.image then
+					chunks = {}
+				elseif prev.text and prev.text ~= "" then
+					chunks[#chunks + 1] = prev.text
+				end
+			end
+			if #chunks > 0 then
+				prefix = table.concat(chunks)
+			end
+		end
+		if prefix then
+			word_metrics = measure_node(word, settings, { text = prefix })
 		end
 
 		-- Trim first word of the line
