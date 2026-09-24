@@ -8,6 +8,9 @@ local utf8 = utf8 or utf8_lua
 
 local M = {}
 
+-- One UTF-8 character: a lead byte with its continuation bytes
+local UTF8_CHAR_PATTERN = "[^\128-\191][\128-\191]*"
+
 local function parse_tag(tag, params, style)
 	local settings = { tags = { [tag] = params }, tag = tag }
 	if not tags.apply(tag, params, settings, style) then
@@ -21,7 +24,9 @@ end
 -- add a single word to the list of words
 local function add_word(text, settings, words)
 	-- handle HTML entities
-	text = text:gsub("&lt;", "<"):gsub("&gt;", ">"):gsub("&nbsp;", " ")
+	if text:find("&", 1, true) then
+		text = text:gsub("&lt;", "<"):gsub("&gt;", ">"):gsub("&nbsp;", " ")
+	end
 
 	local data = { text = text, source_text = text }
 	for k,v in pairs(settings) do
@@ -51,9 +56,7 @@ local function split_line(line, settings, words)
 		end
 		for word in trimmed_text:gmatch("%S+") do
 			if settings.split_to_characters then
-				local length = utf8.len(word)
-				for i = 1, length do
-					local symbol = utf8.sub(word, i, i)
+				for symbol in word:gmatch(UTF8_CHAR_PATTERN) do
 					local w = add_word(symbol, settings, words)
 					w.nobr = true
 				end
@@ -66,7 +69,8 @@ local function split_line(line, settings, words)
 		first.text = ws_start .. first.text
 		first.source_text = first.text
 		local last = words[#words]
-		last.text = utf8.sub(last.text, 1, utf8.len(last.text) - 1) .. ws_end
+		-- The last word always ends with the space added above
+		last.text = last.text:sub(1, -2) .. ws_end
 		last.source_text = last.text
 	end
 end

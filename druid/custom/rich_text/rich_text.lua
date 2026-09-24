@@ -174,8 +174,7 @@ function M:set_text(text)
 	self._settings.height = root_size.y
 	self._settings.split_to_characters = self._split_to_characters
 
-	local words, settings, line_metrics = rich_text.create(text, self._settings, self.style)
-	line_metrics = rich_text.adjust_to_area(words, settings, line_metrics, self.style)
+	local words, line_metrics = rich_text.create_adjusted(text, self._settings, self.style)
 
 	self._words = words
 	self._line_metrics = line_metrics

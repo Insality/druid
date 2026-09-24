@@ -114,46 +114,87 @@ local function get_prefix_shift(font_resource)
 end
 
 
+---@param font hash|string
+---@param settings druid.rich_text.settings
+---@return hash
+local function get_font_resource(font, settings)
+	local font_resources = settings.font_resources
+	if not font_resources then
+		font_resources = {}
+		settings.font_resources = font_resources
+	end
+	local font_resource = font_resources[font]
+	if not font_resource then
+		font_resource = gui.get_font_resource(font)
+		font_resources[font] = font_resource
+	end
+	return font_resource
+end
+
+
+-- Raw text metrics do not depend on the scale, so the fit loop and the line
+-- tails measure the same strings again and again. The cache lives until the next create.
+---@param font_resource hash
+---@param text string
+---@param settings druid.rich_text.settings
+local function get_raw_metrics(font_resource, text, settings)
+	local cache = settings.metrics_cache
+	if not cache then
+		cache = {}
+		settings.metrics_cache = cache
+	end
+	local font_cache = cache[font_resource]
+	if not font_cache then
+		font_cache = {}
+		cache[font_resource] = font_cache
+	end
+	local metrics = font_cache[text]
+	if not metrics then
+		metrics = resource.get_text_metrics(font_resource, text)
+		font_cache[text] = metrics
+	end
+	return metrics
+end
+
+
 ---@param word druid.rich_text.word
 ---@param prefix string|nil Text before the word on the same line
 ---@param settings druid.rich_text.settings
 ---@return druid.rich_text.metrics
 local function get_text_metrics(word, prefix, settings)
 	local text = word.text
-	local font_resource = gui.get_font_resource(word.font)
-
-	---@type druid.rich_text.metrics
-	local metrics
+	local font_resource = get_font_resource(word.font, settings)
 	local word_scale_x = word.relative_scale * settings.scale.x * settings.adjust_scale
 	local word_scale_y = word.relative_scale * settings.scale.y * settings.adjust_scale
 
-	if utf8.len(text) == 0 then
-		metrics = resource.get_text_metrics(font_resource, "|")
-		metrics.width = 0
-		metrics.height = metrics.height * word_scale_y
-	else
-		metrics = resource.get_text_metrics(font_resource, text)
-		local alone_width = metrics.width * word_scale_x
-		metrics.height = metrics.height * word_scale_y
-
-		-- A lone glyph's width includes distance-field padding on both sides.
-		-- Measure after text that already paid that padding, then pull the node
-		-- back so the padding overlaps the previous glyph instead of a word space.
-		-- Spaces have no glyph to pay the padding, so keep "|" before them
-		local previous_text = prefix or ""
-		if not previous_text:find("%S") then
-			previous_text = "|" .. previous_text
-		end
-		local base_metrics = resource.get_text_metrics(font_resource, previous_text)
-		local union_metrics = resource.get_text_metrics(font_resource, previous_text .. text)
-		metrics.width = (union_metrics.width - base_metrics.width) * word_scale_x
-		metrics.offset_x = metrics.width - alone_width - get_prefix_shift(font_resource) * word_scale_x
+	if text == "" then
+		return {
+			width = 0,
+			height = get_raw_metrics(font_resource, "|", settings).height * word_scale_y,
+			offset_x = 0,
+			offset_y = 0,
+		}
 	end
 
-	metrics.offset_x = metrics.offset_x or 0
-	metrics.offset_y = metrics.offset_y or 0
+	local alone = get_raw_metrics(font_resource, text, settings)
 
-	return metrics
+	-- A lone glyph's width includes distance-field padding on both sides.
+	-- Measure after text that already paid that padding, then pull the node
+	-- back so the padding overlaps the previous glyph instead of a word space.
+	-- Spaces have no glyph to pay the padding, so keep "|" before them
+	local previous_text = prefix or ""
+	if not previous_text:find("%S") then
+		previous_text = "|" .. previous_text
+	end
+	local base_width = get_raw_metrics(font_resource, previous_text, settings).width
+	local width = get_raw_metrics(font_resource, previous_text .. text, settings).width - base_width
+
+	return {
+		width = width * word_scale_x,
+		height = alone.height * word_scale_y,
+		offset_x = (width - alone.width - get_prefix_shift(font_resource)) * word_scale_x,
+		offset_y = 0,
+	}
 end
 
 
@@ -161,23 +202,28 @@ end
 ---@param settings druid.rich_text.settings
 ---@return druid.rich_text.metrics
 local function get_image_metrics(word, settings)
-	local node = word.node
-	if word.image.width or word.image.height then
-		gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
-	else
-		gui.set_size_mode(node, gui.SIZE_MODE_AUTO)
-	end
-	gui.set_texture(node, word.image.texture)
-	gui.play_flipbook(node, hash(word.image.anim))
+	-- Image size does not change with the scale, read it from the node once
+	local image_size = word.image_size
+	if not image_size then
+		local node = word.node
+		if word.image.width or word.image.height then
+			gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
+		else
+			gui.set_size_mode(node, gui.SIZE_MODE_AUTO)
+		end
+		gui.set_texture(node, word.image.texture)
+		gui.play_flipbook(node, hash(word.image.anim))
 
-	local node_size = gui.get_size(node)
-	node_size.x = word.image.width or node_size.x
-	node_size.y = word.image.height or node_size.y
+		image_size = gui.get_size(node)
+		image_size.x = word.image.width or image_size.x
+		image_size.y = word.image.height or image_size.y
+		word.image_size = image_size
+	end
 
 	return {
-		width = node_size.x * word.relative_scale * settings.adjust_scale,
-		height = node_size.y * word.relative_scale * settings.adjust_scale,
-		node_size = node_size,
+		width = image_size.x * word.relative_scale * settings.adjust_scale,
+		height = image_size.y * word.relative_scale * settings.adjust_scale,
+		node_size = vmath.vector3(image_size),
 	}
 end
 
@@ -210,15 +256,15 @@ local function measure_node(word, settings, prefix)
 end
 
 
--- Create rich text gui nodes from text
----@param text string The text to create rich text nodes from
----@param settings table Optional settings table (refer to documentation for details)
+-- Parse text into words, nodes are created on the first measure
+---@param text string
+---@param settings druid.rich_text.settings
 ---@param style druid.rich_text.style
 ---@return druid.rich_text.word[]
----@return druid.rich_text.settings
----@return druid.rich_text.lines_metrics
-function M.create(text, settings, style)
+local function parse_words(text, settings, style)
 	assert(text, "You must provide a text")
+	settings.metrics_cache = {}
+	settings.font_resources = {}
 
 	-- default settings for a word
 	-- will be assigned to each word unless tags override the values
@@ -248,17 +294,47 @@ function M.create(text, settings, style)
 		nobr = nil,
 	}
 
-	local parsed_words = parser.parse(text, word_params, style)
-	local lines = M._split_on_lines(parsed_words, settings)
+	return parser.parse(text, word_params, style)
+end
+
+
+-- Create rich text gui nodes from text
+---@param text string The text to create rich text nodes from
+---@param settings table Optional settings table (refer to documentation for details)
+---@param style druid.rich_text.style
+---@return druid.rich_text.word[]
+---@return druid.rich_text.settings
+---@return druid.rich_text.lines_metrics
+function M.create(text, settings, style)
+	local words = parse_words(text, settings, style)
+	local lines = M._split_on_lines(words, settings)
 	local lines_metrics = M._position_lines(lines, settings)
 	M._update_nodes(lines, settings)
 
-	local words = {}
-	for index = 1, #lines do
-		helper.add_array(words, lines[index])
+	return words, settings, lines_metrics
+end
+
+
+---Create rich text gui nodes from text, scaled down to fit the area. Nodes are updated once
+---@param text string The text to create rich text nodes from
+---@param settings druid.rich_text.settings
+---@param style druid.rich_text.style
+---@return druid.rich_text.word[]
+---@return druid.rich_text.lines_metrics
+function M.create_adjusted(text, settings, style)
+	local words = parse_words(text, settings, style)
+	local lines = M._split_on_lines(words, settings)
+
+	local scale = M._get_fit_scale(words, settings, M._get_lines_metrics(lines, settings), style)
+	if scale then
+		settings.adjust_scale = scale
+		lines = M._split_on_lines(words, settings)
 	end
 
-	return words, settings, lines_metrics
+	local lines_metrics = M._position_lines(lines, settings)
+	M._update_nodes(lines, settings)
+
+	return words, lines_metrics
 end
 
 
@@ -495,9 +571,9 @@ function M._get_lines_metrics(lines, settings)
 		if last and not last.image then
 			local trimmed = last.text:match("^(.-)%s+$")
 			if trimmed then
-				local font_resource = gui.get_font_resource(last.font)
+				local font_resource = get_font_resource(last.font, settings)
 				local scale_x = last.relative_scale * settings.scale.x * settings.adjust_scale
-				local space_w = resource.get_text_metrics(font_resource, last.text).width - resource.get_text_metrics(font_resource, trimmed).width
+				local space_w = get_raw_metrics(font_resource, last.text, settings).width - get_raw_metrics(font_resource, trimmed, settings).width
 				width = width - space_w * scale_x
 			end
 		end
@@ -506,7 +582,7 @@ function M._get_lines_metrics(lines, settings)
 		local first = line[1]
 		if first and not first.image then
 			local scale_x = first.relative_scale * settings.scale.x * settings.adjust_scale
-			width = width - get_prefix_shift(gui.get_font_resource(first.font)) * scale_x
+			width = width - get_prefix_shift(get_font_resource(first.font, settings)) * scale_x
 		end
 
 		if line_index > 1 then
@@ -583,55 +659,77 @@ function M.set_text_scale(words, settings, scale)
 end
 
 
+---Find the adjust scale to fit the text into the area
+---@param words druid.rich_text.word[]
+---@param settings druid.rich_text.settings
+---@param lines_metrics druid.rich_text.lines_metrics Metrics at the current adjust scale
+---@param style druid.rich_text.style
+---@return number|nil scale Nil if the text already fits
+function M._get_fit_scale(words, settings, lines_metrics, style)
+	local width = settings.width
+	local height = settings.height
+	local current_scale = settings.adjust_scale
+
+	if not settings.is_multiline then
+		if lines_metrics.text_width <= width then
+			return nil
+		end
+		return current_scale * width / lines_metrics.text_width
+	end
+
+	if lines_metrics.text_width <= width and lines_metrics.text_height <= height then
+		return nil
+	end
+
+	-- Lines rewrap on every scale, so start from the area ratio and search around it:
+	-- step away with a doubling step until fit and miss are around the answer, then halve
+	local scale = current_scale * math.sqrt(height / lines_metrics.text_height)
+	if lines_metrics.text_width * scale > width * current_scale then
+		scale = current_scale * math.sqrt(width / lines_metrics.text_width)
+	end
+
+	local fit_scale = 0
+	local miss_scale = current_scale
+	local step = style.ADJUST_SCALE_DELTA
+	if scale <= fit_scale or scale >= miss_scale then
+		scale = (fit_scale + miss_scale) / 2
+	end
+
+	for _ = 1, style.ADJUST_STEPS do
+		settings.adjust_scale = scale
+		local metrics = M._get_lines_metrics(M._split_on_lines(words, settings), settings)
+		local is_fit = metrics.text_width <= width and metrics.text_height <= height
+		if is_fit then
+			fit_scale = scale
+		else
+			miss_scale = scale
+		end
+		if miss_scale - fit_scale <= style.ADJUST_SCALE_DELTA then
+			break
+		end
+
+		scale = is_fit and (scale + step) or (scale - step)
+		step = step * 2
+		if scale <= fit_scale or scale >= miss_scale then
+			scale = (fit_scale + miss_scale) / 2
+		end
+	end
+
+	settings.adjust_scale = current_scale
+	return fit_scale > 0 and fit_scale or miss_scale
+end
+
+
 ---@param words druid.rich_text.word[]
 ---@param settings druid.rich_text.settings
 ---@param lines_metrics druid.rich_text.lines_metrics
 ---@param style druid.rich_text.style
 function M.adjust_to_area(words, settings, lines_metrics, style)
-	local last_line_metrics = lines_metrics
-
-	if not settings.is_multiline then
-		if lines_metrics.text_width > settings.width then
-			last_line_metrics = M.set_text_scale(words, settings, settings.width / lines_metrics.text_width)
-		end
-	else
-		-- Multiline adjusting is very tricky stuff...
-		-- It's doing a lot of calculations, beware!
-		if lines_metrics.text_width > settings.width or lines_metrics.text_height > settings.height then
-			local scale_koef = math.sqrt(settings.height / lines_metrics.text_height)
-			if lines_metrics.text_width * scale_koef > settings.width then
-				scale_koef = math.sqrt(settings.width / lines_metrics.text_width)
-			end
-			local adjust_scale = math.min(scale_koef, settings.scale.x)
-
-			local lines = M.apply_scale_without_update(words, settings, adjust_scale)
-			local is_fit = M.is_fit_info_area(lines, settings)
-			local step = is_fit and style.ADJUST_SCALE_DELTA or -style.ADJUST_SCALE_DELTA
-
-			for i = 1, style.ADJUST_STEPS do
-				-- Grow down to check if we fit
-				if step < 0 and is_fit then
-					last_line_metrics = M.set_text_scale(words, settings, adjust_scale)
-					break
-				end
-				-- Grow up to check if we still fit
-				if step > 0 and not is_fit then
-					last_line_metrics = M.set_text_scale(words, settings, adjust_scale - step)
-					break
-				end
-
-				adjust_scale = adjust_scale + step
-				lines = M.apply_scale_without_update(words, settings, adjust_scale)
-				is_fit = M.is_fit_info_area(lines, settings)
-
-				if i == style.ADJUST_STEPS then
-					last_line_metrics = M.set_text_scale(words, settings, adjust_scale)
-				end
-			end
-		end
+	local scale = M._get_fit_scale(words, settings, lines_metrics, style)
+	if not scale then
+		return lines_metrics
 	end
-
-	return last_line_metrics
+	return M.set_text_scale(words, settings, scale)
 end
 
 
