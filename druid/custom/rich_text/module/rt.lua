@@ -13,6 +13,9 @@ local COLOR_WHITE = vmath.vector4(1)
 
 local M = {}
 
+-- Font resource -> constant shift of measuring after "|", see get_prefix_shift
+local PREFIX_SHIFT = {}
+
 -- Trim spaces on string start
 local function ltrim(text)
 	return text:match('^%s*(.*)')
@@ -97,6 +100,20 @@ function M.length(text)
 end
 
 
+-- Measuring after "|" shifts every word by the same amount, so a word with
+-- no text before it would not start at the node origin. Remove this constant.
+local function get_prefix_shift(font_resource)
+	local shift = PREFIX_SHIFT[font_resource]
+	if not shift then
+		local single = resource.get_text_metrics(font_resource, "|").width
+		local double = resource.get_text_metrics(font_resource, "||").width
+		shift = double - single * 2
+		PREFIX_SHIFT[font_resource] = shift
+	end
+	return shift
+end
+
+
 ---@param word druid.rich_text.word
 ---@param prefix string|nil Text before the word on the same line
 ---@param settings druid.rich_text.settings
@@ -126,7 +143,7 @@ local function get_text_metrics(word, prefix, settings)
 		local base_metrics = resource.get_text_metrics(font_resource, previous_text)
 		local union_metrics = resource.get_text_metrics(font_resource, previous_text .. text)
 		metrics.width = (union_metrics.width - base_metrics.width) * word_scale_x
-		metrics.offset_x = metrics.width - alone_width
+		metrics.offset_x = metrics.width - alone_width - get_prefix_shift(font_resource) * word_scale_x
 	end
 
 	metrics.offset_x = metrics.offset_x or 0
@@ -479,6 +496,13 @@ function M._get_lines_metrics(lines, settings)
 				local space_w = resource.get_text_metrics(font_resource, last.text).width - resource.get_text_metrics(font_resource, trimmed).width
 				width = width - space_w * scale_x
 			end
+		end
+
+		-- Words are measured by advance, the line also takes the side padding of its first glyph
+		local first = line[1]
+		if first and not first.image then
+			local scale_x = first.relative_scale * settings.scale.x * settings.adjust_scale
+			width = width - get_prefix_shift(gui.get_font_resource(first.font)) * scale_x
 		end
 
 		if line_index > 1 then
