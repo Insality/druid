@@ -150,6 +150,13 @@
 	"ui_example_rich_text_resize": "Rich Text 尺寸",
 	"ui_example_rich_text_resize_description": "拖动宽度和高度滑块：文本会重新换行并缩小以适应区域。",
 
+	"ui_example_rich_text_glyphs": "富文本字形",
+	"ui_example_rich_text_glyphs_description": "富文本绘制在相同字符串的普通文本节点上。字母应完全重合，橙色边缘表示字距错误。",
+
+	"ui_example_rich_text_split_wrap": "按字母换行",
+	"ui_example_rich_text_split_wrap_description": "每个字母都是独立节点，但单词整体换行。图片后的空格、缩进和 nobr 部分会保留。",
+	"ui_split_to_characters": "拆分为字母",
+
 	"ui_width": "宽度",
 	"ui_height": "高度",
 

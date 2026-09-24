@@ -150,6 +150,13 @@
 	"ui_example_rich_text_resize": "Tamanho do Rich Text",
 	"ui_example_rich_text_resize_description": "Mexa nos sliders de largura e altura: o texto requebra e reduz para caber na área.",
 
+	"ui_example_rich_text_glyphs": "Glifos do Rich Text",
+	"ui_example_rich_text_glyphs_description": "O rich text é desenhado sobre um nó de texto normal com a mesma string. As letras devem cobri-lo exatamente, bordas laranja indicam um avanço errado.",
+
+	"ui_example_rich_text_split_wrap": "Quebra por letras",
+	"ui_example_rich_text_split_wrap_description": "Cada letra é um nó, mas as palavras quebram inteiras. Espaços após imagens, recuos e partes nobr são mantidos.",
+	"ui_split_to_characters": "Dividir em letras",
+
 	"ui_width": "Largura",
 	"ui_height": "Altura",
 

@@ -150,6 +150,13 @@
 	"ui_example_rich_text_resize": "Rich Text のサイズ",
 	"ui_example_rich_text_resize_description": "幅と高さのスライダーを動かすと、テキストが再折り返しされ領域に収まるよう縮小します。",
 
+	"ui_example_rich_text_glyphs": "リッチテキストのグリフ",
+	"ui_example_rich_text_glyphs_description": "同じ文字列の通常テキストノードの上にリッチテキストを表示します。文字がぴったり重なるはずで、オレンジの縁は送り幅のずれを示します。",
+
+	"ui_example_rich_text_split_wrap": "文字単位の折り返し",
+	"ui_example_rich_text_split_wrap_description": "各文字は別ノードですが、単語はまとめて折り返されます。画像後のスペース、インデント、nobrは保持されます。",
+	"ui_split_to_characters": "文字に分割",
+
 	"ui_width": "幅",
 	"ui_height": "高さ",
 

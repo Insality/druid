@@ -1,0 +1,60 @@
+fonts {
+  name: "text_bold"
+  font: "/example/assets/fonts/text_bold.font"
+}
+fonts {
+  name: "text_regular"
+  font: "/example/assets/fonts/text_regular.font"
+}
+nodes {
+  size {
+    x: 1000.0
+    y: 1000.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  visible: false
+}
+nodes {
+  size {
+    x: 520.0
+    y: 240.0
+  }
+  color {
+    x: 0.941
+    y: 0.984
+  }
+  type: TYPE_TEXT
+  text: "Rich Text"
+  font: "text_regular"
+  id: "text"
+  line_break: true
+  parent: "root"
+  inherit_alpha: true
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+nodes {
+  size {
+    x: 520.0
+    y: 240.0
+  }
+  color {
+    x: 0.894
+    y: 0.506
+    z: 0.333
+  }
+  type: TYPE_TEXT
+  text: "Text"
+  font: "text_regular"
+  id: "text_reference"
+  line_break: true
+  parent: "text"
+  inherit_alpha: true
+  alpha: 0.6
+  outline_alpha: 0.0
+  shadow_alpha: 0.0
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

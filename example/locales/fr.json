@@ -150,6 +150,13 @@
 	"ui_example_rich_text_resize": "Taille du Rich Text",
 	"ui_example_rich_text_resize_description": "Bouge les sliders de largeur et de hauteur : le texte se recoupe et se réduit pour tenir.",
 
+	"ui_example_rich_text_glyphs": "Glyphes Rich Text",
+	"ui_example_rich_text_glyphs_description": "Le texte riche est dessiné sur un nœud texte normal avec la même chaîne. Les lettres doivent le couvrir exactement, des bords orange signalent une mauvaise avance.",
+
+	"ui_example_rich_text_split_wrap": "Retour à la ligne par lettres",
+	"ui_example_rich_text_split_wrap_description": "Chaque lettre est un nœud, mais les mots passent à la ligne en entier. Les espaces après les images, les retraits et les parties nobr sont conservés.",
+	"ui_split_to_characters": "Diviser en lettres",
+
 	"ui_width": "Largeur",
 	"ui_height": "Hauteur",
 

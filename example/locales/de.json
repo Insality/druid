@@ -150,6 +150,13 @@
 	"ui_example_rich_text_resize": "Rich Text Größe",
 	"ui_example_rich_text_resize_description": "Zieh die Slider für Breite und Höhe: der Text bricht neu um und skaliert in die Fläche.",
 
+	"ui_example_rich_text_glyphs": "Rich-Text-Glyphen",
+	"ui_example_rich_text_glyphs_description": "Rich Text liegt über einem normalen Textknoten mit demselben String. Die Buchstaben sollten ihn genau verdecken, orange Ränder bedeuten einen falschen Vorschub.",
+
+	"ui_example_rich_text_split_wrap": "Rich-Text-Umbruch pro Buchstabe",
+	"ui_example_rich_text_split_wrap_description": "Jeder Buchstabe ist ein eigener Knoten, aber Wörter werden als Ganzes umgebrochen. Leerzeichen nach Bildern, Einzüge und nobr bleiben erhalten.",
+	"ui_split_to_characters": "In Buchstaben teilen",
+
 	"ui_width": "Breite",
 	"ui_height": "Höhe",
 

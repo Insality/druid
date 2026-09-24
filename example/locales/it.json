@@ -150,6 +150,13 @@
 	"ui_example_rich_text_resize": "Dimensione del Rich Text",
 	"ui_example_rich_text_resize_description": "Muovi gli slider di larghezza e altezza: il testo va a capo e si riduce per stare nell'area.",
 
+	"ui_example_rich_text_glyphs": "Glifi Rich Text",
+	"ui_example_rich_text_glyphs_description": "Il rich text è disegnato sopra un nodo di testo normale con la stessa stringa. Le lettere devono coprirlo esattamente, i bordi arancioni indicano un avanzamento errato.",
+
+	"ui_example_rich_text_split_wrap": "A capo per lettere",
+	"ui_example_rich_text_split_wrap_description": "Ogni lettera è un nodo, ma le parole vanno a capo intere. Spazi dopo le immagini, rientri e parti nobr restano.",
+	"ui_split_to_characters": "Dividi in lettere",
+
 	"ui_width": "Larghezza",
 	"ui_height": "Altezza",
 
