@@ -64,7 +64,8 @@ local VECTOR3_ONE = vmath.vector3(1)
 ---@field lines table<number, druid.rich_text.metrics>
 
 ---@class druid.rich_text.metrics
----@field width number
+---@field width number Advance of the word, the next word starts after it
+---@field visible_width number|nil Width to the last visible glyph of a text word
 ---@field height number
 ---@field offset_x number|nil
 ---@field offset_y number|nil

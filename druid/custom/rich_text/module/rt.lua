@@ -13,70 +13,9 @@ local COLOR_WHITE = vmath.vector4(1)
 
 local M = {}
 
--- Font resource -> constant shift of measuring after "|", see get_prefix_shift
-local PREFIX_SHIFT = {}
-
 -- Trim spaces on string start
 local function ltrim(text)
 	return text:match('^%s*(.*)')
-end
-
-
--- Keep only the last glyph run with trailing spaces: the advance of the next word
--- depends on the previous glyph only, and a longer text is just more to measure
-local function get_line_tail(tail, font, word)
-	if word.image then
-		return nil, nil
-	end
-	if word.text == "" then
-		return tail, font
-	end
-	if word.font ~= font then
-		tail = nil
-	end
-	local text = (tail or "") .. word.text
-	return text:match("%S+%s*$") or text, word.font
-end
-
-
--- Line tail is a valid measure prefix only for a text word in the same font
-local function get_prefix(tail, font, word)
-	if word.image or word.font ~= font then
-		return nil
-	end
-	return tail
-end
-
-
--- compare two words and check that they have the same size, color, font and tags
-local function compare_words(one, two)
-	if one == nil
-	or two == nil
-	or one.size ~= two.size
-	or one.color ~= two.color
-	or one.shadow ~= two.shadow
-	or one.outline ~= two.outline
-	or one.font ~= two.font then
-		return false
-	end
-	local one_tags, two_tags = one.tags, two.tags
-	if one_tags == two_tags then
-		return true
-	end
-	if one_tags == nil or two_tags == nil then
-		return false
-	end
-	for k, v in pairs(one_tags) do
-		if two_tags[k] ~= v then
-			return false
-		end
-	end
-	for k, v in pairs(two_tags) do
-		if one_tags[k] ~= v then
-			return false
-		end
-	end
-	return true
 end
 
 
@@ -97,20 +36,6 @@ function M.length(text)
 		end
 		return count
 	end
-end
-
-
--- Measuring after "|" shifts every word by the same amount, so a word with
--- no text before it would not start at the node origin. Remove this constant.
-local function get_prefix_shift(font_resource)
-	local shift = PREFIX_SHIFT[font_resource]
-	if not shift then
-		local single = resource.get_text_metrics(font_resource, "|").width
-		local double = resource.get_text_metrics(font_resource, "||").width
-		shift = double - single * 2
-		PREFIX_SHIFT[font_resource] = shift
-	end
-	return shift
 end
 
 
@@ -158,41 +83,29 @@ end
 
 
 ---@param word druid.rich_text.word
----@param prefix string|nil Text before the word on the same line
 ---@param settings druid.rich_text.settings
 ---@return druid.rich_text.metrics
-local function get_text_metrics(word, prefix, settings)
+local function get_text_metrics(word, settings)
 	local text = word.text
 	local font_resource = get_font_resource(word.font, settings)
 	local word_scale_x = word.relative_scale * settings.scale.x * settings.adjust_scale
 	local word_scale_y = word.relative_scale * settings.scale.y * settings.adjust_scale
 
-	if text == "" then
-		return {
-			width = 0,
-			height = get_raw_metrics(font_resource, "|", settings).height * word_scale_y,
-			offset_x = 0,
-			offset_y = 0,
-		}
-	end
+	-- A text width ends at its last glyph, including the distance field padding.
+	-- "|" after the text keeps the full advance instead, so the next word starts
+	-- where it would start in one text node, whatever its size or font is
+	local end_metrics = get_raw_metrics(font_resource, "|", settings)
+	local advance = get_raw_metrics(font_resource, text .. "|", settings).width - end_metrics.width
 
-	local alone = get_raw_metrics(font_resource, text, settings)
-
-	-- A lone glyph's width includes distance-field padding on both sides.
-	-- Measure after text that already paid that padding, then pull the node
-	-- back so the padding overlaps the previous glyph instead of a word space.
-	-- Spaces have no glyph to pay the padding, so keep "|" before them
-	local previous_text = prefix or ""
-	if not previous_text:find("%S") then
-		previous_text = "|" .. previous_text
-	end
-	local base_width = get_raw_metrics(font_resource, previous_text, settings).width
-	local width = get_raw_metrics(font_resource, previous_text .. text, settings).width - base_width
+	-- Where the visible glyphs end, used to wrap and to align lines
+	local trimmed = text:match("^(.-)%s*$")
+	local visible_width = trimmed ~= "" and get_raw_metrics(font_resource, trimmed, settings).width or 0
 
 	return {
-		width = width * word_scale_x,
-		height = alone.height * word_scale_y,
-		offset_x = (width - alone.width - get_prefix_shift(font_resource)) * word_scale_x,
+		width = advance * word_scale_x,
+		visible_width = visible_width * word_scale_x,
+		height = end_metrics.height * word_scale_y,
+		offset_x = 0,
 		offset_y = 0,
 	}
 end
@@ -230,9 +143,8 @@ end
 
 ---@param word druid.rich_text.word
 ---@param settings druid.rich_text.settings
----@param prefix string|nil Text before the word on the same line
 ---@return druid.rich_text.metrics
-local function measure_node(word, settings, prefix)
+local function measure_node(word, settings)
 	do -- Clone node if required
 		local node
 		if word.image then
@@ -251,7 +163,7 @@ local function measure_node(word, settings, prefix)
 	if word.image then
 		return get_image_metrics(word, settings)
 	else
-		return get_text_metrics(word, prefix, settings)
+		return get_text_metrics(word, settings)
 	end
 end
 
@@ -388,6 +300,18 @@ function M._fill_properties(word, metrics, settings)
 end
 
 
+-- Width from the word start to its last visible glyph
+---@param word druid.rich_text.word
+---@param metrics druid.rich_text.metrics
+---@return number
+local function get_visible_width(word, metrics)
+	if word.image then
+		return metrics.width
+	end
+	return metrics.visible_width
+end
+
+
 ---@param words druid.rich_text.word[]
 ---@param settings druid.rich_text.settings
 ---@return druid.rich_text.word[][]
@@ -399,11 +323,6 @@ function M._split_on_lines(words, settings)
 	local current_line_width = 0
 	local current_line_height = 0
 
-	-- Text before the next word on the current line, see get_line_tail
-	local line_tail = nil
-	local line_font = nil
-	local last_text_word = nil
-
 	repeat
 		local word = words[i]
 		if word == nil then
@@ -412,31 +331,28 @@ function M._split_on_lines(words, settings)
 
 		-- Reset texts to start measure again
 		word.text = word.source_text
-
-		local prefix = get_prefix(line_tail, line_font, word)
-		if settings.combine_words and not compare_words(last_text_word, word) then
-			prefix = nil
-		end
-
-		local word_metrics = measure_node(word, settings, prefix)
+		local word_metrics = measure_node(word, settings)
 
 		-- A nobr run moves to the next line only as a whole, from its first word
 		local previous_word = words[i - 1]
 		local is_nobr_start = word.nobr and not (previous_word and previous_word.nobr)
 
-		local next_words_width = word_metrics.width
 		-- Collect width of nobr words from current to next words with nobr
+		local next_words_width = get_visible_width(word, word_metrics)
 		if is_nobr_start then
-			local run_tail, run_font = get_line_tail(prefix, word.font, word)
+			local run_advance = word_metrics.width
 			for index = i + 1, word_count do
 				local next_word = words[index]
 				if not next_word.nobr then
 					break
 				end
 				next_word.text = next_word.source_text
-				local next_word_measure = measure_node(next_word, settings, get_prefix(run_tail, run_font, next_word))
-				next_words_width = next_words_width + next_word_measure.width
-				run_tail, run_font = get_line_tail(run_tail, run_font, next_word)
+				local next_word_metrics = measure_node(next_word, settings)
+				local visible_width = get_visible_width(next_word, next_word_metrics)
+				if visible_width > 0 then
+					next_words_width = run_advance + visible_width
+				end
+				run_advance = run_advance + next_word_metrics.width
 			end
 		end
 		-- A word wider than the area stays on its line instead of leaving an empty one before it
@@ -447,9 +363,9 @@ function M._split_on_lines(words, settings)
 		-- Trim first word of the line
 		if is_new_line or #current_line == 0 then
 			local trimmed = ltrim(word.text)
-			if is_new_line or trimmed ~= word.text then
+			if trimmed ~= word.text then
 				word.text = trimmed
-				word_metrics = measure_node(word, settings, nil)
+				word_metrics = measure_node(word, settings)
 			end
 		end
 		M._fill_properties(word, word_metrics, settings)
@@ -467,14 +383,6 @@ function M._split_on_lines(words, settings)
 			current_line = { word }
 			current_line_height = word.metrics.height
 			current_line_width = word.metrics.width
-			line_tail, line_font, last_text_word = nil, nil, nil
-		end
-
-		line_tail, line_font = get_line_tail(line_tail, line_font, word)
-		if word.image then
-			last_text_word = nil
-		elseif word.text ~= "" then
-			last_text_word = word
 		end
 
 		i = i + 1
@@ -554,35 +462,21 @@ function M._get_lines_metrics(lines, settings)
 	local text_height = 0
 	for line_index = 1, #lines do
 		local line = lines[line_index]
+		-- Words stand at their advance, the line ends at the last visible glyph
+		local advance = 0
 		local width = 0
 		local height = 0
 		for word_index = 1, #line do
 			local word = line[word_index]
-			local word_width = word.metrics.width
-			width = width + word_width
+			local visible_width = get_visible_width(word, word.metrics)
+			if visible_width > 0 then
+				width = advance + visible_width
+			end
+			advance = advance + word.metrics.width
 			-- TODO: Here too
 			if not word.image then
 				height = math.max(height, word.metrics.height)
 			end
-		end
-
-		-- Exclude trailing space of last word from line width (parser adds "word " per token)
-		local last = line[#line]
-		if last and not last.image then
-			local trimmed = last.text:match("^(.-)%s+$")
-			if trimmed then
-				local font_resource = get_font_resource(last.font, settings)
-				local scale_x = last.relative_scale * settings.scale.x * settings.adjust_scale
-				local space_w = get_raw_metrics(font_resource, last.text, settings).width - get_raw_metrics(font_resource, trimmed, settings).width
-				width = width - space_w * scale_x
-			end
-		end
-
-		-- Words are measured by advance, the line also takes the side padding of its first glyph
-		local first = line[1]
-		if first and not first.image then
-			local scale_x = first.relative_scale * settings.scale.x * settings.adjust_scale
-			width = width - get_prefix_shift(get_font_resource(first.font, settings)) * scale_x
 		end
 
 		if line_index > 1 then
@@ -631,6 +525,8 @@ function M._update_nodes(lines, settings)
 				gui.set_text(node, word.text)
 				gui.set_color(node, word.color or word.text_color)
 				gui.set_font(node, word.font or settings.font)
+				-- The node is as wide as the advance, a word never wraps inside itself
+				gui.set_line_break(node, false)
 			end
 			word.node = node
 			gui.set_enabled(node, true)
