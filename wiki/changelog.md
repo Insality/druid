@@ -940,3 +940,8 @@ The rest are fixes and small API additions. There are several breaking changes, 
 	- `set_whitelist(nil)` clears the whitelist, all components receive input
 	- `set_whitelist({})` is an empty allow-list, no component receives input
 	- `set_blacklist({})` and `nil` both still deny nobody
+
+### Druid 1.3.2
+- [Drag] Drag cursors are set in the Drag style: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. The default style uses `defos.CURSOR_HAND`, set `nil` to disable. Before, the cursors were hardcoded to crosshair and hand
+- [Hover] The default style sets `defos.CURSOR_HAND` for `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`, so buttons show the hand cursor
+- [Scroll] Scroll has its own cursors in the Scroll style: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. They are `nil` by default, so no cursor over the scroll. Before, the scroll always used the drag cursors and they could not be disabled

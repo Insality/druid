@@ -61,7 +61,7 @@ The constructor for Drag component
 drag:set_drag_cursors(is_enabled)
 ```
 
-Enable or disable drag cursor styles. No-op without defos. Hover is created on first enable.
+Enable or disable drag cursors from the Drag style. No-op without defos or without cursors in style. Hover is created on first enable.
 
 - **Parameters:**
 	- `is_enabled` *(boolean)*: True if Drag cursors are enabled
