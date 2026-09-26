@@ -101,6 +101,8 @@ M["progress"] = {
 
 M["slider"] = {
 	DEFAULT_STEPS = {}, -- e.g. {0, 0.25, 0.5, 0.75, 1} for notched slider; empty = continuous
+	ON_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on mouse hover, nil to disable
 }
 
 
@@ -116,6 +118,8 @@ M["input"] = {
 	BUTTON_SELECT_INCREASE = 1.08,
 	MASK_DEFAULT_CHAR = "*",
 	IS_UNSELECT_ON_RESELECT = false,
+	ON_HOVER_CURSOR = defos and defos.CURSOR_IBEAM or nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_IBEAM or nil, -- Defos cursor on mouse hover, nil to disable
 
 	on_init = function(self) end,
 

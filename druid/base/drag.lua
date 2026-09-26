@@ -97,6 +97,7 @@ end
 
 
 ---Enable or disable drag cursors from the Drag style. No-op without defos or without cursors in style. Hover is created on first enable.
+---The cursors are not shown while the Drag is disabled.
 ---@param is_enabled boolean True if Drag cursors are enabled
 function M:set_drag_cursors(is_enabled)
 	self._is_drag_cursors = is_enabled
@@ -114,7 +115,7 @@ function M:set_drag_cursors(is_enabled)
 				self.hover:set_click_zone(self.click_zone)
 			end
 		end
-		self.hover:set_enabled(true)
+		self.hover:set_enabled(self._is_enabled)
 		self.hover.style.ON_HOVER_CURSOR = hover_cursor
 		self.hover.style.ON_MOUSE_HOVER_CURSOR = mouse_hover_cursor
 	elseif self.hover then
@@ -257,6 +258,11 @@ end
 ---@return druid.drag self Current instance
 function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
+
+	-- The disabled drag should not show the drag cursors
+	if self.hover then
+		self.hover:set_enabled(is_enabled and self._is_drag_cursors)
+	end
 
 	return self
 end
