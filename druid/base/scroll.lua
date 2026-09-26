@@ -81,6 +81,7 @@ function M:init(view_node, content_node)
 	self.inertion = vmath.vector3(0)
 
 	self.drag = self.druid:new_drag(view_node, self._on_scroll_drag)
+	self.drag:set_drag_cursors(false)
 	self.drag.on_touch_start:subscribe(self._on_touch_start)
 	self.drag.on_touch_end:subscribe(self._on_touch_end)
 
@@ -831,8 +832,6 @@ function M:_update_size()
 	self:_set_scroll_position(self.position.x, self.position.y)
 	self.target_position.x = self.position.x
 	self.target_position.y = self.position.y
-
-	self.drag:set_drag_cursors(self.drag.can_x or self.drag.can_y)
 end
 
 
