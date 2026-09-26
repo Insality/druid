@@ -54,6 +54,21 @@ local function create_cursor_hover(self, node)
 end
 
 
+---Recreate the cursor hovers with the current Slider style
+---@param self druid.slider
+local function update_cursor_hovers(self)
+	if self.hover then
+		self:get_druid():remove(self.hover)
+	end
+	if self._input_hover then
+		self:get_druid():remove(self._input_hover)
+	end
+
+	self.hover = create_cursor_hover(self, self.node)
+	self._input_hover = self._input_node and create_cursor_hover(self, self._input_node) or nil
+end
+
+
 ---The Slider constructor
 ---@param node node GUI node to drag as a slider
 ---@param end_pos vector3 The end position of slider, should be on the same axis as the node
@@ -97,12 +112,18 @@ end
 ---@param style table
 function M:on_style_change(style)
 	self.style = {
+		DEFAULT_STEPS = style.DEFAULT_STEPS,
 		ON_HOVER_CURSOR = style.ON_HOVER_CURSOR or nil,
 		ON_MOUSE_HOVER_CURSOR = style.ON_MOUSE_HOVER_CURSOR or nil,
 	}
 
 	if style.DEFAULT_STEPS and #style.DEFAULT_STEPS > 0 then
 		self.steps = style.DEFAULT_STEPS
+	end
+
+	-- The style is set before init, the node is not set yet
+	if self.node then
+		update_cursor_hovers(self)
 	end
 end
 
