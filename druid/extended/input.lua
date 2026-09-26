@@ -9,6 +9,8 @@ local utf8 = utf8 or utf8_lua
 ---@field MASK_DEFAULT_CHAR string Default character mask for password input
 ---@field IS_LONGTAP_ERASE boolean Is long tap will erase current input data
 ---@field IS_UNSELECT_ON_RESELECT boolean If true, call unselect on select selected input
+---@field ON_HOVER_CURSOR string|number|nil Cursor on input touch hover (defos cursor). Default: nil
+---@field ON_MOUSE_HOVER_CURSOR string|number|nil Cursor on input mouse hover (defos cursor). Default: nil
 ---@field on_init fun(self: druid.input)|nil Callback when input is initialized, use to set custom properties on self
 ---@field on_select fun(self: druid.input, button_node: node) Callback on input field selecting
 ---@field on_unselect fun(self: druid.input, button_node: node) Callback on input field unselecting
@@ -69,6 +71,14 @@ local function mask_text(text, mask)
 end
 
 
+---Apply the cursors from the Input style to the button hover
+---@param self druid.input
+local function update_hover_cursors(self)
+	self.button.hover.style.ON_HOVER_CURSOR = self.style.ON_HOVER_CURSOR
+	self.button.hover.style.ON_MOUSE_HOVER_CURSOR = self.style.ON_MOUSE_HOVER_CURSOR
+end
+
+
 local function clear_and_select(self)
 	if self.style.IS_LONGTAP_ERASE then
 		self:set_text("")
@@ -115,11 +125,7 @@ function M:init(click_node, text_node, keyboard_type)
 	self.button.on_click_outside:subscribe(self.unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
 	self.button:set_style(nil)
-
-	if defos then
-		self.button.hover.style.ON_HOVER_CURSOR = defos.CURSOR_IBEAM
-		self.button.hover.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_IBEAM
-	end
+	update_hover_cursors(self)
 
 	if html5 then
 		self.button:set_web_user_interaction(true)
@@ -142,12 +148,19 @@ function M:on_style_change(style)
 		IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false,
 		MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*",
 		IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false,
+		ON_HOVER_CURSOR = style.ON_HOVER_CURSOR or nil,
+		ON_MOUSE_HOVER_CURSOR = style.ON_MOUSE_HOVER_CURSOR or nil,
 
 		on_init = style.on_init or function() end,
 		on_select = style.on_select or function(_, button_node) end,
 		on_unselect = style.on_unselect or function(_, button_node) end,
 		on_input_wrong = style.on_input_wrong or function(_, button_node) end,
 	}
+
+	-- The style is set before init, the button is not created yet
+	if self.button then
+		update_hover_cursors(self)
+	end
 
 	self.style.on_init(self)
 end

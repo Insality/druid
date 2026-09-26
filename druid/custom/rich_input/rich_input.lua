@@ -205,12 +205,10 @@ function M:init(template, nodes)
 	self.drag = self.druid:new_drag("button", on_drag_callback)
 	self.drag.on_touch_start:subscribe(on_touch_start_callback)
 	self.drag:set_input_priority(const.PRIORITY_INPUT_MAX + 1)
-	if defos then
-		-- The drag shares the node with the input button, both should show the same cursor
-		self.drag.style.ON_HOVER_CURSOR = defos.CURSOR_IBEAM
-		self.drag.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_IBEAM
-		self.drag:set_drag_cursors(true)
-	end
+	-- The drag shares the node with the input button, both show the cursors from the Input style
+	self.drag.style.ON_HOVER_CURSOR = self.input.style.ON_HOVER_CURSOR
+	self.drag.style.ON_MOUSE_HOVER_CURSOR = self.input.style.ON_MOUSE_HOVER_CURSOR
+	self.drag:set_drag_cursors(true)
 	self.drag:set_enabled(false)
 
 	self.input:set_text("")
