@@ -972,6 +972,7 @@ The rich text layout changes can move your text by a few pixels, and some word v
 - [Rich Text] Fix the rich text length when a native `utf8` module is present
 - [Examples] Add **Rich Text Glyphs** and **Rich Text Split Wrap** examples
 - [Drag] The disabled Drag does not show the drag cursors
+- [Slider] Slider shows the cursors from the Slider style over the pin and the input node: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. The default style uses `defos.CURSOR_HAND`, set `nil` to disable
 - [Hover] Fix the stuck hover and cursor when the scroll content moves under the still mouse, by the mouse wheel or inertion
 - [Button] The mouse wheel or key actions consumed by another component do not reset the button hover anymore
 - [Hover] Reset the mouse hover when the mouse move is consumed by a component above, like a blocker

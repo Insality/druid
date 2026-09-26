@@ -3,6 +3,11 @@ local helper = require("druid.helper")
 local const = require("druid.const")
 local component = require("druid.component")
 
+---@class druid.slider.style
+---@field DEFAULT_STEPS number[]|nil Default steps for the notched slider. Default: nil
+---@field ON_HOVER_CURSOR string|number|nil Cursor on slider touch hover (defos cursor). Default: nil
+---@field ON_MOUSE_HOVER_CURSOR string|number|nil Cursor on slider mouse hover (defos cursor). Default: nil
+
 ---Basic Druid slider component. Creates a draggable node over a line with progress reporting.
 ---
 ---### Setup
@@ -17,7 +22,8 @@ local component = require("druid.component")
 ---@class druid.slider: druid.component
 ---@field node node The node to manage the slider
 ---@field on_change_value event fun(self: druid.slider, value: number) The event triggered when the slider value changes
----@field style table The style of the slider
+---@field style druid.slider.style The style of the slider
+---@field hover druid.hover|nil Hover for the pin node cursors. nil without defos or without cursors in style
 ---@field private start_pos vector3 The start position of the slider
 ---@field private pos vector3 The current position of the slider
 ---@field private target_pos vector3 The target position of the slider
@@ -26,7 +32,26 @@ local component = require("druid.component")
 ---@field private is_drag boolean True if the slider is being dragged
 ---@field private value number The current value of the slider
 ---@field private steps number[]? The steps of the slider
+---@field private _input_hover druid.hover|nil Hover for the input node cursors
 local M = component.create("slider", const.PRIORITY_INPUT_HIGH)
+
+
+---Create the hover with the cursors from the Slider style
+---@param self druid.slider
+---@param node node The node to show the cursors over
+---@return druid.hover|nil hover nil without defos or without cursors in style
+local function create_cursor_hover(self, node)
+	if not defos or not (self.style.ON_HOVER_CURSOR or self.style.ON_MOUSE_HOVER_CURSOR) then
+		return nil
+	end
+
+	local hover = self:get_druid():new_hover(node)
+	hover.style.ON_HOVER_CURSOR = self.style.ON_HOVER_CURSOR
+	hover.style.ON_MOUSE_HOVER_CURSOR = self.style.ON_MOUSE_HOVER_CURSOR
+	hover:set_enabled(self._is_enabled)
+
+	return hover
+end
 
 
 ---The Slider constructor
@@ -49,6 +74,8 @@ function M:init(node, end_pos, callback)
 	self.on_change_value = event.create(callback)
 	self:on_window_resized()
 
+	self.hover = create_cursor_hover(self, self.node)
+
 	assert(self.dist.x == 0 or self.dist.y == 0, "Slider for now can be only vertical or horizontal")
 end
 
@@ -69,6 +96,11 @@ end
 ---@private
 ---@param style table
 function M:on_style_change(style)
+	self.style = {
+		ON_HOVER_CURSOR = style.ON_HOVER_CURSOR or nil,
+		ON_MOUSE_HOVER_CURSOR = style.ON_MOUSE_HOVER_CURSOR or nil,
+	}
+
 	if style.DEFAULT_STEPS and #style.DEFAULT_STEPS > 0 then
 		self.steps = style.DEFAULT_STEPS
 	end
@@ -217,12 +249,18 @@ end
 ---@param input_node node|string|nil
 ---@return druid.slider self Current slider instance
 function M:set_input_node(input_node)
+	if self._input_hover then
+		self:get_druid():remove(self._input_hover)
+		self._input_hover = nil
+	end
+
 	if not input_node then
 		self._input_node = nil
 		return self
 	end
 
 	self._input_node = self:get_node(input_node)
+	self._input_hover = create_cursor_hover(self, self._input_node)
 	return self
 end
 
@@ -232,6 +270,14 @@ end
 ---@return druid.slider self Current slider instance
 function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
+
+	-- The disabled slider should not show the cursors
+	if self.hover then
+		self.hover:set_enabled(is_enabled)
+	end
+	if self._input_hover then
+		self._input_hover:set_enabled(is_enabled)
+	end
 
 	return self
 end
