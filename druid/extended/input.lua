@@ -79,6 +79,29 @@ local function update_hover_cursors(self)
 end
 
 
+---Track the modificator keys state, used for the cursor moving with the arrow keys
+---@param self druid.input
+---@param action_id hash|nil The action id
+---@param action action The action
+local function update_modificators(self, action_id, action)
+	if action_id == const.ACTION_LSHIFT then
+		if action.pressed then
+			self.is_lshift = true
+		elseif action.released then
+			self.is_lshift = false
+		end
+	end
+
+	if action_id == const.ACTION_LCTRL or action_id == const.ACTION_LCMD then
+		if action.pressed then
+			self.is_lctrl = true
+		elseif action.released then
+			self.is_lctrl = false
+		end
+	end
+end
+
+
 local function clear_and_select(self)
 	if self.style.IS_LONGTAP_ERASE then
 		self:set_text("")
@@ -172,22 +195,7 @@ end
 ---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
 	if MODIFICATOR_ACTIONS[action_id] then
-		if action_id == const.ACTION_LSHIFT then
-			if action.pressed then
-				self.is_lshift = true
-			elseif action.released then
-				self.is_lshift = false
-			end
-		end
-
-		if action_id == const.ACTION_LCTRL or action_id == const.ACTION_LCMD then
-			if action.pressed then
-				self.is_lctrl = true
-			elseif action.released then
-				self.is_lctrl = false
-			end
-		end
-
+		update_modificators(self, action_id, action)
 		return false
 	end
 
@@ -331,6 +339,17 @@ function M:on_input(action_id, action)
 	end
 
 	return self.is_selected
+end
+
+
+---@private
+---@param action_id hash|nil The action id
+---@param action action The action
+function M:on_input_interrupt(action_id, action)
+	-- The modificator keys can be consumed by the component above, the state should be tracked anyway
+	if MODIFICATOR_ACTIONS[action_id] then
+		update_modificators(self, action_id, action)
+	end
 end
 
 

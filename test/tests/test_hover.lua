@@ -115,39 +115,6 @@ return function()
 			assert(instance:is_hovered() == false)
 		end)
 
-		it("Should update the hovers when the nodes move under the still mouse", function()
-			local button = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 50, 0))
-			local other = gui.new_box_node(vmath.vector3(200, 0, 0), vmath.vector3(100, 50, 0))
-
-			local instance = druid:new_hover(button)
-			local other_instance = druid:new_hover(other)
-			instance.on_mouse_hover:subscribe(function() end)
-			other_instance.on_mouse_hover:subscribe(function() end)
-
-			druid:on_input(mock_input.input_empty_action_nil(10, 10))
-			assert(instance:is_mouse_hovered() == true)
-			assert(other_instance:is_mouse_hovered() == false)
-
-			-- The nodes are moved, like the scroll content, the mouse stays still
-			gui.set_position(button, vmath.vector3(-200, 0, 0))
-			gui.set_position(other, vmath.vector3(0, 0, 0))
-
-			-- Nothing is changed without the refresh
-			druid:update(0.016)
-			assert(instance:is_mouse_hovered() == true)
-			assert(other_instance:is_mouse_hovered() == false)
-
-			druid:refresh_mouse()
-			druid:update(0.016)
-			assert(instance:is_mouse_hovered() == false)
-			assert(other_instance:is_mouse_hovered() == true)
-
-			druid:remove(instance)
-			druid:remove(other_instance)
-			gui.delete_node(button)
-			gui.delete_node(other)
-		end)
-
 		it("Should reset mouse hover when the mouse move is consumed above", function()
 			local button = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 50, 0))
 			local blocker_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 50, 0))

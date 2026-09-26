@@ -63,7 +63,6 @@ local component = require("druid.component")
 ---@field private _grid_on_change_callback function Grid change callback
 ---@field private _offset vector3 Content start offset
 ---@field private _layout_on_change_callback function Layout change callback
----@field private _last_frame_position vector3 Content position on the previous frame, to update the hovers when it moves
 local M = component.create("scroll")
 
 
@@ -81,7 +80,6 @@ function M:init(view_node, content_node)
 
 	self.position = gui.get_position(self.content_node)
 	self.target_position = vmath.vector3(self.position)
-	self._last_frame_position = vmath.vector3(self.position)
 	self.inertion = vmath.vector3(0)
 
 	self.drag = self.druid:new_drag(view_node, self._on_scroll_drag)
@@ -167,8 +165,6 @@ function M:update(dt)
 	else
 		self:_update_free_scroll(dt)
 	end
-
-	self:_check_content_moved()
 end
 
 
@@ -846,20 +842,6 @@ function M:_update_size()
 	self.target_position.y = self.position.y
 
 	self:_update_drag_cursors()
-end
-
-
----Update the hovers once per frame, if the content moved under the still mouse:
----by the mouse wheel, the inertion or the scroll_to animation
-function M:_check_content_moved()
-	local last_position = self._last_frame_position
-	if last_position.x == self.position.x and last_position.y == self.position.y then
-		return
-	end
-
-	last_position.x = self.position.x
-	last_position.y = self.position.y
-	self.druid:refresh_mouse()
 end
 
 

@@ -438,6 +438,30 @@ return function()
 			gui.delete_node(text_node)
 		end)
 
+		it("Should track the modificator keys consumed by the component above", function()
+			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
+			local text_node = gui.new_text_node(vmath.vector3(50, 25, 0), "Hello World")
+			gui.set_font(text_node, "druid_text_bold")
+
+			local input = druid:new_input(button_node, text_node)
+
+			-- The component above consumes all the actions
+			local consumer_class = require("druid.component").create("consumer", 100)
+			function consumer_class:on_input() return true end
+
+			druid:on_input(mock_input.key_pressed("key_lshift"))
+			assert(input.is_lshift == true)
+
+			local consumer = druid:new(consumer_class)
+			druid:on_input(mock_input.key_released("key_lshift"))
+			assert(input.is_lshift == false)
+
+			druid:remove(consumer)
+			druid:remove(input)
+			gui.delete_node(button_node)
+			gui.delete_node(text_node)
+		end)
+
 		it("Should reset the modificator keys on focus lost", function()
 			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
 			local text_node = gui.new_text_node(vmath.vector3(50, 25, 0), "Hello World")
