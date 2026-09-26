@@ -34,9 +34,22 @@ local function set_selection_width(self, selection_width)
 end
 
 
+---Return the input text as it is displayed, masked for the password input
+---@param self druid.rich_input
+---@return string
+local function get_display_text(self)
+	local text = self.input:get_text()
+	if self.input.keyboard_type == gui.KEYBOARD_TYPE_PASSWORD then
+		return string.rep(self.input.style.MASK_DEFAULT_CHAR, utf8.len(text))
+	end
+
+	return text
+end
+
+
 ---@param self druid.rich_input
 local function update_text(self)
-	local full_text = self.input:get_text()
+	local full_text = get_display_text(self)
 	local visible_text = self.input:get_text_visual()
 
 	local is_truncated = visible_text ~= full_text
@@ -48,8 +61,8 @@ local function update_text(self)
 
 	end
 
-	local left_text_part = utf8.sub(self.input:get_text(), 0, cursor_index)
-	local selected_text_part = utf8.sub(self.input:get_text(), self.input.start_index + 1, self.input.end_index)
+	local left_text_part = utf8.sub(full_text, 0, cursor_index)
+	local selected_text_part = utf8.sub(full_text, self.input.start_index + 1, self.input.end_index)
 
 	local left_part_width = self.input.text:get_text_size(left_text_part)
 	local selected_part_width = self.input.text:get_text_size(selected_text_part)
@@ -136,7 +149,7 @@ local function on_touch_start_callback(self, touch)
 	self._last_touch_info.cursor_index = cursor_index
 	self._last_touch_info.time = socket.gettime()
 
-	if self.is_lshift then
+	if self.input.is_lshift then
 		local start_index = self.input.start_index
 		local end_index = self.input.end_index
 
@@ -181,8 +194,6 @@ function M:init(template, nodes)
 		cursor_index = nil,
 		time = 0,
 	}
-	self.is_lshift = false
-	self.is_lctrl = false
 
 	self.input = self.druid:new_input("button", "input_text")
 	self.is_button_input_enabled = gui.is_enabled(self.input.button.node)
@@ -194,6 +205,12 @@ function M:init(template, nodes)
 	self.drag = self.druid:new_drag("button", on_drag_callback)
 	self.drag.on_touch_start:subscribe(on_touch_start_callback)
 	self.drag:set_input_priority(const.PRIORITY_INPUT_MAX + 1)
+	if defos then
+		-- The drag shares the node with the input button, both should show the same cursor
+		self.drag.style.ON_HOVER_CURSOR = defos.CURSOR_IBEAM
+		self.drag.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_IBEAM
+		self.drag:set_drag_cursors(true)
+	end
 	self.drag:set_enabled(false)
 
 	self.input:set_text("")
@@ -207,43 +224,6 @@ function M:init(template, nodes)
 
 	on_unselect(self)
 	update_text(self)
-end
-
-
----@private
----@param action_id hash Action id from on_input
----@param action table Action table from on_input
----@return boolean is_consumed True if input was consumed
-function M:on_input(action_id, action)
-	if action_id == const.ACTION_LSHIFT then
-		if action.pressed then
-			self.is_lshift = true
-		elseif action.released then
-			self.is_lshift = false
-		end
-	end
-
-	if action_id == const.ACTION_LCTRL or action_id == const.ACTION_LCMD then
-		if action.pressed then
-			self.is_lctrl = true
-		elseif action.released then
-			self.is_lctrl = false
-		end
-	end
-
-	if self.input.is_selected then
-		if action_id == const.ACTION_LEFT and (action.pressed or action.repeated) then
-			self.input:move_selection(-1, self.is_lshift, self.is_lctrl)
-			return true
-		end
-
-		if action_id == const.ACTION_RIGHT and (action.pressed or action.repeated) then
-			self.input:move_selection(1, self.is_lshift, self.is_lctrl)
-			return true
-		end
-	end
-
-	return false
 end
 
 
