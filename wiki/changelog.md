@@ -941,19 +941,42 @@ The rest are fixes and small API additions. There are several breaking changes, 
 	- `set_whitelist({})` is an empty allow-list, no component receives input
 	- `set_blacklist({})` and `nil` both still deny nobody
 
-### Druid 1.3.2
+### Druid 1.4.0
+
+Hello! This Druid update is mostly about the **Rich Text**.
+
+Rich text letters are placed by the glyph advance now, so a rich text looks exactly like a regular text node with the same string. Before, the distance field padding made the spacing wider and the whole text was a few pixels off. The spacing is also correct where the size, the font or an image changes inside the text.
+
+`set_split_to_characters` works as expected with the multiline text: words move to the next line as a whole, and the layout is the same as without the split. Non-latin text does not create extra empty nodes anymore.
+
+The rich text layout is also noticeably cheaper, especially when the text is scaled down to fit the area.
+
+The Drag, Hover and Scroll cursors are set in the styles now, the scroll has no cursor by default.
+
+The rich text layout changes can move your text by a few pixels, and some word values are different. Check the migration section below.
+
+**Changelog 1.4.0**
 - [Drag] Drag cursors are set in the Drag style: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. The default style uses `defos.CURSOR_HAND`, set `nil` to disable. Before, the cursors were hardcoded to crosshair and hand
 - [Hover] The default style sets `defos.CURSOR_HAND` for `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`, so buttons show the hand cursor
 - [Scroll] Scroll has its own cursors in the Scroll style: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. They are `nil` by default, so no cursor over the scroll. Before, the scroll always used the drag cursors and they could not be disabled
-- [Rich Text] Letters and words are placed by the glyph advance, so rich text matches a regular text node with the same string. Before, the distance field padding made the spacing wider and the text was a few pixels off
-	- Spacing is also correct at `<size>`, `<font>` and `<img>` boundaries
-	- Lines wrap and align by the last visible glyph, so a line does not overflow the area and text that fits is not scaled down anymore
-	- `word.metrics.width` is the word advance now, `word.metrics.visible_width` is the width to its last glyph. If you placed something by these values or by `get_line_metric()`, check it again
+- [Rich Text] **Breaking**: letters and words are placed by the glyph advance, so rich text matches a regular text node with the same string. Before, the distance field padding made the spacing wider and the text was a few pixels off
+- [Rich Text] Spacing is correct at `<size>`, `<font>` and `<img>` boundaries
+- [Rich Text] Lines wrap and align by the last visible glyph, so a line does not overflow the area and a text that fits is not scaled down anymore
+- [Rich Text] **Breaking**: `word.metrics.width` is the word advance now. Add `word.metrics.visible_width`, the width to the last visible glyph of the word
 - [Rich Text] Fix line wrap with `set_split_to_characters`: words move to the next line as a whole instead of overflowing the area. The layout is the same as without the split
-- [Rich Text] Fix `set_split_to_characters` with non-latin text: multibyte letters created extra empty words and nodes. `get_words()` returns fewer words for such text, check the code that uses word indices
+- [Rich Text] **Breaking**: fix `set_split_to_characters` with non-latin text, multibyte letters created extra empty words and nodes
 - [Rich Text] `<nobr>` text moves to the next line as a whole when it does not fit. Before, it could not start a new line and overflowed the area
 - [Rich Text] A word wider than the area no longer leaves an empty line before it
-- [Rich Text] Faster layout: text metrics are cached, nodes are updated once, the fit scale is found in fewer steps. The fitted scale can differ by ~0.01 from the previous version
-- [Rich Text] Words read the tag settings through a metatable instead of copying them, parse with `set_split_to_characters` is about 2 times faster. `pairs(word)` does not list the inherited settings anymore
+- [Rich Text] Faster layout: text metrics are cached, nodes are updated once, the fit scale is found in fewer steps
+- [Rich Text] Words read the tag settings through a metatable instead of copying them, the parse with `set_split_to_characters` is about 2 times faster
 - [Rich Text] Fix the rich text length when a native `utf8` module is present
-- [Example] Add Rich Text Glyphs and Rich Text Split Wrap examples
+- [Examples] Add **Rich Text Glyphs** and **Rich Text Split Wrap** examples
+
+**Migration 1.4.0**
+
+- The rich text can move by a few pixels, since it is placed as a regular text node now. If you aligned other nodes to a rich text by eye, check them again.
+- `word.metrics.width` is the word advance: the next word starts right after it. Use `word.metrics.visible_width` for the width to the last visible glyph. `get_line_metric()` line widths end at the last visible glyph and do not include the trailing spaces.
+- With `set_split_to_characters`, `get_words()` returns fewer words for non-latin text, as there are no empty words anymore. If you animate the letters by the word index, the timings will change for such text.
+- `pairs(word)` does not list the inherited settings (`font`, `color`, `tags` and others) anymore. Read them by the key, `word.font` works as before.
+- The rich text scale fitted to the area can differ by ~0.01, and a text that overflowed the area by the last glyph padding is not scaled down anymore.
+- The Drag uses `defos.CURSOR_HAND` by default and the Scroll has no cursor. Set `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR` in your Drag and Scroll styles to change them.
