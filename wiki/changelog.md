@@ -972,6 +972,9 @@ The rich text layout changes can move your text by a few pixels, and some word v
 - [Rich Text] Fix the rich text length when a native `utf8` module is present
 - [Examples] Add **Rich Text Glyphs** and **Rich Text Split Wrap** examples
 - [Drag] The disabled Drag does not show the drag cursors
+- [Hover] Fix the stuck hover and cursor when the scroll content moves under the still mouse, by the mouse wheel or inertion
+- [Button] The mouse wheel or key actions consumed by another component do not reset the button hover anymore
+- [Hover] Reset the mouse hover when the mouse move is consumed by a component above, like a blocker
 - [Component] Fix `set_input_priority` did not update the children when the component already had the same priority
 - [Component] Fix `reset_input_priority` overwrote the children default priority with the parent one. Each component returns to its own default priority now
 - [Input] The left and right arrow keys move the cursor, with `Shift` to select and `Ctrl`/`Cmd` to move to the text bounds

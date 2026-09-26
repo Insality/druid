@@ -235,8 +235,14 @@ end
 ---@private
 function M:on_input_interrupt(action_id, action)
 	self.can_action = false
-	self.hover:set_hover(false)
-	self.hover:set_mouse_hover(false)
+
+	-- Only the pointer actions consumed above cover the button.
+	-- The mouse wheel scroll or the key actions should not reset the hover of the button under the mouse
+	local is_pointer_action = action_id == nil or action_id == const.ACTION_TOUCH or action_id == const.ACTION_MULTITOUCH
+	if is_pointer_action then
+		self.hover:set_hover(false)
+		self.hover:set_mouse_hover(false)
+	end
 
 	local is_input_match = self:_is_input_match(action_id) and action.x -- only touch/mouse actions
 	local is_enabled = gui.is_enabled(self.node, true)

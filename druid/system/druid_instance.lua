@@ -25,6 +25,8 @@ local druid_component = require("druid.component")
 ---@field package _input_filter druid.instance.input_filter|nil Input filter for all the instance components
 ---@field package _root druid.instance The root Druid instance, the inner ones are the proxies over it
 ---@field package _has_input_filters boolean True if any filter was set on the instance or on its components
+---@field package _mouse_action table|nil The last mouse position, replayed as a mouse move by `refresh_mouse`
+---@field package _is_mouse_refresh boolean True if the mouse move should be replayed on the next update
 local M = {}
 
 local IS_NO_AUTO_INPUT = sys.get_config_int("druid.no_auto_input", 0) == 1
@@ -39,6 +41,38 @@ local function set_input_state(self, is_input_inited)
 
 	self.input_inited = is_input_inited
 	msg.post(".", is_input_inited and "acquire_input_focus" or "release_input_focus")
+end
+
+
+---Remember the mouse position from the mouse move action to replay it later.
+---The own table is used, so the replayed action has no movement delta and no allocations on each mouse move
+---@param self druid.instance
+---@param action action The mouse move action
+local function remember_mouse_position(self, action)
+	local mouse_action = self._mouse_action
+	if not mouse_action then
+		mouse_action = { dx = 0, dy = 0, screen_dx = 0, screen_dy = 0 }
+		self._mouse_action = mouse_action
+	end
+
+	mouse_action.x = action.x
+	mouse_action.y = action.y
+	mouse_action.screen_x = action.screen_x
+	mouse_action.screen_y = action.screen_y
+end
+
+
+---Replay the last mouse position as a mouse move, if it was requested by `refresh_mouse`
+---@param self druid.instance
+local function replay_mouse_move(self)
+	if not self._is_mouse_refresh then
+		return
+	end
+
+	self._is_mouse_refresh = false
+	if self._mouse_action then
+		self:on_input(nil, self._mouse_action)
+	end
 end
 
 
@@ -232,6 +266,9 @@ function M.create_druid_instance(context, style)
 	self._input_filter = nil
 	self._has_input_filters = false
 
+	self._mouse_action = nil
+	self._is_mouse_refresh = false
+
 	self.components_all = {}
 	self.components_interest = {}
 	for i = 1, #const.ALL_INTERESTS do
@@ -393,6 +430,17 @@ function M:update(dt)
 
 	self._is_late_remove_enabled = false
 	self:_clear_late_remove()
+
+	-- After the components update, the nodes are on their new places now
+	replay_mouse_move(self)
+end
+
+
+---Replay the last mouse move at the end of the update, so all components get it in the regular input order.
+---Used by the components which move the nodes under the still mouse, like the scroll content on the mouse wheel
+---@package
+function M:refresh_mouse()
+	self._root._is_mouse_refresh = true
 end
 
 
@@ -401,6 +449,11 @@ end
 ---@param action table Action from on_input
 ---@return boolean is_input_consumed The boolean value is input was consumed
 function M:on_input(action_id, action)
+	local is_mouse_move = action_id == nil and action.x
+	if is_mouse_move and action ~= self._mouse_action then
+		remember_mouse_position(self, action)
+	end
+
 	self._is_late_remove_enabled = true
 
 	local components = self.components_interest[const.ON_INPUT]
