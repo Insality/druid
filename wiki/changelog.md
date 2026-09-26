@@ -951,13 +951,13 @@ Rich text letters are placed by the glyph advance now, so a rich text looks exac
 
 The rich text layout is also noticeably cheaper, especially when the text is scaled down to fit the area.
 
-The Drag, Hover and Scroll cursors are set in the styles now, the scroll has no cursor by default.
+The Button, Drag, Scroll, Slider and Input cursors are set in the styles now, the scroll has no cursor by default.
 
 The rich text layout changes can move your text by a few pixels, and some word values are different. Check the migration section below.
 
 **Changelog 1.4.0**
 - [Drag] Drag cursors are set in the Drag style: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. The default style uses `defos.CURSOR_HAND`, set `nil` to disable. Before, the cursors were hardcoded to crosshair and hand
-- [Hover] The default style sets `defos.CURSOR_HAND` for `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`, so buttons show the hand cursor
+- [Button] Button cursors are set in the Button style: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. The default style uses `defos.CURSOR_HAND`, set `nil` to disable. The Hover style has no cursor by default, so a plain `new_hover` does not change the cursor
 - [Scroll] Scroll has its own cursors in the Scroll style: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. They are `nil` by default, so no cursor over the scroll. Before, the scroll always used the drag cursors and they could not be disabled
 - [Rich Text] **Breaking**: letters and words are placed by the glyph advance, so rich text matches a regular text node with the same string. Before, the distance field padding made the spacing wider and the text was a few pixels off
 - [Rich Text] Spacing is correct at `<size>`, `<font>` and `<img>` boundaries
@@ -972,7 +972,7 @@ The rich text layout changes can move your text by a few pixels, and some word v
 - [Rich Text] Fix the rich text length when a native `utf8` module is present
 - [Examples] Add **Rich Text Glyphs** and **Rich Text Split Wrap** examples
 - [Drag] The disabled Drag does not show the drag cursors
-- [Slider] Slider shows the cursors from the Slider style over the pin and the input node: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. The default style uses `defos.CURSOR_HAND`, set `nil` to disable
+- [Slider] Slider shows the cursors from the Slider style over the pin and the input node: `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR`. The default style uses `defos.CURSOR_HAND`, set `nil` to disable. The cursors are updated on the Slider style change
 - [Button] The mouse wheel or key actions consumed by another component do not reset the button hover anymore
 - [Hover] Reset the mouse hover when the mouse move is consumed by a component above, like a blocker
 - [Component] Fix `set_input_priority` did not update the children when the component already had the same priority
@@ -993,6 +993,7 @@ The rich text layout changes can move your text by a few pixels, and some word v
 - `pairs(word)` does not list the inherited settings (`font`, `color`, `tags` and others) anymore. Read them by the key, `word.font` works as before.
 - The rich text scale fitted to the area can differ by ~0.01, and a text that overflowed the area by the last glyph padding is not scaled down anymore.
 - The Drag uses `defos.CURSOR_HAND` by default and the Scroll has no cursor. Set `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR` in your Drag and Scroll styles to change them.
+- The Button uses `defos.CURSOR_HAND` from the Button style. If you use a custom style, add `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR` to its `button` section to show the hand cursor.
 - The Input takes the I-beam cursor from the Input style now. If you use a custom style, add `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR` to its `input` section to keep the I-beam cursor. The Rich Input uses the same Input style cursors.
 - `reset_input_priority` returns each child to its own default priority. Before, the children got the parent default priority after the reset.
 - Add the `key_del` key trigger to your input bindings to use the forward delete in the Input.
