@@ -57,13 +57,15 @@ M["button"] = {
 }
 
 M["hover"] = {
-	ON_HOVER_CURSOR = nil,
-	ON_MOUSE_HOVER_CURSOR = nil,
+	ON_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on mouse hover, nil to disable
 }
 
 M["drag"] = {
 	DRAG_DEADZONE = 4, -- Size in pixels of drag deadzone
 	NO_USE_SCREEN_KOEF = false,
+	ON_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on mouse hover, nil to disable
 }
 
 
@@ -85,6 +87,8 @@ M["scroll"] = {
 	WHEEL_SCROLL_SPEED = 20, -- Amount of pixels to scroll by one wheel event (0 to disable)
 	WHEEL_SCROLL_INVERTED = true, -- Boolean to invert wheel scroll side
 	WHEEL_SCROLL_BY_INERTION = false, -- If true, wheel will add inertion to scroll. Direct set position otherwise.
+	ON_HOVER_CURSOR = nil, -- Defos cursor on touch hover while content is scrollable, nil to disable
+	ON_MOUSE_HOVER_CURSOR = nil, -- Defos cursor on mouse hover while content is scrollable, nil to disable
 	SMALL_CONTENT_SCROLL = false, -- If true, content node with size less than view node size can be scrolled
 }
 

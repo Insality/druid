@@ -17,6 +17,8 @@ local component = require("druid.component")
 ---@field WHEEL_SCROLL_SPEED number|nil The scroll speed via mouse wheel scroll or touchpad. Set to 0 to disable wheel scrolling. Default: 0
 ---@field WHEEL_SCROLL_INVERTED boolean|nil If true, invert direction for touchpad and mouse wheel scroll. Default: false
 ---@field WHEEL_SCROLL_BY_INERTION boolean|nil If true, wheel will add inertion to scroll. Direct set position otherwise.. Default: false
+---@field ON_HOVER_CURSOR string|number|nil Cursor on scroll touch hover (defos cursor), only while content is scrollable. Default: nil
+---@field ON_MOUSE_HOVER_CURSOR string|number|nil Cursor on scroll mouse hover (defos cursor), only while content is scrollable. Default: nil
 
 ---Basic Druid scroll component. Handles all scrolling behavior in Druid GUI.
 ---
@@ -81,7 +83,7 @@ function M:init(view_node, content_node)
 	self.inertion = vmath.vector3(0)
 
 	self.drag = self.druid:new_drag(view_node, self._on_scroll_drag)
-	self.drag:set_drag_cursors(false)
+	self:_update_drag_cursors()
 	self.drag.on_touch_start:subscribe(self._on_touch_start)
 	self.drag.on_touch_end:subscribe(self._on_touch_end)
 
@@ -120,10 +122,16 @@ function M:on_style_change(style)
 	self.style.WHEEL_SCROLL_SPEED = style.WHEEL_SCROLL_SPEED or 0
 	self.style.WHEEL_SCROLL_INVERTED = style.WHEEL_SCROLL_INVERTED or false
 	self.style.WHEEL_SCROLL_BY_INERTION = style.WHEEL_SCROLL_BY_INERTION or false
+	self.style.ON_HOVER_CURSOR = style.ON_HOVER_CURSOR or nil
+	self.style.ON_MOUSE_HOVER_CURSOR = style.ON_MOUSE_HOVER_CURSOR or nil
 
 	self._is_inert = not (self.style.FRICT == 0 or
 		self.style.FRICT_HOLD == 0 or
 		self.style.INERT_SPEED == 0)
+
+	if self.drag then
+		self:_update_drag_cursors()
+	end
 end
 
 
@@ -832,6 +840,16 @@ function M:_update_size()
 	self:_set_scroll_position(self.position.x, self.position.y)
 	self.target_position.x = self.position.x
 	self.target_position.y = self.position.y
+
+	self:_update_drag_cursors()
+end
+
+
+---Apply scroll cursors style to the inner drag. Cursors are shown only while content is scrollable
+function M:_update_drag_cursors()
+	self.drag.style.ON_HOVER_CURSOR = self.style.ON_HOVER_CURSOR
+	self.drag.style.ON_MOUSE_HOVER_CURSOR = self.style.ON_MOUSE_HOVER_CURSOR
+	self.drag:set_drag_cursors(self.drag.can_x or self.drag.can_y)
 end
 
 
