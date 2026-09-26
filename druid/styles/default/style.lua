@@ -15,6 +15,8 @@ M["button"] = {
 	LONGTAP_TIME = 0.4,
 	AUTOHOLD_TRIGGER = 0.8,
 	DOUBLETAP_TIME = 0.4,
+	ON_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on mouse hover, nil to disable
 
 	on_init = function(self) end,
 
@@ -57,8 +59,8 @@ M["button"] = {
 }
 
 M["hover"] = {
-	ON_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on touch hover, nil to disable
-	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on mouse hover, nil to disable
+	ON_HOVER_CURSOR = nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = nil, -- Defos cursor on mouse hover, nil to disable
 }
 
 M["drag"] = {
