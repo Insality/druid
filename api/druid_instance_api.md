@@ -158,8 +158,9 @@ instance:set_whitelist([whitelist_components])
 ```
 
 Set whitelist components for input processing.
-If whitelist is not empty, only the listed components and their descendants
-receive input. Descendants created later still match, no need to call this again.
+If whitelist is set, only the listed components and their descendants receive input.
+An empty list allows none. Pass nil to clear the whitelist (all components receive input).
+Descendants created later still match, no need to call this again.
 
 The filter is scoped to the caller: on the `druid` instance it affects all components,
 on the `self.druid` inside a component it affects this component subtree only.
@@ -180,8 +181,9 @@ instance:set_blacklist([blacklist_components])
 ```
 
 Set blacklist components for input processing.
-If blacklist is not empty, the listed components and their descendants
-are skipped on the input step. Descendants created later still match.
+If blacklist is set, the listed components and their descendants are skipped
+on the input step. An empty list and nil both deny nobody.
+Descendants created later still match.
 
 The filter is scoped to the caller: on the `druid` instance it affects all components,
 on the `self.druid` inside a component it affects this component subtree only.

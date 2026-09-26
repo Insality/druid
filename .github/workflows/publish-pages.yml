@@ -33,7 +33,7 @@ jobs:
 
       - name: build html5
         run: |
-          deployer_url="https://raw.githubusercontent.com/Insality/defold-deployer/4/deployer.sh"
+          deployer_url="https://raw.githubusercontent.com/Insality/defold-deployer/6/deployer.sh"
           curl -s "${deployer_url}" | bash -s hbr
 
       - name: find build artifacts

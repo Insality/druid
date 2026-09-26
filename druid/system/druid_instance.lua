@@ -9,8 +9,8 @@ local druid_component = require("druid.component")
 ---The input filter, applied to the Druid instance components or to the component subtree.
 ---Membership is the listed component plus any descendant, including ones created later.
 ---@class druid.instance.input_filter
----@field whitelist table<druid.component, boolean>|nil Components that should receive input (with descendants)
----@field blacklist table<druid.component, boolean>|nil Components that should not receive input (with descendants)
+---@field whitelist table<druid.component, boolean>|nil Allow-list: nil means all, empty table means none
+---@field blacklist table<druid.component, boolean>|nil Deny-list: nil and empty table both deny nobody
 
 ---The Druid Factory used to create components
 ---@class druid.instance
@@ -148,8 +148,6 @@ local function is_filtered(filter, component, owner)
 		return false
 	end
 
-	-- Both lists are checked in the single walk. The blacklist wins, so it returns at once,
-	-- while the whitelist hit still has to look for the blacklist in the rest of the chain
 	local is_allowed = not whitelist
 	local current = component
 	while current do
@@ -487,18 +485,15 @@ end
 
 
 ---Make a hash set from the components list to check the input filter membership.
----Children are not copied in: membership walks the parent chain at input time,
----so components created later under a listed parent still match.
----Keys are weak, so a listed component removed from the Druid instance is not kept alive.
 ---@param components table|druid.component[]|nil The array of components, single component or nil
----@return table<druid.component, boolean>|nil map The components hash set or nil if the list is empty
+---@return table<druid.component, boolean>|nil map The components hash set, or nil if components is nil
 local function make_filter_map(components)
-	if components and components._component then
-		components = { components }
+	if not components then
+		return nil
 	end
 
-	if not components or #components == 0 then
-		return nil
+	if components._component then
+		components = { components }
 	end
 
 	local map = setmetatable({}, WEAK_KEYS_METATABLE)
@@ -530,8 +525,9 @@ end
 
 
 ---Set whitelist components for input processing.
----If whitelist is not empty, only the listed components and their descendants
----receive input. Descendants created later still match, no need to call this again.
+---If whitelist is set, only the listed components and their descendants receive input.
+---An empty list allows none. Pass nil to clear the whitelist (all components receive input).
+---Descendants created later still match, no need to call this again.
 ---
 ---The filter is scoped to the caller: on the `druid` instance it affects all components,
 ---on the `self.druid` inside a component it affects this component subtree only.
@@ -548,8 +544,9 @@ end
 
 
 ---Set blacklist components for input processing.
----If blacklist is not empty, the listed components and their descendants
----are skipped on the input step. Descendants created later still match.
+---If blacklist is set, the listed components and their descendants are skipped
+---on the input step. An empty list and nil both deny nobody.
+---Descendants created later still match.
 ---
 ---The filter is scoped to the caller: on the `druid` instance it affects all components,
 ---on the `self.druid` inside a component it affects this component subtree only.

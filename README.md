@@ -5,11 +5,11 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/insality/druid/ci-workflow.yml?branch=master&style=for-the-badge)](https://github.com/Insality/druid/actions)
 [![codecov](https://img.shields.io/codecov/c/github/Insality/druid?style=for-the-badge)](https://codecov.io/gh/Insality/druid)
 
-Place nodes in the Defold GUI editor, then attach a button, scroll, data list or your own component.
+To make UI you need to place nodes in the Defold GUI editor, then attach a logic (button, scroll, data list or your own component) to them..
 
 ## Layout the window
 
-Build the window in the GUI scene, for example:
+Build the window in Defold GUI editor, for example:
 
 ```
 shop
@@ -23,7 +23,7 @@ shop
 
 ## Assign the ids to the components
 
-Inside `init` of this GUI gui_script file:
+Now we can assign components inside `init` of this GUI gui_script file:
 
 ```lua
 self.druid = druid.new(self)
@@ -34,10 +34,10 @@ self.druid:new_scroll("scroll", "content")
 self.druid:new_button("buy", self.on_buy)
 ```
 
-## A reusable piece is a `.gui` plus a `.lua`
+## Custom widgets is a `.gui` plus a `.lua` files
 
-Design layout `health_bar.gui` (`root`, `fill`, `label`).
-You write `health_bar.lua` next to it:
+For example you did `health_bar.gui` (`root`, `fill`, `label`).
+Now you can make `health_bar.lua` next to it:
 
 ```lua
 function M:init()
@@ -46,17 +46,17 @@ function M:init()
 end
 ```
 
-Drop the template on a screen, then:
+Add this `health_bar.gui` template on your screen, and init with `new_widget` function:
 
 ```lua
-self.hp = self.druid:new_widget(health_bar, "health_bar")
+self.health_bar = self.druid:new_widget(health_bar, "health_bar")
 ```
 
 [Live examples](https://insality.github.io/druid/)
 
 ## Features
 
-- **Components** - Button, scroll, data list, input, and the rest. Logic over nodes you already placed
+- **Components** - Button, scroll, infinity lists, input and the many others. Logic over nodes you already placed inside GUI
 - **Widgets** - A reusable piece is a `.gui` plus a `.lua`
 - **Input** - Stack-based, with priority. Last created is checked first
 - **Events** - Callbacks via [Defold Event](https://github.com/Insality/defold-event)
@@ -86,7 +86,7 @@ https://github.com/Insality/defold-event/archive/refs/tags/16.zip
 **[Druid](https://github.com/Insality/druid/)**
 
 ```
-https://github.com/Insality/druid/archive/refs/tags/1.3.0.zip
+https://github.com/Insality/druid/archive/refs/tags/1.4.0.zip
 ```
 
 After that, select `Project ▸ Fetch Libraries` to update [library dependencies]((https://defold.com/manuals/libraries/#setting-up-library-dependencies)). This happens automatically whenever you open a project so you will only need to do this if the dependencies change without re-opening the project.
@@ -279,10 +279,6 @@ Read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
 
 ## ❤️ Support project ❤️
 
-Druid is developed and maintained by a single developer in his free time.
-
 If this library helps your project, consider supporting my work ❤️
-
-It really makes a difference.
 
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)

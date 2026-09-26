@@ -84,6 +84,59 @@ return function()
 			gui.delete_node(other_node)
 		end)
 
+		it("Should block all input with an empty whitelist", function()
+			local widget = create_test_widget()
+
+			-- Empty allow-list is not a clear: nobody in this instance receives input
+			druid_instance:set_whitelist({})
+			send_input()
+			assert(widget.probe_a.input_calls == 0)
+			assert(widget.probe_b.input_calls == 0)
+			assert(widget.input_calls == 0)
+
+			druid_instance:set_whitelist(nil)
+			send_input()
+			assert(widget.probe_a.input_calls == 1)
+			assert(widget.probe_b.input_calls == 1)
+			assert(widget.input_calls == 1)
+
+			druid_instance:remove(widget)
+		end)
+
+		it("Should not block input with an empty blacklist", function()
+			local widget = create_test_widget()
+
+			-- Empty deny-list is the same as none: everybody still receives input
+			druid_instance:set_blacklist({})
+			send_input()
+			assert(widget.probe_a.input_calls == 1)
+			assert(widget.input_calls == 1)
+
+			druid_instance:set_blacklist(nil)
+			send_input()
+			assert(widget.probe_a.input_calls == 2)
+
+			druid_instance:remove(widget)
+		end)
+
+		it("Should block widget children with an empty whitelist", function()
+			local widget = create_test_widget()
+			local neighbor = create_test_widget()
+
+			widget.druid:set_whitelist({})
+			send_input()
+
+			assert(widget.probe_a.input_calls == 0)
+			assert(widget.probe_b.input_calls == 0)
+			-- The filter owner itself is not affected by its own filter
+			assert(widget.input_calls == 1)
+			-- The neighbor widget is out of the filter scope
+			assert(neighbor.probe_a.input_calls == 1)
+
+			druid_instance:remove(widget)
+			druid_instance:remove(neighbor)
+		end)
+
 		it("Should not modify the array passed to set_whitelist", function()
 			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
 			local button = druid_instance:new_button(button_node, function() end)
