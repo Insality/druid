@@ -971,6 +971,15 @@ The rich text layout changes can move your text by a few pixels, and some word v
 - [Rich Text] Words read the tag settings through a metatable instead of copying them, the parse with `set_split_to_characters` is about 2 times faster
 - [Rich Text] Fix the rich text length when a native `utf8` module is present
 - [Examples] Add **Rich Text Glyphs** and **Rich Text Split Wrap** examples
+- [Drag] The disabled Drag does not show the drag cursors
+- [Component] Fix `set_input_priority` did not update the children when the component already had the same priority
+- [Component] Fix `reset_input_priority` overwrote the children default priority with the parent one. Each component returns to its own default priority now
+- [Input] The left and right arrow keys move the cursor, with `Shift` to select and `Ctrl`/`Cmd` to move to the text bounds
+- [Input] Add the forward delete key support: `key_del`, can be changed with `druid.input_key_delete` in game.project
+- [Input] Reset the modificator keys on focus lost, they could stay pressed after switching the window
+- [Rich Input] Shows the I-beam cursor over the input, before it could show the hand cursor of the inner drag
+- [Rich Input] Fix `Shift` + click to extend the selection
+- [Rich Input] Fix the cursor position on the truncated text, with the marked text and in the password input
 
 **Migration 1.4.0**
 
@@ -980,3 +989,6 @@ The rich text layout changes can move your text by a few pixels, and some word v
 - `pairs(word)` does not list the inherited settings (`font`, `color`, `tags` and others) anymore. Read them by the key, `word.font` works as before.
 - The rich text scale fitted to the area can differ by ~0.01, and a text that overflowed the area by the last glyph padding is not scaled down anymore.
 - The Drag uses `defos.CURSOR_HAND` by default and the Scroll has no cursor. Set `ON_HOVER_CURSOR` and `ON_MOUSE_HOVER_CURSOR` in your Drag and Scroll styles to change them.
+- `reset_input_priority` returns each child to its own default priority. Before, the children got the parent default priority after the reset.
+- Add the `key_del` key trigger to your input bindings to use the forward delete in the Input.
+- The Rich Input `is_lshift` and `is_lctrl` fields are removed, read `rich_input.input.is_lshift` and `rich_input.input.is_lctrl` instead.
