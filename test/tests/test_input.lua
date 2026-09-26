@@ -438,6 +438,36 @@ return function()
 			gui.delete_node(text_node)
 		end)
 
+		it("Should reset the modificator keys on focus lost", function()
+			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
+			local text_node = gui.new_text_node(vmath.vector3(50, 25, 0), "Hello World")
+			gui.set_font(text_node, "druid_text_bold")
+
+			local input = druid:new_input(button_node, text_node)
+
+			druid:on_input(mock_input.key_pressed("key_lshift"))
+			druid:on_input(mock_input.key_pressed("key_lctrl"))
+			assert(input.is_lshift == true)
+			assert(input.is_lctrl == true)
+
+			-- The keys are released while the window is unfocused, no released action comes
+			druid:on_window_event(window.WINDOW_EVENT_FOCUS_LOST)
+			assert(input.is_lshift == false)
+			assert(input.is_lctrl == false)
+
+			-- The arrow key moves the cursor by one letter without the selection
+			druid:on_input(mock_input.click_pressed(50, 25))
+			druid:on_input(mock_input.click_released(50, 25))
+			druid:on_input(mock_input.key_pressed("key_left"))
+			assert(input.cursor_index == 10)
+			assert(input.start_index == 10)
+			assert(input.end_index == 10)
+
+			druid:remove(input)
+			gui.delete_node(button_node)
+			gui.delete_node(text_node)
+		end)
+
 		it("Should handle forward delete input", function()
 			local button_node = gui.new_box_node(vmath.vector3(50, 25, 0), vmath.vector3(100, 50, 0))
 			local text_node = gui.new_text_node(vmath.vector3(50, 25, 0), "Hello")

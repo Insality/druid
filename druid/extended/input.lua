@@ -323,6 +323,10 @@ end
 
 ---@private
 function M:on_focus_lost()
+	-- The modificator keys can be released while the window is unfocused, the released action will never come
+	self.is_lshift = false
+	self.is_lctrl = false
+
 	self:unselect()
 end
 
