@@ -64,7 +64,8 @@ local VECTOR3_ONE = vmath.vector3(1)
 ---@field lines table<number, druid.rich_text.metrics>
 
 ---@class druid.rich_text.metrics
----@field width number
+---@field width number Advance of the word, the next word starts after it
+---@field visible_width number|nil Width to the last visible glyph of a text word
 ---@field height number
 ---@field offset_x number|nil
 ---@field offset_y number|nil
@@ -174,8 +175,7 @@ function M:set_text(text)
 	self._settings.height = root_size.y
 	self._settings.split_to_characters = self._split_to_characters
 
-	local words, settings, line_metrics = rich_text.create(text, self._settings, self.style)
-	line_metrics = rich_text.adjust_to_area(words, settings, line_metrics, self.style)
+	local words, line_metrics = rich_text.create_adjusted(text, self._settings, self.style)
 
 	self._words = words
 	self._line_metrics = line_metrics
