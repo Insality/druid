@@ -155,6 +155,7 @@
 
 	"ui_example_rich_text_split_wrap": "글자 단위 줄바꿈",
 	"ui_example_rich_text_split_wrap_description": "각 글자는 별도 노드지만 단어는 통째로 줄바꿈됩니다. 이미지 뒤 공백, 들여쓰기, nobr 부분이 유지됩니다.",
+	"ui_show_rich_text": "리치 텍스트 표시",
 	"ui_split_to_characters": "글자로 나누기",
 
 	"ui_width": "너비",

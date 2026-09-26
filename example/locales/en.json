@@ -156,6 +156,7 @@
 
 	"ui_example_rich_text_split_wrap": "Rich Text Split Wrap",
 	"ui_example_rich_text_split_wrap_description": "Letters are separate nodes, but words wrap as a whole. Move the width slider, spaces after images, indents and nobr parts stay.",
+	"ui_show_rich_text": "Show Rich Text",
 	"ui_split_to_characters": "Split to Characters",
 
 	"ui_width": "Width",

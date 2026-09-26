@@ -155,6 +155,7 @@
 
 	"ui_example_rich_text_split_wrap": "按字母换行",
 	"ui_example_rich_text_split_wrap_description": "每个字母都是独立节点，但单词整体换行。图片后的空格、缩进和 nobr 部分会保留。",
+	"ui_show_rich_text": "显示富文本",
 	"ui_split_to_characters": "拆分为字母",
 
 	"ui_width": "宽度",

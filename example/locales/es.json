@@ -155,6 +155,7 @@
 
 	"ui_example_rich_text_split_wrap": "Ajuste por letras",
 	"ui_example_rich_text_split_wrap_description": "Cada letra es un nodo, pero las palabras se ajustan completas. Se conservan los espacios tras imágenes, las sangrías y las partes nobr.",
+	"ui_show_rich_text": "Mostrar Rich Text",
 	"ui_split_to_characters": "Dividir en letras",
 
 	"ui_width": "Ancho",

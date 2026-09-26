@@ -155,6 +155,7 @@
 
 	"ui_example_rich_text_split_wrap": "Retour à la ligne par lettres",
 	"ui_example_rich_text_split_wrap_description": "Chaque lettre est un nœud, mais les mots passent à la ligne en entier. Les espaces après les images, les retraits et les parties nobr sont conservés.",
+	"ui_show_rich_text": "Afficher Rich Text",
 	"ui_split_to_characters": "Diviser en lettres",
 
 	"ui_width": "Largeur",

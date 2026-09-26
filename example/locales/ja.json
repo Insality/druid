@@ -155,6 +155,7 @@
 
 	"ui_example_rich_text_split_wrap": "文字単位の折り返し",
 	"ui_example_rich_text_split_wrap_description": "各文字は別ノードですが、単語はまとめて折り返されます。画像後のスペース、インデント、nobrは保持されます。",
+	"ui_show_rich_text": "リッチテキストを表示",
 	"ui_split_to_characters": "文字に分割",
 
 	"ui_width": "幅",

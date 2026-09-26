@@ -155,6 +155,7 @@
 
 	"ui_example_rich_text_split_wrap": "Перенос по буквам",
 	"ui_example_rich_text_split_wrap_description": "Каждая буква отдельная нода, но слова переносятся целиком. Двигайте ширину: пробелы после картинок, отступы и nobr сохраняются.",
+	"ui_show_rich_text": "Показать Rich Text",
 	"ui_split_to_characters": "По буквам",
 
 	"ui_width": "Ширина",
