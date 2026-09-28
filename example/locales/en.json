@@ -151,6 +151,14 @@
 	"ui_example_rich_text_resize": "Rich Text Resize",
 	"ui_example_rich_text_resize_description": "Move the width and height sliders: the text rewraps and scales down to fit the area.",
 
+	"ui_example_rich_text_glyphs": "Rich Text Glyphs",
+	"ui_example_rich_text_glyphs_description": "Rich text is drawn over a regular text node with the same string. Letters should cover it exactly, orange edges mean a wrong advance.",
+
+	"ui_example_rich_text_split_wrap": "Rich Text Split Wrap",
+	"ui_example_rich_text_split_wrap_description": "Letters are separate nodes, but words wrap as a whole. Move the width slider, spaces after images, indents and nobr parts stay.",
+	"ui_show_rich_text": "Show Rich Text",
+	"ui_split_to_characters": "Split to Characters",
+
 	"ui_width": "Width",
 	"ui_height": "Height",
 

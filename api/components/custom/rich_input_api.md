@@ -22,8 +22,6 @@ The component that handles a rich text input field, it's a wrapper around the dr
 - [cursor_text](#cursor_text)
 - [cursor_position](#cursor_position)
 - [druid](#druid)
-- [is_lshift](#is_lshift)
-- [is_lctrl](#is_lctrl)
 - [is_button_input_enabled](#is_button_input_enabled)
 - [drag](#drag)
 - [placeholder](#placeholder)
@@ -147,12 +145,6 @@ Set allowed charaters for input field.
 
 <a name="druid"></a>
 - **druid** (_druid.instance_): The Druid Factory used to create components
-
-<a name="is_lshift"></a>
-- **is_lshift** (_boolean_)
-
-<a name="is_lctrl"></a>
-- **is_lctrl** (_boolean_)
 
 <a name="is_button_input_enabled"></a>
 - **is_button_input_enabled** (_unknown_)

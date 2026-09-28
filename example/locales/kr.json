@@ -150,6 +150,14 @@
 	"ui_example_rich_text_resize": "Rich Text 크기",
 	"ui_example_rich_text_resize_description": "너비와 높이 슬라이더를 움직이면 텍스트가 다시 줄바꿈되고 영역에 맞게 줄어듭니다.",
 
+	"ui_example_rich_text_glyphs": "리치 텍스트 글리프",
+	"ui_example_rich_text_glyphs_description": "같은 문자열의 일반 텍스트 노드 위에 리치 텍스트를 그립니다. 글자가 정확히 겹쳐야 하며, 주황색 테두리는 잘못된 간격을 뜻합니다.",
+
+	"ui_example_rich_text_split_wrap": "글자 단위 줄바꿈",
+	"ui_example_rich_text_split_wrap_description": "각 글자는 별도 노드지만 단어는 통째로 줄바꿈됩니다. 이미지 뒤 공백, 들여쓰기, nobr 부분이 유지됩니다.",
+	"ui_show_rich_text": "리치 텍스트 표시",
+	"ui_split_to_characters": "글자로 나누기",
+
 	"ui_width": "너비",
 	"ui_height": "높이",
 

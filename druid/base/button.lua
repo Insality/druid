@@ -17,6 +17,8 @@ local component = require("druid.component")
 ---@field BTN_SOUND_DISABLED string|nil Sound id played on disabled click. Default: "click"
 ---@field DISABLED_COLOR vector4|nil Color applied when disabled via style. Default: vmath.vector4(0, 0, 0, 1)
 ---@field ENABLED_COLOR vector4|nil Color applied when enabled via style. Default: vmath.vector4(1)
+---@field ON_HOVER_CURSOR string|number|nil Cursor on button touch hover (defos cursor). Default: nil
+---@field ON_MOUSE_HOVER_CURSOR string|number|nil Cursor on button mouse hover (defos cursor). Default: nil
 ---@field on_init fun(self: druid.button)|nil
 ---@field on_click fun(self: druid.button, node: node)|nil
 ---@field on_click_disabled fun(self: druid.button, node: node)|nil
@@ -62,6 +64,14 @@ local component = require("druid.component")
 local M = component.create("button")
 
 
+---Apply the cursors from the Button style to the button hover
+---@param self druid.button
+local function update_hover_cursors(self)
+	self.hover.style.ON_HOVER_CURSOR = self.style.ON_HOVER_CURSOR
+	self.hover.style.ON_MOUSE_HOVER_CURSOR = self.style.ON_MOUSE_HOVER_CURSOR
+end
+
+
 ---The constructor for the button component
 ---@param node_or_node_id node|string Node name or GUI Node itself
 ---@param callback fun(self: any, custom_args: any, button_instance: druid.button)|nil Callback on button click
@@ -78,6 +88,7 @@ function M:init(node_or_node_id, callback, custom_args, anim_node)
 	self.params = custom_args
 	self.hover = self.druid:new_hover(node_or_node_id, self.button_hover)
 	self.hover.on_mouse_hover:subscribe(self.button_mouse_hover)
+	update_hover_cursors(self)
 	self.click_zone = nil
 	self.is_repeated_started = false
 	self.last_pressed_time = 0
@@ -108,6 +119,8 @@ function M:on_style_change(style)
 		LONGTAP_TIME = style.LONGTAP_TIME or 0.4,
 		AUTOHOLD_TRIGGER = style.AUTOHOLD_TRIGGER or 0.8,
 		DOUBLETAP_TIME = style.DOUBLETAP_TIME or 0.4,
+		ON_HOVER_CURSOR = style.ON_HOVER_CURSOR or nil,
+		ON_MOUSE_HOVER_CURSOR = style.ON_MOUSE_HOVER_CURSOR or nil,
 
 		on_init = style.on_init or function() end,
 		on_click = style.on_click or function(_, node) end,
@@ -116,6 +129,11 @@ function M:on_style_change(style)
 		on_hover = style.on_hover or function(_, node, state) end,
 		on_set_enabled = style.on_set_enabled or function(_, node, state) end,
 	}
+
+	-- The style is set before init, the hover is not created yet
+	if self.hover then
+		update_hover_cursors(self)
+	end
 
 	self.style.on_init(self)
 end
@@ -235,8 +253,14 @@ end
 ---@private
 function M:on_input_interrupt(action_id, action)
 	self.can_action = false
-	self.hover:set_hover(false)
-	self.hover:set_mouse_hover(false)
+
+	-- Only the pointer actions consumed above cover the button.
+	-- The mouse wheel scroll or the key actions should not reset the hover of the button under the mouse
+	local is_pointer_action = action_id == nil or action_id == const.ACTION_TOUCH or action_id == const.ACTION_MULTITOUCH
+	if is_pointer_action then
+		self.hover:set_hover(false)
+		self.hover:set_mouse_hover(false)
+	end
 
 	local is_input_match = self:_is_input_match(action_id) and action.x -- only touch/mouse actions
 	local is_enabled = gui.is_enabled(self.node, true)

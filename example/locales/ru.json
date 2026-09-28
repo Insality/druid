@@ -150,6 +150,14 @@
 	"ui_example_rich_text_resize": "Размер Rich Text",
 	"ui_example_rich_text_resize_description": "Двигайте слайдеры ширины и высоты: текст переносится и уменьшается, чтобы влезть в область.",
 
+	"ui_example_rich_text_glyphs": "Буквы Rich Text",
+	"ui_example_rich_text_glyphs_description": "Rich Text нарисован поверх обычной текстовой ноды с той же строкой. Буквы должны совпасть точно, оранжевые края значат неверный отступ.",
+
+	"ui_example_rich_text_split_wrap": "Перенос по буквам",
+	"ui_example_rich_text_split_wrap_description": "Каждая буква отдельная нода, но слова переносятся целиком. Двигайте ширину: пробелы после картинок, отступы и nobr сохраняются.",
+	"ui_show_rich_text": "Показать Rich Text",
+	"ui_split_to_characters": "По буквам",
+
 	"ui_width": "Ширина",
 	"ui_height": "Высота",
 

@@ -34,10 +34,23 @@ local function set_selection_width(self, selection_width)
 end
 
 
+---Return the input text as it is displayed, masked for the password input
+---@param self druid.rich_input
+---@return string
+local function get_display_text(self)
+	local text = self.input:get_text()
+	if self.input.keyboard_type == gui.KEYBOARD_TYPE_PASSWORD then
+		return string.rep(self.input.style.MASK_DEFAULT_CHAR, utf8.len(text))
+	end
+
+	return text
+end
+
+
 ---@param self druid.rich_input
 local function update_text(self)
-	local full_text = self.input:get_text()
-	local visible_text = self.input.text:get_text()
+	local full_text = get_display_text(self)
+	local visible_text = self.input:get_text_visual()
 
 	local is_truncated = visible_text ~= full_text
 	local cursor_index = self.input.cursor_index
@@ -48,8 +61,8 @@ local function update_text(self)
 
 	end
 
-	local left_text_part = utf8.sub(self.input:get_text(), 0, cursor_index)
-	local selected_text_part = utf8.sub(self.input:get_text(), self.input.start_index + 1, self.input.end_index)
+	local left_text_part = utf8.sub(full_text, 0, cursor_index)
+	local selected_text_part = utf8.sub(full_text, self.input.start_index + 1, self.input.end_index)
 
 	local left_part_width = self.input.text:get_text_size(left_text_part)
 	local selected_part_width = self.input.text:get_text_size(selected_text_part)
@@ -57,12 +70,21 @@ local function update_text(self)
 	local pivot_text = gui.get_pivot(self.input.text.node)
 	local pivot_offset = helper.get_pivot_offset(pivot_text)
 
-	self.cursor_position.x = self.text_position.x - self.input.text_width * (0.5 + pivot_offset.x) + left_part_width
+	self.cursor_position.x = self.text_position.x - self.input.total_width * (0.5 + pivot_offset.x) + left_part_width
 
 	gui.set_position(self.cursor, self.cursor_position)
 	gui.set_scale(self.cursor, self.input.text.scale)
 
 	set_selection_width(self, selected_part_width)
+end
+
+
+---The drag shares the node with the input button, both show the cursors from the Input style
+---@param self druid.rich_input
+local function update_drag_cursors(self)
+	self.drag.style.ON_HOVER_CURSOR = self.input.style.ON_HOVER_CURSOR
+	self.drag.style.ON_MOUSE_HOVER_CURSOR = self.input.style.ON_MOUSE_HOVER_CURSOR
+	self.drag:set_drag_cursors(true)
 end
 
 
@@ -72,6 +94,8 @@ local function on_select(self)
 	gui.set_enabled(self.input.button.node, true)
 
 	animate_cursor(self)
+	-- The Input style can be changed after the init
+	update_drag_cursors(self)
 	self.drag:set_enabled(true)
 
 	-- We want to catch events here first
@@ -181,8 +205,6 @@ function M:init(template, nodes)
 		cursor_index = nil,
 		time = 0,
 	}
-	self.is_lshift = false
-	self.is_lctrl = false
 
 	self.input = self.druid:new_input("button", "input_text")
 	self.is_button_input_enabled = gui.is_enabled(self.input.button.node)
@@ -194,6 +216,7 @@ function M:init(template, nodes)
 	self.drag = self.druid:new_drag("button", on_drag_callback)
 	self.drag.on_touch_start:subscribe(on_touch_start_callback)
 	self.drag:set_input_priority(const.PRIORITY_INPUT_MAX + 1)
+	update_drag_cursors(self)
 	self.drag:set_enabled(false)
 
 	self.input:set_text("")
@@ -207,43 +230,6 @@ function M:init(template, nodes)
 
 	on_unselect(self)
 	update_text(self)
-end
-
-
----@private
----@param action_id hash Action id from on_input
----@param action table Action table from on_input
----@return boolean is_consumed True if input was consumed
-function M:on_input(action_id, action)
-	if action_id == const.ACTION_LSHIFT then
-		if action.pressed then
-			self.is_lshift = true
-		elseif action.released then
-			self.is_lshift = false
-		end
-	end
-
-	if action_id == const.ACTION_LCTRL or action_id == const.ACTION_LCMD then
-		if action.pressed then
-			self.is_lctrl = true
-		elseif action.released then
-			self.is_lctrl = false
-		end
-	end
-
-	if self.input.is_selected then
-		if action_id == const.ACTION_LEFT and (action.pressed or action.repeated) then
-			self.input:move_selection(-1, self.is_lshift, self.is_lctrl)
-			return true
-		end
-
-		if action_id == const.ACTION_RIGHT and (action.pressed or action.repeated) then
-			self.input:move_selection(1, self.is_lshift, self.is_lctrl)
-			return true
-		end
-	end
-
-	return false
 end
 
 
