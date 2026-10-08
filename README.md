@@ -80,7 +80,7 @@ Open your `game.project` file and add the following lines to the dependencies fi
 **[Defold Event](https://github.com/Insality/defold-event)**
 
 ```
-https://github.com/Insality/defold-event/archive/refs/tags/16.zip
+https://github.com/Insality/defold-event/archive/refs/tags/21.zip
 ```
 
 **[Druid](https://github.com/Insality/druid/)**
