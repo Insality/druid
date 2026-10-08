@@ -150,6 +150,14 @@
 	"ui_example_rich_text_resize": "Tamaño de Rich Text",
 	"ui_example_rich_text_resize_description": "Mueve los sliders de ancho y alto: el texto se reajusta y se escala para caber en el área.",
 
+	"ui_example_rich_text_glyphs": "Glifos de Rich Text",
+	"ui_example_rich_text_glyphs_description": "El texto enriquecido se dibuja sobre un nodo de texto normal con la misma cadena. Las letras deben cubrirlo exactamente, los bordes naranjas indican un avance incorrecto.",
+
+	"ui_example_rich_text_split_wrap": "Ajuste por letras",
+	"ui_example_rich_text_split_wrap_description": "Cada letra es un nodo, pero las palabras se ajustan completas. Se conservan los espacios tras imágenes, las sangrías y las partes nobr.",
+	"ui_show_rich_text": "Mostrar Rich Text",
+	"ui_split_to_characters": "Dividir en letras",
+
 	"ui_width": "Ancho",
 	"ui_height": "Alto",
 

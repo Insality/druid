@@ -114,5 +114,27 @@ return function()
 			druid:on_input(mock_input.input_empty(100, 100))
 			assert(instance:is_hovered() == false)
 		end)
+
+		it("Should reset mouse hover when the mouse move is consumed above", function()
+			local button = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 50, 0))
+			local blocker_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 50, 0))
+
+			local instance = druid:new_hover(button)
+			instance.on_mouse_hover:subscribe(function() end)
+
+			druid:on_input(mock_input.input_empty_action_nil(10, 10))
+			assert(instance:is_mouse_hovered() == true)
+
+			-- The blocker is processed first and consumes the mouse move
+			local blocker = druid:new_blocker(blocker_node)
+			blocker:set_input_priority(100)
+			druid:on_input(mock_input.input_empty_action_nil(10, 10))
+			assert(instance:is_mouse_hovered() == false)
+
+			druid:remove(blocker)
+			druid:remove(instance)
+			gui.delete_node(button)
+			gui.delete_node(blocker_node)
+		end)
 	end)
 end

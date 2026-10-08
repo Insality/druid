@@ -259,6 +259,22 @@ function M.get_examples()
 			code_url = "example/examples/basic/rich_text/rich_text_resize.lua",
 			widget_class = require("example.examples.basic.rich_text.rich_text_resize"),
 		},
+		{
+			name_id = "ui_example_rich_text_glyphs",
+			information_text_id = "ui_example_rich_text_glyphs_description",
+			template = "rich_text_glyphs",
+			root = "rich_text_glyphs/root",
+			code_url = "example/examples/basic/rich_text/rich_text_glyphs.lua",
+			widget_class = require("example.examples.basic.rich_text.rich_text_glyphs"),
+		},
+		{
+			name_id = "ui_example_rich_text_split_wrap",
+			information_text_id = "ui_example_rich_text_split_wrap_description",
+			template = "rich_text_split_wrap",
+			root = "rich_text_split_wrap/root",
+			code_url = "example/examples/basic/rich_text/rich_text_split_wrap.lua",
+			widget_class = require("example.examples.basic.rich_text.rich_text_split_wrap"),
+		},
 		--{
 		--	name_id = "ui_example_rich_text_tags_custom",
 		--	information_text_id = "ui_example_rich_text_tags_custom_description",

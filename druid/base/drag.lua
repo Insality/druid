@@ -6,6 +6,8 @@ local component = require("druid.component")
 ---@class druid.drag.style
 ---@field DRAG_DEADZONE number Distance in pixels to start dragging. Default: 10
 ---@field NO_USE_SCREEN_KOEF boolean If screen aspect ratio affects on drag values. Default: false
+---@field ON_HOVER_CURSOR string|number|nil Cursor on node touch hover (defos cursor). Default: nil
+---@field ON_MOUSE_HOVER_CURSOR string|number|nil Cursor on node mouse hover (defos cursor). Default: nil
 
 ---A component that allows you to subscribe to drag events over a node
 ---@class druid.drag: druid.component
@@ -84,27 +86,38 @@ function M:on_style_change(style)
 	self.style = {
 		DRAG_DEADZONE = style.DRAG_DEADZONE or 10,
 		NO_USE_SCREEN_KOEF = style.NO_USE_SCREEN_KOEF or false,
+		ON_HOVER_CURSOR = style.ON_HOVER_CURSOR or nil,
+		ON_MOUSE_HOVER_CURSOR = style.ON_MOUSE_HOVER_CURSOR or nil,
 	}
+
+	if self._is_drag_cursors ~= nil then
+		self:set_drag_cursors(self._is_drag_cursors)
+	end
 end
 
 
----Enable or disable drag cursor styles. No-op without defos. Hover is created on first enable.
+---Enable or disable drag cursors from the Drag style. No-op without defos or without cursors in style. Hover is created on first enable.
+---The cursors are not shown while the Drag is disabled.
 ---@param is_enabled boolean True if Drag cursors are enabled
 function M:set_drag_cursors(is_enabled)
+	self._is_drag_cursors = is_enabled
 	if not defos then
 		return
 	end
 
-	if is_enabled then
+	local hover_cursor = self.style.ON_HOVER_CURSOR
+	local mouse_hover_cursor = self.style.ON_MOUSE_HOVER_CURSOR
+
+	if is_enabled and (hover_cursor or mouse_hover_cursor) then
 		if not self.hover then
 			self.hover = self.druid:new_hover(self.node)
 			if self.click_zone then
 				self.hover:set_click_zone(self.click_zone)
 			end
 		end
-		self.hover:set_enabled(true)
-		self.hover.style.ON_HOVER_CURSOR = defos.CURSOR_CROSSHAIR
-		self.hover.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_HAND
+		self.hover:set_enabled(self._is_enabled)
+		self.hover.style.ON_HOVER_CURSOR = hover_cursor
+		self.hover.style.ON_MOUSE_HOVER_CURSOR = mouse_hover_cursor
 	elseif self.hover then
 		self.hover.style.ON_HOVER_CURSOR = nil
 		self.hover.style.ON_MOUSE_HOVER_CURSOR = nil
@@ -245,6 +258,11 @@ end
 ---@return druid.drag self Current instance
 function M:set_enabled(is_enabled)
 	self._is_enabled = is_enabled
+
+	-- The disabled drag should not show the drag cursors
+	if self.hover then
+		self.hover:set_enabled(is_enabled and self._is_drag_cursors)
+	end
 
 	return self
 end

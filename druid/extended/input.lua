@@ -9,6 +9,8 @@ local utf8 = utf8 or utf8_lua
 ---@field MASK_DEFAULT_CHAR string Default character mask for password input
 ---@field IS_LONGTAP_ERASE boolean Is long tap will erase current input data
 ---@field IS_UNSELECT_ON_RESELECT boolean If true, call unselect on select selected input
+---@field ON_HOVER_CURSOR string|number|nil Cursor on input touch hover (defos cursor). Default: nil
+---@field ON_MOUSE_HOVER_CURSOR string|number|nil Cursor on input mouse hover (defos cursor). Default: nil
 ---@field on_init fun(self: druid.input)|nil Callback when input is initialized, use to set custom properties on self
 ---@field on_select fun(self: druid.input, button_node: node) Callback on input field selecting
 ---@field on_unselect fun(self: druid.input, button_node: node) Callback on input field unselecting
@@ -43,9 +45,12 @@ M.ALLOWED_ACTIONS = {
 	[const.ACTION_TEXT] = true,
 	[const.ACTION_MARKED_TEXT] = true,
 	[const.ACTION_BACKSPACE] = true,
+	[const.ACTION_DELETE] = true,
 	[const.ACTION_ENTER] = true,
 	[const.ACTION_ESC] = true,
 	[const.ACTION_BACK] = true,
+	[const.ACTION_LEFT] = true,
+	[const.ACTION_RIGHT] = true,
 }
 
 -- Modifiers must not be swallowed while the input is selected,
@@ -63,6 +68,37 @@ local MODIFICATOR_ACTIONS = {
 ---@return string Masked text
 local function mask_text(text, mask)
 	return string.rep(mask or "*", utf8.len(text))
+end
+
+
+---Apply the cursors from the Input style to the button hover
+---@param self druid.input
+local function update_hover_cursors(self)
+	self.button.hover.style.ON_HOVER_CURSOR = self.style.ON_HOVER_CURSOR
+	self.button.hover.style.ON_MOUSE_HOVER_CURSOR = self.style.ON_MOUSE_HOVER_CURSOR
+end
+
+
+---Track the modificator keys state, used for the cursor moving with the arrow keys
+---@param self druid.input
+---@param action_id hash|nil The action id
+---@param action action The action
+local function update_modificators(self, action_id, action)
+	if action_id == const.ACTION_LSHIFT then
+		if action.pressed then
+			self.is_lshift = true
+		elseif action.released then
+			self.is_lshift = false
+		end
+	end
+
+	if action_id == const.ACTION_LCTRL or action_id == const.ACTION_LCMD then
+		if action.pressed then
+			self.is_lctrl = true
+		elseif action.released then
+			self.is_lctrl = false
+		end
+	end
 end
 
 
@@ -88,6 +124,8 @@ function M:init(click_node, text_node, keyboard_type)
 	end
 
 	self.is_selected = false
+	self.is_lshift = false
+	self.is_lctrl = false
 	self.value = self.text.last_value
 	self.previous_value = self.text.last_value
 	self.current_value = self.text.last_value
@@ -110,11 +148,7 @@ function M:init(click_node, text_node, keyboard_type)
 	self.button.on_click_outside:subscribe(self.unselect)
 	self.button.on_long_click:subscribe(clear_and_select)
 	self.button:set_style(nil)
-
-	if defos then
-		self.button.hover.style.ON_HOVER_CURSOR = defos.CURSOR_IBEAM
-		self.button.hover.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_IBEAM
-	end
+	update_hover_cursors(self)
 
 	if html5 then
 		self.button:set_web_user_interaction(true)
@@ -137,12 +171,19 @@ function M:on_style_change(style)
 		IS_LONGTAP_ERASE = style.IS_LONGTAP_ERASE or false,
 		MASK_DEFAULT_CHAR = style.MASK_DEFAULT_CHAR or "*",
 		IS_UNSELECT_ON_RESELECT = style.IS_UNSELECT_ON_RESELECT or false,
+		ON_HOVER_CURSOR = style.ON_HOVER_CURSOR or nil,
+		ON_MOUSE_HOVER_CURSOR = style.ON_MOUSE_HOVER_CURSOR or nil,
 
 		on_init = style.on_init or function() end,
 		on_select = style.on_select or function(_, button_node) end,
 		on_unselect = style.on_unselect or function(_, button_node) end,
 		on_input_wrong = style.on_input_wrong or function(_, button_node) end,
 	}
+
+	-- The style is set before init, the button is not created yet
+	if self.button then
+		update_hover_cursors(self)
+	end
 
 	self.style.on_init(self)
 end
@@ -153,7 +194,12 @@ end
 ---@param action action The action
 ---@return boolean is_consume True if the action is consumed
 function M:on_input(action_id, action)
-	if MODIFICATOR_ACTIONS[action_id] or action_id == const.ACTION_TAB then
+	if MODIFICATOR_ACTIONS[action_id] then
+		update_modificators(self, action_id, action)
+		return false
+	end
+
+	if action_id == const.ACTION_TAB then
 		return false
 	end
 
@@ -225,6 +271,42 @@ function M:on_input(action_id, action)
 			end
 		end
 
+		if action_id == const.ACTION_DELETE and (action.pressed or action.repeated) then
+			local len = utf8.len(self.value)
+			local start_index = self.start_index or len
+			local end_index = self.end_index or len
+
+			-- If start == end index, remove right of this selection letter, else delete all selection
+			if start_index == end_index then
+				-- Nothing to delete if the cursor is at the end of the text
+				if end_index < len then
+					local left_part = utf8.sub(self.value, 1, start_index)
+					local right_part = utf8.sub(self.value, end_index + 2, len)
+					input_text = left_part .. right_part
+
+					-- The cursor stays on the same place
+					cursor_shift_indexes = 0
+				end
+			else
+				local left_part = utf8.sub(self.value, 1, start_index)
+				local right_part = utf8.sub(self.value, end_index + 1, len)
+				input_text = left_part .. right_part
+
+				-- Calculate offsets from cursor pos to start index
+				cursor_shift_indexes = start_index - self.cursor_index
+			end
+		end
+
+		if action_id == const.ACTION_LEFT and (action.pressed or action.repeated) then
+			self:move_selection(-1, self.is_lshift, self.is_lctrl)
+			return true
+		end
+
+		if action_id == const.ACTION_RIGHT and (action.pressed or action.repeated) then
+			self:move_selection(1, self.is_lshift, self.is_lctrl)
+			return true
+		end
+
 		if action_id == const.ACTION_ENTER and action.released then
 			self:unselect()
 			return true
@@ -261,7 +343,22 @@ end
 
 
 ---@private
+---@param action_id hash|nil The action id
+---@param action action The action
+function M:on_input_interrupt(action_id, action)
+	-- The modificator keys can be consumed by the component above, the state should be tracked anyway
+	if MODIFICATOR_ACTIONS[action_id] then
+		update_modificators(self, action_id, action)
+	end
+end
+
+
+---@private
 function M:on_focus_lost()
+	-- The modificator keys can be released while the window is unfocused, the released action will never come
+	self.is_lshift = false
+	self.is_lctrl = false
+
 	self:unselect()
 end
 

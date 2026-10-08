@@ -114,8 +114,13 @@ end
 
 
 ---@private
-function M:on_input_interrupt()
+function M:on_input_interrupt(action_id, action)
 	self:set_hover(false)
+
+	-- The mouse move is consumed by the component above, the node is covered by it
+	if action_id == nil then
+		self:set_mouse_hover(false)
+	end
 end
 
 
@@ -219,8 +224,9 @@ function M:_set_cursor(priority, cursor)
 	end
 
 	local uid = self:get_uid()
-	cursor_stack[uid] = cursor_stack[uid] or {}
-	cursor_stack[uid][priority] = cursor
+	local stack = cursor_stack[uid] or {}
+	stack[priority] = cursor
+	cursor_stack[uid] = next(stack) and stack or nil
 	M._apply_cursor_stack()
 end
 

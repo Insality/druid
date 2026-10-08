@@ -187,6 +187,24 @@ function M:get_parent_name()
 end
 
 
+---Apply the input priority to the single component, without touching it's children
+---@param component druid.component The component to apply the input priority
+---@param value number The input priority value
+---@param is_temporary boolean|nil If true, the default input priority is not changed
+local function apply_input_priority(component, value, is_temporary)
+	local component_data = component._component
+
+	if component_data.input_priority ~= value then
+		component_data.input_priority = value
+		component_data._is_input_priority_changed = true
+	end
+
+	if not is_temporary then
+		component_data.default_input_priority = value
+	end
+end
+
+
 ---Get component input priority, the bigger number processed first. Default value: 10
 ---@return number
 function M:get_input_priority()
@@ -201,22 +219,12 @@ end
 function M:set_input_priority(value, is_temporary)
 	assert(value)
 
-	local component = self._component
+	apply_input_priority(self, value, is_temporary)
 
-	if component.input_priority == value then
-		return self
-	end
-
-	component.input_priority = value
-	component._is_input_priority_changed = true
-
-	if not is_temporary then
-		component.default_input_priority = value
-	end
-
+	-- The children list is already recursive, no need to go deeper from each child
 	local children = self:get_childrens()
 	for i = 1, #children do
-		children[i]:set_input_priority(value, is_temporary)
+		apply_input_priority(children[i], value, is_temporary)
 	end
 
 	return self
@@ -224,9 +232,17 @@ end
 
 
 ---Reset component input priority to it's default value, that was set in `create` function or `set_input_priority`
+---Each component in the subtree returns to it's own default value, not to the parent one
 ---@return druid.component self The component itself for chaining
 function M:reset_input_priority()
-	self:set_input_priority(self._component.default_input_priority)
+	apply_input_priority(self, self._component.default_input_priority, true)
+
+	-- The children list is already recursive, no need to go deeper from each child
+	local children = self:get_childrens()
+	for i = 1, #children do
+		apply_input_priority(children[i], children[i]._component.default_input_priority, true)
+	end
+
 	return self
 end
 

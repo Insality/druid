@@ -15,6 +15,8 @@ M["button"] = {
 	LONGTAP_TIME = 0.4,
 	AUTOHOLD_TRIGGER = 0.8,
 	DOUBLETAP_TIME = 0.4,
+	ON_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on mouse hover, nil to disable
 
 	on_init = function(self) end,
 
@@ -57,13 +59,15 @@ M["button"] = {
 }
 
 M["hover"] = {
-	ON_HOVER_CURSOR = nil,
-	ON_MOUSE_HOVER_CURSOR = nil,
+	ON_HOVER_CURSOR = nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = nil, -- Defos cursor on mouse hover, nil to disable
 }
 
 M["drag"] = {
 	DRAG_DEADZONE = 4, -- Size in pixels of drag deadzone
 	NO_USE_SCREEN_KOEF = false,
+	ON_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on mouse hover, nil to disable
 }
 
 
@@ -85,6 +89,8 @@ M["scroll"] = {
 	WHEEL_SCROLL_SPEED = 20, -- Amount of pixels to scroll by one wheel event (0 to disable)
 	WHEEL_SCROLL_INVERTED = true, -- Boolean to invert wheel scroll side
 	WHEEL_SCROLL_BY_INERTION = false, -- If true, wheel will add inertion to scroll. Direct set position otherwise.
+	ON_HOVER_CURSOR = nil, -- Defos cursor on touch hover while content is scrollable, nil to disable
+	ON_MOUSE_HOVER_CURSOR = nil, -- Defos cursor on mouse hover while content is scrollable, nil to disable
 	SMALL_CONTENT_SCROLL = false, -- If true, content node with size less than view node size can be scrolled
 }
 
@@ -97,6 +103,8 @@ M["progress"] = {
 
 M["slider"] = {
 	DEFAULT_STEPS = {}, -- e.g. {0, 0.25, 0.5, 0.75, 1} for notched slider; empty = continuous
+	ON_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_HAND or nil, -- Defos cursor on mouse hover, nil to disable
 }
 
 
@@ -112,6 +120,8 @@ M["input"] = {
 	BUTTON_SELECT_INCREASE = 1.08,
 	MASK_DEFAULT_CHAR = "*",
 	IS_UNSELECT_ON_RESELECT = false,
+	ON_HOVER_CURSOR = defos and defos.CURSOR_IBEAM or nil, -- Defos cursor on touch hover, nil to disable
+	ON_MOUSE_HOVER_CURSOR = defos and defos.CURSOR_IBEAM or nil, -- Defos cursor on mouse hover, nil to disable
 
 	on_init = function(self) end,
 

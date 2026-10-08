@@ -1938,6 +1938,56 @@ nodes {
 }
 nodes {
   type: TYPE_TEMPLATE
+  id: "rich_text_glyphs"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/rich_text/rich_text_glyphs.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_text_glyphs/root"
+  parent: "rich_text_glyphs"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_glyphs/text"
+  parent: "rich_text_glyphs/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_glyphs/text_reference"
+  parent: "rich_text_glyphs/text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "rich_text_split_wrap"
+  parent: "basic"
+  inherit_alpha: true
+  template: "/example/examples/basic/rich_text/rich_text_split_wrap.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_text_split_wrap/root"
+  parent: "rich_text_split_wrap"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "rich_text_split_wrap/text"
+  parent: "rich_text_split_wrap/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "rich_text_split_wrap/text_area_debug"
+  parent: "rich_text_split_wrap/text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
   id: "rich_text_tags_custom"
   parent: "basic"
   inherit_alpha: true
