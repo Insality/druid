@@ -5,7 +5,7 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/insality/druid/ci-workflow.yml?branch=master&style=for-the-badge)](https://github.com/Insality/druid/actions)
 [![codecov](https://img.shields.io/codecov/c/github/Insality/druid?style=for-the-badge)](https://codecov.io/gh/Insality/druid)
 
-To make UI you need to place nodes in the Defold GUI editor, then attach a logic (button, scroll, data list or your own component) to them..
+To make UI you need to place nodes in the Defold GUI editor, then attach a logic (button, scroll, data list or your own component) to them.
 
 ## Layout the window
 
