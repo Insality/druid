@@ -243,6 +243,7 @@ To better understand **Druid**, read the following documentation:
 - [How To GUI in Defold](https://forum.defold.com/t/how-to-gui-in-defold/73256)
 - [Widgets](wiki/widgets.md)
 - [Druid styles](wiki/styles.md)
+- [Cursors](wiki/cursors.md)
 - [Advanced Setup](wiki/advanced-setup.md)
 - [Druid Settings](wiki/druid_settings.md)
 - [Optimize Druid Size](wiki/optimize_druid_size.md)

@@ -79,3 +79,5 @@ Override all fields you want and set your style with one of next ways:
 - Set your style as global via `druid.set_default_style`
 - Set style for concrete druid instance via `druid = druid.new(self, style)`
 - Set style for concrete instance via `component:set_style(style)`
+
+Button, Drag, Scroll, Slider, Input and Hover take their mouse cursor from these styles. See [Cursors](cursors.md).
