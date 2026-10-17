@@ -86,6 +86,7 @@ self.druid:new_timer(node, [seconds_from], [seconds_to], [callback])
 -- Operational
 self.druid:remove(component)
 self.druid:set_blacklist(blacklist_components)
+self.druid:reset_hovers()
 self.druid:set_whitelist(whitelist_components)
 ```
 

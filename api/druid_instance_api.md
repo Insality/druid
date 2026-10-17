@@ -16,6 +16,7 @@ The Druid Factory used to create components
 - [on_window_event](#on_window_event)
 - [set_whitelist](#set_whitelist)
 - [set_blacklist](#set_blacklist)
+- [reset_hovers](#reset_hovers)
 - [new_widget](#new_widget)
 - [new_button](#new_button)
 - [new_blocker](#new_blocker)
@@ -192,6 +193,21 @@ set the filter from the outside: the gui script or the parent widget.
 
 - **Parameters:**
 	- `[blacklist_components]` *(table|druid.component[]|nil)*: The array of component to blacklist, nil to clear it
+
+- **Returns:**
+	- `self` *(druid.instance)*: The Druid instance
+
+### reset_hovers
+
+---
+```lua
+instance:reset_hovers()
+```
+
+Reset the hover state of all hover components of the Druid instance.
+The hovers trigger the hover events with false and drop their cursors.
+Call it when another GUI covers this one and takes the input: the covered nodes never get the mouse leave.
+The next pointer move over a node hovers it again.
 
 - **Returns:**
 	- `self` *(druid.instance)*: The Druid instance

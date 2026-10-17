@@ -5,6 +5,7 @@ local events = require("event.events")
 local const = require("druid.const")
 local settings = require("druid.system.settings")
 local druid_component = require("druid.component")
+local hover = require("druid.base.hover")
 
 ---The input filter, applied to the Druid instance components or to the component subtree.
 ---Membership is the listed component plus any descendant, including ones created later.
@@ -562,6 +563,25 @@ function M:set_blacklist(blacklist_components)
 end
 
 
+---Reset the hover state of all hover components of the Druid instance.
+---The hovers trigger the hover events with false and drop their cursors.
+---Call it when another GUI covers this one and takes the input: the covered nodes never get the mouse leave.
+---The next pointer move over a node hovers it again.
+---@return druid.instance self The Druid instance
+function M:reset_hovers()
+	local components = self.components_all
+	for index = 1, #components do
+		local component = components[index]
+		if getmetatable(component).__index == hover then
+			component:set_hover(false)
+			component:set_mouse_hover(false)
+		end
+	end
+
+	return self
+end
+
+
 ---Remove all components on late remove step DruidInstance
 ---@private
 function M:_clear_late_remove()
@@ -632,7 +652,6 @@ function M:new_back_handler(callback, params)
 end
 
 
-local hover = require("druid.base.hover")
 ---Create Hover component
 ---@param node string|node The node_id or gui.get_node(node_id)
 ---@param on_hover_callback function|nil Hover callback
