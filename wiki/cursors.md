@@ -71,9 +71,10 @@ The fields are read when the pointer enters or leaves. Assign them before that h
 
 ```lua
 local button = self.druid:new_button("buy", self.on_buy)
-button.hover.style.ON_HOVER_CURSOR = defos.CURSOR_HAND
-button.hover.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_HAND
+button:set_cursor(defos.CURSOR_HAND)
 ```
+
+`button:set_cursor(nil)` turns the cursor off for one button, for example a full-screen background that closes a window.
 
 A node that is not a button gets the same treatment through Hover. The Hover style cursors are nil, so set them on the instance:
 

@@ -138,6 +138,7 @@ local button = require("druid.base.button")
 
 button:init(node_or_node_id, [callback], [custom_args], [anim_node])
 button:set_animations_disabled()
+button:set_cursor([cursor])
 button:set_enabled([state])
 button:is_enabled()
 button:set_click_zone([zone])

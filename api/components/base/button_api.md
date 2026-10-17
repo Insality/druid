@@ -23,6 +23,7 @@ Where node_name is name of node from GUI scene. You can use `node_name` as input
 
 - [init](#init)
 - [set_animations_disabled](#set_animations_disabled)
+- [set_cursor](#set_cursor)
 - [set_enabled](#set_enabled)
 - [is_enabled](#is_enabled)
 - [set_click_zone](#set_click_zone)
@@ -89,6 +90,21 @@ button:set_animations_disabled()
 ```
 
 Remove default button style animations
+
+- **Returns:**
+	- `self` *(druid.button)*: The current button instance
+
+### set_cursor
+
+---
+```lua
+button:set_cursor([cursor])
+```
+
+Set the cursor on button hover and mouse hover. Assign it before the pointer enters the button
+
+- **Parameters:**
+	- `[cursor]` *(string|number|nil)*: Defos cursor, nil to keep the cursor unchanged on this button
 
 - **Returns:**
 	- `self` *(druid.button)*: The current button instance
