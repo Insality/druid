@@ -71,9 +71,10 @@ The fields are read when the pointer enters or leaves. Assign them before that h
 
 ```lua
 local button = self.druid:new_button("buy", self.on_buy)
-button.hover.style.ON_HOVER_CURSOR = defos.CURSOR_HAND
-button.hover.style.ON_MOUSE_HOVER_CURSOR = defos.CURSOR_HAND
+button:set_cursor(defos.CURSOR_HAND)
 ```
+
+`button:set_cursor(nil)` turns the cursor off for one button, for example a full-screen background that closes a window.
 
 A node that is not a button gets the same treatment through Hover. The Hover style cursors are nil, so set them on the instance:
 
@@ -112,3 +113,5 @@ A custom image is a cursor from `defos.load_cursor`, stored in the same two fiel
 Each hovered node keeps its own cursor. The pressed cursor wins over the plain hover cursor for as long as the button is down. When the pointer leaves, the component is disabled, or the component is removed, that cursor is dropped and the next one is shown.
 
 A component that consumes the mouse move, such as a Blocker, clears the mouse hover of the nodes under it. Their cursor goes away while the pointer is over the blocker.
+
+This works inside one Druid instance only. A GUI that consumes the mouse move stops it for the GUIs below, so their hovered nodes keep the cursor. Call `self.druid:reset_hovers()` on the covered GUI when the cover opens, for example a window over the game scene.

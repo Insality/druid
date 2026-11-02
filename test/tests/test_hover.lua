@@ -136,5 +136,31 @@ return function()
 			gui.delete_node(button)
 			gui.delete_node(blocker_node)
 		end)
+
+		it("Should reset hovers when a hover callback removes a component", function()
+			local node_first = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 50, 0))
+			local node_second = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 50, 0))
+
+			local first = druid:new_hover(node_first)
+			local second = druid:new_hover(node_second)
+			second.on_mouse_hover:subscribe(function() end)
+			first.on_mouse_hover:subscribe(function(_, state)
+				if not state then
+					druid:remove(second)
+				end
+			end)
+
+			druid:on_input(mock_input.input_empty_action_nil(10, 10))
+			assert(first:is_mouse_hovered() == true)
+			assert(second:is_mouse_hovered() == true)
+
+			druid:reset_hovers()
+			assert(first:is_mouse_hovered() == false)
+			assert(second:is_mouse_hovered() == false)
+
+			druid:remove(first)
+			gui.delete_node(node_first)
+			gui.delete_node(node_second)
+		end)
 	end)
 end

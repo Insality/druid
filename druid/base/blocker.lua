@@ -1,4 +1,5 @@
 local const = require("druid.const")
+local helper = require("druid.helper")
 local component = require("druid.component")
 
 ---Druid component for block input. Use it to block input in special zone.
@@ -43,7 +44,7 @@ function M:on_input(action_id, action)
 		return false
 	end
 
-	if gui.pick_node(self.node, action.x, action.y) then
+	if helper.pick_node(self.node, action.x, action.y) then
 		return true
 	end
 

@@ -86,6 +86,7 @@ self.druid:new_timer(node, [seconds_from], [seconds_to], [callback])
 -- Operational
 self.druid:remove(component)
 self.druid:set_blacklist(blacklist_components)
+self.druid:reset_hovers()
 self.druid:set_whitelist(whitelist_components)
 ```
 
@@ -138,6 +139,7 @@ local button = require("druid.base.button")
 
 button:init(node_or_node_id, [callback], [custom_args], [anim_node])
 button:set_animations_disabled()
+button:set_cursor([cursor])
 button:set_enabled([state])
 button:is_enabled()
 button:set_click_zone([zone])

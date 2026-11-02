@@ -1,6 +1,7 @@
 return function()
 	describe("Slider Component", function()
 		local mock_time
+		local mock_input
 		local druid_system
 
 		local druid
@@ -8,6 +9,7 @@ return function()
 
 		before(function()
 			mock_time = require("deftest.mock.time")
+			mock_input = require("test.helper.mock_input")
 			druid_system = require("druid.druid")
 
 			mock_time.mock()
@@ -72,6 +74,18 @@ return function()
 			assert(slider:is_enabled() == false)
 			slider:set_enabled(true)
 			assert(slider:is_enabled() == true)
+		end)
+
+		it("Should stop drag on touch released without position", function()
+			local pin = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(20, 20, 0))
+			local slider = druid:new_slider(pin, vmath.vector3(100, 0, 0))
+
+			druid:on_input(mock_input.click_pressed(5, 5))
+			assert(slider.is_drag == true)
+
+			-- Touch released when the app loses focus comes without position
+			druid:on_input(mock_input.click_released())
+			assert(slider.is_drag == false)
 		end)
 	end)
 end

@@ -86,7 +86,7 @@ https://github.com/Insality/defold-event/archive/refs/tags/21.zip
 **[Druid](https://github.com/Insality/druid/)**
 
 ```
-https://github.com/Insality/druid/archive/refs/tags/1.4.0.zip
+https://github.com/Insality/druid/archive/refs/tags/1.4.2.zip
 ```
 
 After that, select `Project ▸ Fetch Libraries` to update [library dependencies]((https://defold.com/manuals/libraries/#setting-up-library-dependencies)). This happens automatically whenever you open a project so you will only need to do this if the dependencies change without re-opening the project.

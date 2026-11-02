@@ -154,6 +154,18 @@ function M:set_animations_disabled()
 end
 
 
+---Set the cursor on button hover and mouse hover. Assign it before the pointer enters the button
+---@param cursor string|number|nil Defos cursor, nil to keep the cursor unchanged on this button
+---@return druid.button self The current button instance
+function M:set_cursor(cursor)
+	self.style.ON_HOVER_CURSOR = cursor
+	self.style.ON_MOUSE_HOVER_CURSOR = cursor
+	update_hover_cursors(self)
+
+	return self
+end
+
+
 ---@private
 function M:on_late_init()
 	if not self.click_zone then
