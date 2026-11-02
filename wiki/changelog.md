@@ -998,3 +998,11 @@ The rich text layout changes can move your text by a few pixels, and some word v
 - `reset_input_priority` returns each child to its own default priority. Before, the children got the parent default priority after the reset.
 - Add the `key_del` key trigger to your input bindings to use the forward delete in the Input.
 - The Rich Input `is_lshift` and `is_lctrl` fields are removed, read `rich_input.input.is_lshift` and `rich_input.input.is_lctrl` instead.
+
+### Druid 1.4.1
+- [Button] Add `button:set_cursor(cursor)` to set the hover and mouse hover cursor of one button. Pass `nil` to keep the cursor unchanged on this button
+- [System] Add `druid:reset_hovers()` to reset all hovers of the Druid instance. Call it when another GUI covers this one: the covered nodes never get the mouse leave
+- [Docs] Add the [Cursors](cursors.md) page
+
+### Druid 1.4.2
+- [System] Fix the crash on a touch action without position, like a touch released when the app loses focus. Button, Blocker, Hover, Swipe and Slider handle it as a touch outside of the node
