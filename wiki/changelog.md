@@ -1006,3 +1006,5 @@ The rich text layout changes can move your text by a few pixels, and some word v
 
 ### Druid 1.4.2
 - [System] Fix the crash on a touch action without position, like a touch released when the app loses focus. Button, Blocker, Hover, Swipe and Slider handle it as a touch outside of the node
+- [Slider] Fix the slider stuck in drag after a touch released without position
+- [System] Fix the crash in `druid:reset_hovers()` when a hover callback removes a component
