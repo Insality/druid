@@ -152,6 +152,9 @@ function M:on_input(action_id, action)
 
 	-- Slider requires the pointer position, a touch released on focus lost comes without it
 	if not action.x or not action.y then
+		if action.released then
+			self.is_drag = false
+		end
 		return false
 	end
 
