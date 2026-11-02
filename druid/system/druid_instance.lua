@@ -569,6 +569,10 @@ end
 ---The next pointer move over a node hovers it again.
 ---@return druid.instance self The Druid instance
 function M:reset_hovers()
+	-- Hover callbacks can remove components, defer it to keep the iteration valid
+	local is_late_remove_enabled = self._is_late_remove_enabled
+	self._is_late_remove_enabled = true
+
 	local components = self.components_all
 	for index = 1, #components do
 		local component = components[index]
@@ -576,6 +580,11 @@ function M:reset_hovers()
 			component:set_hover(false)
 			component:set_mouse_hover(false)
 		end
+	end
+
+	self._is_late_remove_enabled = is_late_remove_enabled
+	if not is_late_remove_enabled then
+		self:_clear_late_remove()
 	end
 
 	return self
