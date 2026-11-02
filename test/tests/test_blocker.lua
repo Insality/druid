@@ -89,5 +89,25 @@ return function()
 			assert(blocker:is_enabled() == true)
 			assert(on_click_calls == 1)
 		end)
+
+		it("Should skip touch without position", function()
+			local button_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(150, 150, 0))
+			local blocker_node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(20, 20, 0))
+			local on_click_calls = 0
+
+			druid:new_button(button_node, function()
+				on_click_calls = on_click_calls + 1
+			end)
+			druid:new_blocker(blocker_node)
+
+			-- Touch released when the app loses focus comes without position
+			druid:on_input(mock_input.click_pressed(20, 20))
+			druid:on_input(mock_input.click_released())
+			assert(on_click_calls == 0)
+
+			druid:on_input(mock_input.click_pressed(20, 20))
+			druid:on_input(mock_input.click_released(20, 20))
+			assert(on_click_calls == 1)
+		end)
 	end)
 end

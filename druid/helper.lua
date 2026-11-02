@@ -287,12 +287,17 @@ end
 
 
 ---Make a check with gui.pick_node, but with additional node_click_area check.
+---A pointer action can come without position (touch released when the app loses focus): it picks nothing.
 ---@param node node
----@param x number
----@param y number
+---@param x number|nil
+---@param y number|nil
 ---@param node_click_area node|nil Additional node to check for click area. If nil, only node will be checked
 ---@local
 function M.pick_node(node, x, y, node_click_area)
+	if not x or not y then
+		return false
+	end
+
 	local is_pick = gui_pick_node(node, x, y)
 
 	if node_click_area then
